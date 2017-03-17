@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/scroll">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/tl_history_abs"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TableRow
+            android:background="#4CAF50"
+            android:padding="5dp"
+            android:gravity="center_horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Preview History Absen"
+                android:textSize="@dimen/text_size_medium"
+                android:textColor="@color/white"
+                />
+        </TableRow>
+        </TableLayout>
+
+        <TextView
+            android:layout_below="@+id/tl_history_abs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Username"
+            android:id="@+id/textView20"
+            android:layout_alignLeft="@+id/tl_history_abs"
+            android:layout_alignStart="@+id/tl_history_abs"
+            android:layout_margin="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Branch"
+            android:id="@+id/textView23"
+            android:layout_below="@+id/textView20"
+            android:layout_alignLeft="@+id/textView20"
+            android:layout_alignStart="@+id/textView20"
+            android:layout_marginBottom="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Outlet"
+            android:id="@+id/textView24"
+            android:layout_below="@+id/textView23"
+            android:layout_alignLeft="@+id/textView23"
+            android:layout_alignStart="@+id/textView23"
+            android:layout_marginBottom="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Check in"
+            android:id="@+id/textView25"
+            android:layout_below="@+id/textView24"
+            android:layout_alignLeft="@+id/textView24"
+            android:layout_alignStart="@+id/textView24"
+            android:layout_marginBottom="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Check out"
+            android:id="@+id/textView26"
+            android:layout_below="@+id/textView25"
+            android:layout_alignLeft="@+id/textView25"
+            android:layout_alignStart="@+id/textView25"
+            android:layout_marginBottom="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Image"
+            android:id="@+id/textView28"
+            android:layout_below="@+id/textView26"
+            android:layout_alignLeft="@+id/textView26"
+            android:layout_alignStart="@+id/textView26"
+            android:layout_marginBottom="10dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/textView28"
+            android:layout_alignLeft="@+id/textView28"
+            android:layout_alignStart="@+id/textView28"
+            android:id="@+id/linearLayout"
+            android:layout_alignRight="@+id/tvCheckout"
+            android:layout_alignEnd="@+id/tvCheckout"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imgAbsen1"
+                android:layout_below="@+id/textView28"
+                android:layout_alignLeft="@+id/textView28"
+                android:layout_alignStart="@+id/textView28"
+                android:src="@drawable/b_camera"
+                android:layout_marginRight="10dp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imgAbsen2"
+                android:layout_alignTop="@+id/imgAbsen1"
+                android:layout_toRightOf="@+id/imgAbsen1"
+                android:layout_toEndOf="@+id/imgAbsen1"
+                android:src="@drawable/b_camera"
+                android:layout_above="@+id/textView29" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            android:id="@+id/tvUsername"
+            android:layout_toRightOf="@+id/textView20"
+            android:layout_alignTop="@+id/textView20"
+            android:layout_alignBottom="@+id/textView20"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            android:id="@+id/tvBranch"
+            android:layout_alignTop="@+id/textView23"
+            android:layout_toRightOf="@+id/textView20"
+            android:layout_alignRight="@+id/tvUsername"
+            android:layout_alignEnd="@+id/tvUsername" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            android:id="@+id/tvOutlet"
+            android:layout_alignTop="@+id/textView24"
+            android:layout_alignLeft="@+id/tvBranch"
+            android:layout_alignStart="@+id/tvBranch"
+            android:layout_alignRight="@+id/tvBranch"
+            android:layout_alignEnd="@+id/tvBranch" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            android:id="@+id/tvCheckin"
+            android:layout_alignTop="@+id/textView25"
+            android:layout_alignLeft="@+id/tvOutlet"
+            android:layout_alignStart="@+id/tvOutlet"
+            android:layout_alignRight="@+id/tvOutlet"
+            android:layout_alignEnd="@+id/tvOutlet" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            android:id="@+id/tvCheckout"
+            android:layout_alignTop="@+id/textView26"
+            android:layout_alignLeft="@+id/tvCheckin"
+            android:layout_alignStart="@+id/tvCheckin"
+            android:layout_alignRight="@+id/tvCheckin"
+            android:layout_alignEnd="@+id/tvCheckin" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location"
+            android:id="@+id/textView29"
+            android:gravity="center_horizontal"
+            android:layout_alignLeft="@+id/linearLayout"
+            android:layout_alignStart="@+id/linearLayout"
+            android:layout_below="@+id/linearLayout"
+            android:layout_alignRight="@+id/linearLayout"
+            android:layout_alignEnd="@+id/linearLayout" />
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.MapFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="250dp"
+            android:apiKey="AIzaSyC8ZaU1H_c2JN7wRHbCbSeCU9XGTDYwL6A"
+            android:clickable="true"
+            android:enabled="true"
+            android:layout_below="@+id/textView29"
+            android:layout_alignLeft="@+id/textView29"
+            android:layout_alignStart="@+id/textView29"
+            android:layout_alignParentBottom="true"
+            android:layout_alignRight="@+id/textView29"
+            android:layout_alignEnd="@+id/textView29" />
+
+    </RelativeLayout>
+</ScrollView>

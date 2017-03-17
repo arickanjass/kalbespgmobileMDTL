@@ -1,0 +1,92 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.kalbenutritionals.app.kalbespgmobile.MainMenu"
+    android:padding="10dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rlSearch"
+        android:paddingBottom="20dp">
+
+        <Spinner
+            android:id="@+id/spnType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/bg_edtext"
+            android:layout_toEndOf="@+id/textView34"
+            android:layout_toRightOf="@+id/textView34"
+            android:layout_marginLeft="30dp" />
+
+        <Spinner
+            android:id="@+id/spnOutlet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_edtext"
+            android:layout_below="@+id/spnType"
+            android:layout_alignLeft="@+id/spnType"
+            android:layout_alignStart="@+id/spnType" />
+
+        <TextView
+            android:text="Type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/textView34" />
+
+        <TextView
+            android:text="Outlet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/spnOutlet"
+            android:id="@+id/textView35"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+
+    </RelativeLayout>
+
+    <Button
+        android:text="Search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rlSearch"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/btnsearch"
+        android:background="@drawable/btn_download_all"
+        android:textColor="@color/white"/>
+
+    <Button
+        android:text="Hide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/btnsearch"
+        android:layout_toRightOf="@+id/btnsearch"
+        android:layout_toEndOf="@+id/btnsearch"
+        android:background="@drawable/btn_download_all"
+        android:textColor="@color/white"
+        android:id="@+id/btnHide"
+        android:layout_marginLeft="10dp" />
+
+    <addons.tableview.SortableReportTableView
+        android:id="@+id/tableView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        custom:tableView_columnCount="4"
+        custom:tableView_headerColor="#27ae60"
+        custom:tableView_headerElevation="10"
+        android:layout_below="@+id/btnsearch"
+        android:layout_marginTop="20dp" />
+
+
+</RelativeLayout>

@@ -1,0 +1,120 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="top"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="5dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="5dp"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    tools:context="com.kalbenutritionals.app.kalbespgmobile.Leave" >
+    <ScrollView
+        android:id="@+id/scrollViewLeave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textViewDateTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:textColor="#000"/>
+            <View
+                android:id="@+id/view1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/textViewDateTime"
+                android:layout_marginTop="10dp"
+                android:background="#bfbfbf" />
+            <TextView
+                android:id="@+id/tvTypeLeave"
+                android:layout_below="@+id/view1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="Type Leave"
+                android:textColor="#000" />
+            <Spinner
+                android:id="@+id/spnTypeLeave"
+                android:layout_below="@+id/tvTypeLeave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/bg_edtext"/>
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/spnTypeLeave"
+                android:layout_marginTop="10dp"
+                android:background="#bfbfbf" />
+            <TextView
+                android:id="@+id/tvReason"
+                android:layout_below="@id/view2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="Reason *"
+                android:textColor="#000"/>
+            <EditText
+                android:id="@+id/editTextReason"
+                android:layout_below="@+id/tvReason"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textMultiLine"
+                android:background="@drawable/bg_edtext"
+                android:drawableRight="@mipmap/ic_action_assignment">
+
+                <requestFocus />
+            </EditText>
+            <View
+                android:id="@+id/view3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/editTextReason"
+                android:layout_marginTop="10dp"
+                android:background="#bfbfbf" />
+            <TextView
+                android:id="@+id/tvPinBbm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_below="@+id/view3"
+                android:text="Status"
+                android:textColor="#000" />
+            <View
+                android:id="@+id/view4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/tvPinBbm"
+                android:layout_marginTop="10dp"
+                android:background="#bfbfbf" />
+            <Button
+                android:id="@+id/buttonSaveLeave"
+                android:layout_below="@+id/view4"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_edtext"
+                android:text="Save" />
+
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

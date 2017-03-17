@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scroll_reso"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/lnReso"
+        android:padding="15dp"
+        android:orientation="vertical">
+    <TextView
+        android:id="@+id/txtReso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No SO"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:textColor="#000"/>
+    <TextView
+        android:id="@+id/txtNoreso"
+        android:layout_below="@+id/txtReso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No SO"
+        android:layout_marginLeft="10dp"
+        android:textColor="#000"/>
+    <View
+        android:id="@+id/view1"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/txtNoreso"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#bfbfbf" />
+
+    <TextView
+        android:id="@+id/txtDate"
+        android:layout_below="@id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Date"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:textColor="#000"/>
+    <TextView
+        android:id="@+id/txtviewDate"
+        android:layout_below="@+id/txtDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tanggal"
+        android:layout_marginLeft="10dp"
+        android:textColor="#000"/>
+    <View
+        android:id="@+id/view2"
+        android:layout_below="@+id/txtviewDate"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#bfbfbf" />
+
+    <TextView
+        android:id="@+id/txtKet"
+        android:layout_below="@id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:textColor="#000"/>
+    <EditText
+        android:id="@+id/etKeterangan"
+        android:layout_below="@+id/txtKet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:background="@drawable/bg_edtext"
+        android:drawableRight="@mipmap/ic_action_assignment">
+
+        <requestFocus />
+    </EditText>
+    <View
+        android:id="@+id/view3"
+        android:layout_below="@+id/etKeterangan"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#bfbfbf" />
+    <Button
+        android:id="@+id/btnPreviewReso"
+        android:layout_below="@+id/view3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:text="Preview"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/btn_download_all"/>
+
+        <TextView
+            android:id="@+id/tv_search"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/btnPreviewReso"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:text="Search Product"
+            android:textColor="#000"></TextView>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/searchProduct"
+            android:inputType="textFilter"
+            android:background="@drawable/bg_edtext"
+            android:drawableRight="@drawable/ic_delete_black"/>
+
+    <ListView
+        android:id="@+id/lvProduk"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/btnPreviewReso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"></ListView>
+    </LinearLayout>
+</ScrollView>
