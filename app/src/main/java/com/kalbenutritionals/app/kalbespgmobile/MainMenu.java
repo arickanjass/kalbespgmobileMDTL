@@ -366,6 +366,19 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
                         return true;
 
+                    case R.id.quantityStock: 
+                        toolbar.setTitle("View xQuantity Stock");
+
+                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
+
+                        FragmentViewQuantityStock quantityStock = new FragmentViewQuantityStock();
+                        FragmentTransaction fragmentTransactionQuantityStock = getSupportFragmentManager().beginTransaction();
+                        fragmentTransactionQuantityStock.replace(R.id.frame, quantityStock);
+                        fragmentTransactionQuantityStock.commit();
+                        selectedId = 99;
+
+                        return true;
+
                     case R.id.historyAbsen:
                         toolbar.setTitle("History Absen");
 
