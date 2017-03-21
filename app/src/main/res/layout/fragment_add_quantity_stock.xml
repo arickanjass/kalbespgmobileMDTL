@@ -89,34 +89,32 @@
             android:layout_marginTop="10dp"
             android:background="#bfbfbf" />
 
-        <TextView
-            android:id="@+id/txtAfter"
-            android:layout_below="@id/view3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="After"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="10dp"
-            android:textColor="#000"/>
         <LinearLayout
+            android:background="@drawable/bg_rounded_normal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="horizontal">
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:text="After"/>
             <ImageView
                 android:id="@+id/imageAfter1"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="10dp"
-                android:background="@color/primary_color_theme"/>
+                android:layout_marginLeft="5dp"
+                android:background="@mipmap/ic_maps_local_see"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_weight="1"/>
             <ImageView
                 android:id="@+id/imageAfter2"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="20dp"
-                android:background="@color/primary_color_theme"/>
+                android:layout_marginLeft="5dp"
+                android:background="@mipmap/ic_maps_local_see"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_weight="1"/>
 
         </LinearLayout>
         <View
@@ -127,34 +125,32 @@
             android:layout_marginTop="10dp"
             android:background="#bfbfbf" />
 
-        <TextView
-            android:id="@+id/txtBefore"
-            android:layout_below="@id/view4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Before"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="10dp"
-            android:textColor="#000"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/bg_rounded_normal"
+            android:gravity="center"
             android:orientation="horizontal">
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:text="Before"/>
             <ImageView
                 android:id="@+id/imageBefore1"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="10dp"
-                android:background="@color/gray"/>
+                android:layout_marginLeft="5dp"
+                android:background="@mipmap/ic_maps_local_see"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_weight="1"/>
             <ImageView
                 android:id="@+id/imageBefore2"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="20dp"
-                android:background="@color/gray"/>
+                android:layout_marginLeft="5dp"
+                android:background="@mipmap/ic_maps_local_see"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_weight="1"/>
 
         </LinearLayout>
         <View
