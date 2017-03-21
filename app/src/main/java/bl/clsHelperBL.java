@@ -26,6 +26,8 @@ import library.salesforce.common.tCustomerBasedMobileDetailData;
 import library.salesforce.common.tCustomerBasedMobileDetailProductData;
 import library.salesforce.common.tCustomerBasedMobileHeaderData;
 import library.salesforce.common.tLeaveMobileData;
+import library.salesforce.common.tPurchaseOrderDetailData;
+import library.salesforce.common.tPurchaseOrderHeaderData;
 import library.salesforce.common.tSalesProductDetailData;
 import library.salesforce.common.tSalesProductHeaderData;
 import library.salesforce.common.tUserLoginData;
@@ -40,6 +42,8 @@ import library.salesforce.dal.tCustomerBasedMobileDetailDA;
 import library.salesforce.dal.tCustomerBasedMobileDetailProductDA;
 import library.salesforce.dal.tCustomerBasedMobileHeaderDA;
 import library.salesforce.dal.tLeaveMobileDA;
+import library.salesforce.dal.tPurchaseOrderDetailDA;
+import library.salesforce.dal.tPurchaseOrderHeaderDA;
 import library.salesforce.dal.tSalesProductDetailDA;
 import library.salesforce.dal.tSalesProductHeaderDA;
 import library.salesforce.dal.tUserLoginDA;
@@ -259,6 +263,8 @@ public class clsHelperBL extends clsMainBL {
 			tLeaveMobileDA _tLeaveMobileDA =new tLeaveMobileDA(db);
             tSalesProductHeaderDA _tSalesProductHeaderDA = new tSalesProductHeaderDA(db);
             tSalesProductDetailDA _tSalesProductDetailDA = new tSalesProductDetailDA(db);
+            tPurchaseOrderDetailDA _tPurchaseOrderDetailDA = new tPurchaseOrderDetailDA(db);
+            tPurchaseOrderHeaderDA _tPurchaseOrderHeaderDA = new tPurchaseOrderHeaderDA(db);
             tCustomerBasedMobileHeaderDA _tCustomerBasedMobileHeaderDA = new tCustomerBasedMobileHeaderDA(db);
             tCustomerBasedMobileDetailDA _tCustomerBasedMobileDetailDA = new tCustomerBasedMobileDetailDA(db);
             tCustomerBasedMobileDetailProductDA _tCustomerBasedMobileDetailProductDA = new tCustomerBasedMobileDetailProductDA(db);
@@ -270,6 +276,8 @@ public class clsHelperBL extends clsMainBL {
 
             List<tSalesProductHeaderData> ListOfSalesProductHeader = _tSalesProductHeaderDA.getAllDataToPushData(db);
             List<tSalesProductDetailData> ListOfSalesProductDetail = _tSalesProductDetailDA.getAllDataToPushData(db, ListOfSalesProductHeader);
+            List<tPurchaseOrderHeaderData> ListOfPurchaseOrderHeader = _tPurchaseOrderHeaderDA.getAllDataToPushData(db);
+            List<tPurchaseOrderDetailData> ListOfPurchaseOrderDetail = _tPurchaseOrderDetailDA.getAllDataToPushDataPO(db, ListOfPurchaseOrderHeader);
 			List<tLeaveMobileData> ListOftLeaveData=_tLeaveMobileDA.getAllDataPushData(db);
             List<tAbsenUserData> ListOftAbsenUserData = _tAbsenUserDA.getAllDataToPushData(db);
             List<tActivityData> ListOftActivityData = _tActivityDA.getAllDataToPushData(db);
@@ -308,6 +316,12 @@ public class clsHelperBL extends clsMainBL {
 
             if (ListOfSalesProductDetail != null) {
                 dtPush.setListOftSalesProductDetailData(ListOfSalesProductDetail);
+            }
+            if (ListOfPurchaseOrderDetail != null){
+                dtPush.setListOftPurchaseOrderDetailData(ListOfPurchaseOrderDetail);
+            }
+            if (ListOfPurchaseOrderHeader != null){
+                dtPush.setListOftPurchaseOrderHeaderData(ListOfPurchaseOrderHeader);
             }
 
             if (ListOftCustomerBasedMobileHeader != null) {
@@ -378,6 +392,13 @@ public class clsHelperBL extends clsMainBL {
             }
         }
 
+        if (dtJson.getListOftPurchaseOrderHeaderData() != null){
+            for (tPurchaseOrderHeaderData dt : dtJson.getListOftPurchaseOrderHeaderData()){
+                tPurchaseOrderHeaderDA _tPurchaseOrderHeaderDA = new tPurchaseOrderHeaderDA(db);
+                dt.set_intSync("1");
+                _tPurchaseOrderHeaderDA.SaveDatatPurchaseOrderHeaderData(db,dt);
+            }
+        }
         if (dtJson.get_ListOftCustomerBasedMobileHeaderData() != null) {
             for (tCustomerBasedMobileHeaderData dt : dtJson.get_ListOftCustomerBasedMobileHeaderData()) {
                 tCustomerBasedMobileHeaderDA _tCustomerBasedMobileHeaderDA = new tCustomerBasedMobileHeaderDA(db);

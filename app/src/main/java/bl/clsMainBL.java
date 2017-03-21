@@ -3,6 +3,9 @@ package bl;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
+import org.json.JSONArray;
+import org.json.simple.JSONObject;
+
 import java.io.File;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -20,6 +23,8 @@ import library.salesforce.common.mconfigData;
 import library.salesforce.common.tAbsenUserData;
 import library.salesforce.common.tActivityData;
 import library.salesforce.common.tLeaveMobileData;
+import library.salesforce.common.tPurchaseOrderDetailData;
+import library.salesforce.common.tPurchaseOrderHeaderData;
 import library.salesforce.common.tSalesProductDetailData;
 import library.salesforce.common.tSalesProductHeaderData;
 import library.salesforce.common.tUserLoginData;
@@ -31,6 +36,8 @@ import library.salesforce.dal.mconfigDA;
 import library.salesforce.dal.tAbsenUserDA;
 import library.salesforce.dal.tActivityDA;
 import library.salesforce.dal.tLeaveMobileDA;
+import library.salesforce.dal.tPurchaseOrderDetailDA;
+import library.salesforce.dal.tPurchaseOrderHeaderDA;
 import library.salesforce.dal.tSalesProductDetailDA;
 import library.salesforce.dal.tSalesProductHeaderDA;
 import library.salesforce.dal.tUserLoginDA;
@@ -98,6 +105,7 @@ public class clsMainBL {
 	public clsStatusMenuStart checkUserActive() throws ParseException{
 		this.db = getDb();
 		tSalesProductHeaderDA _tSalesProductHeaderDA=new tSalesProductHeaderDA(db);
+		tPurchaseOrderHeaderDA _tPurchaseOrderHeaderDA = new tPurchaseOrderHeaderDA(db);
 		tUserLoginDA _tUserLoginDA=new tUserLoginDA(db);
     	tActivityDA _tActivityDA=new tActivityDA(db);
     	tAbsenUserDA _tAbsenUserDA=new tAbsenUserDA(db);
@@ -110,12 +118,16 @@ public class clsMainBL {
     	}else{
     		Boolean dvalid=false;
     		List<tSalesProductHeaderData> listDataPush= _tSalesProductHeaderDA.getAllDataToPushData(db);
+			List<tPurchaseOrderHeaderData> listPODataPush = _tPurchaseOrderHeaderDA.getAllDataToPushData(db);
     		List<tActivityData> listtActivityDataPush= _tActivityDA.getAllDataToPushData(db);
     		List<tAbsenUserData> listtAbsenUserDataPush= _tAbsenUserDA.getAllDataToPushData(db);
     		List<tLeaveMobileData> listTLeave= _tLeaveMobileDA.getAllDataPushData(db);
     		if(listDataPush != null && dvalid==false){
     			dvalid=true;
     		}
+			if (listPODataPush != null && dvalid == false){
+				dvalid = true;
+			}
     		if(listtActivityDataPush != null && dvalid==false){
     			dvalid=true;
     		}
@@ -201,26 +213,68 @@ public class clsMainBL {
 				}
 			}
 		}
-		
-		dtlinkAPI=new linkAPI();
-		txtMethod="PushDataTHeaderSales";
+
+		dtlinkAPI = new linkAPI();
+		txtMethod = "PushDataTHeaderPO";
 		dtlinkAPI.set_txtMethod(txtMethod);
 		dtlinkAPI.set_txtParam("");
 		dtlinkAPI.set_txtToken(new clsHardCode().txtTokenAPI);
-		dtlinkAPI.set_txtVesion(VersionName);
-		strLinkAPI= dtlinkAPI.QueryString(_StrLINKAPI);
-		
-		tSalesProductHeaderDA _tSalesProductHeaderDA=new tSalesProductHeaderDA(_db);
-		List<tSalesProductHeaderData> ListDataTsalesHeader= _tSalesProductHeaderDA.getAllDataToPushData(_db);
-		if(ListDataTsalesHeader!=null){
-			for (tSalesProductHeaderData dataheader : ListDataTsalesHeader) {
-				dataJson Json= new dataJson();
-				List<tSalesProductHeaderData> tmplistDatatSalesProductHeaderData=new ArrayList<tSalesProductHeaderData>();
-				tmplistDatatSalesProductHeaderData.add(dataheader);
-				tAbsenUserData _tmpdataabsen= _tAbsenUserDA.getData(_db, Integer.valueOf(dataheader.get_intIdAbsenUser()));
-				List<tAbsenUserData> tmpListDataUserAbsen=new ArrayList<tAbsenUserData>();
-				tmpListDataUserAbsen.add(_tmpdataabsen);
-				tSalesProductDetailDA _tSalesProductDetailDA=new tSalesProductDetailDA(_db);
+		dtlinkAPI.set_txtMethod(VersionName);
+		strLinkAPI = dtlinkAPI.QueryString(_StrLINKAPI);
+
+		tPurchaseOrderHeaderDA _tPurchaseOrderHeaderDA = new tPurchaseOrderHeaderDA(_db);
+		List<tPurchaseOrderHeaderData> ListDataTPOHeader = _tPurchaseOrderHeaderDA.getAllDataToPushData(_db);
+		if (ListDataTPOHeader != null) {
+			for (tPurchaseOrderHeaderData dataHeader : ListDataTPOHeader) {
+				dataJson Json = new dataJson();
+				List<tPurchaseOrderHeaderData> tmpListDataPOHeaderData = new ArrayList<tPurchaseOrderHeaderData>();
+				tmpListDataPOHeaderData.add(dataHeader);
+				tAbsenUserData _tmpDataAbsen = _tAbsenUserDA.getData(_db, Integer.valueOf(dataHeader.get_intIdAbsenUser()));
+				List<tAbsenUserData> tmpListDataUserAbsen = new ArrayList<tAbsenUserData>();
+				tmpListDataUserAbsen.add(_tmpDataAbsen);
+				tPurchaseOrderDetailDA _tPurchaseOrderDetailDA = new tPurchaseOrderDetailDA(_db);
+				List<tPurchaseOrderDetailData> tmpListPurchaseOrderDetail = _tPurchaseOrderDetailDA.getPurchaseOrderDetailByHeaderId(_db, dataHeader.get_intId());
+				if (tmpListPurchaseOrderDetail != null) {
+					Json.setListOftPurchaseOrderDetailData(tmpListPurchaseOrderDetail);
+				}
+				Json.setListOftAbsenUserData(tmpListDataUserAbsen);
+				Json.setListOftPurchaseOrderHeaderData(tmpListDataPOHeaderData);
+				String Html = new clsHelper().pushtData(strLinkAPI, Json.txtJSON().toString(), Integer.valueOf(TimeOut));
+				org.json.simple.JSONArray JsonArray = _help.ResultJsonArray(Html);
+				Iterator i = JsonArray.iterator();
+				while (i.hasNext()){
+					APIData dtAPIDATA = new APIData();
+					JSONObject InnerObj = (JSONObject) i.next();
+					int boolValid = Integer.valueOf(String.valueOf(InnerObj.get(dtAPIDATA.boolValid)));
+					if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)){
+						dataHeader.set_intSync("1");
+						_tPurchaseOrderHeaderDA.SaveDatatPurchaseOrderHeaderData(_db, dataHeader);
+					}
+				}
+
+			}
+		}
+
+			dtlinkAPI=new linkAPI();
+			txtMethod="PushDataTHeaderSales";
+			dtlinkAPI.set_txtMethod(txtMethod);
+			dtlinkAPI.set_txtParam("");
+			dtlinkAPI.set_txtToken(new clsHardCode().txtTokenAPI);
+			dtlinkAPI.set_txtVesion(VersionName);
+			strLinkAPI= dtlinkAPI.QueryString(_StrLINKAPI);
+
+			tSalesProductHeaderDA _tSalesProductHeaderDA=new tSalesProductHeaderDA(_db);
+			List<tSalesProductHeaderData> ListDataTsalesHeader= _tSalesProductHeaderDA.getAllDataToPushData(_db);
+			if(ListDataTsalesHeader!=null){
+				for (tSalesProductHeaderData dataheader : ListDataTsalesHeader) {
+					dataJson Json= new dataJson();
+					List<tSalesProductHeaderData> tmplistDatatSalesProductHeaderData=new ArrayList<tSalesProductHeaderData>();
+					tmplistDatatSalesProductHeaderData.add(dataheader);
+					tAbsenUserData _tmpdataabsen= _tAbsenUserDA.getData(_db, Integer.valueOf(dataheader.get_intIdAbsenUser()));
+					List<tAbsenUserData> tmpListDataUserAbsen=new ArrayList<tAbsenUserData>();
+					tmpListDataUserAbsen.add(_tmpdataabsen);
+					tSalesProductDetailDA _tSalesProductDetailDA=new tSalesProductDetailDA(_db);
+
 				List<tSalesProductDetailData> tmpListSalesProductDetail= _tSalesProductDetailDA.getSalesProductDetailByHeaderId(_db, dataheader.get_intId());
 				if(tmpListSalesProductDetail!=null){
 					Json.setListOftSalesProductDetailData(tmpListSalesProductDetail);

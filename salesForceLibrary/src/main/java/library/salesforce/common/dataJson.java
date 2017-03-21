@@ -137,6 +137,24 @@ public class dataJson {
         ListOftSalesProductHeaderData = listOftSalesProductHeaderData;
     }
 
+    public synchronized List<tPurchaseOrderDetailData> getListOftPurchaseOrderDetailData(){
+        return ListOftPurchaseOrderDetailData;
+    }
+    public synchronized void setListOftPurchaseOrderDetailData(List<tPurchaseOrderDetailData> listOftPurchaseOrderDetailData){
+        ListOftPurchaseOrderDetailData = listOftPurchaseOrderDetailData;
+    }
+
+
+    public synchronized List<tPurchaseOrderHeaderData> getListOftPurchaseOrderHeaderData() {
+        return ListOftPurchaseOrderHeaderData;
+    }
+
+    public synchronized void setListOftPurchaseOrderHeaderData(List<tPurchaseOrderHeaderData> listOftPurchaseOrderHeaderData) {
+        ListOftPurchaseOrderHeaderData = listOftPurchaseOrderHeaderData;
+    }
+
+
+
     public synchronized List<tDeviceInfoUserData> getListDatatDeviceInfoUser() {
         return ListDatatDeviceInfoUser;
     }
@@ -289,6 +307,24 @@ public class dataJson {
                 resJson.put(dttSalesProductDetailData.Property_ListOftSalesProductDetailData, new JSONArray(itemsListJquey));
             }
 
+            if (this.getListOftPurchaseOrderDetailData() != null){
+                tPurchaseOrderDetailData dttPurchaseOrderDetailData = new tPurchaseOrderDetailData();
+                itemsListJquey = new ArrayList<JSONObject>();
+                for (tPurchaseOrderDetailData data : this.getListOftPurchaseOrderDetailData()){
+                    JSONObject item = new JSONObject();
+                    item.put(dttPurchaseOrderDetailData.Property_intId, String.valueOf(data.get_intId()));
+                    item.put(dttPurchaseOrderDetailData.Property_dtDate, String.valueOf(data.get_dtDate()));
+                    item.put(dttPurchaseOrderDetailData.Property_intPrice, String.valueOf(data.get_intPrice()));
+                    item.put(dttPurchaseOrderDetailData.Property_intQty, String.valueOf(data.get_intQty()));
+                    item.put(dttPurchaseOrderDetailData.Property_txtCodeProduct, String.valueOf(data.get_txtCodeProduct()));
+                    item.put(dttPurchaseOrderDetailData.Property_txtNameProduct, String.valueOf(data.get_txtNameProduct()));
+                    item.put(dttPurchaseOrderDetailData.Property_txtNIK, String.valueOf(data.get_txtNIK()));
+                    item.put(dttPurchaseOrderDetailData.Property_intTotal, String.valueOf(data.get_intTotal()));
+                    item.put(dttPurchaseOrderDetailData.Property_txtNoOrder, String.valueOf(data.get_txtNoOrder()));
+                    itemsListJquey.add(item);
+                }
+                resJson.put(dttPurchaseOrderDetailData.Property_ListOftPurchaseOrderDetailData, new JSONArray(itemsListJquey));
+            }
 
             if (this.getListOftSalesProductHeaderData() != null) {
                 tSalesProductHeaderData dttSalesProductHeaderData = new tSalesProductHeaderData();
@@ -314,6 +350,29 @@ public class dataJson {
                     itemsListJquey.add(item1);
                 }
                 resJson.put(dttSalesProductHeaderData.Property_ListOftSalesProductHeaderData, new JSONArray(itemsListJquey));
+            }
+
+            if (this.getListOftPurchaseOrderHeaderData() != null){
+                tPurchaseOrderHeaderData dttPurchaseOrderHeaderData = new tPurchaseOrderHeaderData();
+                itemsListJquey = new ArrayList<JSONObject>();
+                for (tPurchaseOrderHeaderData data : this.getListOftPurchaseOrderHeaderData()){
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dttPurchaseOrderHeaderData.Property_intId, String.valueOf(data.get_intId()));
+                    item1.put(dttPurchaseOrderHeaderData.Property_txtNoOrder, String.valueOf(data.get_txtNoOrder()));
+                    item1.put(dttPurchaseOrderHeaderData.Property_OutletCode, String.valueOf(data.get_OutletCode()));
+                    item1.put(dttPurchaseOrderHeaderData.Property_OutletName, String.valueOf(data.get_OutletName()));
+                    item1.put(dttPurchaseOrderHeaderData.Property_txtDate, String.valueOf(data.get_dtDate()));
+                    item1.put(dttPurchaseOrderHeaderData.Property_intIdAbsenUser, String.valueOf(data.get_intIdAbsenUser()));
+                    item1.put(dttPurchaseOrderHeaderData.Property_intSubmit, String.valueOf(data.get_intSubmit()));
+                    item1.put(dttPurchaseOrderHeaderData.Property_intSumAmount, String.valueOf(data.get_intSumAmount()));
+                    item1.put(dttPurchaseOrderHeaderData.Property_intSumItem, String.valueOf(data.get_intSumItem()));
+                    item1.put(dttPurchaseOrderHeaderData.Property_UserId, String.valueOf(data.get_UserId()));
+                    item1.put(dttPurchaseOrderHeaderData.Property_txtKeterangan, String.valueOf(data.get_txtKeterangan()));
+                    item1.put(dttPurchaseOrderHeaderData.Property_txtNIK, String.valueOf(data.get_txtNIK()));
+                    item1.put(dttPurchaseOrderHeaderData.Property_txtRoleId, String.valueOf(data.get_txtRoleId()));
+                    itemsListJquey.add(item1);
+                }
+                resJson.put(dttPurchaseOrderHeaderData.Property_ListOftPurchaseOrderHeaderData, new JSONArray(itemsListJquey));
             }
 
             if (this.get_ListOftCustomerBasedMobileHeaderData() != null) {
@@ -713,7 +772,9 @@ public class dataJson {
     private List<mMenuData> ListOfmMenuData;
     private List<tSalesProductDetailData> ListOftSalesProductDetailData;
     private List<tSalesProductHeaderData> ListOftSalesProductHeaderData;
+    private List<tPurchaseOrderDetailData> ListOftPurchaseOrderDetailData;
 
+    private List<tPurchaseOrderHeaderData> ListOftPurchaseOrderHeaderData;
     private List<tCustomerBasedMobileHeaderData> ListOftCustomerBasedMobileHeaderData;
     private List<tCustomerBasedMobileDetailData> ListOftCustomerBasedMobileDetailData;
     private List<tCustomerBasedMobileDetailProductData> ListOftCustomerBasedMobileDetailProductData;

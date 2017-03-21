@@ -53,6 +53,8 @@ import library.salesforce.dal.tDeviceInfoUserDA;
 import library.salesforce.dal.tDisplayPictureDA;
 import library.salesforce.dal.tLeaveMobileDA;
 import library.salesforce.dal.tNotificationDA;
+import library.salesforce.dal.tPurchaseOrderDetailDA;
+import library.salesforce.dal.tPurchaseOrderHeaderDA;
 import library.salesforce.dal.tSalesProductDetailDA;
 import library.salesforce.dal.tSalesProductHeaderDA;
 import library.salesforce.dal.tSalesProductQuantityDA;
@@ -224,6 +226,8 @@ public class clsHelper {
 		tUserLoginDA _tUserLoginDA=new tUserLoginDA(db);
 		tSalesProductHeaderDA _tSalesProductHeaderDA=new tSalesProductHeaderDA(db);
 		tSalesProductDetailDA _tSalesProductDetailDA=new tSalesProductDetailDA(db);
+		tPurchaseOrderDetailDA _tPurchaseOrderDetailDA = new tPurchaseOrderDetailDA(db);
+		tPurchaseOrderHeaderDA _tPurchaseOrderHeaderDA = new tPurchaseOrderHeaderDA(db);
 		tDeviceInfoUserDA _tDeviceInfoUserDA=new tDeviceInfoUserDA(db);
 		mProductBrandHeaderDA _mProductBrandHeaderDA=new mProductBrandHeaderDA(db);
 		mNotificationDA _mNotificationDA=new mNotificationDA(db);
@@ -272,6 +276,8 @@ public class clsHelper {
 		_tUserLoginDA.DropTable(db);
 		_tSalesProductHeaderDA.DropTable(db);
 		_tSalesProductDetailDA.DropTable(db);
+		_tPurchaseOrderHeaderDA.DropTable(db);
+		_tPurchaseOrderDetailDA.DropTable(db);
 		_tDeviceInfoUserDA.DropTable(db);
 		_mMenuDA.DropTable(db);
 		_mCounterNumberDA.DropTable(db);
@@ -292,6 +298,8 @@ public class clsHelper {
 		_tLeaveMobileDA=new tLeaveMobileDA(db);
 		_tUserLoginDA=new tUserLoginDA(db);
 		_tSalesProductHeaderDA=new tSalesProductHeaderDA(db);
+		_tPurchaseOrderHeaderDA = new tPurchaseOrderHeaderDA(db);
+		_tPurchaseOrderDetailDA = new tPurchaseOrderDetailDA(db);
 		_tSalesProductDetailDA=new tSalesProductDetailDA(db);
 		_tActivityDA=new tActivityDA(db);
 		_tDeviceInfoUserDA=new tDeviceInfoUserDA(db);
@@ -403,9 +411,32 @@ public class clsHelper {
 		}
 		return result;
 	}
+	public void createFolderUserData(){
+		clsHardCode clsdthc = new clsHardCode();
+
+		File appDirUser = new File(clsdthc.txtPathUserData);
+
+		if(!appDirUser.exists() && !appDirUser.isDirectory())
+		{
+			// create empty directory
+			if (appDirUser.mkdirs())
+			{
+				Log.i("CreateDir","App dir created");
+			}
+			else
+			{
+				Log.w("CreateDir","Unable to create app dir!");
+			}
+		}
+		else
+		{
+			Log.i("CreateDir","App dir already exists");
+		}
+	}
 	public void createFolderApp(){
 		clsHardCode clsdthc = new clsHardCode();
 		File appDir=new File(clsdthc.txtPathApp);
+
 		if(!appDir.exists() && !appDir.isDirectory())
 		{
 			// create empty directory

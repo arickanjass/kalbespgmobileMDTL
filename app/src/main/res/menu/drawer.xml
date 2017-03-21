@@ -25,7 +25,7 @@
             android:checked="false"
             android:orderInCategory="1"
             android:title="Quantity Stock"
-            android:icon="@drawable/ic_looks_one_black"/> 
+            android:icon="@drawable/ic_looks_one_black"/>
 
     </group>
     <group
@@ -49,6 +49,10 @@
             android:checked="false"
             android:orderInCategory="2"
             android:title="History Absen" />
+        <item android:id="@+id/PO"
+            android:checked="false"
+            android:orderInCategory="2"
+            android:title="Purchase Order"/>
 
         <!--<item-->
             <!--android:id="@+id/information"-->

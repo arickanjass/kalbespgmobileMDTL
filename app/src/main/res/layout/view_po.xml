@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
+    android:layout_height="match_parent">
+
+    <include  layout="@layout/add_po"
+        android:id="@+id/lPo"/>
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_keyboard_arrow_up_white_48dp"
+        android:visibility="invisible"
+        android:id="@+id/fabPO"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_marginBottom="@dimen/action_button_margin"
+        app:layout_anchor="@id/lPo"
+        app:layout_anchorGravity="bottom|center_horizontal"/>
+
+</android.support.design.widget.CoordinatorLayout>
