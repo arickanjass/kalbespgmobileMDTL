@@ -40,21 +40,23 @@
             android:layout_below="@id/view1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Date Expire"
+            android:text="Expire Date"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="10dp"
             android:textColor="#000"/>
-        <TextView
-            android:id="@+id/txtviewDateExpire"
-            android:layout_below="@+id/txtDateExpire"
+        <DatePicker
+            android:id="@+id/dp_expire_date"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Tanggal Kadaluarsa"
-            android:layout_marginLeft="10dp"
-            android:textColor="#000"/>
+            android:layout_height="match_parent"
+            android:layout_below="@+id/txtDateExpire"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner"
+            android:visibility="visible" />
         <View
             android:id="@+id/view2"
-            android:layout_below="@+id/txtviewDateExpire"
+            android:layout_below="@+id/dp_expire_date"
             android:layout_width="fill_parent"
             android:layout_height="1dp"
             android:layout_marginTop="10dp"
