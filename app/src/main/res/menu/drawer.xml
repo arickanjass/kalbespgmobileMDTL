@@ -51,7 +51,7 @@
             android:title="History Absen" />
         <item android:id="@+id/PO"
             android:checked="false"
-            android:orderInCategory="2"
+            android:orderInCategory="3"
             android:title="Purchase Order"/>
 
         <!--<item-->
