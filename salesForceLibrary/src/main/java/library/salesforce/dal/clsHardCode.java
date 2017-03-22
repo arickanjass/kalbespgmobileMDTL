@@ -191,6 +191,7 @@ public class clsHardCode  {
 	public String txtTable_mTypeSubmissionMobile="mTypeSubmissionMobile";
 	public String txtTable_mProductCompetitorData="mProductCompetitorData";
 	public String txtTable_tSalesQuantityStock="tSalesQuantityStock";
+	public String txtTable_tSalesProductQuantityDetail="tSalesProductQuantityDetail";
 
 	public String dtDateTimeNow(){
 		Date date = new Date();
