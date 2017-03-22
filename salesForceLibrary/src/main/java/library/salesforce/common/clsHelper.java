@@ -58,6 +58,7 @@ import library.salesforce.dal.tPurchaseOrderHeaderDA;
 import library.salesforce.dal.tSalesProductDetailDA;
 import library.salesforce.dal.tSalesProductHeaderDA;
 import library.salesforce.dal.tSalesProductQuantityDA;
+import library.salesforce.dal.tSalesProductQuantityDetailDA;
 import library.salesforce.dal.tUserLoginDA;
 
 public class clsHelper {
@@ -249,6 +250,7 @@ public class clsHelper {
 		mProductCompetitorDA _mProductCompetitorDA = new mProductCompetitorDA(db);
 		mTypeSubmissionMobileDA _mTypeSubmissionMobileDA = new mTypeSubmissionMobileDA(db);
 		tSalesProductQuantityDA _tSalesProductQuantityDA = new tSalesProductQuantityDA(db);
+		tSalesProductQuantityDetailDA _tSalesProductQuantityDetailDA = new tSalesProductQuantityDetailDA(db);
 		tCustomerBasedMobileHeaderDA _tCustomerBasedMobileHeaderDA = new tCustomerBasedMobileHeaderDA(db);
 		tCustomerBasedMobileDetailDA _tCustomerBasedMobileDetailDA = new tCustomerBasedMobileDetailDA(db);
 		tCustomerBasedMobileDetailProductDA _tCustomerBasedMobileDetailProductDA = new tCustomerBasedMobileDetailProductDA(db);
@@ -259,6 +261,7 @@ public class clsHelper {
 		_mProductCompetitorDA.DropTable(db);
 		_mTypeSubmissionMobileDA.DropTable(db);
 		_tSalesProductQuantityDA.Droptable(db);
+		_tSalesProductQuantityDetailDA.DropTable(db);
 		_tCustomerBasedMobileHeaderDA.DropTable(db);
 		_tCustomerBasedMobileDetailDA.DropTable(db);
 		_tCustomerBasedMobileDetailProductDA.DropTable(db);
@@ -287,6 +290,7 @@ public class clsHelper {
 		_mProductCompetitorDA = new mProductCompetitorDA(db);
 		_mTypeSubmissionMobileDA = new mTypeSubmissionMobileDA(db);
 		_tSalesProductQuantityDA = new tSalesProductQuantityDA(db);
+		_tSalesProductQuantityDetailDA = new tSalesProductQuantityDetailDA(db);
 		_tCustomerBasedMobileHeaderDA = new tCustomerBasedMobileHeaderDA(db);
 		_tCustomerBasedMobileDetailDA = new tCustomerBasedMobileDetailDA(db);
 		_tCustomerBasedMobileDetailProductDA = new tCustomerBasedMobileDetailProductDA(db);
