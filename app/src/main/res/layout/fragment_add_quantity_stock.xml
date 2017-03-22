@@ -192,6 +192,12 @@
             android:layout_gravity="center_horizontal"
             android:background="@drawable/btn_download_all"/>
 
+        <edu.swu.pulltorefreshswipemenulistview.library.PullToRefreshSwipeMenuListView
+            android:id="@+id/listViewQuantity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
 
 
     </LinearLayout>
