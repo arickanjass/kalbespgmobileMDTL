@@ -39,6 +39,10 @@ public class tSalesProductQuantityDA {
                 + dt.Property_txtBranchName + " TEXT NULL,"
                 + dt.Property_intIdAbsenUser + " TEXT NULL,"
                 + dt.Property_txtRoleId + " TEXT NULL,"
+                + dt.Property_txtAfterImg1 + " TEXT NULL,"
+                + dt.Property_txtAfterImg2 + " TEXT NULL,"
+                + dt.Property_txtBeforeImg1 + " TEXT NULL,"
+                + dt.Property_txtBeforeImg2 + " TEXT NULL,"
                 + dt.Property_txtNIK + " TEXT NULL" + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
@@ -72,6 +76,10 @@ public class tSalesProductQuantityDA {
                 + dt.Property_txtBranchName + ","
                 + dt.Property_intIdAbsenUser + ","
                 + dt.Property_txtRoleId + ","
+                + dt.Property_txtAfterImg1 + ","
+                + dt.Property_txtAfterImg2 + ","
+                + dt.Property_txtBeforeImg1 + ","
+                + dt.Property_txtBeforeImg2 + ","
                 + dt.Property_txtNIK + ") " +
                 "values('" + String.valueOf(data.get_intId()) + "','"
                 + String.valueOf(data.get_txtQuantityStock()) + "','"
@@ -88,6 +96,10 @@ public class tSalesProductQuantityDA {
                 + String.valueOf(data.get_txtBranchName()) + "','"
                 + String.valueOf(data.get_intIdAbsenUser()) + "','"
                 + String.valueOf(data.get_txtRoleId()) + "','"
+                + String.valueOf(data.get_txtAfterImg1()) + "','"
+                + String.valueOf(data.get_txtAfterImg2()) + "','"
+                + String.valueOf(data.get_txtBeforeImg1()) + "','"
+                + String.valueOf(data.get_txtBeforeImg2()) + "','"
                 + String.valueOf(data.get_txtNIK()) + "')");
     }
 
@@ -115,7 +127,8 @@ public class tSalesProductQuantityDA {
                         dt.Property_OutletCode, dt.Property_OutletName,
                         dt.Property_txtDate, dt.Property_txtKeterangan, dt.Property_txtNIK
                         , dt.Property_intSumAmount, dt.Property_intSumItem, dt.Property_UserId, dt.Property_intSubmit, dt.Property_txtRoleId
-                        , dt.Property_intSync, dt.Property_txtBranchCode, dt.Property_txtBranchName, dt.Property_intIdAbsenUser}, dt.Property_intId + "=?",
+                        , dt.Property_intSync, dt.Property_txtBranchCode, dt.Property_txtBranchName, dt.Property_intIdAbsenUser
+                        , dt.Property_txtAfterImg1, dt.Property_txtAfterImg2, dt.Property_txtBeforeImg1, dt.Property_txtBeforeImg2}, dt.Property_intId + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
         tSalesProductQuantityData contact = null;
         if (cursor.getCount() > 0) {
@@ -137,6 +150,10 @@ public class tSalesProductQuantityDA {
             contact.set_txtBranchName(cursor.getString(12));
             contact.set_intIdAbsenUser(cursor.getString(13));
             contact.set_txtRoleId(cursor.getString(14));
+            contact.set_txtAfterImg1(cursor.getBlob(15));
+            contact.set_txtAfterImg2(cursor.getBlob(16));
+            contact.set_txtBeforeImg1(cursor.getBlob(17));
+            contact.set_txtBeforeImg2(cursor.getBlob(18));
         }
         cursor.close();
         return contact;
@@ -185,6 +202,10 @@ public class tSalesProductQuantityDA {
                 contact.set_intIdAbsenUser(cursor.getString(13));
                 contact.set_txtNIK(cursor.getString(14));
                 contact.set_txtRoleId(cursor.getString(15));
+                contact.set_txtAfterImg1(cursor.getBlob(16));
+                contact.set_txtAfterImg2(cursor.getBlob(17));
+                contact.set_txtBeforeImg1(cursor.getBlob(18));
+                contact.set_txtBeforeImg2(cursor.getBlob(19));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -223,6 +244,10 @@ public class tSalesProductQuantityDA {
                 contact.set_intIdAbsenUser(cursor.getString(13));
                 contact.set_txtNIK(cursor.getString(14));
                 contact.set_txtRoleId(cursor.getString(15));
+                contact.set_txtAfterImg1(cursor.getBlob(16));
+                contact.set_txtAfterImg2(cursor.getBlob(17));
+                contact.set_txtBeforeImg1(cursor.getBlob(18));
+                contact.set_txtBeforeImg2(cursor.getBlob(19));
 
                 // Adding contact to list
                 contactList.add(contact);
@@ -260,6 +285,10 @@ public class tSalesProductQuantityDA {
                 contact.set_txtBranchName(cursor.getString(12));
                 contact.set_intIdAbsenUser(cursor.getString(13));
                 contact.set_txtRoleId(cursor.getString(14));
+                contact.set_txtAfterImg1(cursor.getBlob(15));
+                contact.set_txtAfterImg2(cursor.getBlob(16));
+                contact.set_txtBeforeImg1(cursor.getBlob(17));
+                contact.set_txtBeforeImg2(cursor.getBlob(18));
 
                 // Adding contact to list
                 contactList.add(contact);
@@ -297,6 +326,10 @@ public class tSalesProductQuantityDA {
                 contact.set_txtBranchName(cursor.getString(12));
                 contact.set_intIdAbsenUser(cursor.getString(13));
                 contact.set_txtRoleId(cursor.getString(14));
+                contact.set_txtAfterImg1(cursor.getBlob(15));
+                contact.set_txtAfterImg2(cursor.getBlob(16));
+                contact.set_txtBeforeImg1(cursor.getBlob(17));
+                contact.set_txtBeforeImg2(cursor.getBlob(18));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -369,6 +402,10 @@ public class tSalesProductQuantityDA {
                 contact.set_txtBranchName(cursor.getString(12));
                 contact.set_intIdAbsenUser(cursor.getString(13));
                 contact.set_txtRoleId(cursor.getString(14));
+                contact.set_txtAfterImg1(cursor.getBlob(15));
+                contact.set_txtAfterImg2(cursor.getBlob(16));
+                contact.set_txtBeforeImg1(cursor.getBlob(17));
+                contact.set_txtBeforeImg2(cursor.getBlob(18));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -406,6 +443,10 @@ public class tSalesProductQuantityDA {
                 contact.set_txtBranchName(cursor.getString(12));
                 contact.set_intIdAbsenUser(cursor.getString(13));
                 contact.set_txtRoleId(cursor.getString(14));
+                contact.set_txtAfterImg1(cursor.getBlob(15));
+                contact.set_txtAfterImg2(cursor.getBlob(16));
+                contact.set_txtBeforeImg1(cursor.getBlob(17));
+                contact.set_txtBeforeImg2(cursor.getBlob(18));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -442,6 +483,10 @@ public class tSalesProductQuantityDA {
                 contact.set_txtBranchName(cursor.getString(12));
                 contact.set_intIdAbsenUser(cursor.getString(13));
                 contact.set_txtRoleId(cursor.getString(14));
+                contact.set_txtAfterImg1(cursor.getBlob(15));
+                contact.set_txtAfterImg2(cursor.getBlob(16));
+                contact.set_txtBeforeImg1(cursor.getBlob(17));
+                contact.set_txtBeforeImg2(cursor.getBlob(18));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -479,6 +524,10 @@ public class tSalesProductQuantityDA {
                 contact.set_intIdAbsenUser(cursor.getString(13));
                 contact.set_txtNIK(cursor.getString(14));
                 contact.set_txtRoleId(cursor.getString(15));
+                contact.set_txtAfterImg1(cursor.getBlob(15));
+                contact.set_txtAfterImg2(cursor.getBlob(16));
+                contact.set_txtBeforeImg1(cursor.getBlob(17));
+                contact.set_txtBeforeImg2(cursor.getBlob(18));
                 // Adding contact to list
                 contactList.add(contact);
             }while (cursor.moveToNext());
@@ -516,6 +565,10 @@ public class tSalesProductQuantityDA {
                 contact.set_intIdAbsenUser(cursor.getString(13));
                 contact.set_txtNIK(cursor.getString(14));
                 contact.set_txtRoleId(cursor.getString(15));
+                contact.set_txtAfterImg1(cursor.getBlob(16));
+                contact.set_txtAfterImg2(cursor.getBlob(17));
+                contact.set_txtBeforeImg1(cursor.getBlob(18));
+                contact.set_txtBeforeImg2(cursor.getBlob(19));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -553,6 +606,10 @@ public class tSalesProductQuantityDA {
                 contact.set_intIdAbsenUser(cursor.getString(13));
                 contact.set_txtNIK(cursor.getString(14));
                 contact.set_txtRoleId(cursor.getString(15));
+                contact.set_txtAfterImg1(cursor.getBlob(16));
+                contact.set_txtAfterImg2(cursor.getBlob(17));
+                contact.set_txtBeforeImg1(cursor.getBlob(18));
+                contact.set_txtBeforeImg2(cursor.getBlob(19));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -612,6 +669,10 @@ public class tSalesProductQuantityDA {
                 contact.set_intIdAbsenUser(cursor.getString(13));
                 contact.set_txtNIK(cursor.getString(14));
                 contact.set_txtRoleId(cursor.getString(15));
+                contact.set_txtAfterImg1(cursor.getBlob(16));
+                contact.set_txtAfterImg2(cursor.getBlob(17));
+                contact.set_txtBeforeImg1(cursor.getBlob(18));
+                contact.set_txtBeforeImg2(cursor.getBlob(19));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());

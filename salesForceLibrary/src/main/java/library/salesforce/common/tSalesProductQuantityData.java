@@ -133,6 +133,38 @@ public class tSalesProductQuantityData {
         this._txtRoleId = _txtRoleId;
     }
 
+    public byte[] get_txtAfterImg1() {
+        return _txtAfterImg1;
+    }
+
+    public synchronized void set_txtAfterImg1(byte[] _txtAfterImg1) {
+        this._txtAfterImg1 = _txtAfterImg1;
+    }
+
+    public synchronized byte[] get_txtAfterImg2() {
+        return _txtAfterImg2;
+    }
+
+    public synchronized void set_txtAfterImg2(byte[] _txtAfterImg2) {
+        this._txtAfterImg2 = _txtAfterImg2;
+    }
+
+    public synchronized byte[] get_txtBeforeImg1() {
+        return _txtBeforeImg1;
+    }
+
+    public synchronized void set_txtBeforeImg1(byte[] _txtBeforeImg1) {
+        this._txtBeforeImg1 = _txtBeforeImg1;
+    }
+
+    public synchronized byte[] get_txtBeforeImg2() {
+        return _txtBeforeImg2;
+    }
+
+    public synchronized void set_txtBeforeImg2(byte[] _txtBeforeImg2) {
+        this._txtBeforeImg2 = _txtBeforeImg2;
+    }
+
     private String _intId;
     private String _txtQuantityStock;
     private String _txtNIK;
@@ -149,6 +181,10 @@ public class tSalesProductQuantityData {
     private String _txtBranchName;
     private String _intIdAbsenUser;
     private String _txtRoleId;
+    private byte[] _txtAfterImg1;
+    private byte[] _txtAfterImg2;
+    private byte[] _txtBeforeImg1;
+    private byte[] _txtBeforeImg2;
 
     public String Property_UserId = "UserId";
     public String Property_txtQuantityStock = "txtQuantityStock";
@@ -166,6 +202,10 @@ public class tSalesProductQuantityData {
     public String Property_txtBranchName = "txtBranchName";
     public String Property_intIdAbsenUser = "intIdAbsenUser";
     public String Property_txtRoleId = "txtRoleId";
+    public String Property_txtAfterImg1="txtAfterImg1";
+    public String Property_txtAfterImg2="txtAfterImg2";
+    public String Property_txtBeforeImg1="txtBeforeImg1";
+    public String Property_txtBeforeImg2="txtBeforeImg2";
     public String Property_ListOftSalesProductHeaderData = "ListOftSalesProductHeaderData";
 
     public tSalesProductQuantityData() {
@@ -188,5 +228,9 @@ public class tSalesProductQuantityData {
             Property_txtBranchName + "," +
             Property_intIdAbsenUser + "," +
             Property_txtNIK + "," +
-            Property_txtRoleId;
+            Property_txtRoleId + "," +
+            Property_txtAfterImg1 + "," +
+            Property_txtAfterImg2 + "," +
+            Property_txtBeforeImg1 + "," +
+            Property_txtBeforeImg2;
 }
