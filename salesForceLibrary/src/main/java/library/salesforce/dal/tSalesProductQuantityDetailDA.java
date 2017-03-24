@@ -50,29 +50,29 @@ public class tSalesProductQuantityDetailDA {
     public void SaveDatatSalesProductQuantityDetailData(SQLiteDatabase db, tSalesProductQuantityDetailData data) {
         tSalesProductQuantityDetailData dt = new tSalesProductQuantityDetailData();
         db.execSQL("INSERT OR REPLACE into " +TABLE_CONTACTS+ " (" +dt.Property_intId+ ","
-                +dt.Property_dtDate+","
-                +dt.Property_intPrice+","
+                /*+dt.Property_dtDate+","
+                +dt.Property_intPrice+","*/
                 +dt.Property_txtCodeProduct+","
-                +dt.Property_txtKeterangan+","
+               // +dt.Property_txtKeterangan+","
                 +dt.Property_txtProduct+","
                 +dt.Property_txtExpireDate+","
                 +dt.Property_txtQuantity+","
-                +dt.Property_intTotal+","
+                /*+dt.Property_intTotal+","
                 +dt.Property_intTotal+","
                 +dt.Property_txtNoSo+","
-                +dt.Property_intActive+","
+                +dt.Property_intActive+","*/
                 +dt.Property_txtNIK+") "+
             "values('" +String.valueOf(data.getIntId())+"','"
-                +String.valueOf(data.get_dtDate())+"','"
-                +String.valueOf(data.get_intPrice())+"','"
+                /*+String.valueOf(data.get_dtDate())+"','"
+                +String.valueOf(data.get_intPrice())+"','"*/
                 +String.valueOf(data.get_txtCodeProduct())+"','"
-                +String.valueOf(data.get_txtKeterangan())+"','"
+                // +String.valueOf(data.get_txtKeterangan())+"','"
                 +String.valueOf(data.getTxtProduct())+"','"
                 +String.valueOf(data.getTxtExpireDate())+"','"
                 +String.valueOf(data.getTxtQuantity())+"','"
-                +String.valueOf(data.get_intTotal())+"','"
+                /*+String.valueOf(data.get_intTotal())+"','"
                 +String.valueOf(data.get_txtNoSo())+"','"
-                +String.valueOf(data.get_intActive())+"','"
+                +String.valueOf(data.get_intActive())+"','"*/
                 +String.valueOf(data.get_txtNIK())+"')");
     }
 
@@ -224,6 +224,61 @@ public class tSalesProductQuantityDetailDA {
 
         // return count
         return intres;
+    }
+
+    public List<tSalesProductQuantityDetailData> getAllDataByDetailId(SQLiteDatabase db, String id) {
+        tSalesProductQuantityDetailData dt = new tSalesProductQuantityDetailData();
+        List<tSalesProductQuantityDetailData> contactList = new ArrayList<tSalesProductQuantityDetailData>();
+        String[] tableColumns = new String[] {
+                dt.Property_intId,
+                dt.Property_dtDate,
+                dt.Property_intPrice,
+                dt.Property_txtCodeProduct,
+                dt.Property_txtKeterangan,
+                dt.Property_txtProduct,
+                dt.Property_txtExpireDate,
+                dt.Property_txtQuantity,
+                dt.Property_txtNIK,
+                dt.Property_intTotal,
+                dt.Property_txtNoSo,
+                dt.Property_intActive
+        };
+        String whereClause = dt.Property_intId + "=?";
+        String[] whereArgs = new String[] {
+                String.valueOf(id)
+        };
+        String groupBy = null;
+        String havingBy = null;
+        String orderBy = dt.Property_intId;
+
+        Cursor cursor = db.query(TABLE_CONTACTS,
+                tableColumns,
+                whereClause,
+                whereArgs,
+                groupBy,
+                havingBy,
+                orderBy);
+
+        if (cursor.moveToFirst()) {
+            do {
+                tSalesProductQuantityDetailData contact = new tSalesProductQuantityDetailData();
+                contact.setIntId(cursor.getString(0));
+                contact.set_dtDate(cursor.getString(1));
+                contact.set_intPrice(cursor.getString(2));
+                contact.set_txtCodeProduct(cursor.getString(3));
+                contact.set_txtKeterangan(cursor.getString(4));
+                contact.setTxtProduct(cursor.getString(5));
+                contact.setTxtExpireDate(cursor.getString(6));
+                contact.setTxtQuantity(cursor.getString(7));
+                contact.set_txtNIK(cursor.getString(8));
+                contact.set_intTotal(cursor.getString(9));
+                contact.set_txtNoSo(cursor.getString(10));
+                contact.set_intActive(cursor.getString(11));
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return contactList;
     }
 
     // push data

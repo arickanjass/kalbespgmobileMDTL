@@ -115,7 +115,7 @@ public class tSalesProductQuantityDetailData {
     private String _intActive;
 
     public String Property_intId = "intId";
-    public String Property_txtNIK = "txtNIK";
+    public String Property_txtNIK = "txtUserId";
     public String Property_txtKeterangan = "txtKeterangan";
     public String Property_dtDate = "dtDate";
     public String Property_txtCodeProduct = "txtCodeProduct";
