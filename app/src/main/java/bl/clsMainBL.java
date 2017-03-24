@@ -3,7 +3,6 @@ package bl;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import org.json.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.io.File;

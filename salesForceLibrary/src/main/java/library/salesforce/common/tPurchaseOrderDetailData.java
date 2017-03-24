@@ -5,53 +5,6 @@ package library.salesforce.common;
  */
 
 public class tPurchaseOrderDetailData {
-    private String _intId;
-    private String _txtNIK;
-    private String _txtKeterangan;
-    private String _dtDate;
-    private String _txtCodeProduct;
-    private String _txtNameProduct;
-    private String _intQty;
-    private String _intPrice;
-    private String _intTotal;
-    private String _txtNoOrder;
-    private String _intActive;
-
-    public String Property_intId = "intId";
-    public String Property_intTotal = "intTotal";
-    public String Property_txtNIK = "txtNIK";
-    public String Property_inSubmit = "txtSubmit";
-    public String Property_txtKeterangan = "txtKeterangan";
-    public String Property_dtDate = "dtDate";
-    public String Property_txtCodeProduct = "txtCodeProduct";
-    public String Property_txtNameProduct = "txtNameProduct";
-    public String Property_intQty = "intQty";
-    public String Property_txtNoOrder = "txtNoOrder";
-    public String Property_intPrice = "intPrice";
-    public String Property_intActive = "intActive";
-    public String Property_ListOftPurchaseOrderDetailData = "ListOftPurchaseOrderDetailData";
-
-    public String Property_All = Property_intId +","+Property_dtDate +","+Property_intPrice+","+Property_intQty+","+Property_txtCodeProduct+","+Property_txtKeterangan+","+Property_txtNameProduct+","+Property_intTotal+","+Property_txtNoOrder+","+Property_intActive+","+Property_txtNIK;
-
-    public tPurchaseOrderDetailData(){
-        super();
-    }
-
-    public  tPurchaseOrderDetailData(String _intId, String _dtDate, String _intPrice, String _intQty, String _txtCodeProduct, String _txtKeterangan,
-                                     String _txtNameProduct, String _txtNIK, String _intTotal, String _txtNoOrder, String _intActive){
-        this._intId = _intId;
-        this._txtNIK = _txtNIK;
-        this._txtKeterangan = _txtKeterangan;
-        this._dtDate = _dtDate;
-        this._txtCodeProduct = _txtCodeProduct;
-        this._txtNameProduct = _txtNameProduct;
-        this._intQty = _intQty;
-        this._intPrice = _intPrice;
-        this._intTotal = _intTotal;
-        this._txtNoOrder = _txtNoOrder;
-        this._intActive = _intActive;
-    }
-
     public synchronized String get_txtCodeProduct() {
         return _txtCodeProduct;
     }
@@ -139,4 +92,62 @@ public class tPurchaseOrderDetailData {
     public synchronized void set_intActive(String _intActive) {
         this._intActive = _intActive;
     }
-}
+
+    private String _intId;
+    private String _txtNIK;
+    private String _txtKeterangan;
+    private String _dtDate;
+    private String _txtCodeProduct;
+    private String _txtNameProduct;
+    private String _intQty;
+    private String _intPrice;
+    private String _intTotal;
+    private String _txtNoOrder;
+    private String _intActive;
+
+    public String Property_intId = "intId";
+    public String Property_intTotal = "intTotal";
+    public String Property_txtNIK = "txtNIK";
+    public String Property_inSubmit = "txtNIK";
+    public String Property_txtKeterangan = "txtKeterangan";
+    public String Property_dtDate = "dtDate";
+    public String Property_txtCodeProduct = "txtCodeProduct";
+    public String Property_txtNameProduct = "txtNameProduct";
+    public String Property_intQty = "intQty";
+    public String Property_txtNoOrder = "txtNoOrder";
+    public String Property_intPrice = "intPrice";
+    public String Property_intActive = "intActive";
+    public String Property_ListOftPurchaseOrderDetailData = "ListOftPurchaseOrderDetailData";
+
+    public String Property_All = Property_intId + "," +
+            Property_dtDate + "," +
+            Property_intPrice + "," +
+            Property_intQty +"," +
+            Property_txtCodeProduct +"," +
+            Property_txtKeterangan + "," +
+            Property_txtNameProduct + "," +
+            Property_intTotal + "," +
+            Property_txtNoOrder + "," +
+            Property_intActive + "," +
+            Property_txtNIK;
+
+    public tPurchaseOrderDetailData(){
+        super();
+    }
+
+    public  tPurchaseOrderDetailData(String _intId, String _dtDate, String _intPrice, String _intQty, String _txtCodeProduct, String _txtKeterangan,
+                                     String _txtNameProduct, String _txtNIK, String _intTotal, String _txtNoOrder, String _intActive){
+        this._intId = _intId;
+        this._txtNIK = _txtNIK;
+        this._txtKeterangan = _txtKeterangan;
+        this._dtDate = _dtDate;
+        this._txtCodeProduct = _txtCodeProduct;
+        this._txtNameProduct = _txtNameProduct;
+        this._intQty = _intQty;
+        this._intPrice = _intPrice;
+        this._intTotal = _intTotal;
+        this._txtNoOrder = _txtNoOrder;
+        this._intActive = _intActive;
+    }
+
+   }

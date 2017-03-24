@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scroll_po"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -7,7 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="15dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/ln_PO">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -78,7 +80,8 @@
             android:layout_marginTop="15dp"
             android:layout_marginBottom="10dp"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/btn_download_all"/>
+            android:background="@drawable/btn_download_all"
+            android:id="@+id/btn_previewPO"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -96,6 +99,7 @@
         <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_previewPO"
             android:layout_marginTop="10dp"
             android:paddingBottom="5dp"
             android:id="@+id/lvPO"></ListView>

@@ -281,6 +281,8 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                 navigationView.getMenu().findItem(2).setChecked(true);
             } else if (i_view.equals("Notifcation")){
 //                    navigationView.getMenu().findItem(R.id.information).setChecked(true);
+            } else if (i_view.equals("View PO")){
+                navigationView.getMenu().findItem(R.id.PO).setChecked(true);
             }
         }
 

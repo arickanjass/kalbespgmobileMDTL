@@ -40,18 +40,18 @@ public class tPurchaseOrderDetailDA {
 
     public void SaveDatatPurchaseOrderDetailData(SQLiteDatabase db, tPurchaseOrderDetailData data){
         tPurchaseOrderDetailData dt = new tPurchaseOrderDetailData();
-        db.execSQL("INSERT OR REPLACE into "+TABLE_CONTACTS+" ("+dt.Property_intId+","
-                +dt.Property_dtDate+","
-                +dt.Property_intPrice+","
-                +dt.Property_intQty+","
-                +dt.Property_txtCodeProduct+","
-                +dt.Property_txtKeterangan+","
-                +dt.Property_txtNameProduct+","
-                +dt.Property_intTotal+","
-                +dt.Property_txtNoOrder+","
-                +dt.Property_intActive+","
-                +dt.Property_txtNIK+") "+
-        "value('"+String.valueOf(data.get_intId())+"','"
+        db.execSQL("INSERT OR REPLACE into "+TABLE_CONTACTS+" (" +dt.Property_intId+ ","
+                +dt.Property_dtDate+ ","
+                +dt.Property_intPrice+ ","
+                +dt.Property_intQty+ ","
+                +dt.Property_txtCodeProduct+ ","
+                +dt.Property_txtKeterangan+ ","
+                +dt.Property_txtNameProduct+ ","
+                +dt.Property_intTotal+ ","
+                +dt.Property_txtNoOrder+ ","
+                +dt.Property_intActive+ ","
+                +dt.Property_txtNIK+ ") "+
+        "values('" +String.valueOf(data.get_intId())+"','"
             +String.valueOf(data.get_dtDate())+"','"
             +String.valueOf(data.get_intPrice())+"','"
             +String.valueOf(data.get_intQty())+"','"
@@ -88,11 +88,11 @@ public class tPurchaseOrderDetailDA {
     public List<tPurchaseOrderDetailData> getDataByNoOrder(SQLiteDatabase db, String NoOrder) {
         List<tPurchaseOrderDetailData> contactList = null;
         tPurchaseOrderDetailData dt = new tPurchaseOrderDetailData();
-        Cursor cursor = db.query(TABLE_CONTACTS, new String[]{dt.Property_intId,
-                dt.Property_dtDate, dt.Property_intPrice, dt.Property_intQty, dt.Property_txtCodeProduct, dt.Property_txtKeterangan,
+        Cursor cursor = db.query(TABLE_CONTACTS, new String[] { dt.Property_intId,
+                dt.Property_dtDate, dt.Property_intPrice, dt.Property_intQty, dt.Property_txtCodeProduct,
                 dt.Property_txtKeterangan, dt.Property_txtNameProduct, dt.Property_txtNIK, dt.Property_intTotal, dt.Property_txtNoOrder,
-                dt.Property_intActive},dt.Property_txtNoOrder + " = ? ",
-                new String[]{String.valueOf(NoOrder)}, null, null, null, null);
+                dt.Property_intActive}, dt.Property_txtNoOrder + "=?",
+                new String[] { String.valueOf(NoOrder)}, null, null, null, null);
         if (cursor != null){
             if (cursor.moveToFirst()){
                 contactList = new ArrayList<tPurchaseOrderDetailData>();
@@ -110,7 +110,7 @@ public class tPurchaseOrderDetailDA {
                     contact.set_txtNoOrder(cursor.getString(9));
                     contact.set_intActive(cursor.getString(10));
                     contactList.add(contact);
-                } while (cursor.moveToFirst());
+                } while (cursor.moveToNext());
             }
         }
         cursor.close();
@@ -120,7 +120,7 @@ public class tPurchaseOrderDetailDA {
     public List<tPurchaseOrderDetailData>getPurchaseOrderDetailByHeaderId(SQLiteDatabase db, String txtNoOrder){
         List<tPurchaseOrderDetailData> contactList = new ArrayList<tPurchaseOrderDetailData>();
         tPurchaseOrderDetailData dt = new tPurchaseOrderDetailData();
-        String selectQuery = "SELECT "+dt.Property_All+" FROM " + TABLE_CONTACTS + " Where "+dt.Property_txtNoOrder+"='"+txtNoOrder+"'AND "
+        String selectQuery = "SELECT "+dt.Property_All+" FROM " + TABLE_CONTACTS + " Where "+dt.Property_txtNoOrder+" ='"+txtNoOrder+"'AND "
                 +dt.Property_intActive+"=1";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()){
@@ -138,7 +138,7 @@ public class tPurchaseOrderDetailDA {
                 contact.set_txtNoOrder(cursor.getString(9));
                 contact.set_intActive(cursor.getString(10));
                 contactList.add(contact);
-            } while (cursor.moveToFirst());
+            } while (cursor.moveToNext());
         }
         cursor.close();
         return contactList;
@@ -147,7 +147,7 @@ public class tPurchaseOrderDetailDA {
     public List<tPurchaseOrderDetailData> getAllDataPO(SQLiteDatabase db){
         List<tPurchaseOrderDetailData> contactList = new ArrayList<tPurchaseOrderDetailData>();
         tPurchaseOrderDetailData dt = new tPurchaseOrderDetailData();
-        String selectQuery = "SELECT "+dt.Property_All+" FROM " + TABLE_CONTACTS + " Where "+dt.Property_intActive+"=1";
+        String selectQuery = "SELECT "+dt.Property_All+" FROM " + TABLE_CONTACTS + " Where "+dt.Property_intActive+" =1";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()){
             do {
@@ -164,7 +164,7 @@ public class tPurchaseOrderDetailDA {
                 contact.set_txtNoOrder(cursor.getString(9));
                 contact.set_intActive(cursor.getString(10));
                 contactList.add(contact);
-            } while (cursor.moveToFirst());
+            } while (cursor.moveToNext());
         }
         cursor.close();
         return contactList;
@@ -199,7 +199,7 @@ public class tPurchaseOrderDetailDA {
             tPurchaseOrderHeader = "(";
             for (int i = 0; i < ListOfPurchaseOrderHeader.size(); i++){
                 tPurchaseOrderHeader = tPurchaseOrderHeader + "'" + ListOfPurchaseOrderHeader.get(i).get_txtNoOrder() + "'";
-                tPurchaseOrderHeader = tPurchaseOrderHeader + ((i+1) != ListOfPurchaseOrderHeader.size() ? "," : ")");
+                tPurchaseOrderHeader = tPurchaseOrderHeader + ((i + 1) != ListOfPurchaseOrderHeader.size() ? "," : ")");
             }
         }
         String selectQuery = "SELECT "+dt.Property_All+" FROM " + TABLE_CONTACTS + " WHERE "+dt.Property_txtNoOrder+" IN " + tPurchaseOrderHeader;
