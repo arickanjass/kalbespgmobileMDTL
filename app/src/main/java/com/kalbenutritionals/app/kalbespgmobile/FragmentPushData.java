@@ -505,7 +505,7 @@ public class FragmentPushData extends Fragment {
 
             tr.addView(tv);
         }
-        tlsPOHeader.addView(tr,0);
+        tlsPOHeader.addView(tr);
 
         if(listOftPurchaseOrderHeaderData!=null){
             int index = 1;
@@ -527,6 +527,7 @@ public class FragmentPushData extends Fragment {
                 tv_index.setTextSize(12);
                 tv_index.setPadding(10, 10, 10, 10);
                 tv_index.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                tv_index.setGravity(Gravity.CENTER);
                 tv_index.setTextColor(Color.BLACK);
                 tv_index.setText(String.valueOf(index + "."));
                 tv_index.setLayoutParams(params);
@@ -549,21 +550,21 @@ public class FragmentPushData extends Fragment {
                 date.setBackgroundColor(Color.parseColor("#f0f0f0"));
                 date.setTextColor(Color.BLACK);
                 date.setGravity(Gravity.CENTER);
-                date.setText(new clsMainActivity().giveFormatDate(dat.get_dtDate()));
+                date.setText(new clsMainActivity().giveFormatDate2(dat.get_dtDate()));
                 date.setLayoutParams(params);
 
                 tr.addView(date);
 
-                TextView outlet_name = new TextView(getContext());
-                outlet_name.setTextSize(12);
-                outlet_name.setPadding(10, 10, 10, 10);
-                outlet_name.setBackgroundColor(Color.parseColor("#f0f0f0"));
-                outlet_name.setTextColor(Color.BLACK);
-                outlet_name.setGravity(Gravity.CENTER);
-                outlet_name.setText(dat.get_OutletCode());
-                outlet_name.setLayoutParams(params);
+                TextView outlet_code = new TextView(getContext());
+                outlet_code.setTextSize(12);
+                outlet_code.setPadding(10, 10, 10, 10);
+                outlet_code.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                outlet_code.setTextColor(Color.BLACK);
+                outlet_code.setGravity(Gravity.CENTER);
+                outlet_code.setText(dat.get_OutletCode());
+                outlet_code.setLayoutParams(params);
 
-                tr.addView(date);
+                tr.addView(outlet_code);
 
                 tlsPOHeader.addView(tr, index++);
             }
