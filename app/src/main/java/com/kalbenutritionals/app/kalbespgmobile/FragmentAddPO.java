@@ -98,16 +98,18 @@ TextView tv_tgl, tv_noPO;
 
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(desc.getWindowToken(),0);
-        List<tSalesProductHeaderData> dtLast = new tSalesProductHeaderBL().getLastData();
+        List<tPurchaseOrderHeaderData> dtLast = new tPurchaseOrderHeaderBL().getLastData();
+        //List<tSalesProductHeaderData> dtLast = new tSalesProductHeaderBL().getLastData();
         if (dtLast == null || dtLast.size() == 0){
             noPO = new mCounterNumberBL().getData(enumCounterData.NoDataSO);
 
         }else {
             noPO = new mCounterNumberBL().getData(enumCounterData.NoDataSO);
-            List<tSalesProductHeaderData> dataFirstIsExist = new tSalesProductHeaderBL().getDataByNoSO(noPO);
+            //List<tSalesProductHeaderData> dataFirstIsExist = new tSalesProductHeaderBL().getDataByNoSO(noPO);
+            List<tPurchaseOrderHeaderData> dataFirstIsExist = new tPurchaseOrderHeaderBL().getDataByNoOrder(noPO);
             if(dataFirstIsExist.size() == 1){
                 clsHelper _clsHelper = new clsHelper();
-                String oldVersion = dtLast.get(0).get_txtNoSo();
+                String oldVersion = dtLast.get(0).get_txtNoOrder();
                 noPO = _clsHelper.generateNewId(oldVersion, "-", "5");
             }else {
                 noPO = new mCounterNumberBL().getData(enumCounterData.NoDataSO);
@@ -216,8 +218,7 @@ TextView tv_tgl, tv_noPO;
                 if (desc.getText().toString().equals("")) {
                     _clsMainActivity.showCustomToast(getActivity(), "Please fill Description...", false);
 
-                } else
-                if (arrDataProd.size()==0){
+                } else if (arrDataProd.size()==0){
                     _clsMainActivity.showCustomToast(getActivity(), "Please fill Quantity Product...", false);
 
                 } else if (arrDataProd.size()>0){

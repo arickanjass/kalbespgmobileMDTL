@@ -43,6 +43,7 @@ import library.salesforce.common.tActivityData;
 import library.salesforce.common.tCustomerBasedMobileHeaderData;
 import library.salesforce.common.tLeaveMobileData;
 import library.salesforce.common.tNotificationData;
+import library.salesforce.common.tPurchaseOrderHeaderData;
 import library.salesforce.common.tSalesProductHeaderData;
 import library.salesforce.dal.clsHardCode;
 import service.MyServiceNative;
@@ -51,6 +52,7 @@ public class FragmentPushData extends Fragment {
 
 
     private TableLayout tlSOHeader;
+    private TableLayout tlsPOHeader;
     private TableLayout tlSODetail;
     private TableLayout tlActivity;
     private TableLayout tlCustomerBase;
@@ -86,6 +88,7 @@ public class FragmentPushData extends Fragment {
         getContext().stopService(serviceIntentMyServiceNative);
 
         tlSOHeader = (TableLayout) v.findViewById(R.id.tlSOHeader);
+        tlsPOHeader = (TableLayout)v.findViewById(R.id.tlPO);
         tlActivity = (TableLayout) v.findViewById(R.id.tlActivity);
         tlCustomerBase = (TableLayout) v.findViewById(R.id.tl_cb);
         tlAbsen = (TableLayout) v.findViewById(R.id.tl_absen);
@@ -119,6 +122,12 @@ public class FragmentPushData extends Fragment {
                 initSOHeader(getContext(),dtJson.getListOftSalesProductHeaderData());
             } else {
                 initSOHeader(getContext(),null);
+            }
+
+            if(dtJson.getListOftPurchaseOrderHeaderData() !=null){
+                initPOHeader(getContext(),dtJson.getListOftPurchaseOrderHeaderData());
+            } else {
+                initPOHeader(getContext(),null);
             }
 
             if(dtJson.getListOftActivityData()!=null){
@@ -444,25 +453,25 @@ public class FragmentPushData extends Fragment {
 
                 tr.addView(outlet_code);
 
-                TextView outlet_name = new TextView(getContext());
-                outlet_name.setTextSize(12);
-                outlet_name.setPadding(10, 10, 10, 10);
-                outlet_name.setBackgroundColor(Color.parseColor("#f0f0f0"));
-                outlet_name.setTextColor(Color.BLACK);
-                outlet_name.setGravity(Gravity.CENTER);
-                outlet_name.setText(new clsMainActivity().giveFormatDate(dat.get_dtDate()));
-                outlet_name.setLayoutParams(params);
-
-                tr.addView(outlet_name);
-
                 TextView date = new TextView(getContext());
                 date.setTextSize(12);
                 date.setPadding(10, 10, 10, 10);
                 date.setBackgroundColor(Color.parseColor("#f0f0f0"));
                 date.setTextColor(Color.BLACK);
                 date.setGravity(Gravity.CENTER);
-                date.setText(dat.get_OutletCode());
+                date.setText(new clsMainActivity().giveFormatDate(dat.get_dtDate()));
                 date.setLayoutParams(params);
+
+                tr.addView(date);
+
+                TextView outlet_name = new TextView(getContext());
+                outlet_name.setTextSize(12);
+                outlet_name.setPadding(10, 10, 10, 10);
+                outlet_name.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                outlet_name.setTextColor(Color.BLACK);
+                outlet_name.setGravity(Gravity.CENTER);
+                outlet_name.setText(dat.get_OutletCode());
+                outlet_name.setLayoutParams(params);
 
                 tr.addView(date);
 
@@ -471,6 +480,96 @@ public class FragmentPushData extends Fragment {
         }
     }
 
+    private void initPOHeader(Context context, List<tPurchaseOrderHeaderData> listOftPurchaseOrderHeaderData) {
+        tlsPOHeader = (TableLayout) v.findViewById(R.id.tlPO);
+        tlsPOHeader.removeAllViews();
+
+        TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1f);
+        params.setMargins(1, 1, 1, 1);
+
+        TableRow tr = new TableRow(getContext());
+
+        String[] colTextHeader = {"No.", "No Order", "Date", "Outlet Code"};
+
+        for (String text : colTextHeader) {
+            TextView tv = new TextView(getContext());
+           // tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 1));
+
+            tv.setTextSize(14);
+            tv.setPadding(10, 10, 10, 10);
+            tv.setText(text);
+            tv.setGravity(Gravity.CENTER);
+            tv.setBackgroundColor(Color.parseColor("#4CAF50"));
+            tv.setTextColor(Color.WHITE);
+            tv.setLayoutParams(params);
+
+            tr.addView(tv);
+        }
+        tlsPOHeader.addView(tr,0);
+
+        if(listOftPurchaseOrderHeaderData!=null){
+            int index = 1;
+            for(tPurchaseOrderHeaderData dat : listOftPurchaseOrderHeaderData){
+                tr = new TableRow(getContext());
+//                TableLayout.LayoutParams tableRowParams=
+//                        new TableLayout.LayoutParams
+//                                (TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.WRAP_CONTENT);
+//
+//                int leftMargin=0;
+//                int topMargin=0;
+//                int rightMargin=0;
+//                int bottomMargin=0;
+//                tableRowParams.setMargins(leftMargin, topMargin, rightMargin, bottomMargin);
+//
+//                tr.setLayoutParams(tableRowParams);
+
+                TextView tv_index = new TextView(getContext());
+                tv_index.setTextSize(12);
+                tv_index.setPadding(10, 10, 10, 10);
+                tv_index.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                tv_index.setTextColor(Color.BLACK);
+                tv_index.setText(String.valueOf(index + "."));
+                tv_index.setLayoutParams(params);
+                tr.addView(tv_index);
+
+                TextView no_order = new TextView(getContext());
+                no_order.setTextSize(12);
+                no_order.setPadding(10, 10, 10, 10);
+                no_order.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                no_order.setTextColor(Color.BLACK);
+                no_order.setGravity(Gravity.CENTER);
+                no_order.setText(dat.get_txtNoOrder());
+                no_order.setLayoutParams(params);
+
+                tr.addView(no_order);
+
+                TextView date = new TextView(getContext());
+                date.setTextSize(12);
+                date.setPadding(10, 10, 10, 10);
+                date.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                date.setTextColor(Color.BLACK);
+                date.setGravity(Gravity.CENTER);
+                date.setText(new clsMainActivity().giveFormatDate(dat.get_dtDate()));
+                date.setLayoutParams(params);
+
+                tr.addView(date);
+
+                TextView outlet_name = new TextView(getContext());
+                outlet_name.setTextSize(12);
+                outlet_name.setPadding(10, 10, 10, 10);
+                outlet_name.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                outlet_name.setTextColor(Color.BLACK);
+                outlet_name.setGravity(Gravity.CENTER);
+                outlet_name.setText(dat.get_OutletCode());
+                outlet_name.setLayoutParams(params);
+
+                tr.addView(date);
+
+                tlsPOHeader.addView(tr, index++);
+            }
+        }
+
+    }
     private class AsyncCallRole extends AsyncTask<List<dataJson>, Void, List<dataJson>> {
         @Override
         protected List<dataJson> doInBackground(List<dataJson>... params) {

@@ -133,7 +133,7 @@ public class Splash extends AppCompatActivity {
                 Intent myIntent = new Intent(Splash.this, Login.class);
                 clsHelper _clsHelper = new clsHelper();
                 _clsHelper.createFolderApp();
-                _clsHelper.createFolderUserData();
+                //_clsHelper.createFolderUserData();
                 try {
                     clsStatusMenuStart _clsStatusMenuStart = new clsMainBL().checkUserActive();
                     if (_clsStatusMenuStart.get_intStatus() == enumStatusMenuStart.FormLogin) {

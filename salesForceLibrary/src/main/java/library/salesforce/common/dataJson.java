@@ -140,7 +140,8 @@ public class dataJson {
     public synchronized List<tPurchaseOrderDetailData> getListOftPurchaseOrderDetailData(){
         return ListOftPurchaseOrderDetailData;
     }
-    public synchronized void setListOftPurchaseOrderDetailData(List<tPurchaseOrderDetailData> listOftPurchaseOrderDetailData){
+    public synchronized void setListOftPurchaseOrderDetailData(
+            List<tPurchaseOrderDetailData> listOftPurchaseOrderDetailData){
         ListOftPurchaseOrderDetailData = listOftPurchaseOrderDetailData;
     }
 
@@ -317,6 +318,7 @@ public class dataJson {
                     item.put(dttPurchaseOrderDetailData.Property_intPrice, String.valueOf(data.get_intPrice()));
                     item.put(dttPurchaseOrderDetailData.Property_intQty, String.valueOf(data.get_intQty()));
                     item.put(dttPurchaseOrderDetailData.Property_txtCodeProduct, String.valueOf(data.get_txtCodeProduct()));
+                    item.put(dttPurchaseOrderDetailData.Property_txtKeterangan, String.valueOf(data.get_txtKeterangan()));
                     item.put(dttPurchaseOrderDetailData.Property_txtNameProduct, String.valueOf(data.get_txtNameProduct()));
                     item.put(dttPurchaseOrderDetailData.Property_txtNIK, String.valueOf(data.get_txtNIK()));
                     item.put(dttPurchaseOrderDetailData.Property_intTotal, String.valueOf(data.get_intTotal()));
@@ -366,6 +368,9 @@ public class dataJson {
                     item1.put(dttPurchaseOrderHeaderData.Property_intSubmit, String.valueOf(data.get_intSubmit()));
                     item1.put(dttPurchaseOrderHeaderData.Property_intSumAmount, String.valueOf(data.get_intSumAmount()));
                     item1.put(dttPurchaseOrderHeaderData.Property_intSumItem, String.valueOf(data.get_intSumItem()));
+                    item1.put(dttPurchaseOrderHeaderData.Property_intSync, String.valueOf(data.get_intSync()));
+                    item1.put(dttPurchaseOrderHeaderData.Property_txtBranchCode, String.valueOf(data.get_txtBranchCode()));
+                    item1.put(dttPurchaseOrderHeaderData.Property_txtBranchName, String.valueOf(data.get_txtBranchName()));
                     item1.put(dttPurchaseOrderHeaderData.Property_UserId, String.valueOf(data.get_UserId()));
                     item1.put(dttPurchaseOrderHeaderData.Property_txtKeterangan, String.valueOf(data.get_txtKeterangan()));
                     item1.put(dttPurchaseOrderHeaderData.Property_txtNIK, String.valueOf(data.get_txtNIK()));
