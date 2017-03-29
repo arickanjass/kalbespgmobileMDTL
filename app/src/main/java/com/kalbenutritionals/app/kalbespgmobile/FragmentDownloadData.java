@@ -14,7 +14,6 @@ import android.os.StrictMode;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.apache.http.util.ByteArrayBuffer;
 import org.json.simple.JSONArray;
@@ -51,7 +49,9 @@ import bl.tCustomerBasedMobileDetailBL;
 import bl.tCustomerBasedMobileDetailProductBL;
 import bl.tCustomerBasedMobileHeaderBL;
 import bl.tLeaveMobileBL;
+import bl.tPurchaseOrderHeaderBL;
 import bl.tSalesProductHeaderBL;
+import bl.tUserLoginBL;
 import library.salesforce.common.APIData;
 import library.salesforce.common.clsHelper;
 import library.salesforce.common.dataJson;
@@ -69,8 +69,10 @@ import library.salesforce.common.tCustomerBasedMobileHeaderData;
 import library.salesforce.common.tLeaveMobileData;
 import library.salesforce.common.tSalesProductDetailData;
 import library.salesforce.common.tSalesProductHeaderData;
+import library.salesforce.common.tUserLoginData;
 import library.salesforce.dal.clsHardCode;
 import library.salesforce.dal.tSalesProductDetailDA;
+import library.salesforce.dal.tUserLoginDA;
 
 public class FragmentDownloadData extends Fragment {
     View v;
@@ -101,6 +103,7 @@ public class FragmentDownloadData extends Fragment {
     private List<String> arrData;
     private String[] strip = new String[]{"-"};
     int intProcesscancel = 0;
+    tUserLoginData loginData;
 
     clsMainActivity _clsMainActivity;
 
@@ -129,6 +132,9 @@ public class FragmentDownloadData extends Fragment {
         btnAbsen = (Button) v.findViewById(R.id.btnDlAbsen);
         spnDataLeave = (Spinner) v.findViewById(R.id.spnDataLeave);
         btnDataLeave = (Button) v.findViewById(R.id.btnDlDataLeave);
+
+        loginData = new tUserLoginData();
+        loginData = new tUserLoginBL().getUserActive();
 
         loadData();
         btnAllDownload.setOnClickListener(new View.OnClickListener() {
@@ -439,6 +445,7 @@ public class FragmentDownloadData extends Fragment {
                 SaveDatamProductBarcodeData(Json);
                 Json = new mProductBrandHeaderBL().DownloadBrandHeader(pInfo.versionName);
                 SaveDatamProductBarcodeData(Json);
+                new tPurchaseOrderHeaderBL().DownloadNOPO(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
                 Json = new mEmployeeAreaBL().DownloadEmployeeArea2(pInfo.versionName);
                 SaveDatamEmployeeAreaData(Json);
                 Json = new tSalesProductHeaderBL().DownloadReso(pInfo.versionName);
@@ -1493,6 +1500,7 @@ public class FragmentDownloadData extends Fragment {
             JSONArray Json = null;
             try {
                 Json = new mEmployeeBranchBL().DownloadEmployeeBranch2(pInfo.versionName);
+                new tPurchaseOrderHeaderBL().DownloadNOPO(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

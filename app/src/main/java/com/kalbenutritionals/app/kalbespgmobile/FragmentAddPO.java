@@ -101,10 +101,10 @@ TextView tv_tgl, tv_noPO;
         List<tPurchaseOrderHeaderData> dtLast = new tPurchaseOrderHeaderBL().getLastData();
         //List<tSalesProductHeaderData> dtLast = new tSalesProductHeaderBL().getLastData();
         if (dtLast == null || dtLast.size() == 0){
-            noPO = new mCounterNumberBL().getData(enumCounterData.NoDataSO);
+            noPO = new mCounterNumberBL().getData(enumCounterData.NoPurchaseOrder);
 
         }else {
-            noPO = new mCounterNumberBL().getData(enumCounterData.NoDataSO);
+            noPO = new mCounterNumberBL().getData(enumCounterData.NoPurchaseOrder);
             //List<tSalesProductHeaderData> dataFirstIsExist = new tSalesProductHeaderBL().getDataByNoSO(noPO);
             List<tPurchaseOrderHeaderData> dataFirstIsExist = new tPurchaseOrderHeaderBL().getDataByNoOrder(noPO);
             if(dataFirstIsExist.size() == 1){
@@ -112,7 +112,7 @@ TextView tv_tgl, tv_noPO;
                 String oldVersion = dtLast.get(0).get_txtNoOrder();
                 noPO = _clsHelper.generateNewId(oldVersion, "-", "5");
             }else {
-                noPO = new mCounterNumberBL().getData(enumCounterData.NoDataSO);
+                noPO = new mCounterNumberBL().getData(enumCounterData.NoPurchaseOrder);
             }
         }
         tv_noPO.setText(noPO);

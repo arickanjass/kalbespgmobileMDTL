@@ -473,7 +473,7 @@ public class FragmentPushData extends Fragment {
                 outlet_name.setText(dat.get_OutletCode());
                 outlet_name.setLayoutParams(params);
 
-                tr.addView(date);
+                tr.addView(outlet_name);
 
                 tlSOHeader.addView(tr,index++);
             }
