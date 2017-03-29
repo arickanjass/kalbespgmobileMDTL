@@ -499,7 +499,7 @@ public class tSalesProductQuantityDA {
         List<tSalesProductQuantityData> contactList = null;
         // select all query
         tSalesProductQuantityData dt = new tSalesProductQuantityData();
-        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_OutletCode + "='" + code + "'" + " ORDER BY txtNoSo DESC ";
+        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_OutletCode + "='" + code + "'" + " ORDER BY txtQuantityStock DESC ";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
