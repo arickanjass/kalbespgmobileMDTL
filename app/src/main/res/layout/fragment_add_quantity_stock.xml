@@ -12,6 +12,12 @@
         android:padding="15dp"
         android:orientation="vertical">
         <TextView
+            android:id="@+id/txtHDId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="txthdId"
+            android:visibility="gone" />
+        <TextView
             android:id="@+id/txtQuantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -173,12 +179,6 @@
             android:layout_gravity="center_horizontal"
             android:background="@color/back_splash"/>
 
-        <edu.swu.pulltorefreshswipemenulistview.library.PullToRefreshSwipeMenuListView
-            android:id="@+id/listViewQuantityAdd"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
-
         <View
             android:id="@+id/view6"
             android:layout_below="@+id/btnAddQuantity"
@@ -192,11 +192,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:text="Preview"
+            android:text="Save"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="10dp"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/btn_download_all"/>
+
+        <edu.swu.pulltorefreshswipemenulistview.library.PullToRefreshSwipeMenuListView
+            android:id="@+id/listViewQuantityAdd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
 
 
 
