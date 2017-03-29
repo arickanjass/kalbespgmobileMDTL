@@ -23,18 +23,18 @@ public class tSalesProductQuantityDetailBL extends clsMainBL{
         _tSalesProductQuantityDetailDA.SaveDatatSalesProductQuantityDetailData(_db, dt);
     }
 
-    public List<tSalesProductQuantityDetailData> getDataByDetailId(String id){
+    public List<tSalesProductQuantityDetailData> getAllDataByHeaderId(String id){
         SQLiteDatabase _db = getDb();
-        List<tSalesProductQuantityDetailData> dtProductList = new tSalesProductQuantityDetailDA(_db).getAllData(_db);
-        return dtProductList;
+        List<tSalesProductQuantityDetailData> dtDetail = new tSalesProductQuantityDetailDA(_db).getAllDataByHeaderId(_db, id);
+        return dtDetail;
     }
 
-    /*public List<tSalesProductQuantityDetailData> GetDataByNoSO(String Noso) {
+    public List<tSalesProductQuantityDetailData> GetDataByNoSO(String Noso) {
         SQLiteDatabase db =getDb();
         tSalesProductQuantityDetailDA _tSalesProductQuantityDetailDA = new tSalesProductQuantityDetailDA(db);
         List<tSalesProductQuantityDetailData> ListData = _tSalesProductQuantityDetailDA.getDataByNoSo(db, Noso);
         db.close();
         return ListData;
-    }*/
+    }
 
 }
