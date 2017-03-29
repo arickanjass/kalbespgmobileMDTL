@@ -283,6 +283,8 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 //                    navigationView.getMenu().findItem(R.id.information).setChecked(true);
             } else if (i_view.equals("View PO")){
                 navigationView.getMenu().findItem(R.id.PO).setChecked(true);
+            } else if (i_view.equals("View Quantity")){
+                navigationView.getMenu().findItem(R.id.quantityStock).setChecked(true);
             }
         }
 
@@ -369,7 +371,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                         return true;
 
                     case R.id.quantityStock: 
-                        toolbar.setTitle("View xQuantity Stock");
+                        toolbar.setTitle("View Quantity Stock");
 
                         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
 
