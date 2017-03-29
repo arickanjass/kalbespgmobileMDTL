@@ -125,7 +125,7 @@ public class tPurchaseOrderHeaderBL extends clsMainBL {
         String yy = split[0];
         String mm = split[1];
         String dd = split[2];
-        String txtNoPOCode = new mCounterNumberBL().getData(enumCounterData.NoDataSO);
+        String txtNoPOCode = new mCounterNumberBL().getData(enumCounterData.NoPurchaseOrder);
         List<tPurchaseOrderHeaderData> dttas = getLastData();
         String noPO = null;
     }
