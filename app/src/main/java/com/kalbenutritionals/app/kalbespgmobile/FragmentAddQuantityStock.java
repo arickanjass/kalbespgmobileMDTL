@@ -310,6 +310,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                 dataProductKalbe.add(dt.get_txtProductBrandDetailGramName());
                 HMProduct.put(dt.get_txtProductBrandDetailGramName(), dt.get_txtBrandDetailGramCode());
                 HMProduct.put(dt.get_txtBrandDetailGramCode(), dt.get_txtBrandDetailGramCode());
+                HMProduct.put(dt.get_txtBrandDetailGramCode(), dt.get_decHJD());
             }
         }
 
@@ -363,6 +364,12 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                                         data.setTxtProduct(selectedOneKNProduct);
                                         data.setTxtExpireDate(expireDate);
                                         data.setTxtQuantity(qtyProduct);
+                                        data.set_intPrice(HMProduct.get(HMProduct.get(selectedOneKNProduct)));
+
+                                        double prc = Double.valueOf(HMProduct.get(HMProduct.get(selectedOneKNProduct)));
+                                        double itm = Double.valueOf(qtyProduct);
+
+                                        data.set_intTotal(_clsMainActivity.convertNumberDec2(prc*itm));
                                         data.set_txtNIK(dtUser.get_txtUserId());
 
                                         // new tSalesProductQuantityDetailBL().saveData(data);
@@ -442,6 +449,17 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
     // preview image After 1
     private void previewCaptureAfterImage1(Bitmap photo){
         tAbsenUserData absenUserData = new tAbsenUserBL().getDataCheckInActive();
+//        tUserLoginData loginData = new tUserLoginData();
+        tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
+        tSalesProductQuantityDetailData dt = new tSalesProductQuantityDetailData();
+
+        double price = Double.parseDouble(dt.get_intPrice());
+        double value = Double.parseDouble(dt.getTxtQuantity());
+        double qntyNum = price * value;
+        double qntySum = 0;
+        qntySum += qntyNum;
+        String result = "0";
+        result = _clsMainActivity.convertNumberDec2(qntySum);
 //        ModelListview modelListview = new ModelListview();
         try {
             Bitmap bitmap = new clsMainActivity().resizeImageForBlob(photo);
@@ -486,7 +504,9 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                 dtQuantityData.set_txtRoleId(absenUserData.get_txtRoleId());
                 dtQuantityData.set_txtBranchCode(absenUserData.get_txtBranchCode());
                 dtQuantityData.set_txtBranchName(absenUserData.get_txtBranchName());
+                dtQuantityData.set_intSumAmount(String.valueOf(result));
                 dtQuantityData.set_intIdAbsenUser(absenUserData.get_intId());
+                dtQuantityData.set_txtNIK(dataUserActive.get_TxtEmpId());
                 dtQuantityData.set_txtAfterImg1(pht);
             }
             dtQuantityData.set_intSubmit("1");
@@ -502,6 +522,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
     // preview image after 2
     private void previewCaptureAfterImage2(Bitmap photo){
         tAbsenUserData absenUserData = new tAbsenUserBL().getDataCheckInActive();
+        tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
 //        ModelListview modelListview = new ModelListview();
         try {
             Bitmap bitmap = new clsMainActivity().resizeImageForBlob(photo);
@@ -547,6 +568,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                 dtQuantityData.set_txtBranchCode(absenUserData.get_txtBranchCode());
                 dtQuantityData.set_txtBranchName(absenUserData.get_txtBranchName());
                 dtQuantityData.set_intIdAbsenUser(absenUserData.get_intId());
+                dtQuantityData.set_txtNIK(dataUserActive.get_TxtEmpId());
                 dtQuantityData.set_txtAfterImg2(pht);
             }
             dtQuantityData.set_intSubmit("1");
@@ -562,6 +584,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
     // preview image before 1
     private void previewCaptureBeforeImage1(Bitmap photo){
         tAbsenUserData absenUserData = new tAbsenUserBL().getDataCheckInActive();
+        tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
 //        ModelListview modelListview = new ModelListview();
         try {
             Bitmap bitmap = new clsMainActivity().resizeImageForBlob(photo);
@@ -607,6 +630,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                 dtQuantityData.set_txtBranchCode(absenUserData.get_txtBranchCode());
                 dtQuantityData.set_txtBranchName(absenUserData.get_txtBranchName());
                 dtQuantityData.set_intIdAbsenUser(absenUserData.get_intId());
+                dtQuantityData.set_txtNIK(dataUserActive.get_TxtEmpId());
                 dtQuantityData.set_txtBeforeImg1(pht);
             }
             dtQuantityData.set_intSubmit("1");
@@ -622,6 +646,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
     // preview image before 2
     private void previewCaptureBeforeImage2(Bitmap photo){
         tAbsenUserData absenUserData = new tAbsenUserBL().getDataCheckInActive();
+        tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
 //        ModelListview modelListview = new ModelListview();
         try {
             Bitmap bitmap = new clsMainActivity().resizeImageForBlob(photo);
@@ -667,6 +692,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                 dtQuantityData.set_txtBranchCode(absenUserData.get_txtBranchCode());
                 dtQuantityData.set_txtBranchName(absenUserData.get_txtBranchName());
                 dtQuantityData.set_intIdAbsenUser(absenUserData.get_intId());
+                dtQuantityData.set_txtNIK(dataUserActive.get_TxtEmpId());
                 dtQuantityData.set_txtBeforeImg2(pht);
             }
             dtQuantityData.set_intSubmit("1");
