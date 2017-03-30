@@ -51,26 +51,26 @@ public class tSalesProductQuantityDetailDA {
         tSalesProductQuantityDetailData dt = new tSalesProductQuantityDetailData();
         db.execSQL("INSERT OR REPLACE into " +TABLE_CONTACTS+ " (" +dt.Property_intId+ ","
                 +dt.Property_dtDate+","
-                /*+dt.Property_intPrice+","*/
+                +dt.Property_intPrice+","
                 +dt.Property_txtCodeProduct+","
                 +dt.Property_txtKeterangan+","
                 +dt.Property_txtProduct+","
                 +dt.Property_txtExpireDate+","
                 +dt.Property_txtQuantity+","
-                /*+dt.Property_intTotal+","
-                +dt.Property_intTotal+","*/
+                +dt.Property_intTotal+","
+//                +dt.Property_intTotal+","
                 +dt.Property_txtNoSo+","
                 // +dt.Property_intActive+","
                 +dt.Property_txtNIK+") "+
             "values('" +String.valueOf(data.getIntId())+"','"
                 +String.valueOf(data.get_dtDate())+"','"
-                /*+String.valueOf(data.get_intPrice())+"','"*/
+                +String.valueOf(data.get_intPrice())+"','"
                 +String.valueOf(data.get_txtCodeProduct())+"','"
                 +String.valueOf(data.get_txtKeterangan())+"','"
                 +String.valueOf(data.getTxtProduct())+"','"
                 +String.valueOf(data.getTxtExpireDate())+"','"
                 +String.valueOf(data.getTxtQuantity())+"','"
-                //+String.valueOf(data.get_intTotal())+"','"
+                +String.valueOf(data.get_intTotal())+"','"
                 +String.valueOf(data.get_txtNoSo())+"','"
                 //+String.valueOf(data.get_intActive())+"','"
                 +String.valueOf(data.get_txtNIK())+"')");

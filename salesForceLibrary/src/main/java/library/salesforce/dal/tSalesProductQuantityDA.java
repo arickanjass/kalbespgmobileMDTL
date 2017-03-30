@@ -540,7 +540,7 @@ public class tSalesProductQuantityDA {
         List<tSalesProductQuantityData> contactList = null;
         // select all query
         tSalesProductQuantityData dt = new tSalesProductQuantityData();
-        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_txtQuantityStock + "='" + quantityStock + "'";
+        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_txtQuantityStock + " ='" + quantityStock + "'";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -649,7 +649,7 @@ public class tSalesProductQuantityDA {
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
+        if (cursor.moveToLast()) {
             contactList = new ArrayList<tSalesProductQuantityData>();
             do {
                 tSalesProductQuantityData contact = new tSalesProductQuantityData();
