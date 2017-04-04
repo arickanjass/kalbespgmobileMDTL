@@ -130,7 +130,7 @@ public class FragmentViewQuantityStock extends Fragment implements IXListViewLis
         tv_item.setText(": " + String.valueOf(dt.get(position).get_intSumItem()));
         final  TextView tv_amount = (TextView) promptView.findViewById(R.id.tvSumAmount) ;
         tv_amount.setTypeface(null, Typeface.BOLD);
-        tv_amount.setText(": " + new clsMainActivity().convertNumberDec(Double.valueOf(dt.get(position).get_intSumAmount())));
+        tv_amount.setText(": " + String.valueOf(dt.get(position).get_intSumAmount()));
         final  TextView tv_status = (TextView) promptView.findViewById(R.id.tvStatus);
         tv_status.setTypeface(null, Typeface.BOLD);
 
@@ -140,7 +140,7 @@ public class FragmentViewQuantityStock extends Fragment implements IXListViewLis
             tv_status.setText(": Sync");
         }
 
-        TableLayout tlb = (TableLayout) promptView.findViewById(R.id.tlProduct);
+        TableLayout tlb = (TableLayout) promptView.findViewById(R.id.tlProductQty);
         tlb.removeAllViews();
 
         TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
@@ -166,7 +166,7 @@ public class FragmentViewQuantityStock extends Fragment implements IXListViewLis
         }
         tl.addView(tr);
 
-        data = new tSalesProductQuantityDetailBL().GetDataByNoSO(dt.get(position).get_txtQuantityStock());
+        data = new tSalesProductQuantityDetailBL().GetDataNoso(dt.get(position).get_txtQuantityStock());
 
         double qtySum=0;
         double qtyNum;
