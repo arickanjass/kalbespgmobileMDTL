@@ -11,6 +11,7 @@
         android:id="@+id/lnQuantity"
         android:padding="15dp"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/txtHDId"
             android:layout_width="wrap_content"
@@ -87,6 +88,19 @@
 
             <requestFocus />
         </EditText>
+
+        <Button
+            android:id="@+id/btnAddQuantity"
+            android:layout_below="@+id/view3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="5dp"
+            android:textColor="@color/white"
+            android:text="Add Product"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/btn_download_all"/>
         <View
             android:id="@+id/view3"
             android:layout_below="@+id/etKeterangan_quantity"
@@ -132,31 +146,64 @@
             android:background="#bfbfbf" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_rounded_normal"
             android:gravity="center"
             android:orientation="horizontal">
-            <TextView
-                android:layout_width="match_parent"
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="1"
-                android:text="Before"/>
-            <ImageView
-                android:id="@+id/imageBefore1"
-                android:layout_marginLeft="5dp"
-                android:background="@mipmap/ic_maps_local_see"
-                android:layout_width="65dp"
-                android:layout_height="65dp"
-                android:layout_weight="1"/>
-            <ImageView
-                android:id="@+id/imageBefore2"
-                android:layout_marginLeft="5dp"
-                android:background="@mipmap/ic_maps_local_see"
-                android:layout_width="65dp"
-                android:layout_height="65dp"
-                android:layout_weight="1"/>
+                android:background="@drawable/bg_rounded_normal"
+                android:layout_marginLeft="0dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:text="Before"/>
+                <ImageView
+                    android:id="@+id/imageBefore1"
+                    android:layout_marginLeft="5dp"
+                    android:background="@mipmap/ic_maps_local_see"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:layout_weight="1"/>
+                <ImageView
+                    android:id="@+id/imageBefore2"
+                    android:layout_marginLeft="5dp"
+                    android:background="@mipmap/ic_maps_local_see"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="10dp"
+                android:gravity="bottom"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnPreviewQuantity"
+                    android:layout_below="@+id/view4"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="5dp"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:text="Save"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/btn_download_all"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -165,30 +212,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
             android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btnAddQuantity"
-                android:layout_below="@+id/view3"
-                android:layout_width="160dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="2dp"
-                android:layout_marginRight="5dp"
-                android:textColor="@color/white"
-                android:text="Add Product"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/btn_download_all"/>
-
-            <Button
-                android:id="@+id/btnPreviewQuantity"
-                android:layout_below="@+id/view4"
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="6dp"
-                android:layout_marginRight="5dp"
-                android:textColor="@color/white"
-                android:text="Save"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/btn_download_all"/>
 
         </LinearLayout>
 
