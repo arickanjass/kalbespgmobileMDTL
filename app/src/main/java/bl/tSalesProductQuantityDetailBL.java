@@ -17,6 +17,14 @@ import library.salesforce.dal.tSalesProductQuantityDetailDA;
 public class tSalesProductQuantityDetailBL extends clsMainBL{
     SQLiteDatabase db;
 
+    public List<tSalesProductQuantityDetailData> GetDataNoso(String Noso){
+        SQLiteDatabase db=getDb();
+        tSalesProductQuantityDetailDA _tSalesProductQuantityDetailDA = new tSalesProductQuantityDetailDA(db);
+        List<tSalesProductQuantityDetailData>ListData = _tSalesProductQuantityDetailDA.getDataNoso(db, Noso);
+        db.close();
+        return ListData;
+    }
+
     public void saveData(tSalesProductQuantityDetailData dt) {
         SQLiteDatabase _db = getDb();
         tSalesProductQuantityDetailDA _tSalesProductQuantityDetailDA = new tSalesProductQuantityDetailDA(_db);
