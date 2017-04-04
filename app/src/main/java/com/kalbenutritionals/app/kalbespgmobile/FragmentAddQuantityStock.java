@@ -44,6 +44,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import addons.adapter.AdapterListProductCustomerBased;
 import bl.clsMainBL;
 import bl.mCounterNumberBL;
 import bl.mEmployeeSalesProductBL;
@@ -80,6 +81,7 @@ import static com.kalbenutritionals.app.kalbespgmobile.R.id.imageView;
 
 public class FragmentAddQuantityStock extends Fragment implements IXListViewListener{
     View v;
+    tSalesProductQuantityData dtHeader;
 
     private ArrayList<ModelListview> modelItems;
     private ArrayList<ModelListview> arrdataPriv;
@@ -99,7 +101,9 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
     private Uri uriImage;
     TextView tv_date, txtHDId;
     TextView tv_noso;
-    List<tSalesProductQuantityDetailData> dtListDetailProduct;
+    List<tSalesProductQuantityData> dtListDetailProduct;
+    List<tSalesProductQuantityDetailData> dtListProduct;
+    AdapterListProductCustomerBased AdapterProduct;
 
     private List<clsSwipeList> swipeList = new ArrayList<clsSwipeList>();
     private ArrayList<clsSwipeList> swipeListProduct = new ArrayList<clsSwipeList>();
@@ -263,7 +267,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                     alertDialog.setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            save();
+                            save2();
                             viewQuantityFragment();
 
                             _clsMainActivity.showCustomToast(getActivity(), "Saved", true);
@@ -280,9 +284,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                 }
             }
         });
-
-        setTableProduct();
-
+        TableProduct();
         return v;
     }
 
@@ -294,8 +296,12 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         final Spinner spnKalbeProduct = (Spinner) promptView.findViewById(R.id.spnProductQuantity);
         final DatePicker dp = (DatePicker) promptView.findViewById(R.id.dp_expire_date);
 
+
+        List<tSalesProductQuantityDetailData> dataProduct = null;
+
         List<String> dataProductKalbe = new ArrayList<>();
         List<mEmployeeSalesProductData> listDataProductKalbe = new mEmployeeSalesProductBL().GetAllData();
+        modelItems = new ArrayList<>();
 
         editTextQty.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -316,6 +322,33 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
 
         ArrayAdapter<String> adapterKalbeProduct = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, dataProductKalbe);
         spnKalbeProduct.setAdapter(adapterKalbeProduct);
+
+        // for edit data in popupAddQuantity
+        int index = 0;
+        if (dataDetail.getIntId() != null) {
+
+            String item = dataDetail.getTxtProduct();
+            for (int i = 0 ; i < spnKalbeProduct.getAdapter().getCount()-1 ; i++){
+                if(spnKalbeProduct.getItemAtPosition(i).equals(item)){
+                    index = i;
+                }
+            }
+                spnKalbeProduct.setSelection(index);
+            int year = 0;
+            int month = 0;
+            int day = 0;
+            String stringDatedb = dataDetail.getTxtExpireDate();
+            if (!stringDatedb.equals("null")) {
+                String[] parts = stringDatedb.split("-");
+                year = Integer.parseInt(parts[0]);
+                month = Integer.parseInt(parts[1]);
+                day = Integer.parseInt(parts[2]);
+            }
+            dp.updateDate(year,month - 1,day);
+            editTextQty.setText(dataDetail.getTxtQuantity());
+        }
+
+
 
         // set date min today
         dp.setMinDate(System.currentTimeMillis() - 1000);
@@ -356,7 +389,12 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                                         }
 
                                         tSalesProductQuantityDetailData data = new tSalesProductQuantityDetailData();
-                                        data.setIntId(_clsMainActivity.GenerateGuid());
+                                        if (dataDetail.getIntId() != null) {
+                                            data.setIntId(dataDetail.getIntId());
+                                        }else{
+                                            data.setIntId(_clsMainActivity.GenerateGuid());
+                                        }
+
                                         data.set_txtNoSo(tv_noso.getText().toString());
                                         data.set_dtDate(dateFormat.format(cal.getTime()));
                                         data.set_txtCodeProduct(HMProduct.get(selectedOneKNProduct));
@@ -372,13 +410,12 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                                         data.set_intTotal(_clsMainActivity.convertNumberDec2(prc*itm));
                                         data.set_txtNIK(dtUser.get_txtUserId());
 
-                                        // new tSalesProductQuantityDetailBL().saveData(data);
-                                        new tSalesProductQuantityDetailDA(_db).SaveDatatSalesProductQuantityDetailData(_db, data);
+                                        new tSalesProductQuantityDetailBL().saveData(data);
+//                                        new tSalesProductQuantityDetailDA(_db).SaveDatatSalesProductQuantityDetailData(_db, data);
                                         editTextQty.setText("");
 
-
                                         dialog.dismiss();
-                                        setTableProduct();
+                                        TableProduct();
 
                                         _clsMainActivity.showCustomToast(getActivity(), "Saved", true);
                                     }
@@ -451,15 +488,8 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         tAbsenUserData absenUserData = new tAbsenUserBL().getDataCheckInActive();
 //        tUserLoginData loginData = new tUserLoginData();
         tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
-        tSalesProductQuantityDetailData dt = new tSalesProductQuantityDetailData();
-
-        double price = Double.parseDouble(dt.get_intPrice());
-        double value = Double.parseDouble(dt.getTxtQuantity());
-        double qntyNum = price * value;
-        double qntySum = 0;
-        qntySum += qntyNum;
-        String result = "0";
-        result = _clsMainActivity.convertNumberDec2(qntySum);
+        String noSO = tv_noso.getText().toString();
+        List<tSalesProductQuantityDetailData> productDetail = new tSalesProductQuantityDetailBL().GetDataByNoSO(noSO);
 //        ModelListview modelListview = new ModelListview();
         try {
             Bitmap bitmap = new clsMainActivity().resizeImageForBlob(photo);
@@ -487,6 +517,22 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
             byte[] pht = output.toByteArray();
             after1.setImageBitmap(photo_view);
 
+            arrdataPriv = new ArrayList<ModelListview>();
+            double qntySum=0;
+            double qntyNum;
+            double value;
+            double price;
+            String result = "0";
+            String resultItem = "0";
+
+            for (int i = 0; i < productDetail.size(); i++) {
+                price = Double.parseDouble(String.valueOf(productDetail.get(i).get_intPrice()));
+                value = Double.parseDouble(String.valueOf(productDetail.get(i).getTxtQuantity()));
+                qntyNum =  price * value;
+                qntySum += qntyNum;
+                result = new clsMainActivity().convertNumberDec(qntySum);
+            }
+
             java.text.DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Calendar cal = Calendar.getInstance();
             clsMainActivity _clsMainActivity = new clsMainActivity();
@@ -504,9 +550,11 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                 dtQuantityData.set_txtRoleId(absenUserData.get_txtRoleId());
                 dtQuantityData.set_txtBranchCode(absenUserData.get_txtBranchCode());
                 dtQuantityData.set_txtBranchName(absenUserData.get_txtBranchName());
-                dtQuantityData.set_intSumAmount(String.valueOf(result));
+//                dtQuantityData.set_intSumAmount(dt.get_intTotal());
                 dtQuantityData.set_intIdAbsenUser(absenUserData.get_intId());
                 dtQuantityData.set_txtNIK(dataUserActive.get_TxtEmpId());
+                dtQuantityData.set_intSumItem(String.valueOf(productDetail.size()));
+                dtQuantityData.set_intSumAmount(String.valueOf(result));
                 dtQuantityData.set_txtAfterImg1(pht);
             }
             dtQuantityData.set_intSubmit("1");
@@ -755,16 +803,14 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         startActivityForResult(cameraIntent, CAMERA_REQUEST4);
     }
 
-    private void setTableProduct() {
-        ScrollView sv = (ScrollView) v.findViewById(R.id.scroll_quantityStock);
-        sv.setFillViewport(true);
+    /*private void setTableProduct(final tSalesProductQuantityDetailData dtHeader, final View v) {
 
-        tSalesProductQuantityDetailData _tSalesProductQuantityDetailData = new tSalesProductQuantityDetailData();
-        dtListDetailProduct = new tSalesProductQuantityDetailBL().getAllDataByHeaderId(_tSalesProductQuantityDetailData.getIntId());
+        dtListDetailProduct = new tSalesProductQuantityDetailBL().GetDataByNoSO(dtHeader.get_txtNoSo());
 
         clsSwipeList swplist;
 
         swipeListProduct.clear();
+
         Calendar c = Calendar.getInstance();
         int lYear = c.get(Calendar.YEAR);
         int lMonth = c.get(Calendar.MONTH) + 1;
@@ -772,58 +818,95 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
 
         int totalProduct = 0;
         for (int i = 0; i < dtListDetailProduct.size(); i++) {
-            List<tSalesProductQuantityDetailData> dtListProduct = new tSalesProductQuantityDetailBL().getAllDataByHeaderId(dtListDetailProduct.get(i).getIntId());
-
-            if (dtListProduct == null) {
-                totalProduct = 0;
-            } else {
-                totalProduct = dtListProduct.size();
-            }
             swplist = new clsSwipeList();
-
-            swplist.set_txtTitle("Nama Product : " + dtListDetailProduct.get(i).getTxtProduct());
-            swplist.set_txtDescription("Total Product : " + String.valueOf(totalProduct));
-
-            String expireDate = dtListDetailProduct.get(i).getTxtExpireDate();
-            clsMainActivity clsMainMonth = new clsMainActivity();
-            String[] parts = expireDate.split("-");
-            String part1 = parts[0]; //year
-            String part2 = parts[1]; //month
-            String part3 = parts[2]; //date
-
-            String month = clsMainMonth.months[Integer.parseInt(part2)];
-            expireDate = part3+" - " + month + " - " + part1;
-
-            swplist.set_intPIC("Tanggal Kadaluarsa : " + expireDate);
+            swplist.set_txtId(dtListDetailProduct.get(i).get_txtNoSo());
+            swplist.set_txtTitle(dtListDetailProduct.get(i).getTxtProduct());
+            swplist.set_txtDescription(dtListDetailProduct.get(i).getTxtExpireDate());
+            swplist.set_intPIC(dtListDetailProduct.get(i).getTxtQuantity());
             swipeList.add(swplist);
         }
 
         clsMainActivity clsMain = new clsMainActivity();
 
-        mListView = (PullToRefreshSwipeMenuListView) v.findViewById(R.id.listViewQuantityAdd);
+        AdapterProduct = clsMain.setListProductCusBased(getActivity().getApplicationContext(), swipeListProduct);
+
+        ListView lvProduct = (ListView) v.findViewById(R.id.listViewQuantityAdd);
+        lvProduct.setAdapter(AdapterProduct);
+        lvProduct.setEmptyView(v.findViewById(R.id.LayoutEmpty));
+    }*/
+
+    private void TableProduct() {
+        ScrollView sv = (ScrollView) v.findViewById(R.id.scroll_quantityStock);
+        sv.setFillViewport(true);
+
+//        dtListDetailProduct = new tSalesProductQuantityHeaderBL().getDataByNoSO(tv_noso.getText().toString());
+        dtListProduct = new tSalesProductQuantityDetailBL().GetDataByNoSO(tv_noso.getText().toString());
+
+        clsSwipeList swplist;
+
+        swipeList.clear();
+
+        for (tSalesProductQuantityDetailData data : dtListProduct) {
+//            List<tSalesProductQuantityDetailData> dtListProduct = new tSalesProductQuantityDetailBL().GetDataByNoSO(dtListDetailProduct.get(i).get_txtQuantityStock());
+//            List<tSalesProductQuantityDetailData> dtListProduct = new tSalesProductQuantityDetailBL().GetDataByNoSO(noSO);
+
+            swplist = new clsSwipeList();
+
+            swplist.set_txtTitle("Product : " +data.getTxtProduct());
+            swplist.set_txtDescription("Total Product : " + data.getTxtQuantity());
+            swipeList.add(swplist);
+        }
+
+        clsMainActivity clsMain = new clsMainActivity();
+
+        mListView = (PullToRefreshSwipeMenuListView) v.findViewById(R.id.listViewQuantity);
         mAdapter = clsMain.setList(getActivity().getApplicationContext(), swipeList);
         mListView.setAdapter(mAdapter);
         mListView.setPullRefreshEnable(false);
-
+        mListView.setPullLoadEnable(true);
+        mListView.setXListViewListener(this);
         mHandler = new Handler();
 
         HashMap<String, String> mapEdit = new HashMap<String, String>();
         HashMap<String, String> mapDelete = new HashMap<String, String>();
-        HashMap<String, String> mapAdd = new HashMap<String, String>();
-
-        mapAdd.put("name", "AddProduct");
-        mapAdd.put("bgColor", "#27ae60");
 
         mapEdit.put("name", "Edit");
-        mapEdit.put("bgColor", "#2980b9");
+        mapEdit.put("bgColor", "#3498db");
 
         mapDelete.put("name", "Delete");
-        mapDelete.put("bgColor", "#c0392b");
+        mapDelete.put("bgColor", "#FF0000");
 
         mapMenu = new HashMap<String, HashMap>();
-        mapMenu.put("0", mapAdd);
-        mapMenu.put("1", mapEdit);
-        mapMenu.put("2", mapDelete);
+        mapMenu.put("0", mapEdit);
+        mapMenu.put("1", mapDelete);
+
+        SwipeMenuCreator creator = clsMain.setCreator(getActivity().getApplicationContext(), mapMenu);
+        mListView.setMenuCreator(creator);
+        mListView.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+            @Override
+            public void onMenuItemClick(int position, SwipeMenu menu, int index) {
+                clsSwipeList item = swipeList.get(position);
+                switch (index) {
+                    case 0:
+                        editList(getActivity().getApplicationContext(), position);
+                        break;
+                    case 1:
+                        deleteList(getActivity().getApplicationContext(), position);
+                }
+            }
+        });
+    }
+
+    private void editList(Context ctx, int position) {
+        popUpAddQuantity(dtListProduct.get(position));
+    }
+
+    private void deleteList(Context ctx, int position) {
+        tSalesProductQuantityDetailData dtDetail = dtListProduct.get(position);
+
+        new tSalesProductQuantityDetailBL().deleteData(dtDetail);
+        // new tSalesProductQuantityHeaderBL().deleteData(dtDetail);
+        TableProduct();
     }
 
     private void save() {
@@ -854,107 +937,71 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
 //        new tSalesProductQuantityHeaderBL().SaveData(dt);
     }
 
-    public void viewQuantityFragment(){
-        Intent myIntent = new Intent(getContext(), MainMenu.class);
-        myIntent.putExtra("key_view","View Quantity");
-        getActivity().finish();
-        startActivity(myIntent);
-        return;
-    }
-
-    private void saveQuantity() {
-        int a = listView.getCount();
-        String nik = null;
-        List<String> item = new ArrayList<>();
+    private void save2() {
+        List<mEmployeeSalesProductData> employeeSalesProductDataList = new mEmployeeSalesProductBL().GetAllData();
+        dtQuantityData = new tSalesProductQuantityData();
+        tAbsenUserData absenUserData = new tAbsenUserBL().getDataCheckInActive();
+        tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
+        modelItems = new ArrayList<ModelListview>();
+        String noSO = tv_noso.getText().toString();
+        List<tSalesProductQuantityDetailData> productDetail = new tSalesProductQuantityDetailBL().GetDataByNoSO(noSO);
+//
+//        if (employeeSalesProductDataList.size() > 0) {
+//            for (int i = 0; i < employeeSalesProductDataList.size(); i++) {
+//                ModelListview dt = new ModelListview();
+//                dt.set_id(employeeSalesProductDataList.get(i).get_txtBrandDetailGramCode());
+//                dt.set_name(employeeSalesProductDataList.get(i).get_txtProductBrandDetailGramName());
+//                dt.set_price((employeeSalesProductDataList.get(i).get_decHJD()));
+//                dt.set_NIK(employeeSalesProductDataList.get(i).get_txtNIK());
+//                modelItems.add(dt);
+//            }
+//        }
         arrdataPriv = new ArrayList<ModelListview>();
         double qntySum=0;
         double qntyNum;
         double value;
         double price;
         String result = "0";
+        String resultItem = "0";
 
-        final HashMap<String, String> HMProduct = new HashMap<String, String>();
-        List<String> dataProductKalbe = new ArrayList<>();
-        List<mEmployeeSalesProductData> listDataProductKalbe = new mEmployeeSalesProductBL().GetAllData();
-
-        if (listDataProductKalbe.size() > 0) {
-            for (mEmployeeSalesProductData dt : listDataProductKalbe) {
-                dataProductKalbe.add(dt.get_txtProductBrandDetailGramName());
-                HMProduct.put(dt.get_txtProductBrandDetailGramName(), dt.get_txtBrandDetailGramCode());
-                HMProduct.put(dt.get_txtBrandDetailGramCode(), dt.get_txtBrandDetailGramCode());
-            }
+        for (int i = 0; i < productDetail.size(); i++) {
+            price = Double.parseDouble(String.valueOf(productDetail.get(i).get_intPrice()));
+            value = Double.parseDouble(String.valueOf(productDetail.get(i).getTxtQuantity()));
+            qntyNum =  price * value;
+            qntySum += qntyNum;
+            result = new clsMainActivity().convertNumberDec(qntySum);
         }
-
-        for (int i = 0; i < modelItems.size(); i++) {
-            if (modelItems.get(i).get_value() > 0) {
-                ModelListview data = new ModelListview();
-                data.set_id(modelItems.get(i).get_id());
-                data.set_name(modelItems.get(i).get_name());
-                data.set_value(modelItems.get(i).get_value());
-                nik = data.set_NIK(String.valueOf(modelItems.get(i).get_NIK()));
-                price = Double.parseDouble(modelItems.get(i).get_price());
-                value = Double.parseDouble(String.valueOf(modelItems.get(i).get_value()));
-                qntyNum =  price * value;
-                qntySum += qntyNum;
-                result = new clsMainActivity().convertNumberDec2(qntySum);
-                arrdataPriv.add(data);
-            }
-        }
-
-        tSalesProductQuantityData dt = new tSalesProductQuantityData();
 
         java.text.DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Calendar cal = Calendar.getInstance();
-
         clsMainActivity _clsMainActivity = new clsMainActivity();
-        mEmployeeSalesProductData _mEmployeeSalesProductData = new mEmployeeSalesProductData();
-        tAbsenUserData absenUserData = new tAbsenUserBL().getDataCheckInActive();
 
-        dt.set_intId(new clsMainActivity().GenerateGuid());
-        dt.set_txtQuantityStock(tv_noso.getText().toString());
-        dt.set_dtDate(dateFormat.format(cal.getTime()));
-        dt.set_OutletCode(absenUserData.get_txtOutletCode());
-        dt.set_OutletName(absenUserData.get_txtOutletName());
-        dt.set_txtKeterangan(edKeterangan.getText().toString());
-        dt.set_intSumItem(String.valueOf(arrdataPriv.size()));
-        dt.set_intSumAmount(String.valueOf(result));
-        dt.set_UserId(absenUserData.get_txtUserId());
-        dt.set_txtRoleId(absenUserData.get_txtRoleId());
-        dt.set_intSubmit("1");
-        dt.set_intSync("0");
-        dt.set_txtBranchCode(absenUserData.get_txtBranchCode());
-        dt.set_txtBranchName(absenUserData.get_txtBranchName());
-        dt.set_intIdAbsenUser(absenUserData.get_intId());
-        dt.set_txtNIK(nik);
+        dtQuantityData.set_intSumItem(String.valueOf(productDetail.size()));
+        dtQuantityData.set_intSumAmount(String.valueOf(result));
 
-//        new tSalesProductQuantityHeaderBL().SaveData(dt);
+        dtQuantityData.set_intId(txtHDId.getText().toString());
+        dtQuantityData.set_txtQuantityStock(tv_noso.getText().toString());
+        dtQuantityData.set_dtDate(dateFormat.format(cal.getTime()));
+        dtQuantityData.set_OutletCode(absenUserData.get_txtOutletCode());
+        dtQuantityData.set_OutletName(absenUserData.get_txtOutletName());
+        dtQuantityData.set_txtKeterangan(edKeterangan.getText().toString());
+        dtQuantityData.set_UserId(absenUserData.get_txtUserId());
+        dtQuantityData.set_txtRoleId(absenUserData.get_txtRoleId());
+        dtQuantityData.set_txtBranchCode(absenUserData.get_txtBranchCode());
+        dtQuantityData.set_txtBranchName(absenUserData.get_txtBranchName());
+        dtQuantityData.set_intIdAbsenUser(absenUserData.get_intId());
+        dtQuantityData.set_txtNIK(dataUserActive.get_TxtEmpId());
+        dtQuantityData.set_intSubmit("1");
+        dtQuantityData.set_intSync("0");
+        new tSalesProductQuantityHeaderBL().SaveData(dtQuantityData);
+    }
 
-        clsMainBL _clsMainBL = new clsMainBL();
-
-        String selectedOneKNProduct = product.getSelectedItem().toString();
-
-        SQLiteDatabase _db=_clsMainBL.getDb();
-        for (int i = 0; i< modelItems.size(); i++) {
-            if (modelItems.get(i).get_value() > 0) {
-                double prc = Double.valueOf(modelItems.get(i).get_price());
-                double itm = Double.valueOf(modelItems.get(i).get_value());
-                tSalesProductQuantityDetailData dtDetail = new tSalesProductQuantityDetailData();
-                dtDetail.setIntId(_clsMainActivity.GenerateGuid());
-                dtDetail.set_dtDate(dateFormat.format(cal.getTime()));
-                dtDetail.set_intPrice(modelItems.get(i).get_price());
-                dtDetail.set_txtCodeProduct(HMProduct.get(selectedOneKNProduct));
-                dtDetail.set_txtKeterangan(edKeterangan.getText().toString());
-                dtDetail.setTxtProduct(selectedOneKNProduct);
-                dtDetail.setTxtExpireDate(null);
-                dtDetail.setTxtQuantity(null /*String.valueOf(editTextQty.getText())*/);
-                dtDetail.set_intTotal(new clsMainActivity().convertNumberDec2(prc*itm));
-                dtDetail.set_txtNoSo(tv_noso.getText().toString());
-                dtDetail.set_intActive("1");
-                dtDetail.set_txtNIK(modelItems.get(i).get_NIK());
-                new tSalesProductQuantityDetailDA(_db).SaveDatatSalesProductQuantityDetailData(_db, dtDetail);
-            }
-        }
-        _clsMainActivity.showCustomToast(getActivity(), "Saved", true);
+    public void viewQuantityFragment(){
+        Intent myIntent = new Intent(getContext(), MainMenu.class);
+        myIntent.putExtra("key_view","View Quantity");
+        getActivity().finish();
+        startActivity(myIntent);
+        return;
     }
 
     @Override
