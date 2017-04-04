@@ -100,6 +100,37 @@ public class tSalesProductQuantityDetailDA {
         return contact;
     }
 
+    public List<tSalesProductQuantityDetailData> getDataNoso(SQLiteDatabase db, String Noso) {
+        List<tSalesProductQuantityDetailData> contactList = null;
+        tSalesProductQuantityDetailData dt = new tSalesProductQuantityDetailData();
+        Cursor cursor = db.query(TABLE_CONTACTS, new String[] { dt.Property_intId,
+                dt.Property_dtDate, dt.Property_intPrice, dt.Property_txtQuantity,
+                dt.Property_txtCodeProduct, dt.Property_txtKeterangan, dt.Property_txtProduct,
+                dt.Property_txtNIK, dt.Property_intTotal, dt.Property_txtNoSo}, dt.Property_txtNoSo + "=?",
+                new String[] { String.valueOf(Noso) }, null, null, null, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                contactList = new ArrayList<tSalesProductQuantityDetailData>();
+                do {
+                    tSalesProductQuantityDetailData contact = new tSalesProductQuantityDetailData();
+                    contact.setIntId(String.valueOf(cursor.getString(0)));
+                    contact.set_dtDate(cursor.getString(1));
+                    contact.set_intPrice(cursor.getString(2));
+                    contact.setTxtQuantity(cursor.getString(3));
+                    contact.set_txtCodeProduct(cursor.getString(4));
+                    contact.set_txtKeterangan(cursor.getString(5));
+                    contact.setTxtProduct(cursor.getString(6));
+                    contact.set_txtNIK(cursor.getString(7));
+                    contact.set_intTotal(cursor.getString(8));
+                    contact.set_txtNoSo(cursor.getString(9));
+                    contactList.add(contact);
+                } while (cursor.moveToNext());
+            }
+        }
+        cursor.close();
+        return contactList;
+    }
+
     // Getting single contact
     public List<tSalesProductQuantityDetailData> getDataByNoSo(SQLiteDatabase db, String id) {
         tSalesProductQuantityDetailData dt = new tSalesProductQuantityDetailData();
