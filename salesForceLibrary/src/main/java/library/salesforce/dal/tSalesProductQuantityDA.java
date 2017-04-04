@@ -536,17 +536,16 @@ public class tSalesProductQuantityDA {
         return contactList;
     }
 
-    public List<tSalesProductQuantityData> getDataByQuantityStock(SQLiteDatabase db, String quantityStock){
-        List<tSalesProductQuantityData> contactList = null;
+    public List<tSalesProductQuantityData> getDataByQuantityStock(SQLiteDatabase db, String id){
+        List<tSalesProductQuantityData> contactList = new ArrayList<tSalesProductQuantityData>();
         // select all query
         tSalesProductQuantityData dt = new tSalesProductQuantityData();
-        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_txtQuantityStock + " ='" + quantityStock + "'";
+        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_txtQuantityStock + "='" + id + "'";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
-            contactList = new ArrayList<tSalesProductQuantityData>();
             do {
                 tSalesProductQuantityData contact = new tSalesProductQuantityData();
                 contact.set_intId(cursor.getString(0));
@@ -679,6 +678,16 @@ public class tSalesProductQuantityDA {
         }
         cursor.close();
         return contactList;
+    }
+
+    public void deleteByNoso(SQLiteDatabase db, String Noso) {
+        tSalesProductQuantityData dt = new tSalesProductQuantityData();
+        String whereClause = dt.Property_txtQuantityStock + " = ?";
+        String[] whereArgs = new String[]{
+                String.valueOf(Noso)
+        };
+
+        db.delete(TABLE_CONTACTS, whereClause, whereArgs);
     }
 
 }

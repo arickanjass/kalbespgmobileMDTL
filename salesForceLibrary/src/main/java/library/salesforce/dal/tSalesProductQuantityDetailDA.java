@@ -20,7 +20,7 @@ public class tSalesProductQuantityDetailDA {
     public tSalesProductQuantityDetailDA(SQLiteDatabase db) {
         tSalesProductQuantityDetailData dt = new tSalesProductQuantityDetailData();
         String CREATE_CONTACTS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_CONTACTS + "("
-                + dt.Property_intId + " TEXT NULL,"
+                + dt.Property_intId + " TEXT PRIMARY KEY,"
                 + dt.Property_dtDate + " TEXT NULL,"
                 + dt.Property_intPrice + " TEXT NULL,"
                 + dt.Property_txtCodeProduct + " TEXT NULL,"
@@ -58,7 +58,6 @@ public class tSalesProductQuantityDetailDA {
                 +dt.Property_txtExpireDate+","
                 +dt.Property_txtQuantity+","
                 +dt.Property_intTotal+","
-//                +dt.Property_intTotal+","
                 +dt.Property_txtNoSo+","
                 // +dt.Property_intActive+","
                 +dt.Property_txtNIK+") "+
@@ -102,20 +101,42 @@ public class tSalesProductQuantityDetailDA {
     }
 
     // Getting single contact
-    public List<tSalesProductQuantityDetailData> getDataByNoSo(SQLiteDatabase db, String NoSo) {
-        List<tSalesProductQuantityDetailData> contactList = null;
+    public List<tSalesProductQuantityDetailData> getDataByNoSo(SQLiteDatabase db, String id) {
         tSalesProductQuantityDetailData dt = new tSalesProductQuantityDetailData();
-        Cursor cursor = db.query(TABLE_CONTACTS, new String[] { dt.Property_intId,
-                dt.Property_dtDate,dt.Property_intPrice,dt.Property_txtCodeProduct,dt.Property_txtKeterangan,dt.Property_txtProduct,
-                dt.Property_txtExpireDate, dt.Property_txtQuantity,dt.Property_txtNIK,dt.Property_intTotal,
-                dt.Property_txtNoSo, dt.Property_intActive}, dt.Property_txtNoSo +"=?",
-                new String[] { String.valueOf(NoSo) },null,null,null,null);
-        if (cursor != null){
+        List<tSalesProductQuantityDetailData> contactList = new ArrayList<tSalesProductQuantityDetailData>();
+        String[] tableColumns = new String[] {
+                dt.Property_intId,
+                dt.Property_dtDate,
+                dt.Property_intPrice,
+                dt.Property_txtCodeProduct,
+                dt.Property_txtKeterangan,
+                dt.Property_txtProduct,
+                dt.Property_txtExpireDate,
+                dt.Property_txtQuantity,
+                dt.Property_intTotal,
+                dt.Property_txtNoSo,
+                dt.Property_txtNIK
+        };
+        String whereClause = dt.Property_txtNoSo + "=?";
+        String[] whereArgs = new String[]{
+                String.valueOf(id)
+        };
+        String groupBy = null;
+        String havingBy = null;
+        String orderBy = dt.Property_dtDate;
+
+        Cursor cursor = db.query(TABLE_CONTACTS,
+                tableColumns,
+                whereClause,
+                whereArgs,
+                groupBy,
+                havingBy,
+                orderBy);
+
             if (cursor.moveToFirst()) {
-                contactList = new ArrayList<tSalesProductQuantityDetailData>();
                 do {
                     tSalesProductQuantityDetailData contact = new tSalesProductQuantityDetailData();
-                    contact.setIntId(String.valueOf(cursor.getString(0)));
+                    contact.setIntId(cursor.getString(0));
                     contact.set_dtDate(cursor.getString(1));
                     contact.set_intPrice(cursor.getString(2));
                     contact.set_txtCodeProduct(cursor.getString(3));
@@ -123,14 +144,12 @@ public class tSalesProductQuantityDetailDA {
                     contact.setTxtProduct(cursor.getString(5));
                     contact.setTxtExpireDate(cursor.getString(6));
                     contact.setTxtQuantity(cursor.getString(7));
-                    contact.set_txtNIK(cursor.getString(8));
-                    contact.set_intTotal(cursor.getString(9));
-                    contact.set_txtNoSo(cursor.getString(10));
-                    contact.set_intActive(cursor.getString(11));
+                    contact.set_intTotal(cursor.getString(8));
+                    contact.set_txtNoSo(cursor.getString(9));
+                    contact.set_txtNIK(cursor.getString(10));
                     contactList.add(contact);
                 } while (cursor.moveToNext());
             }
-        }
         cursor.close();
         return contactList;
     }
@@ -170,7 +189,7 @@ public class tSalesProductQuantityDetailDA {
     public List<tSalesProductQuantityDetailData> getAllDataByHeaderId(SQLiteDatabase db, String id) {
         List<tSalesProductQuantityDetailData> contactList = new ArrayList<tSalesProductQuantityDetailData>();
         tSalesProductQuantityDetailData dt = new tSalesProductQuantityDetailData();
-        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intId + "='" + id + "' ORDER BY " + dt.Property_dtDate + " desc";
+        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_txtNoSo + "='" + id + "' ORDER BY " + dt.Property_dtDate + " desc";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -255,7 +274,7 @@ public class tSalesProductQuantityDetailDA {
         return intres;
     }
 
-    public List<tSalesProductQuantityDetailData> getAllDataByDetailId(SQLiteDatabase db, String id) {
+    public List<tSalesProductQuantityDetailData> getAllDataByNoso(SQLiteDatabase db, String id) {
         tSalesProductQuantityDetailData dt = new tSalesProductQuantityDetailData();
         List<tSalesProductQuantityDetailData> contactList = new ArrayList<tSalesProductQuantityDetailData>();
         String[] tableColumns = new String[] {
@@ -351,5 +370,14 @@ public class tSalesProductQuantityDetailDA {
         }
         cursor.close();
         return contactList;
+    }
+
+    public void deleteByID(SQLiteDatabase db, String id){
+        tSalesProductQuantityDetailData dt = new tSalesProductQuantityDetailData();
+        String whereClause = dt.Property_intId + " = ?";
+        String[] whereArgs = new String[]{
+                String.valueOf(id)
+        };
+        db.delete(TABLE_CONTACTS, whereClause, whereArgs);
     }
 }
