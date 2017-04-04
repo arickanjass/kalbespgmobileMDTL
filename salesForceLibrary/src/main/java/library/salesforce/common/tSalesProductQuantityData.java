@@ -1,5 +1,7 @@
 package library.salesforce.common;
 
+import android.database.sqlite.SQLiteDatabase;
+
 /**
  * Created by Rian Andrivani on 3/16/2017.
  */
