@@ -29,12 +29,19 @@ public class tSalesProductQuantityDetailBL extends clsMainBL{
         return dtDetail;
     }
 
-    public List<tSalesProductQuantityDetailData> GetDataByNoSO(String Noso) {
-        SQLiteDatabase db =getDb();
-        tSalesProductQuantityDetailDA _tSalesProductQuantityDetailDA = new tSalesProductQuantityDetailDA(db);
-        List<tSalesProductQuantityDetailData> ListData = _tSalesProductQuantityDetailDA.getDataByNoSo(db, Noso);
-        db.close();
+    public List<tSalesProductQuantityDetailData> GetDataByNoSO(String id) {
+        SQLiteDatabase _db =getDb();
+        List<tSalesProductQuantityDetailData> ListData = new tSalesProductQuantityDetailDA(_db).getDataByNoSo(_db, id);
         return ListData;
     }
 
+    public void deleteData(tSalesProductQuantityDetailData dt){
+        SQLiteDatabase _db = getDb();
+        new tSalesProductQuantityDetailDA(_db).deleteByID(_db, dt.getIntId());
+    }
+
+    public void deleteDataByProductId(String id) {
+        SQLiteDatabase _db=getDb();
+        new tSalesProductQuantityDetailDA(_db).deleteByID(_db, id);
+    }
 }

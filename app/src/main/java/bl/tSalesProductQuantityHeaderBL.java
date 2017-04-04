@@ -88,14 +88,10 @@ public class tSalesProductQuantityHeaderBL extends clsMainBL {
         return dt ;
     }
 
-    public List<tSalesProductQuantityData> getDataByNoSO(String quantityStock){
+    public List<tSalesProductQuantityData> getDataByNoSO(String id){
         SQLiteDatabase _db = getDb();
-        tSalesProductQuantityDA _tSalesQuantityHeaderDA = new tSalesProductQuantityDA(_db);
-        List<tSalesProductQuantityData> dt = _tSalesQuantityHeaderDA.getDataByQuantityStock(_db,quantityStock);
-        if(dt == null){
-            dt = new ArrayList<>(0);
-        }
-        return dt ;
+        List<tSalesProductQuantityData> dtDetail = new tSalesProductQuantityDA(_db).getDataByQuantityStock(_db, id);
+        return dtDetail;
     }
 
     public List<tSalesProductQuantityData> getAllSalesBydtDateCheckin(String date){
@@ -166,5 +162,10 @@ public class tSalesProductQuantityHeaderBL extends clsMainBL {
         org.json.simple.JSONArray JsonArray= _help.ResultJsonArray(JsonData);
         _db.close();
         return JsonArray;
+    }
+
+    public void deleteData(tSalesProductQuantityData dt) {
+        SQLiteDatabase _db=getDb();
+        new tSalesProductQuantityDA(_db).deleteByNoso(_db, dt.get_txtQuantityStock());
     }
 }
