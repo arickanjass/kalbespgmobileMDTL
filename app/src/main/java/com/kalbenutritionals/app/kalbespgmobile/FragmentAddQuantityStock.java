@@ -267,7 +267,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                     alertDialog.setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            save2();
+
                             viewQuantityFragment();
 
                             _clsMainActivity.showCustomToast(getActivity(), "Saved", true);
@@ -571,6 +571,8 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
     private void previewCaptureAfterImage2(Bitmap photo){
         tAbsenUserData absenUserData = new tAbsenUserBL().getDataCheckInActive();
         tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
+        String noSO = tv_noso.getText().toString();
+        List<tSalesProductQuantityDetailData> productDetail = new tSalesProductQuantityDetailBL().GetDataByNoSO(noSO);
 //        ModelListview modelListview = new ModelListview();
         try {
             Bitmap bitmap = new clsMainActivity().resizeImageForBlob(photo);
@@ -598,6 +600,22 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
             byte[] pht = output.toByteArray();
             after2.setImageBitmap(photo_view);
 
+            arrdataPriv = new ArrayList<ModelListview>();
+            double qntySum=0;
+            double qntyNum;
+            double value;
+            double price;
+            String result = "0";
+            String resultItem = "0";
+
+            for (int i = 0; i < productDetail.size(); i++) {
+                price = Double.parseDouble(String.valueOf(productDetail.get(i).get_intPrice()));
+                value = Double.parseDouble(String.valueOf(productDetail.get(i).getTxtQuantity()));
+                qntyNum =  price * value;
+                qntySum += qntyNum;
+                result = new clsMainActivity().convertNumberDec(qntySum);
+            }
+
             java.text.DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Calendar cal = Calendar.getInstance();
             clsMainActivity _clsMainActivity = new clsMainActivity();
@@ -617,6 +635,8 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                 dtQuantityData.set_txtBranchName(absenUserData.get_txtBranchName());
                 dtQuantityData.set_intIdAbsenUser(absenUserData.get_intId());
                 dtQuantityData.set_txtNIK(dataUserActive.get_TxtEmpId());
+                dtQuantityData.set_intSumItem(String.valueOf(productDetail.size()));
+                dtQuantityData.set_intSumAmount(String.valueOf(result));
                 dtQuantityData.set_txtAfterImg2(pht);
             }
             dtQuantityData.set_intSubmit("1");
@@ -633,6 +653,8 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
     private void previewCaptureBeforeImage1(Bitmap photo){
         tAbsenUserData absenUserData = new tAbsenUserBL().getDataCheckInActive();
         tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
+        String noSO = tv_noso.getText().toString();
+        List<tSalesProductQuantityDetailData> productDetail = new tSalesProductQuantityDetailBL().GetDataByNoSO(noSO);
 //        ModelListview modelListview = new ModelListview();
         try {
             Bitmap bitmap = new clsMainActivity().resizeImageForBlob(photo);
@@ -660,6 +682,22 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
             byte[] pht = output.toByteArray();
             before1.setImageBitmap(photo_view);
 
+            arrdataPriv = new ArrayList<ModelListview>();
+            double qntySum=0;
+            double qntyNum;
+            double value;
+            double price;
+            String result = "0";
+            String resultItem = "0";
+
+            for (int i = 0; i < productDetail.size(); i++) {
+                price = Double.parseDouble(String.valueOf(productDetail.get(i).get_intPrice()));
+                value = Double.parseDouble(String.valueOf(productDetail.get(i).getTxtQuantity()));
+                qntyNum =  price * value;
+                qntySum += qntyNum;
+                result = new clsMainActivity().convertNumberDec(qntySum);
+            }
+
             java.text.DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Calendar cal = Calendar.getInstance();
             clsMainActivity _clsMainActivity = new clsMainActivity();
@@ -679,6 +717,8 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                 dtQuantityData.set_txtBranchName(absenUserData.get_txtBranchName());
                 dtQuantityData.set_intIdAbsenUser(absenUserData.get_intId());
                 dtQuantityData.set_txtNIK(dataUserActive.get_TxtEmpId());
+                dtQuantityData.set_intSumItem(String.valueOf(productDetail.size()));
+                dtQuantityData.set_intSumAmount(String.valueOf(result));
                 dtQuantityData.set_txtBeforeImg1(pht);
             }
             dtQuantityData.set_intSubmit("1");
@@ -695,6 +735,8 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
     private void previewCaptureBeforeImage2(Bitmap photo){
         tAbsenUserData absenUserData = new tAbsenUserBL().getDataCheckInActive();
         tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
+        String noSO = tv_noso.getText().toString();
+        List<tSalesProductQuantityDetailData> productDetail = new tSalesProductQuantityDetailBL().GetDataByNoSO(noSO);
 //        ModelListview modelListview = new ModelListview();
         try {
             Bitmap bitmap = new clsMainActivity().resizeImageForBlob(photo);
@@ -722,6 +764,22 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
             byte[] pht = output.toByteArray();
             before2.setImageBitmap(photo_view);
 
+            arrdataPriv = new ArrayList<ModelListview>();
+            double qntySum=0;
+            double qntyNum;
+            double value;
+            double price;
+            String result = "0";
+            String resultItem = "0";
+
+            for (int i = 0; i < productDetail.size(); i++) {
+                price = Double.parseDouble(String.valueOf(productDetail.get(i).get_intPrice()));
+                value = Double.parseDouble(String.valueOf(productDetail.get(i).getTxtQuantity()));
+                qntyNum =  price * value;
+                qntySum += qntyNum;
+                result = new clsMainActivity().convertNumberDec(qntySum);
+            }
+
             java.text.DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Calendar cal = Calendar.getInstance();
             clsMainActivity _clsMainActivity = new clsMainActivity();
@@ -741,6 +799,8 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                 dtQuantityData.set_txtBranchName(absenUserData.get_txtBranchName());
                 dtQuantityData.set_intIdAbsenUser(absenUserData.get_intId());
                 dtQuantityData.set_txtNIK(dataUserActive.get_TxtEmpId());
+                dtQuantityData.set_intSumItem(String.valueOf(productDetail.size()));
+                dtQuantityData.set_intSumAmount(String.valueOf(result));
                 dtQuantityData.set_txtBeforeImg2(pht);
             }
             dtQuantityData.set_intSubmit("1");
@@ -907,34 +967,6 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         new tSalesProductQuantityDetailBL().deleteData(dtDetail);
         // new tSalesProductQuantityHeaderBL().deleteData(dtDetail);
         TableProduct();
-    }
-
-    private void save() {
-        tSalesProductQuantityData dt = new tSalesProductQuantityData();
-        tAbsenUserData absenUserData = new tAbsenUserBL().getDataCheckInActive();
-        ModelListview modelListview = new ModelListview();
-        java.text.DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Calendar cal = Calendar.getInstance();
-
-        clsMainActivity _clsMainActivity = new clsMainActivity();
-
-        dt.set_intId(_clsMainActivity.GenerateGuid());
-        dt.set_txtQuantityStock(tv_noso.getText().toString());
-        dt.set_dtDate(dateFormat.format(cal.getTime()));
-        dt.set_OutletCode(absenUserData.get_txtOutletCode());
-        dt.set_OutletName(absenUserData.get_txtBranchName());
-        dt.set_txtKeterangan(edKeterangan.getText().toString());
-        dt.set_UserId(absenUserData.get_txtUserId());
-        dt.set_txtRoleId(absenUserData.get_txtRoleId());
-        dt.set_intSubmit("1");
-        dt.set_intSync("0");
-        dt.set_txtBranchCode(absenUserData.get_txtBranchCode());
-        dt.set_txtBranchName(absenUserData.get_txtBranchName());
-        dt.set_intIdAbsenUser(absenUserData.get_intId());
-        dt.set_txtNIK(modelListview.get_NIK());
-//      dt.set_txtAfterImg1(phtAfter1);
-
-//        new tSalesProductQuantityHeaderBL().SaveData(dt);
     }
 
     private void save2() {
