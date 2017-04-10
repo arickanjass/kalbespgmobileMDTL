@@ -1,7 +1,5 @@
 package library.salesforce.common;
 
-import android.database.sqlite.SQLiteDatabase;
-
 /**
  * Created by Rian Andrivani on 3/16/2017.
  */
@@ -135,7 +133,7 @@ public class tSalesProductQuantityData {
         this._txtRoleId = _txtRoleId;
     }
 
-    public byte[] get_txtAfterImg1() {
+    public synchronized byte[] get_txtAfterImg1() {
         return _txtAfterImg1;
     }
 
