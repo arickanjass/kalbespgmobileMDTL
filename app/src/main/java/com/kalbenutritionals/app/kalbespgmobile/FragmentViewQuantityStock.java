@@ -2,9 +2,12 @@ package com.kalbenutritionals.app.kalbespgmobile;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -16,10 +19,23 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.daimajia.slider.library.Transformers.BaseTransformer;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,10 +45,10 @@ import java.util.Locale;
 import java.util.Map;
 
 import bl.tAbsenUserBL;
-import bl.tSalesProductDetailBL;
-import bl.tSalesProductHeaderBL;
 import bl.tSalesProductQuantityDetailBL;
 import bl.tSalesProductQuantityHeaderBL;
+import bl.tSalesQuantityImageAfterBL;
+import bl.tSalesQuantityImageBeforeBL;
 import edu.swu.pulltorefreshswipemenulistview.library.PullToRefreshSwipeMenuListView;
 import edu.swu.pulltorefreshswipemenulistview.library.pulltorefresh.interfaces.IXListViewListener;
 import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.bean.SwipeMenu;
@@ -42,9 +58,12 @@ import edu.swu.pulltorefreshswipemenulistview.library.util.RefreshTime;
 import library.salesforce.common.AppAdapter;
 import library.salesforce.common.clsSwipeList;
 import library.salesforce.common.tAbsenUserData;
-import library.salesforce.common.tSalesProductDetailData;
 import library.salesforce.common.tSalesProductQuantityData;
 import library.salesforce.common.tSalesProductQuantityDetailData;
+import library.salesforce.common.tSalesQuantityImageAfterData;
+import library.salesforce.common.tSalesQuantityImageBeforeData;
+
+import static com.kalbenutritionals.app.kalbespgmobile.R.id.textView9Quantity;
 
 /**
  * Created by Rian Andrivani on 16/03/2017.
@@ -60,7 +79,16 @@ public class FragmentViewQuantityStock extends Fragment implements IXListViewLis
     private static Map<String, HashMap> mapMenu;
     static List<tSalesProductQuantityData> dt;
     static List<tSalesProductQuantityDetailData> data;
+    static List<tSalesQuantityImageAfterData> dataImage;
+    static List<tSalesQuantityImageBeforeData> dataImageBefore;
     private FloatingActionButton fab;
+
+    private SliderLayout mDemoSlider;
+
+    private static Bitmap mybitmap1;
+    private static Bitmap mybitmap2;
+    private static Bitmap mybitmap3;
+    private static Bitmap mybitmap4;
 
     @Nullable
     @Override
@@ -243,6 +271,240 @@ public class FragmentViewQuantityStock extends Fragment implements IXListViewLis
         alertD.show();
     }
 
+    private void viewImage(Context ctx, final int position) {
+        LayoutInflater layoutInflater = LayoutInflater.from(this.getContext());
+        final View promptView = layoutInflater.inflate(R.layout.fragment_quantity_view_image, null);
+
+        final LinearLayout lnlayout = (LinearLayout) promptView.findViewById(R.id.lnlayoutQuantity);
+
+        lnlayout.setFocusable(true);
+        lnlayout.setFocusableInTouchMode(true);
+
+        final TextView etDesc = (TextView) promptView.findViewById(R.id.etNamaQuantity);
+        final ImageButton img1 = (ImageButton) promptView.findViewById(R.id.imageButtonQuantity);
+        final ImageButton img2 = (ImageButton) promptView.findViewById(R.id.imageButton2Quantity);
+        final ImageButton img3 = (ImageButton) promptView.findViewById(R.id.imageButton3Quantity);
+        final ImageButton img4 = (ImageButton) promptView.findViewById(R.id.imageButton4Quantity);
+        final Button btnSave = (Button) promptView.findViewById(R.id.btnSaveQuantity);
+        final RadioButton rbKalbe = (RadioButton) promptView.findViewById(R.id.rbKalbeQuantity);
+        final RadioButton rbCompetitor = (RadioButton) promptView.findViewById(R.id.rbCompetitorQuantity);
+        final TextView status = (TextView) promptView.findViewById(textView9Quantity);
+        mDemoSlider = (SliderLayout) promptView.findViewById(R.id.sliderQuantity);
+
+        String statusText = dt.get(position).get_intSubmit().equals("1") && dt.get(position).get_intSync().equals("1") ? "Sync" : "Submit";
+        dataImage = new tSalesQuantityImageAfterBL().getDataHeaderId(dt.get(position).get_intId());
+        dataImageBefore = new tSalesQuantityImageBeforeBL().getDataHeaderId(dt.get(position).get_intId());
+
+        status.setText("Status : " +statusText);
+
+        rbKalbe.setTextColor(Color.BLACK);
+        rbKalbe.setEnabled(false);
+
+        img1.setEnabled(true);
+        img2.setEnabled(true);
+        img3.setEnabled(true);
+        img4.setEnabled(true);
+
+        btnSave.setVisibility(View.GONE);
+        etDesc.setText(dt.get(position).get_txtKeterangan());
+
+        File folder = new File(Environment.getExternalStorageDirectory().toString() + "/Android/data/Kalbespgmobile/tempdata");
+        folder.mkdir();
+
+//        final byte[] imgFile = dt.get(position).get_txtBeforeImg1();
+        final byte[] imgFile = dataImage.get(position).get_after1();
+        if (imgFile != null) {
+            mybitmap1 = BitmapFactory.decodeByteArray(imgFile, 0, imgFile.length);
+            Bitmap bitmap = Bitmap.createScaledBitmap(mybitmap1, 150, 150, true);
+            img1.setImageBitmap(bitmap);
+
+            File file = null;
+            try {
+                file = File.createTempFile("image-", ".jpg", new File(Environment.getExternalStorageDirectory().toString() + "/Android/data/Kalbespgmobile/tempdata"));
+                FileOutputStream out = new FileOutputStream(file);
+                out.write(imgFile);
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            TextSliderView textSliderView = new TextSliderView(getContext());
+            textSliderView
+                    .description("After 1")
+                    .image(file)
+                    .setScaleType(BaseSliderView.ScaleType.Fit)
+                    .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
+                        @Override
+                        public void onSliderClick(BaseSliderView slider) {
+                            new clsMainActivity().zoomImage(mybitmap1, getActivity());
+                        }
+                    });
+
+            mDemoSlider.addSlider(textSliderView);
+        } else {
+            img1.setVisibility(View.GONE);
+        }
+
+        final byte[] imgFile2 = dataImage.get(position).get_after2();
+        if (imgFile2 != null) {
+            mybitmap2 = BitmapFactory.decodeByteArray(imgFile2, 0, imgFile2.length);
+            Bitmap bitmap = Bitmap.createScaledBitmap(mybitmap2, 150, 150, true);
+            img2.setImageBitmap(bitmap);
+
+            File file = null;
+            try {
+                file = File.createTempFile("image-", ".jpg", new File(Environment.getExternalStorageDirectory().toString() + "/Android/data/Kalbespgmobile/tempdata"));
+                FileOutputStream out = new FileOutputStream(file);
+                out.write(imgFile2);
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            TextSliderView textSliderView = new TextSliderView(getContext());
+            textSliderView
+                    .description("After 2")
+                    .image(file)
+                    .setScaleType(BaseSliderView.ScaleType.Fit)
+                    .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
+                        @Override
+                        public void onSliderClick(BaseSliderView slider) {
+                            new clsMainActivity().zoomImage(mybitmap2, getActivity());
+                        }
+                    });
+
+            mDemoSlider.addSlider(textSliderView);
+        } else {
+            img2.setVisibility(View.GONE);
+        }
+
+        final byte[] imgFile3 = dataImageBefore.get(position).get_before1();
+        if (imgFile3 != null) {
+            mybitmap3 = BitmapFactory.decodeByteArray(imgFile3, 0, imgFile3.length);
+            Bitmap bitmap = Bitmap.createScaledBitmap(mybitmap3, 150, 150, true);
+            img3.setImageBitmap(bitmap);
+
+            File file = null;
+            try {
+                file = File.createTempFile("image-", ".jpg", new File(Environment.getExternalStorageDirectory().toString() + "/Android/data/Kalbespgmobile/tempdata"));
+                FileOutputStream out = new FileOutputStream(file);
+                out.write(imgFile3);
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            TextSliderView textSliderView = new TextSliderView(getContext());
+            textSliderView
+                    .description("Before 1")
+                    .image(file)
+                    .setScaleType(BaseSliderView.ScaleType.Fit)
+                    .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
+                        @Override
+                        public void onSliderClick(BaseSliderView slider) {
+                            new clsMainActivity().zoomImage(mybitmap3, getActivity());
+                        }
+                    });
+
+            mDemoSlider.addSlider(textSliderView);
+        } else {
+            img3.setVisibility(View.GONE);
+        }
+
+        final byte[] imgFile4 = dataImageBefore.get(position).get_before2();
+        if (imgFile4 != null) {
+            mybitmap4 = BitmapFactory.decodeByteArray(imgFile4, 0, imgFile4.length);
+            Bitmap bitmap = Bitmap.createScaledBitmap(mybitmap1, 150, 150, true);
+            img4.setImageBitmap(bitmap);
+
+            File file = null;
+            try {
+                file = File.createTempFile("image-", ".jpg", new File(Environment.getExternalStorageDirectory().toString() + "/Android/data/Kalbespgmobile/tempdata"));
+                FileOutputStream out = new FileOutputStream(file);
+                out.write(imgFile4);
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            TextSliderView textSliderView = new TextSliderView(getContext());
+            textSliderView
+                    .description("Before 2")
+                    .image(file)
+                    .setScaleType(BaseSliderView.ScaleType.Fit)
+                    .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
+                        @Override
+                        public void onSliderClick(BaseSliderView slider) {
+                            new clsMainActivity().zoomImage(mybitmap4, getActivity());
+                        }
+                    });
+
+            mDemoSlider.addSlider(textSliderView);
+        } else {
+            img4.setVisibility(View.GONE);
+        }
+
+        if (imgFile == null || imgFile2 == null || imgFile3 == null || imgFile4 == null) {
+            mDemoSlider.stopAutoCycle();
+            mDemoSlider.setPagerTransformer(false, new BaseTransformer() {
+                @Override
+                protected void onTransform(View view, float v) {
+                }
+            });
+        } else {
+            mDemoSlider.stopAutoCycle();
+            mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Default);
+            mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+            mDemoSlider.setCustomAnimation(new DescriptionAnimation());
+            mDemoSlider.setDuration(4000);
+        }
+
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this.getContext());
+        alertDialogBuilder.setView(promptView);
+        alertDialogBuilder
+                .setCancelable(false)
+                .setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        new clsMainActivity().deleteTempFolder();
+                        dialog.cancel();
+                    }
+                });
+        final AlertDialog alertD = alertDialogBuilder.create();
+        alertD.show();
+
+        img1.setClickable(true);
+        img1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new clsMainActivity().zoomImage(mybitmap1, getActivity());
+            }
+        });
+
+        img2.setClickable(true);
+        img2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new clsMainActivity().zoomImage(mybitmap2, getActivity());
+            }
+        });
+
+        img3.setClickable(true);
+        img3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new clsMainActivity().zoomImage(mybitmap3, getActivity());
+            }
+        });
+
+        img4.setClickable(true);
+        img4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new clsMainActivity().zoomImage(mybitmap4, getActivity());
+            }
+        });
+    }
+
     private void loadData() {
         tAbsenUserData dtActive = new tAbsenUserBL().getDataCheckInActive();
 
@@ -277,12 +539,17 @@ public class FragmentViewQuantityStock extends Fragment implements IXListViewLis
         mHandler = new Handler();
 
         HashMap<String, String> mapView = new HashMap<String, String>();
+        HashMap<String, String> mapImage = new HashMap<String, String>();
 
         mapView.put("name", "View");
         mapView.put("bgColor", "#3498db");
 
+        mapImage.put("name", "View");
+        mapImage.put("bgColor", "#FF0000");
+
         mapMenu = new HashMap<String, HashMap>();
         mapMenu.put("0", mapView);
+        mapMenu.put("1", mapImage);
 
         SwipeMenuCreator creator = clsMain.setCreator(getActivity().getApplicationContext(), mapMenu);
         mListView.setMenuCreator(creator);
@@ -293,6 +560,9 @@ public class FragmentViewQuantityStock extends Fragment implements IXListViewLis
                 switch (index) {
                     case 0:
                         viewList(getActivity().getApplicationContext(), position);
+                        break;
+                    case 1:
+                        viewImage(getActivity().getApplicationContext(), position);
                 }
             }
         });

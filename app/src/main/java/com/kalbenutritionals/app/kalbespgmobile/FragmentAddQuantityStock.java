@@ -1,6 +1,5 @@
 package com.kalbenutritionals.app.kalbespgmobile;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -33,8 +32,8 @@ import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -49,31 +48,31 @@ import bl.clsMainBL;
 import bl.mCounterNumberBL;
 import bl.mEmployeeSalesProductBL;
 import bl.tAbsenUserBL;
-import bl.tSalesProductHeaderBL;
 import bl.tSalesProductQuantityDetailBL;
 import bl.tSalesProductQuantityHeaderBL;
+import bl.tSalesQuantityImageAfterBL;
+import bl.tSalesQuantityImageBeforeBL;
+import bl.tSalesQuantityImageDetailBL;
 import bl.tUserLoginBL;
 import edu.swu.pulltorefreshswipemenulistview.library.PullToRefreshSwipeMenuListView;
 import edu.swu.pulltorefreshswipemenulistview.library.pulltorefresh.interfaces.IXListViewListener;
 import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.bean.SwipeMenu;
 import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.OnMenuItemClickListener;
 import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.SwipeMenuCreator;
-import edu.swu.pulltorefreshswipemenulistview.library.util.RefreshTime;
 import library.salesforce.common.AppAdapter;
 import library.salesforce.common.ModelListview;
 import library.salesforce.common.clsHelper;
 import library.salesforce.common.clsSwipeList;
 import library.salesforce.common.mEmployeeSalesProductData;
 import library.salesforce.common.tAbsenUserData;
-import library.salesforce.common.tSalesProductHeaderData;
 import library.salesforce.common.tSalesProductQuantityData;
 import library.salesforce.common.tSalesProductQuantityDetailData;
+import library.salesforce.common.tSalesQuantityImageAfterData;
+import library.salesforce.common.tSalesQuantityImageBeforeData;
+import library.salesforce.common.tSalesQuantityImageDetailData;
 import library.salesforce.common.tUserLoginData;
 import library.salesforce.dal.clsHardCode;
 import library.salesforce.dal.enumCounterData;
-import library.salesforce.dal.tSalesProductQuantityDetailDA;
-
-import static com.kalbenutritionals.app.kalbespgmobile.R.id.imageView;
 
 /**
  * Created by Rian Andrivani on 16/03/2017.
@@ -117,14 +116,14 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
     private static final int CAMERA_REQUEST = 1888;
     private static final int CAMERA_REQUEST2 = 1889;
     private static final int CAMERA_REQUEST3 = 1890;
-    private static final int CAMERA_REQUEST4 = 1891;
+    private static final int CAMERA_REQUEST4 = 130;
     private static final String IMAGE_DIRECTORY_NAME = "Image Activity";
 
     private tSalesProductQuantityData dtQuantityData;
 
     private static Bitmap photoAfter1, photoAfter2, photoBefore1, photoBefore2;
     private static ByteArrayOutputStream output = new ByteArrayOutputStream();
-    private byte[] phtAfter1;
+    private static byte[] phtAfter1;
     private static byte[] phtAfter2;
     private static byte[] phtBefore1;
     private static byte[] phtBefore2;
@@ -155,7 +154,6 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         txtHDId.setText(String.valueOf(new clsMainActivity().GenerateGuid()));
 
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(edKeterangan.getWindowToken(), 0);
 
@@ -188,18 +186,54 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         phtBefore1 = null;
         phtBefore2 = null;
 
-        /*if (dtQuantityData.get_intId() == null){
-            byte[] imgAfterFile = dtQuantityData.get_txtAfterImg1();
-            if (imgAfterFile != null) {
-                Bitmap myBitmap = BitmapFactory.decodeByteArray(imgAfterFile, 0, imgAfterFile.length);
+        if (dtQuantityData.get_intId() != null){
+            byte[] imgAfter1File = dtQuantityData.get_txtAfterImg1();
+            if (imgAfter1File != null) {
+                Bitmap myBitmap = BitmapFactory.decodeByteArray(imgAfter1File, 0, imgAfter1File.length);
                 after1.setImageBitmap(myBitmap);
             }
-        }*/
+
+            byte[] imgAfter2File = dtQuantityData.get_txtAfterImg2();
+            if (imgAfter2File != null) {
+                Bitmap myBitmap = BitmapFactory.decodeByteArray(imgAfter2File, 0, imgAfter2File.length);
+                after2.setImageBitmap(myBitmap);
+            }
+
+            byte[] imgBefore1File = dtQuantityData.get_txtBeforeImg1();
+            if (imgBefore1File != null) {
+                Bitmap myBitmap = BitmapFactory.decodeByteArray(imgBefore1File, 0, imgBefore1File.length);
+                before1.setImageBitmap(myBitmap);
+            }
+
+            byte[] imgBefore2File = dtQuantityData.get_txtBeforeImg2();
+            if (imgBefore2File != null) {
+                Bitmap myBitmap = BitmapFactory.decodeByteArray(imgBefore2File, 0, imgBefore2File.length);
+                before2.setImageBitmap(myBitmap);
+            }
+        }
 
         if (photoAfter1 != null){
             after1.setImageBitmap(photoAfter1);
             photoAfter1.compress(Bitmap.CompressFormat.PNG, 100, output);
             phtAfter1 = output.toByteArray();
+        }
+
+        if (photoAfter2 != null){
+            after2.setImageBitmap(photoAfter2);
+            photoAfter2.compress(Bitmap.CompressFormat.PNG, 100, output);
+            phtAfter2 = output.toByteArray();
+        }
+
+        if (photoBefore1 != null){
+            before1.setImageBitmap(photoBefore1);
+            photoBefore1.compress(Bitmap.CompressFormat.PNG, 100, output);
+            phtBefore1 = output.toByteArray();
+        }
+
+        if (photoBefore2 != null){
+            before2.setImageBitmap(photoBefore2);
+            photoBefore2.compress(Bitmap.CompressFormat.PNG, 100, output);
+            phtBefore2 = output.toByteArray();
         }
 
         // click image button
@@ -258,16 +292,20 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
             public void onClick(View view) {
                 if (edKeterangan.getText().toString().equals("")) {
                     _clsMainActivity.showCustomToast(getActivity(), "Please fill Description...", false);
-                } /*else if (phtAfter1 == null){
-                    _clsMainActivity.showCustomToast(getContext(), "Please take at least 1 photo for after and before", false);
-                }*/ else {
+                } else if (phtAfter1 == null && phtAfter2 == null){
+                    _clsMainActivity.showCustomToast(getContext(), "Please take at least 1 photo for after", false);
+                } else if (phtBefore1 == null && phtBefore2 == null){
+                    _clsMainActivity.showCustomToast(getContext(), "Please take at least 1 photo for before", false);
+                } else {
                     final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
                     alertDialog.setTitle("Confirm");
                     alertDialog.setMessage("Are you sure?");
                     alertDialog.setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-
+                            save();
+                            saveImageAfter();
+                            saveImageBefore();
                             viewQuantityFragment();
 
                             _clsMainActivity.showCustomToast(getActivity(), "Saved", true);
@@ -441,56 +479,130 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
     }
 
     // put image from camera
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CAMERA_REQUEST /*&& resultCode == Activity.RESULT_OK*/) {
-            Bitmap bitmap;
-            BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-            String uri = uriImage.getPath().toString();
+        if (requestCode == CAMERA_REQUEST) {
+            if (resultCode == -1) {
+                try {
+                    Bitmap bitmap;
+                    BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+                    String uri = uriImage.getPath().toString();
 
-            bitmap = BitmapFactory.decodeFile(uri, bitmapOptions);
+                    bitmap = BitmapFactory.decodeFile(uri, bitmapOptions);
 
-            previewCaptureAfterImage1(bitmap);
+                    previewCaptureAfterImage1(bitmap);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            else if (resultCode == 0) {
+                new clsMainActivity().showCustomToast(getContext(), "User canceled to capture image", false);
+            }  else {
+                try {
+                    photoAfter1 = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), data.getData());
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             /*
             Bitmap photoAfter1 = (Bitmap) data.getExtras().get("data");
             Bitmap photo_view = Bitmap.createScaledBitmap(photoAfter1, 150, 150, true);
             photoAfter1.compress(Bitmap.CompressFormat.PNG, 100, output);
             after1.setImageBitmap(photo_view);
             phtAfter1 = output.toByteArray();*/
-        } else if (requestCode == CAMERA_REQUEST2 /*&& resultCode == Activity.RESULT_OK*/) {
-            Bitmap bitmap;
-            BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-            String uri = uriImage.getPath().toString();
+        } else if (requestCode == CAMERA_REQUEST2) {
+            if (resultCode == -1) {
+                try {
+                    Bitmap bitmap;
+                    BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+                    String uri = uriImage.getPath().toString();
 
-            bitmap = BitmapFactory.decodeFile(uri, bitmapOptions);
+                    bitmap = BitmapFactory.decodeFile(uri, bitmapOptions);
 
-            previewCaptureAfterImage2(bitmap);
-        } else if (requestCode == CAMERA_REQUEST3 /*&& resultCode == Activity.RESULT_OK*/) {
-            Bitmap bitmap;
-            BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-            String uri = uriImage.getPath().toString();
+                    previewCaptureAfterImage2(bitmap);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
 
-            bitmap = BitmapFactory.decodeFile(uri, bitmapOptions);
+            else if (resultCode == 0) {
+                new clsMainActivity().showCustomToast(getContext(), "User canceled to capture image", false);
+            }  else {
+                try {
+                    photoAfter2 = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), data.getData());
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else if (requestCode == CAMERA_REQUEST3) {
+            if (resultCode == -1) {
+                try {
+                    Bitmap bitmap;
+                    BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+                    String uri = uriImage.getPath().toString();
 
-            previewCaptureBeforeImage1(bitmap);
-        } else if (requestCode == CAMERA_REQUEST4 /*&& resultCode == Activity.RESULT_OK*/) {
-            Bitmap bitmap;
-            BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-            String uri = uriImage.getPath().toString();
+                    bitmap = BitmapFactory.decodeFile(uri, bitmapOptions);
 
-            bitmap = BitmapFactory.decodeFile(uri, bitmapOptions);
+                    previewCaptureBeforeImage1(bitmap);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
 
-            previewCaptureBeforeImage2(bitmap);
+            else if (resultCode == 0) {
+                new clsMainActivity().showCustomToast(getContext(), "User canceled to capture image", false);
+            }  else {
+                try {
+                    photoBefore1 = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), data.getData());
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else if (requestCode == CAMERA_REQUEST4) {
+            if (resultCode == -1) {
+                try {
+                    Bitmap bitmap;
+                    BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+                    String uri = uriImage.getPath().toString();
+
+                    bitmap = BitmapFactory.decodeFile(uri, bitmapOptions);
+
+                    previewCaptureBeforeImage2(bitmap);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            else if (resultCode == 0) {
+                new clsMainActivity().showCustomToast(getContext(), "User canceled to capture image", false);
+            }  else {
+                try {
+                    photoBefore2 = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), data.getData());
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
+
     }
 
     // preview image After 1
     private void previewCaptureAfterImage1(Bitmap photo){
-        tAbsenUserData absenUserData = new tAbsenUserBL().getDataCheckInActive();
-//        tUserLoginData loginData = new tUserLoginData();
-        tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
-        String noSO = tv_noso.getText().toString();
-        List<tSalesProductQuantityDetailData> productDetail = new tSalesProductQuantityDetailBL().GetDataByNoSO(noSO);
-//        ModelListview modelListview = new ModelListview();
+//        tAbsenUserData absenUserData = new tAbsenUserBL().getDataCheckInActive();
+////        tUserLoginData loginData = new tUserLoginData();
+//        tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
+//        String noSO = tv_noso.getText().toString();
+//        List<tSalesProductQuantityDetailData> productDetail = new tSalesProductQuantityDetailBL().GetDataByNoSO(noSO);
+////        ModelListview modelListview = new ModelListview();
         try {
             Bitmap bitmap = new clsMainActivity().resizeImageForBlob(photo);
             after1.setVisibility(View.VISIBLE);
@@ -510,58 +622,54 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                 }
             }
             Bitmap photo_view = Bitmap.createScaledBitmap(bitmap, 150, 150, true);
-            ByteArrayOutputStream blob = new ByteArrayOutputStream();
-//            photo.compress(Bitmap.CompressFormat.JPEG, 0 /*ignored for PNG*/, blob);
-//            Bitmap bitmap1 = Bitmap.createScaledBitmap(photo, 150, 150, false);
-//            bitmap1.compress(Bitmap.CompressFormat.JPEG, 100, blob);
-            byte[] pht = output.toByteArray();
+            phtAfter1 = output.toByteArray();
             after1.setImageBitmap(photo_view);
 
-            arrdataPriv = new ArrayList<ModelListview>();
-            double qntySum=0;
-            double qntyNum;
-            double value;
-            double price;
-            String result = "0";
-            String resultItem = "0";
-
-            for (int i = 0; i < productDetail.size(); i++) {
-                price = Double.parseDouble(String.valueOf(productDetail.get(i).get_intPrice()));
-                value = Double.parseDouble(String.valueOf(productDetail.get(i).getTxtQuantity()));
-                qntyNum =  price * value;
-                qntySum += qntyNum;
-                result = new clsMainActivity().convertNumberDec(qntySum);
-            }
-
-            java.text.DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            Calendar cal = Calendar.getInstance();
-            clsMainActivity _clsMainActivity = new clsMainActivity();
+//            arrdataPriv = new ArrayList<ModelListview>();
+//            double qntySum=0;
+//            double qntyNum;
+//            double value;
+//            double price;
+//            String result = "0";
+//            String resultItem = "0";
+//
+//            for (int i = 0; i < productDetail.size(); i++) {
+//                price = Double.parseDouble(String.valueOf(productDetail.get(i).get_intPrice()));
+//                value = Double.parseDouble(String.valueOf(productDetail.get(i).getTxtQuantity()));
+//                qntyNum =  price * value;
+//                qntySum += qntyNum;
+//                result = new clsMainActivity().convertNumberDec(qntySum);
+//            }
+//
+//            java.text.DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+//            Calendar cal = Calendar.getInstance();
+//            clsMainActivity _clsMainActivity = new clsMainActivity();
 
             if (dtQuantityData == null){
-                dtQuantityData.set_txtAfterImg1(pht);
+                dtQuantityData.set_txtAfterImg1(phtAfter1);
             } else {
-                dtQuantityData.set_intId(txtHDId.getText().toString());
-                dtQuantityData.set_txtQuantityStock(tv_noso.getText().toString());
-                dtQuantityData.set_dtDate(dateFormat.format(cal.getTime()));
-                dtQuantityData.set_OutletCode(absenUserData.get_txtOutletCode());
-                dtQuantityData.set_OutletName(absenUserData.get_txtOutletName());
-                dtQuantityData.set_txtKeterangan(edKeterangan.getText().toString());
-                dtQuantityData.set_UserId(absenUserData.get_txtUserId());
-                dtQuantityData.set_txtRoleId(absenUserData.get_txtRoleId());
-                dtQuantityData.set_txtBranchCode(absenUserData.get_txtBranchCode());
-                dtQuantityData.set_txtBranchName(absenUserData.get_txtBranchName());
-//                dtQuantityData.set_intSumAmount(dt.get_intTotal());
-                dtQuantityData.set_intIdAbsenUser(absenUserData.get_intId());
-                dtQuantityData.set_txtNIK(dataUserActive.get_TxtEmpId());
-                dtQuantityData.set_intSumItem(String.valueOf(productDetail.size()));
-                dtQuantityData.set_intSumAmount(String.valueOf(result));
-                dtQuantityData.set_txtAfterImg1(pht);
+//                dtQuantityData.set_intId(txtHDId.getText().toString());
+//                dtQuantityData.set_txtQuantityStock(tv_noso.getText().toString());
+//                dtQuantityData.set_dtDate(dateFormat.format(cal.getTime()));
+//                dtQuantityData.set_OutletCode(absenUserData.get_txtOutletCode());
+//                dtQuantityData.set_OutletName(absenUserData.get_txtOutletName());
+//                dtQuantityData.set_txtKeterangan(edKeterangan.getText().toString());
+//                dtQuantityData.set_UserId(absenUserData.get_txtUserId());
+//                dtQuantityData.set_txtRoleId(absenUserData.get_txtRoleId());
+//                dtQuantityData.set_txtBranchCode(absenUserData.get_txtBranchCode());
+//                dtQuantityData.set_txtBranchName(absenUserData.get_txtBranchName());
+////                dtQuantityData.set_intSumAmount(dt.get_intTotal());
+//                dtQuantityData.set_intIdAbsenUser(absenUserData.get_intId());
+//                dtQuantityData.set_txtNIK(dataUserActive.get_TxtEmpId());
+//                dtQuantityData.set_intSumItem(String.valueOf(productDetail.size()));
+//                dtQuantityData.set_intSumAmount(String.valueOf(result));
+                dtQuantityData.set_txtAfterImg1(phtAfter1);
             }
-            dtQuantityData.set_intSubmit("1");
-            dtQuantityData.set_intSync("0");
+//            dtQuantityData.set_intSubmit("1");
+//            dtQuantityData.set_intSync("0");
             List<tSalesProductQuantityData> tSalesProductQuantityDatas = new ArrayList<>();
             tSalesProductQuantityDatas.add(dtQuantityData);
-            new tSalesProductQuantityHeaderBL().SaveData(dtQuantityData);
+//            new tSalesProductQuantityHeaderBL().SaveData2(tSalesProductQuantityDatas);
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
@@ -569,11 +677,6 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
 
     // preview image after 2
     private void previewCaptureAfterImage2(Bitmap photo){
-        tAbsenUserData absenUserData = new tAbsenUserBL().getDataCheckInActive();
-        tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
-        String noSO = tv_noso.getText().toString();
-        List<tSalesProductQuantityDetailData> productDetail = new tSalesProductQuantityDetailBL().GetDataByNoSO(noSO);
-//        ModelListview modelListview = new ModelListview();
         try {
             Bitmap bitmap = new clsMainActivity().resizeImageForBlob(photo);
             after2.setVisibility(View.VISIBLE);
@@ -593,57 +696,19 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                 }
             }
             Bitmap photo_view = Bitmap.createScaledBitmap(bitmap, 150, 150, true);
-            ByteArrayOutputStream blob = new ByteArrayOutputStream();
-//            photo.compress(Bitmap.CompressFormat.JPEG, 0 /*ignored for PNG*/, blob);
-//            Bitmap bitmap1 = Bitmap.createScaledBitmap(photo, 150, 150, false);
-//            bitmap1.compress(Bitmap.CompressFormat.JPEG, 100, blob);
-            byte[] pht = output.toByteArray();
+            phtAfter2 = output.toByteArray();
             after2.setImageBitmap(photo_view);
 
-            arrdataPriv = new ArrayList<ModelListview>();
-            double qntySum=0;
-            double qntyNum;
-            double value;
-            double price;
-            String result = "0";
-            String resultItem = "0";
-
-            for (int i = 0; i < productDetail.size(); i++) {
-                price = Double.parseDouble(String.valueOf(productDetail.get(i).get_intPrice()));
-                value = Double.parseDouble(String.valueOf(productDetail.get(i).getTxtQuantity()));
-                qntyNum =  price * value;
-                qntySum += qntyNum;
-                result = new clsMainActivity().convertNumberDec(qntySum);
-            }
-
-            java.text.DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            Calendar cal = Calendar.getInstance();
-            clsMainActivity _clsMainActivity = new clsMainActivity();
-
             if (dtQuantityData == null){
-                dtQuantityData.set_txtAfterImg2(pht);
+                dtQuantityData.set_txtAfterImg2(phtAfter2);
             } else {
-                dtQuantityData.set_intId(txtHDId.getText().toString());
-                dtQuantityData.set_txtQuantityStock(tv_noso.getText().toString());
-                dtQuantityData.set_dtDate(dateFormat.format(cal.getTime()));
-                dtQuantityData.set_OutletCode(absenUserData.get_txtOutletCode());
-                dtQuantityData.set_OutletName(absenUserData.get_txtOutletName());
-                dtQuantityData.set_txtKeterangan(edKeterangan.getText().toString());
-                dtQuantityData.set_UserId(absenUserData.get_txtUserId());
-                dtQuantityData.set_txtRoleId(absenUserData.get_txtRoleId());
-                dtQuantityData.set_txtBranchCode(absenUserData.get_txtBranchCode());
-                dtQuantityData.set_txtBranchName(absenUserData.get_txtBranchName());
-                dtQuantityData.set_intIdAbsenUser(absenUserData.get_intId());
-                dtQuantityData.set_txtNIK(dataUserActive.get_TxtEmpId());
-                dtQuantityData.set_intSumItem(String.valueOf(productDetail.size()));
-                dtQuantityData.set_intSumAmount(String.valueOf(result));
-                dtQuantityData.set_txtAfterImg2(pht);
+                dtQuantityData.set_txtAfterImg2(phtAfter2);
             }
-            dtQuantityData.set_intSubmit("1");
-            dtQuantityData.set_intSync("0");
+//            dtQuantityData.set_intSubmit("1");
+//            dtQuantityData.set_intSync("0");
             List<tSalesProductQuantityData> tSalesProductQuantityDatas = new ArrayList<>();
             tSalesProductQuantityDatas.add(dtQuantityData);
-            new tSalesProductQuantityHeaderBL().SaveData(dtQuantityData);
+//            new tSalesProductQuantityHeaderBL().SaveData2(tSalesProductQuantityDatas);
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
@@ -651,11 +716,6 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
 
     // preview image before 1
     private void previewCaptureBeforeImage1(Bitmap photo){
-        tAbsenUserData absenUserData = new tAbsenUserBL().getDataCheckInActive();
-        tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
-        String noSO = tv_noso.getText().toString();
-        List<tSalesProductQuantityDetailData> productDetail = new tSalesProductQuantityDetailBL().GetDataByNoSO(noSO);
-//        ModelListview modelListview = new ModelListview();
         try {
             Bitmap bitmap = new clsMainActivity().resizeImageForBlob(photo);
             before1.setVisibility(View.VISIBLE);
@@ -675,57 +735,19 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                 }
             }
             Bitmap photo_view = Bitmap.createScaledBitmap(bitmap, 150, 150, true);
-            ByteArrayOutputStream blob = new ByteArrayOutputStream();
-//            photo.compress(Bitmap.CompressFormat.JPEG, 0 /*ignored for PNG*/, blob);
-//            Bitmap bitmap1 = Bitmap.createScaledBitmap(photo, 150, 150, false);
-//            bitmap1.compress(Bitmap.CompressFormat.JPEG, 100, blob);
-            byte[] pht = output.toByteArray();
+            phtBefore1 = output.toByteArray();
             before1.setImageBitmap(photo_view);
 
-            arrdataPriv = new ArrayList<ModelListview>();
-            double qntySum=0;
-            double qntyNum;
-            double value;
-            double price;
-            String result = "0";
-            String resultItem = "0";
-
-            for (int i = 0; i < productDetail.size(); i++) {
-                price = Double.parseDouble(String.valueOf(productDetail.get(i).get_intPrice()));
-                value = Double.parseDouble(String.valueOf(productDetail.get(i).getTxtQuantity()));
-                qntyNum =  price * value;
-                qntySum += qntyNum;
-                result = new clsMainActivity().convertNumberDec(qntySum);
-            }
-
-            java.text.DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            Calendar cal = Calendar.getInstance();
-            clsMainActivity _clsMainActivity = new clsMainActivity();
-
             if (dtQuantityData == null){
-                dtQuantityData.set_txtBeforeImg1(pht);
+                dtQuantityData.set_txtBeforeImg1(phtBefore1);
             } else {
-                dtQuantityData.set_intId(txtHDId.getText().toString());
-                dtQuantityData.set_txtQuantityStock(tv_noso.getText().toString());
-                dtQuantityData.set_dtDate(dateFormat.format(cal.getTime()));
-                dtQuantityData.set_OutletCode(absenUserData.get_txtOutletCode());
-                dtQuantityData.set_OutletName(absenUserData.get_txtOutletName());
-                dtQuantityData.set_txtKeterangan(edKeterangan.getText().toString());
-                dtQuantityData.set_UserId(absenUserData.get_txtUserId());
-                dtQuantityData.set_txtRoleId(absenUserData.get_txtRoleId());
-                dtQuantityData.set_txtBranchCode(absenUserData.get_txtBranchCode());
-                dtQuantityData.set_txtBranchName(absenUserData.get_txtBranchName());
-                dtQuantityData.set_intIdAbsenUser(absenUserData.get_intId());
-                dtQuantityData.set_txtNIK(dataUserActive.get_TxtEmpId());
-                dtQuantityData.set_intSumItem(String.valueOf(productDetail.size()));
-                dtQuantityData.set_intSumAmount(String.valueOf(result));
-                dtQuantityData.set_txtBeforeImg1(pht);
+                dtQuantityData.set_txtBeforeImg1(phtBefore1);
             }
-            dtQuantityData.set_intSubmit("1");
-            dtQuantityData.set_intSync("0");
+//            dtQuantityData.set_intSubmit("1");
+//            dtQuantityData.set_intSync("0");
             List<tSalesProductQuantityData> tSalesProductQuantityDatas = new ArrayList<>();
             tSalesProductQuantityDatas.add(dtQuantityData);
-            new tSalesProductQuantityHeaderBL().SaveData(dtQuantityData);
+//            new tSalesProductQuantityHeaderBL().SaveData2(tSalesProductQuantityDatas);
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
@@ -733,11 +755,6 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
 
     // preview image before 2
     private void previewCaptureBeforeImage2(Bitmap photo){
-        tAbsenUserData absenUserData = new tAbsenUserBL().getDataCheckInActive();
-        tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
-        String noSO = tv_noso.getText().toString();
-        List<tSalesProductQuantityDetailData> productDetail = new tSalesProductQuantityDetailBL().GetDataByNoSO(noSO);
-//        ModelListview modelListview = new ModelListview();
         try {
             Bitmap bitmap = new clsMainActivity().resizeImageForBlob(photo);
             before2.setVisibility(View.VISIBLE);
@@ -757,57 +774,19 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                 }
             }
             Bitmap photo_view = Bitmap.createScaledBitmap(bitmap, 150, 150, true);
-            ByteArrayOutputStream blob = new ByteArrayOutputStream();
-//            photo.compress(Bitmap.CompressFormat.JPEG, 0 /*ignored for PNG*/, blob);
-//            Bitmap bitmap1 = Bitmap.createScaledBitmap(photo, 150, 150, false);
-//            bitmap1.compress(Bitmap.CompressFormat.JPEG, 100, blob);
-            byte[] pht = output.toByteArray();
+            phtBefore2 = output.toByteArray();
             before2.setImageBitmap(photo_view);
 
-            arrdataPriv = new ArrayList<ModelListview>();
-            double qntySum=0;
-            double qntyNum;
-            double value;
-            double price;
-            String result = "0";
-            String resultItem = "0";
-
-            for (int i = 0; i < productDetail.size(); i++) {
-                price = Double.parseDouble(String.valueOf(productDetail.get(i).get_intPrice()));
-                value = Double.parseDouble(String.valueOf(productDetail.get(i).getTxtQuantity()));
-                qntyNum =  price * value;
-                qntySum += qntyNum;
-                result = new clsMainActivity().convertNumberDec(qntySum);
-            }
-
-            java.text.DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            Calendar cal = Calendar.getInstance();
-            clsMainActivity _clsMainActivity = new clsMainActivity();
-
             if (dtQuantityData == null){
-                dtQuantityData.set_txtBeforeImg2(pht);
+                dtQuantityData.set_txtBeforeImg2(phtBefore2);
             } else {
-                dtQuantityData.set_intId(txtHDId.getText().toString());
-                dtQuantityData.set_txtQuantityStock(tv_noso.getText().toString());
-                dtQuantityData.set_dtDate(dateFormat.format(cal.getTime()));
-                dtQuantityData.set_OutletCode(absenUserData.get_txtOutletCode());
-                dtQuantityData.set_OutletName(absenUserData.get_txtOutletName());
-                dtQuantityData.set_txtKeterangan(edKeterangan.getText().toString());
-                dtQuantityData.set_UserId(absenUserData.get_txtUserId());
-                dtQuantityData.set_txtRoleId(absenUserData.get_txtRoleId());
-                dtQuantityData.set_txtBranchCode(absenUserData.get_txtBranchCode());
-                dtQuantityData.set_txtBranchName(absenUserData.get_txtBranchName());
-                dtQuantityData.set_intIdAbsenUser(absenUserData.get_intId());
-                dtQuantityData.set_txtNIK(dataUserActive.get_TxtEmpId());
-                dtQuantityData.set_intSumItem(String.valueOf(productDetail.size()));
-                dtQuantityData.set_intSumAmount(String.valueOf(result));
-                dtQuantityData.set_txtBeforeImg2(pht);
+                dtQuantityData.set_txtBeforeImg2(phtBefore2);
             }
-            dtQuantityData.set_intSubmit("1");
-            dtQuantityData.set_intSync("0");
+//            dtQuantityData.set_intSubmit("1");
+//            dtQuantityData.set_intSync("0");
             List<tSalesProductQuantityData> tSalesProductQuantityDatas = new ArrayList<>();
             tSalesProductQuantityDatas.add(dtQuantityData);
-            new tSalesProductQuantityHeaderBL().SaveData(dtQuantityData);
+//            new tSalesProductQuantityHeaderBL().SaveData2(tSalesProductQuantityDatas);
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
@@ -837,63 +816,31 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
 
     protected void captureAfterImage1() {
         uriImage = getOutputMediaFileUri();
-        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriImage);
         startActivityForResult(cameraIntent, CAMERA_REQUEST);
     }
 
     protected void captureAfterImage2() {
         uriImage = getOutputMediaFileUri();
-        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriImage);
         startActivityForResult(cameraIntent, CAMERA_REQUEST2);
     }
 
     protected void captureBeforeImage1() {
         uriImage = getOutputMediaFileUri();
-        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriImage);
         startActivityForResult(cameraIntent, CAMERA_REQUEST3);
     }
 
     protected void captureBeforeImage2() {
         uriImage = getOutputMediaFileUri();
-        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriImage);
         startActivityForResult(cameraIntent, CAMERA_REQUEST4);
     }
-
-    /*private void setTableProduct(final tSalesProductQuantityDetailData dtHeader, final View v) {
-
-        dtListDetailProduct = new tSalesProductQuantityDetailBL().GetDataByNoSO(dtHeader.get_txtNoSo());
-
-        clsSwipeList swplist;
-
-        swipeListProduct.clear();
-
-        Calendar c = Calendar.getInstance();
-        int lYear = c.get(Calendar.YEAR);
-        int lMonth = c.get(Calendar.MONTH) + 1;
-        int lDay = c.get(Calendar.DATE);
-
-        int totalProduct = 0;
-        for (int i = 0; i < dtListDetailProduct.size(); i++) {
-            swplist = new clsSwipeList();
-            swplist.set_txtId(dtListDetailProduct.get(i).get_txtNoSo());
-            swplist.set_txtTitle(dtListDetailProduct.get(i).getTxtProduct());
-            swplist.set_txtDescription(dtListDetailProduct.get(i).getTxtExpireDate());
-            swplist.set_intPIC(dtListDetailProduct.get(i).getTxtQuantity());
-            swipeList.add(swplist);
-        }
-
-        clsMainActivity clsMain = new clsMainActivity();
-
-        AdapterProduct = clsMain.setListProductCusBased(getActivity().getApplicationContext(), swipeListProduct);
-
-        ListView lvProduct = (ListView) v.findViewById(R.id.listViewQuantityAdd);
-        lvProduct.setAdapter(AdapterProduct);
-        lvProduct.setEmptyView(v.findViewById(R.id.LayoutEmpty));
-    }*/
 
     private void TableProduct() {
         ScrollView sv = (ScrollView) v.findViewById(R.id.scroll_quantityStock);
@@ -969,25 +916,15 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         TableProduct();
     }
 
-    private void save2() {
+    private void save() {
         List<mEmployeeSalesProductData> employeeSalesProductDataList = new mEmployeeSalesProductBL().GetAllData();
-        dtQuantityData = new tSalesProductQuantityData();
+//        dtQuantityData = new tSalesProductQuantityData();
         tAbsenUserData absenUserData = new tAbsenUserBL().getDataCheckInActive();
         tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
         modelItems = new ArrayList<ModelListview>();
         String noSO = tv_noso.getText().toString();
         List<tSalesProductQuantityDetailData> productDetail = new tSalesProductQuantityDetailBL().GetDataByNoSO(noSO);
 //
-//        if (employeeSalesProductDataList.size() > 0) {
-//            for (int i = 0; i < employeeSalesProductDataList.size(); i++) {
-//                ModelListview dt = new ModelListview();
-//                dt.set_id(employeeSalesProductDataList.get(i).get_txtBrandDetailGramCode());
-//                dt.set_name(employeeSalesProductDataList.get(i).get_txtProductBrandDetailGramName());
-//                dt.set_price((employeeSalesProductDataList.get(i).get_decHJD()));
-//                dt.set_NIK(employeeSalesProductDataList.get(i).get_txtNIK());
-//                modelItems.add(dt);
-//            }
-//        }
         arrdataPriv = new ArrayList<ModelListview>();
         double qntySum=0;
         double qntyNum;
@@ -1022,10 +959,43 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         dtQuantityData.set_txtBranchCode(absenUserData.get_txtBranchCode());
         dtQuantityData.set_txtBranchName(absenUserData.get_txtBranchName());
         dtQuantityData.set_intIdAbsenUser(absenUserData.get_intId());
+//        dtQuantityData.set_txtAfterImg1(phtAfter1);
+//        dtQuantityData.set_txtAfterImg2(phtAfter2);
+//        dtQuantityData.set_txtBeforeImg1(phtBefore1);
+//        dtQuantityData.set_txtBeforeImg2(phtBefore2);
         dtQuantityData.set_txtNIK(dataUserActive.get_TxtEmpId());
         dtQuantityData.set_intSubmit("1");
         dtQuantityData.set_intSync("0");
-        new tSalesProductQuantityHeaderBL().SaveData(dtQuantityData);
+        List<tSalesProductQuantityData> dtList = new ArrayList<>();
+        dtList.add(dtQuantityData);
+        new tSalesProductQuantityHeaderBL().SaveData2(dtList);
+    }
+
+    private void saveImageAfter() {
+        tSalesQuantityImageAfterData dataImage = new tSalesQuantityImageAfterData();
+        String headerId = txtHDId.getText().toString();
+
+        dataImage.set_txtId(_clsMainActivity.GenerateGuid());
+        dataImage.set_txtHeaderId(txtHDId.getText().toString());
+        dataImage.set_after1(phtAfter1);
+        dataImage.set_after2(phtAfter2);
+
+        List<tSalesQuantityImageAfterData> dtListImage = new ArrayList<>();
+        dtListImage.add(dataImage);
+        new tSalesQuantityImageAfterBL().SaveData(dtListImage);
+    }
+
+    private void saveImageBefore() {
+        tSalesQuantityImageBeforeData dataImage = new tSalesQuantityImageBeforeData();
+
+        dataImage.set_txtId(_clsMainActivity.GenerateGuid());
+        dataImage.set_txtHeaderId(txtHDId.getText().toString());
+        dataImage.set_before1(phtBefore1);
+        dataImage.set_before2(phtBefore2);
+
+        List<tSalesQuantityImageBeforeData> dtListImage = new ArrayList<>();
+        dtListImage.add(dataImage);
+        new tSalesQuantityImageBeforeBL().SaveData(dtListImage);
     }
 
     public void viewQuantityFragment(){
