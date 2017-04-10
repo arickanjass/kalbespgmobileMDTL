@@ -35,12 +35,31 @@ public class tSalesProductQuantityHeaderBL extends clsMainBL {
         SQLiteDatabase _db = getDb();
         tSalesProductQuantityDA _tSalesQuantityDA = new tSalesProductQuantityDA(_db);
         _tSalesQuantityDA.SaveDataSalesProductQuantityData(_db, dt);
+        _db.close();
+    }
+
+    public void SaveData2(List<tSalesProductQuantityData> Listdata) {
+        SQLiteDatabase _db = getDb();
+        tSalesProductQuantityDA _tSalesQuantityDA = new tSalesProductQuantityDA(_db);
+        for (tSalesProductQuantityData data:Listdata){
+            _tSalesQuantityDA.SaveDataSalesProductQuantityData(_db, data);
+        }
+        _db.close();
+    }
+
+    public List<tSalesProductQuantityData> getAllData2(){
+        SQLiteDatabase db=getDb();
+        tSalesProductQuantityDA _tSalesProductQuantityDA=new tSalesProductQuantityDA(db);
+        List<tSalesProductQuantityData> listData=_tSalesProductQuantityDA.getAllData2(db);
+        db.close();
+        return listData;
     }
 
     public List<tSalesProductQuantityData> getAllSalesQuantityHeader() {
         SQLiteDatabase _db = getDb();
         tSalesProductQuantityDA _tSalesProductQuantityDA = new tSalesProductQuantityDA(_db);
         List<tSalesProductQuantityData> dt = _tSalesProductQuantityDA.getAllData(_db);
+        _db.close();
         return dt;
     }
 
@@ -48,6 +67,7 @@ public class tSalesProductQuantityHeaderBL extends clsMainBL {
         SQLiteDatabase _db = getDb();
         tSalesProductQuantityDA _tSalesQuantityHeaderDA = new tSalesProductQuantityDA(_db);
         List<tSalesProductQuantityData> dt = _tSalesQuantityHeaderDA.getAllDataByOutletCode(_db, outletcode);
+        _db.close();
         return dt;
     }
 
@@ -55,6 +75,7 @@ public class tSalesProductQuantityHeaderBL extends clsMainBL {
         SQLiteDatabase _db = getDb();
         tSalesProductQuantityDA _tSalesQuantityHeaderDA = new tSalesProductQuantityDA(_db);
         List<tSalesProductQuantityData> dt = _tSalesQuantityHeaderDA.getLastData(_db);
+        _db.close();
         return dt;
     }
 
@@ -65,6 +86,7 @@ public class tSalesProductQuantityHeaderBL extends clsMainBL {
         if(dt == null){
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt ;
     }
 
@@ -75,6 +97,7 @@ public class tSalesProductQuantityHeaderBL extends clsMainBL {
         if(dt == null){
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt ;
     }
 
@@ -82,15 +105,15 @@ public class tSalesProductQuantityHeaderBL extends clsMainBL {
         SQLiteDatabase _db = getDb();
         tSalesProductQuantityDA _tSalesQuantityHeaderDA = new tSalesProductQuantityDA(_db);
         List<tSalesProductQuantityData> dt = _tSalesQuantityHeaderDA.getAllDataByOutletCode(_db, code);
-        if(dt == null){
-            dt = new ArrayList<>(0);
-        }
+
+        _db.close();
         return dt ;
     }
 
     public List<tSalesProductQuantityData> getDataByNoSO(String id){
         SQLiteDatabase _db = getDb();
         List<tSalesProductQuantityData> dtDetail = new tSalesProductQuantityDA(_db).getDataByQuantityStock(_db, id);
+        _db.close();
         return dtDetail;
     }
 
@@ -101,6 +124,7 @@ public class tSalesProductQuantityHeaderBL extends clsMainBL {
         if(dt == null){
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt ;
     }
 
@@ -122,7 +146,7 @@ public class tSalesProductQuantityHeaderBL extends clsMainBL {
         String txtNoSoCode = new mCounterNumberBL().getData(enumCounterData.NoDataSO);
 
         List<tSalesProductQuantityData> dttas = getLastData();
-
+        _db.close();
         String QtyStock = null;
     }
 
@@ -167,5 +191,6 @@ public class tSalesProductQuantityHeaderBL extends clsMainBL {
     public void deleteData(tSalesProductQuantityData dt) {
         SQLiteDatabase _db=getDb();
         new tSalesProductQuantityDA(_db).deleteByNoso(_db, dt.get_txtQuantityStock());
+        _db.close();
     }
 }

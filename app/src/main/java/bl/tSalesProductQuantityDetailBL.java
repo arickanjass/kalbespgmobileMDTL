@@ -29,27 +29,32 @@ public class tSalesProductQuantityDetailBL extends clsMainBL{
         SQLiteDatabase _db = getDb();
         tSalesProductQuantityDetailDA _tSalesProductQuantityDetailDA = new tSalesProductQuantityDetailDA(_db);
         _tSalesProductQuantityDetailDA.SaveDatatSalesProductQuantityDetailData(_db, dt);
+        _db.close();
     }
 
     public List<tSalesProductQuantityDetailData> getAllDataByHeaderId(String id){
         SQLiteDatabase _db = getDb();
         List<tSalesProductQuantityDetailData> dtDetail = new tSalesProductQuantityDetailDA(_db).getAllDataByHeaderId(_db, id);
+        _db.close();
         return dtDetail;
     }
 
     public List<tSalesProductQuantityDetailData> GetDataByNoSO(String id) {
         SQLiteDatabase _db =getDb();
         List<tSalesProductQuantityDetailData> ListData = new tSalesProductQuantityDetailDA(_db).getDataByNoSo(_db, id);
+        _db.close();
         return ListData;
     }
 
     public void deleteData(tSalesProductQuantityDetailData dt){
         SQLiteDatabase _db = getDb();
         new tSalesProductQuantityDetailDA(_db).deleteByID(_db, dt.getIntId());
+        _db.close();
     }
 
     public void deleteDataByProductId(String id) {
         SQLiteDatabase _db=getDb();
         new tSalesProductQuantityDetailDA(_db).deleteByID(_db, id);
+        _db.close();
     }
 }
