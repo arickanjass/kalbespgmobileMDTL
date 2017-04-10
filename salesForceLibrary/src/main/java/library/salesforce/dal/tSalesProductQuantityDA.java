@@ -1,5 +1,6 @@
 package library.salesforce.dal;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -39,10 +40,10 @@ public class tSalesProductQuantityDA {
                 + dt.Property_txtBranchName + " TEXT NULL,"
                 + dt.Property_intIdAbsenUser + " TEXT NULL,"
                 + dt.Property_txtRoleId + " TEXT NULL,"
-                + dt.Property_txtAfterImg1 + " TEXT NULL,"
-                + dt.Property_txtAfterImg2 + " TEXT NULL,"
-                + dt.Property_txtBeforeImg1 + " TEXT NULL,"
-                + dt.Property_txtBeforeImg2 + " TEXT NULL,"
+                + dt.Property_txtAfterImg1 + " BLOB NULL,"
+                + dt.Property_txtAfterImg2 + " BLOB NULL,"
+                + dt.Property_txtBeforeImg1 + " BLOB NULL,"
+                + dt.Property_txtBeforeImg2 + " BLOB NULL,"
                 + dt.Property_txtNIK + " TEXT NULL" + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
@@ -61,46 +62,40 @@ public class tSalesProductQuantityDA {
     // Adding new contact
     public void SaveDataSalesProductQuantityData(SQLiteDatabase db, tSalesProductQuantityData data) {
         tSalesProductQuantityData dt = new tSalesProductQuantityData();
-        db.execSQL("INSERT OR REPLACE into " + TABLE_CONTACTS + " (" + dt.Property_intId + ","
-                + dt.Property_txtQuantityStock + ","
-                + dt.Property_OutletCode + ","
-                + dt.Property_OutletName + ","
-                + dt.Property_txtDate + ","
-                + dt.Property_txtKeterangan + ","
-                + dt.Property_intSumAmount + ","
-                + dt.Property_intSumItem + ","
-                + dt.Property_UserId + ","
-                + dt.Property_intSubmit + ","
-                + dt.Property_intSync + ","
-                + dt.Property_txtBranchCode + ","
-                + dt.Property_txtBranchName + ","
-                + dt.Property_intIdAbsenUser + ","
-                + dt.Property_txtRoleId + ","
-                + dt.Property_txtAfterImg1 + ","
-                + dt.Property_txtAfterImg2 + ","
-                + dt.Property_txtBeforeImg1 + ","
-                + dt.Property_txtBeforeImg2 + ","
-                + dt.Property_txtNIK + ") " +
-                "values('" + String.valueOf(data.get_intId()) + "','"
-                + String.valueOf(data.get_txtQuantityStock()) + "','"
-                + String.valueOf(data.get_OutletCode()) + "','"
-                + String.valueOf(data.get_OutletName()) + "','"
-                + String.valueOf(data.get_dtDate()) + "','"
-                + String.valueOf(data.get_txtKeterangan()) + "','"
-                + String.valueOf(data.get_intSumAmount()) + "','"
-                + String.valueOf(data.get_intSumItem()) + "','"
-                + String.valueOf(data.get_UserId()) + "','"
-                + String.valueOf(data.get_intSubmit()) + "','"
-                + String.valueOf(data.get_intSync()) + "','"
-                + String.valueOf(data.get_txtBranchCode()) + "','"
-                + String.valueOf(data.get_txtBranchName()) + "','"
-                + String.valueOf(data.get_intIdAbsenUser()) + "','"
-                + String.valueOf(data.get_txtRoleId()) + "','"
-                + String.valueOf(data.get_txtAfterImg1()) + "','"
-                + String.valueOf(data.get_txtAfterImg2()) + "','"
-                + String.valueOf(data.get_txtBeforeImg1()) + "','"
-                + String.valueOf(data.get_txtBeforeImg2()) + "','"
-                + String.valueOf(data.get_txtNIK()) + "')");
+        ContentValues cv = new ContentValues();
+        cv.put(dt.Property_txtQuantityStock, data.get_txtQuantityStock());
+        cv.put(dt.Property_OutletCode, data.get_OutletCode());
+        cv.put(dt.Property_OutletName, data.get_OutletName());
+        cv.put(dt.Property_txtDate, data.get_dtDate());
+        cv.put(dt.Property_txtKeterangan, data.get_txtKeterangan());
+        cv.put(dt.Property_txtNIK, data.get_txtNIK());
+        cv.put(dt.Property_intSumAmount, data.get_intSumAmount());
+        cv.put(dt.Property_intSumItem, data.get_intSumItem());
+        cv.put(dt.Property_UserId, data.get_UserId());
+        cv.put(dt.Property_intSubmit, data.get_intSubmit());
+        cv.put(dt.Property_intSync, data.get_intSync());
+        cv.put(dt.Property_txtBranchCode, data.get_txtBranchCode());
+        cv.put(dt.Property_txtBranchName, data.get_txtBranchName());
+        cv.put(dt.Property_intIdAbsenUser, data.get_intIdAbsenUser());
+        cv.put(dt.Property_txtRoleId, data.get_txtRoleId());
+//        cv.put(dt.Property_txtAfterImg1, data.get_txtAfterImg1());
+//        cv.put(dt.Property_txtAfterImg2, data.get_txtAfterImg2());
+//        cv.put(dt.Property_txtBeforeImg1, data.get_txtBeforeImg1());
+//        cv.put(dt.Property_txtBeforeImg2, data.get_txtBeforeImg2());
+        if (data.get_intId() == null){
+            db.insert(TABLE_CONTACTS, null, cv);
+        } else {
+            cv.put(dt.Property_intId, data.get_intId());
+            db.replace(TABLE_CONTACTS, null, cv);
+        }
+//        tSalesProductQuantityData dt1 = getData(db,data.get_intId());
+//        if (dt1 == null) {
+//            cv.put(dt.Property_intId, String.valueOf(data.get_intId()));
+//            db.insert(TABLE_CONTACTS, null, cv);
+//        } else {
+//            cv.put(dt.Property_intId, String.valueOf(data.get_intId()));
+//            db.replace(TABLE_CONTACTS, null, cv);
+//        }
     }
 
     public void UpdateDataItem(SQLiteDatabase db, tSalesProductQuantityData data) {
@@ -123,7 +118,7 @@ public class tSalesProductQuantityDA {
     // Getting single contact
     public tSalesProductQuantityData getData(SQLiteDatabase db, String id){
         tSalesProductQuantityData dt = new tSalesProductQuantityData();
-        Cursor cursor = db.query(TABLE_CONTACTS, new String[]{dt.Property_intId,
+        Cursor cursor = db.query(TABLE_CONTACTS, new String[]{dt.Property_intId, dt.Property_txtQuantityStock,
                         dt.Property_OutletCode, dt.Property_OutletName,
                         dt.Property_txtDate, dt.Property_txtKeterangan, dt.Property_txtNIK
                         , dt.Property_intSumAmount, dt.Property_intSumItem, dt.Property_UserId, dt.Property_intSubmit, dt.Property_txtRoleId
@@ -136,24 +131,25 @@ public class tSalesProductQuantityDA {
             if (cursor != null)
                 cursor.moveToFirst();
             contact.set_intId(cursor.getString(0));
-            contact.set_OutletCode(cursor.getString(1));
-            contact.set_OutletName(cursor.getString(2));
-            contact.set_dtDate(cursor.getString(3));
-            contact.set_txtKeterangan(cursor.getString(4));
-            contact.set_txtNIK(cursor.getString(5));
-            contact.set_intSumAmount(cursor.getString(6));
-            contact.set_intSumItem(cursor.getString(7));
-            contact.set_UserId(cursor.getString(8));
-            contact.set_intSubmit(cursor.getString(9));
-            contact.set_intSync(cursor.getString(10));
-            contact.set_txtBranchCode(cursor.getString(11));
-            contact.set_txtBranchName(cursor.getString(12));
-            contact.set_intIdAbsenUser(cursor.getString(13));
-            contact.set_txtRoleId(cursor.getString(14));
-            contact.set_txtAfterImg1(cursor.getBlob(15));
-            contact.set_txtAfterImg2(cursor.getBlob(16));
-            contact.set_txtBeforeImg1(cursor.getBlob(17));
-            contact.set_txtBeforeImg2(cursor.getBlob(18));
+            contact.set_txtQuantityStock(cursor.getString(1));
+            contact.set_OutletCode(cursor.getString(2));
+            contact.set_OutletName(cursor.getString(3));
+            contact.set_dtDate(cursor.getString(4));
+            contact.set_txtKeterangan(cursor.getString(5));
+            contact.set_txtNIK(cursor.getString(6));
+            contact.set_intSumAmount(cursor.getString(7));
+            contact.set_intSumItem(cursor.getString(8));
+            contact.set_UserId(cursor.getString(9));
+            contact.set_intSubmit(cursor.getString(10));
+            contact.set_intSync(cursor.getString(11));
+            contact.set_txtBranchCode(cursor.getString(12));
+            contact.set_txtBranchName(cursor.getString(13));
+            contact.set_intIdAbsenUser(cursor.getString(14));
+            contact.set_txtRoleId(cursor.getString(15));
+            contact.set_txtAfterImg1(cursor.getBlob(16));
+            contact.set_txtAfterImg2(cursor.getBlob(17));
+            contact.set_txtBeforeImg1(cursor.getBlob(18));
+            contact.set_txtBeforeImg2(cursor.getBlob(19));
         }
         cursor.close();
         return contact;
@@ -499,11 +495,9 @@ public class tSalesProductQuantityDA {
         List<tSalesProductQuantityData> contactList = null;
         // select all query
         tSalesProductQuantityData dt = new tSalesProductQuantityData();
-        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_OutletCode + "='" + code + "'" + " ORDER BY txtQuantityStock DESC ";
+        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_OutletCode + "='" + code + "'";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
-
-        // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             contactList = new ArrayList<tSalesProductQuantityData>();
             do {
@@ -524,13 +518,13 @@ public class tSalesProductQuantityDA {
                 contact.set_intIdAbsenUser(cursor.getString(13));
                 contact.set_txtNIK(cursor.getString(14));
                 contact.set_txtRoleId(cursor.getString(15));
-                contact.set_txtAfterImg1(cursor.getBlob(15));
-                contact.set_txtAfterImg2(cursor.getBlob(16));
-                contact.set_txtBeforeImg1(cursor.getBlob(17));
-                contact.set_txtBeforeImg2(cursor.getBlob(18));
+                contact.set_txtAfterImg1(cursor.getBlob(16));
+                contact.set_txtAfterImg2(cursor.getBlob(17));
+                contact.set_txtBeforeImg1(cursor.getBlob(18));
+                contact.set_txtBeforeImg2(cursor.getBlob(19));
                 // Adding contact to list
                 contactList.add(contact);
-            }while (cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
         cursor.close();
         return contactList;
@@ -614,6 +608,47 @@ public class tSalesProductQuantityDA {
             } while (cursor.moveToNext());
         }
         cursor.close();
+        return contactList;
+    }
+
+    public List<tSalesProductQuantityData> getAllData2(SQLiteDatabase db) {
+        List<tSalesProductQuantityData> contactList = new ArrayList<tSalesProductQuantityData>();
+        // Select All Query
+        tSalesProductQuantityData dt=new tSalesProductQuantityData();
+        String selectQuery = "SELECT  "+dt.Property_All+" FROM " + TABLE_CONTACTS;
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                tSalesProductQuantityData contact = new tSalesProductQuantityData();
+                contact.set_intId(cursor.getString(0));
+                contact.set_txtQuantityStock(cursor.getString(1));
+                contact.set_txtNIK(cursor.getString(2));
+                contact.set_txtKeterangan(cursor.getString(3));
+                contact.set_dtDate(cursor.getString(4));
+                contact.set_OutletCode(cursor.getString(5));
+                contact.set_OutletName(cursor.getString(6));
+                contact.set_intSumItem(cursor.getString(7));
+                contact.set_intSumAmount(cursor.getString(8));
+                contact.set_UserId(cursor.getString(9));
+                contact.set_intSubmit(cursor.getString(10));
+                contact.set_intSync(cursor.getString(11));
+                contact.set_txtBranchCode(cursor.getString(12));
+                contact.set_txtBranchName(cursor.getString(13));
+                contact.set_intIdAbsenUser(cursor.getString(14));
+                contact.set_txtRoleId(cursor.getString(15));
+                contact.set_txtAfterImg1(cursor.getBlob(16));
+                contact.set_txtAfterImg2(cursor.getBlob(17));
+                contact.set_txtBeforeImg1(cursor.getBlob(18));
+                contact.set_txtAfterImg2(cursor.getBlob(19));
+                // Adding contact to list
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        // return contact list
         return contactList;
     }
 
