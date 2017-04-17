@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import library.salesforce.common.tSalesProductQuantityData;
+import library.salesforce.common.tSalesProductQuantityHeaderData;
 import library.salesforce.common.tSalesQuantityImageAfterData;
 
 /**
@@ -72,7 +72,7 @@ public class tSalesQuantityImageAfterDA {
         return contactList;
     }
 
-    public List<tSalesQuantityImageAfterData> getAllDataToPushData(SQLiteDatabase db, List<tSalesProductQuantityData> ListOfSalesProductQuantityHeader){
+    public List<tSalesQuantityImageAfterData> getAllDataToPushData(SQLiteDatabase db, List<tSalesProductQuantityHeaderData> ListOfSalesProductQuantityHeader){
         List<tSalesQuantityImageAfterData> contactList = null;
         tSalesQuantityImageAfterData dt = new tSalesQuantityImageAfterData();
 

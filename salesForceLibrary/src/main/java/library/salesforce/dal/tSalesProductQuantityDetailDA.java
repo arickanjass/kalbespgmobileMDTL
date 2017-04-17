@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import library.salesforce.common.tSalesProductQuantityHeaderData;
 import library.salesforce.common.tSalesProductQuantityDetailData;
 
 /**
@@ -190,7 +191,7 @@ public class tSalesProductQuantityDetailDA {
         List<tSalesProductQuantityDetailData> contactList = new ArrayList<tSalesProductQuantityDetailData>();
         // select All Query
         tSalesProductQuantityDetailData dt = new tSalesProductQuantityDetailData();
-        String selectQuery = "SELECT  "+dt.Property_All+" FROM " + TABLE_CONTACTS +" Where "+dt.Property_txtNoSo+"='"+txtNoSO+"' AND "+dt.Property_intActive+"=1";
+        String selectQuery = "SELECT  "+dt.Property_All+" FROM " + TABLE_CONTACTS +" Where "+dt.Property_txtNoSo+"='"+txtNoSO;
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -361,7 +362,7 @@ public class tSalesProductQuantityDetailDA {
     }
 
     // push data
-    public List<tSalesProductQuantityDetailData> getAllDataToPushData(SQLiteDatabase db, List<tSalesProductQuantityDetailData> ListOfSalesProductQuantityHeader) {
+    public List<tSalesProductQuantityDetailData> getAllDataToPushData(SQLiteDatabase db, List<tSalesProductQuantityHeaderData> ListOfSalesProductQuantityHeader) {
         List<tSalesProductQuantityDetailData> contactList = null;
         // select All Query
         tSalesProductQuantityDetailData dt = new tSalesProductQuantityDetailData();
@@ -371,7 +372,7 @@ public class tSalesProductQuantityDetailDA {
         if (ListOfSalesProductQuantityHeader != null){
             tSalesProductQuantityHeader = "(";
             for (int i = 0; i < ListOfSalesProductQuantityHeader.size(); i++) {
-                tSalesProductQuantityHeader = tSalesProductQuantityHeader + "'" + ListOfSalesProductQuantityHeader.get(i).get_txtNoSo() + "'";
+                tSalesProductQuantityHeader = tSalesProductQuantityHeader + "'" + ListOfSalesProductQuantityHeader.get(i).get_txtQuantityStock() + "'";
                 tSalesProductQuantityHeader = tSalesProductQuantityHeader + ((i + 1) != ListOfSalesProductQuantityHeader.size() ? "," : ")");
             }
         }
