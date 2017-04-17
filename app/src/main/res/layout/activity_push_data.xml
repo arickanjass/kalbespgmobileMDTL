@@ -84,6 +84,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
     </TableLayout>
+
+    <TextView
+        android:id="@+id/tv7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_marginTop="5dp"
+        android:textColor="#000"
+        android:text="Quantity Stock"/>
+
+    <TableLayout
+        android:id="@+id/tl_quantity_stock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></TableLayout>
      
     <TextView
       android:id="@+id/tv4"
