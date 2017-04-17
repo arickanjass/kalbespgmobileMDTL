@@ -45,6 +45,7 @@ import library.salesforce.common.tLeaveMobileData;
 import library.salesforce.common.tNotificationData;
 import library.salesforce.common.tPurchaseOrderHeaderData;
 import library.salesforce.common.tSalesProductHeaderData;
+import library.salesforce.common.tSalesProductQuantityHeaderData;
 import library.salesforce.dal.clsHardCode;
 import service.MyServiceNative;
 
@@ -56,6 +57,7 @@ public class FragmentPushData extends Fragment {
     private TableLayout tlSODetail;
     private TableLayout tlActivity;
     private TableLayout tlCustomerBase;
+    private TableLayout tlsQuantityStock;
     private TableLayout tlAbsen;
     private TableLayout tlLeave;
     private Button btnPush;
@@ -91,6 +93,7 @@ public class FragmentPushData extends Fragment {
         tlsPOHeader = (TableLayout)v.findViewById(R.id.tlPO);
         tlActivity = (TableLayout) v.findViewById(R.id.tlActivity);
         tlCustomerBase = (TableLayout) v.findViewById(R.id.tl_cb);
+        tlsQuantityStock = (TableLayout) v.findViewById(R.id.tl_quantity_stock);
         tlAbsen = (TableLayout) v.findViewById(R.id.tl_absen);
         tlLeave = (TableLayout) v.findViewById(R.id.tl_leave);
         btnPush = (Button) v.findViewById(R.id.btnPush);
@@ -128,6 +131,12 @@ public class FragmentPushData extends Fragment {
                 initPOHeader(getContext(),dtJson.getListOftPurchaseOrderHeaderData());
             } else {
                 initPOHeader(getContext(),null);
+            }
+
+            if (dtJson.getListOftSalesProductQuantityData() != null){
+                initQuantityStockHeader(getContext(),dtJson.getListOftSalesProductQuantityData());
+            } else {
+                initQuantityStockHeader(getContext(), null);
             }
 
             if(dtJson.getListOftActivityData()!=null){
@@ -571,6 +580,87 @@ public class FragmentPushData extends Fragment {
         }
 
     }
+
+    private void initQuantityStockHeader(Context context, List<tSalesProductQuantityHeaderData> listOftSalesProductQuantityData) {
+        tlsQuantityStock = (TableLayout) v.findViewById(R.id.tl_quantity_stock);
+        tlsQuantityStock.removeAllViews();
+
+        TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1f);
+        params.setMargins(1, 1, 1, 1);
+
+        TableRow tr = new TableRow(getContext());
+
+        String[] colTextHeader = {"No.", "No Quantity", "Date", "Outlet Code"};
+
+        for (String text : colTextHeader) {
+            TextView tv = new TextView(getContext());
+            // tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 1));
+
+            tv.setTextSize(14);
+            tv.setPadding(10, 10, 10, 10);
+            tv.setText(text);
+            tv.setGravity(Gravity.CENTER);
+            tv.setBackgroundColor(Color.parseColor("#4CAF50"));
+            tv.setTextColor(Color.WHITE);
+            tv.setLayoutParams(params);
+
+            tr.addView(tv);
+        }
+        tlsQuantityStock.addView(tr);
+
+        if (listOftSalesProductQuantityData != null){
+            int index = 1;
+            for (tSalesProductQuantityHeaderData dat : listOftSalesProductQuantityData){
+                tr = new TableRow(getContext());
+
+                TextView tv_index = new TextView(getContext());
+                tv_index.setTextSize(12);
+                tv_index.setPadding(10, 10, 10, 10);
+                tv_index.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                tv_index.setGravity(Gravity.CENTER);
+                tv_index.setTextColor(Color.BLACK);
+                tv_index.setText(String.valueOf(index + "."));
+                tv_index.setLayoutParams(params);
+                tr.addView(tv_index);
+
+                TextView no_quantity_stock = new TextView(getContext());
+                no_quantity_stock.setTextSize(12);
+                no_quantity_stock.setPadding(10, 10, 10, 10);
+                no_quantity_stock.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                no_quantity_stock.setTextColor(Color.BLACK);
+                no_quantity_stock.setGravity(Gravity.CENTER);
+                no_quantity_stock.setText(dat.get_txtQuantityStock());
+                no_quantity_stock.setLayoutParams(params);
+
+                tr.addView(no_quantity_stock);
+
+                TextView date = new TextView(getContext());
+                date.setTextSize(12);
+                date.setPadding(10, 10, 10, 10);
+                date.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                date.setTextColor(Color.BLACK);
+                date.setGravity(Gravity.CENTER);
+                date.setText(new clsMainActivity().giveFormatDate2(dat.get_dtDate()));
+                date.setLayoutParams(params);
+
+                tr.addView(date);
+
+                TextView outlet_code = new TextView(getContext());
+                outlet_code.setTextSize(12);
+                outlet_code.setPadding(10, 10, 10, 10);
+                outlet_code.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                outlet_code.setTextColor(Color.BLACK);
+                outlet_code.setGravity(Gravity.CENTER);
+                outlet_code.setText(dat.get_OutletCode());
+                outlet_code.setLayoutParams(params);
+
+                tr.addView(outlet_code);
+
+                tlsQuantityStock.addView(tr, index++);
+            }
+        }
+    }
+
     private class AsyncCallRole extends AsyncTask<List<dataJson>, Void, List<dataJson>> {
         @Override
         protected List<dataJson> doInBackground(List<dataJson>... params) {

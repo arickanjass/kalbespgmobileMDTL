@@ -58,7 +58,7 @@ import edu.swu.pulltorefreshswipemenulistview.library.util.RefreshTime;
 import library.salesforce.common.AppAdapter;
 import library.salesforce.common.clsSwipeList;
 import library.salesforce.common.tAbsenUserData;
-import library.salesforce.common.tSalesProductQuantityData;
+import library.salesforce.common.tSalesProductQuantityHeaderData;
 import library.salesforce.common.tSalesProductQuantityDetailData;
 import library.salesforce.common.tSalesQuantityImageAfterData;
 import library.salesforce.common.tSalesQuantityImageBeforeData;
@@ -77,7 +77,7 @@ public class FragmentViewQuantityStock extends Fragment implements IXListViewLis
     private PullToRefreshSwipeMenuListView mListView;
     private Handler mHandler;
     private static Map<String, HashMap> mapMenu;
-    static List<tSalesProductQuantityData> dt;
+    static List<tSalesProductQuantityHeaderData> dt;
     static List<tSalesProductQuantityDetailData> data;
     static List<tSalesQuantityImageAfterData> dataImage;
     static List<tSalesQuantityImageBeforeData> dataImageBefore;
