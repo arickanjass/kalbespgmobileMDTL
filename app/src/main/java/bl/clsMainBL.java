@@ -26,6 +26,8 @@ import library.salesforce.common.tPurchaseOrderDetailData;
 import library.salesforce.common.tPurchaseOrderHeaderData;
 import library.salesforce.common.tSalesProductDetailData;
 import library.salesforce.common.tSalesProductHeaderData;
+import library.salesforce.common.tSalesProductQuantityHeaderData;
+import library.salesforce.common.tSalesProductQuantityDetailData;
 import library.salesforce.common.tUserLoginData;
 import library.salesforce.dal.clsHardCode;
 import library.salesforce.dal.enumConfigData;
@@ -39,6 +41,8 @@ import library.salesforce.dal.tPurchaseOrderDetailDA;
 import library.salesforce.dal.tPurchaseOrderHeaderDA;
 import library.salesforce.dal.tSalesProductDetailDA;
 import library.salesforce.dal.tSalesProductHeaderDA;
+import library.salesforce.dal.tSalesProductQuantityHeaderDA;
+import library.salesforce.dal.tSalesProductQuantityDetailDA;
 import library.salesforce.dal.tUserLoginDA;
 
 public class clsMainBL {
@@ -251,6 +255,46 @@ public class clsMainBL {
 					}
 				}
 
+			}
+		}
+
+		dtlinkAPI = new linkAPI();
+		txtMethod = "PushDataTHeaderQuantityStock";
+		dtlinkAPI.set_txtMethod(txtMethod);
+		dtlinkAPI.set_txtParam("");
+		dtlinkAPI.set_txtToken(new clsHardCode().txtTokenAPI);
+		dtlinkAPI.set_txtMethod(VersionName);
+		strLinkAPI = dtlinkAPI.QueryString(_StrLINKAPI);
+
+		tSalesProductQuantityHeaderDA _tSalesProductQuantityDA = new tSalesProductQuantityHeaderDA(_db);
+		List<tSalesProductQuantityHeaderData> ListDataTQuantityStockHeader = _tSalesProductQuantityDA.getAllDataToPushData(_db);
+		if (ListDataTPOHeader != null) {
+			for (tSalesProductQuantityHeaderData dataHeader : ListDataTQuantityStockHeader) {
+				dataJson Json = new dataJson();
+				List<tSalesProductQuantityHeaderData> tmpListDataQuantityStockHeaderData = new ArrayList<tSalesProductQuantityHeaderData>();
+				tmpListDataQuantityStockHeaderData.add(dataHeader);
+				tAbsenUserData _tmpDataAbsen = _tAbsenUserDA.getData(_db, Integer.valueOf(dataHeader.get_intIdAbsenUser()));
+				List<tAbsenUserData> tmpListDataUserAbsen = new ArrayList<tAbsenUserData>();
+				tmpListDataUserAbsen.add(_tmpDataAbsen);
+				tSalesProductQuantityDetailDA _tSalesProductQuantityDetailDA = new tSalesProductQuantityDetailDA(_db);
+				List<tSalesProductQuantityDetailData> tmpListQuantityStockDetail = _tSalesProductQuantityDetailDA.getSalesProductQuantityDetailByHeaderId(_db, dataHeader.get_txtQuantityStock());
+				if (tmpListQuantityStockDetail != null){
+					Json.setListOftSalesProductQuantityDetailData(tmpListQuantityStockDetail);
+				}
+				Json.setListOftAbsenUserData(tmpListDataUserAbsen);
+				Json.setListOftSalesProductQuantityData(tmpListDataQuantityStockHeaderData);
+				String Html = new clsHelper().pushtData(strLinkAPI, Json.txtJSON().toString(), Integer.valueOf(TimeOut));
+				org.json.simple.JSONArray JsonArray = _help.ResultJsonArray(Html);
+				Iterator i = JsonArray.iterator();
+				while (i.hasNext()){
+					APIData dtAPIDATA = new APIData();
+					JSONObject InnerObj = (JSONObject) i.next();
+					int boolValid = Integer.valueOf(String.valueOf(InnerObj.get(dtAPIDATA.boolValid)));
+					if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)){
+						dataHeader.set_intSync("1");
+						_tSalesProductQuantityDA.SaveDataSalesProductQuantityData(_db, dataHeader);
+					}
+				}
 			}
 		}
 

@@ -30,6 +30,10 @@ import library.salesforce.common.tPurchaseOrderDetailData;
 import library.salesforce.common.tPurchaseOrderHeaderData;
 import library.salesforce.common.tSalesProductDetailData;
 import library.salesforce.common.tSalesProductHeaderData;
+import library.salesforce.common.tSalesProductQuantityHeaderData;
+import library.salesforce.common.tSalesProductQuantityDetailData;
+import library.salesforce.common.tSalesQuantityImageAfterData;
+import library.salesforce.common.tSalesQuantityImageBeforeData;
 import library.salesforce.common.tUserLoginData;
 import library.salesforce.dal.clsHardCode;
 import library.salesforce.dal.enumConfigData;
@@ -46,6 +50,10 @@ import library.salesforce.dal.tPurchaseOrderDetailDA;
 import library.salesforce.dal.tPurchaseOrderHeaderDA;
 import library.salesforce.dal.tSalesProductDetailDA;
 import library.salesforce.dal.tSalesProductHeaderDA;
+import library.salesforce.dal.tSalesProductQuantityHeaderDA;
+import library.salesforce.dal.tSalesProductQuantityDetailDA;
+import library.salesforce.dal.tSalesQuantityImageAfterDA;
+import library.salesforce.dal.tSalesQuantityImageBeforeDA;
 import library.salesforce.dal.tUserLoginDA;
 
 //import org.xml.sax.DTDHandler;
@@ -265,6 +273,10 @@ public class clsHelperBL extends clsMainBL {
             tSalesProductDetailDA _tSalesProductDetailDA = new tSalesProductDetailDA(db);
             tPurchaseOrderDetailDA _tPurchaseOrderDetailDA = new tPurchaseOrderDetailDA(db);
             tPurchaseOrderHeaderDA _tPurchaseOrderHeaderDA = new tPurchaseOrderHeaderDA(db);
+            tSalesProductQuantityHeaderDA _tSalesProductQuantityDA = new tSalesProductQuantityHeaderDA(db);
+            tSalesProductQuantityDetailDA _tSalesProductQuantityDetailDA = new tSalesProductQuantityDetailDA(db);
+            tSalesQuantityImageAfterDA _tSalesQuantityImageAfterDA = new tSalesQuantityImageAfterDA(db);
+            tSalesQuantityImageBeforeDA _tSalesQuantityImageBeforeDA = new tSalesQuantityImageBeforeDA(db);
             tCustomerBasedMobileHeaderDA _tCustomerBasedMobileHeaderDA = new tCustomerBasedMobileHeaderDA(db);
             tCustomerBasedMobileDetailDA _tCustomerBasedMobileDetailDA = new tCustomerBasedMobileDetailDA(db);
             tCustomerBasedMobileDetailProductDA _tCustomerBasedMobileDetailProductDA = new tCustomerBasedMobileDetailProductDA(db);
@@ -278,6 +290,10 @@ public class clsHelperBL extends clsMainBL {
             List<tSalesProductDetailData> ListOfSalesProductDetail = _tSalesProductDetailDA.getAllDataToPushData(db, ListOfSalesProductHeader);
             List<tPurchaseOrderHeaderData> ListOfPurchaseOrderHeader = _tPurchaseOrderHeaderDA.getAllDataToPushData(db);
             List<tPurchaseOrderDetailData> ListOfPurchaseOrderDetail = _tPurchaseOrderDetailDA.getAllDataToPushDataPO(db, ListOfPurchaseOrderHeader);
+            List<tSalesProductQuantityHeaderData> ListOfSalesProductQuantityHeader = _tSalesProductQuantityDA.getAllDataToPushData(db);
+            List<tSalesProductQuantityDetailData> ListOfSalesProductQuantityDetail = _tSalesProductQuantityDetailDA.getAllDataToPushData(db, ListOfSalesProductQuantityHeader);
+            List<tSalesQuantityImageAfterData> ListOftSalesQuantityImageAfter = _tSalesQuantityImageAfterDA.getAllDataToPushData(db, ListOfSalesProductQuantityHeader);
+            List<tSalesQuantityImageBeforeData> ListOftSalesQuantityImageBefore = _tSalesQuantityImageBeforeDA.getAllDataToPushData(db, ListOfSalesProductQuantityHeader);
 			List<tLeaveMobileData> ListOftLeaveData=_tLeaveMobileDA.getAllDataPushData(db);
             List<tAbsenUserData> ListOftAbsenUserData = _tAbsenUserDA.getAllDataToPushData(db);
             List<tActivityData> ListOftActivityData = _tActivityDA.getAllDataToPushData(db);
@@ -322,6 +338,19 @@ public class clsHelperBL extends clsMainBL {
             }
             if (ListOfPurchaseOrderHeader != null){
                 dtPush.setListOftPurchaseOrderHeaderData(ListOfPurchaseOrderHeader);
+            }
+
+            if (ListOfSalesProductQuantityDetail != null){
+                dtPush.setListOftSalesProductQuantityDetailData(ListOfSalesProductQuantityDetail);
+            }
+            if (ListOftSalesQuantityImageAfter != null){
+                dtPush.setListOftSalesQuantityImageAfterData(ListOftSalesQuantityImageAfter);
+            }
+            if (ListOftSalesQuantityImageBefore != null){
+                dtPush.setListOftSalesQuantityImageBeforeData(ListOftSalesQuantityImageBefore);
+            }
+            if (ListOfSalesProductQuantityHeader != null){
+                dtPush.setListOftSalesProductQuantityData(ListOfSalesProductQuantityHeader);
             }
 
             if (ListOftCustomerBasedMobileHeader != null) {
@@ -399,6 +428,15 @@ public class clsHelperBL extends clsMainBL {
                 _tPurchaseOrderHeaderDA.SaveDatatPurchaseOrderHeaderData(db,dt);
             }
         }
+
+        if (dtJson.getListOftSalesProductQuantityData() != null){
+            for (tSalesProductQuantityHeaderData dt : dtJson.getListOftSalesProductQuantityData()){
+                tSalesProductQuantityHeaderDA _tSalesProductQuantityDA = new tSalesProductQuantityHeaderDA(db);
+                dt.set_intSync("1");
+                _tSalesProductQuantityDA.SaveDataSalesProductQuantityData(db, dt);
+            }
+        }
+
         if (dtJson.get_ListOftCustomerBasedMobileHeaderData() != null) {
             for (tCustomerBasedMobileHeaderData dt : dtJson.get_ListOftCustomerBasedMobileHeaderData()) {
                 tCustomerBasedMobileHeaderDA _tCustomerBasedMobileHeaderDA = new tCustomerBasedMobileHeaderDA(db);
