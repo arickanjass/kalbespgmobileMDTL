@@ -46,6 +46,7 @@ public class tSalesQuantityImageAfterData {
     public String Property_txtHeaderId = "txtHeaderId";
     public String Property_after1 = "byteAfter1";
     public String Property_after2 = "byteAfter2";
+    public String Property_ListOftSalesQuantityImageAfterData = "ListOftSalesQuantityImageAfterData";
 
     public String Property_All = Property_txtId +","+
             Property_txtHeaderId +","+

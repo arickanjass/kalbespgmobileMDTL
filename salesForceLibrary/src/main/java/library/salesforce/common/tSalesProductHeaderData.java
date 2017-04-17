@@ -1,6 +1,6 @@
 package library.salesforce.common;
 
-public class tSalesProductHeaderData extends tSalesProductQuantityData {
+public class tSalesProductHeaderData extends tSalesProductQuantityHeaderData {
     public synchronized String get_intIdAbsenUser() {
         return _intIdAbsenUser;
     }

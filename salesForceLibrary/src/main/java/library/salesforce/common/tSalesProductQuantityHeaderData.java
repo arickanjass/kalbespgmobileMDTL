@@ -4,7 +4,7 @@ package library.salesforce.common;
  * Created by Rian Andrivani on 3/16/2017.
  */
 
-public class tSalesProductQuantityData {
+public class tSalesProductQuantityHeaderData {
     public synchronized String get_intId() {
         return _intId;
     }
@@ -208,7 +208,7 @@ public class tSalesProductQuantityData {
     public String Property_txtBeforeImg2="txtBeforeImg2";
     public String Property_ListOftSalesProductHeaderData = "ListOftSalesProductHeaderData";
 
-    public tSalesProductQuantityData() {
+    public tSalesProductQuantityHeaderData() {
         super();
     }
 
