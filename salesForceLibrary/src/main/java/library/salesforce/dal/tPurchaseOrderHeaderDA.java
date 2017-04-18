@@ -139,6 +139,18 @@ public class tPurchaseOrderHeaderDA {
         return result;
     }
 
+    public int getAllCheckToPushData(SQLiteDatabase db) {
+        // Select All Query
+        tPurchaseOrderHeaderData dt = new tPurchaseOrderHeaderData();
+        String selectQuery = "SELECT 1 FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intSubmit + "=1 AND " + dt.Property_intSync + "=0";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // return count
+        int index = cursor.getCount();
+        cursor.close();
+        return index;
+        // return contact list
+    }
     public List<tPurchaseOrderHeaderData> getAllDataToPushData(SQLiteDatabase db){
         List<tPurchaseOrderHeaderData> contactList = null;
         tPurchaseOrderHeaderData dt = new tPurchaseOrderHeaderData();
@@ -161,7 +173,7 @@ public class tPurchaseOrderHeaderDA {
                 contact.set_intSync(cursor.getString(10));
                 contact.set_txtBranchCode(cursor.getString(11));
                 contact.set_txtBranchName(cursor.getString(12));
-                contact.set_intIdAbsenUser(cursor.getColumnName(13));
+                contact.set_intIdAbsenUser(cursor.getString(13));
                 contact.set_txtNIK(cursor.getString(14));
                 contact.set_txtRoleId(cursor.getString(15));
                 contactList.add(contact);
@@ -193,7 +205,7 @@ public class tPurchaseOrderHeaderDA {
                 contact.set_intSync(cursor.getString(10));
                 contact.set_txtBranchCode(cursor.getString(11));
                 contact.set_txtBranchName(cursor.getString(12));
-                contact.set_intIdAbsenUser(cursor.getColumnName(13));
+                contact.set_intIdAbsenUser(cursor.getString(13));
                 contact.set_txtNIK(cursor.getString(14));
                 contact.set_txtRoleId(cursor.getString(15));
                 contactList.add(contact);
@@ -227,7 +239,7 @@ public class tPurchaseOrderHeaderDA {
                 contact.set_intSync(cursor.getString(11));
                 contact.set_txtBranchCode(cursor.getString(12));
                 contact.set_txtBranchName(cursor.getString(13));
-                contact.set_intIdAbsenUser(cursor.getColumnName(14));
+                contact.set_intIdAbsenUser(cursor.getString(14));
                 contactList.add(contact);
             } while (cursor.moveToNext());
         }
@@ -259,7 +271,7 @@ public class tPurchaseOrderHeaderDA {
                 contact.set_intSync(cursor.getString(11));
                 contact.set_txtBranchCode(cursor.getString(12));
                 contact.set_txtBranchName(cursor.getString(13));
-                contact.set_intIdAbsenUser(cursor.getColumnName(14));
+                contact.set_intIdAbsenUser(cursor.getString(14));
                 contactList.add(contact);
             } while (cursor.moveToNext());
         }
@@ -291,7 +303,7 @@ public class tPurchaseOrderHeaderDA {
                 contact.set_intSync(cursor.getString(11));
                 contact.set_txtBranchCode(cursor.getString(12));
                 contact.set_txtBranchName(cursor.getString(13));
-                contact.set_intIdAbsenUser(cursor.getColumnName(14));
+                contact.set_intIdAbsenUser(cursor.getString(14));
                 contactList.add(contact);
             } while (cursor.moveToNext());
         }
@@ -324,7 +336,7 @@ public class tPurchaseOrderHeaderDA {
                 contact.set_intSync(cursor.getString(11));
                 contact.set_txtBranchCode(cursor.getString(12));
                 contact.set_txtBranchName(cursor.getString(13));
-                contact.set_intIdAbsenUser(cursor.getColumnName(14));
+                contact.set_intIdAbsenUser(cursor.getString(14));
                 contactList.add(contact);
             } while (cursor.moveToNext());
         }
@@ -356,7 +368,7 @@ public class tPurchaseOrderHeaderDA {
                 contact.set_intSync(cursor.getString(11));
                 contact.set_txtBranchCode(cursor.getString(12));
                 contact.set_txtBranchName(cursor.getString(13));
-                contact.set_intIdAbsenUser(cursor.getColumnName(14));
+                contact.set_intIdAbsenUser(cursor.getString(14));
                 contactList.add(contact);
             } while (cursor.moveToNext());
         }
@@ -388,7 +400,7 @@ public class tPurchaseOrderHeaderDA {
                 contact.set_intSync(cursor.getString(11));
                 contact.set_txtBranchCode(cursor.getString(12));
                 contact.set_txtBranchName(cursor.getString(13));
-                contact.set_intIdAbsenUser(cursor.getColumnName(14));
+                contact.set_intIdAbsenUser(cursor.getString(14));
                 contactList.add(contact);
             } while (cursor.moveToNext());
         }
@@ -419,7 +431,7 @@ public class tPurchaseOrderHeaderDA {
                 contact.set_intSync(cursor.getString(10));
                 contact.set_txtBranchCode(cursor.getString(11));
                 contact.set_txtBranchName(cursor.getString(12));
-                contact.set_intIdAbsenUser(cursor.getColumnName(13));
+                contact.set_intIdAbsenUser(cursor.getString(13));
                 contact.set_txtNIK(cursor.getString(14));
                 contact.set_txtRoleId(cursor.getString(15));
                 contactList.add(contact);

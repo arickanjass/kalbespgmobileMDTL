@@ -117,16 +117,19 @@ public class clsMainBL {
     	}else{
     		Boolean dvalid=false;
     		List<tSalesProductHeaderData> listDataPush= _tSalesProductHeaderDA.getAllDataToPushData(db);
-			List<tPurchaseOrderHeaderData> listPODataPush = _tPurchaseOrderHeaderDA.getAllDataToPushData(db);
+			int listPODataPush = _tPurchaseOrderHeaderDA.getAllCheckToPushData(db);
     		List<tActivityData> listtActivityDataPush= _tActivityDA.getAllDataToPushData(db);
     		List<tAbsenUserData> listtAbsenUserDataPush= _tAbsenUserDA.getAllDataToPushData(db);
     		List<tLeaveMobileData> listTLeave= _tLeaveMobileDA.getAllDataPushData(db);
     		if(listDataPush != null && dvalid==false){
     			dvalid=true;
     		}
-			if (listPODataPush != null && dvalid == false){
-				dvalid = true;
+			if(listPODataPush > 0 && dvalid==false){
+				dvalid=true;
 			}
+//			if (listPODataPush != null && dvalid == false){
+//				dvalid = true;
+//			}
     		if(listtActivityDataPush != null && dvalid==false){
     			dvalid=true;
     		}

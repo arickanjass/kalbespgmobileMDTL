@@ -102,13 +102,13 @@ public class MyServiceNative extends Service{
 				Intent serviceIntent = new Intent(this,MyNotificationService.class);
 				serviceIntent.putExtra("From", "PUSHDATA");
 				startService(serviceIntent);
-		    
+
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
     	}
-    	
+
     	SQLiteDatabase db;
     	String versionName="";
     	try {

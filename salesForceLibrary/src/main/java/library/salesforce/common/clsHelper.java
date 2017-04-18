@@ -61,7 +61,6 @@ import library.salesforce.dal.tSalesProductQuantityDA;
 import library.salesforce.dal.tSalesProductQuantityDetailDA;
 import library.salesforce.dal.tSalesQuantityImageAfterDA;
 import library.salesforce.dal.tSalesQuantityImageBeforeDA;
-import library.salesforce.dal.tSalesQuantityImageDetailDA;
 import library.salesforce.dal.tUserLoginDA;
 
 public class clsHelper {

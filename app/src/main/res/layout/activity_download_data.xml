@@ -332,6 +332,38 @@
                 android:background="#bfbfbf" />
 
             <TextView
+                android:id="@+id/txtTrPO"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Purchase Order"
+                android:textColor="#000" />
+
+            <Spinner
+                android:id="@+id/spnDataPO"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/bg_edtext" />
+
+            <Button
+                android:id="@+id/btnDlDataPO"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/btn_on_click"
+                android:text="Download Purchase Order" />
+
+            <View
+                android:id="@+id/view15"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="#bfbfbf" />
+
+            <TextView
                 android:id="@+id/txtVwDataLeave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -357,7 +389,7 @@
                 android:text="Download Leave" />
 
             <View
-                android:id="@+id/view5"
+                android:id="@+id/view16"
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="10dp"
@@ -367,7 +399,7 @@
                 android:id="@+id/btnAllDownload"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/view5"
+                android:layout_below="@+id/view6"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="15dp"

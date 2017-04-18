@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import org.apache.http.util.ByteArrayBuffer;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
@@ -49,6 +50,7 @@ import bl.tCustomerBasedMobileDetailBL;
 import bl.tCustomerBasedMobileDetailProductBL;
 import bl.tCustomerBasedMobileHeaderBL;
 import bl.tLeaveMobileBL;
+import bl.tPurchaseOrderDetailBL;
 import bl.tPurchaseOrderHeaderBL;
 import bl.tSalesProductHeaderBL;
 import bl.tUserLoginBL;
@@ -67,10 +69,13 @@ import library.salesforce.common.tCustomerBasedMobileDetailData;
 import library.salesforce.common.tCustomerBasedMobileDetailProductData;
 import library.salesforce.common.tCustomerBasedMobileHeaderData;
 import library.salesforce.common.tLeaveMobileData;
+import library.salesforce.common.tPurchaseOrderDetailData;
+import library.salesforce.common.tPurchaseOrderHeaderData;
 import library.salesforce.common.tSalesProductDetailData;
 import library.salesforce.common.tSalesProductHeaderData;
 import library.salesforce.common.tUserLoginData;
 import library.salesforce.dal.clsHardCode;
+import library.salesforce.dal.tPurchaseOrderDetailDA;
 import library.salesforce.dal.tSalesProductDetailDA;
 import library.salesforce.dal.tUserLoginDA;
 
@@ -96,8 +101,8 @@ public class FragmentDownloadData extends Fragment {
     private Button btnCustomerBase;
     private Spinner spnAbsen;
     private Button btnAbsen;
-    private Spinner spnDataLeave;
-    private Button btnDataLeave;
+    private Spinner spnDataLeave, spnDataPO;
+    private Button btnDataLeave, btnDataPO;
 
     private PackageInfo pInfo = null;
     private List<String> arrData;
@@ -132,6 +137,8 @@ public class FragmentDownloadData extends Fragment {
         btnAbsen = (Button) v.findViewById(R.id.btnDlAbsen);
         spnDataLeave = (Spinner) v.findViewById(R.id.spnDataLeave);
         btnDataLeave = (Button) v.findViewById(R.id.btnDlDataLeave);
+        spnDataPO = (Spinner)v.findViewById(R.id.spnDataPO);
+        btnDataPO = (Button)v.findViewById(R.id.btnDlDataPO);
 
         loginData = new tUserLoginData();
         loginData = new tUserLoginBL().getUserActive();
@@ -215,6 +222,14 @@ public class FragmentDownloadData extends Fragment {
                 task.execute();
             }
         });
+        btnDataPO.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intProcesscancel = 0;
+                AsyncCallDataPO task = new AsyncCallDataPO();
+                task.execute();
+            }
+        });
 
 
         return v;
@@ -237,6 +252,7 @@ public class FragmentDownloadData extends Fragment {
         List<tActivityData> listtActivityData = new tActivityBL().getAllData();
         List<tAbsenUserData> listtAbsenUserData = new tAbsenUserBL().getAllDataActive();
         List<tLeaveMobileData> listtLeaveData = new tLeaveMobileBL().getData("");
+        List<tPurchaseOrderHeaderData> listPurchaseOrderHeaderData = new tPurchaseOrderHeaderBL().getAllPurchaseOrderHeader();
 
         arrData = new ArrayList<String>();
         if (listDataBranch.size() > 0) {
@@ -355,6 +371,19 @@ public class FragmentDownloadData extends Fragment {
             spnAbsen.setAdapter(adapterspn);
             spnAbsen.setEnabled(false);
         }
+        arrData = new ArrayList<String>();
+        if (listPurchaseOrderHeaderData != null) {
+            for (tPurchaseOrderHeaderData dt : listPurchaseOrderHeaderData) {
+                arrData.add(dt.get_txtNoOrder());
+            }
+            spnDataPO.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
+            spnDataPO.setEnabled(true);
+        } else if (listPurchaseOrderHeaderData == null) {
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<String>(getContext(),
+                    android.R.layout.simple_spinner_item, strip);
+            spnDataPO.setAdapter(adapterspn);
+            spnDataPO.setEnabled(false);
+        }
 
         arrData = new ArrayList<String>();
         if (listtAbsenUserData != null) {
@@ -454,6 +483,12 @@ public class FragmentDownloadData extends Fragment {
                 org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
                 int boolValid = Integer.valueOf(String.valueOf(innerObj.get("_pboolValid")));
                 if(boolValid == 1) SaveDatatSalesProductData(Json);
+
+                Json = new tPurchaseOrderHeaderBL().DownloadTransactionPO(pInfo.versionName);
+                Iterator j = Json.iterator();
+                org.json.simple.JSONObject innerObj_po = (org.json.simple.JSONObject) j.next();
+                int boolValid_po = Integer.valueOf(String.valueOf(innerObj_po.get("_pboolValid")));
+                if(boolValid_po == 1) SaveDatatPurchaseOrderData(Json);
 
                 Json = new tActivityBL().DownloadActivity(pInfo.versionName);
                 SaveDatatActivityData(Json);
@@ -1304,6 +1339,64 @@ public class FragmentDownloadData extends Fragment {
         }
     }
 
+    private class AsyncCallDataPO extends AsyncTask<JSONArray, Void, JSONArray>{
+
+        @Override
+        protected JSONArray doInBackground(JSONArray... params) {
+            JSONArray Json = null;
+            try {
+                Json = new tPurchaseOrderHeaderBL().DownloadTransactionPO(pInfo.versionName);
+//                new tPurchaseOrderHeaderBL().DownloadNOPO(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return Json;
+        }
+        private ProgressDialog dialog = new ProgressDialog(getContext());
+
+        @Override
+        protected void onCancelled() {
+            dialog.dismiss();
+            new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessCancelRequest, false);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog.setMessage("Getting Data Purchase Order");
+            dialog.setCancelable(false);
+            dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    intProcesscancel = 1;
+                }
+            });
+            dialog.show();
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray jsonArray) {
+            if (jsonArray != null && jsonArray.size() > 0){
+                arrData = SaveDatatPurchaseOrderData(jsonArray);
+                loadData();
+                new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
+            } else {
+                if (intProcesscancel == 1){
+                    onCancelled();
+                } else {
+                    new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
+                }
+            }
+            checkingDataTable();
+            dialog.dismiss();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+            dialog.dismiss();
+        }
+    }
     private class AsyncCallDataLeave extends AsyncTask<JSONArray, Void, JSONArray> {
         @Override
         protected JSONArray doInBackground(JSONArray... params) {
@@ -1500,7 +1593,6 @@ public class FragmentDownloadData extends Fragment {
             JSONArray Json = null;
             try {
                 Json = new mEmployeeBranchBL().DownloadEmployeeBranch2(pInfo.versionName);
-                new tPurchaseOrderHeaderBL().DownloadNOPO(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -1698,5 +1790,70 @@ public class FragmentDownloadData extends Fragment {
         protected void onProgressUpdate(Void... values) {
             Dialog.dismiss();
         }
+    }
+
+    private List<String> SaveDatatPurchaseOrderData(JSONArray jsonArray){
+        List<String> _array;
+        APIData dtAPIDATA = new APIData();
+        _array = new ArrayList<>();
+        Iterator i = jsonArray.iterator();
+        Boolean flag = true;
+        String ErrorMess = "";
+        List<tPurchaseOrderHeaderData> listDataHeader = new ArrayList<>();
+        while (i.hasNext()){
+            JSONObject innerObj = (JSONObject) i.next();
+            try {
+                JSONArray jsonArray_header = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListDatatPurchaseOrderHeader_mobile")));
+                if (jsonArray_header != null){
+                    Iterator j = jsonArray_header.iterator();
+                    while (j.hasNext()){
+                        tPurchaseOrderHeaderData _data = new tPurchaseOrderHeaderData();
+                        JSONObject innerObj_header = (JSONObject) j.next();
+                        _data.set_intId(String.valueOf(innerObj_header.get("TxtDataId")));
+                        _data.set_txtKeterangan(String.valueOf(innerObj_header.get("TxtKeterangan")));
+                        _data.set_dtDate(String.valueOf(innerObj_header.get("DtDate")));
+                        _data.set_intSumAmount(String.valueOf(innerObj_header.get("IntSumAmount")));
+                        _data.set_intSumItem(String.valueOf(innerObj_header.get("IntSumItem")));
+                        _data.set_intIdAbsenUser(String.valueOf(innerObj_header.get("IntIdAbsenUser")));
+                        _data.set_txtNIK(String.valueOf(innerObj_header.get("TxtNIK")));
+                        _data.set_txtNoOrder(String.valueOf(innerObj_header.get("TxtNoPB")));
+                        _data.set_OutletCode(String.valueOf(innerObj_header.get("TxtOutletCode")));
+                        _data.set_OutletName(String.valueOf(innerObj_header.get("TxtOutletName")));
+                        _data.set_txtBranchCode(String.valueOf(innerObj_header.get("TxtBranchCode")));
+                        _data.set_txtBranchName(String.valueOf(innerObj_header.get("TxtBranchName")));
+                        _data.set_UserId(String.valueOf(innerObj_header.get("TxtUserId")));
+                        _data.set_txtRoleId(String.valueOf(innerObj_header.get("TxtRoleId")));
+                        _data.set_intSubmit("1");
+                        _data.set_intSync("1");
+                        new tPurchaseOrderHeaderBL().SaveData(_data);
+                    }
+
+                    JSONArray jsonArray_Detail = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListDatatPurchaseOrderDetail_mobile")));
+                    Iterator k = jsonArray_Detail.iterator();
+                    clsMainBL _clsMainBL = new clsMainBL();
+                    SQLiteDatabase _db = _clsMainBL.getDb();
+                    while (k.hasNext()) {
+                        tPurchaseOrderDetailData _data = new tPurchaseOrderDetailData();
+                        JSONObject innerObj_detail = (JSONObject) k.next();
+                        _data.set_intId(String.valueOf(innerObj_detail.get("TxtTrPurchaseOrderDetail")));
+                        _data.set_dtDate(String.valueOf(innerObj_detail.get("DtDate")));
+                        _data.set_intPrice(String.valueOf(innerObj_detail.get("IntPrice")));
+                        _data.set_intQty(String.valueOf(innerObj_detail.get("IntQty")));
+                        _data.set_intTotal(String.valueOf(innerObj_detail.get("IntTotal")));
+                        _data.set_txtCodeProduct(String.valueOf(innerObj_detail.get("TxtCodeProduct")));
+                        _data.set_txtNameProduct(String.valueOf(innerObj_detail.get("TxtNameProduct")));
+                        _data.set_txtNoOrder(String.valueOf(innerObj_detail.get("TxtNoPB")));
+                        _data.set_txtKeterangan(String.valueOf(innerObj_detail.get("TxtKeterangan")));
+                        _data.set_intActive(String.valueOf(innerObj_detail.get("BitActive")));
+                        new tPurchaseOrderDetailDA(_db).SaveDatatPurchaseOrderDetailData(_db, _data);
+                    }
+                } else {
+                    new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
+                }
+            }catch (ParseException e){
+                e.printStackTrace();
+            }
+        }
+        return _array;
     }
 }

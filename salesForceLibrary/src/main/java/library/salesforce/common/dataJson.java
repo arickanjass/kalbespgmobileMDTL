@@ -323,6 +323,7 @@ public class dataJson {
                     item.put(dttPurchaseOrderDetailData.Property_txtNIK, String.valueOf(data.get_txtNIK()));
                     item.put(dttPurchaseOrderDetailData.Property_intTotal, String.valueOf(data.get_intTotal()));
                     item.put(dttPurchaseOrderDetailData.Property_txtNoOrder, String.valueOf(data.get_txtNoOrder()));
+                    item.put(dttPurchaseOrderDetailData.Property_intActive, String.valueOf(data.get_intActive()));
                     itemsListJquey.add(item);
                 }
                 resJson.put(dttPurchaseOrderDetailData.Property_ListOftPurchaseOrderDetailData, new JSONArray(itemsListJquey));
