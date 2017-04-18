@@ -191,7 +191,7 @@ public class tPurchaseOrderHeaderBL extends clsMainBL {
         tUserLoginData _dataUserLogin = _tUserLoginDA.getData(db, 1);
         clsHelper _help = new clsHelper();
         linkAPI dtLinkAPI = new linkAPI();
-        String txtMethod = "GetDataTransactionPurchaseOrder";
+        String txtMethod = "GetDataTransactionPurchaseOrder"; 
         JSONObject resJson = new JSONObject();
         dtLinkAPI.set_txtMethod(txtMethod);
         dtLinkAPI.set_txtParam("|" + _dataUserLogin.get_TxtEmpId() + "|" + dateNow);
