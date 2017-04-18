@@ -57,7 +57,7 @@ import library.salesforce.dal.tPurchaseOrderDetailDA;
 import library.salesforce.dal.tPurchaseOrderHeaderDA;
 import library.salesforce.dal.tSalesProductDetailDA;
 import library.salesforce.dal.tSalesProductHeaderDA;
-import library.salesforce.dal.tSalesProductQuantityDA;
+import library.salesforce.dal.tSalesProductQuantityHeaderDA;
 import library.salesforce.dal.tSalesProductQuantityDetailDA;
 import library.salesforce.dal.tSalesQuantityImageAfterDA;
 import library.salesforce.dal.tSalesQuantityImageBeforeDA;
@@ -251,7 +251,7 @@ public class clsHelper {
 
 		mProductCompetitorDA _mProductCompetitorDA = new mProductCompetitorDA(db);
 		mTypeSubmissionMobileDA _mTypeSubmissionMobileDA = new mTypeSubmissionMobileDA(db);
-		tSalesProductQuantityDA _tSalesProductQuantityDA = new tSalesProductQuantityDA(db);
+		tSalesProductQuantityHeaderDA _tSalesProductQuantityDA = new tSalesProductQuantityHeaderDA(db);
 		tSalesProductQuantityDetailDA _tSalesProductQuantityDetailDA = new tSalesProductQuantityDetailDA(db);
 		tSalesQuantityImageAfterDA _tSalesQuantityImageAfterDA = new tSalesQuantityImageAfterDA(db);
 		tSalesQuantityImageBeforeDA _tSalesQuantityImageBeforeDA = new tSalesQuantityImageBeforeDA(db);
@@ -295,7 +295,7 @@ public class clsHelper {
 
 		_mProductCompetitorDA = new mProductCompetitorDA(db);
 		_mTypeSubmissionMobileDA = new mTypeSubmissionMobileDA(db);
-		_tSalesProductQuantityDA = new tSalesProductQuantityDA(db);
+		_tSalesProductQuantityDA = new tSalesProductQuantityHeaderDA(db);
 		_tSalesProductQuantityDetailDA = new tSalesProductQuantityDetailDA(db);
 		_tSalesQuantityImageAfterDA = new tSalesQuantityImageAfterDA(db);
 		_tSalesQuantityImageBeforeDA = new tSalesQuantityImageBeforeDA(db);

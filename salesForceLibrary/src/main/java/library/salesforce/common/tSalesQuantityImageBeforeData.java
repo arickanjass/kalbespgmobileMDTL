@@ -46,6 +46,7 @@ public class tSalesQuantityImageBeforeData {
     public String Property_txtHeaderId = "txtHeaderId";
     public String Property_before1 = "byteBefore1";
     public String Property_before2 = "byteBefore2";
+    public String Property_ListOftSalesQuantityImageBeforeData = "ListOftSalesQuantityImageBeforeData";
 
     public String Property_All = Property_txtId +","+
             Property_txtHeaderId +","+

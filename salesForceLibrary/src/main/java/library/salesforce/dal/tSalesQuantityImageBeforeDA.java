@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import library.salesforce.common.tSalesProductQuantityHeaderData;
 import library.salesforce.common.tSalesQuantityImageBeforeData;
 
 /**
@@ -66,6 +67,38 @@ public class tSalesQuantityImageBeforeDA {
                     contactList.add(contact);
                 } while (cursor.moveToNext());
             }
+        }
+        cursor.close();
+        return contactList;
+    }
+
+    public List<tSalesQuantityImageBeforeData> getAllDataToPushData(SQLiteDatabase db, List<tSalesProductQuantityHeaderData> ListOfSalesProductQuantityHeader){
+        List<tSalesQuantityImageBeforeData> contactList = null;
+        tSalesQuantityImageBeforeData dt = new tSalesQuantityImageBeforeData();
+
+        String tSalesProductQuantityHeader = "()";
+
+        if (ListOfSalesProductQuantityHeader != null){
+            tSalesProductQuantityHeader = "(";
+            for (int i = 0; i < ListOfSalesProductQuantityHeader.size(); i++){
+                tSalesProductQuantityHeader = tSalesProductQuantityHeader + "'" + ListOfSalesProductQuantityHeader.get(i).get_intId() +"'";
+                tSalesProductQuantityHeader = tSalesProductQuantityHeader + ((i + 1) != ListOfSalesProductQuantityHeader.size() ? "," : ")");
+            }
+        }
+        String selectQuery = "SELECT "+dt.Property_All+" FROM " + TABLE_CONTACTS + " WHERE "+dt.Property_txtHeaderId+" IN " + tSalesProductQuantityHeader;
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            contactList = new ArrayList<tSalesQuantityImageBeforeData>();
+            do {
+                tSalesQuantityImageBeforeData contact = new tSalesQuantityImageBeforeData();
+                contact.set_txtId(cursor.getString(0));
+                contact.set_txtHeaderId(cursor.getString(1));
+                contact.set_before1(cursor.getBlob(2));
+                contact.set_before2(cursor.getBlob(3));
+                contactList.add(contact);
+            } while (cursor.moveToNext());
         }
         cursor.close();
         return contactList;

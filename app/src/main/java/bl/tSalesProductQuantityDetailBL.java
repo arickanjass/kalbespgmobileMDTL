@@ -2,12 +2,9 @@ package bl;
 
 import android.database.sqlite.SQLiteDatabase;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import library.salesforce.common.tSalesProductQuantityData;
 import library.salesforce.common.tSalesProductQuantityDetailData;
-import library.salesforce.dal.tSalesProductQuantityDA;
 import library.salesforce.dal.tSalesProductQuantityDetailDA;
 
 /**

@@ -64,7 +64,7 @@ import library.salesforce.common.clsHelper;
 import library.salesforce.common.clsSwipeList;
 import library.salesforce.common.mEmployeeSalesProductData;
 import library.salesforce.common.tAbsenUserData;
-import library.salesforce.common.tSalesProductQuantityData;
+import library.salesforce.common.tSalesProductQuantityHeaderData;
 import library.salesforce.common.tSalesProductQuantityDetailData;
 import library.salesforce.common.tSalesQuantityImageAfterData;
 import library.salesforce.common.tSalesQuantityImageBeforeData;
@@ -78,15 +78,15 @@ import library.salesforce.dal.enumCounterData;
 
 public class FragmentAddQuantityStock extends Fragment implements IXListViewListener{
     View v;
-    tSalesProductQuantityData dtHeader;
+    tSalesProductQuantityHeaderData dtHeader;
 
     private ArrayList<ModelListview> modelItems;
     private ArrayList<ModelListview> arrdataPriv;
     ListView listView;
     int selectedId;
     public static ArrayList<ModelListview> arr = new ArrayList<ModelListview>();
-    static List<tSalesProductQuantityData> dt;
-    static List<tSalesProductQuantityData> data;
+    static List<tSalesProductQuantityHeaderData> dt;
+    static List<tSalesProductQuantityHeaderData> data;
     private FloatingActionButton fab;
     private List<String> arrData;
     private EditText edKeterangan, editTextQty;
@@ -98,7 +98,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
     private Uri uriImage;
     TextView tv_date, txtHDId;
     TextView tv_noso;
-    List<tSalesProductQuantityData> dtListDetailProduct;
+    List<tSalesProductQuantityHeaderData> dtListDetailProduct;
     List<tSalesProductQuantityDetailData> dtListProduct;
     AdapterListProductCustomerBased AdapterProduct;
 
@@ -117,7 +117,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
     private static final int CAMERA_REQUEST4 = 130;
     private static final String IMAGE_DIRECTORY_NAME = "Image Activity";
 
-    private tSalesProductQuantityData dtQuantityData;
+    private tSalesProductQuantityHeaderData dtQuantityData;
 
     private static Bitmap photoAfter1, photoAfter2, photoBefore1, photoBefore2;
     private static ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -148,7 +148,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         editTextQty = (EditText) v.findViewById(R.id.editTextQty);
 
         _clsMainActivity = new clsMainActivity();
-        dtQuantityData = new tSalesProductQuantityData();
+        dtQuantityData = new tSalesProductQuantityHeaderData();
         txtHDId.setText(String.valueOf(new clsMainActivity().GenerateGuid()));
 
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
@@ -157,13 +157,13 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
 
         // add no so in Textview txtNoQuantity
 //        List<tSalesProductHeaderData> dtta = new tSalesProductHeaderBL().getAllSalesProductHeader();
-        List<tSalesProductQuantityData> dtLast = new tSalesProductQuantityHeaderBL().getLastData();
+        List<tSalesProductQuantityHeaderData> dtLast = new tSalesProductQuantityHeaderBL().getLastData();
         if (dtLast == null || dtLast.size() == 0) {
             noso = new mCounterNumberBL().getData(enumCounterData.NoDataSO);
 
         } else {
             noso = new mCounterNumberBL().getData(enumCounterData.NoDataSO);
-            List<tSalesProductQuantityData> dataFirstIsExist = new tSalesProductQuantityHeaderBL().getDataByNoSO(noso);
+            List<tSalesProductQuantityHeaderData> dataFirstIsExist = new tSalesProductQuantityHeaderBL().getDataByNoSO(noso);
             if (dataFirstIsExist.size() == 1) {
                 clsHelper _clsHelper = new clsHelper();
                 String oldVersion = dtLast.get(0).get_txtQuantityStock();
@@ -665,7 +665,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
             }
 //            dtQuantityData.set_intSubmit("1");
 //            dtQuantityData.set_intSync("0");
-            List<tSalesProductQuantityData> tSalesProductQuantityDatas = new ArrayList<>();
+            List<tSalesProductQuantityHeaderData> tSalesProductQuantityDatas = new ArrayList<>();
             tSalesProductQuantityDatas.add(dtQuantityData);
 //            new tSalesProductQuantityHeaderBL().SaveData2(tSalesProductQuantityDatas);
         } catch (NullPointerException e) {
@@ -704,7 +704,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
             }
 //            dtQuantityData.set_intSubmit("1");
 //            dtQuantityData.set_intSync("0");
-            List<tSalesProductQuantityData> tSalesProductQuantityDatas = new ArrayList<>();
+            List<tSalesProductQuantityHeaderData> tSalesProductQuantityDatas = new ArrayList<>();
             tSalesProductQuantityDatas.add(dtQuantityData);
 //            new tSalesProductQuantityHeaderBL().SaveData2(tSalesProductQuantityDatas);
         } catch (NullPointerException e) {
@@ -743,7 +743,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
             }
 //            dtQuantityData.set_intSubmit("1");
 //            dtQuantityData.set_intSync("0");
-            List<tSalesProductQuantityData> tSalesProductQuantityDatas = new ArrayList<>();
+            List<tSalesProductQuantityHeaderData> tSalesProductQuantityDatas = new ArrayList<>();
             tSalesProductQuantityDatas.add(dtQuantityData);
 //            new tSalesProductQuantityHeaderBL().SaveData2(tSalesProductQuantityDatas);
         } catch (NullPointerException e) {
@@ -782,7 +782,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
             }
 //            dtQuantityData.set_intSubmit("1");
 //            dtQuantityData.set_intSync("0");
-            List<tSalesProductQuantityData> tSalesProductQuantityDatas = new ArrayList<>();
+            List<tSalesProductQuantityHeaderData> tSalesProductQuantityDatas = new ArrayList<>();
             tSalesProductQuantityDatas.add(dtQuantityData);
 //            new tSalesProductQuantityHeaderBL().SaveData2(tSalesProductQuantityDatas);
         } catch (NullPointerException e) {
@@ -916,7 +916,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
 
     private void save() {
         List<mEmployeeSalesProductData> employeeSalesProductDataList = new mEmployeeSalesProductBL().GetAllData();
-//        dtQuantityData = new tSalesProductQuantityData();
+//        dtQuantityData = new tSalesProductQuantityHeaderData();
         tAbsenUserData absenUserData = new tAbsenUserBL().getDataCheckInActive();
         tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
         modelItems = new ArrayList<ModelListview>();
@@ -964,7 +964,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         dtQuantityData.set_txtNIK(dataUserActive.get_TxtEmpId());
         dtQuantityData.set_intSubmit("1");
         dtQuantityData.set_intSync("0");
-        List<tSalesProductQuantityData> dtList = new ArrayList<>();
+        List<tSalesProductQuantityHeaderData> dtList = new ArrayList<>();
         dtList.add(dtQuantityData);
         new tSalesProductQuantityHeaderBL().SaveData2(dtList);
     }

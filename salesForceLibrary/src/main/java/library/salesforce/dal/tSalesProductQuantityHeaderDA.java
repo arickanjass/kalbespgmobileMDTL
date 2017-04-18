@@ -7,14 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import library.salesforce.common.tSalesProductHeaderData;
-import library.salesforce.common.tSalesProductQuantityData;
+import library.salesforce.common.tSalesProductQuantityHeaderData;
 
 /**
  * Created by Rian Andrivani on 3/16/2017.
  */
 
-public class tSalesProductQuantityDA {
+public class tSalesProductQuantityHeaderDA {
     // All Static variables
 
     // Contacts table name
@@ -22,8 +21,8 @@ public class tSalesProductQuantityDA {
 
     // Contacts Table Columns names
 
-    public tSalesProductQuantityDA(SQLiteDatabase db){
-        tSalesProductQuantityData dt = new tSalesProductQuantityData();
+    public tSalesProductQuantityHeaderDA(SQLiteDatabase db){
+        tSalesProductQuantityHeaderData dt = new tSalesProductQuantityHeaderData();
         String CREATE_CONTACTS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_CONTACTS + "("
                 + dt.Property_intId + " TEXT PRIMARY KEY,"
                 + dt.Property_txtQuantityStock + " TEXT NULL,"
@@ -60,8 +59,8 @@ public class tSalesProductQuantityDA {
      */
 
     // Adding new contact
-    public void SaveDataSalesProductQuantityData(SQLiteDatabase db, tSalesProductQuantityData data) {
-        tSalesProductQuantityData dt = new tSalesProductQuantityData();
+    public void SaveDataSalesProductQuantityData(SQLiteDatabase db, tSalesProductQuantityHeaderData data) {
+        tSalesProductQuantityHeaderData dt = new tSalesProductQuantityHeaderData();
         ContentValues cv = new ContentValues();
         cv.put(dt.Property_txtQuantityStock, data.get_txtQuantityStock());
         cv.put(dt.Property_OutletCode, data.get_OutletCode());
@@ -88,7 +87,7 @@ public class tSalesProductQuantityDA {
             cv.put(dt.Property_intId, data.get_intId());
             db.replace(TABLE_CONTACTS, null, cv);
         }
-//        tSalesProductQuantityData dt1 = getData(db,data.get_intId());
+//        tSalesProductQuantityHeaderData dt1 = getData(db,data.get_intId());
 //        if (dt1 == null) {
 //            cv.put(dt.Property_intId, String.valueOf(data.get_intId()));
 //            db.insert(TABLE_CONTACTS, null, cv);
@@ -98,8 +97,8 @@ public class tSalesProductQuantityDA {
 //        }
     }
 
-    public void UpdateDataItem(SQLiteDatabase db, tSalesProductQuantityData data) {
-        tSalesProductQuantityData dt = new tSalesProductQuantityData();
+    public void UpdateDataItem(SQLiteDatabase db, tSalesProductQuantityHeaderData data) {
+        tSalesProductQuantityHeaderData dt = new tSalesProductQuantityHeaderData();
         db.execSQL("Update " + TABLE_CONTACTS + " set  "
                 + dt.Property_intSumAmount + "="
                 + String.valueOf(data.get_intSumAmount())
@@ -109,15 +108,15 @@ public class tSalesProductQuantityDA {
     }
 
     public void UpdateDataItemForSubmit(SQLiteDatabase db, String dataid) {
-        tSalesProductQuantityData dt = new tSalesProductQuantityData();
+        tSalesProductQuantityHeaderData dt = new tSalesProductQuantityHeaderData();
         db.execSQL("Update " + TABLE_CONTACTS + " set  "
                 + dt.Property_intSubmit + "=1"
                 + " Where " + dt.Property_intId + "='" + dataid + "'");
     }
 
     // Getting single contact
-    public tSalesProductQuantityData getData(SQLiteDatabase db, String id){
-        tSalesProductQuantityData dt = new tSalesProductQuantityData();
+    public tSalesProductQuantityHeaderData getData(SQLiteDatabase db, String id){
+        tSalesProductQuantityHeaderData dt = new tSalesProductQuantityHeaderData();
         Cursor cursor = db.query(TABLE_CONTACTS, new String[]{dt.Property_intId, dt.Property_txtQuantityStock,
                         dt.Property_OutletCode, dt.Property_OutletName,
                         dt.Property_txtDate, dt.Property_txtKeterangan, dt.Property_txtNIK
@@ -125,9 +124,9 @@ public class tSalesProductQuantityDA {
                         , dt.Property_intSync, dt.Property_txtBranchCode, dt.Property_txtBranchName, dt.Property_intIdAbsenUser
                         , dt.Property_txtAfterImg1, dt.Property_txtAfterImg2, dt.Property_txtBeforeImg1, dt.Property_txtBeforeImg2}, dt.Property_intId + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
-        tSalesProductQuantityData contact = null;
+        tSalesProductQuantityHeaderData contact = null;
         if (cursor.getCount() > 0) {
-            contact = new tSalesProductQuantityData();
+            contact = new tSalesProductQuantityHeaderData();
             if (cursor != null)
                 cursor.moveToFirst();
             contact.set_intId(cursor.getString(0));
@@ -156,7 +155,7 @@ public class tSalesProductQuantityDA {
     }
 
     public boolean CheckDataPushData(SQLiteDatabase db) {
-        tSalesProductQuantityData dt = new tSalesProductQuantityData();
+        tSalesProductQuantityHeaderData dt = new tSalesProductQuantityHeaderData();
         String selectQuery = "SELECT 1 FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intSubmit + "=1 AND " + dt.Property_intSync + "=0";
         Cursor cursor = db.rawQuery(selectQuery, null);
         boolean result = false;
@@ -169,19 +168,19 @@ public class tSalesProductQuantityDA {
     }
 
     // Getting All Contacts
-    public List<tSalesProductQuantityData> getAllDataToPushData(SQLiteDatabase db){
-        List<tSalesProductQuantityData> contactList = null;
+    public List<tSalesProductQuantityHeaderData> getAllDataToPushData(SQLiteDatabase db){
+        List<tSalesProductQuantityHeaderData> contactList = null;
         // Select All Query
-        tSalesProductQuantityData dt = new tSalesProductQuantityData();
+        tSalesProductQuantityHeaderData dt = new tSalesProductQuantityHeaderData();
 
         String selectQuery = "SELECT " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intSubmit + "=1 AND " + dt.Property_intSync + "=0";
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
-            contactList = new ArrayList<tSalesProductQuantityData>();
+            contactList = new ArrayList<tSalesProductQuantityHeaderData>();
             do {
-                tSalesProductQuantityData contact = new tSalesProductQuantityData();
+                tSalesProductQuantityHeaderData contact = new tSalesProductQuantityHeaderData();
                 contact.set_intId(cursor.getString(0));
                 contact.set_txtQuantityStock(cursor.getString(1));
                 contact.set_dtDate(cursor.getString(2));
@@ -211,19 +210,19 @@ public class tSalesProductQuantityDA {
         return contactList;
     }
 
-    public List<tSalesProductQuantityData> getAllData(SQLiteDatabase db) {
-        List<tSalesProductQuantityData> contactList = null;
+    public List<tSalesProductQuantityHeaderData> getAllData(SQLiteDatabase db) {
+        List<tSalesProductQuantityHeaderData> contactList = null;
         // select all query
-        tSalesProductQuantityData dt = new tSalesProductQuantityData();
+        tSalesProductQuantityHeaderData dt = new tSalesProductQuantityHeaderData();
         String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " ORDER BY txtNoSo DESC";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
-            contactList = new ArrayList<tSalesProductQuantityData>();
+            contactList = new ArrayList<tSalesProductQuantityHeaderData>();
             do {
-                tSalesProductQuantityData contact = new tSalesProductQuantityData();
+                tSalesProductQuantityHeaderData contact = new tSalesProductQuantityHeaderData();
                 contact.set_intId(cursor.getString(0));
                 contact.set_txtQuantityStock(cursor.getString(1));
                 contact.set_dtDate(cursor.getString(2));
@@ -253,19 +252,19 @@ public class tSalesProductQuantityDA {
         return contactList;
     }
 
-    public List<tSalesProductQuantityData> getAllDataByOutlet(SQLiteDatabase db, String txtOutletCode) {
-        List<tSalesProductQuantityData> contactList = null;
+    public List<tSalesProductQuantityHeaderData> getAllDataByOutlet(SQLiteDatabase db, String txtOutletCode) {
+        List<tSalesProductQuantityHeaderData> contactList = null;
         // select all query
-        tSalesProductQuantityData dt = new tSalesProductQuantityData();
+        tSalesProductQuantityHeaderData dt = new tSalesProductQuantityHeaderData();
         String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_OutletCode + "='" + txtOutletCode + "' AND " + dt.Property_intSubmit + "=1";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
-            contactList = new ArrayList<tSalesProductQuantityData>();
+            contactList = new ArrayList<tSalesProductQuantityHeaderData>();
             do {
-                tSalesProductQuantityData contact = new tSalesProductQuantityData();
+                tSalesProductQuantityHeaderData contact = new tSalesProductQuantityHeaderData();
                 contact.set_intId(cursor.getString(0));
                 contact.set_OutletCode(cursor.getString(1));
                 contact.set_OutletName(cursor.getString(2));
@@ -294,19 +293,19 @@ public class tSalesProductQuantityDA {
         return contactList;
     }
 
-    public List<tSalesProductQuantityData> getAllDataSubmit(SQLiteDatabase db) {
-        List<tSalesProductQuantityData> contactList = null;
+    public List<tSalesProductQuantityHeaderData> getAllDataSubmit(SQLiteDatabase db) {
+        List<tSalesProductQuantityHeaderData> contactList = null;
         // Select All Query
-        tSalesProductQuantityData dt = new tSalesProductQuantityData();
+        tSalesProductQuantityHeaderData dt = new tSalesProductQuantityHeaderData();
         String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intSubmit + "=1";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()){
-            contactList = new ArrayList<tSalesProductQuantityData>();
+            contactList = new ArrayList<tSalesProductQuantityHeaderData>();
             do {
-                tSalesProductQuantityData contact = new tSalesProductQuantityData();
+                tSalesProductQuantityHeaderData contact = new tSalesProductQuantityHeaderData();
                 contact.set_intId(cursor.getString(0));
                 contact.set_OutletCode(cursor.getString(1));
                 contact.set_OutletName(cursor.getString(2));
@@ -334,19 +333,19 @@ public class tSalesProductQuantityDA {
         return contactList;
     }
 
-    public List<tSalesProductQuantityData> getAllDataNotSync(SQLiteDatabase db) {
-        List<tSalesProductQuantityData> contactList = null;
+    public List<tSalesProductQuantityHeaderData> getAllDataNotSync(SQLiteDatabase db) {
+        List<tSalesProductQuantityHeaderData> contactList = null;
         // select All Query
-        tSalesProductQuantityData dt = new tSalesProductQuantityData();
+        tSalesProductQuantityHeaderData dt = new tSalesProductQuantityHeaderData();
         String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intSync + "=0";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
-            contactList = new ArrayList<tSalesProductQuantityData>();
+            contactList = new ArrayList<tSalesProductQuantityHeaderData>();
             do {
-                tSalesProductQuantityData contact = new tSalesProductQuantityData();
+                tSalesProductQuantityHeaderData contact = new tSalesProductQuantityHeaderData();
                 contact.set_intId(cursor.getString(0));
                 contact.set_OutletCode(cursor.getString(1));
                 contact.set_OutletName(cursor.getString(2));
@@ -370,19 +369,19 @@ public class tSalesProductQuantityDA {
         return contactList;
     }
 
-    public List<tSalesProductQuantityData> getAllDataByIdAbsen(SQLiteDatabase db, String Id) {
-        List<tSalesProductQuantityData> contactList = null;
+    public List<tSalesProductQuantityHeaderData> getAllDataByIdAbsen(SQLiteDatabase db, String Id) {
+        List<tSalesProductQuantityHeaderData> contactList = null;
         // select all query
-        tSalesProductQuantityData dt = new tSalesProductQuantityData();
+        tSalesProductQuantityHeaderData dt = new tSalesProductQuantityHeaderData();
         String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intIdAbsenUser + "='" + Id + "'";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
-            contactList = new ArrayList<tSalesProductQuantityData>();
+            contactList = new ArrayList<tSalesProductQuantityHeaderData>();
             do {
-                tSalesProductQuantityData contact = new tSalesProductQuantityData();
+                tSalesProductQuantityHeaderData contact = new tSalesProductQuantityHeaderData();
                 contact.set_intId(cursor.getString(0));
                 contact.set_OutletCode(cursor.getString(1));
                 contact.set_OutletName(cursor.getString(2));
@@ -411,19 +410,19 @@ public class tSalesProductQuantityDA {
     }
 
     //get data by int sync
-    public List<tSalesProductQuantityData> getAllDataByIntSyc(SQLiteDatabase db, String int_sync) {
-        List<tSalesProductQuantityData> contactList = null;
+    public List<tSalesProductQuantityHeaderData> getAllDataByIntSyc(SQLiteDatabase db, String int_sync) {
+        List<tSalesProductQuantityHeaderData> contactList = null;
         // select all query
-        tSalesProductQuantityData dt = new tSalesProductQuantityData();
+        tSalesProductQuantityHeaderData dt = new tSalesProductQuantityHeaderData();
         String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intSync + "='" + int_sync + "'";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
-            contactList = new ArrayList<tSalesProductQuantityData>();
+            contactList = new ArrayList<tSalesProductQuantityHeaderData>();
             do {
-                tSalesProductQuantityData contact = new tSalesProductQuantityData();
+                tSalesProductQuantityHeaderData contact = new tSalesProductQuantityHeaderData();
                 contact.set_intId(cursor.getString(0));
                 contact.set_OutletCode(cursor.getString(1));
                 contact.set_OutletName(cursor.getString(2));
@@ -451,19 +450,19 @@ public class tSalesProductQuantityDA {
         return contactList;
     }
 
-    public List<tSalesProductQuantityData> getAllDataByIntSycAndOutlet(SQLiteDatabase db, String int_sync, String outlet){
-        List<tSalesProductQuantityData> contactList = null;
+    public List<tSalesProductQuantityHeaderData> getAllDataByIntSycAndOutlet(SQLiteDatabase db, String int_sync, String outlet){
+        List<tSalesProductQuantityHeaderData> contactList = null;
         // select all query
-        tSalesProductQuantityData dt = new tSalesProductQuantityData();
+        tSalesProductQuantityHeaderData dt = new tSalesProductQuantityHeaderData();
         String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intSync + "='" + int_sync + "' AND " + dt.Property_OutletCode + "='" + outlet + "'";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
-            contactList = new ArrayList<tSalesProductQuantityData>();
+            contactList = new ArrayList<tSalesProductQuantityHeaderData>();
             do {
-                tSalesProductQuantityData contact = new tSalesProductQuantityData();
+                tSalesProductQuantityHeaderData contact = new tSalesProductQuantityHeaderData();
                 contact.set_intId(cursor.getString(0));
                 contact.set_OutletCode(cursor.getString(1));
                 contact.set_OutletName(cursor.getString(2));
@@ -491,17 +490,17 @@ public class tSalesProductQuantityDA {
         return contactList;
     }
 
-    public List<tSalesProductQuantityData> getAllDataByOutletCode(SQLiteDatabase db, String code){
-        List<tSalesProductQuantityData> contactList = null;
+    public List<tSalesProductQuantityHeaderData> getAllDataByOutletCode(SQLiteDatabase db, String code){
+        List<tSalesProductQuantityHeaderData> contactList = null;
         // select all query
-        tSalesProductQuantityData dt = new tSalesProductQuantityData();
+        tSalesProductQuantityHeaderData dt = new tSalesProductQuantityHeaderData();
         String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_OutletCode + "='" + code + "'";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
-            contactList = new ArrayList<tSalesProductQuantityData>();
+            contactList = new ArrayList<tSalesProductQuantityHeaderData>();
             do {
-                tSalesProductQuantityData contact = new tSalesProductQuantityData();
+                tSalesProductQuantityHeaderData contact = new tSalesProductQuantityHeaderData();
                 contact.set_intId(cursor.getString(0));
                 contact.set_txtQuantityStock(cursor.getString(1));
                 contact.set_dtDate(cursor.getString(2));
@@ -530,10 +529,10 @@ public class tSalesProductQuantityDA {
         return contactList;
     }
 
-    public List<tSalesProductQuantityData> getDataByQuantityStock(SQLiteDatabase db, String id){
-        List<tSalesProductQuantityData> contactList = new ArrayList<tSalesProductQuantityData>();
+    public List<tSalesProductQuantityHeaderData> getDataByQuantityStock(SQLiteDatabase db, String id){
+        List<tSalesProductQuantityHeaderData> contactList = new ArrayList<tSalesProductQuantityHeaderData>();
         // select all query
-        tSalesProductQuantityData dt = new tSalesProductQuantityData();
+        tSalesProductQuantityHeaderData dt = new tSalesProductQuantityHeaderData();
         String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_txtQuantityStock + "='" + id + "'";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -541,7 +540,7 @@ public class tSalesProductQuantityDA {
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                tSalesProductQuantityData contact = new tSalesProductQuantityData();
+                tSalesProductQuantityHeaderData contact = new tSalesProductQuantityHeaderData();
                 contact.set_intId(cursor.getString(0));
                 contact.set_txtQuantityStock(cursor.getString(1));
                 contact.set_dtDate(cursor.getString(2));
@@ -570,19 +569,19 @@ public class tSalesProductQuantityDA {
         return contactList;
     }
 
-    public List<tSalesProductQuantityData> getAllDataByDateCheckin(SQLiteDatabase db, String date) {
-        List<tSalesProductQuantityData> contactList = null;
+    public List<tSalesProductQuantityHeaderData> getAllDataByDateCheckin(SQLiteDatabase db, String date) {
+        List<tSalesProductQuantityHeaderData> contactList = null;
         // select All Query
-        tSalesProductQuantityData dt = new tSalesProductQuantityData();
+        tSalesProductQuantityHeaderData dt = new tSalesProductQuantityHeaderData();
         String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_txtDate + "='" + date + "'";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
-            contactList = new ArrayList<tSalesProductQuantityData>();
+            contactList = new ArrayList<tSalesProductQuantityHeaderData>();
             do {
-                tSalesProductQuantityData contact = new tSalesProductQuantityData();
+                tSalesProductQuantityHeaderData contact = new tSalesProductQuantityHeaderData();
                 contact.set_intId(cursor.getString(0));
                 contact.set_txtQuantityStock(cursor.getString(1));
                 contact.set_dtDate(cursor.getString(2));
@@ -611,10 +610,10 @@ public class tSalesProductQuantityDA {
         return contactList;
     }
 
-    public List<tSalesProductQuantityData> getAllData2(SQLiteDatabase db) {
-        List<tSalesProductQuantityData> contactList = new ArrayList<tSalesProductQuantityData>();
+    public List<tSalesProductQuantityHeaderData> getAllData2(SQLiteDatabase db) {
+        List<tSalesProductQuantityHeaderData> contactList = new ArrayList<tSalesProductQuantityHeaderData>();
         // Select All Query
-        tSalesProductQuantityData dt=new tSalesProductQuantityData();
+        tSalesProductQuantityHeaderData dt=new tSalesProductQuantityHeaderData();
         String selectQuery = "SELECT  "+dt.Property_All+" FROM " + TABLE_CONTACTS;
 
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -622,7 +621,7 @@ public class tSalesProductQuantityDA {
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                tSalesProductQuantityData contact = new tSalesProductQuantityData();
+                tSalesProductQuantityHeaderData contact = new tSalesProductQuantityHeaderData();
                 contact.set_intId(cursor.getString(0));
                 contact.set_txtQuantityStock(cursor.getString(1));
                 contact.set_txtNIK(cursor.getString(2));
@@ -654,7 +653,7 @@ public class tSalesProductQuantityDA {
 
     // Deleting single contact
     public void deleteContact(SQLiteDatabase db, String id) {
-        tSalesProductQuantityData dt = new tSalesProductQuantityData();
+        tSalesProductQuantityHeaderData dt = new tSalesProductQuantityHeaderData();
         db.delete(TABLE_CONTACTS, dt.Property_intId + " = ?",
                 new String[]{String.valueOf(id)});
     }
@@ -674,19 +673,19 @@ public class tSalesProductQuantityDA {
         return index;
     }
 
-    public List<tSalesProductQuantityData> getLastData(SQLiteDatabase db) {
-        List<tSalesProductQuantityData> contactList = null;
+    public List<tSalesProductQuantityHeaderData> getLastData(SQLiteDatabase db) {
+        List<tSalesProductQuantityHeaderData> contactList = null;
         // select all query
-        tSalesProductQuantityData dt = new tSalesProductQuantityData();
+        tSalesProductQuantityHeaderData dt = new tSalesProductQuantityHeaderData();
         String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS;
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         // looping through all rows and adding to list
         if (cursor.moveToLast()) {
-            contactList = new ArrayList<tSalesProductQuantityData>();
+            contactList = new ArrayList<tSalesProductQuantityHeaderData>();
             do {
-                tSalesProductQuantityData contact = new tSalesProductQuantityData();
+                tSalesProductQuantityHeaderData contact = new tSalesProductQuantityHeaderData();
                 contact.set_intId(cursor.getString(0));
                 contact.set_txtQuantityStock(cursor.getString(1));
                 contact.set_dtDate(cursor.getString(2));
@@ -716,7 +715,7 @@ public class tSalesProductQuantityDA {
     }
 
     public void deleteByNoso(SQLiteDatabase db, String Noso) {
-        tSalesProductQuantityData dt = new tSalesProductQuantityData();
+        tSalesProductQuantityHeaderData dt = new tSalesProductQuantityHeaderData();
         String whereClause = dt.Property_txtQuantityStock + " = ?";
         String[] whereArgs = new String[]{
                 String.valueOf(Noso)

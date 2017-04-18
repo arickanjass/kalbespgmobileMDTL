@@ -7,7 +7,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.StringTokenizer;
 
 public class dataJson {
 
@@ -145,6 +144,30 @@ public class dataJson {
         ListOftPurchaseOrderDetailData = listOftPurchaseOrderDetailData;
     }
 
+    public synchronized List<tSalesProductQuantityDetailData> getListOftSalesProductQuantityDetailData() {
+        return ListOftSalesProductQuantityDetailData;
+    }
+
+    public synchronized void setListOftSalesProductQuantityDetailData(List<tSalesProductQuantityDetailData> listOftSalesProductQuantityDetailData) {
+        ListOftSalesProductQuantityDetailData = listOftSalesProductQuantityDetailData;
+    }
+
+    public synchronized List<tSalesQuantityImageAfterData> getListOftSalesQuantityImageAfterData() {
+        return ListOftSalesQuantityImageAfterData;
+    }
+
+    public synchronized void setListOftSalesQuantityImageAfterData(List<tSalesQuantityImageAfterData> listOftSalesQuantityImageAfterData) {
+        ListOftSalesQuantityImageAfterData = listOftSalesQuantityImageAfterData;
+    }
+
+    public synchronized List<tSalesQuantityImageBeforeData> getListOftSalesQuantityImageBeforeData() {
+        return ListOftSalesQuantityImageBeforeData;
+    }
+
+    public synchronized void setListOftSalesQuantityImageBeforeData(List<tSalesQuantityImageBeforeData> listOftSalesQuantityImageBeforeData) {
+        ListOftSalesQuantityImageBeforeData = listOftSalesQuantityImageBeforeData;
+    }
+
 
     public synchronized List<tPurchaseOrderHeaderData> getListOftPurchaseOrderHeaderData() {
         return ListOftPurchaseOrderHeaderData;
@@ -152,6 +175,14 @@ public class dataJson {
 
     public synchronized void setListOftPurchaseOrderHeaderData(List<tPurchaseOrderHeaderData> listOftPurchaseOrderHeaderData) {
         ListOftPurchaseOrderHeaderData = listOftPurchaseOrderHeaderData;
+    }
+
+    public synchronized List<tSalesProductQuantityHeaderData> getListOftSalesProductQuantityData() {
+        return ListOftSalesProductQuantityData;
+    }
+
+    public synchronized void setListOftSalesProductQuantityData(List<tSalesProductQuantityHeaderData> listOftSalesProductQuantityData) {
+        ListOftSalesProductQuantityData = listOftSalesProductQuantityData;
     }
 
 
@@ -329,6 +360,55 @@ public class dataJson {
                 resJson.put(dttPurchaseOrderDetailData.Property_ListOftPurchaseOrderDetailData, new JSONArray(itemsListJquey));
             }
 
+            if (this.getListOftSalesProductQuantityDetailData() != null){
+                tSalesProductQuantityDetailData dttSalesProductQuantityDetailData = new tSalesProductQuantityDetailData();
+                itemsListJquey = new ArrayList<JSONObject>();
+                for (tSalesProductQuantityDetailData data : this.getListOftSalesProductQuantityDetailData()){
+                    JSONObject item = new JSONObject();
+                    item.put(dttSalesProductQuantityDetailData.Property_intId, String.valueOf(data.getIntId()));
+                    item.put(dttSalesProductQuantityDetailData.Property_dtDate, String.valueOf(data.get_dtDate()));
+                    item.put(dttSalesProductQuantityDetailData.Property_intPrice, String.valueOf(data.get_intPrice()));
+                    item.put(dttSalesProductQuantityDetailData.Property_txtQuantity, String.valueOf(data.getTxtQuantity()));
+                    item.put(dttSalesProductQuantityDetailData.Property_txtCodeProduct, String.valueOf(data.get_txtCodeProduct()));
+                    item.put(dttSalesProductQuantityDetailData.Property_txtKeterangan, String.valueOf(data.get_txtKeterangan()));
+                    item.put(dttSalesProductQuantityDetailData.Property_txtExpireDate, String.valueOf(data.getTxtExpireDate()));
+                    item.put(dttSalesProductQuantityDetailData.Property_txtProduct, String.valueOf(data.getTxtProduct()));
+                    item.put(dttSalesProductQuantityDetailData.Property_txtNIK, String.valueOf(data.get_txtNIK()));
+                    item.put(dttSalesProductQuantityDetailData.Property_intTotal, String.valueOf(data.get_intTotal()));
+                    item.put(dttSalesProductQuantityDetailData.Property_txtNoSo, String.valueOf(data.get_txtNoSo()));
+                    itemsListJquey.add(item);
+                }
+                resJson.put(dttSalesProductQuantityDetailData.Property_ListOftSalesProductQuantityDetailData, new JSONArray(itemsListJquey));
+            }
+
+            if (this.getListOftSalesQuantityImageAfterData() != null){
+                tSalesQuantityImageAfterData dttSalesQuantityImageAfterData = new tSalesQuantityImageAfterData();
+                itemsListJquey = new ArrayList<JSONObject>();
+                for (tSalesQuantityImageAfterData data : this.getListOftSalesQuantityImageAfterData()){
+                    JSONObject item = new JSONObject();
+                    item.put(dttSalesQuantityImageAfterData.Property_txtId, String.valueOf(data.get_txtId()));
+                    item.put(dttSalesQuantityImageAfterData.Property_txtHeaderId, String.valueOf(data.get_txtHeaderId()));
+                    item.put(dttSalesQuantityImageAfterData.Property_after1, String.valueOf(data.get_after1()));
+                    item.put(dttSalesQuantityImageAfterData.Property_after2, String.valueOf(data.get_after2()));
+                    itemsListJquey.add(item);
+                }
+                resJson.put(dttSalesQuantityImageAfterData.Property_ListOftSalesQuantityImageAfterData, new JSONArray(itemsListJquey));
+            }
+
+            if (this.getListOftSalesQuantityImageBeforeData() != null){
+                tSalesQuantityImageBeforeData dttSalesQuantityImageBeforeData = new tSalesQuantityImageBeforeData();
+                itemsListJquey = new ArrayList<JSONObject>();
+                for (tSalesQuantityImageBeforeData data : this.getListOftSalesQuantityImageBeforeData()){
+                    JSONObject item = new JSONObject();
+                    item.put(dttSalesQuantityImageBeforeData.Property_txtId, String.valueOf(data.get_txtId()));
+                    item.put(dttSalesQuantityImageBeforeData.Property_txtHeaderId, String.valueOf(data.get_txtHeaderId()));
+                    item.put(dttSalesQuantityImageBeforeData.Property_before1, String.valueOf(data.get_before1()));
+                    item.put(dttSalesQuantityImageBeforeData.Property_before2, String.valueOf(data.get_before2()));
+                    itemsListJquey.add(item);
+                }
+                resJson.put(dttSalesQuantityImageBeforeData.Property_ListOftSalesQuantityImageBeforeData, new JSONArray(itemsListJquey));
+            }
+
             if (this.getListOftSalesProductHeaderData() != null) {
                 tSalesProductHeaderData dttSalesProductHeaderData = new tSalesProductHeaderData();
                 itemsListJquey = new ArrayList<JSONObject>();
@@ -379,6 +459,32 @@ public class dataJson {
                     itemsListJquey.add(item1);
                 }
                 resJson.put(dttPurchaseOrderHeaderData.Property_ListOftPurchaseOrderHeaderData, new JSONArray(itemsListJquey));
+            }
+
+            if (this.getListOftSalesProductQuantityData() != null){
+                tSalesProductQuantityHeaderData dttSalesProductQuantityData = new tSalesProductQuantityHeaderData();
+                itemsListJquey = new ArrayList<JSONObject>();
+                for (tSalesProductQuantityHeaderData data : this.getListOftSalesProductQuantityData()){
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dttSalesProductQuantityData.Property_intId, String.valueOf(data.get_intId()));
+                    item1.put(dttSalesProductQuantityData.Property_txtQuantityStock, String.valueOf(data.get_txtQuantityStock()));
+                    item1.put(dttSalesProductQuantityData.Property_OutletCode, String.valueOf(data.get_OutletCode()));
+                    item1.put(dttSalesProductQuantityData.Property_OutletName, String.valueOf(data.get_OutletName()));
+                    item1.put(dttSalesProductQuantityData.Property_txtDate, String.valueOf(data.get_dtDate()));
+                    item1.put(dttSalesProductQuantityData.Property_intIdAbsenUser, String.valueOf(data.get_intIdAbsenUser()));
+                    item1.put(dttSalesProductQuantityData.Property_intSubmit, String.valueOf(data.get_intSubmit()));
+                    item1.put(dttSalesProductQuantityData.Property_intSumAmount, String.valueOf(data.get_intSumAmount()));
+                    item1.put(dttSalesProductQuantityData.Property_intSumItem, String.valueOf(data.get_intSumItem()));
+                    item1.put(dttSalesProductQuantityData.Property_intSync, String.valueOf(data.get_intSync()));
+                    item1.put(dttSalesProductQuantityData.Property_txtBranchCode, String.valueOf(data.get_txtBranchCode()));
+                    item1.put(dttSalesProductQuantityData.Property_txtBranchName, String.valueOf(data.get_txtBranchName()));
+                    item1.put(dttSalesProductQuantityData.Property_UserId, String.valueOf(data.get_UserId()));
+                    item1.put(dttSalesProductQuantityData.Property_txtKeterangan, String.valueOf(data.get_txtKeterangan()));
+                    item1.put(dttSalesProductQuantityData.Property_txtNIK, String.valueOf(data.get_txtNIK()));
+                    item1.put(dttSalesProductQuantityData.Property_txtRoleId, String.valueOf(data.get_txtRoleId()));
+                    itemsListJquey.add(item1);
+                }
+                resJson.put(dttSalesProductQuantityData.Property_ListOftSalesProductHeaderData, new JSONArray(itemsListJquey));
             }
 
             if (this.get_ListOftCustomerBasedMobileHeaderData() != null) {
@@ -779,8 +885,12 @@ public class dataJson {
     private List<tSalesProductDetailData> ListOftSalesProductDetailData;
     private List<tSalesProductHeaderData> ListOftSalesProductHeaderData;
     private List<tPurchaseOrderDetailData> ListOftPurchaseOrderDetailData;
+    private List<tSalesProductQuantityDetailData> ListOftSalesProductQuantityDetailData;
+    private List<tSalesQuantityImageAfterData> ListOftSalesQuantityImageAfterData;
+    private List<tSalesQuantityImageBeforeData> ListOftSalesQuantityImageBeforeData;
 
     private List<tPurchaseOrderHeaderData> ListOftPurchaseOrderHeaderData;
+    private List<tSalesProductQuantityHeaderData> ListOftSalesProductQuantityData;
     private List<tCustomerBasedMobileHeaderData> ListOftCustomerBasedMobileHeaderData;
     private List<tCustomerBasedMobileDetailData> ListOftCustomerBasedMobileDetailData;
     private List<tCustomerBasedMobileDetailProductData> ListOftCustomerBasedMobileDetailProductData;
