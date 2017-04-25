@@ -133,8 +133,8 @@ public class FragmentPushData extends Fragment {
                 initPOHeader(getContext(),null);
             }
 
-            if (dtJson.getListOftSalesProductQuantityData() != null){
-                initQuantityStockHeader(getContext(),dtJson.getListOftSalesProductQuantityData());
+            if (dtJson.getListOftSalesProductQuantityHeaderData() != null){
+                initQuantityStockHeader(getContext(),dtJson.getListOftSalesProductQuantityHeaderData());
             } else {
                 initQuantityStockHeader(getContext(), null);
             }
