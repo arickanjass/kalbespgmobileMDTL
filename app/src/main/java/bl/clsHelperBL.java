@@ -429,8 +429,8 @@ public class clsHelperBL extends clsMainBL {
             }
         }
 
-        if (dtJson.getListOftSalesProductQuantityData() != null){
-            for (tSalesProductQuantityHeaderData dt : dtJson.getListOftSalesProductQuantityData()){
+        if (dtJson.getListOftSalesProductQuantityHeaderData() != null){
+            for (tSalesProductQuantityHeaderData dt : dtJson.getListOftSalesProductQuantityHeaderData()){
                 tSalesProductQuantityHeaderDA _tSalesProductQuantityDA = new tSalesProductQuantityHeaderDA(db);
                 dt.set_intSync("1");
                 _tSalesProductQuantityDA.SaveDataSalesProductQuantityData(db, dt);
