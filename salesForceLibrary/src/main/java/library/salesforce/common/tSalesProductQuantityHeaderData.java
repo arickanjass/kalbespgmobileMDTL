@@ -206,7 +206,7 @@ public class tSalesProductQuantityHeaderData {
     public String Property_txtAfterImg2="txtAfterImg2";
     public String Property_txtBeforeImg1="txtBeforeImg1";
     public String Property_txtBeforeImg2="txtBeforeImg2";
-    public String Property_ListOftSalesProductHeaderData = "ListOftSalesProductHeaderData";
+    public String Property_ListOftSalesProductHeaderData = "ListOftSalesProductQuantityHeaderData";
 
     public tSalesProductQuantityHeaderData() {
         super();

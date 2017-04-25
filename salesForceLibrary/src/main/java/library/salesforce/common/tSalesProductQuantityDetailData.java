@@ -143,7 +143,6 @@ public class tSalesProductQuantityDetailData {
 
     public tSalesProductQuantityDetailData() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     public tSalesProductQuantityDetailData(String intId, String _dtDate, String _intPrice, String _txtCodeProduct, String txtProduct,
