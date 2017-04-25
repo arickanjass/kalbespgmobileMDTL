@@ -177,7 +177,7 @@ public class dataJson {
         ListOftPurchaseOrderHeaderData = listOftPurchaseOrderHeaderData;
     }
 
-    public synchronized List<tSalesProductQuantityHeaderData> getListOftSalesProductQuantityData() {
+    public synchronized List<tSalesProductQuantityHeaderData> getListOftSalesProductQuantityHeaderData() {
         return ListOftSalesProductQuantityData;
     }
 
@@ -460,10 +460,10 @@ public class dataJson {
                 resJson.put(dttPurchaseOrderHeaderData.Property_ListOftPurchaseOrderHeaderData, new JSONArray(itemsListJquey));
             }
 
-            if (this.getListOftSalesProductQuantityData() != null){
+            if (this.getListOftSalesProductQuantityHeaderData() != null){
                 tSalesProductQuantityHeaderData dttSalesProductQuantityData = new tSalesProductQuantityHeaderData();
                 itemsListJquey = new ArrayList<JSONObject>();
-                for (tSalesProductQuantityHeaderData data : this.getListOftSalesProductQuantityData()){
+                for (tSalesProductQuantityHeaderData data : this.getListOftSalesProductQuantityHeaderData()){
                     JSONObject item1 = new JSONObject();
                     item1.put(dttSalesProductQuantityData.Property_intId, String.valueOf(data.get_intId()));
                     item1.put(dttSalesProductQuantityData.Property_txtQuantityStock, String.valueOf(data.get_txtQuantityStock()));
