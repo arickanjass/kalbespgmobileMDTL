@@ -70,8 +70,8 @@ public class FragmentPO extends Fragment implements IXListViewListener{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_customerbase_view, container, false);
-        fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        view = inflater.inflate(R.layout.fragment_po_view, container, false);
+        fab = (FloatingActionButton) view.findViewById(R.id.fabPO);
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
 //        getData = getActivity().getIntent().getStringExtra("View PO");
         Intent intent = getActivity().getIntent();
@@ -273,12 +273,12 @@ public class FragmentPO extends Fragment implements IXListViewListener{
 
         clsMainActivity clsMain = new clsMainActivity();
 
-        mListView = (PullToRefreshSwipeMenuListView) view.findViewById(R.id.listView);
+        mListView = (PullToRefreshSwipeMenuListView) view.findViewById(R.id.listViewPO);
         mAdapter = clsMain.setList(getActivity().getApplicationContext(), swipeList);
         mListView.setAdapter(mAdapter);
         mListView.setPullRefreshEnable(true);
         mListView.setPullLoadEnable(true);
-        mListView.setEmptyView(view.findViewById(R.id.LayoutEmpty));
+        mListView.setEmptyView(view.findViewById(R.id.ln_po_view));
         mListView.setXListViewListener(this);
         mHandler = new Handler();
 

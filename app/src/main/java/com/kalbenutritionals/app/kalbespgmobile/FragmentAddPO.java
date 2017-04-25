@@ -99,7 +99,7 @@ TextView tv_tgl, tv_noPO;
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(desc.getWindowToken(),0);
         List<tPurchaseOrderHeaderData> dtLast = new tPurchaseOrderHeaderBL().getLastData();
-        //List<tSalesProductHeaderData> dtLast = new tSalesProductHeaderBL().getLastData();
+//        List<tSalesProductHeaderData> dtLast = new tSalesProductHeaderBL().getLastData();
         if (dtLast == null || dtLast.size() == 0){
             noPO = new mCounterNumberBL().getData(enumCounterData.NoPurchaseOrder);
 
@@ -186,7 +186,7 @@ TextView tv_tgl, tv_noPO;
         return v;
     }
 
-    public void viewResoFragment(){
+    public void viewPOFragment(){
         Bundle bundle = new Bundle();
         bundle.putString("key_view", "View_PO");
         FragmentAddPO fragmentAddPO = new FragmentAddPO();
@@ -351,8 +351,8 @@ TextView tv_tgl, tv_noPO;
                                             alertDialog.setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
-                                                    saveReso();
-                                                    viewResoFragment();
+                                                    savePO();
+                                                    viewPOFragment();
                                                 }
                                             });
                                             alertDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -386,7 +386,7 @@ TextView tv_tgl, tv_noPO;
         }
     }
 
-    private void saveReso() {
+    private void savePO() {
         int a = listView.getCount();
         String nik = null;
         List<String> item = new ArrayList<>();

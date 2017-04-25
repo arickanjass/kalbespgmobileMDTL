@@ -173,4 +173,35 @@ public class tPurchaseOrderHeaderBL extends clsMainBL {
         _db.close();
         return jsonArray;
     }
+
+    public JSONArray DownloadTransactionPO(String versionName) throws Exception{
+        SQLiteDatabase _db = getDb();
+        tUserLoginDA _tUserLoginDA = new tUserLoginDA(_db);
+        mconfigDA _mconfigDA = new mconfigDA(_db);
+        String strVAl2 = "";
+        mconfigData dataApi = _mconfigDA.getData(db, enumConfigData.ApiKalbe.getidConfigData());
+        strVAl2 = dataApi.get_txtValue();
+        if (dataApi.get_txtValue() == ""){
+            strVAl2 = dataApi.get_txtDefaultValue();
+        }
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        String dateNow = dateFormat.format(date);
+
+        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(db, 1);
+        clsHelper _help = new clsHelper();
+        linkAPI dtLinkAPI = new linkAPI();
+        String txtMethod = "GetDataTransactionPurchaseOrder"; 
+        JSONObject resJson = new JSONObject();
+        dtLinkAPI.set_txtMethod(txtMethod);
+        dtLinkAPI.set_txtParam("|" + _dataUserLogin.get_TxtEmpId() + "|" + dateNow);
+        dtLinkAPI.set_txtToken(new clsHardCode().txtTokenAPI);
+        dtLinkAPI.set_txtVesion(versionName);
+        String strLinkAPI = dtLinkAPI.QueryString(strVAl2);
+        String JsonData = _help.pushtData(strLinkAPI, dtLinkAPI.get_txtParam(), Integer.valueOf(getBackGroundServiceOnline()));
+        JSONArray jsonArray = _help.ResultJsonArray(JsonData);
+        _db.close();
+        return jsonArray;
+
+    }
 }
