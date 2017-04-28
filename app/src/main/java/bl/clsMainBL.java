@@ -28,6 +28,7 @@ import library.salesforce.common.tSalesProductDetailData;
 import library.salesforce.common.tSalesProductHeaderData;
 import library.salesforce.common.tSalesProductQuantityHeaderData;
 import library.salesforce.common.tSalesProductQuantityDetailData;
+import library.salesforce.common.tSalesProductQuantityImageData;
 import library.salesforce.common.tUserLoginData;
 import library.salesforce.dal.clsHardCode;
 import library.salesforce.dal.enumConfigData;
@@ -43,6 +44,7 @@ import library.salesforce.dal.tSalesProductDetailDA;
 import library.salesforce.dal.tSalesProductHeaderDA;
 import library.salesforce.dal.tSalesProductQuantityHeaderDA;
 import library.salesforce.dal.tSalesProductQuantityDetailDA;
+import library.salesforce.dal.tSalesProductQuantityImageDA;
 import library.salesforce.dal.tUserLoginDA;
 
 public class clsMainBL {
@@ -269,8 +271,8 @@ public class clsMainBL {
 		dtlinkAPI.set_txtMethod(VersionName);
 		strLinkAPI = dtlinkAPI.QueryString(_StrLINKAPI);
 
-		tSalesProductQuantityHeaderDA _tSalesProductQuantityDA = new tSalesProductQuantityHeaderDA(_db);
-		List<tSalesProductQuantityHeaderData> ListDataTQuantityStockHeader = _tSalesProductQuantityDA.getAllDataToPushData(_db);
+		tSalesProductQuantityHeaderDA _tSalesProductQuantityHeaderDA = new tSalesProductQuantityHeaderDA(_db);
+		List<tSalesProductQuantityHeaderData> ListDataTQuantityStockHeader = _tSalesProductQuantityHeaderDA.getAllDataToPushData(_db);
 		if (ListDataTPOHeader != null) {
 			for (tSalesProductQuantityHeaderData dataHeader : ListDataTQuantityStockHeader) {
 				dataJson Json = new dataJson();
@@ -284,6 +286,11 @@ public class clsMainBL {
 				if (tmpListQuantityStockDetail != null){
 					Json.setListOftSalesProductQuantityDetailData(tmpListQuantityStockDetail);
 				}
+				tSalesProductQuantityImageDA _tSalesProductQuantityImageDA = new tSalesProductQuantityImageDA(_db);
+				List<tSalesProductQuantityImageData> tmpListQuantityStockImage = _tSalesProductQuantityImageDA.getSalesProductQuantityImageByHeaderId(_db, dataHeader.get_txtQuantityStock());
+				if (tmpListQuantityStockImage != null){
+					Json.setListOftSalesProductQuantityImageData(tmpListQuantityStockImage);
+				}
 				Json.setListOftAbsenUserData(tmpListDataUserAbsen);
 				Json.setListOftSalesProductQuantityData(tmpListDataQuantityStockHeaderData);
 				String Html = new clsHelper().pushtData(strLinkAPI, Json.txtJSON().toString(), Integer.valueOf(TimeOut));
@@ -295,7 +302,7 @@ public class clsMainBL {
 					int boolValid = Integer.valueOf(String.valueOf(InnerObj.get(dtAPIDATA.boolValid)));
 					if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)){
 						dataHeader.set_intSync("1");
-						_tSalesProductQuantityDA.SaveDataSalesProductQuantityData(_db, dataHeader);
+						_tSalesProductQuantityHeaderDA.SaveDataSalesProductQuantityData(_db, dataHeader);
 					}
 				}
 			}
