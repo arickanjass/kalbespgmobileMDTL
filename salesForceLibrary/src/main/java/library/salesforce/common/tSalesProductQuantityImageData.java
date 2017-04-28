@@ -50,7 +50,7 @@ public class tSalesProductQuantityImageData {
     private String _txtHeaderId;
     private byte[] _txtImage;
     private String _intPosition;
-    private String _txtType; 
+    private String _txtType;
 
     public String Property_txtId = "txtId";
     public String Property_txtHeaderId = "txtHeaderId";
