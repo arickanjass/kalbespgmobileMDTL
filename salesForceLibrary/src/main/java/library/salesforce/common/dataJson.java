@@ -366,7 +366,7 @@ public class dataJson {
                     item.put(dttSalesProductQuantityDetailData.Property_txtProduct, String.valueOf(data.getTxtProduct()));
                     item.put(dttSalesProductQuantityDetailData.Property_txtNIK, String.valueOf(data.get_txtNIK()));
                     item.put(dttSalesProductQuantityDetailData.Property_intTotal, String.valueOf(data.get_intTotal()));
-                    item.put(dttSalesProductQuantityDetailData.Property_txtNoSo, String.valueOf(data.get_txtNoSo()));
+                    item.put(dttSalesProductQuantityDetailData.Property_txtQuantityStock, String.valueOf(data.get_txtQuantityStock()));
                     itemsListJquey.add(item);
                 }
                 resJson.put(dttSalesProductQuantityDetailData.Property_ListOftSalesProductQuantityDetailData, new JSONArray(itemsListJquey));

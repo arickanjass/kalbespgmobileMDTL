@@ -88,13 +88,13 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
     private List<String> arrData;
     private EditText edKeterangan, editTextQty;
     private Button preview;
-    private String noso;
+    private String noQuantityStock;
     private ImageView after1, after2;
     private ImageView before1, before2;
     private Spinner product;
     private Uri uriImage;
     TextView tv_date, txtHDId;
-    TextView tv_noso;
+    TextView tv_noQuantityStock;
     List<tSalesProductQuantityHeaderData> dtListDetailProduct;
     List<tSalesProductQuantityDetailData> dtListProduct;
     AdapterListProductCustomerBased AdapterProduct;
@@ -137,7 +137,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         edKeterangan = (EditText) v.findViewById(R.id.etKeterangan_quantity);
         preview = (Button) v.findViewById(R.id.btnPreviewQuantity);
         tv_date = (TextView) v.findViewById(R.id.txtviewDateQuantity);
-        tv_noso = (TextView) v.findViewById(R.id.txtNoQuantity);
+        tv_noQuantityStock = (TextView) v.findViewById(R.id.txtNoQuantity);
         after1 = (ImageView) v.findViewById(R.id.imageAfter1);
         after2 = (ImageView) v.findViewById(R.id.imageAfter2);
         before1 = (ImageView) v.findViewById(R.id.imageBefore1);
@@ -152,23 +152,23 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(edKeterangan.getWindowToken(), 0);
 
-        // add no so in Textview txtNoQuantity
+        // add no Quantity Stock in Textview txtNoQuantity
         List<tSalesProductQuantityHeaderData> dtLast = new tSalesProductQuantityHeaderBL().getLastData();
         if (dtLast == null || dtLast.size() == 0) {
-            noso = new mCounterNumberBL().getData(enumCounterData.NoDataSO);
+            noQuantityStock = new mCounterNumberBL().getData(enumCounterData.NoDataSO);
 
         } else {
-            noso = new mCounterNumberBL().getData(enumCounterData.NoDataSO);
-            List<tSalesProductQuantityHeaderData> dataFirstIsExist = new tSalesProductQuantityHeaderBL().getDataByNoSO(noso);
+            noQuantityStock = new mCounterNumberBL().getData(enumCounterData.NoDataSO);
+            List<tSalesProductQuantityHeaderData> dataFirstIsExist = new tSalesProductQuantityHeaderBL().getDataByNoQuantityStock(noQuantityStock);
             if (dataFirstIsExist.size() == 1) {
                 clsHelper _clsHelper = new clsHelper();
                 String oldVersion = dtLast.get(0).get_txtQuantityStock();
-                noso = _clsHelper.generateNewId(oldVersion, "-", "5");
+                noQuantityStock = _clsHelper.generateNewId(oldVersion, "-", "5");
             } else {
-                noso = new mCounterNumberBL().getData(enumCounterData.NoDataSO);
+                noQuantityStock = new mCounterNumberBL().getData(enumCounterData.NoDataSO);
             }
         }
-        tv_noso.setText(noso);
+        tv_noQuantityStock.setText(noQuantityStock);
 
         // add date in txtviewDateQuantity
         String timeStamp = new SimpleDateFormat("dd/MM/yyyy",
@@ -417,7 +417,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                                             data.setIntId(_clsMainActivity.GenerateGuid());
                                         }
 
-                                        data.set_txtNoSo(tv_noso.getText().toString());
+                                        data.set_txtQuantityStock(tv_noQuantityStock.getText().toString());
                                         data.set_dtDate(dateFormat.format(cal.getTime()));
                                         data.set_txtCodeProduct(HMProduct.get(selectedOneKNProduct));
                                         data.set_txtKeterangan(edKeterangan.getText().toString());
@@ -777,16 +777,16 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         ScrollView sv = (ScrollView) v.findViewById(R.id.scroll_quantityStock);
         sv.setFillViewport(true);
 
-//        dtListDetailProduct = new tSalesProductQuantityHeaderBL().getDataByNoSO(tv_noso.getText().toString());
-        dtListProduct = new tSalesProductQuantityDetailBL().GetDataByNoSO(tv_noso.getText().toString());
+//        dtListDetailProduct = new tSalesProductQuantityHeaderBL().getDataByNoQuantityStock(tv_noQuantityStock.getText().toString());
+        dtListProduct = new tSalesProductQuantityDetailBL().GetDataByNoQuantityStock(tv_noQuantityStock.getText().toString());
 
         clsSwipeList swplist;
 
         swipeList.clear();
 
         for (tSalesProductQuantityDetailData data : dtListProduct) {
-//            List<tSalesProductQuantityDetailData> dtListProduct = new tSalesProductQuantityDetailBL().GetDataByNoSO(dtListDetailProduct.get(i).get_txtQuantityStock());
-//            List<tSalesProductQuantityDetailData> dtListProduct = new tSalesProductQuantityDetailBL().GetDataByNoSO(noSO);
+//            List<tSalesProductQuantityDetailData> dtListProduct = new tSalesProductQuantityDetailBL().GetDataByNoQuantityStock(dtListDetailProduct.get(i).get_txtQuantityStock());
+//            List<tSalesProductQuantityDetailData> dtListProduct = new tSalesProductQuantityDetailBL().GetDataByNoQuantityStock(noSO);
 
             swplist = new clsSwipeList();
 
@@ -852,8 +852,8 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         tAbsenUserData absenUserData = new tAbsenUserBL().getDataCheckInActive();
         tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
         modelItems = new ArrayList<ModelListview>();
-        String noSO = tv_noso.getText().toString();
-        List<tSalesProductQuantityDetailData> productDetail = new tSalesProductQuantityDetailBL().GetDataByNoSO(noSO);
+        String noQtyStock = tv_noQuantityStock.getText().toString();
+        List<tSalesProductQuantityDetailData> productDetail = new tSalesProductQuantityDetailBL().GetDataByNoQuantityStock(noQtyStock);
 
         arrdataPriv = new ArrayList<ModelListview>();
         double qntySum=0;
@@ -879,7 +879,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         dtQuantityData.set_intSumAmount(String.valueOf(result));
 
         dtQuantityData.set_intId(txtHDId.getText().toString());
-        dtQuantityData.set_txtQuantityStock(tv_noso.getText().toString());
+        dtQuantityData.set_txtQuantityStock(tv_noQuantityStock.getText().toString());
         dtQuantityData.set_dtDate(dateFormat.format(cal.getTime()));
         dtQuantityData.set_OutletCode(absenUserData.get_txtOutletCode());
         dtQuantityData.set_OutletName(absenUserData.get_txtOutletName());
@@ -903,10 +903,10 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
 
     private void savePicture1() {
         tSalesProductQuantityImageData dataImage = new tSalesProductQuantityImageData();
-        String headerId = tv_noso.getText().toString();
+        String headerId = tv_noQuantityStock.getText().toString();
 
         dataImage.set_txtId(_clsMainActivity.GenerateGuid());
-        dataImage.set_txtHeaderId(tv_noso.getText().toString());
+        dataImage.set_txtHeaderId(tv_noQuantityStock.getText().toString());
         dataImage.set_txtImage(phtAfter1);
         dataImage.set_intPosition("1");
         dataImage.set_txtType("After");
@@ -918,10 +918,10 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
 
     private void savePicture2() {
         tSalesProductQuantityImageData dataImage = new tSalesProductQuantityImageData();
-        String headerId = tv_noso.getText().toString();
+        String headerId = tv_noQuantityStock.getText().toString();
 
         dataImage.set_txtId(_clsMainActivity.GenerateGuid());
-        dataImage.set_txtHeaderId(tv_noso.getText().toString());
+        dataImage.set_txtHeaderId(tv_noQuantityStock.getText().toString());
         dataImage.set_txtImage(phtAfter2);
         dataImage.set_intPosition("2");
         dataImage.set_txtType("After");
@@ -933,10 +933,10 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
 
     private void savePicture3() {
         tSalesProductQuantityImageData dataImage = new tSalesProductQuantityImageData();
-        String headerId = tv_noso.getText().toString();
+        String headerId = tv_noQuantityStock.getText().toString();
 
         dataImage.set_txtId(_clsMainActivity.GenerateGuid());
-        dataImage.set_txtHeaderId(tv_noso.getText().toString());
+        dataImage.set_txtHeaderId(tv_noQuantityStock.getText().toString());
         dataImage.set_txtImage(phtBefore1);
         dataImage.set_intPosition("1");
         dataImage.set_txtType("Before");
@@ -948,10 +948,10 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
 
     private void savePicture4() {
         tSalesProductQuantityImageData dataImage = new tSalesProductQuantityImageData();
-        String headerId = tv_noso.getText().toString();
+        String headerId = tv_noQuantityStock.getText().toString();
 
         dataImage.set_txtId(_clsMainActivity.GenerateGuid());
-        dataImage.set_txtHeaderId(tv_noso.getText().toString());
+        dataImage.set_txtHeaderId(tv_noQuantityStock.getText().toString());
         dataImage.set_txtImage(phtBefore2);
         dataImage.set_intPosition("2");
         dataImage.set_txtType("Before");

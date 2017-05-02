@@ -109,7 +109,7 @@ public class tSalesProductQuantityHeaderBL extends clsMainBL {
         return dt ;
     }
 
-    public List<tSalesProductQuantityHeaderData> getDataByNoSO(String id){
+    public List<tSalesProductQuantityHeaderData> getDataByNoQuantityStock(String id){
         SQLiteDatabase _db = getDb();
         List<tSalesProductQuantityHeaderData> dtDetail = new tSalesProductQuantityHeaderDA(_db).getDataByQuantityStock(_db, id);
         _db.close();
@@ -189,7 +189,7 @@ public class tSalesProductQuantityHeaderBL extends clsMainBL {
 
     public void deleteData(tSalesProductQuantityHeaderData dt) {
         SQLiteDatabase _db=getDb();
-        new tSalesProductQuantityHeaderDA(_db).deleteByNoso(_db, dt.get_txtQuantityStock());
+        new tSalesProductQuantityHeaderDA(_db).deleteByQuantityStock(_db, dt.get_txtQuantityStock());
         _db.close();
     }
 }

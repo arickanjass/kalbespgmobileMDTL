@@ -191,7 +191,7 @@ public class FragmentViewQuantityStock extends Fragment implements IXListViewLis
         }
         tl.addView(tr);
 
-        data = new tSalesProductQuantityDetailBL().GetDataNoso(dt.get(position).get_txtQuantityStock());
+        data = new tSalesProductQuantityDetailBL().GetDataNoQuantityStock(dt.get(position).get_txtQuantityStock());
 
         double qtySum=0;
         double qtyNum;
