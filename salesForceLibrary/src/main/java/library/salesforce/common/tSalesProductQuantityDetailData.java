@@ -122,7 +122,7 @@ public class tSalesProductQuantityDetailData {
     public String Property_txtProduct = "txtProduct";
     public String Property_txtExpireDate = "txtExpireDate";
     public String Property_txtQuantity = "txtQuantity";
-    public String Property_txtNoSo = "txtNoSo";
+    public String Property_txtNoSo = "txtQuantityStock";
     public String Property_intPrice = "intPrice";
     public String Property_intTotal = "intTotal";
     public String Property_intActive = "intActive";

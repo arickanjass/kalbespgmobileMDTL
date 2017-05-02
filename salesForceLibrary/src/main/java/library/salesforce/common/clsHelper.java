@@ -59,8 +59,7 @@ import library.salesforce.dal.tSalesProductDetailDA;
 import library.salesforce.dal.tSalesProductHeaderDA;
 import library.salesforce.dal.tSalesProductQuantityHeaderDA;
 import library.salesforce.dal.tSalesProductQuantityDetailDA;
-import library.salesforce.dal.tSalesQuantityImageAfterDA;
-import library.salesforce.dal.tSalesQuantityImageBeforeDA;
+import library.salesforce.dal.tSalesProductQuantityImageDA;
 import library.salesforce.dal.tUserLoginDA;
 
 public class clsHelper {
@@ -253,8 +252,7 @@ public class clsHelper {
 		mTypeSubmissionMobileDA _mTypeSubmissionMobileDA = new mTypeSubmissionMobileDA(db);
 		tSalesProductQuantityHeaderDA _tSalesProductQuantityDA = new tSalesProductQuantityHeaderDA(db);
 		tSalesProductQuantityDetailDA _tSalesProductQuantityDetailDA = new tSalesProductQuantityDetailDA(db);
-		tSalesQuantityImageAfterDA _tSalesQuantityImageAfterDA = new tSalesQuantityImageAfterDA(db);
-		tSalesQuantityImageBeforeDA _tSalesQuantityImageBeforeDA = new tSalesQuantityImageBeforeDA(db);
+		tSalesProductQuantityImageDA _tSalesProductQuantityImageDA = new tSalesProductQuantityImageDA(db);
 		tCustomerBasedMobileHeaderDA _tCustomerBasedMobileHeaderDA = new tCustomerBasedMobileHeaderDA(db);
 		tCustomerBasedMobileDetailDA _tCustomerBasedMobileDetailDA = new tCustomerBasedMobileDetailDA(db);
 		tCustomerBasedMobileDetailProductDA _tCustomerBasedMobileDetailProductDA = new tCustomerBasedMobileDetailProductDA(db);
@@ -266,8 +264,7 @@ public class clsHelper {
 		_mTypeSubmissionMobileDA.DropTable(db);
 		_tSalesProductQuantityDA.Droptable(db);
 		_tSalesProductQuantityDetailDA.DropTable(db);
-		_tSalesQuantityImageAfterDA.Droptable(db);
-		_tSalesQuantityImageBeforeDA.Droptable(db);
+		_tSalesProductQuantityImageDA.Droptable(db);
 		_tCustomerBasedMobileHeaderDA.DropTable(db);
 		_tCustomerBasedMobileDetailDA.DropTable(db);
 		_tCustomerBasedMobileDetailProductDA.DropTable(db);
@@ -297,8 +294,7 @@ public class clsHelper {
 		_mTypeSubmissionMobileDA = new mTypeSubmissionMobileDA(db);
 		_tSalesProductQuantityDA = new tSalesProductQuantityHeaderDA(db);
 		_tSalesProductQuantityDetailDA = new tSalesProductQuantityDetailDA(db);
-		_tSalesQuantityImageAfterDA = new tSalesQuantityImageAfterDA(db);
-		_tSalesQuantityImageBeforeDA = new tSalesQuantityImageBeforeDA(db);
+		_tSalesProductQuantityImageDA = new tSalesProductQuantityImageDA(db);
 		_tCustomerBasedMobileHeaderDA = new tCustomerBasedMobileHeaderDA(db);
 		_tCustomerBasedMobileDetailDA = new tCustomerBasedMobileDetailDA(db);
 		_tCustomerBasedMobileDetailProductDA = new tCustomerBasedMobileDetailProductDA(db);

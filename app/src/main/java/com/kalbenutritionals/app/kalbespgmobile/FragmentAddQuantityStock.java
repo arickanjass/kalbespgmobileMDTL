@@ -50,8 +50,7 @@ import bl.mEmployeeSalesProductBL;
 import bl.tAbsenUserBL;
 import bl.tSalesProductQuantityDetailBL;
 import bl.tSalesProductQuantityHeaderBL;
-import bl.tSalesQuantityImageAfterBL;
-import bl.tSalesQuantityImageBeforeBL;
+import bl.tSalesProductQuantityImageBL;
 import bl.tUserLoginBL;
 import edu.swu.pulltorefreshswipemenulistview.library.PullToRefreshSwipeMenuListView;
 import edu.swu.pulltorefreshswipemenulistview.library.pulltorefresh.interfaces.IXListViewListener;
@@ -66,8 +65,7 @@ import library.salesforce.common.mEmployeeSalesProductData;
 import library.salesforce.common.tAbsenUserData;
 import library.salesforce.common.tSalesProductQuantityHeaderData;
 import library.salesforce.common.tSalesProductQuantityDetailData;
-import library.salesforce.common.tSalesQuantityImageAfterData;
-import library.salesforce.common.tSalesQuantityImageBeforeData;
+import library.salesforce.common.tSalesProductQuantityImageData;
 import library.salesforce.common.tUserLoginData;
 import library.salesforce.dal.clsHardCode;
 import library.salesforce.dal.enumCounterData;
@@ -78,7 +76,6 @@ import library.salesforce.dal.enumCounterData;
 
 public class FragmentAddQuantityStock extends Fragment implements IXListViewListener{
     View v;
-    tSalesProductQuantityHeaderData dtHeader;
 
     private ArrayList<ModelListview> modelItems;
     private ArrayList<ModelListview> arrdataPriv;
@@ -156,7 +153,6 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         imm.hideSoftInputFromWindow(edKeterangan.getWindowToken(), 0);
 
         // add no so in Textview txtNoQuantity
-//        List<tSalesProductHeaderData> dtta = new tSalesProductHeaderBL().getAllSalesProductHeader();
         List<tSalesProductQuantityHeaderData> dtLast = new tSalesProductQuantityHeaderBL().getLastData();
         if (dtLast == null || dtLast.size() == 0) {
             noso = new mCounterNumberBL().getData(enumCounterData.NoDataSO);
@@ -248,9 +244,6 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         after2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Intent cameraIntent2 = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent2, CAMERA_REQUEST2);*/
-
                 captureAfterImage2();
             }
         });
@@ -258,9 +251,6 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         before1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Intent cameraIntent3 = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent3, CAMERA_REQUEST3);*/
-
                 captureBeforeImage1();
             }
         });
@@ -268,9 +258,6 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         before2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Intent cameraIntent4 = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent4, CAMERA_REQUEST4);*/
-
                 captureBeforeImage2();
             }
         });
@@ -302,8 +289,10 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             save();
-                            saveImageAfter();
-                            saveImageBefore();
+                            savePicture1();
+                            savePicture2();
+                            savePicture3();
+                            savePicture4();
                             viewQuantityFragment();
 
                             _clsMainActivity.showCustomToast(getActivity(), "Saved", true);
@@ -384,11 +373,8 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
             editTextQty.setText(dataDetail.getTxtQuantity());
         }
 
-
-
         // set date min today
         dp.setMinDate(System.currentTimeMillis() - 1000);
-
 
         // muncul dialog
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this.getContext());
@@ -595,12 +581,6 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
 
     // preview image After 1
     private void previewCaptureAfterImage1(Bitmap photo){
-//        tAbsenUserData absenUserData = new tAbsenUserBL().getDataCheckInActive();
-////        tUserLoginData loginData = new tUserLoginData();
-//        tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
-//        String noSO = tv_noso.getText().toString();
-//        List<tSalesProductQuantityDetailData> productDetail = new tSalesProductQuantityDetailBL().GetDataByNoSO(noSO);
-////        ModelListview modelListview = new ModelListview();
         try {
             Bitmap bitmap = new clsMainActivity().resizeImageForBlob(photo);
             after1.setVisibility(View.VISIBLE);
@@ -623,51 +603,13 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
             phtAfter1 = output.toByteArray();
             after1.setImageBitmap(photo_view);
 
-//            arrdataPriv = new ArrayList<ModelListview>();
-//            double qntySum=0;
-//            double qntyNum;
-//            double value;
-//            double price;
-//            String result = "0";
-//            String resultItem = "0";
-//
-//            for (int i = 0; i < productDetail.size(); i++) {
-//                price = Double.parseDouble(String.valueOf(productDetail.get(i).get_intPrice()));
-//                value = Double.parseDouble(String.valueOf(productDetail.get(i).getTxtQuantity()));
-//                qntyNum =  price * value;
-//                qntySum += qntyNum;
-//                result = new clsMainActivity().convertNumberDec(qntySum);
-//            }
-//
-//            java.text.DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-//            Calendar cal = Calendar.getInstance();
-//            clsMainActivity _clsMainActivity = new clsMainActivity();
-
             if (dtQuantityData == null){
                 dtQuantityData.set_txtAfterImg1(phtAfter1);
             } else {
-//                dtQuantityData.set_intId(txtHDId.getText().toString());
-//                dtQuantityData.set_txtQuantityStock(tv_noso.getText().toString());
-//                dtQuantityData.set_dtDate(dateFormat.format(cal.getTime()));
-//                dtQuantityData.set_OutletCode(absenUserData.get_txtOutletCode());
-//                dtQuantityData.set_OutletName(absenUserData.get_txtOutletName());
-//                dtQuantityData.set_txtKeterangan(edKeterangan.getText().toString());
-//                dtQuantityData.set_UserId(absenUserData.get_txtUserId());
-//                dtQuantityData.set_txtRoleId(absenUserData.get_txtRoleId());
-//                dtQuantityData.set_txtBranchCode(absenUserData.get_txtBranchCode());
-//                dtQuantityData.set_txtBranchName(absenUserData.get_txtBranchName());
-////                dtQuantityData.set_intSumAmount(dt.get_intTotal());
-//                dtQuantityData.set_intIdAbsenUser(absenUserData.get_intId());
-//                dtQuantityData.set_txtNIK(dataUserActive.get_TxtEmpId());
-//                dtQuantityData.set_intSumItem(String.valueOf(productDetail.size()));
-//                dtQuantityData.set_intSumAmount(String.valueOf(result));
                 dtQuantityData.set_txtAfterImg1(phtAfter1);
             }
-//            dtQuantityData.set_intSubmit("1");
-//            dtQuantityData.set_intSync("0");
             List<tSalesProductQuantityHeaderData> tSalesProductQuantityDatas = new ArrayList<>();
             tSalesProductQuantityDatas.add(dtQuantityData);
-//            new tSalesProductQuantityHeaderBL().SaveData2(tSalesProductQuantityDatas);
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
@@ -702,11 +644,8 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
             } else {
                 dtQuantityData.set_txtAfterImg2(phtAfter2);
             }
-//            dtQuantityData.set_intSubmit("1");
-//            dtQuantityData.set_intSync("0");
             List<tSalesProductQuantityHeaderData> tSalesProductQuantityDatas = new ArrayList<>();
             tSalesProductQuantityDatas.add(dtQuantityData);
-//            new tSalesProductQuantityHeaderBL().SaveData2(tSalesProductQuantityDatas);
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
@@ -741,11 +680,8 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
             } else {
                 dtQuantityData.set_txtBeforeImg1(phtBefore1);
             }
-//            dtQuantityData.set_intSubmit("1");
-//            dtQuantityData.set_intSync("0");
             List<tSalesProductQuantityHeaderData> tSalesProductQuantityDatas = new ArrayList<>();
             tSalesProductQuantityDatas.add(dtQuantityData);
-//            new tSalesProductQuantityHeaderBL().SaveData2(tSalesProductQuantityDatas);
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
@@ -780,11 +716,8 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
             } else {
                 dtQuantityData.set_txtBeforeImg2(phtBefore2);
             }
-//            dtQuantityData.set_intSubmit("1");
-//            dtQuantityData.set_intSync("0");
             List<tSalesProductQuantityHeaderData> tSalesProductQuantityDatas = new ArrayList<>();
             tSalesProductQuantityDatas.add(dtQuantityData);
-//            new tSalesProductQuantityHeaderBL().SaveData2(tSalesProductQuantityDatas);
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
@@ -910,7 +843,6 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         tSalesProductQuantityDetailData dtDetail = dtListProduct.get(position);
 
         new tSalesProductQuantityDetailBL().deleteData(dtDetail);
-        // new tSalesProductQuantityHeaderBL().deleteData(dtDetail);
         TableProduct();
     }
 
@@ -922,7 +854,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         modelItems = new ArrayList<ModelListview>();
         String noSO = tv_noso.getText().toString();
         List<tSalesProductQuantityDetailData> productDetail = new tSalesProductQuantityDetailBL().GetDataByNoSO(noSO);
-//
+
         arrdataPriv = new ArrayList<ModelListview>();
         double qntySum=0;
         double qntyNum;
@@ -969,31 +901,64 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         new tSalesProductQuantityHeaderBL().SaveData2(dtList);
     }
 
-    private void saveImageAfter() {
-        tSalesQuantityImageAfterData dataImage = new tSalesQuantityImageAfterData();
-        String headerId = txtHDId.getText().toString();
+    private void savePicture1() {
+        tSalesProductQuantityImageData dataImage = new tSalesProductQuantityImageData();
+        String headerId = tv_noso.getText().toString();
 
         dataImage.set_txtId(_clsMainActivity.GenerateGuid());
-        dataImage.set_txtHeaderId(txtHDId.getText().toString());
-        dataImage.set_after1(phtAfter1);
-        dataImage.set_after2(phtAfter2);
+        dataImage.set_txtHeaderId(tv_noso.getText().toString());
+        dataImage.set_txtImage(phtAfter1);
+        dataImage.set_intPosition("1");
+        dataImage.set_txtType("After");
 
-        List<tSalesQuantityImageAfterData> dtListImage = new ArrayList<>();
+        List<tSalesProductQuantityImageData> dtListImage = new ArrayList<>();
         dtListImage.add(dataImage);
-        new tSalesQuantityImageAfterBL().SaveData(dtListImage);
+        new tSalesProductQuantityImageBL().SaveData(dtListImage);
     }
 
-    private void saveImageBefore() {
-        tSalesQuantityImageBeforeData dataImage = new tSalesQuantityImageBeforeData();
+    private void savePicture2() {
+        tSalesProductQuantityImageData dataImage = new tSalesProductQuantityImageData();
+        String headerId = tv_noso.getText().toString();
 
         dataImage.set_txtId(_clsMainActivity.GenerateGuid());
-        dataImage.set_txtHeaderId(txtHDId.getText().toString());
-        dataImage.set_before1(phtBefore1);
-        dataImage.set_before2(phtBefore2);
+        dataImage.set_txtHeaderId(tv_noso.getText().toString());
+        dataImage.set_txtImage(phtAfter2);
+        dataImage.set_intPosition("2");
+        dataImage.set_txtType("After");
 
-        List<tSalesQuantityImageBeforeData> dtListImage = new ArrayList<>();
+        List<tSalesProductQuantityImageData> dtListImage = new ArrayList<>();
         dtListImage.add(dataImage);
-        new tSalesQuantityImageBeforeBL().SaveData(dtListImage);
+        new tSalesProductQuantityImageBL().SaveData(dtListImage);
+    }
+
+    private void savePicture3() {
+        tSalesProductQuantityImageData dataImage = new tSalesProductQuantityImageData();
+        String headerId = tv_noso.getText().toString();
+
+        dataImage.set_txtId(_clsMainActivity.GenerateGuid());
+        dataImage.set_txtHeaderId(tv_noso.getText().toString());
+        dataImage.set_txtImage(phtBefore1);
+        dataImage.set_intPosition("1");
+        dataImage.set_txtType("Before");
+
+        List<tSalesProductQuantityImageData> dtListImage = new ArrayList<>();
+        dtListImage.add(dataImage);
+        new tSalesProductQuantityImageBL().SaveData(dtListImage);
+    }
+
+    private void savePicture4() {
+        tSalesProductQuantityImageData dataImage = new tSalesProductQuantityImageData();
+        String headerId = tv_noso.getText().toString();
+
+        dataImage.set_txtId(_clsMainActivity.GenerateGuid());
+        dataImage.set_txtHeaderId(tv_noso.getText().toString());
+        dataImage.set_txtImage(phtBefore2);
+        dataImage.set_intPosition("2");
+        dataImage.set_txtType("Before");
+
+        List<tSalesProductQuantityImageData> dtListImage = new ArrayList<>();
+        dtListImage.add(dataImage);
+        new tSalesProductQuantityImageBL().SaveData(dtListImage);
     }
 
     public void viewQuantityFragment(){
