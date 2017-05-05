@@ -317,6 +317,25 @@ public class clsHelperBL extends clsMainBL {
                     }
                 }
             }
+            if (ListOfSalesProductQuantityImage != null){
+                dtPush.setListOftSalesProductQuantityImageData(ListOfSalesProductQuantityImage);
+                for (tSalesProductQuantityImageData dttQuantityImageData : ListOfSalesProductQuantityImage) {
+                    if (dttQuantityImageData.get_txtImage() != null) {
+                        if (dttQuantityImageData.get_txtType().equals("After") &&  dttQuantityImageData.get_intPosition().equals("1")) {
+                            FileUpload.put("FUQTS" + dttQuantityImageData.get_txtId(), dttQuantityImageData.get_txtImage());
+                        }
+                        if (dttQuantityImageData.get_txtType().equals("After") &&  dttQuantityImageData.get_intPosition().equals("2")) {
+                            FileUpload.put("FUQTS" + dttQuantityImageData.get_txtId(), dttQuantityImageData.get_txtImage());
+                        }
+                        if (dttQuantityImageData.get_txtType().equals("Before") &&  dttQuantityImageData.get_intPosition().equals("1")) {
+                            FileUpload.put("FUQTS" + dttQuantityImageData.get_txtId(), dttQuantityImageData.get_txtImage());
+                        }
+                        if (dttQuantityImageData.get_txtType().equals("Before") &&  dttQuantityImageData.get_intPosition().equals("2")) {
+                            FileUpload.put("FUQTS" + dttQuantityImageData.get_txtId(), dttQuantityImageData.get_txtImage());
+                        }
+                    }
+                }
+            }
 
 			if(ListOftLeaveData!=null){
 				dtPush.setListOftLeaveMobileData(ListOftLeaveData);
@@ -339,9 +358,9 @@ public class clsHelperBL extends clsMainBL {
             if (ListOfSalesProductQuantityDetail != null){
                 dtPush.setListOftSalesProductQuantityDetailData(ListOfSalesProductQuantityDetail);
             }
-            if (ListOfSalesProductQuantityImage != null){
-                dtPush.setListOftSalesProductQuantityImageData(ListOfSalesProductQuantityImage);
-            }
+//            if (ListOfSalesProductQuantityImage != null){
+//                dtPush.setListOftSalesProductQuantityImageData(ListOfSalesProductQuantityImage);
+//            }
             if (ListOfSalesProductQuantityHeader != null){
                 dtPush.setListOftSalesProductQuantityData(ListOfSalesProductQuantityHeader);
             }
