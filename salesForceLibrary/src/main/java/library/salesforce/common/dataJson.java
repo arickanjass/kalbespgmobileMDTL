@@ -358,15 +358,15 @@ public class dataJson {
                     JSONObject item = new JSONObject();
                     item.put(dttSalesProductQuantityDetailData.Property_intId, String.valueOf(data.getIntId()));
                     item.put(dttSalesProductQuantityDetailData.Property_dtDate, String.valueOf(data.get_dtDate()));
-                    item.put(dttSalesProductQuantityDetailData.Property_intPrice, String.valueOf(data.get_intPrice()));
-                    item.put(dttSalesProductQuantityDetailData.Property_txtQuantity, String.valueOf(data.getTxtQuantity()));
-                    item.put(dttSalesProductQuantityDetailData.Property_txtCodeProduct, String.valueOf(data.get_txtCodeProduct()));
-                    item.put(dttSalesProductQuantityDetailData.Property_txtKeterangan, String.valueOf(data.get_txtKeterangan()));
-                    item.put(dttSalesProductQuantityDetailData.Property_txtExpireDate, String.valueOf(data.getTxtExpireDate()));
-                    item.put(dttSalesProductQuantityDetailData.Property_txtProduct, String.valueOf(data.getTxtProduct()));
+                    item.put(dttSalesProductQuantityDetailData.Property_intPrice, String.valueOf(data.get_intTotal()));
+                    item.put(dttSalesProductQuantityDetailData.Property_txtQuantity, String.valueOf(data.getTxtExpireDate()));
+                    item.put(dttSalesProductQuantityDetailData.Property_txtCodeProduct, String.valueOf(data.get_intPrice()));
+                    item.put(dttSalesProductQuantityDetailData.Property_txtKeterangan, String.valueOf(data.get_txtCodeProduct()));
+                    item.put(dttSalesProductQuantityDetailData.Property_txtExpireDate, String.valueOf(data.getTxtProduct()));
+                    item.put(dttSalesProductQuantityDetailData.Property_txtProduct, String.valueOf(data.get_txtKeterangan()));
                     item.put(dttSalesProductQuantityDetailData.Property_txtNIK, String.valueOf(data.get_txtNIK()));
-                    item.put(dttSalesProductQuantityDetailData.Property_intTotal, String.valueOf(data.get_intTotal()));
-                    item.put(dttSalesProductQuantityDetailData.Property_txtQuantityStock, String.valueOf(data.get_txtQuantityStock()));
+                    item.put(dttSalesProductQuantityDetailData.Property_intTotal, String.valueOf(data.get_txtQuantityStock()));
+                    item.put(dttSalesProductQuantityDetailData.Property_txtQuantityStock, String.valueOf(data.getTxtQuantity()));
                     itemsListJquey.add(item);
                 }
                 resJson.put(dttSalesProductQuantityDetailData.Property_ListOftSalesProductQuantityDetailData, new JSONArray(itemsListJquey));
