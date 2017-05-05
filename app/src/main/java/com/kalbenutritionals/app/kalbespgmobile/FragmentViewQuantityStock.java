@@ -47,8 +47,7 @@ import java.util.Map;
 import bl.tAbsenUserBL;
 import bl.tSalesProductQuantityDetailBL;
 import bl.tSalesProductQuantityHeaderBL;
-import bl.tSalesQuantityImageAfterBL;
-import bl.tSalesQuantityImageBeforeBL;
+import bl.tSalesProductQuantityImageBL;
 import edu.swu.pulltorefreshswipemenulistview.library.PullToRefreshSwipeMenuListView;
 import edu.swu.pulltorefreshswipemenulistview.library.pulltorefresh.interfaces.IXListViewListener;
 import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.bean.SwipeMenu;
@@ -60,8 +59,7 @@ import library.salesforce.common.clsSwipeList;
 import library.salesforce.common.tAbsenUserData;
 import library.salesforce.common.tSalesProductQuantityHeaderData;
 import library.salesforce.common.tSalesProductQuantityDetailData;
-import library.salesforce.common.tSalesQuantityImageAfterData;
-import library.salesforce.common.tSalesQuantityImageBeforeData;
+import library.salesforce.common.tSalesProductQuantityImageData;
 
 import static com.kalbenutritionals.app.kalbespgmobile.R.id.textView9Quantity;
 
@@ -79,8 +77,7 @@ public class FragmentViewQuantityStock extends Fragment implements IXListViewLis
     private static Map<String, HashMap> mapMenu;
     static List<tSalesProductQuantityHeaderData> dt;
     static List<tSalesProductQuantityDetailData> data;
-    static List<tSalesQuantityImageAfterData> dataImage;
-    static List<tSalesQuantityImageBeforeData> dataImageBefore;
+    static List<tSalesProductQuantityImageData> dataImage;
     private FloatingActionButton fab;
 
     private SliderLayout mDemoSlider;
@@ -194,7 +191,7 @@ public class FragmentViewQuantityStock extends Fragment implements IXListViewLis
         }
         tl.addView(tr);
 
-        data = new tSalesProductQuantityDetailBL().GetDataNoso(dt.get(position).get_txtQuantityStock());
+        data = new tSalesProductQuantityDetailBL().GetDataNoQuantityStock(dt.get(position).get_txtQuantityStock());
 
         double qtySum=0;
         double qtyNum;
@@ -292,8 +289,7 @@ public class FragmentViewQuantityStock extends Fragment implements IXListViewLis
         mDemoSlider = (SliderLayout) promptView.findViewById(R.id.sliderQuantity);
 
         String statusText = dt.get(position).get_intSubmit().equals("1") && dt.get(position).get_intSync().equals("1") ? "Sync" : "Submit";
-        dataImage = new tSalesQuantityImageAfterBL().getDataHeaderId(dt.get(position).get_intId());
-        dataImageBefore = new tSalesQuantityImageBeforeBL().getDataHeaderId(dt.get(position).get_intId());
+        dataImage = new tSalesProductQuantityImageBL().getDataHeaderId(dt.get(position).get_txtQuantityStock());
 
         status.setText("Status : " +statusText);
 
@@ -308,160 +304,152 @@ public class FragmentViewQuantityStock extends Fragment implements IXListViewLis
         btnSave.setVisibility(View.GONE);
         etDesc.setText(dt.get(position).get_txtKeterangan());
 
-        File folder = new File(Environment.getExternalStorageDirectory().toString() + "/Android/data/Kalbespgmobile/tempdata");
+        File folder = new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata");
         folder.mkdir();
 
 //        final byte[] imgFile = dt.get(position).get_txtBeforeImg1();
-        for (tSalesQuantityImageAfterData imgDtAfter : dataImage){
-            final byte[] imgFile = imgDtAfter.get_after1();
+        for (tSalesProductQuantityImageData imgDt : dataImage){
+            final byte[] imgFile = imgDt.get_txtImage();
             if (imgFile != null) {
-                mybitmap1 = BitmapFactory.decodeByteArray(imgFile, 0, imgFile.length);
-                Bitmap bitmap = Bitmap.createScaledBitmap(mybitmap1, 150, 150, true);
-                img1.setImageBitmap(bitmap);
+                if (imgDt.get_txtType().equals("After") && imgDt.get_intPosition().equals("1")) {
+                    mybitmap1 = BitmapFactory.decodeByteArray(imgFile, 0, imgFile.length);
+                    Bitmap bitmap = Bitmap.createScaledBitmap(mybitmap1, 150, 150, true);
+                    img1.setImageBitmap(bitmap);
 
-                File file = null;
-                try {
-                    file = File.createTempFile("image-", ".jpg", new File(Environment.getExternalStorageDirectory().toString() + "/Android/data/Kalbespgmobile/tempdata"));
-                    FileOutputStream out = new FileOutputStream(file);
-                    out.write(imgFile);
-                    out.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    File file = null;
+                    try {
+                        file = File.createTempFile("image-", ".jpg", new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata"));
+                        FileOutputStream out = new FileOutputStream(file);
+                        out.write(imgFile);
+                        out.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    TextSliderView textSliderView = new TextSliderView(getContext());
+                    textSliderView
+                            .description("After 1")
+                            .image(file)
+                            .setScaleType(BaseSliderView.ScaleType.Fit)
+                            .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
+                                @Override
+                                public void onSliderClick(BaseSliderView slider) {
+                                    new clsMainActivity().zoomImage(mybitmap1, getActivity());
+                                }
+                            });
+
+                    mDemoSlider.addSlider(textSliderView);
                 }
-
-                TextSliderView textSliderView = new TextSliderView(getContext());
-                textSliderView
-                        .description("After 1")
-                        .image(file)
-                        .setScaleType(BaseSliderView.ScaleType.Fit)
-                        .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
-                            @Override
-                            public void onSliderClick(BaseSliderView slider) {
-                                new clsMainActivity().zoomImage(mybitmap1, getActivity());
-                            }
-                        });
-
-                mDemoSlider.addSlider(textSliderView);
             } else {
                 img1.setVisibility(View.GONE);
             }
 
-            final byte[] imgFile2 = imgDtAfter.get_after2();
+            final byte[] imgFile2 = imgDt.get_txtImage();
             if (imgFile2 != null) {
-                mybitmap2 = BitmapFactory.decodeByteArray(imgFile2, 0, imgFile2.length);
-                Bitmap bitmap = Bitmap.createScaledBitmap(mybitmap2, 150, 150, true);
-                img2.setImageBitmap(bitmap);
+                if (imgDt.get_txtType().equals("After") && imgDt.get_intPosition().equals("2")) {
+                    mybitmap2 = BitmapFactory.decodeByteArray(imgFile2, 0, imgFile2.length);
+                    Bitmap bitmap = Bitmap.createScaledBitmap(mybitmap2, 150, 150, true);
+                    img2.setImageBitmap(bitmap);
 
-                File file = null;
-                try {
-                    file = File.createTempFile("image-", ".jpg", new File(Environment.getExternalStorageDirectory().toString() + "/Android/data/Kalbespgmobile/tempdata"));
-                    FileOutputStream out = new FileOutputStream(file);
-                    out.write(imgFile2);
-                    out.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    File file = null;
+                    try {
+                        file = File.createTempFile("image-", ".jpg", new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata"));
+                        FileOutputStream out = new FileOutputStream(file);
+                        out.write(imgFile2);
+                        out.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    TextSliderView textSliderView = new TextSliderView(getContext());
+                    textSliderView
+                            .description("After 2")
+                            .image(file)
+                            .setScaleType(BaseSliderView.ScaleType.Fit)
+                            .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
+                                @Override
+                                public void onSliderClick(BaseSliderView slider) {
+                                    new clsMainActivity().zoomImage(mybitmap2, getActivity());
+                                }
+                            });
+
+                    mDemoSlider.addSlider(textSliderView);
                 }
-
-                TextSliderView textSliderView = new TextSliderView(getContext());
-                textSliderView
-                        .description("After 2")
-                        .image(file)
-                        .setScaleType(BaseSliderView.ScaleType.Fit)
-                        .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
-                            @Override
-                            public void onSliderClick(BaseSliderView slider) {
-                                new clsMainActivity().zoomImage(mybitmap2, getActivity());
-                            }
-                        });
-
-                mDemoSlider.addSlider(textSliderView);
             } else {
                 img2.setVisibility(View.GONE);
             }
-            if (imgFile == null || imgFile2 == null) {
-                mDemoSlider.stopAutoCycle();
-                mDemoSlider.setPagerTransformer(false, new BaseTransformer() {
-                    @Override
-                    protected void onTransform(View view, float v) {
-                    }
-                });
-            } else {
-                mDemoSlider.stopAutoCycle();
-                mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Default);
-                mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-                mDemoSlider.setCustomAnimation(new DescriptionAnimation());
-                mDemoSlider.setDuration(4000);
-            }
-        }
 
-        for (tSalesQuantityImageBeforeData imgDtBefore : dataImageBefore){
-            final byte[] imgFile3 = imgDtBefore.get_before1();
+            final byte[] imgFile3 = imgDt.get_txtImage();
             if (imgFile3 != null) {
-                mybitmap3 = BitmapFactory.decodeByteArray(imgFile3, 0, imgFile3.length);
-                Bitmap bitmap = Bitmap.createScaledBitmap(mybitmap3, 150, 150, true);
-                img3.setImageBitmap(bitmap);
+                if (imgDt.get_txtType().equals("Before") && imgDt.get_intPosition().equals("1")) {
+                    mybitmap3 = BitmapFactory.decodeByteArray(imgFile3, 0, imgFile3.length);
+                    Bitmap bitmap = Bitmap.createScaledBitmap(mybitmap3, 150, 150, true);
+                    img3.setImageBitmap(bitmap);
 
-                File file = null;
-                try {
-                    file = File.createTempFile("image-", ".jpg", new File(Environment.getExternalStorageDirectory().toString() + "/Android/data/Kalbespgmobile/tempdata"));
-                    FileOutputStream out = new FileOutputStream(file);
-                    out.write(imgFile3);
-                    out.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    File file = null;
+                    try {
+                        file = File.createTempFile("image-", ".jpg", new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata"));
+                        FileOutputStream out = new FileOutputStream(file);
+                        out.write(imgFile3);
+                        out.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    TextSliderView textSliderView = new TextSliderView(getContext());
+                    textSliderView
+                            .description("Before 1")
+                            .image(file)
+                            .setScaleType(BaseSliderView.ScaleType.Fit)
+                            .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
+                                @Override
+                                public void onSliderClick(BaseSliderView slider) {
+                                    new clsMainActivity().zoomImage(mybitmap3, getActivity());
+                                }
+                            });
+
+                    mDemoSlider.addSlider(textSliderView);
                 }
-
-                TextSliderView textSliderView = new TextSliderView(getContext());
-                textSliderView
-                        .description("Before 1")
-                        .image(file)
-                        .setScaleType(BaseSliderView.ScaleType.Fit)
-                        .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
-                            @Override
-                            public void onSliderClick(BaseSliderView slider) {
-                                new clsMainActivity().zoomImage(mybitmap3, getActivity());
-                            }
-                        });
-
-                mDemoSlider.addSlider(textSliderView);
             } else {
                 img3.setVisibility(View.GONE);
             }
 
-            final byte[] imgFile4 = imgDtBefore.get_before2();
+            final byte[] imgFile4 = imgDt.get_txtImage();
             if (imgFile4 != null) {
-                mybitmap4 = BitmapFactory.decodeByteArray(imgFile4, 0, imgFile4.length);
-                Bitmap bitmap = Bitmap.createScaledBitmap(mybitmap1, 150, 150, true);
-                img4.setImageBitmap(bitmap);
+                if (imgDt.get_txtType().equals("Before") && imgDt.get_intPosition().equals("2")) {
+                    mybitmap4 = BitmapFactory.decodeByteArray(imgFile4, 0, imgFile4.length);
+                    Bitmap bitmap = Bitmap.createScaledBitmap(mybitmap1, 150, 150, true);
+                    img4.setImageBitmap(bitmap);
 
-                File file = null;
-                try {
-                    file = File.createTempFile("image-", ".jpg", new File(Environment.getExternalStorageDirectory().toString() + "/Android/data/Kalbespgmobile/tempdata"));
-                    FileOutputStream out = new FileOutputStream(file);
-                    out.write(imgFile4);
-                    out.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    File file = null;
+                    try {
+                        file = File.createTempFile("image-", ".jpg", new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata"));
+                        FileOutputStream out = new FileOutputStream(file);
+                        out.write(imgFile4);
+                        out.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    TextSliderView textSliderView = new TextSliderView(getContext());
+                    textSliderView
+                            .description("Before 2")
+                            .image(file)
+                            .setScaleType(BaseSliderView.ScaleType.Fit)
+                            .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
+                                @Override
+                                public void onSliderClick(BaseSliderView slider) {
+                                    new clsMainActivity().zoomImage(mybitmap4, getActivity());
+                                }
+                            });
+
+                    mDemoSlider.addSlider(textSliderView);
                 }
-
-                TextSliderView textSliderView = new TextSliderView(getContext());
-                textSliderView
-                        .description("Before 2")
-                        .image(file)
-                        .setScaleType(BaseSliderView.ScaleType.Fit)
-                        .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
-                            @Override
-                            public void onSliderClick(BaseSliderView slider) {
-                                new clsMainActivity().zoomImage(mybitmap4, getActivity());
-                            }
-                        });
-
-                mDemoSlider.addSlider(textSliderView);
             } else {
                 img4.setVisibility(View.GONE);
             }
 
-            if (imgFile3 == null || imgFile4 == null) {
+            if (imgFile == null || imgFile2 == null || imgFile3 == null || imgFile4 == null) {
                 mDemoSlider.stopAutoCycle();
                 mDemoSlider.setPagerTransformer(false, new BaseTransformer() {
                     @Override

@@ -37,12 +37,12 @@ public class tSalesProductQuantityDetailData {
         this.intId = intId;
     }
 
-    public synchronized String get_txtNoSo() {
-        return _txtNoSo;
+    public synchronized String get_txtQuantityStock() {
+        return _txtQuantityStock;
     }
 
-    public synchronized void set_txtNoSo(String _txtNoSo) {
-        this._txtNoSo = _txtNoSo;
+    public synchronized void set_txtQuantityStock(String _txtQuantityStock) {
+        this._txtQuantityStock = _txtQuantityStock;
     }
 
     public synchronized String get_intActive() {
@@ -111,7 +111,7 @@ public class tSalesProductQuantityDetailData {
     private String txtQuantity;
     private String _intPrice;
     private String _intTotal;
-    private String _txtNoSo;
+    private String _txtQuantityStock;
     private String _intActive;
 
     public String Property_intId = "intId";
@@ -122,7 +122,7 @@ public class tSalesProductQuantityDetailData {
     public String Property_txtProduct = "txtProduct";
     public String Property_txtExpireDate = "txtExpireDate";
     public String Property_txtQuantity = "txtQuantity";
-    public String Property_txtNoSo = "txtNoSo";
+    public String Property_txtQuantityStock = "txtQuantityStock";
     public String Property_intPrice = "intPrice";
     public String Property_intTotal = "intTotal";
     public String Property_intActive = "intActive";
@@ -135,7 +135,7 @@ public class tSalesProductQuantityDetailData {
             Property_txtProduct + "," +
             Property_txtExpireDate + "," +
             Property_txtQuantity + "," +
-            Property_txtNoSo + "," +
+            Property_txtQuantityStock + "," +
             Property_intPrice + "," +
             Property_intTotal + "," +
             Property_intActive + "," +
@@ -143,12 +143,11 @@ public class tSalesProductQuantityDetailData {
 
     public tSalesProductQuantityDetailData() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     public tSalesProductQuantityDetailData(String intId, String _dtDate, String _intPrice, String _txtCodeProduct, String txtProduct,
                                            String _txtKeterangan, String txtExpireDate, String txtQuantity, String _txtNIK, String _intTotal,
-    String _txtNoSo, String _intActive) {
+    String _txtQuantityStock, String _intActive) {
         this.intId = intId;
         this._txtNIK = _txtNIK;
         this._dtDate = _dtDate;
@@ -159,7 +158,7 @@ public class tSalesProductQuantityDetailData {
         this.txtExpireDate = txtExpireDate;
         this.txtQuantity = txtQuantity;
         this._intTotal = _intTotal;
-        this.Property_txtNoSo = _txtNoSo;
+        this.Property_txtQuantityStock = _txtQuantityStock;
         this.Property_intActive = _intActive;
     }
 }

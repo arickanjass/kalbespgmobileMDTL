@@ -14,10 +14,10 @@ import library.salesforce.dal.tSalesProductQuantityDetailDA;
 public class tSalesProductQuantityDetailBL extends clsMainBL{
     SQLiteDatabase db;
 
-    public List<tSalesProductQuantityDetailData> GetDataNoso(String Noso){
+    public List<tSalesProductQuantityDetailData> GetDataNoQuantityStock(String Noso){
         SQLiteDatabase db=getDb();
         tSalesProductQuantityDetailDA _tSalesProductQuantityDetailDA = new tSalesProductQuantityDetailDA(db);
-        List<tSalesProductQuantityDetailData>ListData = _tSalesProductQuantityDetailDA.getDataNoso(db, Noso);
+        List<tSalesProductQuantityDetailData>ListData = _tSalesProductQuantityDetailDA.getDataNoQuantityStock(db, Noso);
         db.close();
         return ListData;
     }
@@ -36,9 +36,9 @@ public class tSalesProductQuantityDetailBL extends clsMainBL{
         return dtDetail;
     }
 
-    public List<tSalesProductQuantityDetailData> GetDataByNoSO(String id) {
+    public List<tSalesProductQuantityDetailData> GetDataByNoQuantityStock(String id) {
         SQLiteDatabase _db =getDb();
-        List<tSalesProductQuantityDetailData> ListData = new tSalesProductQuantityDetailDA(_db).getDataByNoSo(_db, id);
+        List<tSalesProductQuantityDetailData> ListData = new tSalesProductQuantityDetailDA(_db).getDataByQuantityStock(_db, id);
         _db.close();
         return ListData;
     }

@@ -30,7 +30,7 @@ public class tSalesProductQuantityDetailDA {
                 + dt.Property_txtExpireDate + " TEXT NULL,"
                 + dt.Property_txtQuantity + " TEXT NULL,"
                 + dt.Property_intTotal + " TEXT NULL,"
-                + dt.Property_txtNoSo + " TEXT NULL,"
+                + dt.Property_txtQuantityStock + " TEXT NULL,"
                 + dt.Property_intActive + " TEXT NULL,"
                 + dt.Property_txtNIK + " TEXT NULL" + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
@@ -59,7 +59,7 @@ public class tSalesProductQuantityDetailDA {
                 +dt.Property_txtExpireDate+","
                 +dt.Property_txtQuantity+","
                 +dt.Property_intTotal+","
-                +dt.Property_txtNoSo+","
+                +dt.Property_txtQuantityStock +","
                 // +dt.Property_intActive+","
                 +dt.Property_txtNIK+") "+
             "values('" +String.valueOf(data.getIntId())+"','"
@@ -71,7 +71,7 @@ public class tSalesProductQuantityDetailDA {
                 +String.valueOf(data.getTxtExpireDate())+"','"
                 +String.valueOf(data.getTxtQuantity())+"','"
                 +String.valueOf(data.get_intTotal())+"','"
-                +String.valueOf(data.get_txtNoSo())+"','"
+                +String.valueOf(data.get_txtQuantityStock())+"','"
                 //+String.valueOf(data.get_intActive())+"','"
                 +String.valueOf(data.get_txtNIK())+"')");
     }
@@ -89,7 +89,7 @@ public class tSalesProductQuantityDetailDA {
         Cursor cursor = db.query(TABLE_CONTACTS, new String[] {dt.Property_intId,
                 dt.Property_dtDate,dt.Property_intPrice,dt.Property_txtCodeProduct,dt.Property_txtKeterangan,
                 dt.Property_txtProduct, dt.Property_txtExpireDate, dt.Property_txtQuantity, dt.Property_intTotal
-                ,dt.Property_txtNoSo,dt.Property_intActive,dt.Property_txtNIK}, dt.Property_intId + "=?",
+                ,dt.Property_txtQuantityStock,dt.Property_intActive,dt.Property_txtNIK}, dt.Property_intId + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
@@ -101,13 +101,13 @@ public class tSalesProductQuantityDetailDA {
         return contact;
     }
 
-    public List<tSalesProductQuantityDetailData> getDataNoso(SQLiteDatabase db, String Noso) {
+    public List<tSalesProductQuantityDetailData> getDataNoQuantityStock(SQLiteDatabase db, String Noso) {
         List<tSalesProductQuantityDetailData> contactList = null;
         tSalesProductQuantityDetailData dt = new tSalesProductQuantityDetailData();
         Cursor cursor = db.query(TABLE_CONTACTS, new String[] { dt.Property_intId,
                 dt.Property_dtDate, dt.Property_intPrice, dt.Property_txtQuantity,
                 dt.Property_txtCodeProduct, dt.Property_txtKeterangan, dt.Property_txtProduct,
-                dt.Property_txtNIK, dt.Property_intTotal, dt.Property_txtNoSo}, dt.Property_txtNoSo + "=?",
+                dt.Property_txtNIK, dt.Property_intTotal, dt.Property_txtQuantityStock}, dt.Property_txtQuantityStock + "=?",
                 new String[] { String.valueOf(Noso) }, null, null, null, null);
         if (cursor != null) {
             if (cursor.moveToFirst()) {
@@ -123,7 +123,7 @@ public class tSalesProductQuantityDetailDA {
                     contact.setTxtProduct(cursor.getString(6));
                     contact.set_txtNIK(cursor.getString(7));
                     contact.set_intTotal(cursor.getString(8));
-                    contact.set_txtNoSo(cursor.getString(9));
+                    contact.set_txtQuantityStock(cursor.getString(9));
                     contactList.add(contact);
                 } while (cursor.moveToNext());
             }
@@ -133,7 +133,7 @@ public class tSalesProductQuantityDetailDA {
     }
 
     // Getting single contact
-    public List<tSalesProductQuantityDetailData> getDataByNoSo(SQLiteDatabase db, String id) {
+    public List<tSalesProductQuantityDetailData> getDataByQuantityStock(SQLiteDatabase db, String id) {
         tSalesProductQuantityDetailData dt = new tSalesProductQuantityDetailData();
         List<tSalesProductQuantityDetailData> contactList = new ArrayList<tSalesProductQuantityDetailData>();
         String[] tableColumns = new String[] {
@@ -146,10 +146,10 @@ public class tSalesProductQuantityDetailDA {
                 dt.Property_txtExpireDate,
                 dt.Property_txtQuantity,
                 dt.Property_intTotal,
-                dt.Property_txtNoSo,
+                dt.Property_txtQuantityStock,
                 dt.Property_txtNIK
         };
-        String whereClause = dt.Property_txtNoSo + "=?";
+        String whereClause = dt.Property_txtQuantityStock + "=?";
         String[] whereArgs = new String[]{
                 String.valueOf(id)
         };
@@ -177,7 +177,7 @@ public class tSalesProductQuantityDetailDA {
                     contact.setTxtExpireDate(cursor.getString(6));
                     contact.setTxtQuantity(cursor.getString(7));
                     contact.set_intTotal(cursor.getString(8));
-                    contact.set_txtNoSo(cursor.getString(9));
+                    contact.set_txtQuantityStock(cursor.getString(9));
                     contact.set_txtNIK(cursor.getString(10));
                     contactList.add(contact);
                 } while (cursor.moveToNext());
@@ -191,7 +191,7 @@ public class tSalesProductQuantityDetailDA {
         List<tSalesProductQuantityDetailData> contactList = new ArrayList<tSalesProductQuantityDetailData>();
         // select All Query
         tSalesProductQuantityDetailData dt = new tSalesProductQuantityDetailData();
-        String selectQuery = "SELECT  "+dt.Property_All+" FROM " + TABLE_CONTACTS +" Where "+dt.Property_txtNoSo+"='"+txtNoSO;
+        String selectQuery = "SELECT  "+dt.Property_All+" FROM " + TABLE_CONTACTS +" Where "+dt.Property_txtQuantityStock +"='"+txtNoSO;
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -209,7 +209,7 @@ public class tSalesProductQuantityDetailDA {
                 contact.setTxtQuantity(cursor.getString(7));
                 contact.set_txtNIK(cursor.getString(8));
                 contact.set_intTotal(cursor.getString(9));
-                contact.set_txtNoSo(cursor.getString(10));
+                contact.set_txtQuantityStock(cursor.getString(10));
                 contact.set_intActive(cursor.getString(11));
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -221,7 +221,7 @@ public class tSalesProductQuantityDetailDA {
     public List<tSalesProductQuantityDetailData> getAllDataByHeaderId(SQLiteDatabase db, String id) {
         List<tSalesProductQuantityDetailData> contactList = new ArrayList<tSalesProductQuantityDetailData>();
         tSalesProductQuantityDetailData dt = new tSalesProductQuantityDetailData();
-        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_txtNoSo + "='" + id + "' ORDER BY " + dt.Property_dtDate + " desc";
+        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_txtQuantityStock + "='" + id + "' ORDER BY " + dt.Property_dtDate + " desc";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -238,7 +238,7 @@ public class tSalesProductQuantityDetailDA {
                 contact.setTxtQuantity(cursor.getString(7));
                 contact.set_txtNIK(cursor.getString(8));
                 contact.set_intTotal(cursor.getString(9));
-                contact.set_txtNoSo(cursor.getString(10));
+                contact.set_txtQuantityStock(cursor.getString(10));
                 contact.set_intActive(cursor.getString(11));
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -270,7 +270,7 @@ public class tSalesProductQuantityDetailDA {
                 contact.setTxtQuantity(cursor.getString(7));
                 contact.set_txtNIK(cursor.getString(8));
                 contact.set_intTotal(cursor.getString(9));
-                contact.set_txtNoSo(cursor.getString(10));
+                contact.set_txtQuantityStock(cursor.getString(10));
                 contact.set_intActive(cursor.getString(11));
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -291,7 +291,7 @@ public class tSalesProductQuantityDetailDA {
     }
     public void deleteByNOSO(SQLiteDatabase db, String NOSO) {
         tSalesProductQuantityDetailData dt = new tSalesProductQuantityDetailData();
-        db.delete(TABLE_CONTACTS, dt.Property_txtNoSo + " = ?",
+        db.delete(TABLE_CONTACTS, dt.Property_txtQuantityStock + " = ?",
                 new String[] { NOSO });
     }
 
@@ -320,7 +320,7 @@ public class tSalesProductQuantityDetailDA {
                 dt.Property_txtQuantity,
                 dt.Property_txtNIK,
                 dt.Property_intTotal,
-                dt.Property_txtNoSo,
+                dt.Property_txtQuantityStock,
                 dt.Property_intActive
         };
         String whereClause = dt.Property_intId + "=?";
@@ -352,7 +352,7 @@ public class tSalesProductQuantityDetailDA {
                 contact.setTxtQuantity(cursor.getString(7));
                 contact.set_txtNIK(cursor.getString(8));
                 contact.set_intTotal(cursor.getString(9));
-                contact.set_txtNoSo(cursor.getString(10));
+                contact.set_txtQuantityStock(cursor.getString(10));
                 contact.set_intActive(cursor.getString(11));
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -376,7 +376,7 @@ public class tSalesProductQuantityDetailDA {
                 tSalesProductQuantityHeader = tSalesProductQuantityHeader + ((i + 1) != ListOfSalesProductQuantityHeader.size() ? "," : ")");
             }
         }
-        String selectQuery = "SELECT "+dt.Property_All+" FROM " + TABLE_CONTACTS +" WHERE "+dt.Property_txtNoSo+" IN " + tSalesProductQuantityHeader;
+        String selectQuery = "SELECT "+dt.Property_All+" FROM " + TABLE_CONTACTS +" WHERE "+dt.Property_txtQuantityStock +" IN " + tSalesProductQuantityHeader;
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -394,7 +394,7 @@ public class tSalesProductQuantityDetailDA {
                 contact.setTxtExpireDate(cursor.getString(6));
                 contact.setTxtQuantity(cursor.getString(7));
                 contact.set_intTotal(cursor.getString(8));
-                contact.set_txtNoSo(cursor.getString(9));
+                contact.set_txtQuantityStock(cursor.getString(9));
                 contact.set_intActive(cursor.getString(10));
                 contact.set_txtNIK(cursor.getString(11));
                 contactList.add(contact);
