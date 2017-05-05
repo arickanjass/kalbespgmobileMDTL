@@ -13,6 +13,7 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -155,17 +156,17 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         // add no Quantity Stock in Textview txtNoQuantity
         List<tSalesProductQuantityHeaderData> dtLast = new tSalesProductQuantityHeaderBL().getLastData();
         if (dtLast == null || dtLast.size() == 0) {
-            noQuantityStock = new mCounterNumberBL().getData(enumCounterData.NoDataSO);
+            noQuantityStock = new mCounterNumberBL().getData(enumCounterData.NoQuantityStock);
 
         } else {
-            noQuantityStock = new mCounterNumberBL().getData(enumCounterData.NoDataSO);
+            noQuantityStock = new mCounterNumberBL().getData(enumCounterData.NoQuantityStock);
             List<tSalesProductQuantityHeaderData> dataFirstIsExist = new tSalesProductQuantityHeaderBL().getDataByNoQuantityStock(noQuantityStock);
             if (dataFirstIsExist.size() == 1) {
                 clsHelper _clsHelper = new clsHelper();
                 String oldVersion = dtLast.get(0).get_txtQuantityStock();
                 noQuantityStock = _clsHelper.generateNewId(oldVersion, "-", "5");
             } else {
-                noQuantityStock = new mCounterNumberBL().getData(enumCounterData.NoDataSO);
+                noQuantityStock = new mCounterNumberBL().getData(enumCounterData.NoQuantityStock);
             }
         }
         tv_noQuantityStock.setText(noQuantityStock);
@@ -281,6 +282,8 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                     _clsMainActivity.showCustomToast(getContext(), "Please take at least 1 photo for after", false);
                 } else if (phtBefore1 == null && phtBefore2 == null){
                     _clsMainActivity.showCustomToast(getContext(), "Please take at least 1 photo for before", false);
+                } else if (dtListProduct.size()==0){
+                    _clsMainActivity.showCustomToast(getContext(), "Please Add least 1 Product...", false);
                 } else {
                     final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
                     alertDialog.setTitle("Confirm");
@@ -868,7 +871,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
             value = Double.parseDouble(String.valueOf(productDetail.get(i).getTxtQuantity()));
             qntyNum =  price * value;
             qntySum += qntyNum;
-            result = new clsMainActivity().convertNumberDec(qntySum);
+            result = new clsMainActivity().convertNumberDec2(qntySum);
         }
 
         java.text.DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -905,68 +908,83 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         tSalesProductQuantityImageData dataImage = new tSalesProductQuantityImageData();
         String headerId = tv_noQuantityStock.getText().toString();
 
-        dataImage.set_txtId(_clsMainActivity.GenerateGuid());
-        dataImage.set_txtHeaderId(tv_noQuantityStock.getText().toString());
-        dataImage.set_txtImage(phtAfter1);
-        dataImage.set_intPosition("1");
-        dataImage.set_txtType("After");
+        if (phtAfter1 != null){
+            dataImage.set_txtId(_clsMainActivity.GenerateGuid());
+            dataImage.set_txtHeaderId(tv_noQuantityStock.getText().toString());
+            dataImage.set_txtImage(phtAfter1);
+            dataImage.set_intPosition("1");
+            dataImage.set_txtType("After");
 
-        List<tSalesProductQuantityImageData> dtListImage = new ArrayList<>();
-        dtListImage.add(dataImage);
-        new tSalesProductQuantityImageBL().SaveData(dtListImage);
+            List<tSalesProductQuantityImageData> dtListImage = new ArrayList<>();
+            dtListImage.add(dataImage);
+            new tSalesProductQuantityImageBL().SaveData(dtListImage);
+        }
     }
 
     private void savePicture2() {
         tSalesProductQuantityImageData dataImage = new tSalesProductQuantityImageData();
         String headerId = tv_noQuantityStock.getText().toString();
 
-        dataImage.set_txtId(_clsMainActivity.GenerateGuid());
-        dataImage.set_txtHeaderId(tv_noQuantityStock.getText().toString());
-        dataImage.set_txtImage(phtAfter2);
-        dataImage.set_intPosition("2");
-        dataImage.set_txtType("After");
+        if (phtAfter2 != null){
+            dataImage.set_txtId(_clsMainActivity.GenerateGuid());
+            dataImage.set_txtHeaderId(tv_noQuantityStock.getText().toString());
+            dataImage.set_txtImage(phtAfter2);
+            dataImage.set_intPosition("2");
+            dataImage.set_txtType("After");
 
-        List<tSalesProductQuantityImageData> dtListImage = new ArrayList<>();
-        dtListImage.add(dataImage);
-        new tSalesProductQuantityImageBL().SaveData(dtListImage);
+            List<tSalesProductQuantityImageData> dtListImage = new ArrayList<>();
+            dtListImage.add(dataImage);
+            new tSalesProductQuantityImageBL().SaveData(dtListImage);
+        }
     }
 
     private void savePicture3() {
         tSalesProductQuantityImageData dataImage = new tSalesProductQuantityImageData();
         String headerId = tv_noQuantityStock.getText().toString();
 
-        dataImage.set_txtId(_clsMainActivity.GenerateGuid());
-        dataImage.set_txtHeaderId(tv_noQuantityStock.getText().toString());
-        dataImage.set_txtImage(phtBefore1);
-        dataImage.set_intPosition("1");
-        dataImage.set_txtType("Before");
+        if (phtBefore1 != null) {
+            dataImage.set_txtId(_clsMainActivity.GenerateGuid());
+            dataImage.set_txtHeaderId(tv_noQuantityStock.getText().toString());
+            dataImage.set_txtImage(phtBefore1);
+            dataImage.set_intPosition("1");
+            dataImage.set_txtType("Before");
 
-        List<tSalesProductQuantityImageData> dtListImage = new ArrayList<>();
-        dtListImage.add(dataImage);
-        new tSalesProductQuantityImageBL().SaveData(dtListImage);
+            List<tSalesProductQuantityImageData> dtListImage = new ArrayList<>();
+            dtListImage.add(dataImage);
+            new tSalesProductQuantityImageBL().SaveData(dtListImage);
+        }
     }
 
     private void savePicture4() {
         tSalesProductQuantityImageData dataImage = new tSalesProductQuantityImageData();
         String headerId = tv_noQuantityStock.getText().toString();
 
-        dataImage.set_txtId(_clsMainActivity.GenerateGuid());
-        dataImage.set_txtHeaderId(tv_noQuantityStock.getText().toString());
-        dataImage.set_txtImage(phtBefore2);
-        dataImage.set_intPosition("2");
-        dataImage.set_txtType("Before");
+        if (phtBefore2 != null) {
+            dataImage.set_txtId(_clsMainActivity.GenerateGuid());
+            dataImage.set_txtHeaderId(tv_noQuantityStock.getText().toString());
+            dataImage.set_txtImage(phtBefore2);
+            dataImage.set_intPosition("2");
+            dataImage.set_txtType("Before");
 
-        List<tSalesProductQuantityImageData> dtListImage = new ArrayList<>();
-        dtListImage.add(dataImage);
-        new tSalesProductQuantityImageBL().SaveData(dtListImage);
+            List<tSalesProductQuantityImageData> dtListImage = new ArrayList<>();
+            dtListImage.add(dataImage);
+            new tSalesProductQuantityImageBL().SaveData(dtListImage);
+        }
     }
 
     public void viewQuantityFragment(){
-        Intent myIntent = new Intent(getContext(), MainMenu.class);
-        myIntent.putExtra("key_view","View Quantity");
-        getActivity().finish();
-        startActivity(myIntent);
-        return;
+        Bundle bundle = new Bundle();
+        bundle.putString("key_view", "View_QuantityStock");
+        FragmentAddQuantityStock fragmentAddQuantityStock = new FragmentAddQuantityStock();
+        fragmentAddQuantityStock.setArguments(bundle);
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.frame, new FragmentViewQuantityStock()).commit();
+
+//        Intent myIntent = new Intent(getContext(), MainMenu.class);
+//        myIntent.putExtra("key_view","View Quantity");
+//        getActivity().finish();
+//        startActivity(myIntent);
+//        return;
     }
 
     @Override

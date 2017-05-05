@@ -581,7 +581,7 @@ public class FragmentPushData extends Fragment {
 
     }
 
-    private void initQuantityStockHeader(Context context, List<tSalesProductQuantityHeaderData> listOftSalesProductQuantityData) {
+    private void initQuantityStockHeader(Context context, List<tSalesProductQuantityHeaderData> listOftSalesProductQuantityHeaderData) {
         tlsQuantityStock = (TableLayout) v.findViewById(R.id.tl_quantity_stock);
         tlsQuantityStock.removeAllViews();
 
@@ -608,9 +608,9 @@ public class FragmentPushData extends Fragment {
         }
         tlsQuantityStock.addView(tr);
 
-        if (listOftSalesProductQuantityData != null){
+        if (listOftSalesProductQuantityHeaderData != null){
             int index = 1;
-            for (tSalesProductQuantityHeaderData dat : listOftSalesProductQuantityData){
+            for (tSalesProductQuantityHeaderData dat : listOftSalesProductQuantityHeaderData){
                 tr = new TableRow(getContext());
 
                 TextView tv_index = new TextView(getContext());
