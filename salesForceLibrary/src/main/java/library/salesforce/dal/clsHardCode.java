@@ -54,6 +54,12 @@ public class clsHardCode  {
 	public String txtTable_tSalesProductHeader = "tSalesProductHeader";
 	public String txtTable_tPurchaseOrderDetail = "tPurchaseOrderDetail";
 	public String txtTable_tPurchaseOrderHeader = "tPurchaseOrderHeader";
+	public String txtTable_mParent = "mParent";
+	public String txtTable_mKategori = "mKategori";
+	public String txtTable_mPertanyaan = "mPertanyaan";
+	public String txtTable_tJawabanUser = "tJawabanUser";
+	public String txtTable_mTypePertanyaan = "mTypePertanyaan";
+	public String txtTable_mListJawaban = "mListJawaban";
 	public String txtTable_tInventorySPGDetail_mobile = "tInventorySPGDetail_mobile";
 	public String txtTable_tInventorySPGHeader_mobile = "tInventorySPGHeader_mobile";
 	public String txtTable_tSalesOrderHeader_mobile = "tSalesOrderHeader_mobile";

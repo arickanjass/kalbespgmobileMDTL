@@ -34,13 +34,18 @@ import library.salesforce.dal.mCounterNumberDA;
 import library.salesforce.dal.mEmployeeAreaDA;
 import library.salesforce.dal.mEmployeeBranchDA;
 import library.salesforce.dal.mEmployeeSalesProductDA;
+import library.salesforce.dal.mKategoriDA;
+import library.salesforce.dal.mListJawabanDA;
 import library.salesforce.dal.mMenuDA;
 import library.salesforce.dal.mNotificationDA;
+import library.salesforce.dal.mParentDA;
+import library.salesforce.dal.mPertanyaanDA;
 import library.salesforce.dal.mPriceInOutletDA;
 import library.salesforce.dal.mProductBarcodeDA;
 import library.salesforce.dal.mProductBrandHeaderDA;
 import library.salesforce.dal.mProductCompetitorDA;
 import library.salesforce.dal.mTypeLeaveMobileDA;
+import library.salesforce.dal.mTypePertanyaanDA;
 import library.salesforce.dal.mTypeSubmissionMobileDA;
 import library.salesforce.dal.mUserRoleDA;
 import library.salesforce.dal.mconfigDA;
@@ -51,6 +56,7 @@ import library.salesforce.dal.tCustomerBasedMobileDetailProductDA;
 import library.salesforce.dal.tCustomerBasedMobileHeaderDA;
 import library.salesforce.dal.tDeviceInfoUserDA;
 import library.salesforce.dal.tDisplayPictureDA;
+import library.salesforce.dal.tJawabanUserDA;
 import library.salesforce.dal.tLeaveMobileDA;
 import library.salesforce.dal.tNotificationDA;
 import library.salesforce.dal.tPurchaseOrderDetailDA;
@@ -248,6 +254,12 @@ public class clsHelper {
 		mPriceInOutletDA _mPriceInOutletDA=new mPriceInOutletDA(db);
 		mProductBarcodeDA _mProductBarcodeDA=new mProductBarcodeDA(db);
 		tDisplayPictureDA _tDisplayPictureDA = new tDisplayPictureDA(db);
+		mParentDA _mParentDA = new mParentDA(db);
+		mKategoriDA _mKategoriDA = new mKategoriDA(db);
+		mTypePertanyaanDA _mTypePertanyaanDA = new mTypePertanyaanDA(db);
+		mListJawabanDA _mListJawabanDA = new mListJawabanDA(db);
+		mPertanyaanDA _mPertanyaanDA = new mPertanyaanDA(db);
+		tJawabanUserDA _tJawabanUserDA = new tJawabanUserDA(db);
 
 		mProductCompetitorDA _mProductCompetitorDA = new mProductCompetitorDA(db);
 		mTypeSubmissionMobileDA _mTypeSubmissionMobileDA = new mTypeSubmissionMobileDA(db);
@@ -292,6 +304,12 @@ public class clsHelper {
 		_mCounterNumberDA.DropTable(db);
 		_tAbsenUserDA.DropTable(db);
 		_mTypeLeaveMobileDA.DropTable(db);
+		_mParentDA.DropTable(db);
+		_mKategoriDA.DropTable(db);
+		_mTypePertanyaanDA.DropTable(db);
+		_mListJawabanDA.DropTable(db);
+		_mPertanyaanDA.DropTable(db);
+		_tJawabanUserDA.DropTable(db);
 
 		_mProductCompetitorDA = new mProductCompetitorDA(db);
 		_mTypeSubmissionMobileDA = new mTypeSubmissionMobileDA(db);
@@ -303,6 +321,12 @@ public class clsHelper {
 		_tCustomerBasedMobileDetailDA = new tCustomerBasedMobileDetailDA(db);
 		_tCustomerBasedMobileDetailProductDA = new tCustomerBasedMobileDetailProductDA(db);
 		_tDisplayPictureDA = new tDisplayPictureDA(db);
+		_mParentDA = new mParentDA(db);
+		_mKategoriDA = new mKategoriDA(db);
+		_mTypePertanyaanDA = new mTypePertanyaanDA(db);
+		_mListJawabanDA = new mListJawabanDA(db);
+		_mPertanyaanDA = new mPertanyaanDA(db);
+		_tJawabanUserDA = new tJawabanUserDA(db);
 
 		_mPriceInOutletDA=new mPriceInOutletDA(db);
 		_mUserRoleDA=new mUserRoleDA(db);
