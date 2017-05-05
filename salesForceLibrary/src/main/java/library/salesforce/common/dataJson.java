@@ -358,15 +358,15 @@ public class dataJson {
                     JSONObject item = new JSONObject();
                     item.put(dttSalesProductQuantityDetailData.Property_intId, String.valueOf(data.getIntId()));
                     item.put(dttSalesProductQuantityDetailData.Property_dtDate, String.valueOf(data.get_dtDate()));
-                    item.put(dttSalesProductQuantityDetailData.Property_intPrice, String.valueOf(data.get_intTotal()));
-                    item.put(dttSalesProductQuantityDetailData.Property_txtQuantity, String.valueOf(data.getTxtExpireDate()));
-                    item.put(dttSalesProductQuantityDetailData.Property_txtCodeProduct, String.valueOf(data.get_intPrice()));
-                    item.put(dttSalesProductQuantityDetailData.Property_txtKeterangan, String.valueOf(data.get_txtCodeProduct()));
-                    item.put(dttSalesProductQuantityDetailData.Property_txtExpireDate, String.valueOf(data.getTxtProduct()));
-                    item.put(dttSalesProductQuantityDetailData.Property_txtProduct, String.valueOf(data.get_txtKeterangan()));
+                    item.put(dttSalesProductQuantityDetailData.Property_intPrice, String.valueOf(data.get_intPrice()));
+                    item.put(dttSalesProductQuantityDetailData.Property_txtQuantity, String.valueOf(data.getTxtQuantity()));
+                    item.put(dttSalesProductQuantityDetailData.Property_txtCodeProduct, String.valueOf(data.get_txtCodeProduct()));
+                    item.put(dttSalesProductQuantityDetailData.Property_txtKeterangan, String.valueOf(data.get_txtKeterangan()));
+                    item.put(dttSalesProductQuantityDetailData.Property_txtExpireDate, String.valueOf(data.getTxtExpireDate()));
+                    item.put(dttSalesProductQuantityDetailData.Property_txtProduct, String.valueOf(data.getTxtProduct()));
                     item.put(dttSalesProductQuantityDetailData.Property_txtNIK, String.valueOf(data.get_txtNIK()));
-                    item.put(dttSalesProductQuantityDetailData.Property_intTotal, String.valueOf(data.get_txtQuantityStock()));
-                    item.put(dttSalesProductQuantityDetailData.Property_txtQuantityStock, String.valueOf(data.getTxtQuantity()));
+                    item.put(dttSalesProductQuantityDetailData.Property_intTotal, String.valueOf(data.get_intTotal()));
+                    item.put(dttSalesProductQuantityDetailData.Property_txtQuantityStock, String.valueOf(data.get_txtQuantityStock()));
                     itemsListJquey.add(item);
                 }
                 resJson.put(dttSalesProductQuantityDetailData.Property_ListOftSalesProductQuantityDetailData, new JSONArray(itemsListJquey));
@@ -885,6 +885,51 @@ public class dataJson {
     private List<tEmployeeBRWithLOBData> ListOftEmployeeBRWithLOBData;
 
     private List<mProductBarcodeData> _ListOfmProductBarcodeData;
+    private List<mParentData> ListOfmParentData;
+    private List<mKategoriData> ListOfmKategoriData;
+    private List<mTypePertanyaanData> ListOfmTypePertanyaanData;
+    private List<mPertanyaanData> ListOfmPertanyaanData;
+    private List<mListJawabanData> ListofmListJawabanData;
+
+    public synchronized List<mParentData> getListOfmParentData() {
+        return ListOfmParentData;
+    }
+
+    public synchronized void setListOfmParentData(List<mParentData> listOfmParentData) {
+        ListOfmParentData = listOfmParentData;
+    }
+
+    public synchronized List<mKategoriData> getListOfmKategoriData() {
+        return ListOfmKategoriData;
+    }
+
+    public synchronized void setListOfmKategoriData(List<mKategoriData> listOfmKategoriData) {
+        ListOfmKategoriData = listOfmKategoriData;
+    }
+
+    public synchronized List<mTypePertanyaanData> getListOfmTypePertanyaanData() {
+        return ListOfmTypePertanyaanData;
+    }
+
+    public synchronized void setListOfmTypePertanyaanData(List<mTypePertanyaanData> listOfmTypePertanyaanData) {
+        ListOfmTypePertanyaanData = listOfmTypePertanyaanData;
+    }
+
+    public synchronized List<mPertanyaanData> getListOfmPertanyaanData() {
+        return ListOfmPertanyaanData;
+    }
+
+    public synchronized void setListOfmPertanyaanData(List<mPertanyaanData> listOfmPertanyaanData) {
+        ListOfmPertanyaanData = listOfmPertanyaanData;
+    }
+
+    public synchronized List<mListJawabanData> getListofmListJawabanData() {
+        return ListofmListJawabanData;
+    }
+
+    public synchronized void setListofmListJawabanData(List<mListJawabanData> listofmListJawabanData) {
+        ListofmListJawabanData = listofmListJawabanData;
+    }
 
     public List<tCustomerBasedMobileHeaderData> get_ListOftCustomerBasedMobileHeaderData() {
         return _ListOftCustomerBasedMobileHeaderData;
