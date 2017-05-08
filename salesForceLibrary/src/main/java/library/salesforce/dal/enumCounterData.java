@@ -10,8 +10,8 @@ public enum enumCounterData {
 	 DatePartNow (7),
 	 PeriodeNow (8),
 	 NoPenguaran (9),
-	 NoPurchaseOrder (10),
-	 NoQuantityStock (11),
+	 NoQuantityStock (10),
+	 NoPurchaseOrder (11),
 	 dtPushKBN (12),
 	 CustomerBase (13)
 	 ; 
