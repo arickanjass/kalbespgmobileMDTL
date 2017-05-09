@@ -186,7 +186,7 @@ public class tSalesProductQuantityHeaderBL extends clsMainBL {
             int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
             if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)){
                 mCounterNumberData data = new mCounterNumberData();
-                data.set_intId(enumCounterData.NoPurchaseOrder.getidCounterData());
+                data.set_intId(enumCounterData.NoQuantityStock.getidCounterData());
                 data.set_txtDeskripsi((String) innerObj.get("_pstrMethodRequest"));
                 data.set_txtName((String) innerObj.get("_pstrMethodRequest"));
                 data.set_txtValue((String) innerObj.get("_pstrArgument"));
