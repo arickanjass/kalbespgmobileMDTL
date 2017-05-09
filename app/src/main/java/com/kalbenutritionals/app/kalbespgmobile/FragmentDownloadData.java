@@ -53,6 +53,7 @@ import bl.tLeaveMobileBL;
 import bl.tPurchaseOrderDetailBL;
 import bl.tPurchaseOrderHeaderBL;
 import bl.tSalesProductHeaderBL;
+import bl.tSalesProductQuantityHeaderBL;
 import bl.tUserLoginBL;
 import library.salesforce.common.APIData;
 import library.salesforce.common.clsHelper;
@@ -73,10 +74,15 @@ import library.salesforce.common.tPurchaseOrderDetailData;
 import library.salesforce.common.tPurchaseOrderHeaderData;
 import library.salesforce.common.tSalesProductDetailData;
 import library.salesforce.common.tSalesProductHeaderData;
+import library.salesforce.common.tSalesProductQuantityDetailData;
+import library.salesforce.common.tSalesProductQuantityHeaderData;
+import library.salesforce.common.tSalesProductQuantityImageData;
 import library.salesforce.common.tUserLoginData;
 import library.salesforce.dal.clsHardCode;
 import library.salesforce.dal.tPurchaseOrderDetailDA;
 import library.salesforce.dal.tSalesProductDetailDA;
+import library.salesforce.dal.tSalesProductQuantityDetailDA;
+import library.salesforce.dal.tSalesProductQuantityImageDA;
 import library.salesforce.dal.tUserLoginDA;
 
 public class FragmentDownloadData extends Fragment {
@@ -101,8 +107,8 @@ public class FragmentDownloadData extends Fragment {
     private Button btnCustomerBase;
     private Spinner spnAbsen;
     private Button btnAbsen;
-    private Spinner spnDataLeave, spnDataPO;
-    private Button btnDataLeave, btnDataPO;
+    private Spinner spnDataLeave, spnDataPO, spnDataQuantityStock;
+    private Button btnDataLeave, btnDataPO, btnDataQuantityStock;
 
     private PackageInfo pInfo = null;
     private List<String> arrData;
@@ -139,6 +145,8 @@ public class FragmentDownloadData extends Fragment {
         btnDataLeave = (Button) v.findViewById(R.id.btnDlDataLeave);
         spnDataPO = (Spinner)v.findViewById(R.id.spnDataPO);
         btnDataPO = (Button)v.findViewById(R.id.btnDlDataPO);
+        spnDataQuantityStock = (Spinner)v.findViewById(R.id.spnDataQuantityStock);
+        btnDataQuantityStock = (Button)v.findViewById(R.id.btnDlDataQuantityStock);
 
         loginData = new tUserLoginData();
         loginData = new tUserLoginBL().getUserActive();
@@ -230,6 +238,14 @@ public class FragmentDownloadData extends Fragment {
                 task.execute();
             }
         });
+        btnDataQuantityStock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                intProcesscancel = 0;
+                AsyncCallDataQuantityStock task = new AsyncCallDataQuantityStock();
+                task.execute();
+            }
+        });
 
 
         return v;
@@ -253,6 +269,7 @@ public class FragmentDownloadData extends Fragment {
         List<tAbsenUserData> listtAbsenUserData = new tAbsenUserBL().getAllDataActive();
         List<tLeaveMobileData> listtLeaveData = new tLeaveMobileBL().getData("");
         List<tPurchaseOrderHeaderData> listPurchaseOrderHeaderData = new tPurchaseOrderHeaderBL().getAllPurchaseOrderHeader();
+        List<tSalesProductQuantityHeaderData> listQuantityStockHeaderData = new tSalesProductQuantityHeaderBL().getAllSalesQuantityHeader();
 
         arrData = new ArrayList<String>();
         if (listDataBranch.size() > 0) {
@@ -384,6 +401,19 @@ public class FragmentDownloadData extends Fragment {
             spnDataPO.setAdapter(adapterspn);
             spnDataPO.setEnabled(false);
         }
+        arrData = new ArrayList<String>();
+        if (listQuantityStockHeaderData != null) {
+            for (tSalesProductQuantityHeaderData dt : listQuantityStockHeaderData) {
+                arrData.add(dt.get_txtQuantityStock());
+            }
+            spnDataQuantityStock.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
+            spnDataQuantityStock.setEnabled(true);
+        } else if (listQuantityStockHeaderData == null) {
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<String>(getContext(),
+                    android.R.layout.simple_spinner_item, strip);
+            spnDataQuantityStock.setAdapter(adapterspn);
+            spnDataQuantityStock.setEnabled(false);
+        }
 
         arrData = new ArrayList<String>();
         if (listtAbsenUserData != null) {
@@ -475,6 +505,7 @@ public class FragmentDownloadData extends Fragment {
                 Json = new mProductBrandHeaderBL().DownloadBrandHeader(pInfo.versionName);
                 SaveDatamProductBarcodeData(Json);
                 new tPurchaseOrderHeaderBL().DownloadNOPO(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+                new tSalesProductQuantityHeaderBL().DownloadNOQuantityStock(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
                 Json = new mEmployeeAreaBL().DownloadEmployeeArea2(pInfo.versionName);
                 SaveDatamEmployeeAreaData(Json);
                 Json = new tSalesProductHeaderBL().DownloadReso(pInfo.versionName);
@@ -489,6 +520,12 @@ public class FragmentDownloadData extends Fragment {
                 org.json.simple.JSONObject innerObj_po = (org.json.simple.JSONObject) j.next();
                 int boolValid_po = Integer.valueOf(String.valueOf(innerObj_po.get("_pboolValid")));
                 if(boolValid_po == 1) SaveDatatPurchaseOrderData(Json);
+
+                Json = new tSalesProductQuantityHeaderBL().DownloadTransactionQuantityStock(pInfo.versionName);
+                Iterator k = Json.iterator();
+                org.json.simple.JSONObject innerObj_quantityStock = (org.json.simple.JSONObject) k.next();
+                int boolValid_quantityStock = Integer.valueOf(String.valueOf(innerObj_quantityStock.get("_pboolValid")));
+                if (boolValid_quantityStock == 1) SaveDatatSalesProductQuantityData(Json);
 
                 Json = new tActivityBL().DownloadActivity(pInfo.versionName);
                 SaveDatatActivityData(Json);
@@ -1397,6 +1434,65 @@ public class FragmentDownloadData extends Fragment {
             dialog.dismiss();
         }
     }
+
+    private class AsyncCallDataQuantityStock extends AsyncTask<JSONArray, Void, JSONArray> {
+        @Override
+        protected JSONArray doInBackground(JSONArray... params) {
+            JSONArray Json = null;
+            try {
+                Json = new tSalesProductQuantityHeaderBL().DownloadTransactionQuantityStock(pInfo.versionName);
+//                new tSalesProductQuantityHeaderBL().DownloadNOQuantityStock(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return Json;
+        }
+        private ProgressDialog dialog = new ProgressDialog(getContext());
+
+        @Override
+        protected void onCancelled() {
+            dialog.dismiss();
+            new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessCancelRequest, false);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog.setMessage("Getting Data Quantity Stock");
+            dialog.setCancelable(false);
+            dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    intProcesscancel = 1;
+                }
+            });
+            dialog.show();
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray jsonArray) {
+            if (jsonArray != null && jsonArray.size() > 0){
+                arrData = SaveDatatSalesProductQuantityData(jsonArray);
+                loadData();
+                new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
+            } else {
+                if (intProcesscancel == 1){
+                    onCancelled();
+                } else {
+                    new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
+                }
+            }
+            checkingDataTable();
+            dialog.dismiss();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+            dialog.dismiss();
+        }
+    }
+
     private class AsyncCallDataLeave extends AsyncTask<JSONArray, Void, JSONArray> {
         @Override
         protected JSONArray doInBackground(JSONArray... params) {
@@ -1851,6 +1947,95 @@ public class FragmentDownloadData extends Fragment {
                     new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
                 }
             }catch (ParseException e){
+                e.printStackTrace();
+            }
+        }
+        return _array;
+    }
+
+    private List<String> SaveDatatSalesProductQuantityData(JSONArray jsonArray){
+        List<String> _array;
+        APIData dtAPIDATA = new APIData();
+        _array = new ArrayList<>();
+        Iterator i = jsonArray.iterator();
+        Boolean flag = true;
+        String ErrorMess = "";
+        List<tSalesProductQuantityHeaderData> listDataHeader = new ArrayList<>();
+        while (i.hasNext()){
+            JSONObject innerObj = (JSONObject) i.next();
+            try {
+                JSONArray jsonArray_header = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListtSalesProductQuantityHeader_mobile")));
+                if (jsonArray_header != null) {
+                    Iterator j = jsonArray_header.iterator();
+                    while (j.hasNext()){
+                        tSalesProductQuantityHeaderData _data = new tSalesProductQuantityHeaderData();
+                        JSONObject innerObj_header = (JSONObject) j.next();
+                        _data.set_intId(String.valueOf(innerObj_header.get("txtDataId")));
+                        _data.set_txtQuantityStock(String.valueOf(innerObj_header.get("TxtNoQuantityStock")));
+                        _data.set_dtDate(String.valueOf(innerObj_header.get("DtDate")));
+                        _data.set_OutletCode(String.valueOf(innerObj_header.get("TxtOutletCode")));
+                        _data.set_OutletName(String.valueOf(innerObj_header.get("TxtOutletName")));
+                        _data.set_txtKeterangan(String.valueOf(innerObj_header.get("TxtKeterangan")));
+                        _data.set_intSumItem(String.valueOf(innerObj_header.get("IntSumItem")));
+                        _data.set_intSumAmount(String.valueOf(innerObj_header.get("IntSumAmount")));
+                        _data.set_UserId(String.valueOf(innerObj_header.get("TxtUserId")));
+                        _data.set_txtBranchCode(String.valueOf(innerObj_header.get("TxtBranchCode")));
+                        _data.set_txtBranchName(String.valueOf(innerObj_header.get("TxtBranchName")));
+                        _data.set_intIdAbsenUser(String.valueOf(innerObj_header.get("IntIdAbsenUser")));
+                        _data.set_txtRoleId(String.valueOf(innerObj_header.get("TxtRoleId")));
+                        _data.set_txtNIK(String.valueOf(innerObj_header.get("TxtNIK")));
+                        _data.set_intSubmit("1");
+                        _data.set_intSync("1");
+                        new tSalesProductQuantityHeaderBL().SaveData(_data);
+                    }
+
+                    JSONArray jsonArray_Detail = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListtSalesProductQuantityDetail_mobile")));
+                    Iterator k = jsonArray_Detail.iterator();
+                    clsMainBL _clsMainBL = new clsMainBL();
+                    SQLiteDatabase _db = _clsMainBL.getDb();
+                    while (k.hasNext()) {
+                        tSalesProductQuantityDetailData _data = new tSalesProductQuantityDetailData();
+                        JSONObject innerObj_detail = (JSONObject) k.next();
+                        _data.setIntId(String.valueOf(innerObj_detail.get("TxtTrSalesProductQuantityDetail")));
+                        _data.set_txtQuantityStock(String.valueOf(innerObj_detail.get("TxtNoQuantityStock")));
+                        _data.set_dtDate(String.valueOf(innerObj_detail.get("DtDate")));
+                        _data.set_intPrice(String.valueOf(innerObj_detail.get("IntPrice")));
+                        _data.set_txtCodeProduct(String.valueOf(innerObj_detail.get("TxtCodeProduct")));
+                        _data.set_txtKeterangan(String.valueOf(innerObj_detail.get("TxtKeterangan")));
+                        _data.setTxtProduct(String.valueOf(innerObj_detail.get("TxtProduct")));
+                        _data.setTxtExpireDate(String.valueOf(innerObj_detail.get("TxtExpireDate")));
+                        _data.setTxtQuantity(String.valueOf(innerObj_detail.get("TxtQuantity")));
+                        _data.set_intTotal(String.valueOf(innerObj_detail.get("IntTotal")));
+                        _data.set_txtNIK(String.valueOf(innerObj_detail.get("TxtUserId")));
+                        new tSalesProductQuantityDetailDA(_db).SaveDatatSalesProductQuantityDetailData(_db, _data);
+                    }
+
+                    JSONArray jsonArray_Image = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListtSalesProductQuantityImage_mobile")));
+                    Iterator l = jsonArray_Image.iterator();
+                    clsMainBL _clsMainBL_image = new clsMainBL();
+                    SQLiteDatabase _db_image = _clsMainBL_image.getDb();
+                    while (l.hasNext()) {
+                        tSalesProductQuantityImageData _data = new tSalesProductQuantityImageData();
+                        JSONObject innerObj_image = (JSONObject) l.next();
+                        _data.set_txtId(String.valueOf(innerObj_image.get("TxtTrSalesProductQuantityImage")));
+                        _data.set_txtHeaderId(String.valueOf(innerObj_image.get("TxtQuantityStock")));
+                        _data.set_intPosition(String.valueOf(innerObj_image.get("IntPosition")));
+                        _data.set_txtType(String.valueOf(innerObj_image.get("TxtType")));
+
+                        String url = String.valueOf(innerObj_image.get("TxtImage"));
+
+                        byte[] logoImage = getLogoImage(url);
+
+                        if (logoImage != null) {
+                            _data.set_txtImage(logoImage);
+                        }
+
+                        new tSalesProductQuantityImageDA(_db_image).SaveDataImage(_db_image, _data);
+                    }
+                } else {
+                    new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
+                }
+            } catch (ParseException e){
                 e.printStackTrace();
             }
         }
