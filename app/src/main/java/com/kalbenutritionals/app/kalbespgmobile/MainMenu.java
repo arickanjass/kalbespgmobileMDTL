@@ -406,7 +406,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                         selectedId = 99;
                         return true;
 
-                    case R.id.VP:
+                    /*case R.id.VP:
                         toolbar.setTitle("Visit Plan");
                         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                         FragmentVisitPlan fragmentVP = new FragmentVisitPlan();
@@ -414,7 +414,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                         fragmentTransactionVP.replace(R.id.frame, fragmentVP);
                         fragmentTransactionVP.commit();
                         selectedId = 99;
-                        return true;
+                        return true;*/
 //                    case R.id.information:z
 //                        toolbar.setTitle("Information");
 //
