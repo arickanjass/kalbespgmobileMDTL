@@ -20,12 +20,12 @@
         android:checkableBehavior="single"
         android:id="@+id/groupListMenu1">
 
-        <item
-            android:id="@+id/quantityStock"
-            android:checked="false"
-            android:orderInCategory="1"
-            android:title="Quantity Stock"
-            android:icon="@drawable/ic_looks_one_black"/>
+        <!--<item-->
+            <!--android:id="@+id/quantityStock"-->
+            <!--android:checked="false"-->
+            <!--android:orderInCategory="1"-->
+            <!--android:title="Quantity Stock"-->
+            <!--android:icon="@drawable/ic_looks_one_black"/>-->
 
     </group>
     <group
