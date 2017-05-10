@@ -323,7 +323,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         final EditText editTextQty = (EditText) promptView.findViewById(R.id.editTextQty);
         final Spinner spnKalbeProduct = (Spinner) promptView.findViewById(R.id.spnProductQuantity);
         final DatePicker dp = (DatePicker) promptView.findViewById(R.id.dp_expire_date);
-
+        final EditText editTextKeterangan = (EditText) promptView.findViewById(R.id.editTextKeterangan);
 
         List<tSalesProductQuantityDetailData> dataProduct = null;
 
@@ -331,12 +331,12 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         List<mEmployeeSalesProductData> listDataProductKalbe = new mEmployeeSalesProductBL().GetAllData();
         modelItems = new ArrayList<>();
 
-        editTextQty.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                editTextQty.setText("");
-            }
-        });
+//        editTextQty.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View view, boolean b) {
+//                editTextQty.setText("");
+//            }
+//        });
 
         // add product to spinner spnProductQuantity
         if (listDataProductKalbe.size() > 0) {
@@ -407,10 +407,15 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                                         final String expireDate = year + "-" + month + "-" + day;
 
                                         String qtyProduct = null;
+                                        String keterangan;
                                         qtyProduct = editTextQty.getText().toString();
+                                        keterangan = editTextKeterangan.getText().toString();
 
                                         if (qtyProduct.length() == 0){
                                             qtyProduct = "0";
+                                        }
+                                        if (keterangan.length()==0){
+                                            keterangan = "";
                                         }
 
                                         tSalesProductQuantityDetailData data = new tSalesProductQuantityDetailData();
@@ -423,7 +428,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                                         data.set_txtQuantityStock(tv_noQuantityStock.getText().toString());
                                         data.set_dtDate(dateFormat.format(cal.getTime()));
                                         data.set_txtCodeProduct(HMProduct.get(selectedOneKNProduct));
-                                        data.set_txtKeterangan(edKeterangan.getText().toString());
+                                        data.set_txtKeterangan(keterangan);
                                         data.setTxtProduct(selectedOneKNProduct);
                                         data.setTxtExpireDate(expireDate);
                                         data.setTxtQuantity(qtyProduct);
@@ -437,7 +442,6 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
 
                                         new tSalesProductQuantityDetailBL().saveData(data);
 //                                        new tSalesProductQuantityDetailDA(_db).SaveDatatSalesProductQuantityDetailData(_db, data);
-                                        editTextQty.setText("");
 
                                         dialog.dismiss();
                                         TableProduct();
