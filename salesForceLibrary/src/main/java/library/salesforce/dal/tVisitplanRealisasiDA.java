@@ -132,39 +132,39 @@ public class tVisitPlanRealisasiDA {
 //        if ()
         dataSql = getDataByDataIDRealisasi(db,data.get_txtDataIDRealisasi());
         if (dataSql.get_txtDataIDRealisasi()!=null){
-                if (!dataSql.get_dtDateRealisasi().toString().equals("null")){
-                    data.set_dtDateRealisasi(dataSql.get_dtDateRealisasi().toString());
-                }
-                if(!dataSql.get_dtDateRealisasiDevice().toString().equals("null")){
-                    data.set_dtDateRealisasiDevice(dataSql.get_dtDateRealisasiDevice().toString());
-                }
-                if(!dataSql.get_txtDescReply().toString().equals("null")){
-                    data.set_txtDescReply(dataSql.get_txtDescReply().toString());
-                }
-                if(dataSql.get_dtPhoto1()!= null){
-                    data.set_dtPhoto1(dataSql.get_dtPhoto1());
-                }
-                if(!dataSql.get_dtPhoto2().toString().equals("null")){
-                    data.set_dtPhoto2(dataSql.get_dtPhoto2());
-                }
-                if(!dataSql.get_txtLong().toString().equals("null")){
-                    data.set_txtLong(dataSql.get_txtLong().toString());
-                }
-                if(!dataSql.get_txtLat().toString().equals("null")){
-                    data.set_txtLat(dataSql.get_txtLat().toString());
-                }
-                if(!dataSql.get_intDistance().toString().equals("null")){
-                    data.set_intDistance(dataSql.get_intDistance().toString());
-                }
-                if(!dataSql.get_txtRoleId().toString().equals("null")){
-                    data.set_txtRoleId(dataSql.get_txtRoleId().toString());
-                }
-                if(!dataSql.get_intSubmit().toString().equals("null")){
-                    data.set_intSubmit(dataSql.get_intSubmit().toString());
-                }
-                if(!dataSql.get_intPush().toString().equals("null")){
-                    data.set_intPush(dataSql.get_intPush().toString());
-                }
+            if (!dataSql.get_dtDateRealisasi().toString().equals("null")){
+                data.set_dtDateRealisasi(dataSql.get_dtDateRealisasi().toString());
+            }
+            if(!dataSql.get_dtDateRealisasiDevice().toString().equals("null")){
+                data.set_dtDateRealisasiDevice(dataSql.get_dtDateRealisasiDevice().toString());
+            }
+            if(!dataSql.get_txtDescReply().toString().equals("null")){
+                data.set_txtDescReply(dataSql.get_txtDescReply().toString());
+            }
+            if(dataSql.get_dtPhoto1()!= null){
+                data.set_dtPhoto1(dataSql.get_dtPhoto1());
+            }
+            if(!dataSql.get_dtPhoto2().toString().equals("null")){
+                data.set_dtPhoto2(dataSql.get_dtPhoto2());
+            }
+            if(!dataSql.get_txtLong().toString().equals("null")){
+                data.set_txtLong(dataSql.get_txtLong().toString());
+            }
+            if(!dataSql.get_txtLat().toString().equals("null")){
+                data.set_txtLat(dataSql.get_txtLat().toString());
+            }
+            if(!dataSql.get_intDistance().toString().equals("null")){
+                data.set_intDistance(dataSql.get_intDistance().toString());
+            }
+            if(!dataSql.get_txtRoleId().toString().equals("null")){
+                data.set_txtRoleId(dataSql.get_txtRoleId().toString());
+            }
+            if(!dataSql.get_intSubmit().toString().equals("null")){
+                data.set_intSubmit(dataSql.get_intSubmit().toString());
+            }
+            if(!dataSql.get_intPush().toString().equals("null")){
+                data.set_intPush(dataSql.get_intPush().toString());
+            }
 
         }
 
