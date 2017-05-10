@@ -187,7 +187,12 @@ public class clsHardCode  {
 	public String txtMessSuccessDownload = "Success Download";
 	public String txtMessUnableToConnect = "Unable To Connect";
 	public String txtTokenAPI = "129195202189197196195202189175";
-	
+	public String txtTable_mCategoryVisitPlan = "mCategoryVisitPlan";
+	public String txtTable_tVisitPlanHeader_Mobile="tVisitPlanHeader_Mobile";
+	public String txtTable_tVisitplanRealisasi="tVisitplanRealisasi";
+	public String txtMessGetVisitPLan = "Getting Visit Plan";
+	public String txtMessGetVisitPlanTr = "Getting Visit Plan Transaction";
+
 	public String intSuccess = "1";
 	public String intFailed = "0";	
 	

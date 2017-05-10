@@ -30,6 +30,7 @@ import java.util.UUID;
 
 import library.salesforce.dal.clsHardCode;
 import library.salesforce.dal.enumConfigData;
+import library.salesforce.dal.mCategoryVisitPlanDA;
 import library.salesforce.dal.mCounterNumberDA;
 import library.salesforce.dal.mEmployeeAreaDA;
 import library.salesforce.dal.mEmployeeBranchDA;
@@ -63,10 +64,12 @@ import library.salesforce.dal.tPurchaseOrderDetailDA;
 import library.salesforce.dal.tPurchaseOrderHeaderDA;
 import library.salesforce.dal.tSalesProductDetailDA;
 import library.salesforce.dal.tSalesProductHeaderDA;
-import library.salesforce.dal.tSalesProductQuantityHeaderDA;
 import library.salesforce.dal.tSalesProductQuantityDetailDA;
+import library.salesforce.dal.tSalesProductQuantityHeaderDA;
 import library.salesforce.dal.tSalesProductQuantityImageDA;
 import library.salesforce.dal.tUserLoginDA;
+import library.salesforce.dal.tVisitPlanHeader_MobileDA;
+import library.salesforce.dal.tVisitPlanRealisasiDA;
 
 public class clsHelper {
 	public void InitlizeDB(){
@@ -259,7 +262,10 @@ public class clsHelper {
 		mListJawabanDA _mListJawabanDA = new mListJawabanDA(db);
 		mPertanyaanDA _mPertanyaanDA = new mPertanyaanDA(db);
 		tJawabanUserDA _tJawabanUserDA = new tJawabanUserDA(db);
+		mCategoryVisitPlanDA _mMCategoryVisitPlanDA = new mCategoryVisitPlanDA(db);
 
+		tVisitPlanHeader_MobileDA _tVisitPlanHeader_mobileDA = new tVisitPlanHeader_MobileDA(db);
+		tVisitPlanRealisasiDA _tVisitPlanRealisasiDA = new tVisitPlanRealisasiDA(db);
 		mProductCompetitorDA _mProductCompetitorDA = new mProductCompetitorDA(db);
 		mTypeSubmissionMobileDA _mTypeSubmissionMobileDA = new mTypeSubmissionMobileDA(db);
 		tSalesProductQuantityHeaderDA _tSalesProductQuantityDA = new tSalesProductQuantityHeaderDA(db);
@@ -270,7 +276,9 @@ public class clsHelper {
 		tCustomerBasedMobileDetailProductDA _tCustomerBasedMobileDetailProductDA = new tCustomerBasedMobileDetailProductDA(db);
 		_tDisplayPictureDA = new tDisplayPictureDA(db);
 
-
+		_mMCategoryVisitPlanDA.DropTable(db);
+		_tVisitPlanHeader_mobileDA.DropTable(db);
+		_tVisitPlanRealisasiDA.DropTable(db);
 		//_tDisplayPictureDA.DropTable(db);
 		_mProductCompetitorDA.DropTable(db);
 		_mTypeSubmissionMobileDA.DropTable(db);
@@ -308,6 +316,9 @@ public class clsHelper {
 		_mPertanyaanDA.DropTable(db);
 		_tJawabanUserDA.DropTable(db);
 
+		_mMCategoryVisitPlanDA = new mCategoryVisitPlanDA(db);
+		_tVisitPlanRealisasiDA = new tVisitPlanRealisasiDA(db);
+		_tVisitPlanHeader_mobileDA = new tVisitPlanHeader_MobileDA(db);
 		_mProductCompetitorDA = new mProductCompetitorDA(db);
 		_mTypeSubmissionMobileDA = new mTypeSubmissionMobileDA(db);
 		_tSalesProductQuantityDA = new tSalesProductQuantityHeaderDA(db);

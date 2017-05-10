@@ -421,6 +421,75 @@
                 android:text="Download Leave" />
 
             <View
+                android:id="@+id/viewVisitPlan"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/btnLeave"
+                android:layout_marginTop="10dp"
+                android:background="#bfbfbf" />
+
+            <TextView
+                android:id="@+id/txtVwVisitPlan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/viewVisitPlan"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Kategori visit plan"
+                android:textColor="#000" />
+
+            <Spinner
+                android:id="@+id/spnVisitPlan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtVwVisitPlan"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/bg_edtext" />
+
+            <Button
+                android:id="@+id/btnVisitPlan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/spnVisitPlan"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/btn_on_click"
+                android:text="Download kategori visit plan" />
+
+            <View
+                android:id="@+id/viewTrVisitPlan"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="#bfbfbf" />
+
+            <TextView
+                android:id="@+id/txtTrVisitPlan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Transaksi visit plan"
+                android:textColor="#000" />
+
+            <Spinner
+                android:id="@+id/spnTrVisitPlan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/bg_edtext" />
+
+            <Button
+                android:id="@+id/btnTrVisitPlan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/btn_on_click"
+                android:text="Download transaksi visit plan" />
+
+
+            <View
                 android:id="@+id/view17"
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"

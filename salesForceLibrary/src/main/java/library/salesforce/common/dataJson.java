@@ -351,6 +351,33 @@ public class dataJson {
                 resJson.put(dttPurchaseOrderDetailData.Property_ListOftPurchaseOrderDetailData, new JSONArray(itemsListJquey));
             }
 
+            if (this.getListOftVisitPlanRealisasiData() != null){
+                List<tVisitPlanRealisasiData> list = getListOftVisitPlanRealisasiData();
+                for (int i = 0; i<= list.size(); i++){
+                    list.get(i).get_intSubmit();
+                }
+
+                tSalesProductQuantityDetailData dttSalesProductQuantityDetailData = new tSalesProductQuantityDetailData();
+                itemsListJquey = new ArrayList<JSONObject>();
+                for (tSalesProductQuantityDetailData data : this.getListOftSalesProductQuantityDetailData()){
+                    JSONObject item = new JSONObject();
+                    item.put(dttSalesProductQuantityDetailData.Property_intId, String.valueOf(data.getIntId()));
+                    item.put(dttSalesProductQuantityDetailData.Property_dtDate, String.valueOf(data.get_dtDate()));
+                    item.put(dttSalesProductQuantityDetailData.Property_intPrice, String.valueOf(data.get_intTotal()));
+                    item.put(dttSalesProductQuantityDetailData.Property_txtQuantity, String.valueOf(data.getTxtExpireDate()));
+                    item.put(dttSalesProductQuantityDetailData.Property_txtCodeProduct, String.valueOf(data.get_intPrice()));
+                    item.put(dttSalesProductQuantityDetailData.Property_txtKeterangan, String.valueOf(data.get_txtCodeProduct()));
+                    item.put(dttSalesProductQuantityDetailData.Property_txtExpireDate, String.valueOf(data.getTxtProduct()));
+                    item.put(dttSalesProductQuantityDetailData.Property_txtProduct, String.valueOf(data.get_txtKeterangan()));
+                    item.put(dttSalesProductQuantityDetailData.Property_txtNIK, String.valueOf(data.get_txtNIK()));
+                    item.put(dttSalesProductQuantityDetailData.Property_intTotal, String.valueOf(data.get_txtQuantityStock()));
+                    item.put(dttSalesProductQuantityDetailData.Property_txtQuantityStock, String.valueOf(data.getTxtQuantity()));
+                    itemsListJquey.add(item);
+                }
+                resJson.put(dttSalesProductQuantityDetailData.Property_ListOftSalesProductQuantityDetailData, new JSONArray(itemsListJquey));
+            }
+
+
             if (this.getListOftSalesProductQuantityDetailData() != null){
                 tSalesProductQuantityDetailData dttSalesProductQuantityDetailData = new tSalesProductQuantityDetailData();
                 itemsListJquey = new ArrayList<JSONObject>();
@@ -870,6 +897,8 @@ public class dataJson {
     private List<tCustomerBasedMobileHeaderData> ListOftCustomerBasedMobileHeaderData;
     private List<tCustomerBasedMobileDetailData> ListOftCustomerBasedMobileDetailData;
     private List<tCustomerBasedMobileDetailProductData> ListOftCustomerBasedMobileDetailProductData;
+    private List<tVisitPlanHeader_MobileData> ListOftVisitPlanHeader_MobileData;
+    private List<tVisitPlanRealisasiData> ListOftVisitPlanRealisasiData;
 
     private List<mEmployeeAreaData> ListOfmEmployeeAreaData;
     private List<mEmployeeBranchData> ListOfmEmployeeBranchData;
@@ -999,5 +1028,17 @@ public class dataJson {
 
     public void setListOftCustomerBasedMobileDetailProductData(List<tCustomerBasedMobileDetailProductData> listOftCustomerBasedMobileDetailProductData) {
         ListOftCustomerBasedMobileDetailProductData = listOftCustomerBasedMobileDetailProductData;
+    }
+    public List<tVisitPlanHeader_MobileData> getListOftVisitPlanHeader_MobileData(){
+        return ListOftVisitPlanHeader_MobileData;
+    }
+    public void setListOftVisitPlanHeader_MobileData(List<tVisitPlanHeader_MobileData> listOftVisitPlanHeader_MobileData){
+        ListOftVisitPlanHeader_MobileData = listOftVisitPlanHeader_MobileData;
+    }
+    public List<tVisitPlanRealisasiData> getListOftVisitPlanRealisasiData(){
+        return ListOftVisitPlanRealisasiData;
+    }
+    public void setListOftVisitPlanRealisasiData(List<tVisitPlanRealisasiData> listOftVisitPlanRealisasiData){
+        ListOftVisitPlanRealisasiData = listOftVisitPlanRealisasiData;
     }
 }
