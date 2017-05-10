@@ -76,7 +76,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:id="@+id/editTextQty"
-                android:text="0"
+                android:hint="0"
                 android:inputType="number"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="100dp"
@@ -96,6 +96,33 @@
             android:layout_height="1dp"
             android:layout_marginTop="10dp"
             android:background="#bfbfbf" />
+
+    <TextView
+        android:id="@+id/txtKeterangan_popup"
+        android:layout_below="@+id/editTextQty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:textColor="#000"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextKeterangan"
+        android:hint="* optional"
+        android:inputType="text"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/bg_edtext" />
+
+    <View
+        android:id="@+id/view4"
+        android:layout_below="@+id/editTextKeterangan"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#bfbfbf" />
 
 
 </LinearLayout>
