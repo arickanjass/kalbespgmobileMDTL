@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -38,6 +40,7 @@ import java.util.List;
 
 import bl.clsMainBL;
 import bl.mCategoryVisitPlanBL;
+import bl.mDownloadMasterData_mobileBL;
 import bl.mEmployeeAreaBL;
 import bl.mEmployeeBranchBL;
 import bl.mEmployeeSalesProductBL;
@@ -61,6 +64,7 @@ import library.salesforce.common.APIData;
 import library.salesforce.common.clsHelper;
 import library.salesforce.common.dataJson;
 import library.salesforce.common.mCategoryVisitPlanData;
+import library.salesforce.common.mDownloadMasterData_mobileData;
 import library.salesforce.common.mEmployeeAreaData;
 import library.salesforce.common.mEmployeeBranchData;
 import library.salesforce.common.mEmployeeSalesProductData;
@@ -115,6 +119,7 @@ public class FragmentDownloadData extends Fragment {
     private Button btnAbsen;
     private Spinner spnDataLeave, spnDataPO, spnDataQuantityStock;
     private Button btnDataLeave, btnDataPO, btnDataQuantityStock;
+    private LinearLayout ll_branch, ll_outlet, ll_product, ll_brand, ll_type_leave, ll_reso, ll_activity, ll_customerbased, ll_absen, ll_purchase_order, ll_data_leave;
 
     private PackageInfo pInfo = null;
     private List<String> arrData;
@@ -154,6 +159,18 @@ public class FragmentDownloadData extends Fragment {
         spnDataQuantityStock = (Spinner)v.findViewById(R.id.spnDataQuantityStock);
         btnDataQuantityStock = (Button)v.findViewById(R.id.btnDlDataQuantityStock);
 
+        ll_branch = (LinearLayout) v.findViewById(R.id.ll_branch);
+        ll_outlet = (LinearLayout) v.findViewById(R.id.ll_outlet);
+        ll_product = (LinearLayout) v.findViewById(R.id.ll_product);
+        ll_brand = (LinearLayout) v.findViewById(R.id.ll_brand);
+        ll_type_leave = (LinearLayout) v.findViewById(R.id.ll_type_leave);
+        ll_reso = (LinearLayout) v.findViewById(R.id.ll_reso);
+        ll_activity = (LinearLayout) v.findViewById(R.id.ll_activity);
+        ll_customerbased = (LinearLayout) v.findViewById(R.id.ll_customerbased);
+        ll_absen = (LinearLayout) v.findViewById(R.id.ll_absen);
+        ll_purchase_order = (LinearLayout) v.findViewById(R.id.ll_purchase_order);
+        ll_data_leave = (LinearLayout) v.findViewById(R.id.ll_data_leave);
+
         spnVisitPlan = (Spinner) v.findViewById(R.id.spnVisitPlan);
         spnTrVisitPlan = (Spinner) v.findViewById(R.id.spnTrVisitPlan);
 
@@ -163,6 +180,41 @@ public class FragmentDownloadData extends Fragment {
 
         loginData = new tUserLoginData();
         loginData = new tUserLoginBL().getUserActive();
+
+        List<mDownloadMasterData_mobileData> mDownloadMasterData_mobileDataList = new ArrayList<>();
+
+        mDownloadMasterData_mobileDataList = new mDownloadMasterData_mobileBL().GetAllData();
+
+        Resources res = getResources();
+
+        for(mDownloadMasterData_mobileData data : mDownloadMasterData_mobileDataList){
+            String txt_id = data.get_txtMasterData().replaceAll(" ","");
+
+            if(txt_id.equals(res.getResourceEntryName(ll_branch.getId()))){
+                ll_branch.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_outlet.getId()))){
+                ll_outlet.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_product.getId()))){
+                ll_product.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_brand.getId()))){
+                ll_brand.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_type_leave.getId()))){
+                ll_type_leave.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_reso.getId()))){
+                ll_reso.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_activity.getId()))){
+                ll_activity.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_customerbased.getId()))){
+                ll_customerbased.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_absen.getId()))){
+                ll_absen.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_purchase_order.getId()))){
+                ll_purchase_order.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_data_leave.getId()))){
+                ll_data_leave.setVisibility(View.VISIBLE);
+            }
+        }
+
 
         loadData();
 
@@ -546,7 +598,7 @@ public class FragmentDownloadData extends Fragment {
 
     }
 
-    private class AsyncCallDownloadAll extends AsyncTask<JSONArray, Void, List<dataJson>> {
+    private class  AsyncCallDownloadAll extends AsyncTask<JSONArray, Void, List<dataJson>> {
         @Override
         protected List<dataJson> doInBackground(JSONArray... params) {
             //android.os.Debug.waitForDebugger();
@@ -556,14 +608,22 @@ public class FragmentDownloadData extends Fragment {
             JSONParser parser = new JSONParser();
             try {
                 new mPriceInOutletBL().DownloadmPriceInOutlet(pInfo.versionName);
-                Json = new mEmployeeBranchBL().DownloadEmployeeBranch2(pInfo.versionName);
-                SaveDatamEmployeeBranchData(Json);
-                Json = new mTypeLeaveBL().DownloadTypeLeave2(pInfo.versionName);
-                SaveDatamTypeLeaveMobileData(Json);
-                Json = new mEmployeeSalesProductBL().DownloadEmployeeSalesProduct(pInfo.versionName);
-                SaveDatamProductBarcodeData(Json);
-                Json = new mProductBrandHeaderBL().DownloadBrandHeader(pInfo.versionName);
-                SaveDatamProductBarcodeData(Json);
+                if(ll_branch!=null && ll_branch.getVisibility() == View.VISIBLE){
+                    Json = new mEmployeeBranchBL().DownloadEmployeeBranch2(pInfo.versionName);
+                    SaveDatamEmployeeBranchData(Json);
+                }
+                if(ll_type_leave!=null && ll_type_leave.getVisibility() == View.VISIBLE){
+                    Json = new mTypeLeaveBL().DownloadTypeLeave2(pInfo.versionName);
+                    SaveDatamTypeLeaveMobileData(Json);
+                }
+                if(ll_product!=null && ll_product.getVisibility() == View.VISIBLE){
+                    Json = new mEmployeeSalesProductBL().DownloadEmployeeSalesProduct(pInfo.versionName);
+                    SaveDatamProductBarcodeData(Json);
+                }
+                if(ll_brand!=null && ll_brand.getVisibility() == View.VISIBLE){
+                    Json = new mProductBrandHeaderBL().DownloadBrandHeader(pInfo.versionName);
+                    SaveDatamProductBarcodeData(Json);
+                }
                 Json = new mCategoryVisitPlanBL().DownloadCategoryVisitPlanData(pInfo.versionName);
                 SaveDatamCategoryVisitPlanData(Json);
 
@@ -574,18 +634,21 @@ public class FragmentDownloadData extends Fragment {
                 new tSalesProductQuantityHeaderBL().DownloadNOQuantityStock(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
                 Json = new mEmployeeAreaBL().DownloadEmployeeArea2(pInfo.versionName);
                 SaveDatamEmployeeAreaData(Json);
-                Json = new tSalesProductHeaderBL().DownloadReso(pInfo.versionName);
+                if(ll_reso!=null && ll_reso.getVisibility() == View.VISIBLE){
+                    Json = new tSalesProductHeaderBL().DownloadReso(pInfo.versionName);
+                    Iterator i = Json.iterator();
+                    org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
+                    int boolValid = Integer.valueOf(String.valueOf(innerObj.get("_pboolValid")));
+                    if(boolValid == 1) SaveDatatSalesProductData(Json);
+                }
 
-                Iterator i = Json.iterator();
-                org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
-                int boolValid = Integer.valueOf(String.valueOf(innerObj.get("_pboolValid")));
-                if(boolValid == 1) SaveDatatSalesProductData(Json);
-
-                Json = new tPurchaseOrderHeaderBL().DownloadTransactionPO(pInfo.versionName);
-                Iterator j = Json.iterator();
-                org.json.simple.JSONObject innerObj_po = (org.json.simple.JSONObject) j.next();
-                int boolValid_po = Integer.valueOf(String.valueOf(innerObj_po.get("_pboolValid")));
-                if(boolValid_po == 1) SaveDatatPurchaseOrderData(Json);
+                if(ll_purchase_order!=null && ll_purchase_order.getVisibility() == View.VISIBLE){
+                    Json = new tPurchaseOrderHeaderBL().DownloadTransactionPO(pInfo.versionName);
+                    Iterator j = Json.iterator();
+                    org.json.simple.JSONObject innerObj_po = (org.json.simple.JSONObject) j.next();
+                    int boolValid_po = Integer.valueOf(String.valueOf(innerObj_po.get("_pboolValid")));
+                    if(boolValid_po == 1) SaveDatatPurchaseOrderData(Json);
+                }
 
                 Json = new tSalesProductQuantityHeaderBL().DownloadTransactionQuantityStock(pInfo.versionName);
                 Iterator k = Json.iterator();
@@ -593,14 +656,22 @@ public class FragmentDownloadData extends Fragment {
                 int boolValid_quantityStock = Integer.valueOf(String.valueOf(innerObj_quantityStock.get("_pboolValid")));
                 if (boolValid_quantityStock == 1) SaveDatatSalesProductQuantityData(Json);
 
-                Json = new tActivityBL().DownloadActivity(pInfo.versionName);
-                SaveDatatActivityData(Json);
-                Json = new tCustomerBasedMobileHeaderBL().DownloadCustomerBase(pInfo.versionName);
-                SaveDatatCustomerBasedData(Json);
-                Json = new tAbsenUserBL().DownloadAbsen(pInfo.versionName);
-                SaveDatatAbsenUserData(Json);
-                Json = new tLeaveMobileBL().DownloadDataLeave(pInfo.versionName);
-                SaveDatatLeaveData(Json);
+                if(ll_activity!=null && ll_activity.getVisibility() == View.VISIBLE){
+                    Json = new tActivityBL().DownloadActivity(pInfo.versionName);
+                    SaveDatatActivityData(Json);
+                }
+                if(ll_customerbased!=null && ll_customerbased.getVisibility() == View.VISIBLE){
+                    Json = new tCustomerBasedMobileHeaderBL().DownloadCustomerBase(pInfo.versionName);
+                    SaveDatatCustomerBasedData(Json);
+                }
+                if(ll_absen!=null && ll_absen.getVisibility() == View.VISIBLE){
+                    Json = new tAbsenUserBL().DownloadAbsen(pInfo.versionName);
+                    SaveDatatAbsenUserData(Json);
+                }
+                if(ll_data_leave!=null && ll_data_leave.getVisibility() == View.VISIBLE) {
+                    Json = new tLeaveMobileBL().DownloadDataLeave(pInfo.versionName);
+                    SaveDatatLeaveData(Json);
+                }
 
                 dtdataJson.setIntResult("1");
             } catch (Exception e) {
@@ -2117,7 +2188,7 @@ public class FragmentDownloadData extends Fragment {
         mEmployeeAreaDataList = _mEmployeeAreaBL.GetAllData();
         mProductBrandHeaderDataList = _mProductBrandHeaderBL.GetAllData();
         mTypeLeaveMobileDataList = _mTypeLeaveBL.GetAllData();
- 
+
         List<mEmployeeAreaData> data = _mEmployeeAreaBL.GetAllData();
 
         int validate = 0;

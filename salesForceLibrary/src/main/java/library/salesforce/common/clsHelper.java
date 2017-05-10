@@ -32,6 +32,7 @@ import library.salesforce.dal.clsHardCode;
 import library.salesforce.dal.enumConfigData;
 import library.salesforce.dal.mCategoryVisitPlanDA;
 import library.salesforce.dal.mCounterNumberDA;
+import library.salesforce.dal.mDownloadMasterData_mobileDA;
 import library.salesforce.dal.mEmployeeAreaDA;
 import library.salesforce.dal.mEmployeeBranchDA;
 import library.salesforce.dal.mEmployeeSalesProductDA;
@@ -256,6 +257,7 @@ public class clsHelper {
 		mPriceInOutletDA _mPriceInOutletDA=new mPriceInOutletDA(db);
 		mProductBarcodeDA _mProductBarcodeDA=new mProductBarcodeDA(db);
 		tDisplayPictureDA _tDisplayPictureDA = new tDisplayPictureDA(db);
+		mDownloadMasterData_mobileDA _mDownloadMasterData_mobileDA = new mDownloadMasterData_mobileDA(db);
 		mParentDA _mParentDA = new mParentDA(db);
 		mKategoriDA _mKategoriDA = new mKategoriDA(db);
 		mTypePertanyaanDA _mTypePertanyaanDA = new mTypePertanyaanDA(db);
@@ -280,6 +282,7 @@ public class clsHelper {
 		_tVisitPlanHeader_mobileDA.DropTable(db);
 		_tVisitPlanRealisasiDA.DropTable(db);
 		//_tDisplayPictureDA.DropTable(db);
+		_mDownloadMasterData_mobileDA.DropTable(db);
 		_mProductCompetitorDA.DropTable(db);
 		_mTypeSubmissionMobileDA.DropTable(db);
 		_tSalesProductQuantityDA.Droptable(db);
@@ -328,6 +331,7 @@ public class clsHelper {
 		_tCustomerBasedMobileDetailDA = new tCustomerBasedMobileDetailDA(db);
 		_tCustomerBasedMobileDetailProductDA = new tCustomerBasedMobileDetailProductDA(db);
 		_tDisplayPictureDA = new tDisplayPictureDA(db);
+		_mDownloadMasterData_mobileDA = new mDownloadMasterData_mobileDA(db);
 		_mParentDA = new mParentDA(db);
 		_mKategoriDA = new mKategoriDA(db);
 		_mTypePertanyaanDA = new mTypePertanyaanDA(db);

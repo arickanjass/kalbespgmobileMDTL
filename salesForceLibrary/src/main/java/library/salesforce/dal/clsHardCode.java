@@ -32,6 +32,7 @@ public class clsHardCode  {
 	public String txtTable_mAbsenCheckin = "mAbsenCheckin";
 	public String txtTable_mGeolocationOutletSPG = "mGeolocationOutletSPG";
 	public String txtTable_mUserRole = "mUserRole";
+	public String txtTable_mDownloadMasterData_mobile = "mDownloadMasterData_mobile";
 	public String txtTable_mUserCabang = "mUserCabang";
 	public String txtTable_mEmployeeSalesProduct = "mEmployeeSalesProduct";
 	public String txtTable_mNotification = "mNotification";
@@ -83,13 +84,13 @@ public class clsHardCode  {
 	public String txtTable_mStockAwal="mStockAwal_Mobile";
 	public String txtTable_mReason="mReason_Mobile";
 	public String txtTable_mPriceInOutlet="mPriceInOutlet";
-	
+
 	public String txtStatus_SaveData = "SaveData";
 	public String txtStatus_SaveDataCustomerBase = "SaveDataCustomerBase";
 	public String txtStatus_SaveDataSales = "SaveDataSales";
 	public String txtStatus_SaveDataUserLoginAndMmenu = "SaveDataUserLoginAndMmenu";
 	public String txtStatus_UpdateData = "UpdateData";
-	
+
 	public String txtStatus_TypeDataBB = "BB";
 	public String txtStatus_TypeDataGRN = "GRN";
 	public String txtStatus_TypeDataRESO = "SO";
@@ -100,7 +101,7 @@ public class clsHardCode  {
 	public String txtTable_tCustomerBasedMobileHeader = "tCustomerBasedMobileHeader";
 	public String txtTable_tCustomerBasedMobileDetail = "tCustomerBasedMobileDetail";
 	public String txtTable_tCustomerBasedMobileDetailProduct = "tCustomerBasedMobileDetailProduct";
-	
+
 	public String txtStatus_CheckDataActiveCheckIn = "CheckDataActiveCheckIn";
 	public String txtStatus_CheckOutAbsen = "CheckOutAbsen";
 	public String txtStatus_GetData = "GetData";
@@ -129,7 +130,7 @@ public class clsHardCode  {
 	public String txtStatus_RegisterLoginData = "RegisterLoginData";
 	public String txtStatus_DestroyData = "DestroyData";
 	public String txtStatus_GetDataBrosurWithDetail = "GetDataBrosurWithDetail";
-	
+
 	public String txtMethod_GreetingUser = "GreetingUser";
 	public String txtMethod_SearchData = "SearchData";
 	public String txtMethod_initialize = "initialize";
@@ -194,8 +195,8 @@ public class clsHardCode  {
 	public String txtMessGetVisitPlanTr = "Getting Visit Plan Transaction";
 
 	public String intSuccess = "1";
-	public String intFailed = "0";	
-	
+	public String intFailed = "0";
+
 	public String txtQuery_GetTimesStamp = "select strftime('%s','now');";
 	public String txtQuery_ConvertDateFromTimeStamp = "SELECT datetime(@code@, 'unixepoch', 'localtime');";
 	public String txtStatus_UploadDataimage="UploadDataimage";

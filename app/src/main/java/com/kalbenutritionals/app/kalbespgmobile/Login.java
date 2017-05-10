@@ -52,10 +52,12 @@ import java.util.List;
 import bl.clsHelperBL;
 import bl.clsMainBL;
 import bl.mCounterNumberBL;
+import bl.mDownloadMasterData_mobileBL;
 import bl.mMenuBL;
 import bl.mUserRoleBL;
 import bl.tDeviceInfoUserBL;
 import bl.tUserLoginBL;
+import library.salesforce.common.mDownloadMasterData_mobileData;
 import library.salesforce.common.mMenuData;
 import library.salesforce.common.mUserRoleData;
 import library.salesforce.common.tUserLoginData;
@@ -429,6 +431,24 @@ public class Login extends clsMainActivity {
                             listData.add(data);
                         }
                         new mMenuBL().SaveData(listData);
+
+                        JSONArray JsonArrayDetailmDownloadData=(JSONArray) innerObj.get("ListOftDownloadData_mobile");
+                        Iterator iDetailmDownloadData = JsonArrayDetailmDownloadData.iterator();
+                        List<mDownloadMasterData_mobileData> listDatamDownloadData=new ArrayList<mDownloadMasterData_mobileData>();
+                        while (iDetailmDownloadData.hasNext()) {
+                            JSONObject innerObjDetail = (JSONObject) iDetailmDownloadData.next();
+                            mDownloadMasterData_mobileData data=new mDownloadMasterData_mobileData();
+                            data.set_intId((String) innerObjDetail.get("_intID"));
+                            data.set_intModule((String) innerObjDetail.get("_intModule"));
+                            data.set_txtModuleName((String) innerObjDetail.get("_txtModuleName"));
+                            data.set_txtMasterData((String) innerObjDetail.get("_txtMasterData"));
+                            data.set_intVersionApp((String) innerObjDetail.get("_intVersionApp"));
+                            data.set_txtTypeApp((String) innerObjDetail.get("_txtTypeApp"));
+                            data.set_txtVersion((String) innerObjDetail.get("_txtVersion"));
+                            listDatamDownloadData.add(data);
+                        }
+                        new mDownloadMasterData_mobileBL().SaveData(listDatamDownloadData);
+
                         startService(new Intent(Login.this, MyServiceNative.class));
                         finish();
                         Intent myIntent = new Intent(Login.this, MainMenu.class);

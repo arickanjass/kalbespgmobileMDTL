@@ -107,7 +107,7 @@ public class clsHelperBL extends clsMainBL {
         clsHelper _clsHelper = new clsHelper();
     }
 
-        public org.json.simple.JSONArray callPushDataReturnJson(String versionName, String strJson, HashMap<String, byte[]> ListOfDataFile) throws Exception {
+    public org.json.simple.JSONArray callPushDataReturnJson(String versionName, String strJson, HashMap<String, byte[]> ListOfDataFile) throws Exception {
         SQLiteDatabase _db = getDb();
         Boolean flag = true;
         String ErrorMess = "";
@@ -272,7 +272,7 @@ public class clsHelperBL extends clsMainBL {
             tVisitPlanHeader_MobileDA _tVisitPlanHeader_MobileDA = new tVisitPlanHeader_MobileDA(db);
             tAbsenUserDA _tAbsenUserDA = new tAbsenUserDA(db);
             tActivityDA _tActivityDA = new tActivityDA(db);
-			tLeaveMobileDA _tLeaveMobileDA =new tLeaveMobileDA(db);
+            tLeaveMobileDA _tLeaveMobileDA =new tLeaveMobileDA(db);
             tSalesProductHeaderDA _tSalesProductHeaderDA = new tSalesProductHeaderDA(db);
             tSalesProductDetailDA _tSalesProductDetailDA = new tSalesProductDetailDA(db);
             tPurchaseOrderDetailDA _tPurchaseOrderDetailDA = new tPurchaseOrderDetailDA(db);
@@ -297,7 +297,7 @@ public class clsHelperBL extends clsMainBL {
             List<tSalesProductQuantityHeaderData> ListOfSalesProductQuantityHeader = _tSalesProductQuantityDA.getAllDataToPushData(db);
             List<tSalesProductQuantityDetailData> ListOfSalesProductQuantityDetail = _tSalesProductQuantityDetailDA.getAllDataToPushData(db, ListOfSalesProductQuantityHeader);
             List<tSalesProductQuantityImageData> ListOfSalesProductQuantityImage = _tSalesProductQuantityImageDA.getAllDataToPushData(db, ListOfSalesProductQuantityHeader);
-			List<tLeaveMobileData> ListOftLeaveData=_tLeaveMobileDA.getAllDataPushData(db);
+            List<tLeaveMobileData> ListOftLeaveData=_tLeaveMobileDA.getAllDataPushData(db);
             List<tAbsenUserData> ListOftAbsenUserData = _tAbsenUserDA.getAllDataToPushData(db);
             List<tActivityData> ListOftActivityData = _tActivityDA.getAllDataToPushData(db);
 
@@ -344,9 +344,9 @@ public class clsHelperBL extends clsMainBL {
                 }
             }
 
-			if(ListOftLeaveData!=null){
-				dtPush.setListOftLeaveMobileData(ListOftLeaveData);
-			}
+            if(ListOftLeaveData!=null){
+                dtPush.setListOftLeaveMobileData(ListOftLeaveData);
+            }
 //
             if (ListOfSalesProductHeader != null) {
                 dtPush.setListOftSalesProductHeaderData(ListOfSalesProductHeader);
