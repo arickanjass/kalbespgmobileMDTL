@@ -2,24 +2,32 @@ package bl;
 
 import android.database.sqlite.SQLiteDatabase;
 
+import org.json.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
+import library.salesforce.common.APIData;
 import library.salesforce.common.clsHelper;
 import library.salesforce.common.linkAPI;
+import library.salesforce.common.mCounterNumberData;
 import library.salesforce.common.mconfigData;
+import library.salesforce.common.tDeviceInfoUserData;
 import library.salesforce.common.tSalesProductQuantityHeaderData;
 import library.salesforce.common.tUserLoginData;
 import library.salesforce.dal.clsHardCode;
 import library.salesforce.dal.enumConfigData;
 import library.salesforce.dal.enumCounterData;
+import library.salesforce.dal.mCounterNumberDA;
 import library.salesforce.dal.mconfigDA;
+import library.salesforce.dal.tDeviceInfoUserDA;
 import library.salesforce.dal.tSalesProductQuantityHeaderDA;
 import library.salesforce.dal.tUserLoginDA;
 
@@ -109,7 +117,7 @@ public class tSalesProductQuantityHeaderBL extends clsMainBL {
         return dt ;
     }
 
-    public List<tSalesProductQuantityHeaderData> getDataByNoSO(String id){
+    public List<tSalesProductQuantityHeaderData> getDataByNoQuantityStock(String id){
         SQLiteDatabase _db = getDb();
         List<tSalesProductQuantityHeaderData> dtDetail = new tSalesProductQuantityHeaderDA(_db).getDataByQuantityStock(_db, id);
         _db.close();
@@ -142,54 +150,91 @@ public class tSalesProductQuantityHeaderBL extends clsMainBL {
         String mm = split[1];
         String dd = split[2];
 
-        String txtNoSoCode = new mCounterNumberBL().getData(enumCounterData.NoDataSO);
+        String txtNoQuantityStockCode = new mCounterNumberBL().getData(enumCounterData.NoQuantityStock);
 
         List<tSalesProductQuantityHeaderData> dttas = getLastData();
         _db.close();
-        String QtyStock = null;
+        String noQuantityStock = null;
     }
 
-    public org.json.simple.JSONArray DownloadQuantity(String versionName) throws Exception{
+    public org.json.simple.JSONArray DownloadNOQuantityStock(String versionName, String txtUserId, String txtEmpId) throws ParseException {
         SQLiteDatabase _db = getDb();
-        tUserLoginDA _tUserLoginDA=new tUserLoginDA(_db);
-        mconfigDA _mconfigDA =new mconfigDA(_db);
-
-        String strVal2="";
-        mconfigData dataAPI = _mconfigDA.getData(db, enumConfigData.ApiKalbe.getidConfigData());
-        strVal2 = dataAPI.get_txtValue();
-        if (dataAPI.get_txtValue() == "") {
-            strVal2 = dataAPI.get_txtDefaultValue();
-        }
-
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date();
-        String datenow = dateFormat.format(date);
-
-        //ambil version dari webservices
-        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(db, 1);
-        clsHelper _help =new clsHelper();
-        linkAPI dtlinkAPI=new linkAPI();
-        String txtMethod="GetDataTransactionQuantity";
-        JSONObject resJson = new JSONObject();
-        dtlinkAPI.set_txtMethod(txtMethod);
-        dtlinkAPI.set_txtParam("|" + _dataUserLogin.get_TxtEmpId() + "|" + datenow);
+        tUserLoginDA  _tUserLoginDA = new tUserLoginDA(_db);
+        mconfigDA _mconfigDA = new mconfigDA(_db);
+        org.json.simple.JSONArray jsonArray = new org.json.simple.JSONArray();
+        // tUserLoginData _dataUserLogin = _tUserLoginDA.getData(db, 1);
+        tDeviceInfoUserData deviceInfoUserData = new tDeviceInfoUserDA(_db).getData(_db, 1);
+        String txtDomain = _mconfigDA.getDomainKalbeData(_db);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("txtUserId", txtUserId);
+        linkAPI dtlinkAPI = new linkAPI();
+        dtlinkAPI.set_txtMethod("GetDataNoQuantityStock");
+        dtlinkAPI.set_txtParam("");
         dtlinkAPI.set_txtToken(new clsHardCode().txtTokenAPI);
         dtlinkAPI.set_txtVesion(versionName);
-
-        String strLinkAPI= dtlinkAPI.QueryString(strVal2);
-        String JsonData= _help.pushtData(strLinkAPI, dtlinkAPI.get_txtParam(), Integer.valueOf(getBackGroundServiceOnline()));
-
-        //String strLinkAPI= dtlinkAPI.QueryString(strVal2);
-        //String JsonData= _help.ResultJsonData(_help.getHTML(strLinkAPI));
-
-        org.json.simple.JSONArray JsonArray= _help.ResultJsonArray(JsonData);
+        String strLinkAPI = dtlinkAPI.QueryString(getLinkAPI());
+        APIData dtAPIDATA = new APIData();
+        clsHelper _clsHelper = new clsHelper();
+        String jsonData = _clsHelper.pushtData(strLinkAPI, String.valueOf(jsonObject), Integer.valueOf(getBackGroundServiceOnline()));
+        jsonArray = _clsHelper.ResultJsonArray(jsonData);
+        Iterator iterator = jsonArray.iterator();
+        Boolean flag = true;
+        String ErrorMess = "";
+        mCounterNumberDA _mCounterNumberDA = new mCounterNumberDA(_db);
+        while (iterator.hasNext()){
+            JSONObject innerObj = (JSONObject)iterator.next();
+            int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
+            if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)){
+                mCounterNumberData data = new mCounterNumberData();
+                data.set_intId(enumCounterData.NoQuantityStock.getidCounterData());
+                data.set_txtDeskripsi((String) innerObj.get("_pstrMethodRequest"));
+                data.set_txtName((String) innerObj.get("_pstrMethodRequest"));
+                data.set_txtValue((String) innerObj.get("_pstrArgument"));
+                _mCounterNumberDA.SaveDataMConfig(db, data);
+            } else {
+                flag = false;
+                ErrorMess = (String) innerObj.get(dtAPIDATA.strMessage);
+                break;
+            }
+        }
         _db.close();
-        return JsonArray;
+        return jsonArray;
+    }
+
+    public org.json.simple.JSONArray DownloadTransactionQuantityStock(String versionName) throws Exception{
+        SQLiteDatabase _db = getDb();
+        tUserLoginDA _tUserLoginDA = new tUserLoginDA(_db);
+        mconfigDA _mconfigDA = new mconfigDA(_db);
+        String strVAl2 = "";
+        mconfigData dataApi = _mconfigDA.getData(db, enumConfigData.ApiKalbe.getidConfigData());
+        strVAl2 = dataApi.get_txtValue();
+        if (dataApi.get_txtValue() == ""){
+            strVAl2 = dataApi.get_txtDefaultValue();
+        }
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        String dateNow = dateFormat.format(date);
+
+        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(db, 1);
+        clsHelper _help = new clsHelper();
+        linkAPI dtLinkAPI = new linkAPI();
+        String txtMethod = "GetDataTransactionQuantityStock";
+        JSONObject resJson = new JSONObject();
+        dtLinkAPI.set_txtMethod(txtMethod);
+        dtLinkAPI.set_txtParam("|" + _dataUserLogin.get_TxtEmpId() + "|" + dateNow);
+        dtLinkAPI.set_txtToken(new clsHardCode().txtTokenAPI);
+        dtLinkAPI.set_txtVesion(versionName);
+        String strLinkAPI = dtLinkAPI.QueryString(strVAl2);
+        String JsonData = _help.pushtData(strLinkAPI, dtLinkAPI.get_txtParam(), Integer.valueOf(getBackGroundServiceOnline()));
+        org.json.simple.JSONArray jsonArray = _help.ResultJsonArray(JsonData);
+        _db.close();
+        return jsonArray;
+
     }
 
     public void deleteData(tSalesProductQuantityHeaderData dt) {
         SQLiteDatabase _db=getDb();
-        new tSalesProductQuantityHeaderDA(_db).deleteByNoso(_db, dt.get_txtQuantityStock());
+        new tSalesProductQuantityHeaderDA(_db).deleteByQuantityStock(_db, dt.get_txtQuantityStock());
         _db.close();
     }
 }

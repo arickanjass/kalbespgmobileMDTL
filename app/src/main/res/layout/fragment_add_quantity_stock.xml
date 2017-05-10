@@ -22,7 +22,7 @@
             android:id="@+id/txtQuantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="No SO"
+            android:text="No Quantity Stock"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="10dp"
             android:textColor="#000"/>

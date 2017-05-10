@@ -12,7 +12,7 @@ import org.acra.annotation.ReportsCrashes;
  * Created by XSIS on 17/03/2017.
  */
 @ReportsCrashes(
-        mode = ReportingInteractionMode.DIALOG,
+        mode = ReportingInteractionMode.TOAST,
         resToastText = R.string.crash_toast_text, // optional, displayed as soon as the crash occurs, before collecting data which can take a few seconds
         resDialogText = R.string.crash_dialog_text,
         resDialogIcon = android.R.drawable.ic_dialog_info, //optional. default is a warning sign

@@ -53,7 +53,7 @@ public class tSalesProductQuantityImageData {
     private String _txtType;
 
     public String Property_txtId = "txtId";
-    public String Property_txtHeaderId = "txtHeaderId";
+    public String Property_txtHeaderId = "txtQuantityStock";
     public String Property_txtImage = "txtImage";
     public String Property_intPosition = "intPosition";
     public String Property_txtType = "txtType";

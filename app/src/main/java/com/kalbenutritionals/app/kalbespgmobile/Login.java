@@ -96,6 +96,7 @@ public class Login extends clsMainActivity {
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
+
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -156,10 +157,10 @@ public class Login extends clsMainActivity {
 //        };
 //
 //        RunSplash.schedule(ShowSplash, Delay);
-        TelephonyManager tm = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+        TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         String imeiNumber = tm.getDeviceId();
-        new tDeviceInfoUserBL().SaveInfoDevice("","",imeiNumber);
-        ImageView imgBanner = (ImageView) findViewById(R.id.ivBannerLogin) ;
+        new tDeviceInfoUserBL().SaveInfoDevice("", "", imeiNumber);
+        ImageView imgBanner = (ImageView) findViewById(R.id.ivBannerLogin);
         imgBanner.setAdjustViewBounds(true);
         imgBanner.setScaleType(ImageView.ScaleType.CENTER_CROP);
         txtLoginEmail = (EditText) findViewById(R.id.txtLoginEmail);
@@ -200,9 +201,9 @@ public class Login extends clsMainActivity {
         txtLoginPassword.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(event.getAction()==KeyEvent.ACTION_DOWN){
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
                     if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER ||
-                            keyCode == KeyEvent.KEYCODE_ENTER){
+                            keyCode == KeyEvent.KEYCODE_ENTER) {
                         btnLogin.performClick();
                         return true;
                     }
@@ -226,7 +227,7 @@ public class Login extends clsMainActivity {
 
         txtVersionLogin = (TextView) findViewById(R.id.txtVersionLogin);
         txtVersionLogin.setText(pInfo.versionName);
-        spnRole=(Spinner)findViewById(R.id.spnType);
+        spnRole = (Spinner) findViewById(R.id.spnType);
 
         spnRole.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -242,7 +243,7 @@ public class Login extends clsMainActivity {
         });
 
 
-        spnOutlet=(Spinner)findViewById(R.id.spnOutlet);
+        spnOutlet = (Spinner) findViewById(R.id.spnOutlet);
 
         spnOutlet.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -257,19 +258,19 @@ public class Login extends clsMainActivity {
 
         });
 
-        btnLogin=(Button)findViewById(R.id.buttonLogin);
+        btnLogin = (Button) findViewById(R.id.buttonLogin);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
-                intProcesscancel=0;
-                if(txtLoginEmail.getText().length()==0){
+                intProcesscancel = 0;
+                if (txtLoginEmail.getText().length() == 0) {
                     showCustomToast(Login.this, "Please input username", false);
 
                 } else {
-                    if(spnRole.getCount()==0){
+                    if (spnRole.getCount() == 0) {
                         txtEmail1 = txtLoginEmail.getText().toString();
                         AsyncCallRole task = new AsyncCallRole();
                         task.execute();
-                    }else{
+                    } else {
                         txtEmail1 = txtLoginEmail.getText().toString();
                         txtPassword1 = txtLoginPassword.getText().toString();
                         AsyncCallLogin task = new AsyncCallLogin();
@@ -347,41 +348,44 @@ public class Login extends clsMainActivity {
     }
 
     int intProcesscancel = 0;
+
     private class AsyncCallLogin extends AsyncTask<JSONArray, Void, JSONArray> {
         /*TelephonyManager tm = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
         String imeiNumber2 = tm.getDeviceId();*/
         @Override
         protected JSONArray doInBackground(JSONArray... params) {
 //            android.os.Debug.waitForDebugger();
-            JSONArray Json=null;
+            JSONArray Json = null;
             String nameRole = selectedRole;
             String nameOutlet = selectedOutlet;
             try {
-                Json= new tUserLoginBL().LoginNew(String.valueOf(txtEmail1), String.valueOf(txtPassword1), HMRole.get(nameRole), null, null, HMBranchCode.get(0), pInfo.versionName);
+                Json = new tUserLoginBL().LoginNew(String.valueOf(txtEmail1), String.valueOf(txtPassword1), HMRole.get(nameRole), null, null, HMBranchCode.get(0), pInfo.versionName);
             } catch (ParseException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            return Json ;
+            return Json;
         }
 
         private ProgressDialog Dialog = new ProgressDialog(Login.this);
+
         @Override
         protected void onCancelled() {
             Dialog.dismiss();
             showCustomToast(Login.this, new clsHardCode().txtMessCancelRequest, false);
         }
+
         @Override
         protected void onPostExecute(JSONArray roledata) {
-            if (roledata.size() > 0){
+            if (roledata.size() > 0) {
                 Iterator i = roledata.iterator();
                 while (i.hasNext()) {
                     JSONObject innerObj = (JSONObject) i.next();
-                    Long IntResult=(Long) innerObj.get("_pboolValid");
-                    String PstrMessage=(String) innerObj.get("_pstrMessage");
+                    Long IntResult = (Long) innerObj.get("_pboolValid");
+                    String PstrMessage = (String) innerObj.get("_pstrMessage");
 
-                    if(IntResult == 1){
-                        tUserLoginData _tUserLoginData=new tUserLoginData();
+                    if (IntResult == 1) {
+                        tUserLoginData _tUserLoginData = new tUserLoginData();
                         new mCounterNumberBL().saveDateTimeServer((String) innerObj.get("DatetimeNow"));
                         _tUserLoginData.set_intId(1);
                         _tUserLoginData.set_txtCab((String) innerObj.get("TxtCab"));
@@ -410,12 +414,12 @@ public class Login extends clsMainActivity {
 //                        String nameOutlet = spnOutlet.getSelectedItem().toString();
 //                        new mEmployeeAreaBL().DeleteEmployeeNotInId(HMOutletCode.get(nameOutlet));
 
-                        JSONArray JsonArrayDetail=(JSONArray) innerObj.get("ListOfMWebMenuAPI");
+                        JSONArray JsonArrayDetail = (JSONArray) innerObj.get("ListOfMWebMenuAPI");
                         Iterator iDetail = JsonArrayDetail.iterator();
-                        List<mMenuData> listData=new ArrayList<mMenuData>();
+                        List<mMenuData> listData = new ArrayList<mMenuData>();
                         while (iDetail.hasNext()) {
                             JSONObject innerObjDetail = (JSONObject) iDetail.next();
-                            mMenuData data=new mMenuData();
+                            mMenuData data = new mMenuData();
                             data.set_IntMenuID(String.valueOf((Long) innerObjDetail.get("IntMenuID")));
                             data.set_IntOrder((Long) innerObjDetail.get("IntOrder"));
                             data.set_IntParentID((Long) innerObjDetail.get("IntParentID"));
@@ -430,16 +434,16 @@ public class Login extends clsMainActivity {
                         Intent myIntent = new Intent(Login.this, MainMenu.class);
                         myIntent.putExtra("keyMainMenu", "main_menu");
                         startActivity(myIntent);
-                    }else{
+                    } else {
                         showCustomToast(Login.this, PstrMessage, false);
                         txtLoginPassword.requestFocus();
                     }
                 }
 
-            }else{
-                if(intProcesscancel==1){
+            } else {
+                if (intProcesscancel == 1) {
                     onCancelled();
-                }else{
+                } else {
                     showCustomToast(Login.this, new clsHardCode().txtMessDataNotFound, false);
                     txtLoginEmail.requestFocus();
                 }
@@ -457,7 +461,7 @@ public class Login extends clsMainActivity {
             Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    intProcesscancel=1;
+                    intProcesscancel = 1;
                     txtLoginEmail.requestFocus();
                 }
             });
@@ -520,7 +524,7 @@ public class Login extends clsMainActivity {
             List<mUserRoleData> roledata = new ArrayList<mUserRoleData>();
             try {
                 //EditText txt = (EditText) findViewById(R.id.txtLoginEmail);
-                roledata = new mUserRoleBL().getRoleAndOutlet(txtEmail1, pInfo.versionName);
+                roledata = new mUserRoleBL().getRoleAndOutlet(txtEmail1, pInfo.versionName, getApplicationContext());
 
             } catch (ParseException e) {
                 // TODO Auto-generated catch block
@@ -565,10 +569,15 @@ public class Login extends clsMainActivity {
                 if (intProcesscancel == 1) {
                     onCancelled();
                 } else {
-                    showCustomToast(Login.this, clsHardcode.txtMessNetworkOffline, false);
+                    if (intProcesscancel == 1) {
+                        onCancelled();
+                    } else {
+                        showCustomToast(Login.this, clsHardcode.txtMessNetworkOffline, false);
 
-                    spnRole.setAdapter(null);
-                    spnOutlet.setAdapter(null);
+                        spnRole.setAdapter(null);
+                        spnOutlet.setAdapter(null);
+                        txtLoginEmail.requestFocus();
+                    }
                     txtLoginEmail.requestFocus();
                 }
 
@@ -824,8 +833,7 @@ public class Login extends clsMainActivity {
                 }
             } catch (Exception e) {
                 return e.toString();
-            }
-            finally {
+            } finally {
                 try {
                     if (output != null)
                         output.close();

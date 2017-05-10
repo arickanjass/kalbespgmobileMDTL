@@ -30,10 +30,12 @@ import library.salesforce.common.tPurchaseOrderDetailData;
 import library.salesforce.common.tPurchaseOrderHeaderData;
 import library.salesforce.common.tSalesProductDetailData;
 import library.salesforce.common.tSalesProductHeaderData;
-import library.salesforce.common.tSalesProductQuantityHeaderData;
 import library.salesforce.common.tSalesProductQuantityDetailData;
+import library.salesforce.common.tSalesProductQuantityHeaderData;
 import library.salesforce.common.tSalesProductQuantityImageData;
 import library.salesforce.common.tUserLoginData;
+import library.salesforce.common.tVisitPlanHeader_MobileData;
+import library.salesforce.common.tVisitPlanRealisasiData;
 import library.salesforce.dal.clsHardCode;
 import library.salesforce.dal.enumConfigData;
 import library.salesforce.dal.enumCounterData;
@@ -49,10 +51,12 @@ import library.salesforce.dal.tPurchaseOrderDetailDA;
 import library.salesforce.dal.tPurchaseOrderHeaderDA;
 import library.salesforce.dal.tSalesProductDetailDA;
 import library.salesforce.dal.tSalesProductHeaderDA;
-import library.salesforce.dal.tSalesProductQuantityHeaderDA;
 import library.salesforce.dal.tSalesProductQuantityDetailDA;
+import library.salesforce.dal.tSalesProductQuantityHeaderDA;
 import library.salesforce.dal.tSalesProductQuantityImageDA;
 import library.salesforce.dal.tUserLoginDA;
+import library.salesforce.dal.tVisitPlanHeader_MobileDA;
+import library.salesforce.dal.tVisitPlanRealisasiDA;
 
 //import org.xml.sax.DTDHandler;
 //import com.kalbe.salesforce.TableNotif;
@@ -264,6 +268,8 @@ public class clsHelperBL extends clsMainBL {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
+            tVisitPlanRealisasiDA _tVisitPlanRealisasiDA = new tVisitPlanRealisasiDA(db);
+            tVisitPlanHeader_MobileDA _tVisitPlanHeader_MobileDA = new tVisitPlanHeader_MobileDA(db);
             tAbsenUserDA _tAbsenUserDA = new tAbsenUserDA(db);
             tActivityDA _tActivityDA = new tActivityDA(db);
 			tLeaveMobileDA _tLeaveMobileDA =new tLeaveMobileDA(db);
@@ -278,7 +284,8 @@ public class clsHelperBL extends clsMainBL {
             tCustomerBasedMobileDetailDA _tCustomerBasedMobileDetailDA = new tCustomerBasedMobileDetailDA(db);
             tCustomerBasedMobileDetailProductDA _tCustomerBasedMobileDetailProductDA = new tCustomerBasedMobileDetailProductDA(db);
 
-
+            List<tVisitPlanHeader_MobileData> ListOftVisitPlanHeader_MobileDataHeader = _tVisitPlanHeader_MobileDA.getPushData(db);
+            List<tVisitPlanRealisasiData> ListOftVisitPlanRealisasiDataDetail = _tVisitPlanRealisasiDA.getPushData(db, ListOftVisitPlanHeader_MobileDataHeader);
             List<tCustomerBasedMobileHeaderData> ListOftCustomerBasedMobileHeader = _tCustomerBasedMobileHeaderDA.getPushData(db);
             List<tCustomerBasedMobileDetailData> ListOftCustomerBasedMobileDetail = _tCustomerBasedMobileDetailDA.getPushData(db, ListOftCustomerBasedMobileHeader);
             List<tCustomerBasedMobileDetailProductData> ListOftCustomerBasedMobileDetailProduct = _tCustomerBasedMobileDetailProductDA.getPushData(db, ListOftCustomerBasedMobileDetail);
@@ -317,6 +324,25 @@ public class clsHelperBL extends clsMainBL {
                     }
                 }
             }
+            if (ListOfSalesProductQuantityImage != null){
+                dtPush.setListOftSalesProductQuantityImageData(ListOfSalesProductQuantityImage);
+                for (tSalesProductQuantityImageData dttQuantityImageData : ListOfSalesProductQuantityImage) {
+                    if (dttQuantityImageData.get_txtImage() != null) {
+                        if (dttQuantityImageData.get_txtType().equals("After") &&  dttQuantityImageData.get_intPosition().equals("1")) {
+                            FileUpload.put("FUQTS" + dttQuantityImageData.get_txtId(), dttQuantityImageData.get_txtImage());
+                        }
+                        if (dttQuantityImageData.get_txtType().equals("After") &&  dttQuantityImageData.get_intPosition().equals("2")) {
+                            FileUpload.put("FUQTS" + dttQuantityImageData.get_txtId(), dttQuantityImageData.get_txtImage());
+                        }
+                        if (dttQuantityImageData.get_txtType().equals("Before") &&  dttQuantityImageData.get_intPosition().equals("1")) {
+                            FileUpload.put("FUQTS" + dttQuantityImageData.get_txtId(), dttQuantityImageData.get_txtImage());
+                        }
+                        if (dttQuantityImageData.get_txtType().equals("Before") &&  dttQuantityImageData.get_intPosition().equals("2")) {
+                            FileUpload.put("FUQTS" + dttQuantityImageData.get_txtId(), dttQuantityImageData.get_txtImage());
+                        }
+                    }
+                }
+            }
 
 			if(ListOftLeaveData!=null){
 				dtPush.setListOftLeaveMobileData(ListOftLeaveData);
@@ -339,9 +365,9 @@ public class clsHelperBL extends clsMainBL {
             if (ListOfSalesProductQuantityDetail != null){
                 dtPush.setListOftSalesProductQuantityDetailData(ListOfSalesProductQuantityDetail);
             }
-            if (ListOfSalesProductQuantityImage != null){
-                dtPush.setListOftSalesProductQuantityImageData(ListOfSalesProductQuantityImage);
-            }
+//            if (ListOfSalesProductQuantityImage != null){
+//                dtPush.setListOftSalesProductQuantityImageData(ListOfSalesProductQuantityImage);
+//            }
             if (ListOfSalesProductQuantityHeader != null){
                 dtPush.setListOftSalesProductQuantityData(ListOfSalesProductQuantityHeader);
             }
@@ -356,6 +382,12 @@ public class clsHelperBL extends clsMainBL {
 
             if (ListOftCustomerBasedMobileDetailProduct != null) {
                 dtPush.setListOftCustomerBasedMobileDetailProductData(ListOftCustomerBasedMobileDetailProduct);
+            }
+            if (ListOftVisitPlanHeader_MobileDataHeader != null){
+                dtPush.setListOftVisitPlanHeader_MobileData(ListOftVisitPlanHeader_MobileDataHeader);
+            }
+            if (ListOftVisitPlanRealisasiDataDetail != null){
+                dtPush.setListOftVisitPlanRealisasiData(ListOftVisitPlanRealisasiDataDetail);
             }
         } else {
             dtPush = null;
@@ -390,6 +422,13 @@ public class clsHelperBL extends clsMainBL {
             }
         }
 
+        if (dtJson.getListOftVisitPlanRealisasiData() != null) {
+            for (tVisitPlanRealisasiData dt : dtJson.getListOftVisitPlanRealisasiData()) {
+                tVisitPlanRealisasiDA _tVisitPlanRealisasiDA = new tVisitPlanRealisasiDA(db);
+                dt.set_intPush("1");
+                _tVisitPlanRealisasiDA.SaveDatatVisitPlan_MobileData(db, dt);
+            }
+        }
         if (dtJson.getListOftActivityData() != null) {
             for (tActivityData dt : dtJson.getListOftActivityData()) {
                 tActivityDA _tActivityDA = new tActivityDA(db);

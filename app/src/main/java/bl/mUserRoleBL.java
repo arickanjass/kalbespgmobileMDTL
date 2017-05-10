@@ -1,6 +1,11 @@
 package bl;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Handler;
+import android.os.Looper;
+
+import com.kalbenutritionals.app.kalbespgmobile.clsMainActivity;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -56,7 +61,7 @@ public class mUserRoleBL extends clsMainBL{
 		}
 		return Listdata;
 	}
-	public List<mUserRoleData> getRoleAndOutlet(String username,String versionApp) throws ParseException{
+	public List<mUserRoleData> getRoleAndOutlet(String username,String versionApp,final Context context) throws ParseException{
 		List<mUserRoleData> Listdata=new ArrayList<mUserRoleData>();
 		linkAPI dtlinkAPI=new linkAPI();
 		String txtMethod="GetAllUserRoleByUserNameSalesInsentivePostData";
@@ -78,11 +83,12 @@ public class mUserRoleBL extends clsMainBL{
 
 		mEmployeeAreaDA _mEmployeeAreaDA = new mEmployeeAreaDA(db);
 		_mEmployeeAreaDA.DeleteAllDataMConfig(db);
-
+		String message = "";
 		while (i.hasNext()) {
 			org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
 
 			int boolValid= Integer.valueOf(String.valueOf( innerObj.get(dtAPIDATA.boolValid)));
+			message = String.valueOf(innerObj.get("_pstrMessage"));
 			if(boolValid == Integer.valueOf(new clsHardCode().intSuccess)){
 
 				org.json.simple.JSONArray JsonArray_role= _clsHelper.ResultJsonArray(String.valueOf(innerObj.get("ListMWebUserRoleAPI")));
@@ -126,6 +132,15 @@ public class mUserRoleBL extends clsMainBL{
 
 					//_mEmployeeAreaDA.SaveDataMConfig(db, _data);
 				}
+			}else {
+				Handler h = new Handler(Looper.getMainLooper());
+				final String finalMessage = message;
+				h.post(new Runnable() {
+					public void run() {
+						new clsMainActivity().showCustomToast(context, finalMessage, false);
+					}
+				});
+
 			}
 		}
 		return Listdata;

@@ -54,6 +54,12 @@ public class clsHardCode  {
 	public String txtTable_tSalesProductHeader = "tSalesProductHeader";
 	public String txtTable_tPurchaseOrderDetail = "tPurchaseOrderDetail";
 	public String txtTable_tPurchaseOrderHeader = "tPurchaseOrderHeader";
+	public String txtTable_mParent = "mParent";
+	public String txtTable_mKategori = "mKategori";
+	public String txtTable_mPertanyaan = "mPertanyaan";
+	public String txtTable_tJawabanUser = "tJawabanUser";
+	public String txtTable_mTypePertanyaan = "mTypePertanyaan";
+	public String txtTable_mListJawaban = "mListJawaban";
 	public String txtTable_tInventorySPGDetail_mobile = "tInventorySPGDetail_mobile";
 	public String txtTable_tInventorySPGHeader_mobile = "tInventorySPGHeader_mobile";
 	public String txtTable_tSalesOrderHeader_mobile = "tSalesOrderHeader_mobile";
@@ -181,7 +187,12 @@ public class clsHardCode  {
 	public String txtMessSuccessDownload = "Success Download";
 	public String txtMessUnableToConnect = "Unable To Connect";
 	public String txtTokenAPI = "129195202189197196195202189175";
-	
+	public String txtTable_mCategoryVisitPlan = "mCategoryVisitPlan";
+	public String txtTable_tVisitPlanHeader_Mobile="tVisitPlanHeader_Mobile";
+	public String txtTable_tVisitplanRealisasi="tVisitplanRealisasi";
+	public String txtMessGetVisitPLan = "Getting Visit Plan";
+	public String txtMessGetVisitPlanTr = "Getting Visit Plan Transaction";
+
 	public String intSuccess = "1";
 	public String intFailed = "0";	
 	

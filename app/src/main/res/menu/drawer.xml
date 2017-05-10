@@ -49,10 +49,17 @@
             android:checked="false"
             android:orderInCategory="2"
             android:title="History Absen" />
+
         <item android:id="@+id/PO"
             android:checked="false"
             android:orderInCategory="2"
             android:title="Purchase Order"/>
+
+        <item android:id="@+id/VP"
+            android:checked="false"
+            android:orderInCategory="2"
+            android:title="Visit Plan"/>
+
 
         <!--<item-->
             <!--android:id="@+id/information"-->
