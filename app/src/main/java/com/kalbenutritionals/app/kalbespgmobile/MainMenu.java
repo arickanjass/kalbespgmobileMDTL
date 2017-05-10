@@ -370,7 +370,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
                         return true;
 
-                    case R.id.quantityStock: 
+                    case R.id.quantityStock:
                         toolbar.setTitle("View Quantity Stock");
 
                         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
