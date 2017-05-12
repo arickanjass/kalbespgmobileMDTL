@@ -1729,6 +1729,7 @@ public class FragmentDownloadData extends Fragment {
             JSONArray Json = null;
             try {
                 Json = new tSalesProductQuantityHeaderBL().DownloadTransactionQuantityStock(pInfo.versionName);
+                new tSalesProductQuantityHeaderBL().DownloadNOQuantityStock(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
 //                new tSalesProductQuantityHeaderBL().DownloadNOQuantityStock(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
             }catch (Exception e){
                 e.printStackTrace();
