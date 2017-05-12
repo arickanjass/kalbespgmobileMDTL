@@ -32,6 +32,8 @@ public class tVisitPlanRealisasiData {
     private String _txtRoleId;
     private String _intPush;
     private String _intSubmit;
+    private String _intCheckout;
+    private String _dateCheckout;
 
     public String Property_txtDataIDRealisasi = "txtDataIDRealisasi";
     public String Property_intCategoryVisitPlan = "intCategoryVisitPlan";
@@ -59,6 +61,9 @@ public class tVisitPlanRealisasiData {
     public String Property_txtRoleId = "txtRoleId";
     public String Property_intSubmit = "intSubmit";
     public String Property_intPush = "intPush";
+    public String Property_intCheckOut = "intCheckout";
+    public String Property_dateCheckOut = "dateCheckout";
+
 
 
     public String Property_All=Property_txtDataIDRealisasi + "," +
@@ -86,7 +91,25 @@ public class tVisitPlanRealisasiData {
             Property_bitActive + "," +
             Property_txtRoleId + "," +
             Property_intSubmit + "," +
-            Property_intPush;
+            Property_intPush+ "," +
+            Property_intCheckOut+ "," +
+            Property_dateCheckOut;
+
+    public synchronized String get_intCheckout() {
+        return _intCheckout;
+    }
+
+    public synchronized void set_intCheckout(String _intCheckout) {
+        this._intCheckout = _intCheckout;
+    }
+
+    public synchronized String get_dateCheckout() {
+        return _dateCheckout;
+    }
+
+    public synchronized void set_dateCheckout(String _dateCheckout) {
+        this._dateCheckout = _dateCheckout;
+    }
 
     public synchronized String get_intPush(){
         return _intPush;

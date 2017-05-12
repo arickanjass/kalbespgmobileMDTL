@@ -723,7 +723,7 @@ public class FragmentVisitPlan extends Fragment {
                                                 _tVisitPlanRealisasiData.set_intDistance(distance + "");
                                                 _tVisitPlanRealisasiData.set_txtRoleId(idRoleActive);
                                                 _tVisitPlanRealisasiData.set_intSubmit("1");
-                                                _tVisitPlanRealisasiData.set_intPush("0");
+//                                                _tVisitPlanRealisasiData.set_intPush("0");
                                                 checkInUserDatas.add(_tVisitPlanRealisasiData);
                                                 new tVisitPlanRealisasiBL().UpdateData(checkInUserDatas);
 
@@ -1103,7 +1103,7 @@ public class FragmentVisitPlan extends Fragment {
             ByteArrayOutputStream blob = new ByteArrayOutputStream();
             pht1 = output.toByteArray();
             imgPrevNoImg1.setImageBitmap(photo_view);
-            _tVisitPlanRealisasiData = new tVisitPlanRealisasiData();
+//            _tVisitPlanRealisasiData = new tVisitPlanRealisasiData();
             _tVisitPlanRealisasiData.set_dtPhoto1(pht1);
             _tVisitPlanRealisasiData.set_dtPhoto2(pht2);
 
@@ -1138,7 +1138,7 @@ public class FragmentVisitPlan extends Fragment {
             ByteArrayOutputStream blob = new ByteArrayOutputStream();
             pht2 = output.toByteArray();
             imgPrevNoImg2.setImageBitmap(photo_view);
-            _tVisitPlanRealisasiData = new tVisitPlanRealisasiData();
+//            _tVisitPlanRealisasiData = new tVisitPlanRealisasiData();
             _tVisitPlanRealisasiData.set_dtPhoto1(pht1);
             _tVisitPlanRealisasiData.set_dtPhoto2(pht2);
 

@@ -804,6 +804,10 @@ public class FragmentDownloadData extends Fragment {
                             _data.set_txtLongSource((String) innerObjListoftTransaksiRealisasiVisitPlanData.get("txtLong"));
                             _data.set_txtLatSource((String) innerObjListoftTransaksiRealisasiVisitPlanData.get("txtLat"));
                             _data.set_txtAcc((String) innerObjListoftTransaksiRealisasiVisitPlanData.get("txtAcc"));
+                            _data.set_intSubmit("0");
+                            _data.set_intPush("0");
+                            _data.set_intCheckout("0");
+                            _data.set_dateCheckout("0");
                             _array.add(_data.get_txtOutletName() + "-" + _data.get_txtDesc());
                             _Listdata.add(_data);
                         } else {
@@ -862,6 +866,8 @@ public class FragmentDownloadData extends Fragment {
                             _data.set_intSumBobot((String) innerObjListoftTransaksiRealisasiVisitPlanHeaderData.get("intSumBobot"));
                             _data.set_intRealisasi((String) innerObjListoftTransaksiRealisasiVisitPlanHeaderData.get("intRealisasi"));
 //                            _array.add(_data.get_txtOutletName()+"-"+_data.get_txtDesc());
+                            _data.set_intSubmit("0");
+                            _data.set_intPush("0");
                             _Listdata.add(_data);
                         } else {
                             flag = false;
