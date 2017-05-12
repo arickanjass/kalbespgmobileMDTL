@@ -374,6 +374,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
             }
             dp.updateDate(year,month - 1,day);
             editTextQty.setText(dataDetail.getTxtQuantity());
+            editTextKeterangan.setText(dataDetail.get_txtKeterangan());
         }
 
         // set date min today
