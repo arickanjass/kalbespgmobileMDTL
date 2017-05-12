@@ -132,75 +132,9 @@ public class tVisitPlanRealisasiDA {
 //        cv.put(dt.Property_intPush,data.get_intPush());
         db.update(TABLE_CONTACTS, cv, dt.Property_txtDataIDRealisasi+"='"+data.get_txtDataIDRealisasi()+"'", null);
     }
-    public void DownloadDatatVisitPlan_MobileData(SQLiteDatabase db, tVisitPlanRealisasiData data) {
+    public void insertDataDownload(SQLiteDatabase db,tVisitPlanRealisasiData data){
         tVisitPlanRealisasiData dt = new tVisitPlanRealisasiData();
-        tVisitPlanRealisasiData dataSql = null;
-//        if ()
-        dataSql = getDataByDataIDRealisasi(db,data.get_txtDataIDRealisasi());
-        if (dataSql.get_txtDataIDRealisasi()!=null){
-            if (dataSql.get_intSubmit().toString().equals("1")){
-                data.set_dtDateRealisasi(dataSql.get_dtDateRealisasi().toString());
-                data.set_dtDateRealisasiDevice(dataSql.get_dtDateRealisasiDevice().toString());
-                data.set_txtDescReply(dataSql.get_txtDescReply().toString());
-                if(dataSql.get_dtPhoto1()!= null){
-                    data.set_dtPhoto1(dataSql.get_dtPhoto1());
-                }
-                if(dataSql.get_dtPhoto2()!= null){
-                    data.set_dtPhoto2(dataSql.get_dtPhoto2());
-                }
-                data.set_txtLong(dataSql.get_txtLong().toString());
-                data.set_txtLat(dataSql.get_txtLat().toString());
-                data.set_intDistance(dataSql.get_intDistance().toString());
-                data.set_txtRoleId(dataSql.get_txtRoleId().toString());
-                data.set_intSubmit(dataSql.get_intSubmit().toString());
-                data.set_intPush(dataSql.get_intPush().toString());
-                data.set_intCheckout(dataSql.get_intPush().toString());
-                data.set_dateCheckout(dataSql.get_intPush().toString());
-            }
-
-            /*if (!dataSql.get_intSubmit().toString().equals("1")){
-                data.set_dtDateRealisasi(dataSql.get_dtDateRealisasi().toString());
-            }
-            if(!dataSql.get_dtDateRealisasiDevice().toString().equals("null")){
-                data.set_dtDateRealisasiDevice(dataSql.get_dtDateRealisasiDevice().toString());
-            }
-            if(!dataSql.get_txtDescReply().toString().equals("null")){
-                data.set_txtDescReply(dataSql.get_txtDescReply().toString());
-            }
-            if(dataSql.get_dtPhoto1()!= null){
-                data.set_dtPhoto1(dataSql.get_dtPhoto1());
-            }
-            if(dataSql.get_dtPhoto2()!= null){
-                data.set_dtPhoto2(dataSql.get_dtPhoto2());
-            }
-            if(!dataSql.get_txtLong().toString().equals("null")){
-                data.set_txtLong(dataSql.get_txtLong().toString());
-            }
-            if(!dataSql.get_txtLat().toString().equals("null")){
-                data.set_txtLat(dataSql.get_txtLat().toString());
-            }
-            if(!dataSql.get_intDistance().toString().equals("null")){
-                data.set_intDistance(dataSql.get_intDistance().toString());
-            }
-            if(!dataSql.get_txtRoleId().toString().equals("null")){
-                data.set_txtRoleId(dataSql.get_txtRoleId().toString());
-            }
-            if(!dataSql.get_intSubmit().toString().equals("0")){
-                data.set_intSubmit(dataSql.get_intSubmit().toString());
-            }
-            if(!dataSql.get_intPush().toString().equals("0")){
-                data.set_intPush(dataSql.get_intPush().toString());
-            }
-            if(!dataSql.get_intCheckout().toString().equals("0")){
-                data.set_intCheckout(dataSql.get_intPush().toString());
-            }
-            if(!dataSql.get_dateCheckout().toString().equals("null")){
-                data.set_dateCheckout(dataSql.get_intPush().toString());
-            }*/
-
-        }
-
-//        data.set_intSubmit("0");
+        data.set_intSubmit("0");
         db.execSQL("INSERT OR REPLACE into " + TABLE_CONTACTS + " (" + dt.Property_txtDataIDRealisasi + ","
                 + dt.Property_intCategoryVisitPlan + ","
                 + dt.Property_intDetailID + ","
@@ -257,6 +191,16 @@ public class tVisitPlanRealisasiDA {
                 + String.valueOf(data.get_intPush()) + "','"
                 + String.valueOf(data.get_intCheckout()) + "','"
                 + String.valueOf(data.get_dateCheckout()) + "')");
+    }
+    public void DownloadDatatVisitPlan_MobileData(SQLiteDatabase db, tVisitPlanRealisasiData data) {
+        tVisitPlanRealisasiData dataSql = dataSql = getDataByDataIDRealisasi(db,data.get_txtDataIDRealisasi());
+        if (dataSql.get_txtDataIDRealisasi()!=null){
+            if (!dataSql.get_intSubmit().toString().equals("1")){
+                insertDataDownload(db,data);
+            }
+        }else{
+            insertDataDownload(db,data);
+        }
     }
     public List<tVisitPlanRealisasiData> getPushData(SQLiteDatabase db, List<tVisitPlanHeader_MobileData> ListOftVisitPlanRealisasiData) {
         List<tVisitPlanRealisasiData> contactList = null;
