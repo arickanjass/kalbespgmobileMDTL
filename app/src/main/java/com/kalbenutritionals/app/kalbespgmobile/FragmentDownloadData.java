@@ -659,6 +659,13 @@ public class FragmentDownloadData extends Fragment {
                     int boolValid_po = Integer.valueOf(String.valueOf(innerObj_po.get("_pboolValid")));
                     if(boolValid_po == 1) SaveDatatPurchaseOrderData(Json);
                 }
+                    Json = new mParentBL().DownlaodDataQuesioner(pInfo.versionName);
+                    Iterator x = Json.iterator();
+                    org.json.simple.JSONObject innerObj_Quiz = (org.json.simple.JSONObject) x.next();
+                    int boolValid_po = Integer.valueOf(String.valueOf(innerObj_Quiz.get("_pboolValid")));
+                    if(boolValid_po == 1) SaveDataQuesioner(Json);
+                
+
 
                 Json = new tSalesProductQuantityHeaderBL().DownloadTransactionQuantityStock(pInfo.versionName);
                 Iterator k = Json.iterator();
