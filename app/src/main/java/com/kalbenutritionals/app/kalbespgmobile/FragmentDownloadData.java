@@ -824,7 +824,6 @@ public class FragmentDownloadData extends Fragment {
                             _data.set_intSubmit("0");
                             _data.set_intPush("0");
                             _data.set_intCheckout("0");
-                            _data.set_dateCheckout("0");
                             _array.add(_data.get_txtOutletName() + "-" + _data.get_txtDesc());
                             _Listdata.add(_data);
                         } else {

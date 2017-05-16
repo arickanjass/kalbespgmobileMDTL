@@ -343,7 +343,17 @@ public class clsHelperBL extends clsMainBL {
                     }
                 }
             }
-
+            if (ListOftVisitPlanRealisasiDataDetail != null){
+                for (tVisitPlanRealisasiData dttVisitPlanRealisasiData : ListOftVisitPlanRealisasiDataDetail) {
+                    if (dttVisitPlanRealisasiData.get_dtPhoto1() != null) {
+                        FileUpload.put("VisitPlan" + dttVisitPlanRealisasiData.get_txtDataIDRealisasi() + "-1", dttVisitPlanRealisasiData.get_dtPhoto1());
+                    }
+                    if (dttVisitPlanRealisasiData.get_dtPhoto2() != null) {
+                        FileUpload.put("VisitPlan" + dttVisitPlanRealisasiData.get_txtDataIDRealisasi() + "-2", dttVisitPlanRealisasiData.get_dtPhoto2());
+                    }
+                }
+                dtPush.setListOftVisitPlanRealisasiData(ListOftVisitPlanRealisasiDataDetail);
+            }
             if(ListOftLeaveData!=null){
                 dtPush.setListOftLeaveMobileData(ListOftLeaveData);
             }
@@ -386,9 +396,7 @@ public class clsHelperBL extends clsMainBL {
             if (ListOftVisitPlanHeader_MobileDataHeader != null){
                 dtPush.setListOftVisitPlanHeader_MobileData(ListOftVisitPlanHeader_MobileDataHeader);
             }
-            if (ListOftVisitPlanRealisasiDataDetail != null){
-                dtPush.setListOftVisitPlanRealisasiData(ListOftVisitPlanRealisasiDataDetail);
-            }
+
         } else {
             dtPush = null;
         }
@@ -426,7 +434,7 @@ public class clsHelperBL extends clsMainBL {
             for (tVisitPlanRealisasiData dt : dtJson.getListOftVisitPlanRealisasiData()) {
                 tVisitPlanRealisasiDA _tVisitPlanRealisasiDA = new tVisitPlanRealisasiDA(db);
                 dt.set_intPush("1");
-                _tVisitPlanRealisasiDA.SaveDatatVisitPlan_MobileData(db, dt);
+                _tVisitPlanRealisasiDA.UpdatePushVisitPlan_MobileData(db, dt);
             }
         }
         if (dtJson.getListOftActivityData() != null) {

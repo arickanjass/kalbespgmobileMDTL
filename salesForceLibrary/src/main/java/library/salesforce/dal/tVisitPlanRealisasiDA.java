@@ -28,7 +28,7 @@ public class tVisitPlanRealisasiDA {
                 + dt.Property_txtOutletCode + " TEXT NULL,"
                 + dt.Property_txtOutletName + " TEXT NULL,"
                 + dt.Property_txtBranchCode + " TEXT NULL,"
-                + dt.Property_dtDate + " INT NULL,"
+                + dt.Property_dtDate + " TEXT NULL,"
                 + dt.Property_intBobot + " TEXT NULL,"
                 + dt.Property_dtDateRealisasi + " TEXT NULL,"
                 + dt.Property_dtDateRealisasiDevice + " TEXT NULL,"
@@ -117,7 +117,6 @@ public class tVisitPlanRealisasiDA {
     }
     public void UpdateDatatVisitPlan_MobileData(SQLiteDatabase db, tVisitPlanRealisasiData data) {
         tVisitPlanRealisasiData dt = new tVisitPlanRealisasiData();
-//        data.set_intSubmit("1");
         ContentValues cv = new ContentValues();
         cv.put(dt.Property_dtDateRealisasi,data.get_dtDateRealisasi()); //These Fields should be your String values of actual column names
         cv.put(dt.Property_dtDateRealisasiDevice,data.get_dtDateRealisasiDevice());
@@ -129,12 +128,16 @@ public class tVisitPlanRealisasiDA {
         cv.put(dt.Property_intDistance,data.get_intDistance());
         cv.put(dt.Property_txtRoleId,data.get_txtRoleId());
         cv.put(dt.Property_intSubmit,data.get_intSubmit());
-//        cv.put(dt.Property_intPush,data.get_intPush());
+        db.update(TABLE_CONTACTS, cv, dt.Property_txtDataIDRealisasi+"='"+data.get_txtDataIDRealisasi()+"'", null);
+    }
+    public void UpdatePushVisitPlan_MobileData(SQLiteDatabase db, tVisitPlanRealisasiData data) {
+        tVisitPlanRealisasiData dt = new tVisitPlanRealisasiData();
+        ContentValues cv = new ContentValues();
+        cv.put(dt.Property_intPush,data.get_intPush()); //These Fields should be your String values of actual column names
         db.update(TABLE_CONTACTS, cv, dt.Property_txtDataIDRealisasi+"='"+data.get_txtDataIDRealisasi()+"'", null);
     }
     public void insertDataDownload(SQLiteDatabase db,tVisitPlanRealisasiData data){
         tVisitPlanRealisasiData dt = new tVisitPlanRealisasiData();
-        data.set_intSubmit("0");
         db.execSQL("INSERT OR REPLACE into " + TABLE_CONTACTS + " (" + dt.Property_txtDataIDRealisasi + ","
                 + dt.Property_intCategoryVisitPlan + ","
                 + dt.Property_intDetailID + ","
@@ -219,7 +222,8 @@ public class tVisitPlanRealisasiDA {
 
         // Select All Query
         tVisitPlanRealisasiData dt = new tVisitPlanRealisasiData();
-        String selectQuery = "SELECT " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intHeaderID + " IN " + _tVisitPlanRealisasiData;
+//        String selectQuery = "SELECT " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intHeaderID + " IN " + _tVisitPlanRealisasiData;
+        String selectQuery = "SELECT " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intSubmit + "='1' AND " + dt.Property_intPush + "='0'";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 

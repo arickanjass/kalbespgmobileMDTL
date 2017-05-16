@@ -353,28 +353,41 @@ public class dataJson {
 
             if (this.getListOftVisitPlanRealisasiData() != null){
                 List<tVisitPlanRealisasiData> list = getListOftVisitPlanRealisasiData();
-                for (int i = 0; i<= list.size(); i++){
+                /*for (int i = 0; i<= list.size(); i++){
                     list.get(i).get_intSubmit();
-                }
+                }*/
 
-                tSalesProductQuantityDetailData dttSalesProductQuantityDetailData = new tSalesProductQuantityDetailData();
+                tVisitPlanRealisasiData dttVisitPlanRealisasiData = new tVisitPlanRealisasiData();
                 itemsListJquey = new ArrayList<JSONObject>();
-                for (tSalesProductQuantityDetailData data : this.getListOftSalesProductQuantityDetailData()){
+                for (tVisitPlanRealisasiData data : this.getListOftVisitPlanRealisasiData()){
                     JSONObject item = new JSONObject();
-                    item.put(dttSalesProductQuantityDetailData.Property_intId, String.valueOf(data.getIntId()));
-                    item.put(dttSalesProductQuantityDetailData.Property_dtDate, String.valueOf(data.get_dtDate()));
-                    item.put(dttSalesProductQuantityDetailData.Property_intPrice, String.valueOf(data.get_intTotal()));
-                    item.put(dttSalesProductQuantityDetailData.Property_txtQuantity, String.valueOf(data.getTxtExpireDate()));
-                    item.put(dttSalesProductQuantityDetailData.Property_txtCodeProduct, String.valueOf(data.get_intPrice()));
-                    item.put(dttSalesProductQuantityDetailData.Property_txtKeterangan, String.valueOf(data.get_txtCodeProduct()));
-                    item.put(dttSalesProductQuantityDetailData.Property_txtExpireDate, String.valueOf(data.getTxtProduct()));
-                    item.put(dttSalesProductQuantityDetailData.Property_txtProduct, String.valueOf(data.get_txtKeterangan()));
-                    item.put(dttSalesProductQuantityDetailData.Property_txtNIK, String.valueOf(data.get_txtNIK()));
-                    item.put(dttSalesProductQuantityDetailData.Property_intTotal, String.valueOf(data.get_txtQuantityStock()));
-                    item.put(dttSalesProductQuantityDetailData.Property_txtQuantityStock, String.valueOf(data.getTxtQuantity()));
+                    item.put(dttVisitPlanRealisasiData.Property_txtDataIDRealisasi, String.valueOf(data.get_txtDataIDRealisasi()));
+                    item.put(dttVisitPlanRealisasiData.Property_intCategoryVisitPlan, String.valueOf(data.get_intCategoryVisitPlan()));
+                    item.put(dttVisitPlanRealisasiData.Property_intDetailID, String.valueOf(data.get_intDetailID()));
+                    item.put(dttVisitPlanRealisasiData.Property_intHeaderID, String.valueOf(data.get_intHeaderID()));
+                    item.put(dttVisitPlanRealisasiData.Property_intUserID, String.valueOf(data.get_intUserID()));
+                    item.put(dttVisitPlanRealisasiData.Property_txtOutletCode, String.valueOf(data.get_txtOutletCode()));
+                    item.put(dttVisitPlanRealisasiData.Property_txtOutletName, String.valueOf(data.get_txtOutletName()));
+                    item.put(dttVisitPlanRealisasiData.Property_txtBranchCode, String.valueOf(data.get_txtBranchCode()));
+                    item.put(dttVisitPlanRealisasiData.Property_dtDate, String.valueOf(data.get_dtDate()));
+                    item.put(dttVisitPlanRealisasiData.Property_intBobot, String.valueOf(data.get_intBobot()));
+                    item.put(dttVisitPlanRealisasiData.Property_dtDateRealisasi, String.valueOf(data.get_dtDateRealisasi()));
+                    item.put(dttVisitPlanRealisasiData.Property_dtDateRealisasiDevice, String.valueOf(data.get_dtDateRealisasiDevice()));
+                    item.put(dttVisitPlanRealisasiData.Property_txtDesc, String.valueOf(data.get_txtDesc()));
+                    item.put(dttVisitPlanRealisasiData.Property_txtDescReply, String.valueOf(data.get_txtDescReply()));
+                    item.put(dttVisitPlanRealisasiData.Property_dtPhoto1, String.valueOf(data.get_dtPhoto1()));
+                    item.put(dttVisitPlanRealisasiData.Property_dtPhoto2, String.valueOf(data.get_dtPhoto2()));
+                    item.put(dttVisitPlanRealisasiData.Property_txtLong, String.valueOf(data.get_txtLong()));
+                    item.put(dttVisitPlanRealisasiData.Property_txtLat, String.valueOf(data.get_txtLat()));
+                    item.put(dttVisitPlanRealisasiData.Property_txtAcc, String.valueOf(data.get_txtAcc()));
+                    item.put(dttVisitPlanRealisasiData.Property_txtLongSource, String.valueOf(data.get_txtLongSource()));
+                    item.put(dttVisitPlanRealisasiData.Property_txtLatSource, String.valueOf(data.get_txtLatSource()));
+                    item.put(dttVisitPlanRealisasiData.Property_intDistance, String.valueOf(data.get_intDistance()));
+                    item.put(dttVisitPlanRealisasiData.Property_bitActive, String.valueOf(data.get_bitActive()));
+                    item.put(dttVisitPlanRealisasiData.Property_txtRoleId, String.valueOf(data.get_txtRoleId()));
                     itemsListJquey.add(item);
                 }
-                resJson.put(dttSalesProductQuantityDetailData.Property_ListOftSalesProductQuantityDetailData, new JSONArray(itemsListJquey));
+                resJson.put(dttVisitPlanRealisasiData.Property_listOftVisitPlanRealisasiData, new JSONArray(itemsListJquey));
             }
 
 

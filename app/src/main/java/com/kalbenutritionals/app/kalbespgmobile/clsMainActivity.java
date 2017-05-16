@@ -49,6 +49,7 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.UUID;
 
+import addons.adapter.AdapterListVisitplan;
 import addons.zoomview.CustomZoomView;
 import bl.mCounterNumberBL;
 import bl.tDeviceInfoUserBL;
@@ -305,7 +306,23 @@ public class clsMainActivity extends Activity {
         dtmCounterNumberData.set_txtValue(NewId);
         _mCounterNumberBL.SaveData(dtmCounterNumberData);
     }
+    public static AdapterListVisitplan setListVisitPlan(Context _ctx, final ArrayList<clsSwipeList> swipeList) {
+        final AdapterListVisitplan mAdapter;
+        PullToRefreshSwipeMenuListView mListView;
+        Handler mHandler;
 
+        ArrayList<clsSwipeList> mAppList = new ArrayList<>();
+
+        for (int i = 0; i < swipeList.size(); i++) {
+            clsSwipeList getswipeList = swipeList.get(i);
+            mAppList.add(getswipeList);
+        }
+
+        mAdapter = new AdapterListVisitplan(_ctx, mAppList);
+
+        return mAdapter;
+
+    }
     public tUserLoginData getDataLoginActive() {
         tUserLoginData dt = new tUserLoginBL().getUserActive();
         return dt;

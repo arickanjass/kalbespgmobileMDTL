@@ -303,7 +303,7 @@ public class FragmentAbsen extends Fragment implements ConnectionCallbacks, OnCo
             public void onClick(View v) {
                 LayoutInflater layoutInflater = LayoutInflater.from(getContext());
                 final View promptView = layoutInflater.inflate(R.layout.popup_map_absen, null);
-
+                btnPopupMap.setEnabled(false);
                 GoogleMap mMap = null;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                     mMap = ((MapFragment) (getActivity()).getFragmentManager().findFragmentById(R.id.map)).getMap();
@@ -355,6 +355,7 @@ public class FragmentAbsen extends Fragment implements ConnectionCallbacks, OnCo
                             .setPositiveButton("OK",
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
+                                            btnPopupMap.setEnabled(true);
                                             MapFragment f = null;
                                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                                                 f = (MapFragment) (getActivity()).getFragmentManager().findFragmentById(R.id.map);

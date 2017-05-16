@@ -64,10 +64,10 @@ public class tVisitPlanRealisasiBL extends clsMainBL{
         _db.close();
         return dtDetail;
     }
-    public tVisitPlanRealisasiData getDataByIdRealisasi(String id){
+    public List<tVisitPlanRealisasiData> getAllData(){
         SQLiteDatabase db=getDb();
         tVisitPlanRealisasiDA _tActivityDA=new tVisitPlanRealisasiDA(db);
-        tVisitPlanRealisasiData listData=_tActivityDA.getDataByDataIDRealisasi(db,id);
+        List<tVisitPlanRealisasiData> listData=_tActivityDA.getAllData(db);
         return listData;
     }
     public tVisitPlanRealisasiData getDataByIdOutlet(String id){

@@ -367,7 +367,7 @@ public class FragmentVisitPlan extends Fragment {
             public void onClick(View v) {
                 LayoutInflater layoutInflater = LayoutInflater.from(getContext());
                 final View promptView = layoutInflater.inflate(R.layout.popup_map_absen, null);
-
+                btnPopupMap.setEnabled(false);
                 GoogleMap mMap = null;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                     mMap = ((MapFragment) (getActivity()).getFragmentManager().findFragmentById(R.id.map)).getMap();
@@ -419,6 +419,7 @@ public class FragmentVisitPlan extends Fragment {
                             .setPositiveButton("OK",
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
+                                            btnPopupMap.setEnabled(true);
                                             MapFragment f = null;
                                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                                                 f = (MapFragment) (getActivity()).getFragmentManager().findFragmentById(R.id.map);

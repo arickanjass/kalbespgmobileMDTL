@@ -46,6 +46,7 @@ import library.salesforce.common.tNotificationData;
 import library.salesforce.common.tPurchaseOrderHeaderData;
 import library.salesforce.common.tSalesProductHeaderData;
 import library.salesforce.common.tSalesProductQuantityHeaderData;
+import library.salesforce.common.tVisitPlanRealisasiData;
 import library.salesforce.dal.clsHardCode;
 import service.MyServiceNative;
 
@@ -60,6 +61,7 @@ public class FragmentPushData extends Fragment {
     private TableLayout tlsQuantityStock;
     private TableLayout tlAbsen;
     private TableLayout tlLeave;
+    private TableLayout tlVisitPlan;
     private Button btnPush;
     private String myValue;
 
@@ -96,6 +98,7 @@ public class FragmentPushData extends Fragment {
         tlsQuantityStock = (TableLayout) v.findViewById(R.id.tl_quantity_stock);
         tlAbsen = (TableLayout) v.findViewById(R.id.tl_absen);
         tlLeave = (TableLayout) v.findViewById(R.id.tl_leave);
+        tlVisitPlan = (TableLayout) v.findViewById(R.id.tl_visit_plan);
         btnPush = (Button) v.findViewById(R.id.btnPush);
 
         btnPush.setTextColor(Color.parseColor("#FFFFFF"));
@@ -131,6 +134,11 @@ public class FragmentPushData extends Fragment {
                 initPOHeader(getContext(),dtJson.getListOftPurchaseOrderHeaderData());
             } else {
                 initPOHeader(getContext(),null);
+            }
+            if (dtJson.getListOftVisitPlanRealisasiData() != null) {
+                initVisitPlanRealisasiData(getContext(), dtJson.getListOftVisitPlanRealisasiData());
+            } else {
+                initVisitPlanRealisasiData(getContext(), null);
             }
 
             if (dtJson.getListOftSalesProductQuantityHeaderData() != null){
@@ -405,6 +413,81 @@ public class FragmentPushData extends Fragment {
                 tr.addView(date);
 
                 tlActivity.addView(tr,index++);
+            }
+        }
+    }
+    private void initVisitPlanRealisasiData(Context context, List<tVisitPlanRealisasiData> listOftVisitPlanRealisasiData) {
+        tlVisitPlan.removeAllViews();
+        TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1f);
+        params.setMargins(1, 1, 1, 1);
+        TableRow tr = new TableRow(getContext());
+
+        String[] colTextHeader = {"No.", "Outlet Code", "Outlet Name", "Date"};
+        for (String text : colTextHeader) {
+            TextView tv = new TextView(getContext());
+
+            tv.setTextSize(14);
+            tv.setPadding(10, 10, 10, 10);
+            tv.setText(text);
+            tv.setGravity(Gravity.CENTER);
+            tv.setBackgroundColor(Color.parseColor("#4CAF50"));
+            tv.setTextColor(Color.WHITE);
+            tv.setLayoutParams(params);
+
+            tr.addView(tv);
+        }
+        tlVisitPlan.addView(tr, 0);
+
+        if (listOftVisitPlanRealisasiData != null) {
+            int index = 1;
+            for (tVisitPlanRealisasiData dat : listOftVisitPlanRealisasiData) {
+                tr = new TableRow(getContext());
+
+                TextView tv_index = new TextView(getContext());
+                tv_index.setTextSize(12);
+                tv_index.setPadding(10, 10, 10, 10);
+                tv_index.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                tv_index.setTextColor(Color.BLACK);
+                tv_index.setGravity(Gravity.CENTER);
+                tv_index.setText(String.valueOf(index + "."));
+                tv_index.setLayoutParams(params);
+
+                tr.addView(tv_index);
+
+                TextView outlet_code = new TextView(getContext());
+                outlet_code.setTextSize(12);
+                outlet_code.setPadding(10, 10, 10, 10);
+                outlet_code.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                outlet_code.setTextColor(Color.BLACK);
+                outlet_code.setGravity(Gravity.CENTER);
+                outlet_code.setText(dat.get_txtOutletCode());
+                outlet_code.setLayoutParams(params);
+
+                tr.addView(outlet_code);
+
+                TextView outlet_name = new TextView(getContext());
+                outlet_name.setTextSize(12);
+                outlet_name.setPadding(10, 10, 10, 10);
+                outlet_name.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                outlet_name.setTextColor(Color.BLACK);
+                outlet_name.setGravity(Gravity.CENTER);
+                outlet_name.setText(dat.get_txtOutletName());
+                outlet_name.setLayoutParams(params);
+
+                tr.addView(outlet_name);
+
+                TextView date = new TextView(getContext());
+                date.setTextSize(12);
+                date.setPadding(10, 10, 10, 10);
+                date.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                date.setTextColor(Color.BLACK);
+                date.setGravity(Gravity.CENTER);
+                date.setText(new clsMainActivity().giveFormatDate(dat.get_dtDateRealisasi()));
+                date.setLayoutParams(params);
+
+                tr.addView(date);
+
+                tlVisitPlan.addView(tr, index++);
             }
         }
     }

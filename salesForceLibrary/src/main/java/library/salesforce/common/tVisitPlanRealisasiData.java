@@ -63,6 +63,7 @@ public class tVisitPlanRealisasiData {
     public String Property_intPush = "intPush";
     public String Property_intCheckOut = "intCheckout";
     public String Property_dateCheckOut = "dateCheckout";
+    public String Property_listOftVisitPlanRealisasiData = "listOftVisitPlanRealisasiData";
 
 
 
