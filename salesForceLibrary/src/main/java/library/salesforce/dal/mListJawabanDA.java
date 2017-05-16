@@ -46,7 +46,7 @@ public class mListJawabanDA {
     public List<mListJawabanData> GetAllData(SQLiteDatabase db){
         List<mListJawabanData> contactList = new ArrayList<mListJawabanData>();
         mListJawabanData dt = new mListJawabanData();
-        String selectQuery = "Select " + dt.Property_All + " FROM" + TABLE_CONTACTS + " ORDER BY intListAnswerId DESC";
+        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " ORDER BY txtValue DESC";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()){
             do {

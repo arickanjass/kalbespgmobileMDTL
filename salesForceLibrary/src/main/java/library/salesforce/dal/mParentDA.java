@@ -40,7 +40,7 @@ public class mParentDA {
     public List<mParentData> GetAllData(SQLiteDatabase db){
         List<mParentData> contactList = new ArrayList<mParentData>();
         mParentData dt = new mParentData();
-        String selectQuery = "Select " + dt.Property_All + " FROM" + TABLE_CONTACTS + " ORDER BY intParentId DESC";
+        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " ORDER BY intParentId DESC";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()){
             do {

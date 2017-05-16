@@ -18,7 +18,7 @@ public class mKategoriDA {
     public mKategoriDA(SQLiteDatabase db){
         mKategoriData dt = new mKategoriData();
         String CREATE_CONTACTS_TABLE = "CREATE TABLE IF NOT EXISTS "
-                +TABLE_CONTACTS + "( " +dt.Property_intCategoryId + "TEXT PRIMARY KEY," + dt.Property_intParentId + " TEXT NULL" + dt.Property_txtCategoryName + " TEXT NULL)";
+                +TABLE_CONTACTS + "( " +dt.Property_intCategoryId + " TEXT PRIMARY KEY," + dt.Property_intParentId + " TEXT NULL, " + dt.Property_txtCategoryName + " TEXT NULL)";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
     public void DropTable(SQLiteDatabase db){
