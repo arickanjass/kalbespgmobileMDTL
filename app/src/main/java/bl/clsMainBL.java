@@ -273,7 +273,7 @@ public class clsMainBL {
 
 		tSalesProductQuantityHeaderDA _tSalesProductQuantityHeaderDA = new tSalesProductQuantityHeaderDA(_db);
 		List<tSalesProductQuantityHeaderData> ListDataTQuantityStockHeader = _tSalesProductQuantityHeaderDA.getAllDataToPushData(_db);
-		if (ListDataTPOHeader != null) {
+		if (ListDataTQuantityStockHeader != null) {
 			for (tSalesProductQuantityHeaderData dataHeader : ListDataTQuantityStockHeader) {
 				dataJson Json = new dataJson();
 				List<tSalesProductQuantityHeaderData> tmpListDataQuantityStockHeaderData = new ArrayList<tSalesProductQuantityHeaderData>();
