@@ -31,6 +31,7 @@ public class mParentBL extends clsMainBL{
         SQLiteDatabase _db = getDb();
         mParentDA _mParentDA = new mParentDA(_db);
         _mParentDA.SaveDatamParent(_db, dt);
+        
     }
     public List<mParentData> GetAllData(){
         SQLiteDatabase _db = getDb();
