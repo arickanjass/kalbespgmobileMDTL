@@ -44,10 +44,15 @@ import bl.mDownloadMasterData_mobileBL;
 import bl.mEmployeeAreaBL;
 import bl.mEmployeeBranchBL;
 import bl.mEmployeeSalesProductBL;
+import bl.mKategoriBL;
+import bl.mListJawabanBL;
+import bl.mParentBL;
+import bl.mPertanyaanBL;
 import bl.mPriceInOutletBL;
 import bl.mProductBarcodeBL;
 import bl.mProductBrandHeaderBL;
 import bl.mTypeLeaveBL;
+import bl.mTypePertanyaanBL;
 import bl.tAbsenUserBL;
 import bl.tActivityBL;
 import bl.tCustomerBasedMobileDetailBL;
@@ -68,9 +73,14 @@ import library.salesforce.common.mDownloadMasterData_mobileData;
 import library.salesforce.common.mEmployeeAreaData;
 import library.salesforce.common.mEmployeeBranchData;
 import library.salesforce.common.mEmployeeSalesProductData;
+import library.salesforce.common.mKategoriData;
+import library.salesforce.common.mListJawabanData;
+import library.salesforce.common.mParentData;
+import library.salesforce.common.mPertanyaanData;
 import library.salesforce.common.mProductBarcodeData;
 import library.salesforce.common.mProductBrandHeaderData;
 import library.salesforce.common.mTypeLeaveMobileData;
+import library.salesforce.common.mTypePertanyaanData;
 import library.salesforce.common.tAbsenUserData;
 import library.salesforce.common.tActivityData;
 import library.salesforce.common.tCustomerBasedMobileDetailData;
@@ -1677,7 +1687,8 @@ public class FragmentDownloadData extends Fragment {
             JSONArray Json = null;
             try {
                 Json = new tPurchaseOrderHeaderBL().DownloadTransactionPO(pInfo.versionName);
-//                new tPurchaseOrderHeaderBL().DownloadNOPO(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+                new tPurchaseOrderHeaderBL().DownloadNOPO(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+                Json = new mParentBL().DownlaodDataQuesioner(pInfo.versionName);
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -1709,6 +1720,7 @@ public class FragmentDownloadData extends Fragment {
         protected void onPostExecute(JSONArray jsonArray) {
             if (jsonArray != null && jsonArray.size() > 0){
                 arrData = SaveDatatPurchaseOrderData(jsonArray);
+                arrData = SaveDataQuesioner(jsonArray);
                 loadData();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
@@ -2318,6 +2330,93 @@ public class FragmentDownloadData extends Fragment {
             Dialog.dismiss();
         }
     }
+
+    private List<String> SaveDataQuesioner(JSONArray jsonArray) {
+        List<String> _array;
+        APIData dtAPIDATA = new APIData();
+        _array = new ArrayList<>();
+        Iterator i = jsonArray.iterator();
+        Boolean flag = true;
+        String ErrorMess = "";
+        List<mParentData> listDataParent = new ArrayList<>();
+        while (i.hasNext()) {
+            JSONObject innerObj = (JSONObject) i.next();
+            try {
+                int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
+                ErrorMess = String.valueOf(innerObj.get("_pstrMessage"));
+                if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
+
+                    JSONArray jsonArray_parent = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListDatamParent_mobile")));
+                    Iterator j = jsonArray_parent.iterator();
+                    while (j.hasNext()) {
+                        mParentData _data = new mParentData();
+                        JSONObject innerObj_parent = (JSONObject) j.next();
+                        _data.set_intParentId(String.valueOf(innerObj_parent.get("IntParentId")));
+                        _data.set_txtParentName(String.valueOf(innerObj_parent.get("TxtParentName")));
+                        new mParentBL().SaveDatamParent(_data);
+                    }
+
+                    JSONArray jsonArray_kategori = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListDatamKategori_mobile")));
+                    Iterator k = jsonArray_kategori.iterator();
+                    while (k.hasNext()) {
+                        mKategoriData _data = new mKategoriData();
+                        JSONObject innerObj_kategori = (JSONObject) k.next();
+                        _data.set_intCategoryId(String.valueOf(innerObj_kategori.get("IntCategoryId")));
+                        _data.set_intParentId(String.valueOf(innerObj_kategori.get("IntParentId")));
+                        _data.set_txtCategoryName(String.valueOf(innerObj_kategori.get("TxtCategoryName")));
+                        new mKategoriBL().SaveData(_data);
+                    }
+
+                    JSONArray jsonArray_Pertanyaan = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListDatamPertanyaan_mobile")));
+                    Iterator l = jsonArray_Pertanyaan.iterator();
+                    while (l.hasNext()) {
+                        mPertanyaanData _data = new mPertanyaanData();
+                        JSONObject innerObj_Pertanyaan = (JSONObject) l.next();
+                        _data.set_intQuestionId(String.valueOf(innerObj_Pertanyaan.get("IntQuestionId")));
+                        _data.set_intCategoryId(String.valueOf(innerObj_Pertanyaan.get("IntCategoryId")));
+                        _data.set_txtQuestionDesc(String.valueOf(innerObj_Pertanyaan.get("TxtQuestionDesc")));
+                        _data.set_intTypeQuestionId(String.valueOf(innerObj_Pertanyaan.get("IntTypeQuestionId")));
+                        _data.set_decBobot(String.valueOf(innerObj_Pertanyaan.get("DecBobot")));
+                        _data.set_bolHaveAnswerList(String.valueOf(innerObj_Pertanyaan.get("BolHaveAnswerList")));
+                        new mPertanyaanBL().SaveData(_data);
+                    }
+
+
+                    JSONArray jsonArray_listJawaban = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListmListJawaban_mobile")));
+                    Iterator n = jsonArray_listJawaban.iterator();
+                    while (n.hasNext()) {
+                        mListJawabanData _data = new mListJawabanData();
+                        JSONObject innerObj_listJawaban = (JSONObject) n.next();
+                        _data.set_intListAnswerId(String.valueOf(innerObj_listJawaban.get("IntListAnswerId")));
+                        _data.set_intQuestionId(String.valueOf(innerObj_listJawaban.get("IntQuestionId")));
+                        _data.set_intTypeQuestionId(String.valueOf(innerObj_listJawaban.get("IntTypeQuestionId")));
+                        _data.set_txtKey(String.valueOf(innerObj_listJawaban.get("TxtKey")));
+                        _data.set_txtValue(String.valueOf(innerObj_listJawaban.get("TxtValue")));
+                        new mListJawabanBL().SaveData(_data);
+                    }
+
+
+                    JSONArray jsonArray_typePertanyaan = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListDatamTypePertanyaan_mobile")));
+
+                    Iterator m = jsonArray_typePertanyaan.iterator();
+                    while (m.hasNext()) {
+                        mTypePertanyaanData _data = new mTypePertanyaanData();
+                        JSONObject innerObj_TypePertanyaan = (JSONObject) m.next();
+                        _data.set_intTypeQuestionId(String.valueOf(innerObj_TypePertanyaan.get("IntTypeQuestionId")));
+                        _data.set_txtTypeQuestion(String.valueOf(innerObj_TypePertanyaan.get("TxtTypeQuestion")));
+                        new mTypePertanyaanBL().SaveData(_data);
+                    }
+
+                } else {
+                    new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return _array;
+    }
+
 
     private List<String> SaveDatatPurchaseOrderData(JSONArray jsonArray){
         List<String> _array;
