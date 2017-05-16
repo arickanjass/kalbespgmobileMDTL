@@ -123,6 +123,7 @@ public class FragmentKuesioner extends Fragment{
 ////                if(txtJawabanCheckbox.equals("")){
 ////                    tabLayout.getTabAt(3).setIcon(tabIcons[0]);
 ////                }
+                List<String> listAnswer = new ArrayList<String>();
                 for (int i = 0; i < listDataPertanyaan.size()-1; i++){
                     Toast.makeText(getContext(), "1. Edit Text = " + seekBarList.get(0).getProgress() +
                             " | 2. Radio Index = " + seekBarList.get(1).getProgress() +
@@ -133,17 +134,6 @@ public class FragmentKuesioner extends Fragment{
         });
 
         return v;
-    }
-    private void setupTabIcons() {
-
-        TextView tabOne = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.custom_tabs, null);
-        tabOne.setText(mFragmentTitleList.get(1));
-//        tabOne.setCompoundDrawablesWithIntrinsicBounds(0, 0 ,R.drawable.ic_error, 0);
-        tabOne.setTextSize(16);
-        tabOne.setGravity(Gravity.CENTER_VERTICAL);
-
-        tabLayout.getTabAt(1).setCustomView(tabOne);
-
     }
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
