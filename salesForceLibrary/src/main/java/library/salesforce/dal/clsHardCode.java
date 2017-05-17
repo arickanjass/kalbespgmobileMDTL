@@ -205,6 +205,7 @@ public class clsHardCode  {
 	public String txtTable_tSalesQuantityStock="tSalesProductQuantityHeader";
 	public String txtTable_tSalesProductQuantityDetail="tSalesProductQuantityDetail";
 	public String txtTable_tSalesProductQuantityImage="tSalesProductQuantityImage";
+	public String txtTable_trackingLocation="trackingLocation";
 
 	public String dtDateTimeNow(){
 		Date date = new Date();
