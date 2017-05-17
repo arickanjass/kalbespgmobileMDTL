@@ -1,5 +1,6 @@
 package com.kalbenutritionals.app.kalbespgmobile;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,10 +10,16 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +30,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.apache.http.util.ByteArrayBuffer;
 import org.json.simple.JSONArray;
@@ -65,6 +75,7 @@ import bl.tSalesProductQuantityHeaderBL;
 import bl.tUserLoginBL;
 import bl.tVisitPlanHeader_MobileBL;
 import bl.tVisitPlanRealisasiBL;
+import bl.trackingLocationBL;
 import library.salesforce.common.APIData;
 import library.salesforce.common.clsHelper;
 import library.salesforce.common.dataJson;
@@ -97,13 +108,16 @@ import library.salesforce.common.tSalesProductQuantityImageData;
 import library.salesforce.common.tUserLoginData;
 import library.salesforce.common.tVisitPlanHeader_MobileData;
 import library.salesforce.common.tVisitPlanRealisasiData;
+import library.salesforce.common.trackingLocationData;
 import library.salesforce.dal.clsHardCode;
 import library.salesforce.dal.tPurchaseOrderDetailDA;
 import library.salesforce.dal.tSalesProductDetailDA;
 import library.salesforce.dal.tSalesProductQuantityDetailDA;
 import library.salesforce.dal.tSalesProductQuantityImageDA;
 
-public class FragmentDownloadData extends Fragment {
+import static android.content.Context.LOCATION_SERVICE;
+
+public class FragmentDownloadData extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
     View v;
 
     private Button btnBranch;
@@ -136,6 +150,9 @@ public class FragmentDownloadData extends Fragment {
     private String[] strip = new String[]{"-"};
     int intProcesscancel = 0;
     tUserLoginData loginData;
+    private Location mLastLocation;
+    private final static int INTERVAL = 1000 * 60 * 2; //2 minutes
+    Handler mHandler = new Handler();
 
     clsMainActivity _clsMainActivity;
 
@@ -250,6 +267,7 @@ public class FragmentDownloadData extends Fragment {
                 intProcesscancel = 0;
                 AsyncCallDownloadAll task = new AsyncCallDownloadAll();
                 task.execute();
+                startRepeatingTask();
             }
         });
         btnLeave.setOnClickListener(new View.OnClickListener() {
@@ -314,6 +332,7 @@ public class FragmentDownloadData extends Fragment {
                 intProcesscancel = 0;
                 AsyncCallAbsen task = new AsyncCallAbsen();
                 task.execute();
+                startRepeatingTask();
             }
         });
         btnDataLeave.setOnClickListener(new View.OnClickListener() {
@@ -550,6 +569,41 @@ public class FragmentDownloadData extends Fragment {
             spnDataLeave.setAdapter(adapterspn);
             spnDataLeave.setEnabled(false);
         }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
+
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 
     public class MyAdapter extends ArrayAdapter<String> {
@@ -2576,5 +2630,103 @@ public class FragmentDownloadData extends Fragment {
             }
         }
         return _array;
+    }
+
+    public Location trackingLocation() {
+        try {
+            LocationManager locationManager = (LocationManager) getActivity()
+                    .getSystemService(LOCATION_SERVICE);
+
+            // getting GPS status
+            boolean isGPSEnabled = locationManager
+                    .isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+            // getting network status
+            boolean isNetworkEnabled = locationManager
+                    .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+            boolean canGetLocation=false;
+            Location location = null;
+
+            if (!isGPSEnabled && !isNetworkEnabled) {
+                // no network provider is enabled
+                new clsMainActivity().showCustomToast(getContext(), "no network provider is enabled", false );
+            } else {
+                canGetLocation = true;
+                if (isNetworkEnabled) {
+                    if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    }
+                    locationManager.requestLocationUpdates(
+                            LocationManager.NETWORK_PROVIDER,
+                            1000,
+                            0, this);
+                    Log.d("Network", "Network Enabled");
+                    if (locationManager != null) {
+                        mLastLocation = locationManager
+                                .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                        if (location != null) {
+                            double latitude = location.getLatitude();
+                            double longitude = location.getLongitude();
+                        }
+                    }
+                }
+                // if GPS Enabled get lat/long using GPS Services
+                if (isGPSEnabled) {
+                    if (mLastLocation == null) {
+                        locationManager.requestLocationUpdates(
+                                LocationManager.GPS_PROVIDER,
+                                1000,
+                                0, this);
+                        Log.d("GPS", "GPS Enabled");
+                        if (locationManager != null) {
+                            location = locationManager
+                                    .getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                            if (location != null) {
+                                double latitude = location.getLatitude();
+                                double longitude = location.getLongitude();
+                            }
+                        }
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return mLastLocation;
+    }
+
+    private void saveLocation() {
+        trackingLocationData dataLocation = new trackingLocationData();
+//        java.text.DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+//        Calendar cal = Calendar.getInstance();
+
+        dataLocation.set_intId(new clsMainActivity().GenerateGuid());
+        dataLocation.set_txtLongitude(String.valueOf(mLastLocation.getLongitude()));
+        dataLocation.set_txtLatitude(String.valueOf(mLastLocation.getLongitude()));
+        dataLocation.set_txtAccuracy(String.valueOf(mLastLocation.getAccuracy()));
+
+        List<trackingLocationData> dtList = new ArrayList<>();
+        dtList.add(dataLocation);
+        new trackingLocationBL().SaveDataLocation(dtList);
+    }
+
+    Runnable mHandlerTask = new Runnable()
+    {
+        @Override
+        public void run() {
+            trackingLocation();
+            saveLocation();
+            mHandler.postDelayed(mHandlerTask, INTERVAL);
+        }
+    };
+    void startRepeatingTask()
+    {
+        mHandlerTask.run();
+    }
+
+    void stopRepeatingTask()
+    {
+        mHandler.removeCallbacks(mHandlerTask);
     }
 }
