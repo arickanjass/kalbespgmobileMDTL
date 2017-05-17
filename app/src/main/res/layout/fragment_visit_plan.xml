@@ -37,18 +37,26 @@
                 android:layout_height="wrap_content"
                 android:text="txthdId"
                 android:visibility="gone" />
-            <Spinner
+            <!--<Spinner
                 android:id="@+id/spnType"
                 android:layout_below="@+id/tvBranch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:background="@drawable/bg_edtext"/>
+                android:background="@drawable/bg_edtext"/>-->
+            <EditText
+                android:id="@+id/etBranch"
+                android:background="@drawable/bg_edtext"
+                android:layout_width="match_parent"
+                android:textSize="14dp"
+                android:layout_below="@+id/tvBranch"
+                android:layout_marginTop="2dp"
+                android:layout_height="wrap_content" />
             <View
                 android:id="@+id/view1"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@+id/spnType"
+                android:layout_below="@+id/etBranch"
                 android:layout_marginTop="10dp"
                 android:background="#bfbfbf" />
             <TextView
@@ -60,18 +68,26 @@
                 android:layout_marginLeft="10dp"
                 android:text="Outlet :"
                 android:textColor="#000"/>
-            <Spinner
+            <!--<Spinner
                 android:id="@+id/spnOutlet"
                 android:layout_below="@+id/tvOutlet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:background="@drawable/bg_edtext" />
+                android:background="@drawable/bg_edtext" />-->
+            <EditText
+                android:id="@+id/etOutlet"
+                android:background="@drawable/bg_edtext"
+                android:layout_marginTop="2dp"
+                android:layout_below="@+id/tvOutlet"
+                android:textSize="14dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
             <View
                 android:id="@+id/view2"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@+id/spnOutlet"
+                android:layout_below="@+id/etOutlet"
                 android:layout_marginTop="10dp"
                 android:background="#bfbfbf" />
             <TextView
@@ -201,26 +217,27 @@
                         android:text="" />
                 </TableRow>
                 <TableRow
-                    android:background="@drawable/border"
-                    android:padding="5dp"
-                    android:gravity="center_horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        />
+                    android:background="#ffffff"
+                    android:padding="5dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Distance"
+                        android:layout_weight="1"
                         />
                     <TextView
                         android:id="@+id/tvDistance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="234"
+                        android:layout_weight="1"
                         />
-
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:layout_weight="1"
+                        />
                 </TableRow>
             </TableLayout>
 

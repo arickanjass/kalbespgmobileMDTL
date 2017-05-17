@@ -27,7 +27,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -115,6 +114,7 @@ public class FragmentVisitPlan extends Fragment {
     private HashMap<String, String> HMoutletLat = new HashMap<String, String>();
     private HashMap<String, String> HMIdRealisasi = new HashMap<String, String>();
 
+    private String ID_REALISASI = "IdRealisasi";
     final String finalFile = null;
     private TextView lblLong;
     private TextView lblLang;
@@ -124,6 +124,8 @@ public class FragmentVisitPlan extends Fragment {
     private TextView lblLatOutlet;
     private TextView lblDistance;
     private EditText etDescReply;
+    private EditText etBranch;
+    private EditText etOutlet;
     private ArrayAdapter<String> dataAdapterBranch;
     private ArrayAdapter<String> dataAdapterOutlet;
     //    private tAbsenUserBL _tAbsenUserBL;
@@ -151,6 +153,9 @@ public class FragmentVisitPlan extends Fragment {
     private String branchCode;
     private String outletCode;
     private String myClass;
+    Bundle dataHeader;
+    String idRealisasiHeader;
+    tVisitPlanRealisasiData dataDetail;
     private Class<?> clazz = null;
     tVisitPlanRealisasiData _tVisitPlanRealisasiData = new tVisitPlanRealisasiData();;
     private Uri uriImage;
@@ -278,12 +283,25 @@ public class FragmentVisitPlan extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_visit_plan, container, false);
+        dataHeader = getArguments();
+        idRealisasiHeader = dataHeader.getString(ID_REALISASI);
+        dataDetail = new tVisitPlanRealisasiBL().getAllDataByHeaderId(idRealisasiHeader);
+
+        etBranch = (EditText) v.findViewById(R.id.etBranch);
+        etOutlet = (EditText) v.findViewById(R.id.etOutlet);
+        etBranch.setText(dataDetail.get_txtBranchCode());
+        etBranch.setClickable(false);
+        etBranch.setFocusable(false);
+        etOutlet.setText(dataDetail.get_txtOutletName());
+        etOutlet.setFocusable(false);
+        etOutlet.setClickable(false);
+
         txtHDId = (TextView) v.findViewById(R.id.txtHDId);
         btnRefreshMaps = (Button) v.findViewById(R.id.btnRefreshMaps);
         btnCheckIn = (Button) v.findViewById(R.id.buttonCheckIn);
         btnPopupMap = (Button) v.findViewById(R.id.viewMap);
-        spnOutlet = (Spinner) v.findViewById(R.id.spnOutlet);
-        spnBranch = (Spinner) v.findViewById(R.id.spnType);
+//        spnOutlet = (Spinner) v.findViewById(R.id.spnOutlet);
+//        spnBranch = (Spinner) v.findViewById(R.id.spnType);
         imgPrevNoImg1 = (ImageView) v.findViewById(R.id.imageViewCamera1);
         imgPrevNoImg2 = (ImageView) v.findViewById(R.id.imageViewCamera2);
         lblLong = (TextView) v.findViewById(R.id.tvLong);
@@ -291,6 +309,9 @@ public class FragmentVisitPlan extends Fragment {
         lblAcc = (TextView) v.findViewById(R.id.tvAcc);
         lblLongOutlet = (TextView) v.findViewById(R.id.tvLongOutlet);
         lblLatOutlet = (TextView) v.findViewById(R.id.tvlatOutlet);
+        lblLongOutlet.setText(dataDetail.get_txtLongSource());
+        lblLatOutlet.setText(dataDetail.get_txtLatSource());
+
         lblDistance = (TextView) v.findViewById(R.id.tvDistance);
         options = new BitmapFactory.Options();
         options.inSampleSize = 2;
@@ -301,7 +322,7 @@ public class FragmentVisitPlan extends Fragment {
         pht2 = null;
 
 
-        spnOutlet.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        /*spnOutlet.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 getDistance();
@@ -315,7 +336,7 @@ public class FragmentVisitPlan extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });
+        });*/
 
         etDescReply.setFilters(new InputFilter[]{
                 new InputFilter() {
@@ -361,7 +382,8 @@ public class FragmentVisitPlan extends Fragment {
         if (mLastLocation != null) {
             displayLocation(mLastLocation);
         }
-
+        getDistance();
+        lblDistance.setText(Float.toString(distance));
         btnPopupMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -380,8 +402,8 @@ public class FragmentVisitPlan extends Fragment {
                     double longitude = Double.parseDouble(String.valueOf(lblLong.getText()));
                     double accurate = Double.parseDouble(String.valueOf(lblAcc.getText()));
 
-                    double latitudeOutlet = Double.parseDouble(HMoutletLat.get(spnOutlet.getSelectedItem().toString()));
-                    double longitudeOutlet = Double.parseDouble(HMoutletLang.get(spnOutlet.getSelectedItem().toString()));
+                    double latitudeOutlet = Double.parseDouble(dataDetail.get_txtLatSource());
+                    double longitudeOutlet = Double.parseDouble(dataDetail.get_txtLongSource());
 
                     MarkerOptions marker = new MarkerOptions().position(new LatLng(latitude, longitude)).title("Your Location");
 
@@ -464,10 +486,10 @@ public class FragmentVisitPlan extends Fragment {
         imgPrevNoImg1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String nameBranch = spnBranch.getSelectedItem().toString();
-                String nameOutlet = spnOutlet.getSelectedItem().toString();
-                String branchCode = HMbranch.get(nameBranch);
-                String outletCode = HMoutlet.get(nameOutlet);
+//                String nameBranch = spnBranch.getSelectedItem().toString();
+//                String nameOutlet = spnOutlet.getSelectedItem().toString();
+//                String branchCode = HMbranch.get(nameBranch);
+//                String outletCode = HMoutlet.get(nameOutlet);
                 tUserLoginData dataUserActive = new tAbsenUserBL().getUserActive();
                 String idUserActive = String.valueOf(dataUserActive.get_txtUserId());
                 String idRoleActive = String.valueOf(dataUserActive.get_txtRoleId());
@@ -503,10 +525,10 @@ public class FragmentVisitPlan extends Fragment {
 
             @Override
             public void onClick(View v) {
-                String nameBranch = spnBranch.getSelectedItem().toString();
-                String nameOutlet = spnOutlet.getSelectedItem().toString();
-                String branchCode = HMbranch.get(nameBranch);
-                String outletCode = HMoutlet.get(nameOutlet);
+//                String nameBranch = spnBranch.getSelectedItem().toString();
+//                String nameOutlet = spnOutlet.getSelectedItem().toString();
+//                String branchCode = HMbranch.get(nameBranch);
+//                String outletCode = HMoutlet.get(nameOutlet);
                 /*if (dttAbsenUserData == null) {
                     dttAbsenUserData = new tAbsenUserData();
                 }
@@ -535,7 +557,7 @@ public class FragmentVisitPlan extends Fragment {
                 captureImage2();
             }
         });
-        arrData = new ArrayList<String>();
+       /* arrData = new ArrayList<String>();
         if (listDataBranch.size() > 0) {
             for (tVisitPlanRealisasiData dt : listDataBranch) {
                 arrData.add(dt.get_txtBranchCode());
@@ -556,7 +578,7 @@ public class FragmentVisitPlan extends Fragment {
             }
             dataAdapterOutlet = new MyAdapter(getContext(), R.layout.custom_spinner, arrData);
             spnOutlet.setAdapter(dataAdapterOutlet);
-        }
+        }*/
 
         /*if (dttAbsenUserData != null) {
             if (dttAbsenUserData.get_intSubmit().equals("1")) {
@@ -628,8 +650,8 @@ public class FragmentVisitPlan extends Fragment {
 
                 myClass = "com.kalbenutritionals.app.kalbespgmobile.MainMenu";
                 MenuID = "mnCheckinKBN";
-                nameOutlet = spnOutlet.getSelectedItem().toString();
-                outletCode = HMoutlet.get(nameOutlet);
+                nameOutlet = dataDetail.get_txtOutletName();
+                outletCode = dataDetail.get_txtOutletCode();
                 LayoutInflater layoutInflater = LayoutInflater.from(getContext());
                 final View promptView = layoutInflater.inflate(R.layout.confirm_data, null);
 
@@ -677,8 +699,8 @@ public class FragmentVisitPlan extends Fragment {
                                         if (pRes) {
                                             double latitude = Double.parseDouble(String.valueOf(lblLang.getText()));
                                             double longitude = Double.parseDouble(String.valueOf(lblLong.getText()));
-                                            double latitudeOutlet = Double.parseDouble(HMoutletLat.get(spnOutlet.getSelectedItem().toString()));
-                                            double longitudeOutlet = Double.parseDouble(HMoutletLang.get(spnOutlet.getSelectedItem().toString()));
+                                            double latitudeOutlet = Double.parseDouble(dataDetail.get_txtLatSource());
+                                            double longitudeOutlet = Double.parseDouble(dataDetail.get_txtLongSource());
 
                                             Location locationA = new Location("point A");
 
@@ -697,11 +719,11 @@ public class FragmentVisitPlan extends Fragment {
                                             if ((int) Math.ceil(distance) > 100 && checkLocation.get_txtCheckLocation().equals("1")) {
                                                 _clsMainActivity.showCustomToast(getContext(), "Failed checkin: Your location too far from outlet", false);
                                             } else {
-                                                nameBranch = spnBranch.getSelectedItem().toString();
-                                                nameOutlet = spnOutlet.getSelectedItem().toString();
-                                                branchCode = HMbranch.get(nameBranch);
-                                                outletCode = HMoutlet.get(nameOutlet);
-                                                idRealisasi = HMIdRealisasi.get(nameOutlet);
+                                                nameBranch = dataDetail.get_txtBranchCode();
+                                                nameOutlet = dataDetail.get_txtOutletName();
+                                                branchCode = dataDetail.get_txtBranchCode();
+                                                outletCode = dataDetail.get_txtOutletCode();
+                                                idRealisasi = dataDetail.get_txtDataIDRealisasi();
 
 
 //                                                _tVisitPlanRealisasiData = new tVisitPlanRealisasiData();
@@ -724,6 +746,7 @@ public class FragmentVisitPlan extends Fragment {
                                                 _tVisitPlanRealisasiData.set_intDistance(distance + "");
                                                 _tVisitPlanRealisasiData.set_txtRoleId(idRoleActive);
                                                 _tVisitPlanRealisasiData.set_intSubmit("1");
+                                                _tVisitPlanRealisasiData.set_txtAcc(lblAcc.getText().toString());
 //                                                _tVisitPlanRealisasiData.set_intPush("0");
                                                 checkInUserDatas.add(_tVisitPlanRealisasiData);
                                                 new tVisitPlanRealisasiBL().UpdateData(checkInUserDatas);
@@ -758,8 +781,8 @@ public class FragmentVisitPlan extends Fragment {
                                                 datatAbsenUserData.set_dtDateCheckOut(null);
                                                 absenUserDatas.add(datatAbsenUserData);
                                                 new tAbsenUserBL().saveData(absenUserDatas);*/
-                                                spnBranch.setEnabled(false);
-                                                spnOutlet.setEnabled(false);
+//                                                spnBranch.setEnabled(false);
+//                                                spnOutlet.setEnabled(false);
                                                 imgPrevNoImg1.setClickable(false);
                                                 imgPrevNoImg2.setClickable(false);
                                                 btnRefreshMaps.setClickable(false);
@@ -814,8 +837,8 @@ public class FragmentVisitPlan extends Fragment {
     private void getDistance(){
         latitude = Double.parseDouble(String.valueOf(lblLang.getText()));
         longitude = Double.parseDouble(String.valueOf(lblLong.getText()));
-        latitudeOutlet = Double.parseDouble(HMoutletLat.get(spnOutlet.getSelectedItem().toString()));
-        longitudeOutlet = Double.parseDouble(HMoutletLang.get(spnOutlet.getSelectedItem().toString()));
+        latitudeOutlet = Double.parseDouble(dataDetail.get_txtLatSource().toString());
+        longitudeOutlet = Double.parseDouble(dataDetail.get_txtLongSource().toString());
 
         Location locationA = new Location("point A");
 

@@ -125,6 +125,7 @@ public class tVisitPlanRealisasiDA {
         cv.put(dt.Property_dtPhoto2,data.get_dtPhoto2());
         cv.put(dt.Property_txtLong,data.get_txtLong());
         cv.put(dt.Property_txtLat,data.get_txtLat());
+        cv.put(dt.Property_txtAcc,data.get_txtAcc());
         cv.put(dt.Property_intDistance,data.get_intDistance());
         cv.put(dt.Property_txtRoleId,data.get_txtRoleId());
         cv.put(dt.Property_intSubmit,data.get_intSubmit());
