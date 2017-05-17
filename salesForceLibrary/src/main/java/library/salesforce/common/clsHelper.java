@@ -71,6 +71,7 @@ import library.salesforce.dal.tSalesProductQuantityImageDA;
 import library.salesforce.dal.tUserLoginDA;
 import library.salesforce.dal.tVisitPlanHeader_MobileDA;
 import library.salesforce.dal.tVisitPlanRealisasiDA;
+import library.salesforce.dal.trackingLocationDA;
 
 public class clsHelper {
 	public void InitlizeDB(){
@@ -265,6 +266,7 @@ public class clsHelper {
 		mPertanyaanDA _mPertanyaanDA = new mPertanyaanDA(db);
 		tJawabanUserDA _tJawabanUserDA = new tJawabanUserDA(db);
 		mCategoryVisitPlanDA _mMCategoryVisitPlanDA = new mCategoryVisitPlanDA(db);
+		trackingLocationDA _trackingLocationDA = new trackingLocationDA(db);
 
 		tVisitPlanHeader_MobileDA _tVisitPlanHeader_mobileDA = new tVisitPlanHeader_MobileDA(db);
 		tVisitPlanRealisasiDA _tVisitPlanRealisasiDA = new tVisitPlanRealisasiDA(db);
@@ -318,6 +320,7 @@ public class clsHelper {
 		_mListJawabanDA.DropTable(db);
 		_mPertanyaanDA.DropTable(db);
 		_tJawabanUserDA.DropTable(db);
+		_trackingLocationDA.DropTable(db);
 
 		_mMCategoryVisitPlanDA = new mCategoryVisitPlanDA(db);
 		_tVisitPlanRealisasiDA = new tVisitPlanRealisasiDA(db);
@@ -338,6 +341,7 @@ public class clsHelper {
 		_mListJawabanDA = new mListJawabanDA(db);
 		_mPertanyaanDA = new mPertanyaanDA(db);
 		_tJawabanUserDA = new tJawabanUserDA(db);
+		_trackingLocationDA = new trackingLocationDA(db);
 
 		_mPriceInOutletDA=new mPriceInOutletDA(db);
 		_mUserRoleDA=new mUserRoleDA(db);
