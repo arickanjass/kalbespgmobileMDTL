@@ -13,7 +13,8 @@ public enum enumCounterData {
 	 NoPurchaseOrder (10),
 	 NoQuantityStock (11),
 	 dtPushKBN (12),
-	 CustomerBase (13)
+	 CustomerBase (13),
+	 MonitoringLocation(14)
 	 ; 
 	 enumCounterData(int idConfigData) {this.idConfigData = idConfigData;}
 	public int getidCounterData() {
