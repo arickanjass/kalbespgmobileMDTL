@@ -351,6 +351,25 @@ public class dataJson {
                 resJson.put(dttPurchaseOrderDetailData.Property_ListOftPurchaseOrderDetailData, new JSONArray(itemsListJquey));
             }
 
+            if (this.getListOftVisitPlanHeader_MobileData() != null){
+                tVisitPlanHeader_MobileData dttVisitPlanHeader_MobileData = new tVisitPlanHeader_MobileData();
+                itemsListJquey = new ArrayList<JSONObject>();
+                for(tVisitPlanHeader_MobileData data : this.getListOftVisitPlanHeader_MobileData()){
+                    JSONObject item = new JSONObject();
+                    item.put(dttVisitPlanHeader_MobileData.Property_intHeaderId, String.valueOf(data.get_intHeaderId()));
+                    item.put(dttVisitPlanHeader_MobileData.Property_txtUserId, String.valueOf(data.get_txtUserId()));
+                    item.put(dttVisitPlanHeader_MobileData.Property_txtPeriode, String.valueOf(data.get_txtPeriode()));
+                    item.put(dttVisitPlanHeader_MobileData.Property_intUnplan, String.valueOf(data.get_intUnplan()));
+                    item.put(dttVisitPlanHeader_MobileData.Property_txtBranchCode, String.valueOf(data.get_txtBranchCode()));
+                    item.put(dttVisitPlanHeader_MobileData.Property_bitActive, String.valueOf(data.get_bitActive()));
+                    item.put(dttVisitPlanHeader_MobileData.Property_dtStart, String.valueOf(data.get_dtStart()));
+                    item.put(dttVisitPlanHeader_MobileData.Property_dtEnd, String.valueOf(data.get_dtEnd()));
+                    item.put(dttVisitPlanHeader_MobileData.Property_intSumBobot, String.valueOf(data.get_intSumBobot()));
+                    itemsListJquey.add(item);
+                }
+                resJson.put(dttVisitPlanHeader_MobileData.Property_ListOftVisitPlanHeader_MobileData, new JSONArray(itemsListJquey));
+            }
+
             if (this.getListOftVisitPlanRealisasiData() != null){
                 List<tVisitPlanRealisasiData> list = getListOftVisitPlanRealisasiData();
                 /*for (int i = 0; i<= list.size(); i++){

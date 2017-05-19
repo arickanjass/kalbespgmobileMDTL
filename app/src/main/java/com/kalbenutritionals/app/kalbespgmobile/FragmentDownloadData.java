@@ -886,7 +886,7 @@ public class FragmentDownloadData extends Fragment {
                             _data.set_intHeaderId((String) innerObjListoftTransaksiRealisasiVisitPlanHeaderData.get("intHeaderId"));
                             _data.set_txtUserId((String) innerObjListoftTransaksiRealisasiVisitPlanHeaderData.get("txtUserId"));
                             _data.set_txtPeriode((String) innerObjListoftTransaksiRealisasiVisitPlanHeaderData.get("txtPeriode"));
-                            _data.set_intGuidUnplan((String) innerObjListoftTransaksiRealisasiVisitPlanHeaderData.get("txtGuidIdUnplan"));
+                            _data.set_txtGuidUnplan((String) innerObjListoftTransaksiRealisasiVisitPlanHeaderData.get("txtGuidIdUnplan"));
                             _data.set_intUnplan((String) innerObjListoftTransaksiRealisasiVisitPlanHeaderData.get("intUnplan"));
                             _data.set_txtBranchCode((String) innerObjListoftTransaksiRealisasiVisitPlanHeaderData.get("txtBranchCode"));
                             _data.set_bitActive((String) innerObjListoftTransaksiRealisasiVisitPlanHeaderData.get("bitActive"));

@@ -70,6 +70,12 @@ public class tVisitPlanRealisasiBL extends clsMainBL{
         List<tVisitPlanRealisasiData> listData=_tActivityDA.getAllData(db);
         return listData;
     }
+    public List<tVisitPlanRealisasiData> getAllDataByIntSubmit(String intSubmit){
+        SQLiteDatabase db=getDb();
+        tVisitPlanRealisasiDA _tActivityDA=new tVisitPlanRealisasiDA(db);
+        List<tVisitPlanRealisasiData> listData=_tActivityDA.getAllDataByIntSubmit(db, intSubmit);
+        return listData;
+    }
     public tVisitPlanRealisasiData getDataByIdOutlet(String id){
         SQLiteDatabase db=getDb();
         tVisitPlanRealisasiDA _tActivityDA=new tVisitPlanRealisasiDA(db);

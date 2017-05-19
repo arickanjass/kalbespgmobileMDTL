@@ -22,7 +22,7 @@ public class tVisitPlanHeader_MobileDA {
                 + dt.Property_txtUserId + " TEXT NULL,"
                 + dt.Property_txtPeriode + " TEXT NULL,"
                 + dt.Property_intUnplan + " TEXT NULL,"
-                + dt.Property_intGuIdUnplan + " TEXT NULL,"
+                + dt.Property_txtGuIdUnplan + " TEXT NULL,"
                 + dt.Property_txtBranchCode + " TEXT NULL,"
                 + dt.Property_bitActive + " TEXT NULL,"
                 + dt.Property_dtStart + " TEXT NULL,"
@@ -51,7 +51,7 @@ public class tVisitPlanHeader_MobileDA {
                 +dt.Property_txtUserId+ ","
                 +dt.Property_txtPeriode+ ","
                 +dt.Property_intUnplan+ ","
-                +dt.Property_intGuIdUnplan+ ","
+                +dt.Property_txtGuIdUnplan + ","
                 +dt.Property_txtBranchCode+ ","
                 +dt.Property_bitActive+ ","
                 +dt.Property_dtStart+ ","
@@ -64,7 +64,7 @@ public class tVisitPlanHeader_MobileDA {
                 +String.valueOf(data.get_txtUserId())+"','"
                 +String.valueOf(data.get_txtPeriode())+"','"
                 +String.valueOf(data.get_intUnplan())+"','"
-                +String.valueOf(data.get_intGuIdUnplan())+"','"
+                +String.valueOf(data.get_txtGuIdUnplan())+"','"
                 +String.valueOf(data.get_txtBranchCode())+"','"
                 +String.valueOf(data.get_bitActive())+"','"
                 +String.valueOf(data.get_dtStart())+"','"
@@ -83,7 +83,7 @@ public class tVisitPlanHeader_MobileDA {
                 dt.Property_txtUserId,
                 dt.Property_txtPeriode,
                 dt.Property_intUnplan,
-                dt.Property_intGuIdUnplan,
+                dt.Property_txtGuIdUnplan,
                 dt.Property_txtBranchCode,
                 dt.Property_bitActive,
                 dt.Property_dtStart,
@@ -116,7 +116,7 @@ public class tVisitPlanHeader_MobileDA {
                 contact.set_txtUserId(cursor.getString(1));
                 contact.set_txtPeriode(cursor.getString(2));
                 contact.set_intUnplan(cursor.getString(3));
-                contact.set_intGuidUnplan(cursor.getString(4));
+                contact.set_txtGuidUnplan(cursor.getString(4));
                 contact.set_txtBranchCode(cursor.getString(5));
                 contact.set_bitActive(cursor.getString(6));
                 contact.set_dtStart(cursor.getString(7));
@@ -148,7 +148,7 @@ public class tVisitPlanHeader_MobileDA {
                 contact.set_txtUserId(cursor.getString(1));
                 contact.set_txtPeriode(cursor.getString(2));
                 contact.set_intUnplan(cursor.getString(3));
-                contact.set_intGuidUnplan(cursor.getString(4));
+                contact.set_txtGuidUnplan(cursor.getString(4));
                 contact.set_txtBranchCode(cursor.getString(5));
                 contact.set_bitActive(cursor.getString(6));
                 contact.set_dtStart(cursor.getString(7));
@@ -180,7 +180,7 @@ public class tVisitPlanHeader_MobileDA {
                 contact.set_txtUserId(cursor.getString(1));
                 contact.set_txtPeriode(cursor.getString(2));
                 contact.set_intUnplan(cursor.getString(3));
-                contact.set_intGuidUnplan(cursor.getString(4));
+                contact.set_txtGuidUnplan(cursor.getString(4));
                 contact.set_txtBranchCode(cursor.getString(5));
                 contact.set_bitActive(cursor.getString(6));
                 contact.set_dtStart(cursor.getString(7));

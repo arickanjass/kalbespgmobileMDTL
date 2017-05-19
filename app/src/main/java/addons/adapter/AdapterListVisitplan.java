@@ -53,7 +53,7 @@ public class AdapterListVisitplan extends BaseAdapter implements ListAdapter{
         final ViewHolder holder = (ViewHolder) convertView.getTag();
         holder.tv_name.setText(item);
         ImageView icon = (ImageView) convertView.findViewById(R.id.iconRealisasi);
-        if (mAppList.get(position).get_intPIC().equals("Visited")){
+        if (mAppList.get(position).get_intPIC().equals("Done")){
             icon.setImageResource(R.drawable.ic_check_circle_black_24dp);
         }else{
             icon.setImageResource(R.drawable.ic_error_black);

@@ -10,7 +10,7 @@ public class tVisitPlanHeader_MobileData {
     private String _txtUserId;
     private String _txtPeriode;
     private String _intUnplan;
-    private String _intGuIdUnplan;
+    private String _txtGuIdUnplan;
     private String _txtBranchCode;
     private String _bitActive;
     private String _dtStart;
@@ -66,12 +66,12 @@ public class tVisitPlanHeader_MobileData {
         this._intUnplan = _intUnplan;
     }
 
-    public synchronized String get_intGuIdUnplan() {
-        return _intGuIdUnplan;
+    public synchronized String get_txtGuIdUnplan() {
+        return _txtGuIdUnplan;
     }
 
-    public synchronized void set_intGuidUnplan(String _intGuIdUnplan) {
-        this._intGuIdUnplan = _intGuIdUnplan;
+    public synchronized void set_txtGuidUnplan(String _txtGuIdUnplan) {
+        this._txtGuIdUnplan = _txtGuIdUnplan;
     }
 
     public synchronized String get_txtBranchCode() {
@@ -126,7 +126,7 @@ public class tVisitPlanHeader_MobileData {
     public String Property_txtUserId = "txtUserId";
     public String Property_txtPeriode = "txtPeriode";
     public String Property_intUnplan = "intUnplan";
-    public String Property_intGuIdUnplan = "intGuIdUnplan";
+    public String Property_txtGuIdUnplan = "txtGuIdUnplan";
     public String Property_txtBranchCode = "txtBranchCode";
     public String Property_bitActive = "bitActive";
     public String Property_dtStart = "dtStart";
@@ -135,12 +135,13 @@ public class tVisitPlanHeader_MobileData {
     public String Property_intRealisasi = "intRealisasi";
     public String Property_intSubmit = "intSubmit";
     public String Property_intPush = "intPush";
+    public String Property_ListOftVisitPlanHeader_MobileData = "ListOftVisitplanHeaderData";
     public String Property_All =
             Property_intHeaderId + "," +
                     Property_txtUserId + "," +
                     Property_txtPeriode+ "," +
                     Property_intUnplan+ "," +
-                    Property_intGuIdUnplan+ "," +
+                    Property_txtGuIdUnplan + "," +
                     Property_txtBranchCode+ "," +
                     Property_bitActive+ "," +
                     Property_dtStart+ "," +

@@ -284,8 +284,8 @@ public class clsHelperBL extends clsMainBL {
             tCustomerBasedMobileDetailDA _tCustomerBasedMobileDetailDA = new tCustomerBasedMobileDetailDA(db);
             tCustomerBasedMobileDetailProductDA _tCustomerBasedMobileDetailProductDA = new tCustomerBasedMobileDetailProductDA(db);
 
-            List<tVisitPlanHeader_MobileData> ListOftVisitPlanHeader_MobileDataHeader = _tVisitPlanHeader_MobileDA.getPushData(db);
-            List<tVisitPlanRealisasiData> ListOftVisitPlanRealisasiDataDetail = _tVisitPlanRealisasiDA.getPushData(db, ListOftVisitPlanHeader_MobileDataHeader);
+            List<tVisitPlanHeader_MobileData> ListOftVisitPlanHeader_MobileData = _tVisitPlanHeader_MobileDA.getPushData(db);
+            List<tVisitPlanRealisasiData> ListOftVisitPlanRealisasiDataDetail = _tVisitPlanRealisasiDA.getPushData(db, ListOftVisitPlanHeader_MobileData);
             List<tCustomerBasedMobileHeaderData> ListOftCustomerBasedMobileHeader = _tCustomerBasedMobileHeaderDA.getPushData(db);
             List<tCustomerBasedMobileDetailData> ListOftCustomerBasedMobileDetail = _tCustomerBasedMobileDetailDA.getPushData(db, ListOftCustomerBasedMobileHeader);
             List<tCustomerBasedMobileDetailProductData> ListOftCustomerBasedMobileDetailProduct = _tCustomerBasedMobileDetailProductDA.getPushData(db, ListOftCustomerBasedMobileDetail);
@@ -393,8 +393,8 @@ public class clsHelperBL extends clsMainBL {
             if (ListOftCustomerBasedMobileDetailProduct != null) {
                 dtPush.setListOftCustomerBasedMobileDetailProductData(ListOftCustomerBasedMobileDetailProduct);
             }
-            if (ListOftVisitPlanHeader_MobileDataHeader != null){
-                dtPush.setListOftVisitPlanHeader_MobileData(ListOftVisitPlanHeader_MobileDataHeader);
+            if (ListOftVisitPlanHeader_MobileData != null){
+                dtPush.setListOftVisitPlanHeader_MobileData(ListOftVisitPlanHeader_MobileData);
             }
 
         } else {

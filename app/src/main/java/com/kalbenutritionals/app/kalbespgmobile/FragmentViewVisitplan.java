@@ -53,7 +53,7 @@ public class FragmentViewVisitplan  extends Fragment implements IXListViewListen
 
     }
     private void loadData() {
-        List<tVisitPlanRealisasiData> dtVisitPlan = new tVisitPlanRealisasiBL().getAllData();
+        List<tVisitPlanRealisasiData> dtVisitPlan = new tVisitPlanRealisasiBL().getAllDataByIntSubmit("0");
 
         lvVisitPlan = (ListView) v.findViewById(R.id.list_view_tRealisasi);
         clsSwipeList swplist;
@@ -88,7 +88,7 @@ public class FragmentViewVisitplan  extends Fragment implements IXListViewListen
                 data.putString( ID_REALISASI , hmIdRealisasi.get(position).toString());
                 FragmentVisitPlan fragmentVisitPlan = new FragmentVisitPlan();
                 fragmentVisitPlan.setArguments(data);
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                FragmentTransaction fragmentTransaction = getParentFragment().getFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.frame, fragmentVisitPlan);
                 fragmentTransaction.commit();
             }
