@@ -26,6 +26,7 @@ import library.salesforce.common.clsHelper;
 import library.salesforce.common.clsStatusMenuStart;
 import library.salesforce.dal.enumStatusMenuStart;
 import service.MyServiceNative;
+import service.MyTrackingLocationService;
 
 public class Splash extends AppCompatActivity {
     long delay = 5000;
@@ -145,6 +146,7 @@ public class Splash extends AppCompatActivity {
                         myIntent = new Intent(Splash.this, MainMenu.class);
                         //myIntent.putExtra("key_view", "main_menu");
                         startService(new Intent(getApplicationContext(), MyServiceNative.class));
+                        startService(new Intent(getApplicationContext(), MyTrackingLocationService.class));
                     }
                 } catch (ParseException e) {
                     e.printStackTrace();

@@ -63,6 +63,7 @@ import library.salesforce.common.tNotificationData;
 import library.salesforce.common.tUserLoginData;
 import library.salesforce.dal.clsHardCode;
 import service.MyServiceNative;
+import service.MyTrackingLocationService;
 
 public class MainMenu extends AppCompatActivity implements View.OnClickListener {
 
@@ -123,6 +124,9 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
         Intent serviceIntentMyServiceNative = new Intent(getApplicationContext(), MyServiceNative.class);
         getApplicationContext().startService(serviceIntentMyServiceNative);
+
+        Intent serviceIntentMyTrackingLocationService = new Intent(getApplicationContext(), MyTrackingLocationService.class);
+        getApplicationContext().startService(serviceIntentMyTrackingLocationService);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
