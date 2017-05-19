@@ -126,6 +126,11 @@
                 <action android:name="service.MyNotificationService" />
             </intent-filter>
         </service>
+        <service android:name="service.MyTrackingLocationService">
+            <intent-filter>
+                <action android:name="service.MyTrackingLocationService" />
+            </intent-filter>
+        </service>
 
         <activity
             android:name=".Login"
