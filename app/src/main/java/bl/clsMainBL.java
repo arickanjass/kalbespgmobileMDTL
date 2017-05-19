@@ -26,10 +26,11 @@ import library.salesforce.common.tPurchaseOrderDetailData;
 import library.salesforce.common.tPurchaseOrderHeaderData;
 import library.salesforce.common.tSalesProductDetailData;
 import library.salesforce.common.tSalesProductHeaderData;
-import library.salesforce.common.tSalesProductQuantityHeaderData;
 import library.salesforce.common.tSalesProductQuantityDetailData;
+import library.salesforce.common.tSalesProductQuantityHeaderData;
 import library.salesforce.common.tSalesProductQuantityImageData;
 import library.salesforce.common.tUserLoginData;
+import library.salesforce.common.tVisitPlanRealisasiData;
 import library.salesforce.dal.clsHardCode;
 import library.salesforce.dal.enumConfigData;
 import library.salesforce.dal.enumStatusMenuStart;
@@ -42,10 +43,11 @@ import library.salesforce.dal.tPurchaseOrderDetailDA;
 import library.salesforce.dal.tPurchaseOrderHeaderDA;
 import library.salesforce.dal.tSalesProductDetailDA;
 import library.salesforce.dal.tSalesProductHeaderDA;
-import library.salesforce.dal.tSalesProductQuantityHeaderDA;
 import library.salesforce.dal.tSalesProductQuantityDetailDA;
+import library.salesforce.dal.tSalesProductQuantityHeaderDA;
 import library.salesforce.dal.tSalesProductQuantityImageDA;
 import library.salesforce.dal.tUserLoginDA;
+import library.salesforce.dal.tVisitPlanRealisasiDA;
 
 public class clsMainBL {
 	SQLiteDatabase db;
@@ -115,6 +117,8 @@ public class clsMainBL {
     	tActivityDA _tActivityDA=new tActivityDA(db);
     	tAbsenUserDA _tAbsenUserDA=new tAbsenUserDA(db);
     	tLeaveMobileDA _tLeaveMobileDA=new tLeaveMobileDA(db);
+		tVisitPlanRealisasiDA _tVisitPlanRealisasiDA = new tVisitPlanRealisasiDA(db);
+
     	mMenuDA _mMenuDA=new mMenuDA(db);
     	clsStatusMenuStart _clsStatusMenuStart =new clsStatusMenuStart();
     	if(_tUserLoginDA.CheckLoginNow(db)){
@@ -127,10 +131,14 @@ public class clsMainBL {
     		List<tActivityData> listtActivityDataPush= _tActivityDA.getAllDataToPushData(db);
     		List<tAbsenUserData> listtAbsenUserDataPush= _tAbsenUserDA.getAllDataToPushData(db);
     		List<tLeaveMobileData> listTLeave= _tLeaveMobileDA.getAllDataPushData(db);
+			List<tVisitPlanRealisasiData> listVisitplan = _tVisitPlanRealisasiDA.getPushData(db);
     		if(listDataPush != null && dvalid==false){
     			dvalid=true;
     		}
 			if(listPODataPush > 0 && dvalid==false){
+				dvalid=true;
+			}
+			if(listVisitplan != null && dvalid==false){
 				dvalid=true;
 			}
 //			if (listPODataPush != null && dvalid == false){

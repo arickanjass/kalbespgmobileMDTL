@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import library.salesforce.common.tVisitPlanHeader_MobileData;
 import library.salesforce.common.tVisitPlanRealisasiData;
 
 /**
@@ -206,12 +205,12 @@ public class tVisitPlanRealisasiDA {
             insertDataDownload(db,data);
         }
     }
-    public List<tVisitPlanRealisasiData> getPushData(SQLiteDatabase db, List<tVisitPlanHeader_MobileData> ListOftVisitPlanRealisasiData) {
+    public List<tVisitPlanRealisasiData> getPushData(SQLiteDatabase db) {
         List<tVisitPlanRealisasiData> contactList = null;
 
         String _tVisitPlanRealisasiData = "()";
 
-        if (ListOftVisitPlanRealisasiData != null) {
+        /*if (ListOftVisitPlanRealisasiData != null) {
             _tVisitPlanRealisasiData = "(";
             for (int i = 0; i < ListOftVisitPlanRealisasiData.size(); i++) {
                 _tVisitPlanRealisasiData = _tVisitPlanRealisasiData + "'" + ListOftVisitPlanRealisasiData.get(i).get_intHeaderId() + "'";
@@ -219,7 +218,7 @@ public class tVisitPlanRealisasiDA {
                 _tVisitPlanRealisasiData = _tVisitPlanRealisasiData + ((i + 1) != ListOftVisitPlanRealisasiData.size() ? "," : ")");
             }
 //			tSalesProductHeader = tSalesProductHeader + "";
-        }
+        }*/
 
         // Select All Query
         tVisitPlanRealisasiData dt = new tVisitPlanRealisasiData();
