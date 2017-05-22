@@ -1,7 +1,7 @@
 package library.salesforce.common;
 
 /**
- * Created by XSIS on 03/05/2017.
+ * Created by Dewi Oktaviani on 03/05/2017.
  */
 
 public class tJawabanUserData {
