@@ -41,6 +41,7 @@ import library.salesforce.common.dataJson;
 import library.salesforce.common.tAbsenUserData;
 import library.salesforce.common.tActivityData;
 import library.salesforce.common.tCustomerBasedMobileHeaderData;
+import library.salesforce.common.tJawabanUserData;
 import library.salesforce.common.tLeaveMobileData;
 import library.salesforce.common.tNotificationData;
 import library.salesforce.common.tPurchaseOrderHeaderData;
@@ -55,6 +56,7 @@ public class FragmentPushData extends Fragment {
 
     private TableLayout tlSOHeader;
     private TableLayout tlsPOHeader;
+    private TableLayout tlsQuis;
     private TableLayout tlSODetail;
     private TableLayout tlActivity;
     private TableLayout tlCustomerBase;
@@ -93,6 +95,7 @@ public class FragmentPushData extends Fragment {
 
         tlSOHeader = (TableLayout) v.findViewById(R.id.tlSOHeader);
         tlsPOHeader = (TableLayout)v.findViewById(R.id.tlPO);
+        tlsQuis = (TableLayout) v.findViewById(R.id.tl_quiz);
         tlActivity = (TableLayout) v.findViewById(R.id.tlActivity);
         tlCustomerBase = (TableLayout) v.findViewById(R.id.tl_cb);
         tlsQuantityStock = (TableLayout) v.findViewById(R.id.tl_quantity_stock);
@@ -134,6 +137,13 @@ public class FragmentPushData extends Fragment {
                 initPOHeader(getContext(),dtJson.getListOftPurchaseOrderHeaderData());
             } else {
                 initPOHeader(getContext(),null);
+            }
+
+            if (dtJson.getListOftJawabanUserData() != null){
+                initQuis(getContext(), dtJson.getListOftJawabanUserData());
+            }
+            else {
+                initQuis(getContext(), null);
             }
             if (dtJson.getListOftVisitPlanRealisasiData() != null) {
                 initVisitPlanRealisasiData(getContext(), dtJson.getListOftVisitPlanRealisasiData());
@@ -659,6 +669,64 @@ public class FragmentPushData extends Fragment {
                 tr.addView(outlet_code);
 
                 tlsPOHeader.addView(tr, index++);
+            }
+        }
+
+    }
+
+    //table for view quis
+    private void initQuis(Context context, List<tJawabanUserData> listOftJawabanUserData) {
+        tlsQuis = (TableLayout) v.findViewById(R.id.tl_quiz);
+        tlsQuis.removeAllViews();
+
+        TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1f);
+        params.setMargins(1, 1, 1, 1);
+
+        TableRow tr = new TableRow(getContext());
+
+        String[] colTextHeader = {"No. Question", "Answer"};
+
+        for (String text : colTextHeader) {
+            TextView tv = new TextView(getContext());
+            // tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 1));
+
+            tv.setTextSize(14);
+            tv.setPadding(10, 10, 10, 10);
+            tv.setText(text);
+            tv.setGravity(Gravity.CENTER);
+            tv.setBackgroundColor(Color.parseColor("#4CAF50"));
+            tv.setTextColor(Color.WHITE);
+            tv.setLayoutParams(params);
+
+            tr.addView(tv);
+        }
+        tlsQuis.addView(tr);
+
+        if(listOftJawabanUserData!=null){
+            for(tJawabanUserData dat : listOftJawabanUserData){
+                tr = new TableRow(getContext());
+                TextView tv_no_quis = new TextView(getContext());
+                tv_no_quis.setTextSize(12);
+                tv_no_quis.setPadding(10, 10, 10, 10);
+                tv_no_quis.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                tv_no_quis.setGravity(Gravity.CENTER);
+                tv_no_quis.setTextColor(Color.BLACK);
+                tv_no_quis.setText(String.valueOf(dat.get_intQuestionId() + "."));
+                tv_no_quis.setLayoutParams(params);
+                tr.addView(tv_no_quis);
+
+                TextView answer = new TextView(getContext());
+                answer.setTextSize(12);
+                answer.setPadding(10, 10, 10, 10);
+                answer.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                answer.setTextColor(Color.BLACK);
+                answer.setGravity(Gravity.CENTER);
+                answer.setText("Done Question no. " + dat.get_intQuestionId());
+                answer.setLayoutParams(params);
+
+                tr.addView(answer);
+
+                tlsQuis.addView(tr);
             }
         }
 

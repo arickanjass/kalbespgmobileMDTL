@@ -2,7 +2,6 @@ package com.kalbenutritionals.app.kalbespgmobile;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,7 +12,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,10 +23,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.badgeall.MainActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,7 +36,6 @@ import bl.tJawabanUserBL;
 import library.salesforce.common.jawabanModel;
 import library.salesforce.common.mListJawabanData;
 import library.salesforce.common.mPertanyaanData;
-import library.salesforce.common.tAbsenUserData;
 import library.salesforce.common.tJawabanUserData;
 import library.salesforce.common.tUserLoginData;
 
@@ -77,6 +71,7 @@ public class FragmentKuesioner extends Fragment {
         v = inflater.inflate(R.layout.fragment_kuesioner, container, false);
 
         viewPager = (ViewPager) v.findViewById(R.id.viewpager);
+        final ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
 
         //disesuaikan jumlah soal
         viewPager.setOffscreenPageLimit(100);
@@ -117,52 +112,53 @@ public class FragmentKuesioner extends Fragment {
                 int[] tabIcons = {
                         R.drawable.ic_error,
                 };
-
+                boolean validate = true;
                 for (int i = 0; i < listDataPertanyaan.size(); i++) {
-                    boolean validate = true;
+
                     View jawaban = listAnswer.get(i);
                     if ((jawaban instanceof SeekBar && (seekbar = (SeekBar) jawaban).getProgress() == 0) || (jawaban instanceof Spinner && spinner.getSelectedItem().toString().equals("Select One")) || (jawaban instanceof EditText && etTestGet.getText().toString().equals("")) ||  (jawaban instanceof RadioGroup && rgTestGet.getCheckedRadioButtonId() == -1)) {
                         _clsMainActivity.showCustomToast(getActivity(), "Please fill empty Field...", false);
                         validate = false;
-                    } else if (jawaban instanceof ListView) {
+                    }else if (jawaban instanceof ListView) {
                         ListView listView = (ListView) listAnswer.get(i);
+                        int count = 0;
                         for (int x = 0; x < listView.getChildCount(); x++) {
                             View nextChild = listView.getChildAt(x);
                             if (nextChild instanceof CheckBox) {
                                 CheckBox checkBox = (CheckBox) nextChild;
-                                if (checkBox.isChecked()){
-                                } else {
-                                    tabLayout.getTabAt(i).setIcon(tabIcons[0]);
-                                    tabLayout.getTabAt(i).getCustomView();
-                                    _clsMainActivity.showCustomToast(getActivity(), "Please fill empty Field...", false);
-                                    validate = false;
+                                    if (checkBox.isChecked()){
+                                        count++;
+                                    }
                                 }
-                            }}
+                            }
+                    if (count == 0){
+                        _clsMainActivity.showCustomToast(getActivity(), "Please fill empty Field...", false);
+                        validate = false;
                     }
-                    if (validate){
-                        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-                        alertDialog.setTitle("Confirm");
-                        alertDialog.setMessage("Are you sure?");
-                        alertDialog.setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                SaveQuiz();
-                                _clsMainActivity.showCustomToast(getActivity(), "Saved", true);
-                                Intent myIntent = new Intent(getContext(), MainMenu.class);
-                                startActivity(myIntent);
-                            }
-                        });
-                        alertDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-
-                            }
-                        });
-
-                        alertDialog.show();
                     }
                 }
+                if (validate){
+                    final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+                    alertDialog.setTitle("Confirm");
+                    alertDialog.setMessage("Are you sure?");
+                    alertDialog.setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            SaveQuiz();
+                            _clsMainActivity.showCustomToast(getActivity(), "Saved", true);
+                            Intent myIntent = new Intent(getContext(), MainMenu.class);
+                            startActivity(myIntent);
+                        }
+                    });
+                    alertDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+
+                        }
+                    });
+
+                    alertDialog.show();}
 
 
 
@@ -199,7 +195,6 @@ public class FragmentKuesioner extends Fragment {
                 dt.set_txtValue(String.valueOf(seekBar.getProgress()));
                 dt.set_decBobot("");
                 new tJawabanUserBL().SaveDatatJawabanUser(dt);
-                Toast.makeText(getContext(), "slider soal ke " + listDataPertanyaan.get(i).get_intQuestionId() + " : " + seekBar.getProgress(), Toast.LENGTH_SHORT).show();
             } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("1")) {
                 Spinner spinner = (Spinner) listAnswer.get(i);
                 tabLayout.getTabAt(i).setIcon(null);
@@ -213,7 +208,6 @@ public class FragmentKuesioner extends Fragment {
                 dt.set_txtValue(HMJawaban.get(HMJawaban.get(spinner.getSelectedItem().toString())));
                 dt.set_decBobot("");
                 new tJawabanUserBL().SaveDatatJawabanUser(dt);
-                Toast.makeText(getContext(), "spinner soal ke " + listDataPertanyaan.get(i).get_intQuestionId() + " : " + spinner.getSelectedItem(), Toast.LENGTH_SHORT).show();
             } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("3")) {
                 EditText editText = (EditText) listAnswer.get(i);
                 tabLayout.getTabAt(i).setIcon(null);
@@ -227,7 +221,6 @@ public class FragmentKuesioner extends Fragment {
                 dt.set_txtValue(editText.getText().toString());
                 dt.set_decBobot("");
                 new tJawabanUserBL().SaveDatatJawabanUser(dt);
-                Toast.makeText(getContext(), "EditText soal ke " + listDataPertanyaan.get(i).get_intQuestionId() + " : " + editText.getText().toString(), Toast.LENGTH_SHORT).show();
             } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("2")) {
                 ListView listView = (ListView) listAnswer.get(i);
                 for (int x = 0; x < listView.getChildCount(); x++) {
@@ -246,7 +239,6 @@ public class FragmentKuesioner extends Fragment {
                             dt.set_txtValue(HMJawaban.get(HMJawaban.get(cbTestGet.getText().toString())));
                             dt.set_decBobot("");
                             new tJawabanUserBL().SaveDatatJawabanUser(dt);
-                            Toast.makeText(getContext(), "CheckBox soal ke " + listDataPertanyaan.get(i).get_intQuestionId() + " : " + cbTestGet.getText().toString(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
@@ -269,7 +261,6 @@ public class FragmentKuesioner extends Fragment {
                             dt.set_txtValue(HMJawaban.get(HMJawaban.get(radioButton.getText().toString())));
                             dt.set_decBobot("");
                             new tJawabanUserBL().SaveDatatJawabanUser(dt);
-                            Toast.makeText(getContext(), " Radio grup soal ke" + listDataPertanyaan.get(i).get_intQuestionId() + " : " + radioButton.getText().toString(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
@@ -329,6 +320,12 @@ public class FragmentKuesioner extends Fragment {
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }
+
+//        public Void getTabView(int position) {
+//            View tab = LayoutInflater.from(getContext()).inflate(R.layout.custom_tab, null);
+//            TextView tv = (TextView) tab.findViewById(R.id.custom_text);
+//            tv.setText(mFragmentTitleList.get(position));
+//        }
 
         @Override
         public CharSequence getPageTitle(int position) {
