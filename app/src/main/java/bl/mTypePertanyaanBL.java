@@ -9,7 +9,7 @@ import library.salesforce.common.mTypePertanyaanData;
 import library.salesforce.dal.mTypePertanyaanDA;
 
 /**
- * Created by XSIS on 05/05/2017.
+ * Created by Dewi Oktaviani on 05/05/2017.
  */
 
 public class mTypePertanyaanBL extends clsMainBL{

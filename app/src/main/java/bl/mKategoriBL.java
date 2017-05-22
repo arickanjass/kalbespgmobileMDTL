@@ -8,7 +8,7 @@ import library.salesforce.common.mKategoriData;
 import library.salesforce.dal.mKategoriDA;
 
 /**
- * Created by XSIS on 05/05/2017.
+ * Created by Dewi Oktaviani on 05/05/2017.
  */
 
 public class mKategoriBL extends clsMainBL {

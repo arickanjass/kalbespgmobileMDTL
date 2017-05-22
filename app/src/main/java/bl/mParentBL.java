@@ -21,7 +21,7 @@ import library.salesforce.dal.mconfigDA;
 import library.salesforce.dal.tUserLoginDA;
 
 /**
- * Created by XSIS on 05/05/2017.
+ * Created by Dewi Oktaviani on 05/05/2017.
  */
 
 public class mParentBL extends clsMainBL{
@@ -31,7 +31,7 @@ public class mParentBL extends clsMainBL{
         SQLiteDatabase _db = getDb();
         mParentDA _mParentDA = new mParentDA(_db);
         _mParentDA.SaveDatamParent(_db, dt);
-        
+
     }
     public List<mParentData> GetAllData(){
         SQLiteDatabase _db = getDb();

@@ -8,7 +8,7 @@ import library.salesforce.common.mListJawabanData;
 import library.salesforce.dal.mListJawabanDA;
 
 /**
- * Created by XSIS on 05/05/2017.
+ * Created by Dewi Oktaviani on 05/05/2017.
  */
 
 public class mListJawabanBL extends clsMainBL {
@@ -24,6 +24,12 @@ public class mListJawabanBL extends clsMainBL {
         SQLiteDatabase _db = getDb();
         mListJawabanDA _mListJawabanDA = new mListJawabanDA(_db);
         List<mListJawabanData> dt = _mListJawabanDA.GetAllData(_db);
+        return dt;
+    }
+    public List<mListJawabanData> GetDataByTypeQuestion(String typeId, String qId){
+        SQLiteDatabase _db = getDb();
+        mListJawabanDA _mListJawabanDA = new mListJawabanDA(_db);
+        List<mListJawabanData> dt = _mListJawabanDA.GetDataByTypeQuestion(_db, typeId, qId);
         return dt;
     }
 }

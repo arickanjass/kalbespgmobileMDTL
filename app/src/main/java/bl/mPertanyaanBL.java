@@ -8,7 +8,7 @@ import library.salesforce.common.mPertanyaanData;
 import library.salesforce.dal.mPertanyaanDA;
 
 /**
- * Created by XSIS on 05/05/2017.
+ * Created by Dewi Oktaviani on 05/05/2017.
  */
 
 public class mPertanyaanBL extends clsMainBL {
