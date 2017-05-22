@@ -53,6 +53,54 @@ public class tVisitPlanRealisasiDA {
     public void DropTable(SQLiteDatabase db) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTACTS);
     }
+    public tVisitPlanRealisasiData getDataCheckInActive(SQLiteDatabase db) {
+        // Select All Query
+        tVisitPlanRealisasiData dt=new tVisitPlanRealisasiData();
+        String selectQuery = "SELECT  "+dt.Property_All+" FROM " + TABLE_CONTACTS +" Where "+dt.Property_dateCheckOut+" in ('null','') AND intSubmit='1'";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        tVisitPlanRealisasiData contact = new tVisitPlanRealisasiData();;
+        // looping through all rows and adding to list
+        //query nya ga dpt kadangan ah pusing
+        if (cursor.moveToFirst()) {
+            do {
+                contact.set_txtDataIDRealisasi(cursor.getString(0));
+                contact.set_intCategoryVisitPlan(cursor.getString(1));
+                contact.set_intDetailID(cursor.getString(2));
+                contact.set_intHeaderID(cursor.getString(3));
+                contact.set_intUserID(cursor.getString(4));
+                contact.set_txtOutletCode(cursor.getString(5));
+                contact.set_txtOutletName(cursor.getString(6));
+                contact.set_txtBranchCode(cursor.getString(7));
+                contact.set_dtDate(cursor.getString(8));
+                contact.set_intBobot(cursor.getString(9));
+                contact.set_dtDateRealisasi(cursor.getString(10));
+                contact.set_dtDateRealisasiDevice(cursor.getString(11));
+                contact.set_txtDesc(cursor.getString(12));
+                contact.set_txtDescReply(cursor.getString(13));
+                byte[] blob1 = cursor.getBlob(14);
+                contact.set_dtPhoto1(blob1);
+                byte[] blob2 = cursor.getBlob(15);
+                contact.set_dtPhoto2(blob2);
+                contact.set_txtLong(cursor.getString(16));
+                contact.set_txtLat(cursor.getString(17));
+                contact.set_txtAcc(cursor.getString(18));
+                contact.set_txtLongSource(cursor.getString(19));
+                contact.set_txtLatSource(cursor.getString(20));
+                contact.set_intDistance(cursor.getString(21));
+                contact.set_bitActive(cursor.getString(22));
+                contact.set_txtRoleId(cursor.getString(23));
+                contact.set_intSubmit(cursor.getString(24));
+                contact.set_intPush(cursor.getString(25));
+                contact.set_intCheckout(cursor.getString(26));
+                contact.set_dateCheckout(cursor.getString(27));
+                // Adding contact to list
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        // return contact list
+        return contact;
+    }
 
     public void SaveDatatVisitPlan_MobileData(SQLiteDatabase db, tVisitPlanRealisasiData data) {
         tVisitPlanRealisasiData dt = new tVisitPlanRealisasiData();
@@ -128,6 +176,9 @@ public class tVisitPlanRealisasiDA {
         cv.put(dt.Property_intDistance,data.get_intDistance());
         cv.put(dt.Property_txtRoleId,data.get_txtRoleId());
         cv.put(dt.Property_intSubmit,data.get_intSubmit());
+        if (data.get_dateCheckout()!=null){
+            cv.put(dt.Property_dateCheckOut,data.get_dateCheckout());
+        }
         db.update(TABLE_CONTACTS, cv, dt.Property_txtDataIDRealisasi+"='"+data.get_txtDataIDRealisasi()+"'", null);
     }
     public void UpdatePushVisitPlan_MobileData(SQLiteDatabase db, tVisitPlanRealisasiData data) {

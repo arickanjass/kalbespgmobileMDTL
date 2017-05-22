@@ -283,7 +283,7 @@ public class clsHelperBL extends clsMainBL {
             tCustomerBasedMobileHeaderDA _tCustomerBasedMobileHeaderDA = new tCustomerBasedMobileHeaderDA(db);
             tCustomerBasedMobileDetailDA _tCustomerBasedMobileDetailDA = new tCustomerBasedMobileDetailDA(db);
             tCustomerBasedMobileDetailProductDA _tCustomerBasedMobileDetailProductDA = new tCustomerBasedMobileDetailProductDA(db);
- 
+
             List<tVisitPlanHeader_MobileData> ListOftVisitPlanHeader_MobileData = _tVisitPlanHeader_MobileDA.getPushData(db);
             List<tVisitPlanRealisasiData> ListOftVisitPlanRealisasiDataDetail = _tVisitPlanRealisasiDA.getPushData(db);
             List<tCustomerBasedMobileHeaderData> ListOftCustomerBasedMobileHeader = _tCustomerBasedMobileHeaderDA.getPushData(db);

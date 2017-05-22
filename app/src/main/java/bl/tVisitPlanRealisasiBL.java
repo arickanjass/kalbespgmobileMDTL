@@ -33,13 +33,11 @@ public class tVisitPlanRealisasiBL extends clsMainBL{
         }
         db.close();
     }
-    public void UpdateData(List<tVisitPlanRealisasiData> dt) {
+    public void UpdateData(tVisitPlanRealisasiData dt) {
         SQLiteDatabase db = getDb();
         tVisitPlanRealisasiDA _tVisitPlanRealisasiDA = new tVisitPlanRealisasiDA(db);
 //        _tVisitPlanRealisasiDA.DeleteAllData(db);
-        for (tVisitPlanRealisasiData data : dt) {
-            _tVisitPlanRealisasiDA.UpdateDatatVisitPlan_MobileData(db, data);
-        }
+            _tVisitPlanRealisasiDA.UpdateDatatVisitPlan_MobileData(db, dt);
         db.close();
     }
     public void downloadData(List<tVisitPlanRealisasiData> dt) {
@@ -58,11 +56,17 @@ public class tVisitPlanRealisasiBL extends clsMainBL{
         return dtDetail;
     }
 
-    public tVisitPlanRealisasiData getAllDataByHeaderId(String id){
+    public tVisitPlanRealisasiData getDataByHeaderId(String id){
         SQLiteDatabase _db = getDb();
         tVisitPlanRealisasiData dtDetail = new tVisitPlanRealisasiDA(_db).getDataByDataIDRealisasi(_db,id);
         _db.close();
         return dtDetail;
+    }
+    public tVisitPlanRealisasiData getDataCheckinActive(){
+        SQLiteDatabase _db = getDb();
+        tVisitPlanRealisasiData dt = new tVisitPlanRealisasiDA(_db).getDataCheckInActive(_db);
+        _db.close();
+        return dt;
     }
     public List<tVisitPlanRealisasiData> getAllData(){
         SQLiteDatabase db=getDb();

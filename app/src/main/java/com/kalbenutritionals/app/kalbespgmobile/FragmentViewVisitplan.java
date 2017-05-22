@@ -77,7 +77,10 @@ public class FragmentViewVisitplan  extends Fragment implements IXListViewListen
         clsMainActivity clsMain = new clsMainActivity();
 
         mAdapter = clsMain.setListVisitPlan(getActivity().getApplicationContext(), swipeListProduct);
-
+        tVisitPlanRealisasiData data = new tVisitPlanRealisasiBL().getDataCheckinActive();
+        if (data.get_txtDataIDRealisasi() != null){
+            lvVisitPlan.setEnabled(false);
+        }
         lvVisitPlan.setAdapter(mAdapter);
         lvVisitPlan.setEmptyView(v.findViewById(R.id.LayoutEmpty));
         lvVisitPlan.setOnItemClickListener(new AdapterView.OnItemClickListener() {

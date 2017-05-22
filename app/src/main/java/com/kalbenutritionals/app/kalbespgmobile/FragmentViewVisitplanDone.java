@@ -103,7 +103,7 @@ public class FragmentViewVisitplanDone extends Fragment implements IXListViewLis
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String idR = hmIdRealisasi.get(position).toString();
-                tVisitPlanRealisasiData data = new tVisitPlanRealisasiBL().getAllDataByHeaderId(idR);
+                tVisitPlanRealisasiData data = new tVisitPlanRealisasiBL().getDataByHeaderId(idR);
                 popUpDetail(data);
             }
         });

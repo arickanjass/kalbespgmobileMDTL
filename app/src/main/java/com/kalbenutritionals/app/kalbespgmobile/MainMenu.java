@@ -43,7 +43,10 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -53,6 +56,7 @@ import bl.tAbsenUserBL;
 import bl.tDisplayPictureBL;
 import bl.tNotificationBL;
 import bl.tUserLoginBL;
+import bl.tVisitPlanRealisasiBL;
 import come.example.viewbadger.ShortcutBadger;
 import de.hdodenhof.circleimageview.CircleImageView;
 import library.salesforce.common.clsPushData;
@@ -61,6 +65,7 @@ import library.salesforce.common.tAbsenUserData;
 import library.salesforce.common.tDisplayPictureData;
 import library.salesforce.common.tNotificationData;
 import library.salesforce.common.tUserLoginData;
+import library.salesforce.common.tVisitPlanRealisasiData;
 import library.salesforce.dal.clsHardCode;
 import service.MyServiceNative;
 import service.MyTrackingLocationService;
@@ -73,6 +78,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
     private tAbsenUserBL _tAbsenUserBL;
     private tAbsenUserData dttAbsenUserData;
     private tAbsenUserData dtAbsens;
+    private tVisitPlanRealisasiData dtRealisasi;
 
     private TextView tvUsername, tvEmail;
     private CircleImageView ivProfile;
@@ -177,11 +183,18 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
         dtAbsens = new tAbsenUserBL().getDataCheckInActive();
         Menu header = navigationView.getMenu();
 
+        dtRealisasi = new tVisitPlanRealisasiBL().getDataCheckinActive();
+
         Intent intent = getIntent();
         String i_view = intent.getStringExtra("key_view");
 
         int statusAbsen = 0;
         int menuActive = 0;
+
+        if (dtRealisasi.get_txtDataIDRealisasi() == null){
+            menuActive = R.id.groupListMenu;
+            header.removeItem(R.id.checkoutVisitplan);
+        }
 
         if (dtAbsens == null) {
             menuActive = R.id.groupListMenu;
@@ -442,6 +455,67 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 //                        selectedId = 99;
 //
 //                        return  true;
+                    case R.id.checkoutVisitplan:
+                        LayoutInflater _layoutInflater2 = LayoutInflater.from(MainMenu.this);
+                        final View _promptView2 = _layoutInflater2.inflate(R.layout.confirm_data, null);
+
+                        final TextView tvConfirm2 = (TextView) _promptView2.findViewById(R.id.tvTitle);
+                        final TextView tvDesc2 = (TextView) _promptView2.findViewById(R.id.tvDesc);
+                        tvDesc2.setVisibility(View.INVISIBLE);
+                        tvConfirm2.setText("Check Out Data ?");
+                        tvConfirm2.setTextSize(18);
+
+                        AlertDialog.Builder _alertDialogBuilder2 = new AlertDialog.Builder(MainMenu.this);
+                        _alertDialogBuilder2.setView(_promptView2);
+                        _alertDialogBuilder2
+                                .setCancelable(false)
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                       tVisitPlanRealisasiData data = new tVisitPlanRealisasiData();
+                                        data = dtRealisasi;
+                                        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                        Calendar cal = Calendar.getInstance();
+                                        data.set_dateCheckout(dateFormat.format(cal.getTime()));
+                                        data.set_intPush("0");
+                                        new tVisitPlanRealisasiBL().UpdateData(data);
+                                        finish();
+                                        Intent nextScreen = new Intent(getApplicationContext(), MainMenu.class);
+                                        nextScreen.putExtra("keyMainMenu", "main_menu");
+                                        finish();
+                                        startActivity(nextScreen);
+                                        /* _tAbsenUserBL = new tAbsenUserBL();
+                                        dttAbsenUserData = new tAbsenUserData();
+
+                                        dttAbsenUserData = _tAbsenUserBL.getDataCheckInActive();
+                                        tAbsenUserData datatAbsenUserData = dttAbsenUserData;
+                                        List<tAbsenUserData> absenUserDatas = new ArrayList<tAbsenUserData>();
+
+                                        if (dttAbsenUserData != null) {
+                                            datatAbsenUserData.set_intId(dttAbsenUserData.get_intId());
+                                            datatAbsenUserData.set_dtDateCheckOut(_clsMainActivity.FormatDateDB().toString());
+                                            datatAbsenUserData.set_intSubmit("1");
+                                            datatAbsenUserData.set_intSync("0");
+                                            datatAbsenUserData.set_txtAbsen("0");
+                                            absenUserDatas.add(datatAbsenUserData);
+                                            new tAbsenUserBL().saveData(absenUserDatas);
+
+                                            finish();
+                                            Intent nextScreen = new Intent(getApplicationContext(), MainMenu.class);
+                                            nextScreen.putExtra("keyMainMenu", "main_menu");
+                                            finish();
+                                            startActivity(nextScreen);
+                                        }*/
+                                    }
+                                })
+                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+                        final AlertDialog _alertD2 = _alertDialogBuilder2.create();
+                        _alertD2.show();
+
+                        return true;
 
                     case R.id.checkout:
                         LayoutInflater _layoutInflater = LayoutInflater.from(MainMenu.this);

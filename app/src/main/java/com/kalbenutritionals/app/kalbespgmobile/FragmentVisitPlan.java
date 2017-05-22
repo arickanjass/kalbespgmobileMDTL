@@ -285,7 +285,7 @@ public class FragmentVisitPlan extends Fragment {
         v = inflater.inflate(R.layout.fragment_visit_plan, container, false);
         dataHeader = getArguments();
         idRealisasiHeader = dataHeader.getString(ID_REALISASI);
-        dataDetail = new tVisitPlanRealisasiBL().getAllDataByHeaderId(idRealisasiHeader);
+        dataDetail = new tVisitPlanRealisasiBL().getDataByHeaderId(idRealisasiHeader);
 
         etBranch = (EditText) v.findViewById(R.id.etBranch);
         etOutlet = (EditText) v.findViewById(R.id.etOutlet);
@@ -748,41 +748,8 @@ public class FragmentVisitPlan extends Fragment {
                                                 _tVisitPlanRealisasiData.set_intSubmit("1");
                                                 _tVisitPlanRealisasiData.set_txtAcc(lblAcc.getText().toString());
 //                                                _tVisitPlanRealisasiData.set_intPush("0");
-                                                checkInUserDatas.add(_tVisitPlanRealisasiData);
-                                                new tVisitPlanRealisasiBL().UpdateData(checkInUserDatas);
-
-                                                /*if (dttAbsenUserData == null) {
-                                                    dttAbsenUserData = new tAbsenUserData();
-                                                }
-                                                tAbsenUserData datatAbsenUserData = dttAbsenUserData;
-                                                tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
-                                                String idUserActive = String.valueOf(dataUserActive.get_txtUserId());
-                                                String idRoleActive = String.valueOf(dataUserActive.get_txtRoleId());
-                                                List<tDeviceInfoUserData> dataDeviceInfoUser = new tDeviceInfoUserBL().getData(1);
-                                                String deviceInfo = String.valueOf(dataDeviceInfoUser.get(0).get_txtDeviceId());
-                                                List<tAbsenUserData> absenUserDatas = new ArrayList<tAbsenUserData>();
-                                                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                                                Calendar cal = Calendar.getInstance();
-                                                datatAbsenUserData.set_dtDateCheckIn(dateFormat.format(cal.getTime()));
-                                                datatAbsenUserData.set_intId(txtHDId.getText().toString());
-                                                datatAbsenUserData.set_intSubmit("0");
-                                                datatAbsenUserData.set_intSync("0");
-                                                datatAbsenUserData.set_txtAbsen("0");//
-                                                datatAbsenUserData.set_txtBranchCode(HMbranch.get(nameBranch));
-                                                datatAbsenUserData.set_txtBranchName(spnBranch.getSelectedItem().toString());
-                                                datatAbsenUserData.set_txtAccuracy(lblAcc.getText().toString());
-                                                datatAbsenUserData.set_txtLatitude(lblLang.getText().toString());
-                                                datatAbsenUserData.set_txtLongitude(lblLong.getText().toString());
-                                                datatAbsenUserData.set_txtOutletCode(outletCode);
-                                                datatAbsenUserData.set_txtOutletName(nameOutlet);
-                                                datatAbsenUserData.set_txtDeviceId(deviceInfo);
-                                                datatAbsenUserData.set_txtUserId(idUserActive);
-                                                datatAbsenUserData.set_txtRoleId(idRoleActive);
-                                                datatAbsenUserData.set_dtDateCheckOut(null);
-                                                absenUserDatas.add(datatAbsenUserData);
-                                                new tAbsenUserBL().saveData(absenUserDatas);*/
-//                                                spnBranch.setEnabled(false);
-//                                                spnOutlet.setEnabled(false);
+//                                                checkInUserDatas.add(_tVisitPlanRealisasiData);
+                                                new tVisitPlanRealisasiBL().UpdateData(_tVisitPlanRealisasiData);
                                                 imgPrevNoImg1.setClickable(false);
                                                 imgPrevNoImg2.setClickable(false);
                                                 btnRefreshMaps.setClickable(false);
