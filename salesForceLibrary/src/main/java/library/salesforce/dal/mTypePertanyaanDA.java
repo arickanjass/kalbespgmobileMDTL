@@ -9,7 +9,7 @@ import java.util.List;
 import library.salesforce.common.mTypePertanyaanData;
 
 /**
- * Created by XSIS on 03/05/2017.
+ * Created by Dewi Oktaviani on 03/05/2017.
  */
 
 public class mTypePertanyaanDA {
@@ -37,7 +37,7 @@ public class mTypePertanyaanDA {
     public List<mTypePertanyaanData> GetAllData(SQLiteDatabase db){
         List<mTypePertanyaanData> contactList = new ArrayList<mTypePertanyaanData>();
         mTypePertanyaanData dt = new mTypePertanyaanData();
-        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " ORDER BY intTypeQuestionId DESC";
+        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " ORDER BY intTypeQuestionId ASC";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()){
             do {

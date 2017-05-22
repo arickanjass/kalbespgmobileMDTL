@@ -10,7 +10,7 @@ import library.salesforce.common.tJawabanUserData;
 
 
 /**
- * Created by XSIS on 04/05/2017.
+ * Created by Dewi Oktaviani on 04/05/2017.
  */
 
 public class tJawabanUserDA {
@@ -56,7 +56,7 @@ public class tJawabanUserDA {
     public List<tJawabanUserData> GetAllData(SQLiteDatabase db){
         List<tJawabanUserData> contactList = new ArrayList<tJawabanUserData>();
         tJawabanUserData dt = new tJawabanUserData();
-        String selectQuery = "Select " + dt.Property_All + " FROM" + TABLE_CONTACTS + " ORDER BY intQuestionId DESC";
+        String selectQuery = "Select " + dt.Property_All + " FROM" + TABLE_CONTACTS + " ORDER BY intQuestionId ASC";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()){
             do {

@@ -10,7 +10,7 @@ import library.salesforce.common.mListJawabanData;
 import library.salesforce.common.mParentData;
 
 /**
- * Created by XSIS on 03/05/2017.
+ * Created by Dewi Oktaviani on 03/05/2017.
  */
 
 public class mListJawabanDA {
@@ -46,7 +46,27 @@ public class mListJawabanDA {
     public List<mListJawabanData> GetAllData(SQLiteDatabase db){
         List<mListJawabanData> contactList = new ArrayList<mListJawabanData>();
         mListJawabanData dt = new mListJawabanData();
-        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " ORDER BY txtValue DESC";
+        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " ORDER BY txtValue ASC";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()){
+            do {
+                mListJawabanData contact = new mListJawabanData();
+                contact.set_intListAnswerId(cursor.getString(0));
+                contact.set_intQuestionId(cursor.getString(1));
+                contact.set_intTypeQuestionId(cursor.getString(2));
+                contact.set_txtKey(cursor.getString(3));
+                contact.set_txtValue(cursor.getString(4));
+                contactList.add(contact);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return contactList;
+    }
+    public List<mListJawabanData> GetDataByTypeQuestion(SQLiteDatabase db, String typeID, String qID){
+        List<mListJawabanData> contactList = new ArrayList<mListJawabanData>();
+        mListJawabanData dt = new mListJawabanData();
+        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intTypeQuestionId + "='" + typeID + "' AND " + dt.Property_intQuestionId +
+                "='" + qID + "' ORDER BY txtValue ASC";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()){
             do {
