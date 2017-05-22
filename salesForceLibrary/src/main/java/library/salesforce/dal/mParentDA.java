@@ -9,7 +9,7 @@ import java.util.List;
 import library.salesforce.common.mParentData;
 
 /**
- * Created by XSIS on 03/05/2017.
+ * Created by Dewi Oktaviani on 03/05/2017.
  */
 
 public class mParentDA {
@@ -29,10 +29,10 @@ public class mParentDA {
     public void SaveDatamParent(SQLiteDatabase db, mParentData data){
         mParentData dt = new mParentData();
         db.execSQL("INSERT OR REPLACE into " + TABLE_CONTACTS + " ("
-        + dt.Property_intParentId + ","
-        + dt.Property_txtParentName + ") " + "values('"
-        + String.valueOf(data.get_intParentId()) + "','"
-        + String.valueOf(data.get_txtParentName()) + "')");
+                + dt.Property_intParentId + ","
+                + dt.Property_txtParentName + ") " + "values('"
+                + String.valueOf(data.get_intParentId()) + "','"
+                + String.valueOf(data.get_txtParentName()) + "')");
     }
     public void DeleteAllDatamParent(SQLiteDatabase db){
         db.execSQL("DELETE FROM " + TABLE_CONTACTS);
@@ -40,7 +40,7 @@ public class mParentDA {
     public List<mParentData> GetAllData(SQLiteDatabase db){
         List<mParentData> contactList = new ArrayList<mParentData>();
         mParentData dt = new mParentData();
-        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " ORDER BY intParentId DESC";
+        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " ORDER BY intParentId ASC";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()){
             do {

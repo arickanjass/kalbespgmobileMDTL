@@ -11,7 +11,7 @@ import library.salesforce.common.mPertanyaanData;
 
 
 /**
- * Created by XSIS on 03/05/2017.
+ * Created by Dewi Oktaviani on 03/05/2017.
  */
 
 public class mPertanyaanDA {
@@ -19,7 +19,7 @@ public class mPertanyaanDA {
     public mPertanyaanDA(SQLiteDatabase db){
         mPertanyaanData dt = new mPertanyaanData();
         String CREATE_CONTACTS_TABLE = "CREATE TABLE IF NOT EXISTS "
-                + TABLE_CONTACTS + "( " + dt.Property_intQuestionId + " TEXT PRIMARY KEY," + dt.Property_intCategoryId + " TEXT NULL," + dt.Property_txtQuestionDesc + " TEXT NULL,"
+                + TABLE_CONTACTS + "( " + dt.Property_intQuestionId + " INTEGER PRIMARY KEY," + dt.Property_intCategoryId + " TEXT NULL," + dt.Property_txtQuestionDesc + " TEXT NULL,"
                 + dt.Property_intTypeQuestionId + " TEXT NULL," + dt.Property_decBobot + " TEXT NULL," + dt.Property_bolHaveAnswerList + " TEXT NULL)";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
