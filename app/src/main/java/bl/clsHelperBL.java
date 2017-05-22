@@ -25,6 +25,7 @@ import library.salesforce.common.tActivityData;
 import library.salesforce.common.tCustomerBasedMobileDetailData;
 import library.salesforce.common.tCustomerBasedMobileDetailProductData;
 import library.salesforce.common.tCustomerBasedMobileHeaderData;
+import library.salesforce.common.tJawabanUserData;
 import library.salesforce.common.tLeaveMobileData;
 import library.salesforce.common.tPurchaseOrderDetailData;
 import library.salesforce.common.tPurchaseOrderHeaderData;
@@ -46,6 +47,7 @@ import library.salesforce.dal.tActivityDA;
 import library.salesforce.dal.tCustomerBasedMobileDetailDA;
 import library.salesforce.dal.tCustomerBasedMobileDetailProductDA;
 import library.salesforce.dal.tCustomerBasedMobileHeaderDA;
+import library.salesforce.dal.tJawabanUserDA;
 import library.salesforce.dal.tLeaveMobileDA;
 import library.salesforce.dal.tPurchaseOrderDetailDA;
 import library.salesforce.dal.tPurchaseOrderHeaderDA;
@@ -276,6 +278,7 @@ public class clsHelperBL extends clsMainBL {
             tSalesProductHeaderDA _tSalesProductHeaderDA = new tSalesProductHeaderDA(db);
             tSalesProductDetailDA _tSalesProductDetailDA = new tSalesProductDetailDA(db);
             tPurchaseOrderDetailDA _tPurchaseOrderDetailDA = new tPurchaseOrderDetailDA(db);
+            tJawabanUserDA _tJawabanUserDA = new tJawabanUserDA(db);
             tPurchaseOrderHeaderDA _tPurchaseOrderHeaderDA = new tPurchaseOrderHeaderDA(db);
             tSalesProductQuantityHeaderDA _tSalesProductQuantityDA = new tSalesProductQuantityHeaderDA(db);
             tSalesProductQuantityDetailDA _tSalesProductQuantityDetailDA = new tSalesProductQuantityDetailDA(db);
@@ -295,6 +298,7 @@ public class clsHelperBL extends clsMainBL {
             List<tPurchaseOrderHeaderData> ListOfPurchaseOrderHeader = _tPurchaseOrderHeaderDA.getAllDataToPushData(db);
             List<tPurchaseOrderDetailData> ListOfPurchaseOrderDetail = _tPurchaseOrderDetailDA.getAllDataToPushDataPO(db, ListOfPurchaseOrderHeader);
             List<tSalesProductQuantityHeaderData> ListOfSalesProductQuantityHeader = _tSalesProductQuantityDA.getAllDataToPushData(db);
+            List<tJawabanUserData> ListOfJawabanUser = _tJawabanUserDA.GetAllData(db);
             List<tSalesProductQuantityDetailData> ListOfSalesProductQuantityDetail = _tSalesProductQuantityDetailDA.getAllDataToPushData(db, ListOfSalesProductQuantityHeader);
             List<tSalesProductQuantityImageData> ListOfSalesProductQuantityImage = _tSalesProductQuantityImageDA.getAllDataToPushData(db, ListOfSalesProductQuantityHeader);
             List<tLeaveMobileData> ListOftLeaveData=_tLeaveMobileDA.getAllDataPushData(db);
@@ -364,6 +368,10 @@ public class clsHelperBL extends clsMainBL {
 
             if (ListOfSalesProductDetail != null) {
                 dtPush.setListOftSalesProductDetailData(ListOfSalesProductDetail);
+            }
+
+            if (ListOfJawabanUser != null){
+                dtPush.setListOftJawabanUserData(ListOfJawabanUser);
             }
             if (ListOfPurchaseOrderDetail != null){
                 dtPush.setListOftPurchaseOrderDetailData(ListOfPurchaseOrderDetail);
