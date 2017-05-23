@@ -354,6 +354,9 @@ public class clsHelperBL extends clsMainBL {
                 }
                 dtPush.setListOftVisitPlanRealisasiData(ListOftVisitPlanRealisasiDataDetail);
             }
+            if (ListOftVisitPlanHeader_MobileData != null){
+                dtPush.setListOftVisitPlanHeader_MobileData(ListOftVisitPlanHeader_MobileData);
+            }
             if(ListOftLeaveData!=null){
                 dtPush.setListOftLeaveMobileData(ListOftLeaveData);
             }

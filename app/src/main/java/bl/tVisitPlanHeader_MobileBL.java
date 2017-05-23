@@ -28,15 +28,13 @@ public class tVisitPlanHeader_MobileBL extends clsMainBL {
         _db.close();
         return dtDetail;
     }
-   /* public void UpdateData(List<tVisitPlanHeader_MobileData> dt) {
+    public void UpdateData(tVisitPlanHeader_MobileData dt) {
         SQLiteDatabase db = getDb();
         tVisitPlanHeader_MobileDA _tVisitPlanHeader_MobileDA = new tVisitPlanHeader_MobileDA(db);
 //        _tVisitPlanRealisasiDA.DeleteAllData(db);
-        for (tVisitPlanHeader_MobileData data : dt) {
-            _tVisitPlanHeader_MobileDA.UpdateDatatVisitPlan_MobileData(db, data);
-        }
+            _tVisitPlanHeader_MobileDA.UpdateDatatVisitPlan_MobileData(db, dt);
         db.close();
-    }*/
+    }
 
     public List<tVisitPlanHeader_MobileData> getAllDataByHeaderId(String id){
         SQLiteDatabase _db = getDb();
