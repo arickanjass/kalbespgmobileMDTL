@@ -183,7 +183,13 @@ public class dataJson {
         ListOftSalesProductQuantityData = listOftSalesProductQuantityData;
     }
 
+    public synchronized List<trackingLocationData> getListOfTrackingLocationData() {
+        return ListOfTrackingLocationData;
+    }
 
+    public synchronized void setListOfTrackingLocationData(List<trackingLocationData> listOfTrackingLocationData) {
+        ListOfTrackingLocationData = listOfTrackingLocationData;
+    }
 
     public synchronized List<tDeviceInfoUserData> getListDatatDeviceInfoUser() {
         return ListDatatDeviceInfoUser;
@@ -547,6 +553,30 @@ public class dataJson {
                     itemsListJquey.add(item1);
                 }
                 resJson.put(dttSalesProductQuantityData.Property_ListOftSalesProductHeaderData, new JSONArray(itemsListJquey));
+            }
+
+            if (this.getListOfTrackingLocationData() != null){
+                trackingLocationData dtTrackingLocationData = new trackingLocationData();
+                itemsListJquey = new ArrayList<JSONObject>();
+                for (trackingLocationData data : this.getListOfTrackingLocationData()){
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtTrackingLocationData.Property_intId, String.valueOf(data.get_intId()));
+                    item1.put(dtTrackingLocationData.Property_txtLongitude, String.valueOf(data.get_txtLongitude()));
+                    item1.put(dtTrackingLocationData.Property_txtLatitude, String.valueOf(data.get_txtLatitude()));
+                    item1.put(dtTrackingLocationData.Property_txtAccuracy, String.valueOf(data.get_txtAccuracy()));
+                    item1.put(dtTrackingLocationData.Property_txtTime, String.valueOf(data.get_txtTime()));
+                    item1.put(dtTrackingLocationData.Property_txtUserId, String.valueOf(data.get_txtUserId()));
+                    item1.put(dtTrackingLocationData.Property_txtUsername, String.valueOf(data.get_txtUsername()));
+                    item1.put(dtTrackingLocationData.Property_txtRoleId, String.valueOf(data.get_txtRoleId()));
+                    item1.put(dtTrackingLocationData.Property_txtDeviceId, String.valueOf(data.get_txtDeviceId()));
+                    item1.put(dtTrackingLocationData.Property_txtBranchCode, String.valueOf(data.get_txtBranchCode()));
+                    item1.put(dtTrackingLocationData.Property_txtOutletCode, String.valueOf(data.get_txtOutletCode()));
+                    item1.put(dtTrackingLocationData.Property_txtNIK, String.valueOf(data.get_txtNIK()));
+                    item1.put(dtTrackingLocationData.Property_intSubmit, String.valueOf(data.get_intSubmit()));
+                    item1.put(dtTrackingLocationData.Property_intSync, String.valueOf(data.get_intSync()));
+                    itemsListJquey.add(item1);
+                }
+                resJson.put(dtTrackingLocationData.Property_ListOftrackingLocation, new JSONArray(itemsListJquey));
             }
 
             if (this.get_ListOftCustomerBasedMobileHeaderData() != null) {
@@ -957,6 +987,7 @@ public class dataJson {
     private List<tCustomerBasedMobileDetailProductData> ListOftCustomerBasedMobileDetailProductData;
     private List<tVisitPlanHeader_MobileData> ListOftVisitPlanHeader_MobileData;
     private List<tVisitPlanRealisasiData> ListOftVisitPlanRealisasiData;
+    private List<trackingLocationData> ListOfTrackingLocationData;
 
     private List<mEmployeeAreaData> ListOfmEmployeeAreaData;
     private List<mEmployeeBranchData> ListOfmEmployeeBranchData;
