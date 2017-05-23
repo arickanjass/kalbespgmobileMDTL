@@ -37,6 +37,7 @@ import library.salesforce.common.tSalesProductQuantityImageData;
 import library.salesforce.common.tUserLoginData;
 import library.salesforce.common.tVisitPlanHeader_MobileData;
 import library.salesforce.common.tVisitPlanRealisasiData;
+import library.salesforce.common.trackingLocationData;
 import library.salesforce.dal.clsHardCode;
 import library.salesforce.dal.enumConfigData;
 import library.salesforce.dal.enumCounterData;
@@ -59,6 +60,7 @@ import library.salesforce.dal.tSalesProductQuantityImageDA;
 import library.salesforce.dal.tUserLoginDA;
 import library.salesforce.dal.tVisitPlanHeader_MobileDA;
 import library.salesforce.dal.tVisitPlanRealisasiDA;
+import library.salesforce.dal.trackingLocationDA;
 
 //import org.xml.sax.DTDHandler;
 //import com.kalbe.salesforce.TableNotif;
@@ -286,6 +288,7 @@ public class clsHelperBL extends clsMainBL {
             tCustomerBasedMobileHeaderDA _tCustomerBasedMobileHeaderDA = new tCustomerBasedMobileHeaderDA(db);
             tCustomerBasedMobileDetailDA _tCustomerBasedMobileDetailDA = new tCustomerBasedMobileDetailDA(db);
             tCustomerBasedMobileDetailProductDA _tCustomerBasedMobileDetailProductDA = new tCustomerBasedMobileDetailProductDA(db);
+            trackingLocationDA _trackingLocationDA = new trackingLocationDA(db);
 
             List<tVisitPlanHeader_MobileData> ListOftVisitPlanHeader_MobileData = _tVisitPlanHeader_MobileDA.getPushData(db);
             List<tVisitPlanRealisasiData> ListOftVisitPlanRealisasiDataDetail = _tVisitPlanRealisasiDA.getPushData(db);
@@ -301,6 +304,7 @@ public class clsHelperBL extends clsMainBL {
             List<tJawabanUserData> ListOfJawabanUser = _tJawabanUserDA.GetAllData(db);
             List<tSalesProductQuantityDetailData> ListOfSalesProductQuantityDetail = _tSalesProductQuantityDetailDA.getAllDataToPushData(db, ListOfSalesProductQuantityHeader);
             List<tSalesProductQuantityImageData> ListOfSalesProductQuantityImage = _tSalesProductQuantityImageDA.getAllDataToPushData(db, ListOfSalesProductQuantityHeader);
+            List<trackingLocationData> ListOfTrackingLocation = _trackingLocationDA.getAllDataToPushData(db);
             List<tLeaveMobileData> ListOftLeaveData=_tLeaveMobileDA.getAllDataPushData(db);
             List<tAbsenUserData> ListOftAbsenUserData = _tAbsenUserDA.getAllDataToPushData(db);
             List<tActivityData> ListOftActivityData = _tActivityDA.getAllDataToPushData(db);
@@ -391,6 +395,10 @@ public class clsHelperBL extends clsMainBL {
 //            }
             if (ListOfSalesProductQuantityHeader != null){
                 dtPush.setListOftSalesProductQuantityData(ListOfSalesProductQuantityHeader);
+            }
+
+            if (ListOfTrackingLocation != null){
+                dtPush.setListOfTrackingLocationData(ListOfTrackingLocation);
             }
 
             if (ListOftCustomerBasedMobileHeader != null) {
@@ -485,6 +493,14 @@ public class clsHelperBL extends clsMainBL {
                 tSalesProductQuantityHeaderDA _tSalesProductQuantityDA = new tSalesProductQuantityHeaderDA(db);
                 dt.set_intSync("1");
                 _tSalesProductQuantityDA.SaveDataSalesProductQuantityData(db, dt);
+            }
+        }
+
+        if (dtJson.getListOfTrackingLocationData() != null){
+            for (trackingLocationData dt : dtJson.getListOfTrackingLocationData()){
+                trackingLocationDA _trackingLocationDA = new trackingLocationDA(db);
+                dt.set_intSync("1");
+                _trackingLocationDA.SaveDataTrackingLocation(db, dt);
             }
         }
 
