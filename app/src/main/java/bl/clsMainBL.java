@@ -31,6 +31,7 @@ import library.salesforce.common.tSalesProductQuantityHeaderData;
 import library.salesforce.common.tSalesProductQuantityImageData;
 import library.salesforce.common.tUserLoginData;
 import library.salesforce.common.tVisitPlanRealisasiData;
+import library.salesforce.common.trackingLocationData;
 import library.salesforce.dal.clsHardCode;
 import library.salesforce.dal.enumConfigData;
 import library.salesforce.dal.enumStatusMenuStart;
@@ -48,6 +49,7 @@ import library.salesforce.dal.tSalesProductQuantityHeaderDA;
 import library.salesforce.dal.tSalesProductQuantityImageDA;
 import library.salesforce.dal.tUserLoginDA;
 import library.salesforce.dal.tVisitPlanRealisasiDA;
+import library.salesforce.dal.trackingLocationDA;
 
 public class clsMainBL {
 	SQLiteDatabase db;
@@ -311,6 +313,37 @@ public class clsMainBL {
 					if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)){
 						dataHeader.set_intSync("1");
 						_tSalesProductQuantityHeaderDA.SaveDataSalesProductQuantityData(_db, dataHeader);
+					}
+				}
+			}
+		}
+
+		dtlinkAPI = new linkAPI();
+		txtMethod = "PushDataTrackingLocation";
+		dtlinkAPI.set_txtMethod(txtMethod);
+		dtlinkAPI.set_txtParam("");
+		dtlinkAPI.set_txtToken(new clsHardCode().txtTokenAPI);
+		dtlinkAPI.set_txtMethod(VersionName);
+		strLinkAPI = dtlinkAPI.QueryString(_StrLINKAPI);
+
+		trackingLocationDA _trackingLocationDA = new trackingLocationDA(_db);
+		List<trackingLocationData> ListDataTrackingLocation = _trackingLocationDA.getAllDataToPushData(_db);
+		if (ListDataTrackingLocation != null) {
+			for (trackingLocationData dataHeader : ListDataTrackingLocation) {
+				dataJson Json = new dataJson();
+				List<trackingLocationData> tmpListDataTrackingLocationData = new ArrayList<trackingLocationData>();
+				tmpListDataTrackingLocationData.add(dataHeader);
+				Json.setListOfTrackingLocationData(tmpListDataTrackingLocationData);
+				String Html = new clsHelper().pushtData(strLinkAPI, Json.txtJSON().toString(), Integer.valueOf(TimeOut));
+				org.json.simple.JSONArray JsonArray = _help.ResultJsonArray(Html);
+				Iterator i = JsonArray.iterator();
+				while (i.hasNext()){
+					APIData dtAPIDATA = new APIData();
+					JSONObject InnerObj = (JSONObject) i.next();
+					int boolValid = Integer.valueOf(String.valueOf(InnerObj.get(dtAPIDATA.boolValid)));
+					if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)){
+						dataHeader.set_intSync("1");
+						_trackingLocationDA.SaveDataTrackingLocation(_db, dataHeader);
 					}
 				}
 			}
