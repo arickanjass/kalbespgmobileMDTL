@@ -99,6 +99,7 @@ public class MyServiceNative extends Service{
     		try {
     			JSONArray JsonArrayResult=new clsHelperBL().callPushDataReturnJson(versionName,dtJson.getDtdataJson().txtJSON().toString(),dtJson.getFileUpload());
 				new clsHelperBL().saveDataPush(dtJson.getDtdataJson(),JsonArrayResult);
+				new clsHelperBL().deleteDataPush(dtJson.getDtdataJson(), JsonArrayResult);
 				Intent serviceIntent = new Intent(this,MyNotificationService.class);
 				serviceIntent.putExtra("From", "PUSHDATA");
 				startService(serviceIntent);
