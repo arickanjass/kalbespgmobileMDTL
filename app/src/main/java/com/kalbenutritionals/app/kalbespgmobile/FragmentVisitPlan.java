@@ -66,11 +66,13 @@ import bl.mMenuBL;
 import bl.tAbsenUserBL;
 import bl.tDeviceInfoUserBL;
 import bl.tUserLoginBL;
+import bl.tVisitPlanHeader_MobileBL;
 import bl.tVisitPlanRealisasiBL;
 import library.salesforce.common.mMenuData;
 import library.salesforce.common.tAbsenUserData;
 import library.salesforce.common.tDeviceInfoUserData;
 import library.salesforce.common.tUserLoginData;
+import library.salesforce.common.tVisitPlanHeader_MobileData;
 import library.salesforce.common.tVisitPlanRealisasiData;
 import library.salesforce.dal.clsHardCode;
 
@@ -157,7 +159,8 @@ public class FragmentVisitPlan extends Fragment {
     String idRealisasiHeader;
     tVisitPlanRealisasiData dataDetail;
     private Class<?> clazz = null;
-    tVisitPlanRealisasiData _tVisitPlanRealisasiData = new tVisitPlanRealisasiData();;
+    tVisitPlanRealisasiData _tVisitPlanRealisasiData = new tVisitPlanRealisasiData();
+    ;
     private Uri uriImage;
     private int countActivity;
 
@@ -755,6 +758,21 @@ public class FragmentVisitPlan extends Fragment {
                                                 btnRefreshMaps.setClickable(false);
                                                 btnRefreshMaps.setVisibility(View.GONE);
 
+                                                List<tVisitPlanRealisasiData> data = new tVisitPlanRealisasiBL().getAllData();
+                                                boolean statusHeader = false;
+                                                for (tVisitPlanRealisasiData dt : data) {
+                                                    if (dt.get_intSubmit().toString().equals("1")) {
+                                                        statusHeader = true;
+                                                    }else{
+                                                        statusHeader = false;
+                                                    }
+                                                }
+                                                if (statusHeader){
+                                                    tVisitPlanHeader_MobileData dt = new tVisitPlanHeader_MobileData();
+                                                    dt.set_intSubmit("1");
+                                                    dt.set_intHeaderId(dataDetail.get_intHeaderID());
+                                                    new tVisitPlanHeader_MobileBL().UpdateData(dt);
+                                                }
 
                                                 _clsMainActivity.showCustomToast(getContext(), "Saved", true);
                                                 try {
@@ -801,7 +819,8 @@ public class FragmentVisitPlan extends Fragment {
 
         return v;
     }
-    private void getDistance(){
+
+    private void getDistance() {
         latitude = Double.parseDouble(String.valueOf(lblLang.getText()));
         longitude = Double.parseDouble(String.valueOf(lblLong.getText()));
         latitudeOutlet = Double.parseDouble(dataDetail.get_txtLatSource().toString());
@@ -819,6 +838,7 @@ public class FragmentVisitPlan extends Fragment {
 
         distance = locationA.distanceTo(locationB);
     }
+
     private void gettingLocation() {
         LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
         Criteria criteria = new Criteria();

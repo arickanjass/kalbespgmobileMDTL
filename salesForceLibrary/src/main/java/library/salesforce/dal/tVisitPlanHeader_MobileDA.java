@@ -1,5 +1,6 @@
 package library.salesforce.dal;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -38,12 +39,12 @@ public class tVisitPlanHeader_MobileDA {
     public void DropTable(SQLiteDatabase db){
         db.execSQL("DROP TABLE IF EXISTS " +TABLE_CONTACTS);
     }
-    /*public void UpdateDatatVisitPlan_MobileData(SQLiteDatabase db, tVisitPlanHeader_MobileData data) {
+    public void UpdateDatatVisitPlan_MobileData(SQLiteDatabase db, tVisitPlanHeader_MobileData data) {
         tVisitPlanHeader_MobileData dt = new tVisitPlanHeader_MobileData();
         ContentValues cv = new ContentValues();
         cv.put(dt.Property_intSubmit,data.get_intSubmit());
         db.update(TABLE_CONTACTS, cv, dt.Property_intHeaderId+"='"+data.get_intHeaderId()+"'", null);
-    }*/
+    }
 
     public void SaveDatatVisitPlanHeader_MobileData(SQLiteDatabase db, tVisitPlanHeader_MobileData data){
         tVisitPlanHeader_MobileData dt = new tVisitPlanHeader_MobileData();
