@@ -56,7 +56,7 @@ public class tJawabanUserDA {
     public List<tJawabanUserData> GetAllData(SQLiteDatabase db){
         List<tJawabanUserData> contactList = new ArrayList<tJawabanUserData>();
         tJawabanUserData dt = new tJawabanUserData();
-        String selectQuery = "Select " + dt.Property_All + " FROM" + TABLE_CONTACTS + " ORDER BY intQuestionId ASC";
+        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " ORDER BY intUserId ASC";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()){
             do {

@@ -32,13 +32,18 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import bl.clsMainBL;
+import bl.tAbsenUserBL;
+import bl.tUserLoginBL;
 import bl.trackingLocationBL;
 import library.salesforce.common.mCounterNumberData;
+import library.salesforce.common.mDownloadMasterData_mobileData;
+import library.salesforce.common.tAbsenUserData;
 import library.salesforce.common.tUserLoginData;
 import library.salesforce.common.trackingLocationData;
 import library.salesforce.dal.clsHardCode;
 import library.salesforce.dal.enumCounterData;
 import library.salesforce.dal.mCounterNumberDA;
+import library.salesforce.dal.mDownloadMasterData_mobileDA;
 import library.salesforce.dal.tUserLoginDA;
 
 /**
@@ -46,6 +51,8 @@ import library.salesforce.dal.tUserLoginDA;
  */
 
 public class MyTrackingLocationService extends Service implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+    List<tUserLoginData> dtLogin;
+    List<mDownloadMasterData_mobileData> dtDownload;
     public MyTrackingLocationService() {
 
     }
@@ -95,6 +102,7 @@ public class MyTrackingLocationService extends Service implements GoogleApiClien
         clsHardCode clsdthc = new clsHardCode();
         db = SQLiteDatabase.openOrCreateDatabase(clsdthc.txtDatabaseName,null); // create file database
         tUserLoginDA _tUserLoginDA=new tUserLoginDA(db);
+        mDownloadMasterData_mobileDA _mDownloadMasterData_mobileDA = new mDownloadMasterData_mobileDA(db);
 
         if (_tUserLoginDA.getContactsCount(db)> 0) {
             tUserLoginData _tUserLoginData=_tUserLoginDA.getData(db, 1);
@@ -110,13 +118,14 @@ public class MyTrackingLocationService extends Service implements GoogleApiClien
                 _data.set_txtValue(dateFormat.format(cal.getTime()));
                 _mCounterNumberDA.SaveDataMConfig(db, _data);
 
+                startRepeatingTask();
                 //new clsInit().PushData(db,versionName);
             } catch (Exception e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
 
-            startRepeatingTask();
+
 //            trackingLocation();
 
         } else {
@@ -186,6 +195,8 @@ public class MyTrackingLocationService extends Service implements GoogleApiClien
         }
 
         trackingLocationData dataLocation = new trackingLocationData();
+        tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
+        tUserLoginData _tUserLoginData = new tUserLoginData();
 //        java.text.DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 //        Calendar cal = Calendar.getInstance();
 
@@ -193,6 +204,14 @@ public class MyTrackingLocationService extends Service implements GoogleApiClien
         dataLocation.set_txtLongitude(String.valueOf(mLastLocation.getLongitude()));
         dataLocation.set_txtLatitude(String.valueOf(mLastLocation.getLongitude()));
         dataLocation.set_txtAccuracy(String.valueOf(mLastLocation.getAccuracy()));
+        dataLocation.set_txtUserId(dataUserActive.get_txtUserId());
+        dataLocation.set_txtUsername(dataUserActive.get_txtUserName());
+        dataLocation.set_txtRoleId(dataUserActive.get_txtRoleId());
+        dataLocation.set_txtDeviceId(dataUserActive.get_txtDeviceId());
+        dataLocation.set_txtBranchCode(dataUserActive.get_txtBranchCode());
+        dataLocation.set_txtNIK(dataUserActive.get_TxtEmpId());
+        dataLocation.set_intSubmit("1");
+        dataLocation.set_intSync("0");
 
         List<trackingLocationData> dtList = new ArrayList<>();
         dtList.add(dataLocation);

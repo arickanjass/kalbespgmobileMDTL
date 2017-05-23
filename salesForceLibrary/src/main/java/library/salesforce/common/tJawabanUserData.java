@@ -96,7 +96,7 @@ public class tJawabanUserData {
     public String Property_intAnswerId = "intAnswerId";
     public String Property_txtValue = "txtValue";
     public String Property_decBobot = "decBobot";
-    public String Property_ListOfmJawabanUserData = "ListOfmJawabanUserData";
+    public String Property_ListOftJawabanUserData = "ListOftJawabanUserData";
     public String Property_All = Property_intUserAnswer + "," + Property_intUserId + "," + Property_intRoleId + "," + Property_intQuestionId + "," + Property_intTypeQuestionId + "," + Property_bolHaveAnswerList
             + "," + Property_intAnswerId + "," + Property_txtValue + "," + Property_decBobot;
     public tJawabanUserData(){

@@ -168,6 +168,13 @@ public class dataJson {
         ListOftPurchaseOrderHeaderData = listOftPurchaseOrderHeaderData;
     }
 
+    public synchronized List<tJawabanUserData> getListOftJawabanUserData(){
+        return ListOftJawabanUserData;
+    }
+
+    public synchronized void setListOftJawabanUserData(List<tJawabanUserData> listOftJawabanUserData){
+        ListOftJawabanUserData = listOftJawabanUserData;
+    }
     public synchronized List<tSalesProductQuantityHeaderData> getListOftSalesProductQuantityHeaderData() {
         return ListOftSalesProductQuantityData;
     }
@@ -498,6 +505,24 @@ public class dataJson {
                 resJson.put(dttPurchaseOrderHeaderData.Property_ListOftPurchaseOrderHeaderData, new JSONArray(itemsListJquey));
             }
 
+            if (this.getListOftJawabanUserData() != null){
+                tJawabanUserData dtJawabanUserData = new tJawabanUserData();
+                itemsListJquey = new ArrayList<JSONObject>();
+                for (tJawabanUserData data  : this.getListOftJawabanUserData()){
+                    JSONObject item = new JSONObject();
+                    item.put(dtJawabanUserData.Property_intUserAnswer, String.valueOf(data.get_intUserAnswer()));
+                    item.put(dtJawabanUserData.Property_intUserId, String.valueOf(data.get_intUserId()));
+                    item.put(dtJawabanUserData.Property_intRoleId, String.valueOf(data.get_intRoleId()));
+                    item.put(dtJawabanUserData.Property_intQuestionId, String.valueOf(data.get_intQuestionId()));
+                    item.put(dtJawabanUserData.Property_intTypeQuestionId, String.valueOf(data.get_intTypeQuestionId()));
+                    item.put(dtJawabanUserData.Property_bolHaveAnswerList, String.valueOf(data.get_bolHaveAnswerList()));
+                    item.put(dtJawabanUserData.Property_intAnswerId, String.valueOf(data.get_intAnswerId()));
+                    item.put(dtJawabanUserData.Property_txtValue, String.valueOf(data.get_txtValue()));
+                    item.put(dtJawabanUserData.Property_decBobot, String.valueOf(data.get_decBobot()));
+                    itemsListJquey.add(item);
+                }
+                resJson.put(dtJawabanUserData.Property_ListOftJawabanUserData, new JSONArray(itemsListJquey));
+            }
             if (this.getListOftSalesProductQuantityHeaderData() != null){
                 tSalesProductQuantityHeaderData dttSalesProductQuantityData = new tSalesProductQuantityHeaderData();
                 itemsListJquey = new ArrayList<JSONObject>();
@@ -925,6 +950,7 @@ public class dataJson {
     private List<tSalesProductQuantityDetailData> ListOftSalesProductQuantityDetailData;
     private List<tSalesProductQuantityImageData> ListOftSalesProductQuantityImageData;
     private List<tPurchaseOrderHeaderData> ListOftPurchaseOrderHeaderData;
+    private List<tJawabanUserData> ListOftJawabanUserData;
     private List<tSalesProductQuantityHeaderData> ListOftSalesProductQuantityData;
     private List<tCustomerBasedMobileHeaderData> ListOftCustomerBasedMobileHeaderData;
     private List<tCustomerBasedMobileDetailData> ListOftCustomerBasedMobileDetailData;
