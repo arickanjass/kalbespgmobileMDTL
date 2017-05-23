@@ -146,7 +146,7 @@ public class trackingLocationData {
     public String Property_txtNIK = "txtNIK";
     public String Property_intSubmit = "intSubmit";
     public String Property_intSync = "intSync";
-    public String Property_ListOftrackingLocation = "ListOftrackingLocation";
+    public String Property_ListOftrackingLocation = "ListOfTrackingLocationData";
     public String Property_All = Property_intId + "," +
             Property_txtLongitude + "," +
             Property_txtLatitude + "," +
