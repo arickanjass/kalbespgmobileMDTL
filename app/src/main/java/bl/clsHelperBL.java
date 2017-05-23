@@ -425,6 +425,17 @@ public class clsHelperBL extends clsMainBL {
         return dtclsPushData;
     }
 
+    public void deleteDataPush(dataJson dtJson, JSONArray JsonResult) {
+        SQLiteDatabase db = getDb();
+        if (dtJson.getListOftJawabanUserData() != null) {
+            for (tJawabanUserData dt : dtJson.getListOftJawabanUserData()) {
+                tJawabanUserDA _tJawabanUserDA = new tJawabanUserDA(db);
+                _tJawabanUserDA.DeleteAllDatatJawabanUser(db);
+            }
+        }
+        db.close();
+    }
+
     public void saveDataPush(dataJson dtJson, org.json.simple.JSONArray JsonResult) {
         SQLiteDatabase db = getDb();
 
