@@ -3,6 +3,7 @@ package com.kalbenutritionals.app.kalbespgmobile;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -23,6 +24,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.TableLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -100,8 +103,9 @@ public class FragmentKuesioner extends Fragment {
                         for (int x = 0; x < listView.getChildCount(); x++) {
                             View nextChild = listView.getChildAt(x);
                             if (nextChild instanceof CheckBox) {
-                                cbTestGet= (CheckBox) nextChild;
-                            }}
+                                cbTestGet = (CheckBox) nextChild;
+                            }
+                        }
                         listAnswer.add(listView);
                     } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("4")) {
                         rgTestGet = (RadioGroup) v.findViewById(Integer.parseInt(HMPertanyaan.get(dataPertanyaan.get(i))));
@@ -112,32 +116,67 @@ public class FragmentKuesioner extends Fragment {
                 int[] tabIcons = {
                         R.drawable.ic_error,
                 };
+
+                Drawable ikon = getContext().getResources().getDrawable(tabIcons[0]);
+                ikon.setBounds(0, 0, ikon.getIntrinsicWidth(), ikon.getIntrinsicHeight());
                 boolean validate = true;
                 for (int i = 0; i < listDataPertanyaan.size(); i++) {
-
+                    View tab = LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
+                    TextView tv = (TextView) tab.findViewById(R.id.custom_text);
+                    tv.setText(mFragmentTitleList.get(i));
+                    tv.setCompoundDrawablesWithIntrinsicBounds(tabIcons[0], 0, 0, 0);
                     View jawaban = listAnswer.get(i);
-                    if ((jawaban instanceof SeekBar && (seekbar = (SeekBar) jawaban).getProgress() == 0) || (jawaban instanceof Spinner && spinner.getSelectedItem().toString().equals("Select One")) || (jawaban instanceof EditText && etTestGet.getText().toString().equals("")) ||  (jawaban instanceof RadioGroup && rgTestGet.getCheckedRadioButtonId() == -1)) {
+
+                    if (jawaban instanceof SeekBar && (seekbar = (SeekBar) jawaban).getProgress() == 0) {
                         _clsMainActivity.showCustomToast(getActivity(), "Please fill empty Field...", false);
+                        tabLayout.getTabAt(i).setCustomView(tab);
                         validate = false;
-                    }else if (jawaban instanceof ListView) {
-                        ListView listView = (ListView) listAnswer.get(i);
-                        int count = 0;
-                        for (int x = 0; x < listView.getChildCount(); x++) {
-                            View nextChild = listView.getChildAt(x);
-                            if (nextChild instanceof CheckBox) {
-                                CheckBox checkBox = (CheckBox) nextChild;
-                                    if (checkBox.isChecked()){
-                                        count++;
-                                    }
-                                }
-                            }
-                    if (count == 0){
+                    } else {
+                        tabLayout.getTabAt(i).setCustomView(null);
+                    }
+                    if (jawaban instanceof Spinner && (spinner= (Spinner) jawaban).getSelectedItem().toString().equals("Select One")) {
                         _clsMainActivity.showCustomToast(getActivity(), "Please fill empty Field...", false);
+                        tabLayout.getTabAt(i).setCustomView(tab);
                         validate = false;
+                    } else {
+                        tabLayout.getTabAt(i).setCustomView(null);
                     }
-                    }
+//                    if (jawaban instanceof EditText && (etTestGet = (EditText)jawaban).getText().toString().equals("")) {
+//                        _clsMainActivity.showCustomToast(getActivity(), "Please fill empty Field...", false);
+//                        tabLayout.getTabAt(i).setCustomView(tab);
+//                        validate = false;
+//                    } else {
+//                        tabLayout.getTabAt(i).setCustomView(null);
+//                    }
+//                    if (jawaban instanceof RadioGroup && (rgTestGet = (RadioGroup)jawaban).getCheckedRadioButtonId() == -1) {
+//                        _clsMainActivity.showCustomToast(getActivity(), "Please fill empty Field...", false);
+//                        tabLayout.getTabAt(i).setCustomView(tab);
+//                        validate = false;
+//                    } else {
+//                        tabLayout.getTabAt(i).setCustomView(null);
+//                    }
+//                    if (jawaban instanceof ListView) {
+//                        ListView listView = (ListView) listAnswer.get(i);
+//                        int count = 0;
+//                        for (int x = 0; x < listView.getChildCount(); x++) {
+//                            View nextChild = listView.getChildAt(x);
+//                            if (nextChild instanceof CheckBox) {
+//                                CheckBox checkBox = (CheckBox) nextChild;
+//                                if (checkBox.isChecked()) {
+//                                    count++;
+//                                }
+//                            }
+//                        }
+//                        if (count == 0) {
+//                            _clsMainActivity.showCustomToast(getActivity(), "Please fill empty Field...", false);
+//                            tabLayout.getTabAt(i).setCustomView(tab);
+//                            validate = false;
+//                        } else {
+//                            tabLayout.getTabAt(i).setCustomView(null);
+//                        }
+//                    }
                 }
-                if (validate){
+                if (validate) {
                     final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
                     alertDialog.setTitle("Confirm");
                     alertDialog.setMessage("Are you sure?");
@@ -158,8 +197,8 @@ public class FragmentKuesioner extends Fragment {
                         }
                     });
 
-                    alertDialog.show();}
-
+                    alertDialog.show();
+                }
 
 
             }
@@ -168,7 +207,7 @@ public class FragmentKuesioner extends Fragment {
         return v;
     }
 
-    private void SaveQuiz(){
+    private void SaveQuiz() {
         for (int i = 0; i < listDataPertanyaan.size(); i++) {
             tJawabanUserData dt = new tJawabanUserData();
             tUserLoginData dataUserActive = new tAbsenUserBL().getUserActive();
@@ -267,6 +306,7 @@ public class FragmentKuesioner extends Fragment {
             }
         }
     }
+
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
         dataPertanyaan = new ArrayList<>();

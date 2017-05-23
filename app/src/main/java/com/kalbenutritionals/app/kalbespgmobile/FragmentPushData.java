@@ -830,6 +830,12 @@ public class FragmentPushData extends Fragment {
                 }
                 try {
                     JSONArray Jresult= new clsHelperBL().callPushDataReturnJson(versionName,dtJson.getDtdataJson().txtJSON().toString(),dtJson.getFileUpload());
+                    new clsHelperBL().deleteDataPush(dtJson.getDtdataJson(),Jresult);
+                }catch (Exception e3){
+                    e3.printStackTrace();
+                }
+                try {
+                    JSONArray Jresult= new clsHelperBL().callPushDataReturnJson(versionName,dtJson.getDtdataJson().txtJSON().toString(),dtJson.getFileUpload());
                     new clsHelperBL().saveDataPush(dtJson.getDtdataJson(),Jresult);
                     dtdataJson.setIntResult("1");
                 } catch (Exception e) {
