@@ -22,4 +22,12 @@ public class trackingLocationBL extends clsMainBL {
         }
         db.close();
     }
+
+    public List<trackingLocationData> getAllDataTrackingLocation() {
+        SQLiteDatabase _db = getDb();
+        trackingLocationDA _trackingLocationDA = new trackingLocationDA(_db);
+        List<trackingLocationData> dt = _trackingLocationDA.getAllData(_db);
+        db.close();
+        return dt;
+    }
 }

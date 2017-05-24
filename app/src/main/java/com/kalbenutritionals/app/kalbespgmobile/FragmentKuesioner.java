@@ -85,6 +85,7 @@ public class FragmentKuesioner extends Fragment {
         fb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //ini buat nyimpen widget di dalam list array di View
                 for (int i = 0; i < listDataPertanyaan.size(); i++) {
                     if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("5")) {
                         seekbar = (SeekBar) v.findViewById(Integer.parseInt(HMPertanyaan.get(dataPertanyaan.get(i))));
@@ -113,9 +114,7 @@ public class FragmentKuesioner extends Fragment {
                 int[] tabIcons = {
                         R.drawable.ic_error,
                 };
-
-                Drawable ikon = getContext().getResources().getDrawable(tabIcons[0]);
-                ikon.setBounds(0, 0, ikon.getIntrinsicWidth(), ikon.getIntrinsicHeight());
+                //ini buat validasi kalo jawaban masih kosong
                 boolean validate = true;
                 for (int i = 0; i < listDataPertanyaan.size(); i++) {
                     View tab = LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
@@ -127,7 +126,6 @@ public class FragmentKuesioner extends Fragment {
                     if (jawaban instanceof SeekBar ){
                         tabLayout.getTabAt(i).setCustomView(null);
                         if ((seekbar = (SeekBar) jawaban).getProgress() == 0) {
-//                        _clsMainActivity.showCustomToast(getActivity(), "Please fill empty Field...", false);
                             tabLayout.getTabAt(i).setCustomView(tab);
                             validate = false;
                         } else {
@@ -137,7 +135,6 @@ public class FragmentKuesioner extends Fragment {
                     if (jawaban instanceof Spinner){
                         tabLayout.getTabAt(i).setCustomView(null);
                         if ((spinner= (Spinner) jawaban).getSelectedItem().toString().equals("Select One")) {
-//                        _clsMainActivity.showCustomToast(getActivity(), "Please fill empty Field...", false);
                             tabLayout.getTabAt(i).setCustomView(tab);
                             validate = false;
                         } else {
@@ -156,7 +153,6 @@ public class FragmentKuesioner extends Fragment {
                     if (jawaban instanceof RadioGroup ){
                         tabLayout.getTabAt(i).setCustomView(null);
                         if ((rgTestGet = (RadioGroup)jawaban).getCheckedRadioButtonId() == -1) {
-//                            _clsMainActivity.showCustomToast(getActivity(), "Please fill empty Field...", false);
                             tabLayout.getTabAt(i).setCustomView(tab);
                             validate = false;
                         } else {
@@ -178,7 +174,6 @@ public class FragmentKuesioner extends Fragment {
                             }
                         }
                         if (count == 0) {
-//                            _clsMainActivity.showCustomToast(getActivity(), "Please fill empty Field...", false);
                             tabLayout.getTabAt(i).setCustomView(tab);
                             validate = false;
                         } else {
@@ -186,7 +181,7 @@ public class FragmentKuesioner extends Fragment {
                         }
                     }
                 }
-                if (validate) {
+                if (validate) { //kalau jawaban sudah di isi jalankan ini
                     final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
                     alertDialog.setTitle("Confirm");
                     alertDialog.setMessage("Are you sure?");
@@ -320,7 +315,7 @@ public class FragmentKuesioner extends Fragment {
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         dataPertanyaan = new ArrayList<>();
         List<mPertanyaanData> listDataPertanyaan = new mPertanyaanBL().GetAllData();
 
@@ -346,7 +341,7 @@ public class FragmentKuesioner extends Fragment {
                     modelJawaban.add(dt);
                 }
             }
-            adapter.addFrag(new FragmentKuesionerPart(Integer.parseInt(HMPertanyaan.get(dataPertanyaan.get(i))), dataPertanyaan.get(i), Integer.parseInt(HMPertanyaan.get(HMPertanyaan.get(dataPertanyaan.get(i)))), modelJawaban), "Soal " + HMPertanyaan.get(dataPertanyaan.get(i)));
+            adapter.addFrag(new FragmentKuesionerPart(Integer.parseInt(HMPertanyaan.get(dataPertanyaan.get(i))), dataPertanyaan.get(i), Integer.parseInt(HMPertanyaan.get(HMPertanyaan.get(dataPertanyaan.get(i)))), modelJawaban), "SOAL " + HMPertanyaan.get(dataPertanyaan.get(i)));
         }
         viewPager.setAdapter(adapter);
     }
@@ -372,12 +367,6 @@ public class FragmentKuesioner extends Fragment {
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }
-
-//        public Void getTabView(int position) {
-//            View tab = LayoutInflater.from(getContext()).inflate(R.layout.custom_tab, null);
-//            TextView tv = (TextView) tab.findViewById(R.id.custom_text);
-//            tv.setText(mFragmentTitleList.get(position));
-//        }
 
         @Override
         public CharSequence getPageTitle(int position) {
