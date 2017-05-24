@@ -107,4 +107,40 @@ public class trackingLocationDA {
         return contactList;
     }
 
+    public List<trackingLocationData> getAllData(SQLiteDatabase db){
+        List<trackingLocationData> contactList = null;
+        // select query
+        trackingLocationData dt = new trackingLocationData();
+        String selectQuery = "SELECT TOP 1 " + dt.Property_All + " FROM " + TABLE_CONTACTS + " ORDER BY Time DESC";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            contactList = new ArrayList<trackingLocationData>();
+            do {
+                trackingLocationData contact = new trackingLocationData();
+                contact.set_intId(cursor.getString(0));
+                contact.set_txtLongitude(cursor.getString(1));
+                contact.set_txtLatitude(cursor.getString(2));
+                contact.set_txtAccuracy(cursor.getString(3));
+                contact.set_txtTime(cursor.getString(4));
+                contact.set_txtUserId(cursor.getString(5));
+                contact.set_txtUsername(cursor.getString(6));
+                contact.set_txtRoleId(cursor.getString(7));
+                contact.set_txtDeviceId(cursor.getString(8));
+                contact.set_txtBranchCode(cursor.getString(9));
+                contact.set_txtOutletCode(cursor.getString(10));
+                contact.set_txtNIK(cursor.getString(11));
+                contact.set_intSubmit(cursor.getString(12));
+                contact.set_intSync(cursor.getString(13));
+
+                // Adding contact to list
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return contactList;
+    }
+
 }
