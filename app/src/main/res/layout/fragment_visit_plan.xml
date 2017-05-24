@@ -99,12 +99,36 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="10dp"
                 android:textColor="#000"/>
+            <TextView
+                android:id="@+id/tvDesc"
+                android:layout_below="@id/txtKet_visitPlan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Description :"
+                android:textColor="#000"
+                android:background="@drawable/bg_edtext"/>
+            <View
+                android:id="@+id/viewDsc"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/tvDesc"
+                android:layout_marginTop="10dp"
+                android:background="#bfbfbf" />
+            <TextView
+                android:id="@+id/txtDesc"
+                android:layout_below="@id/viewDsc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Description Reply :"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:textColor="#000"/>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/input_layout_description_visit_plan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtKet_visitPlan">
+                android:layout_below="@+id/txtDesc">
 
                 <EditText
                 android:id="@+id/et_desc_reply"
