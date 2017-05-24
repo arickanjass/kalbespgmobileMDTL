@@ -85,6 +85,7 @@ public class FragmentKuesioner extends Fragment {
         fb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //ini buat nyimpen widget di dalam list array di View
                 for (int i = 0; i < listDataPertanyaan.size(); i++) {
                     if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("5")) {
                         seekbar = (SeekBar) v.findViewById(Integer.parseInt(HMPertanyaan.get(dataPertanyaan.get(i))));
@@ -113,9 +114,7 @@ public class FragmentKuesioner extends Fragment {
                 int[] tabIcons = {
                         R.drawable.ic_error,
                 };
-
-                Drawable ikon = getContext().getResources().getDrawable(tabIcons[0]);
-                ikon.setBounds(0, 0, ikon.getIntrinsicWidth(), ikon.getIntrinsicHeight());
+                //ini buat validasi kalo jawaban masih kosong
                 boolean validate = true;
                 for (int i = 0; i < listDataPertanyaan.size(); i++) {
                     View tab = LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
@@ -182,7 +181,7 @@ public class FragmentKuesioner extends Fragment {
                         }
                     }
                 }
-                if (validate) {
+                if (validate) { //kalau jawaban sudah di isi jalankan ini
                     final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
                     alertDialog.setTitle("Confirm");
                     alertDialog.setMessage("Are you sure?");
@@ -368,12 +367,6 @@ public class FragmentKuesioner extends Fragment {
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }
-
-//        public Void getTabView(int position) {
-//            View tab = LayoutInflater.from(getContext()).inflate(R.layout.custom_tab, null);
-//            TextView tv = (TextView) tab.findViewById(R.id.custom_text);
-//            tv.setText(mFragmentTitleList.get(position));
-//        }
 
         @Override
         public CharSequence getPageTitle(int position) {
