@@ -315,7 +315,7 @@ public class FragmentKuesioner extends Fragment {
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         dataPertanyaan = new ArrayList<>();
         List<mPertanyaanData> listDataPertanyaan = new mPertanyaanBL().GetAllData();
 
