@@ -134,8 +134,8 @@ public class FragmentDownloadData extends Fragment {
     private Button btnActivity;
     private Spinner spnCustomerBase;
     private Button btnCustomerBase;
-    private Spinner spnAbsen;
-    private Button btnAbsen;
+    private Spinner spnAbsen, spnQuiz;
+    private Button btnAbsen, btnQuiz;
     private Spinner spnDataLeave, spnDataPO, spnDataQuantityStock;
     private Button btnDataLeave, btnDataPO, btnDataQuantityStock;
     private LinearLayout ll_branch, ll_outlet, ll_product, ll_brand, ll_type_leave, ll_reso, ll_activity, ll_customerbased, ll_absen, ll_purchase_order, ll_data_leave;
@@ -180,6 +180,8 @@ public class FragmentDownloadData extends Fragment {
         btnDataPO = (Button)v.findViewById(R.id.btnDlDataPO);
         spnDataQuantityStock = (Spinner)v.findViewById(R.id.spnDataQuantityStock);
         btnDataQuantityStock = (Button)v.findViewById(R.id.btnDlDataQuantityStock);
+        spnQuiz = (Spinner) v.findViewById(R.id.spnQuiz);
+        btnQuiz = (Button)v.findViewById(R.id.btnQuiz);
 
         ll_branch = (LinearLayout) v.findViewById(R.id.ll_branch);
         ll_outlet = (LinearLayout) v.findViewById(R.id.ll_outlet);
@@ -336,6 +338,14 @@ public class FragmentDownloadData extends Fragment {
                 task.execute();
             }
         });
+        btnQuiz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intProcesscancel = 0;
+                AsyncCallQuis task = new AsyncCallQuis();
+                task.execute();
+            }
+        });
         btnDataPO.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -376,6 +386,11 @@ public class FragmentDownloadData extends Fragment {
         List<tActivityData> listtActivityData = new tActivityBL().getAllData();
         List<tAbsenUserData> listtAbsenUserData = new tAbsenUserBL().getAllDataActive();
         List<tLeaveMobileData> listtLeaveData = new tLeaveMobileBL().getData("");
+        List<mParentData> parentDataList = new mParentBL().GetAllData();
+        List<mPertanyaanData> pertanyaanDataList = new mPertanyaanBL().GetAllData();
+        List<mListJawabanData> jawabanDataList = new mListJawabanBL().GetAllData();
+        List<mTypePertanyaanData> typePertanyaanDataList = new mTypePertanyaanBL().GetAllData();
+        List<mKategoriData> kategoriDataList = new mKategoriBL().GetAllData();
         List<tPurchaseOrderHeaderData> listPurchaseOrderHeaderData = new tPurchaseOrderHeaderBL().getAllPurchaseOrderHeader();
         List<tSalesProductQuantityHeaderData> listQuantityStockHeaderData = new tSalesProductQuantityHeaderBL().getAllSalesQuantityHeader();
 
@@ -391,6 +406,18 @@ public class FragmentDownloadData extends Fragment {
                     android.R.layout.simple_spinner_item, strip);
             spnBranch.setAdapter(adapterspn);
             spnBranch.setEnabled(false);
+        }
+
+        arrData = new ArrayList<String>();
+        if (parentDataList.size() > 0 && kategoriDataList.size() > 0 && jawabanDataList.size() >0 && typePertanyaanDataList.size() > 0 && pertanyaanDataList.size() >0) {
+                arrData.add("Quesioner  Ready");
+            spnQuiz.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
+            spnQuiz.setEnabled(true);
+        } else if (parentDataList.size() == 0 && kategoriDataList.size() == 0 && jawabanDataList.size() == 0 && typePertanyaanDataList.size() == 0 && pertanyaanDataList.size() ==0) {
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<String>(getContext(),
+                    android.R.layout.simple_spinner_item, strip);
+            spnQuiz.setAdapter(adapterspn);
+            spnQuiz.setEnabled(false);
         }
 
         arrData = new ArrayList<String>();
@@ -1334,6 +1361,63 @@ public class FragmentDownloadData extends Fragment {
         return _array;
     }
 
+    private class AsyncCallQuis extends AsyncTask<JSONArray, Void, JSONArray> {
+        @Override
+        protected JSONArray doInBackground(JSONArray... params) {
+            JSONArray Json = null;
+            try {
+                Json = new mParentBL().DownlaodDataQuesioner(pInfo.versionName);
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return Json;
+        }
+
+        private ProgressDialog Dialog = new ProgressDialog(getContext());
+
+        @Override
+        protected void onCancelled() {
+            Dialog.dismiss();
+            new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessCancelRequest, false);
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray jsonArray) {
+            if (jsonArray != null && jsonArray.size() > 0){
+                arrData = SaveDataQuesioner(jsonArray);
+                loadData();
+                new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
+            } else {
+                if (intProcesscancel == 1){
+                    onCancelled();
+                } else {
+                    new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
+                }
+            }
+            checkingDataTable();
+            Dialog.dismiss();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            Dialog.setMessage("Getting Question");
+            Dialog.setCancelable(false);
+            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    intProcesscancel = 1;
+                }
+            });
+            Dialog.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            Dialog.dismiss();
+        }
+    }
+
     private class AsyncCallProduct extends AsyncTask<JSONArray, Void, JSONArray> {
         @Override
         protected JSONArray doInBackground(JSONArray... params) {
@@ -1707,7 +1791,6 @@ public class FragmentDownloadData extends Fragment {
             try {
                 Json = new tPurchaseOrderHeaderBL().DownloadTransactionPO(pInfo.versionName);
                 new tPurchaseOrderHeaderBL().DownloadNOPO(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
-                Json = new mParentBL().DownlaodDataQuesioner(pInfo.versionName);
             }catch (Exception e){
                 e.printStackTrace();
             }

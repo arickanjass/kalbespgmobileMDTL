@@ -20,7 +20,7 @@ public class mKategoriBL extends clsMainBL {
         _mKategoriDA.SaveDatamKategori(_db, dt);
     }
 
-    private List<mKategoriData> GetAllData(){
+    public List<mKategoriData> GetAllData(){
         SQLiteDatabase _db = getDb();
         mKategoriDA _mKategoriDA = new mKategoriDA(_db);
         List<mKategoriData> dt = _mKategoriDA.GetAllData(_db);

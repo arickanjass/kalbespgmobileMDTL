@@ -584,6 +584,37 @@
                 android:background="@drawable/btn_on_click"
                 android:text="Download transaksi visit plan" />
 
+            <View
+                android:id="@+id/viewTrVisitPlan"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="#bfbfbf" />
+
+            <TextView
+                android:id="@+id/tv_quis"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Quesioner"
+                android:textColor="#000" />
+
+            <Spinner
+                android:id="@+id/spnQuiz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/bg_edtext" />
+
+            <Button
+                android:id="@+id/btnQuiz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/btn_on_click"
+                android:text="Download Quesioner" />
 
             <View
                 android:id="@+id/view17"
