@@ -127,7 +127,6 @@ public class FragmentKuesioner extends Fragment {
                     if (jawaban instanceof SeekBar ){
                         tabLayout.getTabAt(i).setCustomView(null);
                         if ((seekbar = (SeekBar) jawaban).getProgress() == 0) {
-//                        _clsMainActivity.showCustomToast(getActivity(), "Please fill empty Field...", false);
                             tabLayout.getTabAt(i).setCustomView(tab);
                             validate = false;
                         } else {
@@ -137,7 +136,6 @@ public class FragmentKuesioner extends Fragment {
                     if (jawaban instanceof Spinner){
                         tabLayout.getTabAt(i).setCustomView(null);
                         if ((spinner= (Spinner) jawaban).getSelectedItem().toString().equals("Select One")) {
-//                        _clsMainActivity.showCustomToast(getActivity(), "Please fill empty Field...", false);
                             tabLayout.getTabAt(i).setCustomView(tab);
                             validate = false;
                         } else {
@@ -156,7 +154,6 @@ public class FragmentKuesioner extends Fragment {
                     if (jawaban instanceof RadioGroup ){
                         tabLayout.getTabAt(i).setCustomView(null);
                         if ((rgTestGet = (RadioGroup)jawaban).getCheckedRadioButtonId() == -1) {
-//                            _clsMainActivity.showCustomToast(getActivity(), "Please fill empty Field...", false);
                             tabLayout.getTabAt(i).setCustomView(tab);
                             validate = false;
                         } else {
@@ -178,7 +175,6 @@ public class FragmentKuesioner extends Fragment {
                             }
                         }
                         if (count == 0) {
-//                            _clsMainActivity.showCustomToast(getActivity(), "Please fill empty Field...", false);
                             tabLayout.getTabAt(i).setCustomView(tab);
                             validate = false;
                         } else {
