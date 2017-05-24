@@ -341,7 +341,7 @@ public class FragmentKuesioner extends Fragment {
                     modelJawaban.add(dt);
                 }
             }
-            adapter.addFrag(new FragmentKuesionerPart(Integer.parseInt(HMPertanyaan.get(dataPertanyaan.get(i))), dataPertanyaan.get(i), Integer.parseInt(HMPertanyaan.get(HMPertanyaan.get(dataPertanyaan.get(i)))), modelJawaban), "Soal " + HMPertanyaan.get(dataPertanyaan.get(i)));
+            adapter.addFrag(new FragmentKuesionerPart(Integer.parseInt(HMPertanyaan.get(dataPertanyaan.get(i))), dataPertanyaan.get(i), Integer.parseInt(HMPertanyaan.get(HMPertanyaan.get(dataPertanyaan.get(i)))), modelJawaban), "SOAL " + HMPertanyaan.get(dataPertanyaan.get(i)));
         }
         viewPager.setAdapter(adapter);
     }
