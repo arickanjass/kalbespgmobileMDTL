@@ -2,6 +2,8 @@ package com.kalbenutritionals.app.kalbespgmobile;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -64,6 +67,7 @@ public class FragmentKuesioner extends Fragment {
     private LinearLayout linearLayout;
     private RadioGroup rgTestGet;
     clsMainActivity _clsMainActivity;
+    private int value;;
 
     @Nullable
     @Override
@@ -74,8 +78,14 @@ public class FragmentKuesioner extends Fragment {
         final ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
 
         //disesuaikan jumlah soal
-        viewPager.setOffscreenPageLimit(100);
+        viewPager.setOffscreenPageLimit(listDataPertanyaan.size());
+
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            value = bundle.getInt("key_view");
+        }
         setupViewPager(viewPager);
+        viewPager.setCurrentItem(value);
 
         tabLayout = (TabLayout) v.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
@@ -114,13 +124,20 @@ public class FragmentKuesioner extends Fragment {
                 int[] tabIcons = {
                         R.drawable.ic_error,
                 };
+
                 //ini buat validasi kalo jawaban masih kosong
                 boolean validate = true;
                 for (int i = 0; i < listDataPertanyaan.size(); i++) {
+                    //ini buat custom tab
                     View tab = LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
                     TextView tv = (TextView) tab.findViewById(R.id.custom_text);
+                    Drawable img = getContext().getResources().getDrawable(
+                            R.drawable.ic_error);
+                    final int width = Math.round(2 * img.getIntrinsicWidth());
+                    final int height = Math.round(2 * img.getIntrinsicHeight());
+                    img.setBounds(width, height, width, height);
                     tv.setText(mFragmentTitleList.get(i));
-                    tv.setCompoundDrawablesWithIntrinsicBounds(tabIcons[0], 0, 0, 0);
+                    tv.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
                     View jawaban = listAnswer.get(i);
 
                     if (jawaban instanceof SeekBar ){
@@ -314,7 +331,7 @@ public class FragmentKuesioner extends Fragment {
         }
     }
 
-    private void setupViewPager(ViewPager viewPager) {
+    public void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         dataPertanyaan = new ArrayList<>();
         List<mPertanyaanData> listDataPertanyaan = new mPertanyaanBL().GetAllData();
@@ -346,7 +363,7 @@ public class FragmentKuesioner extends Fragment {
         viewPager.setAdapter(adapter);
     }
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
+   public class ViewPagerAdapter extends FragmentPagerAdapter {
 
 
         public ViewPagerAdapter(FragmentManager manager) {

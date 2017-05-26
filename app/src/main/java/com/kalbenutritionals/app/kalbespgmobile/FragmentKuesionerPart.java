@@ -88,7 +88,7 @@ public class FragmentKuesionerPart extends Fragment {
             for (int i = 0; i < _jawabanModel.size(); i++) {
                 lvArray.add(_jawabanModel.get(i).getKey());
             }
-            ListView.LayoutParams layoutParams = new ListView.LayoutParams(ListView.LayoutParams.MATCH_PARENT, ListView.LayoutParams.WRAP_CONTENT);
+            ListView.LayoutParams layoutParams = new ListView.LayoutParams(ListView.LayoutParams.MATCH_PARENT, ListView.LayoutParams.MATCH_PARENT);
             ListView listView = new ListView(getContext());
             listView.setLayoutParams(layoutParams);
             listView.setId(noSoal);

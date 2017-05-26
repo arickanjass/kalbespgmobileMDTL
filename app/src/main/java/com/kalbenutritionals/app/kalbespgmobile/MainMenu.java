@@ -423,15 +423,23 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                         selectedId = 99;
                         return true;
 
-
                     case R.id.soalkuesioner:
                         toolbar.setTitle("Kuesioner / Quiz");
                         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                        FragmentKuesioner fragmentKuesioner = new FragmentKuesioner();
+                        FragmentKuesionerAwal fragmentKuesioner = new FragmentKuesionerAwal();
                         FragmentTransaction fragmentTransactionKuesioner = getSupportFragmentManager().beginTransaction();
                         fragmentTransactionKuesioner.replace(R.id.frame, fragmentKuesioner);
                         fragmentTransactionKuesioner.commit();
                         return true;
+
+//                    case R.id.soalkuesioner:
+//                        toolbar.setTitle("Kuesioner / Quiz");
+//                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//                        FragmentKuesioner fragmentKuesioner = new FragmentKuesioner();
+//                        FragmentTransaction fragmentTransactionKuesioner = getSupportFragmentManager().beginTransaction();
+//                        fragmentTransactionKuesioner.replace(R.id.frame, fragmentKuesioner);
+//                        fragmentTransactionKuesioner.commit();
+//                        return true;
 
 
                   /*  case R.id.viewVisitPlan:
