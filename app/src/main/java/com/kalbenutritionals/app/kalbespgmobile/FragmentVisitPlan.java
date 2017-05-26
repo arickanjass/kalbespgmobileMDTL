@@ -128,6 +128,7 @@ public class FragmentVisitPlan extends Fragment {
     private EditText etDescReply;
     private EditText etBranch;
     private EditText etOutlet;
+    private TextView tvDesc;
     private ArrayAdapter<String> dataAdapterBranch;
     private ArrayAdapter<String> dataAdapterOutlet;
     //    private tAbsenUserBL _tAbsenUserBL;
@@ -295,10 +296,11 @@ public class FragmentVisitPlan extends Fragment {
         etBranch.setText(dataDetail.get_txtBranchCode());
         etBranch.setClickable(false);
         etBranch.setFocusable(false);
+        tvDesc = (TextView) v.findViewById(R.id.tvDesc);
+        tvDesc.setText(dataDetail.get_txtDesc());
         etOutlet.setText(dataDetail.get_txtOutletName());
         etOutlet.setFocusable(false);
         etOutlet.setClickable(false);
-
         txtHDId = (TextView) v.findViewById(R.id.txtHDId);
         btnRefreshMaps = (Button) v.findViewById(R.id.btnRefreshMaps);
         btnCheckIn = (Button) v.findViewById(R.id.buttonCheckIn);
@@ -672,28 +674,8 @@ public class FragmentVisitPlan extends Fragment {
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         Boolean pRes = true;
-                                        /*if (dttAbsenUserData == null) {
-
-                                            pRes = false;
-
-                                        } else {
-                                            nameBranch = spnBranch.getSelectedItem().toString();
-                                            if ((dttAbsenUserData.get_txtImg1() == null)
-                                                    && (dttAbsenUserData.get_txtImg2() == null)
-                                                    || (spnBranch.getSelectedItem().toString().equals("")
-                                                    || spnBranch.getSelectedItem().toString().equals("null"))
-                                                    || (HMbranch.get(nameBranch).equals("")
-                                                    || HMbranch.get(nameBranch).equals("null"))) {
-
-                                                pRes = false;
-                                            }
-                                        }*/
                                         new clsMainActivity().removeErrorMessage(textInputLayoutDescriptionVisiPlan);
-
-                                        /*if(etDescReply.getText().toString().equals("")&&etDescReply.getText().toString().length()==0){
-                                            new clsMainActivity().setErrorMessage(getContext(), textInputLayoutDescriptionVisiPlan, etDescReply, "Please give Description");
-                                            pRes =false;
-                                        } else*/
+                                        //validasi foto jika kosong semua
                                         if (pht1 == null && pht2 == null) {
                                             new clsMainActivity().removeErrorMessage(textInputLayoutDescriptionVisiPlan);
                                             new clsMainActivity().showCustomToast(getContext(), "Please take at least 1 photo", false);
