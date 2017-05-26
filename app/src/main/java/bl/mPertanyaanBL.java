@@ -25,4 +25,11 @@ public class mPertanyaanBL extends clsMainBL {
         List<mPertanyaanData> dt = _mPertanyaanDA.GetAllData(_db);
         return dt;
     }
+
+    public List<mPertanyaanData> GetDataByCategoriId(int categoriId){
+        SQLiteDatabase _db = getDb();
+        mPertanyaanDA _mPertanyaanDA = new mPertanyaanDA(_db);
+        List<mPertanyaanData> dt = _mPertanyaanDA.GetDataBYCategory(_db,categoriId);
+        return dt;
+    }
 }
