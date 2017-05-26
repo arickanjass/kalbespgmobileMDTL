@@ -44,5 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="20dp"
-        android:src="@android:drawable/ic_dialog_email" />
+        android:src="@android:drawable/ic_menu_send"
+        android:scaleType="centerCrop"
+        app:fabSize="normal" />
 </android.support.design.widget.CoordinatorLayout>
