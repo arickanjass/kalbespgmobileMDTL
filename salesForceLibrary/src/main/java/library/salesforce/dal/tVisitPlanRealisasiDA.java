@@ -176,6 +176,9 @@ public class tVisitPlanRealisasiDA {
         cv.put(dt.Property_intDistance,data.get_intDistance());
         cv.put(dt.Property_txtRoleId,data.get_txtRoleId());
         cv.put(dt.Property_intSubmit,data.get_intSubmit());
+        if (data.get_intPush()!=null){
+            cv.put(dt.Property_intPush,data.get_intPush());
+        }
         if (data.get_dateCheckout()!=null){
             cv.put(dt.Property_dateCheckOut,data.get_dateCheckout());
         }

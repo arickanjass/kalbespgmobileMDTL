@@ -44,8 +44,6 @@ public class FragmentVisitPlanTabview extends Fragment {
         arg2.putInt("Arg for Frag2", 2);
         tabHost.addTab(tabHost.newTabSpec("Tab2").setIndicator("Done"),
                 FragmentViewVisitplanDone.class, arg2);
-
-
         return tabHost;
     }
 

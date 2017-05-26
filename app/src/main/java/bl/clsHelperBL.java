@@ -411,11 +411,11 @@ public class clsHelperBL extends clsMainBL {
 
             if (ListOftCustomerBasedMobileDetailProduct != null) {
                 dtPush.setListOftCustomerBasedMobileDetailProductData(ListOftCustomerBasedMobileDetailProduct);
-            }
+            }/*
             if (ListOftVisitPlanHeader_MobileData != null){
                 dtPush.setListOftVisitPlanHeader_MobileData(ListOftVisitPlanHeader_MobileData);
             }
-
+*/
         } else {
             dtPush = null;
         }

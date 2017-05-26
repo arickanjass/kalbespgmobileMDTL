@@ -78,24 +78,31 @@ public class FragmentViewVisitplan  extends Fragment implements IXListViewListen
 
         mAdapter = clsMain.setListVisitPlan(getActivity().getApplicationContext(), swipeListProduct);
         tVisitPlanRealisasiData data = new tVisitPlanRealisasiBL().getDataCheckinActive();
-        if (data.get_txtDataIDRealisasi() != null){
-            lvVisitPlan.setEnabled(false);
-        }
+
         lvVisitPlan.setAdapter(mAdapter);
         lvVisitPlan.setEmptyView(v.findViewById(R.id.LayoutEmpty));
-        lvVisitPlan.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (data.get_txtDataIDRealisasi() != null){
+            lvVisitPlan.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    new clsMainActivity().showCustomToast(getContext(), "to open, please checkout", false);
+                }
+            });
+        }else{
+            lvVisitPlan.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                new clsMainActivity().showCustomToast(getContext(), "You click id : " + id +" Posisi : "+position, true);
-                Bundle data = new Bundle();
-                data.putString( ID_REALISASI , hmIdRealisasi.get(position).toString());
-                FragmentVisitPlan fragmentVisitPlan = new FragmentVisitPlan();
-                fragmentVisitPlan.setArguments(data);
-                FragmentTransaction fragmentTransaction = getParentFragment().getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.frame, fragmentVisitPlan);
-                fragmentTransaction.commit();
-            }
-        });
+                    Bundle data = new Bundle();
+                    data.putString( ID_REALISASI , hmIdRealisasi.get(position).toString());
+                    FragmentVisitPlan fragmentVisitPlan = new FragmentVisitPlan();
+                    fragmentVisitPlan.setArguments(data);
+                    FragmentTransaction fragmentTransaction = getParentFragment().getFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.frame, fragmentVisitPlan);
+                    fragmentTransaction.commit();
+                }
+            });
+        }
 
     }
 }

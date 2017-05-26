@@ -417,6 +417,7 @@ public class dataJson {
                     item.put(dttVisitPlanRealisasiData.Property_intDistance, String.valueOf(data.get_intDistance()));
                     item.put(dttVisitPlanRealisasiData.Property_bitActive, String.valueOf(data.get_bitActive()));
                     item.put(dttVisitPlanRealisasiData.Property_txtRoleId, String.valueOf(data.get_txtRoleId()));
+                    item.put(dttVisitPlanRealisasiData.Property_dateCheckOut, String.valueOf(data.get_dateCheckout()));
                     itemsListJquey.add(item);
                 }
                 resJson.put(dttVisitPlanRealisasiData.Property_listOftVisitPlanRealisasiData, new JSONArray(itemsListJquey));
