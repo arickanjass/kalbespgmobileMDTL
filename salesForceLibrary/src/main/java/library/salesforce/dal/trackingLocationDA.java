@@ -73,6 +73,30 @@ public class trackingLocationDA {
         }
     }
 
+    public void SaveDataDownloadTrackingLocation(SQLiteDatabase db, trackingLocationData data) {
+        trackingLocationData dt = new trackingLocationData();
+        ContentValues cv = new ContentValues();
+        cv.put(dt.Property_txtLongitude, String.valueOf(data.get_txtLongitude()));
+        cv.put(dt.Property_txtLatitude, String.valueOf(data.get_txtLatitude()));
+        cv.put(dt.Property_txtAccuracy, String.valueOf(data.get_txtAccuracy()));
+        cv.put(dt.Property_txtTime, String.valueOf(data.get_txtTime()));
+        cv.put(dt.Property_txtUserId, String.valueOf(data.get_txtUserId()));
+        cv.put(dt.Property_txtUsername, String.valueOf(data.get_txtUsername()));
+        cv.put(dt.Property_txtRoleId, String.valueOf(data.get_txtRoleId()));
+        cv.put(dt.Property_txtDeviceId, String.valueOf(data.get_txtDeviceId()));
+        cv.put(dt.Property_txtBranchCode, String.valueOf(data.get_txtBranchCode()));
+        cv.put(dt.Property_txtOutletCode, String.valueOf(data.get_txtOutletCode()));
+        cv.put(dt.Property_txtNIK, String.valueOf(data.get_txtNIK()));
+        cv.put(dt.Property_intSubmit, String.valueOf(data.get_intSubmit()));
+        cv.put(dt.Property_intSync, String.valueOf(data.get_intSync()));
+        if (data.get_intId() == null){
+            db.insert(TABLE_CONTACTS, null, cv);
+        } else {
+            cv.put(dt.Property_intId, String.valueOf(data.get_intId()));
+            db.replace(TABLE_CONTACTS, null, cv);
+        }
+    }
+
     public List<trackingLocationData> getAllDataToPushData(SQLiteDatabase db){
         List<trackingLocationData> contactList = null;
         trackingLocationData dt = new trackingLocationData();
@@ -111,7 +135,7 @@ public class trackingLocationDA {
         List<trackingLocationData> contactList = null;
         // select query
         trackingLocationData dt = new trackingLocationData();
-        String selectQuery = "SELECT TOP 1 " + dt.Property_All + " FROM " + TABLE_CONTACTS + " ORDER BY Time DESC";
+        String selectQuery = "SELECT " + dt.Property_All + " FROM " + TABLE_CONTACTS + " ORDER BY Time " ;
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
