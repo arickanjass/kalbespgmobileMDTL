@@ -40,7 +40,7 @@ public class mKategoriDA {
     public List<mKategoriData> GetAllData(SQLiteDatabase db){
         List<mKategoriData> contactList = new ArrayList<mKategoriData>();
         mKategoriData dt = new mKategoriData();
-        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " ORDER BY intCategoryId DESC";
+        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " ORDER BY intCategoryId ASC";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()){
             do {

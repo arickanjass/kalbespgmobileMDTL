@@ -65,4 +65,25 @@ public class mPertanyaanDA {
         cursor.close();
         return contactList;
     }
+
+    public List<mPertanyaanData> GetDataBYCategory(SQLiteDatabase db, int categoryId){
+        List<mPertanyaanData> contactList = new ArrayList<mPertanyaanData>();
+        mPertanyaanData dt = new mPertanyaanData();
+        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intCategoryId + "='" + categoryId +"' ORDER BY intQuestionId ASC";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()){
+            do {
+                mPertanyaanData contact = new mPertanyaanData();
+                contact.set_intQuestionId(cursor.getString(0));
+                contact.set_intCategoryId(cursor.getString(1));
+                contact.set_txtQuestionDesc(cursor.getString(2));
+                contact.set_intTypeQuestionId(cursor.getString(3));
+                contact.set_decBobot(cursor.getString(4));
+                contact.set_bolHaveAnswerList(cursor.getString(5));
+                contactList.add(contact);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return contactList;
+    }
 }
