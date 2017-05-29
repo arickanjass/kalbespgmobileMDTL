@@ -12,11 +12,21 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:orientation="vertical">
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_quizzz"
+            android:gravity="center|top"
+            android:text="Example"
+            android:textColor="@color/white"
+            android:background="@color/primary_color_theme"
+            android:paddingBottom="4dp"
+            android:paddingTop="4dp"
+            android:textSize="15dp"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="45dp"
             android:id="@+id/txtSoal"
             android:gravity="center"
             android:text="Example"
