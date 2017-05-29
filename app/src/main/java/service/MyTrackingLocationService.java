@@ -104,8 +104,9 @@ public class MyTrackingLocationService extends Service implements GoogleApiClien
         tUserLoginDA _tUserLoginDA=new tUserLoginDA(db);
         mDownloadMasterData_mobileDA _mDownloadMasterData_mobileDA = new mDownloadMasterData_mobileDA(db);
 
-        if (_tUserLoginDA.getContactsCount(db)> 0) {
-            tUserLoginData _tUserLoginData=_tUserLoginDA.getData(db, 1);
+        if (_mDownloadMasterData_mobileDA.getContactsCount(db)> 0) {
+//            tUserLoginData _tUserLoginData=_tUserLoginDA.getData(db, 1);
+            mDownloadMasterData_mobileData mDownloadMasterData_mobileData = _mDownloadMasterData_mobileDA.getData(db,1);
 
             try {
                 DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
