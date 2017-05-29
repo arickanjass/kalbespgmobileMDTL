@@ -33,16 +33,18 @@ import library.salesforce.common.jawabanModel;
 public class FragmentKuesionerPart extends Fragment {
 
     int noSoal;
-    String soal;
+    String soal, kategori;
     int typeJawaban;
     List<jawabanModel> _jawabanModel;
     ListAdapter myAdapter;
+    TextView textView;
 
-    public FragmentKuesionerPart(int noSoal, String soal, int typeJawaban, List<jawabanModel> _jawabanModel) {
+    public FragmentKuesionerPart(String kategori, int noSoal, String soal, int typeJawaban, List<jawabanModel> _jawabanModel) {
         this.noSoal = noSoal;
         this.soal = soal;
         this.typeJawaban = typeJawaban;
         this._jawabanModel = _jawabanModel;
+        this.kategori = kategori;
     }
 
     @Override
@@ -55,6 +57,8 @@ public class FragmentKuesionerPart extends Fragment {
         View v = inflater.inflate(R.layout.fragment_kuesioner_part, container, false);
 
         LinearLayout llMain = (LinearLayout) v.findViewById(R.id.llMain);
+        textView = (TextView) v.findViewById(R.id.tv_quizzz);
+        textView.setText(kategori);
         TextView txtSoal = (TextView) v.findViewById(R.id.txtSoal);
         txtSoal.setText(soal);
 
@@ -114,18 +118,25 @@ public class FragmentKuesionerPart extends Fragment {
             }
             llMain.addView(rg);
         } else if(typeJawaban == 5){
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            LinearLayout linearLayout= new LinearLayout(getContext());
+            linearLayout.setId(noSoal);
+            linearLayout.setLayoutParams(layoutParams);
+            linearLayout.setOrientation(LinearLayout.VERTICAL);
+            llMain.addView(linearLayout);
+
             SeekBar seekBar = new SeekBar(getContext());
             seekBar.setMax(100);
             seekBar.setMinimumWidth(200);
             seekBar.setProgress(0);
-            seekBar.setId(noSoal);
-            llMain.addView(seekBar);
+            seekBar.setId(linearLayout.getId() * 33);
+            linearLayout.addView(seekBar);
 
             final TextView tv = new TextView(getContext());
-            tv.setId(noSoal * 200);
+            tv.setId(linearLayout.getId() * 200);
             tv.setGravity(Gravity.CENTER);
             tv.setText("Sliding of the blue pointer");
-            llMain.addView(tv);
+            linearLayout.addView(tv);
 
             seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override

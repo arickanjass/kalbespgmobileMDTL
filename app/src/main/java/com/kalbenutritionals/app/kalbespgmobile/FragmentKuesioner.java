@@ -32,11 +32,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import bl.mKategoriBL;
 import bl.mListJawabanBL;
 import bl.mPertanyaanBL;
 import bl.tAbsenUserBL;
 import bl.tJawabanUserBL;
 import library.salesforce.common.jawabanModel;
+import library.salesforce.common.mKategoriData;
 import library.salesforce.common.mListJawabanData;
 import library.salesforce.common.mPertanyaanData;
 import library.salesforce.common.tJawabanUserData;
@@ -52,8 +54,12 @@ public class FragmentKuesioner extends Fragment {
     private ViewPager viewPager;
     private ArrayList<jawabanModel> modelJawaban;
     final HashMap<String, String> HMPertanyaan = new HashMap<String, String>();
+    final HashMap<String, String> HMPertanyaan2 = new HashMap<String, String>();
     final HashMap<String, String> HMJawaban = new HashMap<String, String>();
+    final HashMap<String, String> HMKategori = new HashMap<String, String>();
     List<String> dataPertanyaan;
+    List<String> dataPertanyaan2;
+    List<String> dataKategori;
     List<String> dataJawaban;
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
@@ -64,6 +70,7 @@ public class FragmentKuesioner extends Fragment {
     private Spinner spinner;
     private EditText etTestGet;
     private ListView listView;
+    private TextView textView;
     private LinearLayout linearLayout;
     private RadioGroup rgTestGet;
     clsMainActivity _clsMainActivity;
@@ -98,8 +105,18 @@ public class FragmentKuesioner extends Fragment {
                 //ini buat nyimpen widget di dalam list array di View
                 for (int i = 0; i < listDataPertanyaan.size(); i++) {
                     if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("5")) {
-                        seekbar = (SeekBar) v.findViewById(Integer.parseInt(HMPertanyaan.get(dataPertanyaan.get(i))));
-                        listAnswer.add(seekbar);
+                        linearLayout = (LinearLayout) v.findViewById(Integer.parseInt(HMPertanyaan.get(dataPertanyaan.get(i))));
+                        for (int x = 0; x < linearLayout.getChildCount(); x++) {
+                            View nextChild = linearLayout.getChildAt(x);
+                            if (nextChild instanceof TextView){
+                                textView = (TextView)nextChild;
+                                textView = (TextView)v.findViewById(linearLayout.getId()*200);
+                            } else if (nextChild instanceof SeekBar){
+                                seekbar = (SeekBar) nextChild;
+                                seekbar = (SeekBar) v.findViewById(linearLayout.getId() *33);
+                            }
+                        }
+                        listAnswer.add(linearLayout);
                     } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("1")) {
                         spinner = (Spinner) v.findViewById(Integer.parseInt(HMPertanyaan.get(dataPertanyaan.get(i))));
                         listAnswer.add(spinner);
@@ -140,13 +157,19 @@ public class FragmentKuesioner extends Fragment {
                     tv.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
                     View jawaban = listAnswer.get(i);
 
-                    if (jawaban instanceof SeekBar ){
+                    if (jawaban instanceof LinearLayout ){
                         tabLayout.getTabAt(i).setCustomView(null);
-                        if ((seekbar = (SeekBar) jawaban).getProgress() == 0) {
-                            tabLayout.getTabAt(i).setCustomView(tab);
-                            validate = false;
-                        } else {
-                            tabLayout.getTabAt(i).setCustomView(null);
+                        for (int x = 0; x < linearLayout.getChildCount(); x++) {
+                            View nextChild = linearLayout.getChildAt(x);
+                            if (nextChild instanceof TextView){
+                                textView = (TextView)nextChild;
+                                if (textView.getText().toString().equals("Sliding of the blue pointer")) {
+                                    tabLayout.getTabAt(i).setCustomView(tab);
+                                    validate = false;
+                                } else {
+                                    tabLayout.getTabAt(i).setCustomView(null);
+                                }
+                            }
                         }
                     }
                     if (jawaban instanceof Spinner){
@@ -246,18 +269,24 @@ public class FragmentKuesioner extends Fragment {
             }
             View answer = listAnswer.get(i);
             if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("5")) {
-                SeekBar seekBar = (SeekBar) listAnswer.get(i);
-                tabLayout.getTabAt(i).setIcon(null);
-                dt.set_intUserAnswer(new clsMainActivity().GenerateGuid());
-                dt.set_intUserId(dataUserActive.get_txtUserId());
-                dt.set_intRoleId(dataUserActive.get_txtRoleId());
-                dt.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
-                dt.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
-                dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
-                dt.set_intAnswerId(HMJawaban.get(seekBar.getProgress()));
-                dt.set_txtValue(String.valueOf(seekBar.getProgress()));
-                dt.set_decBobot("");
-                new tJawabanUserBL().SaveDatatJawabanUser(dt);
+                LinearLayout linearLayout = (LinearLayout) listAnswer.get(i);
+                for (int x = 0; x < linearLayout.getChildCount(); x++) {
+                    View nextChild = linearLayout.getChildAt(x);
+                    if (nextChild instanceof SeekBar) {
+                        seekbar = (SeekBar) nextChild;
+                        tabLayout.getTabAt(i).setIcon(null);
+                        dt.set_intUserAnswer(new clsMainActivity().GenerateGuid());
+                        dt.set_intUserId(dataUserActive.get_txtUserId());
+                        dt.set_intRoleId(dataUserActive.get_txtRoleId());
+                        dt.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
+                        dt.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
+                        dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
+                        dt.set_intAnswerId(HMJawaban.get(seekbar.getProgress()));
+                        dt.set_txtValue(String.valueOf(seekbar.getProgress()));
+                        dt.set_decBobot("");
+                        new tJawabanUserBL().SaveDatatJawabanUser(dt);
+                    }
+                }
             } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("1")) {
                 Spinner spinner = (Spinner) listAnswer.get(i);
                 tabLayout.getTabAt(i).setIcon(null);
@@ -334,7 +363,10 @@ public class FragmentKuesioner extends Fragment {
     public void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         dataPertanyaan = new ArrayList<>();
+        dataPertanyaan2 = new ArrayList<>();
+        dataKategori = new ArrayList<>();
         List<mPertanyaanData> listDataPertanyaan = new mPertanyaanBL().GetAllData();
+        List<mKategoriData> kategoriDataList = new mKategoriBL().GetAllData();
 
 //mapping pertanyaan
         if (listDataPertanyaan.size() > 0) {
@@ -344,7 +376,21 @@ public class FragmentKuesioner extends Fragment {
                 HMPertanyaan.put(dt.get_intQuestionId(), dt.get_intTypeQuestionId());
             }
         }
+        //mapping pertanyaan yang kedua
+        if (listDataPertanyaan.size() > 0) {
+            for (mPertanyaanData data : listDataPertanyaan) {
+                dataPertanyaan2.add(data.get_intQuestionId());
+                HMPertanyaan2.put(data.get_intQuestionId(), data.get_intCategoryId());
+            }
+        }
 
+//mapping kategori
+        if (kategoriDataList.size() > 0){
+            for (mKategoriData dt : kategoriDataList){
+                dataKategori.add(dt.get_intCategoryId());
+                HMKategori.put(dt.get_intCategoryId(), dt.get_txtCategoryName());
+            }
+        }
 //isi fragment dan get jawaban berdasarkan type pertanyaan
 
         for (int i = 0; i < listDataPertanyaan.size(); i++) {
@@ -358,7 +404,7 @@ public class FragmentKuesioner extends Fragment {
                     modelJawaban.add(dt);
                 }
             }
-            adapter.addFrag(new FragmentKuesionerPart(Integer.parseInt(HMPertanyaan.get(dataPertanyaan.get(i))), dataPertanyaan.get(i), Integer.parseInt(HMPertanyaan.get(HMPertanyaan.get(dataPertanyaan.get(i)))), modelJawaban), "SOAL " + HMPertanyaan.get(dataPertanyaan.get(i)));
+            adapter.addFrag(new FragmentKuesionerPart(HMKategori.get(HMPertanyaan2.get(HMPertanyaan.get(dataPertanyaan.get(i)))),Integer.parseInt(HMPertanyaan.get(dataPertanyaan.get(i))), dataPertanyaan.get(i), Integer.parseInt(HMPertanyaan.get(HMPertanyaan.get(dataPertanyaan.get(i)))), modelJawaban), "SOAL " + (i+1));
         }
         viewPager.setAdapter(adapter);
     }
