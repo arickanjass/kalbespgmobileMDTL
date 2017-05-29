@@ -451,7 +451,7 @@ public class Login extends clsMainActivity {
                         new mDownloadMasterData_mobileBL().SaveData(listDatamDownloadData);
 
                         startService(new Intent(Login.this, MyServiceNative.class));
-                        startService(new Intent(Login.this, MyTrackingLocationService.class));
+//                        startService(new Intent(Login.this, MyTrackingLocationService.class));
                         finish();
                         Intent myIntent = new Intent(Login.this, MainMenu.class);
                         myIntent.putExtra("keyMainMenu", "main_menu");

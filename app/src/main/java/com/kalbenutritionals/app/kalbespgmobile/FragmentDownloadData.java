@@ -34,6 +34,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.apache.http.util.ByteArrayBuffer;
+import org.json.JSONException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -74,6 +75,7 @@ import bl.tSalesProductQuantityHeaderBL;
 import bl.tUserLoginBL;
 import bl.tVisitPlanHeader_MobileBL;
 import bl.tVisitPlanRealisasiBL;
+import bl.trackingLocationBL;
 import library.salesforce.common.APIData;
 import library.salesforce.common.clsHelper;
 import library.salesforce.common.dataJson;
@@ -106,11 +108,14 @@ import library.salesforce.common.tSalesProductQuantityImageData;
 import library.salesforce.common.tUserLoginData;
 import library.salesforce.common.tVisitPlanHeader_MobileData;
 import library.salesforce.common.tVisitPlanRealisasiData;
+import library.salesforce.common.trackingLocationData;
 import library.salesforce.dal.clsHardCode;
 import library.salesforce.dal.tPurchaseOrderDetailDA;
 import library.salesforce.dal.tSalesProductDetailDA;
 import library.salesforce.dal.tSalesProductQuantityDetailDA;
 import library.salesforce.dal.tSalesProductQuantityImageDA;
+import service.MyServiceNative;
+import service.MyTrackingLocationService;
 
 public class FragmentDownloadData extends Fragment {
     View v;
@@ -327,8 +332,10 @@ public class FragmentDownloadData extends Fragment {
             public void onClick(View arg0) {
                 intProcesscancel = 0;
                 AsyncCallAbsen task = new AsyncCallAbsen();
+                AsyncCallDataTrackingLocation task2 = new AsyncCallDataTrackingLocation();
                 task.execute();
-//                startRepeatingTask();
+//                task2.execute();
+//                _clsMainActivity.startService(new Intent(getContext(), MyTrackingLocationService.class));
             }
         });
         btnDataLeave.setOnClickListener(new View.OnClickListener() {
@@ -393,6 +400,7 @@ public class FragmentDownloadData extends Fragment {
         List<mKategoriData> kategoriDataList = new mKategoriBL().GetAllData();
         List<tPurchaseOrderHeaderData> listPurchaseOrderHeaderData = new tPurchaseOrderHeaderBL().getAllPurchaseOrderHeader();
         List<tSalesProductQuantityHeaderData> listQuantityStockHeaderData = new tSalesProductQuantityHeaderBL().getAllSalesQuantityHeader();
+        List<trackingLocationData> listtrackingLocationData = new trackingLocationBL().getAllDataTrackingLocation();
 
         arrData = new ArrayList<String>();
         if (listDataBranch.size() > 0) {
@@ -712,6 +720,12 @@ public class FragmentDownloadData extends Fragment {
                 org.json.simple.JSONObject innerObj_quantityStock = (org.json.simple.JSONObject) k.next();
                 int boolValid_quantityStock = Integer.valueOf(String.valueOf(innerObj_quantityStock.get("_pboolValid")));
                 if (boolValid_quantityStock == 1) SaveDatatSalesProductQuantityData(Json);
+
+                Json = new trackingLocationBL().DownloadTrackingLocation(pInfo.versionName);
+                Iterator l = Json.iterator();
+                org.json.simple.JSONObject innerObj_trackingLocation = (org.json.simple.JSONObject) k.next();
+                int boolValid_trackingLocation = Integer.valueOf(String.valueOf(innerObj_trackingLocation.get("_pboolValid")));
+                if (boolValid_trackingLocation == 1) SaveDataTrackingLocationData(Json);
 
                 if(ll_activity!=null && ll_activity.getVisibility() == View.VISIBLE){
                     Json = new tActivityBL().DownloadActivity(pInfo.versionName);
@@ -1902,6 +1916,49 @@ public class FragmentDownloadData extends Fragment {
         }
     }
 
+    private class AsyncCallDataTrackingLocation extends AsyncTask<JSONArray, Void, JSONArray> {
+        @Override
+        protected JSONArray doInBackground(JSONArray... params) {
+            JSONArray Json = null;
+            try {
+                Json = new trackingLocationBL().DownloadTrackingLocation(pInfo.versionName);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return Json;
+        }
+        private ProgressDialog dialog = new ProgressDialog(getContext());
+
+        @Override
+        protected void onCancelled() {
+            dialog.dismiss();
+            new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessCancelRequest, false);
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray jsonArray) {
+            if (jsonArray != null && jsonArray.size() > 0){
+                arrData = SaveDataTrackingLocationData(jsonArray);
+                loadData();
+                new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
+            } else {
+                if (intProcesscancel == 1){
+                    onCancelled();
+                } else {
+                    new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
+                }
+            }
+            checkingDataTable();
+            dialog.dismiss();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+            dialog.dismiss();
+        }
+    }
+
     private class AsyncCallDataLeave extends AsyncTask<JSONArray, Void, JSONArray> {
         @Override
         protected JSONArray doInBackground(JSONArray... params) {
@@ -2668,6 +2725,47 @@ public class FragmentDownloadData extends Fragment {
                     new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
                 }
             } catch (ParseException e){
+                e.printStackTrace();
+            }
+        }
+        return _array;
+    }
+
+    private List<String> SaveDataTrackingLocationData(JSONArray jsonArray){
+        List<String> _array;
+        APIData dtAPIDATA = new APIData();
+        _array = new ArrayList<>();
+        Iterator i = jsonArray.iterator();
+        Boolean flag = true;
+        String ErrorMess = "";
+        List<trackingLocationData> listData = new ArrayList<>();
+        while (i.hasNext()){
+            JSONObject innerObj = (JSONObject) i.next();
+            try {
+                JSONArray jsonArray_header = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListTrackingLocation_mobile")));
+                if (jsonArray_header != null) {
+                    Iterator j = jsonArray_header.iterator();
+                    while (j.hasNext()){
+                        trackingLocationData _data = new trackingLocationData();
+                        JSONObject innerObj_header = (JSONObject) j.next();
+                        _data.set_intId(String.valueOf(innerObj_header.get("IntId")));
+                        _data.set_txtLongitude(String.valueOf(innerObj_header.get("TxtLongitude")));
+                        _data.set_txtLatitude(String.valueOf(innerObj_header.get("TxtLatitude")));
+                        _data.set_txtAccuracy(String.valueOf(innerObj_header.get("TxtAccuracy")));
+                        _data.set_txtTime(String.valueOf(innerObj_header.get("Time")));
+                        _data.set_txtUserId(String.valueOf(innerObj_header.get("TxtUserId")));
+                        _data.set_txtUsername(String.valueOf(innerObj_header.get("TxtUsername")));
+                        _data.set_txtRoleId(String.valueOf(innerObj_header.get("TxtRoleId")));
+                        _data.set_txtDeviceId(String.valueOf(innerObj_header.get("TxtDeviceId")));
+                        _data.set_txtBranchCode(String.valueOf(innerObj_header.get("TxtBranchCode")));
+                        _data.set_txtOutletCode(String.valueOf(innerObj_header.get("TxtOutletCode")));
+                        _data.set_txtNIK(String.valueOf(innerObj_header.get("TxtNIK")));
+                        _data.set_intSubmit("1");
+                        _data.set_intSync("1");
+                        new trackingLocationBL().SaveDataTrackingLocation(_data);
+                    }
+                }
+            } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
