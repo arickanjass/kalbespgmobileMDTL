@@ -20,9 +20,11 @@
     <color name="table_header_text">#FFFFFF</color>
     <color name="table_data_row_even">#FFFFFF</color>
     <color name="table_data_row_odd">#ecf0f1</color>
+    <color name="red">#f40e02</color>
 
     <color name="primary_color_theme">#4CAF50</color>
-    <color name="color_select_tab">#39a83d</color>
+    <color name="color_select_tab">#1ea010
+    </color>
 
     <color name="back_splash">#171b21</color>
 
