@@ -41,7 +41,6 @@ public class FragmentKuesionerAwal extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_awal, container, false);
         lnBtn = (LinearLayout) v.findViewById(R.id.ln_quis_btn);
-        btn1 = (Button) v.findViewById(R.id.btn1);
         kategoriDataList = new mKategoriBL().GetAllData();
 
         for (int i = 0; i < kategoriDataList.size(); i++) {
