@@ -146,7 +146,7 @@ public class Splash extends AppCompatActivity {
                         myIntent = new Intent(Splash.this, MainMenu.class);
                         //myIntent.putExtra("key_view", "main_menu");
                         startService(new Intent(getApplicationContext(), MyServiceNative.class));
-                        startService(new Intent(getApplicationContext(), MyTrackingLocationService.class));
+//                        startService(new Intent(getApplicationContext(), MyTrackingLocationService.class));
                     }
                 } catch (ParseException e) {
                     e.printStackTrace();
