@@ -54,9 +54,8 @@ public class mParentBL extends clsMainBL{
         clsHelper _help = new clsHelper();
         linkAPI dtLinkAPI = new linkAPI();
         String txtMethod = "GetDataQuesioner_mobile";
-        JSONObject rseJson = new JSONObject();
         dtLinkAPI.set_txtMethod(txtMethod);
-        dtLinkAPI.set_txtParam("");
+        dtLinkAPI.set_txtParam(_tUserLoginData.get_txtRoleId());
         dtLinkAPI.set_txtToken(new clsHardCode().txtTokenAPI);
         dtLinkAPI.set_txtVesion(versionName);
         String strLinkAPI = dtLinkAPI.QueryString(strVal2);
