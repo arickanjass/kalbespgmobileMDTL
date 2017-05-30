@@ -347,6 +347,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         stopService(new Intent(getApplicationContext(), MyServiceNative.class));
+                                        stopService(new Intent(getApplicationContext(), MyTrackingLocationService.class));
                                         AsyncCallLogOut task = new AsyncCallLogOut();
                                         task.execute();
                                         //new clsHelperBL().DeleteAllDB();
