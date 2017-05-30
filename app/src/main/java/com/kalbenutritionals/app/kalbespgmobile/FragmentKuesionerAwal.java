@@ -23,7 +23,7 @@ import library.salesforce.common.mKategoriData;
 import library.salesforce.common.mPertanyaanData;
 
 /**
- * Created by XSIS on 17/03/2017.
+ * Created by Dewi Oktaviani on 17/03/2017.
  */
 
 public class FragmentKuesionerAwal extends Fragment {

@@ -2,11 +2,16 @@ package com.kalbenutritionals.app.kalbespgmobile;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -26,6 +31,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.TabHost;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -147,16 +153,26 @@ public class FragmentKuesioner extends Fragment {
                 for (int i = 0; i < listDataPertanyaan.size(); i++) {
                     //ini buat custom tab
                     View tab = LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
+                    tab.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                    tab.setBackgroundResource(R.drawable.bg_tablayout2);
+                    tab.setPadding(3,0,15,0);
                     TextView tv = (TextView) tab.findViewById(R.id.custom_text);
                     Drawable img = getContext().getResources().getDrawable(
                             R.drawable.ic_error);
-                    final int width = Math.round(2 * img.getIntrinsicWidth());
-                    final int height = Math.round(2 * img.getIntrinsicHeight());
-                    img.setBounds(width, height, width, height);
+                    final int width = img.getIntrinsicWidth();
+                    final int height = img.getIntrinsicHeight();
+                    float scaleWidth = (float) 0.75f/width;
+                    float scaleHeight = (float) 0.75f/height;
+                    Matrix matrix = new Matrix();
+                    matrix.postScale(scaleWidth, scaleHeight);;
+                    Bitmap bitmap = ((BitmapDrawable) img).getBitmap();
+// Scale it to 50 x 50
+                    Drawable d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 30, 30, true));
                     tv.setText(mFragmentTitleList.get(i));
-                    tv.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
-                    View jawaban = listAnswer.get(i);
+                    tv.setCompoundDrawablesWithIntrinsicBounds(d, null, null, null);
 
+                    //ini buat ngatur validasinya
+                    View jawaban = listAnswer.get(i);
                     if (jawaban instanceof LinearLayout ){
                         tabLayout.getTabAt(i).setCustomView(null);
                         for (int x = 0; x < linearLayout.getChildCount(); x++) {
@@ -404,7 +420,7 @@ public class FragmentKuesioner extends Fragment {
                     modelJawaban.add(dt);
                 }
             }
-            adapter.addFrag(new FragmentKuesionerPart(HMKategori.get(HMPertanyaan2.get(HMPertanyaan.get(dataPertanyaan.get(i)))),Integer.parseInt(HMPertanyaan.get(dataPertanyaan.get(i))), dataPertanyaan.get(i), Integer.parseInt(HMPertanyaan.get(HMPertanyaan.get(dataPertanyaan.get(i)))), modelJawaban), "SOAL " + (i+1));
+            adapter.addFrag(new FragmentKuesionerPart(HMKategori.get(HMPertanyaan2.get(HMPertanyaan.get(dataPertanyaan.get(i)))),i+1, dataPertanyaan.get(i), Integer.parseInt(HMPertanyaan.get(HMPertanyaan.get(dataPertanyaan.get(i)))), modelJawaban), "SOAL " + (i+1));
         }
         viewPager.setAdapter(adapter);
     }
