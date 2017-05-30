@@ -159,12 +159,6 @@ public class FragmentKuesioner extends Fragment {
                     TextView tv = (TextView) tab.findViewById(R.id.custom_text);
                     Drawable img = getContext().getResources().getDrawable(
                             R.drawable.ic_error);
-                    final int width = img.getIntrinsicWidth();
-                    final int height = img.getIntrinsicHeight();
-                    float scaleWidth = (float) 0.75f/width;
-                    float scaleHeight = (float) 0.75f/height;
-                    Matrix matrix = new Matrix();
-                    matrix.postScale(scaleWidth, scaleHeight);;
                     Bitmap bitmap = ((BitmapDrawable) img).getBitmap();
 // Scale it to 50 x 50
                     Drawable d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 30, 30, true));
