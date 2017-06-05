@@ -334,7 +334,7 @@ public class FragmentDownloadData extends Fragment {
                 AsyncCallAbsen task = new AsyncCallAbsen();
                 AsyncCallDataTrackingLocation task2 = new AsyncCallDataTrackingLocation();
                 task.execute();
-//                task2.execute();
+                task2.execute();
 //                _clsMainActivity.startService(new Intent(getContext(), MyTrackingLocationService.class));
             }
         });

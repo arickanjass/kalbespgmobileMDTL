@@ -243,22 +243,32 @@ public class MyTrackingLocationService extends Service implements GoogleApiClien
     public void onStart(Intent intent, int startId) {
         // For time consuming an long tasks you can launch a new thread here...
         //Toast.makeText(this, "Welcome Kalbe SPG Mobile", Toast.LENGTH_LONG).show();
-        try {
-            startService();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    startService();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, 20000);
 
     }
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         // TODO Auto-generated method stub
         //Toast.makeText(this, " onStartCommand", Toast.LENGTH_LONG).show();
-        try {
-            startService();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    startService();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, 20000);
         return START_STICKY;
     }
 
