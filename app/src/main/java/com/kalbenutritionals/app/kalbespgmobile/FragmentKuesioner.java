@@ -19,6 +19,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,10 +79,12 @@ public class FragmentKuesioner extends Fragment {
     private EditText etTestGet;
     private ListView listView;
     private TextView textView;
-    private LinearLayout linearLayout;
+    private LinearLayout linearLayout, layoutDate;
     private RadioGroup rgTestGet;
+    private EditText dateView;
     clsMainActivity _clsMainActivity;
-    private int value;;
+    private int value;
+    ;
 
     @Nullable
     @Override
@@ -114,12 +118,12 @@ public class FragmentKuesioner extends Fragment {
                         linearLayout = (LinearLayout) v.findViewById(Integer.parseInt(HMPertanyaan.get(dataPertanyaan.get(i))));
                         for (int x = 0; x < linearLayout.getChildCount(); x++) {
                             View nextChild = linearLayout.getChildAt(x);
-                            if (nextChild instanceof TextView){
-                                textView = (TextView)nextChild;
-                                textView = (TextView)v.findViewById(linearLayout.getId()*200);
-                            } else if (nextChild instanceof SeekBar){
+                            if (nextChild instanceof TextView) {
+                                textView = (TextView) nextChild;
+                                textView = (TextView) v.findViewById(linearLayout.getId() * 200);
+                            } else if (nextChild instanceof SeekBar) {
                                 seekbar = (SeekBar) nextChild;
-                                seekbar = (SeekBar) v.findViewById(linearLayout.getId() *33);
+                                seekbar = (SeekBar) v.findViewById(linearLayout.getId() * 33);
                             }
                         }
                         listAnswer.add(linearLayout);
@@ -138,15 +142,21 @@ public class FragmentKuesioner extends Fragment {
                             }
                         }
                         listAnswer.add(listView);
-                    } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("4")) {
+                    } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("6")) {
                         rgTestGet = (RadioGroup) v.findViewById(Integer.parseInt(HMPertanyaan.get(dataPertanyaan.get(i))));
                         listAnswer.add(rgTestGet);
+                    } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("4")) {
+                        layoutDate = (LinearLayout) v.findViewById(Integer.parseInt(HMPertanyaan.get(dataPertanyaan.get(i))));
+                        for (int x = 0; x < layoutDate.getChildCount(); x++) {
+                            View nextChild = layoutDate.getChildAt(x);
+                            if (nextChild instanceof EditText) {
+                                dateView = (EditText) nextChild;
+                                dateView = (EditText) v.findViewById(linearLayout.getId() * 145);
+                            }
+                        }
+                        listAnswer.add(layoutDate);
                     }
                 }
-
-                int[] tabIcons = {
-                        R.drawable.ic_error,
-                };
 
                 //ini buat validasi kalo jawaban masih kosong
                 boolean validate = true;
@@ -155,7 +165,7 @@ public class FragmentKuesioner extends Fragment {
                     View tab = LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
                     tab.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                     tab.setBackgroundResource(R.drawable.bg_tablayout2);
-                    tab.setPadding(3,0,15,0);
+                    tab.setPadding(3, 0, 15, 0);
                     TextView tv = (TextView) tab.findViewById(R.id.custom_text);
                     Drawable img = getContext().getResources().getDrawable(
                             R.drawable.ic_error);
@@ -166,14 +176,23 @@ public class FragmentKuesioner extends Fragment {
                     tv.setCompoundDrawablesWithIntrinsicBounds(d, null, null, null);
 
                     //ini buat ngatur validasinya
-                    View jawaban = listAnswer.get(i);
-                    if (jawaban instanceof LinearLayout ){
+                    final View jawaban = listAnswer.get(i);
+                    if (jawaban instanceof LinearLayout) {
                         tabLayout.getTabAt(i).setCustomView(null);
                         for (int x = 0; x < linearLayout.getChildCount(); x++) {
                             View nextChild = linearLayout.getChildAt(x);
-                            if (nextChild instanceof TextView){
-                                textView = (TextView)nextChild;
+                            if (nextChild instanceof TextView) {
+                                textView = (TextView) nextChild;
                                 if (textView.getText().toString().equals("Sliding of the blue pointer")) {
+                                    tabLayout.getTabAt(i).setCustomView(tab);
+                                    validate = false;
+                                } else {
+                                    tabLayout.getTabAt(i).setCustomView(null);
+                                }
+                            } else if (nextChild instanceof EditText) {
+                                //ini masih ada bug
+                                dateView = (EditText) nextChild;
+                                if (dateView.getText().toString().equals("")) {
                                     tabLayout.getTabAt(i).setCustomView(tab);
                                     validate = false;
                                 } else {
@@ -182,27 +201,58 @@ public class FragmentKuesioner extends Fragment {
                             }
                         }
                     }
-                    if (jawaban instanceof Spinner){
+                    if (jawaban instanceof Spinner) {
                         tabLayout.getTabAt(i).setCustomView(null);
-                        if ((spinner= (Spinner) jawaban).getSelectedItem().toString().equals("Select One")) {
+                        if ((spinner = (Spinner) jawaban).getSelectedItem().toString().equals("Select One")) {
                             tabLayout.getTabAt(i).setCustomView(tab);
                             validate = false;
                         } else {
                             tabLayout.getTabAt(i).setCustomView(null);
                         }
                     }
-                    if (jawaban instanceof EditText){
+                    if (jawaban instanceof EditText) {
                         tabLayout.getTabAt(i).setCustomView(null);
-                        if ((etTestGet = (EditText)jawaban).getText().toString().equals("")) {
+                        InputFilter filter = new InputFilter() {
+                            boolean canEnterSpace = false;
+
+                            public CharSequence filter(CharSequence source, int start, int end,
+                                                       Spanned dest, int dstart, int dend) {
+
+                                if ((etTestGet = (EditText) jawaban).getText().toString().equals("")) {
+                                    canEnterSpace = false;
+                                }
+
+                                StringBuilder builder = new StringBuilder();
+
+                                for (int i = start; i < end; i++) {
+                                    char currentChar = source.charAt(i);
+
+                                    if (Character.isLetterOrDigit(currentChar) || currentChar == '_') {
+                                        builder.append(currentChar);
+                                        canEnterSpace = true;
+                                    }
+
+                                    if (Character.isWhitespace(currentChar) && canEnterSpace) {
+                                        builder.append(currentChar);
+                                    }
+
+                                }
+                                return builder.toString();
+                            }
+
+                        };
+                        (etTestGet = (EditText) jawaban).setFilters(new InputFilter[]{filter});
+
+                        if ((etTestGet = (EditText) jawaban).getText().toString().equals("") || (etTestGet = (EditText) jawaban).getText().toString().endsWith(" ")) {
                             tabLayout.getTabAt(i).setCustomView(tab);
                             validate = false;
                         } else {
                             tabLayout.getTabAt(i).setCustomView(null);
                         }
                     }
-                    if (jawaban instanceof RadioGroup ){
+                    if (jawaban instanceof RadioGroup) {
                         tabLayout.getTabAt(i).setCustomView(null);
-                        if ((rgTestGet = (RadioGroup)jawaban).getCheckedRadioButtonId() == -1) {
+                        if ((rgTestGet = (RadioGroup) jawaban).getCheckedRadioButtonId() == -1) {
                             tabLayout.getTabAt(i).setCustomView(tab);
                             validate = false;
                         } else {
@@ -253,7 +303,7 @@ public class FragmentKuesioner extends Fragment {
                     });
 
                     alertDialog.show();
-                }else{
+                } else {
                     _clsMainActivity.showCustomToast(getActivity(), "Please fill empty Field...", false);
                 }
 
@@ -344,7 +394,7 @@ public class FragmentKuesioner extends Fragment {
                         }
                     }
                 }
-            } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("4")) {
+            } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("6")) {
                 RadioGroup radioGroup = (RadioGroup) listAnswer.get(i);
 
                 if (!radioGroup.onCheckIsTextEditor()) {
@@ -364,6 +414,25 @@ public class FragmentKuesioner extends Fragment {
                             dt.set_decBobot("");
                             new tJawabanUserBL().SaveDatatJawabanUser(dt);
                         }
+                    }
+                }
+            } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("4")) {
+                LinearLayout linearLayout = (LinearLayout) listAnswer.get(i);
+                for (int x = 0; x < linearLayout.getChildCount(); x++) {
+                    View nextChild = linearLayout.getChildAt(x);
+                    if (nextChild instanceof EditText) {
+                        dateView = (EditText) nextChild;
+                        tabLayout.getTabAt(i).setIcon(null);
+                        dt.set_intUserAnswer(new clsMainActivity().GenerateGuid());
+                        dt.set_intUserId(dataUserActive.get_txtUserId());
+                        dt.set_intRoleId(dataUserActive.get_txtRoleId());
+                        dt.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
+                        dt.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
+                        dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
+                        dt.set_intAnswerId(HMJawaban.get(dateView.getText().toString()));
+                        dt.set_txtValue(HMJawaban.get(HMJawaban.get(dateView.getText().toString())));
+                        dt.set_decBobot("");
+                        new tJawabanUserBL().SaveDatatJawabanUser(dt);
                     }
                 }
             }
@@ -395,8 +464,8 @@ public class FragmentKuesioner extends Fragment {
         }
 
 //mapping kategori
-        if (kategoriDataList.size() > 0){
-            for (mKategoriData dt : kategoriDataList){
+        if (kategoriDataList.size() > 0) {
+            for (mKategoriData dt : kategoriDataList) {
                 dataKategori.add(dt.get_intCategoryId());
                 HMKategori.put(dt.get_intCategoryId(), dt.get_txtCategoryName());
             }
@@ -414,12 +483,12 @@ public class FragmentKuesioner extends Fragment {
                     modelJawaban.add(dt);
                 }
             }
-            adapter.addFrag(new FragmentKuesionerPart(HMKategori.get(HMPertanyaan2.get(HMPertanyaan.get(dataPertanyaan.get(i)))),i+1, dataPertanyaan.get(i), Integer.parseInt(HMPertanyaan.get(HMPertanyaan.get(dataPertanyaan.get(i)))), modelJawaban), "SOAL " + (i+1));
+            adapter.addFrag(new FragmentKuesionerPart(HMKategori.get(HMPertanyaan2.get(HMPertanyaan.get(dataPertanyaan.get(i)))), i + 1, dataPertanyaan.get(i), Integer.parseInt(HMPertanyaan.get(HMPertanyaan.get(dataPertanyaan.get(i)))), modelJawaban), "SOAL " + (i + 1));
         }
         viewPager.setAdapter(adapter);
     }
 
-   public class ViewPagerAdapter extends FragmentPagerAdapter {
+    public class ViewPagerAdapter extends FragmentPagerAdapter {
 
 
         public ViewPagerAdapter(FragmentManager manager) {

@@ -1,7 +1,13 @@
 package com.kalbenutritionals.app.kalbespgmobile;
 
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
@@ -12,7 +18,9 @@ import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -23,7 +31,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import library.salesforce.common.jawabanModel;
@@ -38,7 +49,10 @@ public class FragmentKuesionerPart extends Fragment {
     List<jawabanModel> _jawabanModel;
     ListAdapter myAdapter;
     TextView textView;
-
+    Calendar calendar;
+    EditText dateView;
+    private int year,month, day;
+    DatePickerDialog dialog;
     public FragmentKuesionerPart(String kategori, int noSoal, String soal, int typeJawaban, List<jawabanModel> _jawabanModel) {
         this.noSoal = noSoal;
         this.soal = soal;
@@ -105,7 +119,7 @@ public class FragmentKuesionerPart extends Fragment {
             etTest.setHint("Please fill...");
             etTest.setId(noSoal);
             llMain.addView(etTest);
-        } else if (typeJawaban == 4) {
+        } else if (typeJawaban == 6) {
             RadioButton[] rb = new RadioButton[_jawabanModel.size()];
             RadioGroup rg = new RadioGroup(getContext()); //create the RadioGroup
             rg.setOrientation(LinearLayout.VERTICAL);
@@ -113,7 +127,7 @@ public class FragmentKuesionerPart extends Fragment {
             for (int i = 0; i < _jawabanModel.size(); i++) {
                 rb[i] = new RadioButton(getContext());
                 rb[i].setText(_jawabanModel.get(i).getKey());
-                rb[i].setId(i * noSoal + 1000);
+                rb[i].setId(i * noSoal + 1007);
                 rg.addView(rb[i]);
             }
             llMain.addView(rg);
@@ -154,9 +168,74 @@ public class FragmentKuesionerPart extends Fragment {
 
                 }
             });
+        } else if (typeJawaban == 4){
+            LinearLayout linearLayout = new LinearLayout(getContext());
+            linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            layoutParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL;
+            linearLayout.setLayoutParams(layoutParams);
+            linearLayout.setId(noSoal);
+            dateView = new EditText(getContext());
+            LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(35, 35);
+            layoutParams1.gravity = Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL;
+            dateView.setId(linearLayout.getId() * 165);
+            dateView.setEnabled(false);
+            ImageView imageView = new ImageView(getContext());
+            imageView.setImageResource(R.drawable.ic_cal);
+            imageView.setId(1045*noSoal);
+            imageView.setLayoutParams(layoutParams1);
+            dateView.setLayoutParams(layoutParams);
+            calendar= Calendar.getInstance();
+            year=calendar.get(Calendar.YEAR);
+            month=calendar.get(Calendar.MONTH);
+            day=calendar.get(Calendar.DAY_OF_MONTH);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy");
+            dateView.setHint(simpleDateFormat.format(calendar.getTime()));
+//            showDate(year,month,day);
+
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        //tambah style baru
+                        dialog = new DatePickerDialog(getContext(), R.style.style_date_picker_dialog, myDateListener, year, month, day);
+                    } else {
+                        dialog = new DatePickerDialog(getContext(),  myDateListener, year, month, day);
+                    }
+                    dialog.setTitle("Select Date");
+                    dialog.show();
+                }
+            });
+
+            linearLayout.addView(dateView);
+            linearLayout.addView(imageView);
+            llMain.addView(linearLayout);
+//            llMain.addView(dateView);
         }
 
         return v;
+    }
+    private DatePickerDialog.OnDateSetListener myDateListener = new
+            DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker arg0, int arg1, int arg2, int arg3) {
+//                    showDate(arg1, arg2, arg3);
+                    year = arg1;
+                    month = arg2;
+                    day = arg3;
+                    displayDate();
+                    dateView.setEnabled(true);
+                }
+            };
+    private void displayDate(){
+        GregorianCalendar c = new GregorianCalendar(year, month, day);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy");
+        dateView.setText(simpleDateFormat.format(c.getTime()));
+    }
+
+    private void showDate(int year, int month, int day) {
+        dateView.setHint(new StringBuilder().append(day).append("/")
+                .append(month).append("/").append(year));
     }
     public static boolean setListViewHeightBasedOnItems(ListView listView) {
 
