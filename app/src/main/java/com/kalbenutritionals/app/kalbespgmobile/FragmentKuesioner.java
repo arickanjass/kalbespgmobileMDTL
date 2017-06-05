@@ -179,24 +179,32 @@ public class FragmentKuesioner extends Fragment {
                     final View jawaban = listAnswer.get(i);
                     if (jawaban instanceof LinearLayout) {
                         tabLayout.getTabAt(i).setCustomView(null);
-                        for (int x = 0; x < linearLayout.getChildCount(); x++) {
-                            View nextChild = linearLayout.getChildAt(x);
-                            if (nextChild instanceof TextView) {
-                                textView = (TextView) nextChild;
-                                if (textView.getText().toString().equals("Sliding of the blue pointer")) {
-                                    tabLayout.getTabAt(i).setCustomView(tab);
-                                    validate = false;
-                                } else {
-                                    tabLayout.getTabAt(i).setCustomView(null);
+                        LinearLayout layout = (LinearLayout) jawaban;
+                        if (layout == linearLayout){
+                            for (int x = 0; x < linearLayout.getChildCount(); x++) {
+                                View nextChild = linearLayout.getChildAt(x);
+                                if (nextChild instanceof TextView) {
+                                    textView = (TextView) nextChild;
+                                    if (textView.getText().toString().equals("Sliding of the blue pointer")) {
+                                        tabLayout.getTabAt(i).setCustomView(tab);
+                                        validate = false;
+                                    } else {
+                                        tabLayout.getTabAt(i).setCustomView(null);
+                                    }
                                 }
-                            } else if (nextChild instanceof EditText) {
-                                //ini masih ada bug
-                                dateView = (EditText) nextChild;
-                                if (dateView.getText().toString().equals("")) {
-                                    tabLayout.getTabAt(i).setCustomView(tab);
-                                    validate = false;
-                                } else {
-                                    tabLayout.getTabAt(i).setCustomView(null);
+                            }
+                        } else if (layout == layoutDate){
+                            for (int y = 0; y <layoutDate.getChildCount() ; y++){
+                                View nextChild = layoutDate.getChildAt(y);
+                                if (nextChild instanceof EditText) {
+                                    //ini masih ada bug
+                                    dateView = (EditText) nextChild;
+                                    if (dateView.getText().toString().equals("")) {
+                                        tabLayout.getTabAt(i).setCustomView(tab);
+                                        validate = false;
+                                    } else {
+                                        tabLayout.getTabAt(i).setCustomView(null);
+                                    }
                                 }
                             }
                         }
