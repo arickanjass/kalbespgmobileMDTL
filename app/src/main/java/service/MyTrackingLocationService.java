@@ -252,7 +252,7 @@ public class MyTrackingLocationService extends Service implements GoogleApiClien
                     e.printStackTrace();
                 }
             }
-        }, 20000);
+        }, 25000);
 
     }
     @Override
@@ -268,7 +268,7 @@ public class MyTrackingLocationService extends Service implements GoogleApiClien
                     e.printStackTrace();
                 }
             }
-        }, 20000);
+        }, 25000);
         return START_STICKY;
     }
 
