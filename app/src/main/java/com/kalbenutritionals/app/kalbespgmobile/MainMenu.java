@@ -401,6 +401,19 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
                         return true;
 
+                    case R.id.koordinasiOutlet:
+                        toolbar.setTitle("Koordinasi Outlet");
+
+                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
+
+                        FragmentAddKoordinasi koordinasi = new FragmentAddKoordinasi();
+                        FragmentTransaction FragmentTransactionKoordinasi = getSupportFragmentManager().beginTransaction();
+                        FragmentTransactionKoordinasi.replace(R.id.frame, koordinasi);
+                        FragmentTransactionKoordinasi.commit();
+                        selectedId = 99;
+
+                        return true;
+
                     case R.id.historyAbsen:
                         toolbar.setTitle("History Absen");
 
