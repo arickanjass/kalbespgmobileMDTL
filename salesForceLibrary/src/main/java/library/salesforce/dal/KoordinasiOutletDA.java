@@ -51,7 +51,7 @@ public class KoordinasiOutletDA {
         cv.put(dt.Property_txtUsername, String.valueOf(data.get_txtUsername()));
         cv.put(dt.Property_txtRoleId, String.valueOf(data.get_txtRoleId()));
         cv.put(dt.Property_txtOutletCode, String.valueOf(data.get_txtOutletCode()));
-        cv.put(dt.Property_txtOutletCode, String.valueOf(data.get_txtOutletCode()));
+        cv.put(dt.Property_txtOutletName, String.valueOf(data.get_txtOutletName()));
         cv.put(dt.Property_txtBranchCode, String.valueOf(data.get_txtBranchCode()));
         cv.put(dt.Property_txtBranchName, String.valueOf(data.get_txtBranchName()));
         cv.put(dt.Property_intSubmit, String.valueOf(data.get_intSubmit()));

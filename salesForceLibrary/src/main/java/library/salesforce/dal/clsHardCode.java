@@ -207,6 +207,7 @@ public class clsHardCode  {
 	public String txtTable_tSalesProductQuantityImage="tSalesProductQuantityImage";
 	public String txtTable_trackingLocation="trackingLocation";
 	public String txtTable_KoordinasiOutlet="KoordinasiOutlet";
+	public String txtTable_KoordinasiOutletImage="KoordinasiOutletImage";
 
 	public String dtDateTimeNow(){
 		Date date = new Date();
