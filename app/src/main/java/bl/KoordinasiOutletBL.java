@@ -18,4 +18,10 @@ public class KoordinasiOutletBL extends clsMainBL {
         _KoordinasiOutletDA.SaveDataKoordinasiOutlet(_db, dt);
         db.close();
     }
+
+    public int getContactCount() {
+        SQLiteDatabase db = getDb();
+        KoordinasiOutletDA _KoordinasiOutletDA = new KoordinasiOutletDA(db);
+        return _KoordinasiOutletDA.getContactsCount(db);
+    }
 }

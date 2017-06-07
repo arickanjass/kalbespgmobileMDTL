@@ -82,6 +82,41 @@
                 android:layout_marginTop="10dp"
                 android:background="#bfbfbf" />
 
+            <LinearLayout
+                android:background="@drawable/bg_rounded_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:text="Image"/>
+                <ImageView
+                    android:id="@+id/image1"
+                    android:layout_marginLeft="5dp"
+                    android:background="@mipmap/ic_maps_local_see"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:layout_weight="1"/>
+                <ImageView
+                    android:id="@+id/image2"
+                    android:layout_marginLeft="5dp"
+                    android:background="@mipmap/ic_maps_local_see"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+            <View
+                android:id="@+id/view4"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="#bfbfbf" />
+
             <TextView
                 android:id="@+id/tvStatusKoordinasi"
                 android:layout_width="wrap_content"
@@ -91,7 +126,7 @@
                 android:textColor="#000" />
 
             <View
-                android:id="@+id/view4"
+                android:id="@+id/view5"
                 android:layout_below="@+id/tvStatusKoordinasi"
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"

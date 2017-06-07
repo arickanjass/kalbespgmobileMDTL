@@ -1,6 +1,7 @@
 package library.salesforce.dal;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import library.salesforce.common.KoordinasiOutletData;
@@ -61,5 +62,14 @@ public class KoordinasiOutletDA {
             cv.put(dt.Property_intId, String.valueOf(data.get_intId()));
             db.replace(TABLE_CONTACTS, null, cv);
         }
+    }
+
+    // Getting contacts Count
+    public int getContactsCount(SQLiteDatabase db) {
+        String countQuery = "SELECT * FROM " + TABLE_CONTACTS;
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int countData = cursor.getCount();
+        cursor.close();
+        return countData;
     }
 }
