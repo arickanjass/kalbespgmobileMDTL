@@ -29,6 +29,7 @@ import java.util.Scanner;
 import java.util.UUID;
 
 import library.salesforce.dal.KoordinasiOutletDA;
+import library.salesforce.dal.KoordinasiOutletImageDA;
 import library.salesforce.dal.clsHardCode;
 import library.salesforce.dal.enumConfigData;
 import library.salesforce.dal.mCategoryVisitPlanDA;
@@ -269,6 +270,7 @@ public class clsHelper {
 		mCategoryVisitPlanDA _mMCategoryVisitPlanDA = new mCategoryVisitPlanDA(db);
 		trackingLocationDA _trackingLocationDA = new trackingLocationDA(db);
 		KoordinasiOutletDA _KoordinasiOutletDA = new KoordinasiOutletDA(db);
+		KoordinasiOutletImageDA _KoordinasiOutletImageDA = new KoordinasiOutletImageDA(db);
 
 		tVisitPlanHeader_MobileDA _tVisitPlanHeader_mobileDA = new tVisitPlanHeader_MobileDA(db);
 		tVisitPlanRealisasiDA _tVisitPlanRealisasiDA = new tVisitPlanRealisasiDA(db);
@@ -324,6 +326,7 @@ public class clsHelper {
 		_tJawabanUserDA.DropTable(db);
 		_trackingLocationDA.DropTable(db);
 		_KoordinasiOutletDA.DropTable(db);
+		_KoordinasiOutletImageDA.Droptable(db);
 
 		_mMCategoryVisitPlanDA = new mCategoryVisitPlanDA(db);
 		_tVisitPlanRealisasiDA = new tVisitPlanRealisasiDA(db);
@@ -346,6 +349,7 @@ public class clsHelper {
 		_tJawabanUserDA = new tJawabanUserDA(db);
 		_trackingLocationDA = new trackingLocationDA(db);
 		_KoordinasiOutletDA = new KoordinasiOutletDA(db);
+		_KoordinasiOutletImageDA = new KoordinasiOutletImageDA(db);
 
 		_mPriceInOutletDA=new mPriceInOutletDA(db);
 		_mUserRoleDA=new mUserRoleDA(db);
