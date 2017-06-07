@@ -33,6 +33,13 @@
             <!--android:title="Quantity Stock"-->
             <!--android:icon="@drawable/ic_looks_one_black"/>-->
 
+        <item
+            android:id="@+id/koordinasiOutlet"
+            android:checked="false"
+            android:orderInCategory="1"
+            android:title="Koordinasi Outlet SPG"
+            android:icon="@drawable/ic_looks_one_black"/>
+
     </group>
     <group
         android:checkableBehavior="single"
