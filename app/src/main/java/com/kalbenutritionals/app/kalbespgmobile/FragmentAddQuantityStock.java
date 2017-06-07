@@ -45,6 +45,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import addons.adapter.AdapterListProductCustomerBased;
+import bl.clsHelperBL;
 import bl.clsMainBL;
 import bl.mCounterNumberBL;
 import bl.mEmployeeSalesProductBL;
@@ -68,6 +69,7 @@ import library.salesforce.common.tSalesProductQuantityHeaderData;
 import library.salesforce.common.tSalesProductQuantityDetailData;
 import library.salesforce.common.tSalesProductQuantityImageData;
 import library.salesforce.common.tUserLoginData;
+import library.salesforce.common.visitplanAbsenData;
 import library.salesforce.dal.clsHardCode;
 import library.salesforce.dal.enumCounterData;
 
@@ -857,8 +859,9 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
     private void save() {
         List<mEmployeeSalesProductData> employeeSalesProductDataList = new mEmployeeSalesProductBL().GetAllData();
 //        dtQuantityData = new tSalesProductQuantityHeaderData();
-        tAbsenUserData absenUserData = new tAbsenUserBL().getDataCheckInActive();
+//        tAbsenUserData absenUserData = new tAbsenUserBL().getDataCheckInActive();
         tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
+        visitplanAbsenData absenUserData = new clsHelperBL().getDataCheckInActive();
         modelItems = new ArrayList<ModelListview>();
         String noQtyStock = tv_noQuantityStock.getText().toString();
         List<tSalesProductQuantityDetailData> productDetail = new tSalesProductQuantityDetailBL().GetDataByNoQuantityStock(noQtyStock);

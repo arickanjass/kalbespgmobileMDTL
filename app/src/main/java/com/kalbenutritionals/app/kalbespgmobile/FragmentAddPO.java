@@ -3,11 +3,9 @@ package com.kalbenutritionals.app.kalbespgmobile;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.hardware.fingerprint.FingerprintManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -45,19 +43,17 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import bl.clsHelperBL;
 import bl.clsMainBL;
 import bl.mCounterNumberBL;
 import bl.mEmployeeSalesProductBL;
-import bl.tAbsenUserBL;
 import bl.tPurchaseOrderHeaderBL;
-import bl.tSalesProductHeaderBL;
 import library.salesforce.common.ModelListview;
 import library.salesforce.common.clsHelper;
 import library.salesforce.common.mEmployeeSalesProductData;
-import library.salesforce.common.tAbsenUserData;
 import library.salesforce.common.tPurchaseOrderDetailData;
 import library.salesforce.common.tPurchaseOrderHeaderData;
-import library.salesforce.common.tSalesProductHeaderData;
+import library.salesforce.common.visitplanAbsenData;
 import library.salesforce.dal.enumCounterData;
 import library.salesforce.dal.tPurchaseOrderDetailDA;
 
@@ -420,8 +416,8 @@ TextView tv_tgl, tv_noPO;
 
         clsMainActivity _clsMainActivity = new clsMainActivity();
         mEmployeeSalesProductData _mEmployeeSalesProductData = new mEmployeeSalesProductData();
-        tAbsenUserData absenUserData = new tAbsenUserBL().getDataCheckInActive();
-
+//        tAbsenUserData absenUserData = new tAbsenUserBL().getDataCheckInActive();
+        visitplanAbsenData absenUserData = new clsHelperBL().getDataCheckInActive();
         dt.set_intId(new clsMainActivity().GenerateGuid());
         dt.set_txtNoOrder(tv_noPO.getText().toString());
         dt.set_dtDate(dateFormat.format(cal.getTime()));

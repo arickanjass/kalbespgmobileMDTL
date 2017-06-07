@@ -72,7 +72,7 @@ public class mMenuBL extends clsMainBL {
                     if (listDataLeave.size() == 0 && _mEmployeeAreaDA.getContactsCount(db) > 0 && _mEmployeeBranchDA.getContactsCount(db) > 0 && data.get_TxtDescription().contains("mnAbsenSPG")) {
 
                         int validate = 0;
-                        if (data.get_TxtDescription().contains("mnAbsenSPG")) {
+                        if (data.get_TxtDescription().contains("mnAbsenSPG")||data.get_TxtDescription().contains("mnVisitPlanMobile")) {
 
                             validate = 1;
 

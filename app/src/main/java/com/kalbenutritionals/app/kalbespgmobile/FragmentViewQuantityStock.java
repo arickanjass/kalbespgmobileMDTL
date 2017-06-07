@@ -44,7 +44,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import bl.tAbsenUserBL;
+import bl.clsHelperBL;
 import bl.tSalesProductQuantityDetailBL;
 import bl.tSalesProductQuantityHeaderBL;
 import bl.tSalesProductQuantityImageBL;
@@ -56,10 +56,10 @@ import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.Swipe
 import edu.swu.pulltorefreshswipemenulistview.library.util.RefreshTime;
 import library.salesforce.common.AppAdapter;
 import library.salesforce.common.clsSwipeList;
-import library.salesforce.common.tAbsenUserData;
-import library.salesforce.common.tSalesProductQuantityHeaderData;
 import library.salesforce.common.tSalesProductQuantityDetailData;
+import library.salesforce.common.tSalesProductQuantityHeaderData;
 import library.salesforce.common.tSalesProductQuantityImageData;
+import library.salesforce.common.visitplanAbsenData;
 
 import static com.kalbenutritionals.app.kalbespgmobile.R.id.textView9Quantity;
 
@@ -512,7 +512,8 @@ public class FragmentViewQuantityStock extends Fragment implements IXListViewLis
     }
 
     private void loadData() {
-        tAbsenUserData dtActive = new tAbsenUserBL().getDataCheckInActive();
+//        tAbsenUserData dtActive = new tAbsenUserBL().getDataCheckInActive();
+        visitplanAbsenData dtActive = new clsHelperBL().getDataCheckInActive();
 
         clsSwipeList swplist;
         dt = new tSalesProductQuantityHeaderBL().getAllSalesProductHeaderByOutletCode(dtActive.get_txtOutletCode());

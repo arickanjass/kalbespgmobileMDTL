@@ -65,7 +65,6 @@ import library.salesforce.dal.clsHardCode;
 import library.salesforce.dal.enumConfigData;
 import library.salesforce.dal.mconfigDA;
 import service.MyServiceNative;
-import service.MyTrackingLocationService;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -409,7 +408,7 @@ public class Login extends clsMainActivity {
                         _tUserLoginData.set_txtBranchCode((String) innerObj.get("TxtBranchCode"));
                         _tUserLoginData.set_txtImei((String) innerObj.get("TxtImei"));
                         _tUserLoginData.set_txtSubmissionID((String) innerObj.get("TxtSubmissonId"));
-                        _tUserLoginData.set_txtCheckLocation((String) innerObj.get("TDeviceInfoUser_mobile"));
+//                        _tUserLoginData.set_txtCheckLocation((String) innerObj.get("TDeviceInfoUser_mobile"));
 
                         new tDeviceInfoUserBL().SaveInfoDevice(_tUserLoginData.get_TxtEmpId(), _tUserLoginData.get_txtDeviceId(), _tUserLoginData.get_txtImei());
                         new tUserLoginBL().saveData(_tUserLoginData);
@@ -418,38 +417,42 @@ public class Login extends clsMainActivity {
 //                        new mEmployeeAreaBL().DeleteEmployeeNotInId(HMOutletCode.get(nameOutlet));
 
                         JSONArray JsonArrayDetail = (JSONArray) innerObj.get("ListOfMWebMenuAPI");
-                        Iterator iDetail = JsonArrayDetail.iterator();
-                        List<mMenuData> listData = new ArrayList<mMenuData>();
-                        while (iDetail.hasNext()) {
-                            JSONObject innerObjDetail = (JSONObject) iDetail.next();
-                            mMenuData data = new mMenuData();
-                            data.set_IntMenuID(String.valueOf((Long) innerObjDetail.get("IntMenuID")));
-                            data.set_IntOrder((Long) innerObjDetail.get("IntOrder"));
-                            data.set_IntParentID((Long) innerObjDetail.get("IntParentID"));
-                            data.set_TxtDescription((String) innerObjDetail.get("TxtDescription"));
-                            data.set_TxtLink((String) innerObjDetail.get("TxtLink"));
-                            data.set_TxtMenuName((String) innerObjDetail.get("TxtMenuName"));
-                            listData.add(data);
+                        if(JsonArrayDetail!=null){
+                            Iterator iDetail = JsonArrayDetail.iterator();
+                            List<mMenuData> listData = new ArrayList<mMenuData>();
+                            while (iDetail.hasNext()) {
+                                JSONObject innerObjDetail = (JSONObject) iDetail.next();
+                                mMenuData data = new mMenuData();
+                                data.set_IntMenuID(String.valueOf((Long) innerObjDetail.get("IntMenuID")));
+                                data.set_IntOrder((Long) innerObjDetail.get("IntOrder"));
+                                data.set_IntParentID((Long) innerObjDetail.get("IntParentID"));
+                                data.set_TxtDescription((String) innerObjDetail.get("TxtDescription"));
+                                data.set_TxtLink((String) innerObjDetail.get("TxtLink"));
+                                data.set_TxtMenuName((String) innerObjDetail.get("TxtMenuName"));
+                                listData.add(data);
+                            }
+                            new mMenuBL().SaveData(listData);
                         }
-                        new mMenuBL().SaveData(listData);
+
 
                         JSONArray JsonArrayDetailmDownloadData=(JSONArray) innerObj.get("ListOftDownloadData_mobile");
-                        Iterator iDetailmDownloadData = JsonArrayDetailmDownloadData.iterator();
-                        List<mDownloadMasterData_mobileData> listDatamDownloadData=new ArrayList<mDownloadMasterData_mobileData>();
-                        while (iDetailmDownloadData.hasNext()) {
-                            JSONObject innerObjDetail = (JSONObject) iDetailmDownloadData.next();
-                            mDownloadMasterData_mobileData data=new mDownloadMasterData_mobileData();
-                            data.set_intId((String) innerObjDetail.get("_intID"));
-                            data.set_intModule((String) innerObjDetail.get("_intModule"));
-                            data.set_txtModuleName((String) innerObjDetail.get("_txtModuleName"));
-                            data.set_txtMasterData((String) innerObjDetail.get("_txtMasterData"));
-                            data.set_intVersionApp((String) innerObjDetail.get("_intVersionApp"));
-                            data.set_txtTypeApp((String) innerObjDetail.get("_txtTypeApp"));
-                            data.set_txtVersion((String) innerObjDetail.get("_txtVersion"));
-                            listDatamDownloadData.add(data);
+                        if(JsonArrayDetailmDownloadData !=null){
+                            Iterator iDetailmDownloadData = JsonArrayDetailmDownloadData.iterator();
+                            List<mDownloadMasterData_mobileData> listDatamDownloadData=new ArrayList<mDownloadMasterData_mobileData>();
+                            while (iDetailmDownloadData.hasNext()) {
+                                JSONObject innerObjDetail = (JSONObject) iDetailmDownloadData.next();
+                                mDownloadMasterData_mobileData data=new mDownloadMasterData_mobileData();
+                                data.set_intId((String) innerObjDetail.get("_intID"));
+                                data.set_intModule((String) innerObjDetail.get("_intModule"));
+                                data.set_txtModuleName((String) innerObjDetail.get("_txtModuleName"));
+                                data.set_txtMasterData((String) innerObjDetail.get("_txtMasterData"));
+                                data.set_intVersionApp((String) innerObjDetail.get("_intVersionApp"));
+                                data.set_txtTypeApp((String) innerObjDetail.get("_txtTypeApp"));
+                                data.set_txtVersion((String) innerObjDetail.get("_txtVersion"));
+                                listDatamDownloadData.add(data);
+                            }
+                            new mDownloadMasterData_mobileBL().SaveData(listDatamDownloadData);
                         }
-                        new mDownloadMasterData_mobileBL().SaveData(listDatamDownloadData);
-
                         startService(new Intent(Login.this, MyServiceNative.class));
 //                        startService(new Intent(Login.this, MyTrackingLocationService.class));
                         finish();

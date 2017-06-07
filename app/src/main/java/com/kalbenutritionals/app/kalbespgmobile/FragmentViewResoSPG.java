@@ -1,6 +1,5 @@
 package com.kalbenutritionals.app.kalbespgmobile;
 
-import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -11,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import bl.tAbsenUserBL;
+import bl.clsHelperBL;
 import bl.tSalesProductDetailBL;
 import bl.tSalesProductHeaderBL;
 import edu.swu.pulltorefreshswipemenulistview.library.PullToRefreshSwipeMenuListView;
@@ -39,9 +39,9 @@ import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.Swipe
 import edu.swu.pulltorefreshswipemenulistview.library.util.RefreshTime;
 import library.salesforce.common.AppAdapter;
 import library.salesforce.common.clsSwipeList;
-import library.salesforce.common.tAbsenUserData;
 import library.salesforce.common.tSalesProductDetailData;
 import library.salesforce.common.tSalesProductHeaderData;
+import library.salesforce.common.visitplanAbsenData;
 
 /**
  * Created by ASUS ZE on 26/07/2016.
@@ -239,8 +239,8 @@ public class FragmentViewResoSPG extends Fragment implements IXListViewListener 
     }
 
     private void loadData(){
-        tAbsenUserData dtActive = new tAbsenUserBL().getDataCheckInActive();
-
+//        tAbsenUserData dtActive = new tAbsenUserBL().getDataCheckInActive();
+        visitplanAbsenData dtActive = new clsHelperBL().getDataCheckInActive();
         clsSwipeList swplist;
         dt = new tSalesProductHeaderBL().getAllSalesProductHeaderByOutletCode(dtActive.get_txtOutletCode());
 

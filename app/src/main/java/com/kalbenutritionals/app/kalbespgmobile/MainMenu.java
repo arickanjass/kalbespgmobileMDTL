@@ -66,6 +66,7 @@ import library.salesforce.common.tDisplayPictureData;
 import library.salesforce.common.tNotificationData;
 import library.salesforce.common.tUserLoginData;
 import library.salesforce.common.tVisitPlanRealisasiData;
+import library.salesforce.common.visitplanAbsenData;
 import library.salesforce.dal.clsHardCode;
 import service.MyServiceNative;
 import service.MyTrackingLocationService;
@@ -77,7 +78,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
     private DrawerLayout drawerLayout;
     private tAbsenUserBL _tAbsenUserBL;
     private tAbsenUserData dttAbsenUserData;
-    private tAbsenUserData dtAbsens;
+    private visitplanAbsenData dtAbsensVisitplan;
     private tVisitPlanRealisasiData dtRealisasi;
 
     private TextView tvUsername, tvEmail;
@@ -180,7 +181,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
         ivProfile.setOnClickListener(this);
 
-        dtAbsens = new tAbsenUserBL().getDataCheckInActive();
+        dtAbsensVisitplan = new clsHelperBL().getDataCheckInActive();
         Menu header = navigationView.getMenu();
 
         dtRealisasi = new tVisitPlanRealisasiBL().getDataCheckinActive();
@@ -196,12 +197,10 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
             header.removeItem(R.id.checkoutVisitplan);
         }
 
-        if (dtAbsens == null) {
-            menuActive = R.id.groupListMenu;
-            header.removeItem(R.id.checkout);
-        } else {
+        if (dtAbsensVisitplan!=null && dtAbsensVisitplan.getType().toString().equals("visitPlan")) {
             header.removeItem(R.id.logout);
-            mMenuData data = new mMenuBL().getMenuDataByMenuName("mnAbsenSPG");
+            header.removeItem(R.id.checkout);
+            mMenuData data = new mMenuBL().getMenuDataByMenuName("mnVisitPlanMobile");
             menuId = Integer.parseInt(data.get_IntMenuID());
             statusAbsen = menuId;
             menuActive = R.id.groupListMenu1;
@@ -215,7 +214,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
             if (i_view != null){
 
-                if (i_view.equals("Notifcation")){
+                if (i_view.equals("Notification")){
                     Class<?> fragmentClass = null;
                     try {
                         fragmentClass = Class.forName("com.kalbenutritionals.app.kalbespgmobile.Fragment" + i_view);
@@ -261,14 +260,80 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                 }
             }
 
+        }else if(dtAbsensVisitplan!=null && dtAbsensVisitplan.getType().toString().equals("absen")) {
+
+            header.removeItem(R.id.logout);
+            header.removeItem(R.id.checkoutVisitplan);
+            mMenuData data = new mMenuBL().getMenuDataByMenuName("mnAbsenSPG");
+            menuId = Integer.parseInt(data.get_IntMenuID());
+            statusAbsen = menuId;
+            menuActive = R.id.groupListMenu1;
+
+            List<mMenuData> menu = new mMenuBL().getDatabyParentId(statusAbsen);
+            listMenu = new String[menu.size()];
+
+            for (int i = 0; i < menu.size(); i++) {
+                listMenu[i] = menu.get(i).get_TxtMenuName();
+            }
+
+            if (i_view != null){
+
+                if (i_view.equals("Notification")){
+                    Class<?> fragmentClass = null;
+                    try {
+                        fragmentClass = Class.forName("com.kalbenutritionals.app.kalbespgmobile.Fragment" + i_view);
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    toolbar.setTitle("Information");
+                    Fragment fragment = null;
+                    try {
+                        fragment = (Fragment) fragmentClass.newInstance();
+                    } catch (InstantiationException e) {
+                        e.printStackTrace();
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.frame, fragment);
+                    fragmentTransaction.commit();
+                    selectedId = 99;
+                } else {
+                    try {
+                        Class<?> fragmentClass = Class.forName("com.kalbenutritionals.app.kalbespgmobile.Fragment" + i_view.replaceAll("\\s+", "") + "SPG");
+                        try {
+                            for (int i = 0; i < listMenu.length; i++) {
+                                if (("View " + listMenu[i]).equals(i_view + " SPG")) {
+                                    selectedId = i;
+                                    break;
+                                }
+                            }
+                            toolbar.setTitle(i_view);
+                            Fragment fragment = (Fragment) fragmentClass.newInstance();
+                            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                            fragmentTransaction.replace(R.id.frame, fragment);
+                            fragmentTransaction.commit();
+                        } catch (InstantiationException e) {
+                            e.printStackTrace();
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        } else {
+            menuActive = R.id.groupListMenu;
+            header.removeItem(R.id.checkout);
         }
 
         List<mMenuData> menu;
 
-        if (dtAbsens == null) {
+        if (dtAbsensVisitplan == null) {
             menu = new mMenuBL().getDatabyParentId(0);
         } else {
-            menu = new mMenuBL().getDatabyParentId(211);
+            menu = new mMenuBL().getDatabyParentId(statusAbsen);
         }
 
         linkMenu = new String[menu.size()];
@@ -295,7 +360,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
             } else if (i_view.equals("View Actvity")){
                 navigationView.getMenu().findItem(1).setChecked(true);
             } else if (i_view.equals("View Customer Base")){
-                navigationView.getMenu().findItem(2).setChecked(true);
+//                navigationView.getMenu().findItem(2).setChecked(true);
             } else if (i_view.equals("Notifcation")){
 //                    navigationView.getMenu().findItem(R.id.information).setChecked(true);
             } else if (i_view.equals("View PO")){
@@ -414,6 +479,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
                         return true;
 
+
                     case R.id.historyAbsen:
                         toolbar.setTitle("History Absen");
 
@@ -493,7 +559,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                                 .setCancelable(false)
                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                       tVisitPlanRealisasiData data = new tVisitPlanRealisasiData();
+                                        tVisitPlanRealisasiData data = new tVisitPlanRealisasiData();
                                         data = dtRealisasi;
                                         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                         Calendar cal = Calendar.getInstance();
@@ -593,7 +659,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                         try {
                             Class<?> fragmentClass = Class.forName(linkMenu[menuItem.getItemId()]);
                             try {
-                                if (dtAbsens != null) {
+                                if (dtAbsensVisitplan != null) {
                                     toolbar.setTitle("View " + menuItem.getTitle().toString());
                                 } else {
                                     toolbar.setTitle(menuItem.getTitle().toString());
@@ -681,7 +747,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 //    public boolean onPrepareOptionsMenu(Menu menu) {
 //        menu.clear();
 //        if (listMenu.length <= selectedId) {
-//            if (toolbar.getTitle().equals("Reporting")&&!isSubMenu||isSubMenu && dtAbsens != null&&listMenu.length>0&&toolbar.getTitle()=="Reporting"){
+//            if (toolbar.getTitle().equals("Reporting")&&!isSubMenu||isSubMenu && dtAbsensVisitplan != null&&listMenu.length>0&&toolbar.getTitle()=="Reporting"){
 //                for(String s : listMenu){
 //                    if(s.contains("Reso SPG")) {
 //                        int a = listMenu.length;
@@ -703,9 +769,9 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 //                menu.add(4, 0, 0, "-");
 //                menu.setGroupEnabled(4, false);
 //            }
-//        } else if (!isSubMenu && dtAbsens != null) {
+//        } else if (!isSubMenu && dtAbsensVisitplan != null) {
 //            menu.add(0, selectedId, 0, "Add " + listMenu[selectedId]);
-//        } else if (isSubMenu && dtAbsens != null) {
+//        } else if (isSubMenu && dtAbsensVisitplan != null) {
 //            menu.add(1, selectedId, 0, "View " + listMenu[selectedId]);
 //        }
 //        else {

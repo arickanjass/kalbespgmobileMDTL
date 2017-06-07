@@ -11,27 +11,27 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//import com.github.amlcurran.showcaseview.ShowcaseView;
-//import com.github.amlcurran.showcaseview.SimpleShowcaseEventListener;
-//import com.github.amlcurran.showcaseview.targets.ViewTarget;
-
 import java.util.List;
 
 import addons.tableview.SortableReportTableView;
+import bl.clsHelperBL;
 import bl.mEmployeeSalesProductBL;
 import bl.mProductBrandHeaderBL;
-import bl.tAbsenUserBL;
 import bl.tActivityBL;
 import bl.tCustomerBasedMobileHeaderBL;
 import bl.tSalesProductHeaderBL;
 import bl.tUserLoginBL;
 import library.salesforce.common.mEmployeeSalesProductData;
 import library.salesforce.common.mProductBrandHeaderData;
-import library.salesforce.common.tAbsenUserData;
 import library.salesforce.common.tActivityData;
 import library.salesforce.common.tCustomerBasedMobileHeaderData;
 import library.salesforce.common.tSalesProductHeaderData;
 import library.salesforce.common.tUserLoginData;
+import library.salesforce.common.visitplanAbsenData;
+
+//import com.github.amlcurran.showcaseview.ShowcaseView;
+//import com.github.amlcurran.showcaseview.SimpleShowcaseEventListener;
+//import com.github.amlcurran.showcaseview.targets.ViewTarget;
 
 public class FragmentHome extends Fragment {
 
@@ -65,7 +65,9 @@ public class FragmentHome extends Fragment {
         tv_cb2 = (TextView) v.findViewById(R.id.tv_cb2);
 
         tUserLoginData dt=new tUserLoginBL().getUserActive();
-        tAbsenUserData dtAbsen = new tAbsenUserBL().getDataCheckInActive();
+//        tAbsenUserData dtAbsen = new tAbsenUserBL().getDataCheckInActive();
+
+        visitplanAbsenData dtAbsen = new clsHelperBL().getDataCheckInActive();
         List<mProductBrandHeaderData> dtBrand = new mProductBrandHeaderBL().GetAllData();
         List<mEmployeeSalesProductData> dtProduct = new mEmployeeSalesProductBL().GetAllData();
         List<tSalesProductHeaderData> dtReso = new tSalesProductHeaderBL().getAllSalesProductHeader();

@@ -14,6 +14,7 @@ public class tVisitPlanRealisasiData {
     private String _txtOutletCode ;
     private String _txtOutletName ;
     private String _txtBranchCode ;
+    private String _txtBranchName;
     private String _dtDate ;
     private String _intBobot ;
     private String _dtDateRealisasi ;
@@ -34,6 +35,7 @@ public class tVisitPlanRealisasiData {
     private String _intSubmit;
     private String _intCheckout;
     private String _dateCheckout;
+    private String _deviceId;
 
     public String Property_txtDataIDRealisasi = "txtDataIDRealisasi";
     public String Property_intCategoryVisitPlan = "intCategoryVisitPlan";
@@ -43,6 +45,7 @@ public class tVisitPlanRealisasiData {
     public String Property_txtOutletCode = "txtOutletCode";
     public String Property_txtOutletName = "txtOutletName";
     public String Property_txtBranchCode = "txtBranchCode";
+    public String Property_txtBranchName = "txtBranchName";
     public String Property_dtDate = "dtDate";
     public String Property_intBobot = "intBobot";
     public String Property_dtDateRealisasi = "dtDateRealisasi";
@@ -63,6 +66,7 @@ public class tVisitPlanRealisasiData {
     public String Property_intPush = "intPush";
     public String Property_intCheckOut = "intCheckout";
     public String Property_dateCheckOut = "dateCheckout";
+    public String Property_deviceId = "deviceId";
     public String Property_listOftVisitPlanRealisasiData = "listOftVisitPlanRealisasiData";
 
 
@@ -75,6 +79,7 @@ public class tVisitPlanRealisasiData {
             Property_txtOutletCode + "," +
             Property_txtOutletName + "," +
             Property_txtBranchCode + "," +
+            Property_txtBranchName + "," +
             Property_dtDate + "," +
             Property_intBobot + "," +
             Property_dtDateRealisasi + "," +
@@ -91,11 +96,24 @@ public class tVisitPlanRealisasiData {
             Property_intDistance + "," +
             Property_bitActive + "," +
             Property_txtRoleId + "," +
+            Property_deviceId + "," +
             Property_intSubmit + "," +
             Property_intPush+ "," +
             Property_intCheckOut+ "," +
             Property_dateCheckOut;
 
+    public synchronized String get_deviceId(){
+        return _deviceId;
+    }
+    public synchronized void set_deviceId(String _deviceId){
+        this._deviceId = _deviceId;
+    }
+    public synchronized String get_txtBranchName(){
+        return  _txtBranchName;
+    }
+    public synchronized void set_txtBranchName(String _txtBranchName){
+        this._txtBranchName = _txtBranchName;
+    }
     public synchronized String get_intCheckout() {
         return _intCheckout;
     }

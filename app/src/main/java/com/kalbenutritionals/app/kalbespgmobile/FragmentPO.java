@@ -29,11 +29,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import bl.tAbsenUserBL;
+import bl.clsHelperBL;
 import bl.tPurchaseOrderDetailBL;
 import bl.tPurchaseOrderHeaderBL;
-import bl.tSalesProductDetailBL;
-import bl.tSalesProductHeaderBL;
 import edu.swu.pulltorefreshswipemenulistview.library.PullToRefreshSwipeMenuListView;
 import edu.swu.pulltorefreshswipemenulistview.library.pulltorefresh.interfaces.IXListViewListener;
 import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.bean.SwipeMenu;
@@ -42,11 +40,11 @@ import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.Swipe
 import edu.swu.pulltorefreshswipemenulistview.library.util.RefreshTime;
 import library.salesforce.common.AppAdapter;
 import library.salesforce.common.clsSwipeList;
-import library.salesforce.common.tAbsenUserData;
 import library.salesforce.common.tPurchaseOrderDetailData;
 import library.salesforce.common.tPurchaseOrderHeaderData;
 import library.salesforce.common.tSalesProductDetailData;
 import library.salesforce.common.tSalesProductHeaderData;
+import library.salesforce.common.visitplanAbsenData;
 
 /**
  * Created by XSIS on 21/03/2017.
@@ -250,8 +248,8 @@ public class FragmentPO extends Fragment implements IXListViewListener{
     }
 
     private void loadData(){
-        tAbsenUserData dtActive = new tAbsenUserBL().getDataCheckInActive();
-
+//        tAbsenUserData dtActive = new tAbsenUserBL().getDataCheckInActive();
+        visitplanAbsenData dtActive = new clsHelperBL().getDataCheckInActive();
         clsSwipeList swplist;
         dtPO = new tPurchaseOrderHeaderBL().getAllPurchaseOrderHeaderByOutletCode(dtActive.get_txtOutletCode());
 

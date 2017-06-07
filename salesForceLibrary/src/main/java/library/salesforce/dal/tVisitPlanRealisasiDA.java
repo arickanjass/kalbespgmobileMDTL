@@ -27,6 +27,7 @@ public class tVisitPlanRealisasiDA {
                 + dt.Property_txtOutletCode + " TEXT NULL,"
                 + dt.Property_txtOutletName + " TEXT NULL,"
                 + dt.Property_txtBranchCode + " TEXT NULL,"
+                + dt.Property_txtBranchName + " TEXT NULL,"
                 + dt.Property_dtDate + " TEXT NULL,"
                 + dt.Property_intBobot + " TEXT NULL,"
                 + dt.Property_dtDateRealisasi + " TEXT NULL,"
@@ -43,6 +44,7 @@ public class tVisitPlanRealisasiDA {
                 + dt.Property_intDistance + " TEXT NULL,"
                 + dt.Property_bitActive + " TEXT NULL,"
                 + dt.Property_txtRoleId + " TEXT NULL,"
+                + dt.Property_deviceId + " TEXT NULL,"
                 + dt.Property_intSubmit + " TEXT NULL,"
                 + dt.Property_intPush + " TEXT NULL,"
                 + dt.Property_intCheckOut + " TEXT NULL,"
@@ -72,28 +74,30 @@ public class tVisitPlanRealisasiDA {
                 contact.set_txtOutletCode(cursor.getString(5));
                 contact.set_txtOutletName(cursor.getString(6));
                 contact.set_txtBranchCode(cursor.getString(7));
-                contact.set_dtDate(cursor.getString(8));
-                contact.set_intBobot(cursor.getString(9));
-                contact.set_dtDateRealisasi(cursor.getString(10));
-                contact.set_dtDateRealisasiDevice(cursor.getString(11));
-                contact.set_txtDesc(cursor.getString(12));
-                contact.set_txtDescReply(cursor.getString(13));
-                byte[] blob1 = cursor.getBlob(14);
+                contact.set_txtBranchName(cursor.getString(8));
+                contact.set_dtDate(cursor.getString(9));
+                contact.set_intBobot(cursor.getString(10));
+                contact.set_dtDateRealisasi(cursor.getString(11));
+                contact.set_dtDateRealisasiDevice(cursor.getString(12));
+                contact.set_txtDesc(cursor.getString(13));
+                contact.set_txtDescReply(cursor.getString(14));
+                byte[] blob1 = cursor.getBlob(15);
                 contact.set_dtPhoto1(blob1);
-                byte[] blob2 = cursor.getBlob(15);
+                byte[] blob2 = cursor.getBlob(16);
                 contact.set_dtPhoto2(blob2);
-                contact.set_txtLong(cursor.getString(16));
-                contact.set_txtLat(cursor.getString(17));
-                contact.set_txtAcc(cursor.getString(18));
-                contact.set_txtLongSource(cursor.getString(19));
-                contact.set_txtLatSource(cursor.getString(20));
-                contact.set_intDistance(cursor.getString(21));
-                contact.set_bitActive(cursor.getString(22));
-                contact.set_txtRoleId(cursor.getString(23));
-                contact.set_intSubmit(cursor.getString(24));
-                contact.set_intPush(cursor.getString(25));
-                contact.set_intCheckout(cursor.getString(26));
-                contact.set_dateCheckout(cursor.getString(27));
+                contact.set_txtLong(cursor.getString(17));
+                contact.set_txtLat(cursor.getString(18));
+                contact.set_txtAcc(cursor.getString(19));
+                contact.set_txtLongSource(cursor.getString(20));
+                contact.set_txtLatSource(cursor.getString(21));
+                contact.set_intDistance(cursor.getString(22));
+                contact.set_bitActive(cursor.getString(23));
+                contact.set_txtRoleId(cursor.getString(24));
+                contact.set_deviceId(cursor.getString(25));
+                contact.set_intSubmit(cursor.getString(26));
+                contact.set_intPush(cursor.getString(27));
+                contact.set_intCheckout(cursor.getString(28));
+                contact.set_dateCheckout(cursor.getString(29));
                 // Adding contact to list
             } while (cursor.moveToNext());
         }
@@ -113,6 +117,7 @@ public class tVisitPlanRealisasiDA {
                 + dt.Property_txtOutletCode + ","
                 + dt.Property_txtOutletName + ","
                 + dt.Property_txtBranchCode + ","
+                + dt.Property_txtBranchName + ","
                 + dt.Property_dtDate + ","
                 + dt.Property_intBobot + ","
                 + dt.Property_dtDateRealisasi + ","
@@ -129,6 +134,7 @@ public class tVisitPlanRealisasiDA {
                 + dt.Property_intDistance + ","
                 + dt.Property_bitActive + ","
                 + dt.Property_txtRoleId + ","
+                + dt.Property_deviceId + ","
                 + dt.Property_intSubmit + ","
                 + dt.Property_intPush + ","
                 + dt.Property_intCheckOut + ","
@@ -141,6 +147,7 @@ public class tVisitPlanRealisasiDA {
                 + String.valueOf(data.get_txtOutletCode()) + "','"
                 + String.valueOf(data.get_txtOutletName()) + "','"
                 + String.valueOf(data.get_txtBranchCode()) + "','"
+                + String.valueOf(data.get_txtBranchName()) + "','"
                 + String.valueOf(data.get_dtDate()) + "','"
                 + String.valueOf(data.get_intBobot()) + "','"
                 + String.valueOf(data.get_dtDateRealisasi()) + "','"
@@ -157,6 +164,7 @@ public class tVisitPlanRealisasiDA {
                 + String.valueOf(data.get_intDistance()) + "','"
                 + String.valueOf(data.get_bitActive()) + "','"
                 + String.valueOf(data.get_txtRoleId()) + "','"
+                + String.valueOf(data.get_deviceId()) + "','"
                 + String.valueOf(data.get_intSubmit()) + "','"
                 + String.valueOf(data.get_intPush()) + "','"
                 + String.valueOf(data.get_intCheckout()) + "','"
@@ -200,6 +208,7 @@ public class tVisitPlanRealisasiDA {
                 + dt.Property_txtOutletCode + ","
                 + dt.Property_txtOutletName + ","
                 + dt.Property_txtBranchCode + ","
+                + dt.Property_txtBranchName + ","
                 + dt.Property_dtDate + ","
                 + dt.Property_intBobot + ","
                 + dt.Property_dtDateRealisasi + ","
@@ -216,6 +225,7 @@ public class tVisitPlanRealisasiDA {
                 + dt.Property_intDistance + ","
                 + dt.Property_bitActive + ","
                 + dt.Property_txtRoleId + ","
+                + dt.Property_deviceId + ","
                 + dt.Property_intSubmit + ","
                 + dt.Property_intPush + ","
                 + dt.Property_intCheckOut + ","
@@ -228,6 +238,7 @@ public class tVisitPlanRealisasiDA {
                 + String.valueOf(data.get_txtOutletCode()) + "','"
                 + String.valueOf(data.get_txtOutletName()) + "','"
                 + String.valueOf(data.get_txtBranchCode()) + "','"
+                + String.valueOf(data.get_txtBranchName()) + "','"
                 + String.valueOf(data.get_dtDate()) + "','"
                 + String.valueOf(data.get_intBobot()) + "','"
                 + String.valueOf(data.get_dtDateRealisasi()) + "','"
@@ -244,6 +255,7 @@ public class tVisitPlanRealisasiDA {
                 + String.valueOf(data.get_intDistance()) + "','"
                 + String.valueOf(data.get_bitActive()) + "','"
                 + String.valueOf(data.get_txtRoleId()) + "','"
+                + String.valueOf(data.get_deviceId()) + "','"
                 + String.valueOf(data.get_intSubmit()) + "','"
                 + String.valueOf(data.get_intPush()) + "','"
                 + String.valueOf(data.get_intCheckout()) + "','"
@@ -293,26 +305,30 @@ public class tVisitPlanRealisasiDA {
                 contact.set_txtOutletCode(cursor.getString(5));
                 contact.set_txtOutletName(cursor.getString(6));
                 contact.set_txtBranchCode(cursor.getString(7));
-                contact.set_dtDate(cursor.getString(8));
-                contact.set_intBobot(cursor.getString(9));
-                contact.set_dtDateRealisasi(cursor.getString(10));
-                contact.set_dtDateRealisasiDevice(cursor.getString(11));
-                contact.set_txtDesc(cursor.getString(12));
-                contact.set_txtDescReply(cursor.getString(13));
-                contact.set_dtPhoto1(cursor.getBlob(14));
-                contact.set_dtPhoto2(cursor.getBlob(15));
-                contact.set_txtLong(cursor.getString(16));
-                contact.set_txtLat(cursor.getString(17));
-                contact.set_txtAcc(cursor.getString(18));
-                contact.set_txtLongSource(cursor.getString(19));
-                contact.set_txtLatSource(cursor.getString(20));
-                contact.set_intDistance(cursor.getString(21));
-                contact.set_bitActive(cursor.getString(22));
-                contact.set_txtRoleId(cursor.getString(23));
-                contact.set_intSubmit(cursor.getString(24));
-                contact.set_intPush(cursor.getString(25));
-                contact.set_intCheckout(cursor.getString(26));
-                contact.set_dateCheckout(cursor.getString(27));
+                contact.set_txtBranchName(cursor.getString(8));
+                contact.set_dtDate(cursor.getString(9));
+                contact.set_intBobot(cursor.getString(10));
+                contact.set_dtDateRealisasi(cursor.getString(11));
+                contact.set_dtDateRealisasiDevice(cursor.getString(12));
+                contact.set_txtDesc(cursor.getString(13));
+                contact.set_txtDescReply(cursor.getString(14));
+                byte[] blob1 = cursor.getBlob(15);
+                contact.set_dtPhoto1(blob1);
+                byte[] blob2 = cursor.getBlob(16);
+                contact.set_dtPhoto2(blob2);
+                contact.set_txtLong(cursor.getString(17));
+                contact.set_txtLat(cursor.getString(18));
+                contact.set_txtAcc(cursor.getString(19));
+                contact.set_txtLongSource(cursor.getString(20));
+                contact.set_txtLatSource(cursor.getString(21));
+                contact.set_intDistance(cursor.getString(22));
+                contact.set_bitActive(cursor.getString(23));
+                contact.set_txtRoleId(cursor.getString(24));
+                contact.set_deviceId(cursor.getString(25));
+                contact.set_intSubmit(cursor.getString(26));
+                contact.set_intPush(cursor.getString(27));
+                contact.set_intCheckout(cursor.getString(28));
+                contact.set_dateCheckout(cursor.getString(29));
                 contactList.add(contact);
             } while (cursor.moveToNext());
         }
@@ -340,26 +356,30 @@ public class tVisitPlanRealisasiDA {
                 contact.set_txtOutletCode(cursor.getString(5));
                 contact.set_txtOutletName(cursor.getString(6));
                 contact.set_txtBranchCode(cursor.getString(7));
-                contact.set_dtDate(cursor.getString(8));
-                contact.set_intBobot(cursor.getString(9));
-                contact.set_dtDateRealisasi(cursor.getString(10));
-                contact.set_dtDateRealisasiDevice(cursor.getString(11));
-                contact.set_txtDesc(cursor.getString(12));
-                contact.set_txtDescReply(cursor.getString(13));
-                contact.set_dtPhoto1(cursor.getBlob(14));
-                contact.set_dtPhoto2(cursor.getBlob(15));
-                contact.set_txtLong(cursor.getString(16));
-                contact.set_txtLat(cursor.getString(17));
-                contact.set_txtAcc(cursor.getString(18));
-                contact.set_txtLongSource(cursor.getString(19));
-                contact.set_txtLatSource(cursor.getString(20));
-                contact.set_intDistance(cursor.getString(21));
-                contact.set_bitActive(cursor.getString(22));
-                contact.set_txtRoleId(cursor.getString(23));
-                contact.set_intSubmit(cursor.getString(24));
-                contact.set_intPush(cursor.getString(25));
-                contact.set_intCheckout(cursor.getString(26));
-                contact.set_dateCheckout(cursor.getString(27));
+                contact.set_txtBranchName(cursor.getString(8));
+                contact.set_dtDate(cursor.getString(9));
+                contact.set_intBobot(cursor.getString(10));
+                contact.set_dtDateRealisasi(cursor.getString(11));
+                contact.set_dtDateRealisasiDevice(cursor.getString(12));
+                contact.set_txtDesc(cursor.getString(13));
+                contact.set_txtDescReply(cursor.getString(14));
+                byte[] blob1 = cursor.getBlob(15);
+                contact.set_dtPhoto1(blob1);
+                byte[] blob2 = cursor.getBlob(16);
+                contact.set_dtPhoto2(blob2);
+                contact.set_txtLong(cursor.getString(17));
+                contact.set_txtLat(cursor.getString(18));
+                contact.set_txtAcc(cursor.getString(19));
+                contact.set_txtLongSource(cursor.getString(20));
+                contact.set_txtLatSource(cursor.getString(21));
+                contact.set_intDistance(cursor.getString(22));
+                contact.set_bitActive(cursor.getString(23));
+                contact.set_txtRoleId(cursor.getString(24));
+                contact.set_deviceId(cursor.getString(25));
+                contact.set_intSubmit(cursor.getString(26));
+                contact.set_intPush(cursor.getString(27));
+                contact.set_intCheckout(cursor.getString(28));
+                contact.set_dateCheckout(cursor.getString(29));
                 contactList.add(contact);
             } while (cursor.moveToNext());
         }
@@ -387,26 +407,30 @@ public class tVisitPlanRealisasiDA {
                 contact.set_txtOutletCode(cursor.getString(5));
                 contact.set_txtOutletName(cursor.getString(6));
                 contact.set_txtBranchCode(cursor.getString(7));
-                contact.set_dtDate(cursor.getString(8));
-                contact.set_intBobot(cursor.getString(9));
-                contact.set_dtDateRealisasi(cursor.getString(10));
-                contact.set_dtDateRealisasiDevice(cursor.getString(11));
-                contact.set_txtDesc(cursor.getString(12));
-                contact.set_txtDescReply(cursor.getString(13));
-                contact.set_dtPhoto1(cursor.getBlob(14));
-                contact.set_dtPhoto2(cursor.getBlob(15));
-                contact.set_txtLong(cursor.getString(16));
-                contact.set_txtLat(cursor.getString(17));
-                contact.set_txtAcc(cursor.getString(18));
-                contact.set_txtLongSource(cursor.getString(19));
-                contact.set_txtLatSource(cursor.getString(20));
-                contact.set_intDistance(cursor.getString(21));
-                contact.set_bitActive(cursor.getString(22));
-                contact.set_txtRoleId(cursor.getString(23));
-                contact.set_intSubmit(cursor.getString(24));
-                contact.set_intPush(cursor.getString(25));
-                contact.set_intCheckout(cursor.getString(26));
-                contact.set_dateCheckout(cursor.getString(27));
+                contact.set_txtBranchName(cursor.getString(8));
+                contact.set_dtDate(cursor.getString(9));
+                contact.set_intBobot(cursor.getString(10));
+                contact.set_dtDateRealisasi(cursor.getString(11));
+                contact.set_dtDateRealisasiDevice(cursor.getString(12));
+                contact.set_txtDesc(cursor.getString(13));
+                contact.set_txtDescReply(cursor.getString(14));
+                byte[] blob1 = cursor.getBlob(15);
+                contact.set_dtPhoto1(blob1);
+                byte[] blob2 = cursor.getBlob(16);
+                contact.set_dtPhoto2(blob2);
+                contact.set_txtLong(cursor.getString(17));
+                contact.set_txtLat(cursor.getString(18));
+                contact.set_txtAcc(cursor.getString(19));
+                contact.set_txtLongSource(cursor.getString(20));
+                contact.set_txtLatSource(cursor.getString(21));
+                contact.set_intDistance(cursor.getString(22));
+                contact.set_bitActive(cursor.getString(23));
+                contact.set_txtRoleId(cursor.getString(24));
+                contact.set_deviceId(cursor.getString(25));
+                contact.set_intSubmit(cursor.getString(26));
+                contact.set_intPush(cursor.getString(27));
+                contact.set_intCheckout(cursor.getString(28));
+                contact.set_dateCheckout(cursor.getString(29));
                 contactList.add(contact);
             } while (cursor.moveToNext());
         }
@@ -427,6 +451,7 @@ public class tVisitPlanRealisasiDA {
                 dt.Property_txtOutletCode,
                 dt.Property_txtOutletName,
                 dt.Property_txtBranchCode,
+                dt.Property_txtBranchName,
                 dt.Property_dtDate,
                 dt.Property_intBobot,
                 dt.Property_dtDateRealisasi,
@@ -443,6 +468,7 @@ public class tVisitPlanRealisasiDA {
                 dt.Property_intDistance,
                 dt.Property_bitActive,
                 dt.Property_txtRoleId,
+                dt.Property_deviceId,
                 dt.Property_intSubmit,
                 dt.Property_intPush,
                 dt.Property_intCheckOut,
@@ -475,26 +501,30 @@ public class tVisitPlanRealisasiDA {
                 contact.set_txtOutletCode(cursor.getString(5));
                 contact.set_txtOutletName(cursor.getString(6));
                 contact.set_txtBranchCode(cursor.getString(7));
-                contact.set_dtDate(cursor.getString(8));
-                contact.set_intBobot(cursor.getString(9));
-                contact.set_dtDateRealisasi(cursor.getString(10));
-                contact.set_dtDateRealisasiDevice(cursor.getString(11));
-                contact.set_txtDesc(cursor.getString(12));
-                contact.set_txtDescReply(cursor.getString(13));
-                contact.set_dtPhoto1(cursor.getBlob(14));
-                contact.set_dtPhoto2(cursor.getBlob(15));
-                contact.set_txtLong(cursor.getString(16));
-                contact.set_txtLat(cursor.getString(17));
-                contact.set_txtAcc(cursor.getString(18));
-                contact.set_txtLongSource(cursor.getString(19));
-                contact.set_txtLatSource(cursor.getString(20));
-                contact.set_intDistance(cursor.getString(21));
-                contact.set_bitActive(cursor.getString(22));
-                contact.set_txtRoleId(cursor.getString(23));
-                contact.set_intSubmit(cursor.getString(24));
-                contact.set_intPush(cursor.getString(25));
-                contact.set_intCheckout(cursor.getString(26));
-                contact.set_dateCheckout(cursor.getString(27));
+                contact.set_txtBranchName(cursor.getString(8));
+                contact.set_dtDate(cursor.getString(9));
+                contact.set_intBobot(cursor.getString(10));
+                contact.set_dtDateRealisasi(cursor.getString(11));
+                contact.set_dtDateRealisasiDevice(cursor.getString(12));
+                contact.set_txtDesc(cursor.getString(13));
+                contact.set_txtDescReply(cursor.getString(14));
+                byte[] blob1 = cursor.getBlob(15);
+                contact.set_dtPhoto1(blob1);
+                byte[] blob2 = cursor.getBlob(16);
+                contact.set_dtPhoto2(blob2);
+                contact.set_txtLong(cursor.getString(17));
+                contact.set_txtLat(cursor.getString(18));
+                contact.set_txtAcc(cursor.getString(19));
+                contact.set_txtLongSource(cursor.getString(20));
+                contact.set_txtLatSource(cursor.getString(21));
+                contact.set_intDistance(cursor.getString(22));
+                contact.set_bitActive(cursor.getString(23));
+                contact.set_txtRoleId(cursor.getString(24));
+                contact.set_deviceId(cursor.getString(25));
+                contact.set_intSubmit(cursor.getString(26));
+                contact.set_intPush(cursor.getString(27));
+                contact.set_intCheckout(cursor.getString(28));
+                contact.set_dateCheckout(cursor.getString(29));
 //                contactList.add(contact);
             } while (cursor.moveToNext());
         }
@@ -514,6 +544,7 @@ public class tVisitPlanRealisasiDA {
                 dt.Property_txtOutletCode,
                 dt.Property_txtOutletName,
                 dt.Property_txtBranchCode,
+                dt.Property_txtBranchName,
                 dt.Property_dtDate,
                 dt.Property_intBobot,
                 dt.Property_dtDateRealisasi,
@@ -530,6 +561,7 @@ public class tVisitPlanRealisasiDA {
                 dt.Property_intDistance,
                 dt.Property_bitActive,
                 dt.Property_txtRoleId,
+                dt.Property_deviceId,
                 dt.Property_intSubmit,
                 dt.Property_intPush,
                 dt.Property_intCheckOut,
@@ -562,26 +594,30 @@ public class tVisitPlanRealisasiDA {
                 contact.set_txtOutletCode(cursor.getString(5));
                 contact.set_txtOutletName(cursor.getString(6));
                 contact.set_txtBranchCode(cursor.getString(7));
-                contact.set_dtDate(cursor.getString(8));
-                contact.set_intBobot(cursor.getString(9));
-                contact.set_dtDateRealisasi(cursor.getString(10));
-                contact.set_dtDateRealisasiDevice(cursor.getString(11));
-                contact.set_txtDesc(cursor.getString(12));
-                contact.set_txtDescReply(cursor.getString(13));
-                contact.set_dtPhoto1(cursor.getBlob(14));
-                contact.set_dtPhoto2(cursor.getBlob(15));
-                contact.set_txtLong(cursor.getString(16));
-                contact.set_txtLat(cursor.getString(17));
-                contact.set_txtAcc(cursor.getString(18));
-                contact.set_txtLongSource(cursor.getString(19));
-                contact.set_txtLatSource(cursor.getString(20));
-                contact.set_intDistance(cursor.getString(21));
-                contact.set_bitActive(cursor.getString(22));
-                contact.set_txtRoleId(cursor.getString(23));
-                contact.set_intSubmit(cursor.getString(24));
-                contact.set_intPush(cursor.getString(25));
-                contact.set_intCheckout(cursor.getString(26));
-                contact.set_dateCheckout(cursor.getString(27));
+                contact.set_txtBranchName(cursor.getString(8));
+                contact.set_dtDate(cursor.getString(9));
+                contact.set_intBobot(cursor.getString(10));
+                contact.set_dtDateRealisasi(cursor.getString(11));
+                contact.set_dtDateRealisasiDevice(cursor.getString(12));
+                contact.set_txtDesc(cursor.getString(13));
+                contact.set_txtDescReply(cursor.getString(14));
+                byte[] blob1 = cursor.getBlob(15);
+                contact.set_dtPhoto1(blob1);
+                byte[] blob2 = cursor.getBlob(16);
+                contact.set_dtPhoto2(blob2);
+                contact.set_txtLong(cursor.getString(17));
+                contact.set_txtLat(cursor.getString(18));
+                contact.set_txtAcc(cursor.getString(19));
+                contact.set_txtLongSource(cursor.getString(20));
+                contact.set_txtLatSource(cursor.getString(21));
+                contact.set_intDistance(cursor.getString(22));
+                contact.set_bitActive(cursor.getString(23));
+                contact.set_txtRoleId(cursor.getString(24));
+                contact.set_deviceId(cursor.getString(25));
+                contact.set_intSubmit(cursor.getString(26));
+                contact.set_intPush(cursor.getString(27));
+                contact.set_intCheckout(cursor.getString(28));
+                contact.set_dateCheckout(cursor.getString(29));
 //                contactList.add(contact);
             } while (cursor.moveToNext());
         }

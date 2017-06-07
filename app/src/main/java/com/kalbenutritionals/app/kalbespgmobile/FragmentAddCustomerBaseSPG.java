@@ -1,7 +1,5 @@
 package com.kalbenutritionals.app.kalbespgmobile;
 
-import android.graphics.Rect;
-import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,6 +9,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spanned;
@@ -31,6 +30,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,8 +40,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import bl.clsHelperBL;
 import bl.mEmployeeSalesProductBL;
-import bl.tAbsenUserBL;
 import bl.tCustomerBasedMobileDetailBL;
 import bl.tCustomerBasedMobileDetailProductBL;
 import bl.tCustomerBasedMobileHeaderBL;
@@ -605,9 +605,9 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
             dtHeader.set_intTrCustomerId(new clsMainActivity().GenerateGuid());
         }
 
-        dtHeader.set_txtBranchCode(new tAbsenUserBL().getDataCheckInActive().get_txtBranchCode());
-        dtHeader.set_txtSumberData(new tAbsenUserBL().getDataCheckInActive().get_txtOutletCode());
-        dtHeader.set_txtNamaSumberData(new tAbsenUserBL().getDataCheckInActive().get_txtOutletName());
+        dtHeader.set_txtBranchCode(new clsHelperBL().getDataCheckInActive().get_txtBranchCode());
+        dtHeader.set_txtSumberData(new clsHelperBL().getDataCheckInActive().get_txtOutletCode());
+        dtHeader.set_txtNamaSumberData(new clsHelperBL().getDataCheckInActive().get_txtOutletName());
         dtHeader.set_txtNamaDepan(etNama.getText().toString());
         dtHeader.set_txtTelp(etTelpon.getText().toString());
         dtHeader.set_txtTelp2(etTelpon2.getText().toString());
@@ -615,8 +615,8 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
         dtHeader.set_txtEmail(etEmail.getText().toString());
         dtHeader.set_txtPINBBM(etPinBBM.getText().toString());
         dtHeader.set_txtALamat(etAlamat.getText().toString());
-        dtHeader.set_txtUserId(new tAbsenUserBL().getDataCheckInActive().get_txtUserId());
-        dtHeader.set_txtRoleId(new tAbsenUserBL().getDataCheckInActive().get_txtRoleId());
+        dtHeader.set_txtUserId(new clsHelperBL().getDataCheckInActive().get_txtUserId());
+        dtHeader.set_txtRoleId(new clsHelperBL().getDataCheckInActive().get_txtRoleId());
 
         int selectedId = radioGenderGroup.getCheckedRadioButtonId();
         RadioButton rbGender = (RadioButton) v.findViewById(selectedId);
@@ -652,8 +652,9 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
                 new tCustomerBasedMobileDetailBL().deleteData(data);
             }
         }
-
-        dtHeader.set_txtDeviceId(new tAbsenUserBL().getDataCheckInActive().get_txtDeviceId());
+        if(new clsHelperBL().getDataCheckInActive().get_txtDeviceId() != null){
+            dtHeader.set_txtDeviceId(new clsHelperBL().getDataCheckInActive().get_txtDeviceId());
+        }
         dtHeader.set_bitActive("1");
         dtHeader.set_dtDate(dateFormat.format(cal.getTime()));
         dtHeader.set_intSubmit("0");

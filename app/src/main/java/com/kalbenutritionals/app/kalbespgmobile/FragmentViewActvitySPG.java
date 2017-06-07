@@ -40,7 +40,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import bl.tAbsenUserBL;
+import bl.clsHelperBL;
 import bl.tActivityBL;
 import edu.swu.pulltorefreshswipemenulistview.library.PullToRefreshSwipeMenuListView;
 import edu.swu.pulltorefreshswipemenulistview.library.pulltorefresh.interfaces.IXListViewListener;
@@ -50,8 +50,8 @@ import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.Swipe
 import edu.swu.pulltorefreshswipemenulistview.library.util.RefreshTime;
 import library.salesforce.common.AppAdapter;
 import library.salesforce.common.clsSwipeList;
-import library.salesforce.common.tAbsenUserData;
 import library.salesforce.common.tActivityData;
+import library.salesforce.common.visitplanAbsenData;
 
 import static com.kalbenutritionals.app.kalbespgmobile.R.id.textView9;
 
@@ -277,8 +277,8 @@ public class FragmentViewActvitySPG extends Fragment implements IXListViewListen
     private void loadData() {
         clsSwipeList swplist;
 
-        tAbsenUserData dtAbsen = new tAbsenUserBL().getDataCheckInActive();
-
+//        tAbsenUserData dtAbsen = new tAbsenUserBL().getDataCheckInActive();
+        visitplanAbsenData dtAbsen = new clsHelperBL().getDataCheckInActive();
         dt = new tActivityBL().getAllDataByOutletCode(dtAbsen.get_txtOutletCode());
 
         swipeList.clear();

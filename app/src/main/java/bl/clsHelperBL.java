@@ -38,6 +38,7 @@ import library.salesforce.common.tUserLoginData;
 import library.salesforce.common.tVisitPlanHeader_MobileData;
 import library.salesforce.common.tVisitPlanRealisasiData;
 import library.salesforce.common.trackingLocationData;
+import library.salesforce.common.visitplanAbsenData;
 import library.salesforce.dal.clsHardCode;
 import library.salesforce.dal.enumConfigData;
 import library.salesforce.dal.enumCounterData;
@@ -73,6 +74,57 @@ public class clsHelperBL extends clsMainBL {
         SQLiteDatabase db = getDb();
         new clsHelper().DeleteAllDB(db);
         db.close();
+    }
+
+    public visitplanAbsenData getDataCheckInActive(){
+        SQLiteDatabase db=getDb();
+        tAbsenUserDA _tAbsenUserDA=new tAbsenUserDA(db);
+        tAbsenUserData dataAbsen=new tAbsenUserData();
+        dataAbsen=_tAbsenUserDA.getDataCheckInActive(db);
+        tVisitPlanRealisasiDA  _tTVisitPlanRealisasiDA = new tVisitPlanRealisasiDA(db);
+        tVisitPlanRealisasiData dataVisit = new tVisitPlanRealisasiData();
+        dataVisit = _tTVisitPlanRealisasiDA.getDataCheckInActive(db);
+        visitplanAbsenData dataReturn = new visitplanAbsenData();
+        if (dataAbsen == null && dataVisit.get_txtDataIDRealisasi() != null){
+            dataReturn.set_txtId(dataVisit.get_txtDataIDRealisasi().toString());
+            dataReturn.set_txtOutletCode(dataVisit.get_txtOutletCode().toString());
+            dataReturn.set_txtOutletName(dataVisit.get_txtOutletName().toString());
+            dataReturn.set_txtBranchCode(dataVisit.get_txtBranchCode().toString());
+            dataReturn.set_txtBranchName(dataVisit.get_txtBranchName().toString());
+
+
+
+            dataReturn.setType("visitPlan");
+        }else if (dataAbsen != null && dataVisit.get_txtDataIDRealisasi() == null){
+            dataReturn.set_txtId(dataAbsen.get_intId().toString());
+            dataReturn.set_txtOutletCode(dataAbsen.get_txtOutletCode().toString());
+            dataReturn.set_txtOutletName(dataAbsen.get_txtOutletName().toString());
+            dataReturn.set_txtBranchCode(dataAbsen.get_txtBranchCode().toString());
+            dataReturn.set_txtBranchName(dataAbsen.get_txtBranchName().toString());
+            dataReturn.set_txtDeviceId(dataAbsen.get_txtDeviceId());
+
+            dataReturn.set_dtDateCheckIn(dataAbsen.get_dtDateCheckIn().toString());
+            dataReturn.set_dtDateCheckOut(dataAbsen.get_dtDateCheckOut().toString());
+            dataReturn.set_intSubmit(dataAbsen.get_intSubmit());
+            dataReturn.set_intSync(dataAbsen.get_intSync());
+            dataReturn.set_txtAbsen(dataAbsen.get_txtAbsen());
+            dataReturn.set_txtAccuracy(dataAbsen.get_txtAccuracy());
+            dataReturn.set_txtLatitude(dataAbsen.get_txtLatitude());
+            dataReturn.set_txtLongitude(dataAbsen.get_txtLongitude());
+            byte[] blob1 = dataAbsen.get_txtImg1();
+//				Bitmap bmp1 = BitmapFactory.decodeByteArray(blob1, 0, blob1.length);
+            dataReturn.set_txtImg1(blob1);
+            byte[] blob2 = dataAbsen.get_txtImg2();
+            dataReturn.set_txtUserId(dataAbsen.get_txtUserId());
+            dataReturn.set_txtRoleId(dataAbsen.get_txtRoleId());
+//				Bitmap bmp2 = BitmapFactory.decodeByteArray(blob2, 0, blob2.length);
+            dataReturn.set_txtImg2(blob2);
+
+            dataReturn.setType("absen");
+        }else{
+            dataReturn = null;
+        }
+        return dataReturn;
     }
 
     public void DownloadData(String versionName) throws ParseException {

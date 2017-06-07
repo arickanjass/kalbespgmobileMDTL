@@ -1,6 +1,5 @@
 package com.kalbenutritionals.app.kalbespgmobile;
 
-import android.support.v7.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,6 +10,7 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.util.Log;
@@ -36,12 +36,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import bl.tAbsenUserBL;
+import bl.clsHelperBL;
 import bl.tActivityBL;
 import bl.tUserLoginBL;
-import library.salesforce.common.tAbsenUserData;
 import library.salesforce.common.tActivityData;
 import library.salesforce.common.tUserLoginData;
+import library.salesforce.common.visitplanAbsenData;
 import library.salesforce.dal.clsHardCode;
 
 public class FragmentAddActvitySPG extends Fragment implements View.OnClickListener {
@@ -201,7 +201,8 @@ public class FragmentAddActvitySPG extends Fragment implements View.OnClickListe
 
                             int selectedId = rdFlag.getCheckedRadioButtonId();
                             RadioButton radioFlag = (RadioButton) v.findViewById(selectedId);
-                            tAbsenUserData dtAbsen = new tAbsenUserBL().getDataCheckInActive();
+//                            tAbsenUserData dtAbsen = new tAbsenUserBL().getDataCheckInActive();
+                            visitplanAbsenData dtAbsen = new clsHelperBL().getDataCheckInActive();
                             tUserLoginData dtLogin = new tUserLoginBL().getUserLogin();
 
                             dtActivityData.set_intActive("0");
@@ -212,7 +213,9 @@ public class FragmentAddActvitySPG extends Fragment implements View.OnClickListe
                             dtActivityData.set_intSubmit("1");
                             dtActivityData.set_txtOutletCode(dtAbsen.get_txtOutletCode());
                             dtActivityData.set_txtOutletName(dtAbsen.get_txtOutletName());
-                            dtActivityData.set_txtDeviceId(dtAbsen.get_txtDeviceId());
+                            if (dtAbsen.get_txtDeviceId() != null){
+                                dtActivityData.set_txtDeviceId(dtAbsen.get_txtDeviceId());
+                            }
                             dtActivityData.set_txtBranch(dtAbsen.get_txtBranchCode());
                             dtActivityData.set_txtUserId(dtLogin.get_TxtEmpId());
                             dtActivityData.set_txtRoleId(dtLogin.get_txtRoleId());

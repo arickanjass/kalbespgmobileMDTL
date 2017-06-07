@@ -1,6 +1,5 @@
 package com.kalbenutritionals.app.kalbespgmobile;
 
-import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -10,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import bl.tAbsenUserBL;
+import bl.clsHelperBL;
 import bl.tCustomerBasedMobileDetailBL;
 import bl.tCustomerBasedMobileDetailProductBL;
 import bl.tCustomerBasedMobileHeaderBL;
@@ -39,10 +39,10 @@ import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.Swipe
 import edu.swu.pulltorefreshswipemenulistview.library.util.RefreshTime;
 import library.salesforce.common.AppAdapter;
 import library.salesforce.common.clsSwipeList;
-import library.salesforce.common.tAbsenUserData;
 import library.salesforce.common.tCustomerBasedMobileDetailData;
 import library.salesforce.common.tCustomerBasedMobileDetailProductData;
 import library.salesforce.common.tCustomerBasedMobileHeaderData;
+import library.salesforce.common.visitplanAbsenData;
 
 public class FragmentViewCustomerBaseSPG extends Fragment implements IXListViewListener {
 
@@ -211,7 +211,7 @@ public class FragmentViewCustomerBaseSPG extends Fragment implements IXListViewL
     }
 
     private void loadData(){
-        tAbsenUserData dtActive = new tAbsenUserBL().getDataCheckInActive();
+        visitplanAbsenData dtActive = new clsHelperBL().getDataCheckInActive();
 
         clsSwipeList swplist;
         dt = new tCustomerBasedMobileHeaderBL().getAllCustomerBasedMobileHeaderByOutletCode(dtActive.get_txtOutletCode());

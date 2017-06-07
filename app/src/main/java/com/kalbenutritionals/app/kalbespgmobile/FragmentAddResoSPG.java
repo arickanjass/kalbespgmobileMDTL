@@ -1,6 +1,5 @@
 package com.kalbenutritionals.app.kalbespgmobile;
 
-import android.support.v7.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,6 +13,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -45,17 +45,17 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import bl.clsHelperBL;
 import bl.clsMainBL;
 import bl.mCounterNumberBL;
 import bl.mEmployeeSalesProductBL;
-import bl.tAbsenUserBL;
 import bl.tSalesProductHeaderBL;
 import library.salesforce.common.ModelListview;
 import library.salesforce.common.clsHelper;
 import library.salesforce.common.mEmployeeSalesProductData;
-import library.salesforce.common.tAbsenUserData;
 import library.salesforce.common.tSalesProductDetailData;
 import library.salesforce.common.tSalesProductHeaderData;
+import library.salesforce.common.visitplanAbsenData;
 import library.salesforce.dal.enumCounterData;
 import library.salesforce.dal.tSalesProductDetailDA;
 
@@ -426,8 +426,8 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
 
         clsMainActivity _clsMainActivity = new clsMainActivity();
         mEmployeeSalesProductData _mEmployeeSalesProductData = new mEmployeeSalesProductData();
-        tAbsenUserData absenUserData = new tAbsenUserBL().getDataCheckInActive();
-
+//        tAbsenUserData absenUserData = new tAbsenUserBL().getDataCheckInActive();
+        visitplanAbsenData absenUserData = new clsHelperBL().getDataCheckInActive();
         dt.set_intId(new clsMainActivity().GenerateGuid());
         dt.set_txtNoSo(tv_noso.getText().toString());
         dt.set_dtDate(dateFormat.format(cal.getTime()));
