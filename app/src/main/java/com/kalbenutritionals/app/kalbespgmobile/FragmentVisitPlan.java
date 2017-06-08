@@ -732,6 +732,9 @@ public class FragmentVisitPlan extends Fragment {
                                                 _tVisitPlanRealisasiData.set_txtRoleId(idRoleActive);
                                                 _tVisitPlanRealisasiData.set_intSubmit("1");
                                                 _tVisitPlanRealisasiData.set_txtAcc(lblAcc.getText().toString());
+                                                List<tDeviceInfoUserData> dataDeviceInfoUser = new tDeviceInfoUserBL().getData(0);
+                                                String deviceInfo = String.valueOf(dataDeviceInfoUser.get(0).get_txtDeviceId());
+                                                _tVisitPlanRealisasiData.set_deviceId(deviceInfo);
 //                                                _tVisitPlanRealisasiData.set_intPush("0");
 //                                                checkInUserDatas.add(_tVisitPlanRealisasiData);
                                                 new tVisitPlanRealisasiBL().UpdateData(_tVisitPlanRealisasiData);

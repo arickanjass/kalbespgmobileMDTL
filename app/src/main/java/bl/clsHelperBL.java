@@ -91,7 +91,23 @@ public class clsHelperBL extends clsMainBL {
             dataReturn.set_txtOutletName(dataVisit.get_txtOutletName().toString());
             dataReturn.set_txtBranchCode(dataVisit.get_txtBranchCode().toString());
             dataReturn.set_txtBranchName(dataVisit.get_txtBranchName().toString());
+            dataReturn.set_txtDeviceId(dataVisit.get_deviceId());
 
+            dataReturn.set_dtDateCheckIn(dataVisit.get_dtDate().toString());
+            dataReturn.set_dtDateCheckOut(dataVisit.get_dateCheckout().toString());
+            dataReturn.set_intSubmit(dataVisit.get_intSubmit());
+            dataReturn.set_intSync(dataVisit.get_intPush());
+            dataReturn.set_txtAccuracy(dataVisit.get_txtAcc());
+            dataReturn.set_txtLatitude(dataVisit.get_txtLat());
+            dataReturn.set_txtLongitude(dataVisit.get_txtLong());
+            byte[] blob1 = dataVisit.get_dtPhoto1();
+//				Bitmap bmp1 = BitmapFactory.decodeByteArray(blob1, 0, blob1.length);
+            dataReturn.set_txtImg1(blob1);
+            byte[] blob2 = dataVisit.get_dtPhoto2();
+            dataReturn.set_txtUserId(dataVisit.get_intUserID());
+            dataReturn.set_txtRoleId(dataVisit.get_txtRoleId());
+//				Bitmap bmp2 = BitmapFactory.decodeByteArray(blob2, 0, blob2.length);
+            dataReturn.set_txtImg2(blob2);
 
 
             dataReturn.setType("visitPlan");
@@ -111,14 +127,18 @@ public class clsHelperBL extends clsMainBL {
             dataReturn.set_txtAccuracy(dataAbsen.get_txtAccuracy());
             dataReturn.set_txtLatitude(dataAbsen.get_txtLatitude());
             dataReturn.set_txtLongitude(dataAbsen.get_txtLongitude());
-            byte[] blob1 = dataAbsen.get_txtImg1();
+            if (dataAbsen.get_txtImg1() != null){
+                byte[] blob1 = dataAbsen.get_txtImg1();
+                dataReturn.set_txtImg1(blob1);
+            }
 //				Bitmap bmp1 = BitmapFactory.decodeByteArray(blob1, 0, blob1.length);
-            dataReturn.set_txtImg1(blob1);
-            byte[] blob2 = dataAbsen.get_txtImg2();
+            if (dataAbsen.get_txtImg2() != null){
+                byte[] blob2 = dataAbsen.get_txtImg2();
+                dataReturn.set_txtImg2(blob2);
+            }
             dataReturn.set_txtUserId(dataAbsen.get_txtUserId());
             dataReturn.set_txtRoleId(dataAbsen.get_txtRoleId());
 //				Bitmap bmp2 = BitmapFactory.decodeByteArray(blob2, 0, blob2.length);
-            dataReturn.set_txtImg2(blob2);
 
             dataReturn.setType("absen");
         }else{
