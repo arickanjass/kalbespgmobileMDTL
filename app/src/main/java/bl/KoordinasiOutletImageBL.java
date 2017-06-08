@@ -22,4 +22,12 @@ public class KoordinasiOutletImageBL extends clsMainBL {
         }
         db.close();
     }
+
+    public List<KoordinasiOutletImageData> getDataHeaderId(String id) {
+        SQLiteDatabase db = getDb();
+        KoordinasiOutletImageDA _KoordinasiOutletImageDA = new KoordinasiOutletImageDA(db);
+        List<KoordinasiOutletImageData>ListData = _KoordinasiOutletImageDA.getDataHeaderId(db, id);
+        db.close();
+        return ListData;
+    }
 }
