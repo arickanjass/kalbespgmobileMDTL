@@ -68,10 +68,10 @@
             android:orderInCategory="2"
             android:title="History Absen" />
 
-        <item android:id="@+id/PO"
+        <!--<item android:id="@+id/PO"
             android:checked="false"
             android:orderInCategory="2"
-            android:title="Purchase Order"/>
+            android:title="Purchase Order"/>-->
 
        <!-- <item android:id="@+id/VP"
             android:checked="false"
