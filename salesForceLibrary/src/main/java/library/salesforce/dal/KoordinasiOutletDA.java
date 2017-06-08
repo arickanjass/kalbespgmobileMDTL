@@ -4,6 +4,9 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import library.salesforce.common.KoordinasiOutletData;
 
 /**
@@ -71,5 +74,66 @@ public class KoordinasiOutletDA {
         int countData = cursor.getCount();
         cursor.close();
         return countData;
+    }
+
+    public List<KoordinasiOutletData> getAllData(SQLiteDatabase db) {
+        List<KoordinasiOutletData> contactList = new ArrayList<KoordinasiOutletData>();
+        // select All Query
+        KoordinasiOutletData dt = new KoordinasiOutletData();
+        String selectQuery = "SELECT  " + dt.Property_All + " FROM "
+                + TABLE_CONTACTS;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                KoordinasiOutletData contact = new KoordinasiOutletData();
+                contact.set_intId(String.valueOf(cursor.getString(0)));
+                contact.set_dtDate(cursor.getString(1));
+                contact.set_txtKeterangan(cursor.getString(2));
+                contact.set_txtUserId(cursor.getString(3));
+                contact.set_txtUsername(cursor.getString(4));
+                contact.set_txtRoleId(cursor.getString(5));
+                contact.set_txtOutletCode(cursor.getString(6));
+                contact.set_txtOutletName(cursor.getString(7));
+                contact.set_txtBranchCode(cursor.getString(8));
+                contact.set_txtBranchName(cursor.getString(9));
+                contact.set_intSubmit(cursor.getString(10));
+                contact.set_intSync(cursor.getString(11));
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return contactList;
+    }
+
+    public KoordinasiOutletData getData(SQLiteDatabase db, String id) {
+        KoordinasiOutletData dt = new KoordinasiOutletData();
+        Cursor cursor = db.query(TABLE_CONTACTS, new String[] {
+                dt.Property_intId, dt.Property_dtDate, dt.Property_txtKeterangan, dt.Property_txtUserId,
+                dt.Property_txtUsername, dt.Property_txtRoleId, dt.Property_txtOutletCode, dt.Property_txtOutletName,
+                dt.Property_txtBranchCode, dt.Property_txtBranchName, dt.Property_intSubmit, dt.Property_intSync},
+                dt.Property_intId + "=?", new String[] { String.valueOf(id) },
+                null, null, null, null);
+        if (cursor != null)
+            cursor.moveToFirst();
+        KoordinasiOutletData contact = new KoordinasiOutletData();
+        if (cursor.getCount() > 0) {
+            contact.set_intId(String.valueOf(cursor.getString(0)));
+            contact.set_dtDate(cursor.getString(1));
+            contact.set_txtKeterangan(cursor.getString(2));
+            contact.set_txtUserId(cursor.getString(3));
+            contact.set_txtUsername(cursor.getString(4));
+            contact.set_txtRoleId(cursor.getString(5));
+            contact.set_txtOutletCode(cursor.getString(6));
+            contact.set_txtOutletName(cursor.getString(7));
+            contact.set_txtBranchCode(cursor.getString(8));
+            contact.set_txtBranchName(cursor.getString(9));
+            contact.set_intSubmit(cursor.getString(10));
+            contact.set_intSync(cursor.getString(11));
+        } else {
+            contact = null;
+        }
+        cursor.close();
+        return contact;
     }
 }
