@@ -28,6 +28,13 @@
             android:paddingTop="@dimen/activity_vertical_margin" >
 
             <TextView
+                android:id="@+id/txtHDId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="txthdId"
+                android:visibility="gone" />
+
+            <TextView
                 android:id="@+id/textViewDateTimeKoordinasi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
