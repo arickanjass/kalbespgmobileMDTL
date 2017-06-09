@@ -40,4 +40,13 @@ public class KoordinasiOutletBL extends clsMainBL {
         }
         return listData;
     }
+
+    public List<KoordinasiOutletData> getAllDataByOutletCode(String code){
+        SQLiteDatabase _db = getDb();
+        KoordinasiOutletDA _KoordinasiOutletDA = new KoordinasiOutletDA(_db);
+        List<KoordinasiOutletData> dt = _KoordinasiOutletDA.getAllDataByOutletCode(_db, code);
+
+        _db.close();
+        return dt ;
+    }
 }

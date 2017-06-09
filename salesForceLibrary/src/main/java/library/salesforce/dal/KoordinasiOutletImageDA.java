@@ -48,15 +48,17 @@ public class KoordinasiOutletImageDA {
     }
 
     public List<KoordinasiOutletImageData> getDataHeaderId(SQLiteDatabase db, String id) {
-        List<KoordinasiOutletImageData> contactList = null;
+        List<KoordinasiOutletImageData> contactList = new ArrayList<KoordinasiOutletImageData>();
         KoordinasiOutletImageData dt = new KoordinasiOutletImageData();
-        Cursor cursor = db.query(TABLE_CONTACTS, new String[] { dt.Property_txtId,
-                        dt.Property_txtHeaderId, dt.Property_txtImage, dt.Property_intPosition},
-                        dt.Property_txtHeaderId + "=?",
+        Cursor cursor = db.query(TABLE_CONTACTS, new String[] {
+                dt.Property_txtId,
+                dt.Property_txtHeaderId,
+                dt.Property_txtImage,
+                dt.Property_intPosition},
+                dt.Property_txtHeaderId + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null) {
             if (cursor.moveToFirst()) {
-                contactList = new ArrayList<KoordinasiOutletImageData>();
                 do {
                     KoordinasiOutletImageData contact = new KoordinasiOutletImageData();
                     contact.set_txtId(String.valueOf(cursor.getString(0)));
