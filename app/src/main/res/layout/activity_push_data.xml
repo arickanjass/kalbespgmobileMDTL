@@ -130,6 +130,21 @@
        </TableLayout>
 
     <TextView
+        android:id="@+id/tvKoordinasi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_medium"
+        android:layout_marginTop="5dp"
+        android:textColor="#000"
+        android:text="Koordinasi Outlet" />
+
+    <TableLayout
+        android:id="@+id/tl_koordinasi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </TableLayout>
+
+    <TextView
         android:id="@+id/tvVisitPlan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

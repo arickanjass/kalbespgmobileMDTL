@@ -36,6 +36,7 @@ import bl.tAbsenUserBL;
 import bl.tNotificationBL;
 import bl.tUserLoginBL;
 import come.example.viewbadger.ShortcutBadger;
+import library.salesforce.common.KoordinasiOutletData;
 import library.salesforce.common.clsPushData;
 import library.salesforce.common.dataJson;
 import library.salesforce.common.tAbsenUserData;
@@ -63,6 +64,7 @@ public class FragmentPushData extends Fragment {
     private TableLayout tlsQuantityStock;
     private TableLayout tlAbsen;
     private TableLayout tlLeave;
+    private TableLayout tlKoordinasi;
     private TableLayout tlVisitPlan;
     private Button btnPush;
     private String myValue;
@@ -101,6 +103,7 @@ public class FragmentPushData extends Fragment {
         tlsQuantityStock = (TableLayout) v.findViewById(R.id.tl_quantity_stock);
         tlAbsen = (TableLayout) v.findViewById(R.id.tl_absen);
         tlLeave = (TableLayout) v.findViewById(R.id.tl_leave);
+        tlKoordinasi = (TableLayout) v.findViewById(R.id.tl_koordinasi);
         tlVisitPlan = (TableLayout) v.findViewById(R.id.tl_visit_plan);
         btnPush = (Button) v.findViewById(R.id.btnPush);
 
@@ -155,6 +158,12 @@ public class FragmentPushData extends Fragment {
                 initQuantityStockHeader(getContext(),dtJson.getListOftSalesProductQuantityHeaderData());
             } else {
                 initQuantityStockHeader(getContext(), null);
+            }
+
+            if (dtJson.getListOfKoordinasiOutletImageData() != null){
+                initKoordinasiOutlet(getContext(),dtJson.getListOfKoordinasiOutletData());
+            } else {
+                initKoordinasiOutlet(getContext(), null);
             }
 
             if(dtJson.getListOftActivityData()!=null){
@@ -808,6 +817,83 @@ public class FragmentPushData extends Fragment {
                 tr.addView(outlet_code);
 
                 tlsQuantityStock.addView(tr, index++);
+            }
+        }
+    }
+
+    private void initKoordinasiOutlet(Context context, List<KoordinasiOutletData> listOfKoordinasiOutletData) {
+        tlKoordinasi = (TableLayout) v.findViewById(R.id.tl_koordinasi);
+        tlKoordinasi.removeAllViews();
+
+        TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1f);
+        params.setMargins(1, 1, 1, 1);
+
+        TableRow tr = new TableRow(getContext());
+
+        String[] colTextHeader = {"No.", "Keterangan", "Date", "Outlet Code"};
+
+        for (String text : colTextHeader) {
+            TextView tv = new TextView(getContext());
+            // tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 1));
+
+            tv.setTextSize(14);
+            tv.setPadding(10, 10, 10, 10);
+            tv.setText(text);
+            tv.setGravity(Gravity.CENTER);
+            tv.setBackgroundColor(Color.parseColor("#4CAF50"));
+            tv.setTextColor(Color.WHITE);
+            tv.setLayoutParams(params);
+
+            tr.addView(tv);
+        }
+        tlKoordinasi.addView(tr);
+
+        if (listOfKoordinasiOutletData != null){
+            int index = 1;
+            for (KoordinasiOutletData dat : listOfKoordinasiOutletData){
+                tr = new TableRow(getContext());
+
+                TextView tv_index = new TextView(getContext());
+                tv_index.setTextSize(12);
+                tv_index.setPadding(10, 10, 10, 10);
+                tv_index.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                tv_index.setGravity(Gravity.CENTER);
+                tv_index.setTextColor(Color.BLACK);
+                tv_index.setText(String.valueOf(index + "."));
+                tv_index.setLayoutParams(params);
+                tr.addView(tv_index);
+
+                TextView keterangan = new TextView(getContext());
+                keterangan.setTextSize(12);
+                keterangan.setPadding(10, 10, 10, 10);
+                keterangan.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                keterangan.setTextColor(Color.BLACK);
+                keterangan.setGravity(Gravity.CENTER);
+                keterangan.setText(dat.get_txtKeterangan());
+                keterangan.setLayoutParams(params);
+                tr.addView(keterangan);
+
+                TextView date = new TextView(getContext());
+                date.setTextSize(12);
+                date.setPadding(10, 10, 10, 10);
+                date.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                date.setTextColor(Color.BLACK);
+                date.setGravity(Gravity.CENTER);
+                date.setText(new clsMainActivity().giveFormatDate2(dat.get_dtDate()));
+                date.setLayoutParams(params);
+                tr.addView(date);
+
+                TextView outlet_code = new TextView(getContext());
+                outlet_code.setTextSize(12);
+                outlet_code.setPadding(10, 10, 10, 10);
+                outlet_code.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                outlet_code.setTextColor(Color.BLACK);
+                outlet_code.setGravity(Gravity.CENTER);
+                outlet_code.setText(dat.get_txtOutletCode());
+                outlet_code.setLayoutParams(params);
+                tr.addView(outlet_code);
+
+                tlKoordinasi.addView(tr, index++);
             }
         }
     }

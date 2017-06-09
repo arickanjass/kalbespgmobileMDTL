@@ -191,6 +191,22 @@ public class dataJson {
         ListOfTrackingLocationData = listOfTrackingLocationData;
     }
 
+    public synchronized List<KoordinasiOutletData> getListOfKoordinasiOutletData() {
+        return ListOfKoordinasiOutletData;
+    }
+
+    public synchronized void setListOfKoordinasiOutletData(List<KoordinasiOutletData> listOfKoordinasiOutletData) {
+        ListOfKoordinasiOutletData = listOfKoordinasiOutletData;
+    }
+
+    public synchronized List<KoordinasiOutletImageData> getListOfKoordinasiOutletImageData() {
+        return ListOfKoordinasiOutletImageData;
+    }
+
+    public synchronized void setListOfKoordinasiOutletImageData(List<KoordinasiOutletImageData> listOfKoordinasiOutletImageData) {
+        ListOfKoordinasiOutletImageData = listOfKoordinasiOutletImageData;
+    }
+
     public synchronized List<tDeviceInfoUserData> getListDatatDeviceInfoUser() {
         return ListDatatDeviceInfoUser;
     }
@@ -579,6 +595,42 @@ public class dataJson {
                     itemsListJquey.add(item1);
                 }
                 resJson.put(dtTrackingLocationData.Property_ListOftrackingLocation, new JSONArray(itemsListJquey));
+            }
+
+            if (this.getListOfKoordinasiOutletData() != null){
+                KoordinasiOutletData dtKoordinasiOutletData = new KoordinasiOutletData();
+                itemsListJquey = new ArrayList<JSONObject>();
+                for (KoordinasiOutletData data : this.getListOfKoordinasiOutletData()){
+                    JSONObject item = new JSONObject();
+                    item.put(dtKoordinasiOutletData.Property_intId, String.valueOf(data.get_intId()));
+                    item.put(dtKoordinasiOutletData.Property_dtDate, String.valueOf(data.get_dtDate()));
+                    item.put(dtKoordinasiOutletData.Property_txtKeterangan, String.valueOf(data.get_txtKeterangan()));
+                    item.put(dtKoordinasiOutletData.Property_txtUserId, String.valueOf(data.get_txtUserId()));
+                    item.put(dtKoordinasiOutletData.Property_txtUsername, String.valueOf(data.get_txtUsername()));
+                    item.put(dtKoordinasiOutletData.Property_txtRoleId, String.valueOf(data.get_txtRoleId()));
+                    item.put(dtKoordinasiOutletData.Property_txtOutletCode, String.valueOf(data.get_txtOutletCode()));
+                    item.put(dtKoordinasiOutletData.Property_txtOutletName, String.valueOf(data.get_txtOutletName()));
+                    item.put(dtKoordinasiOutletData.Property_txtBranchCode, String.valueOf(data.get_txtBranchCode()));
+                    item.put(dtKoordinasiOutletData.Property_txtBranchName, String.valueOf(data.get_txtBranchName()));
+                    item.put(dtKoordinasiOutletData.Property_intSubmit, String.valueOf(data.get_intSubmit()));
+                    item.put(dtKoordinasiOutletData.Property_intSync, String.valueOf(data.get_intSync()));
+                    itemsListJquey.add(item);
+                }
+                resJson.put(dtKoordinasiOutletData.Property_ListOfKoordinasiOutlet, new JSONArray(itemsListJquey));
+            }
+
+            if (this.getListOfKoordinasiOutletImageData() != null){
+                KoordinasiOutletImageData dtKoordinasiOutletImageData = new KoordinasiOutletImageData();
+                itemsListJquey = new ArrayList<JSONObject>();
+                for (KoordinasiOutletImageData data : this.getListOfKoordinasiOutletImageData()){
+                    JSONObject item = new JSONObject();
+                    item.put(dtKoordinasiOutletImageData.Property_txtId, String.valueOf(data.get_txtId()));
+                    item.put(dtKoordinasiOutletImageData.Property_txtHeaderId, String.valueOf(data.get_txtHeaderId()));
+                    item.put(dtKoordinasiOutletImageData.Property_txtImage, String.valueOf(data.get_txtImage()));
+                    item.put(dtKoordinasiOutletImageData.Property_intPosition, String.valueOf(data.get_intPosition()));
+                    itemsListJquey.add(item);
+                }
+                resJson.put(dtKoordinasiOutletImageData.Property_ListOfKoordinasiOutletImageData, new JSONArray(itemsListJquey));
             }
 
             if (this.get_ListOftCustomerBasedMobileHeaderData() != null) {
@@ -990,6 +1042,8 @@ public class dataJson {
     private List<tVisitPlanHeader_MobileData> ListOftVisitPlanHeader_MobileData;
     private List<tVisitPlanRealisasiData> ListOftVisitPlanRealisasiData;
     private List<trackingLocationData> ListOfTrackingLocationData;
+    private List<KoordinasiOutletData> ListOfKoordinasiOutletData;
+    private List<KoordinasiOutletImageData> ListOfKoordinasiOutletImageData;
 
     private List<mEmployeeAreaData> ListOfmEmployeeAreaData;
     private List<mEmployeeBranchData> ListOfmEmployeeBranchData;
