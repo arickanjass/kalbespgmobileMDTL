@@ -126,7 +126,7 @@ public class KoordinasiOutletData {
     public String Property_txtBranchName = "txtBranchName";
     public String Property_intSubmit = "intSubmit";
     public String Property_intSync = "intSync";
-    public String Property_ListOfKoordinasiOutlet = "ListOfKoordinasiOutlet";
+    public String Property_ListOfKoordinasiOutlet = "ListOfKoordinasiOutletData";
     public String Property_All = Property_intId + "," +
             Property_dtDate + "," +
             Property_txtKeterangan + "," +
