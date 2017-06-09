@@ -119,7 +119,8 @@ import service.MyTrackingLocationService;
 
 public class FragmentDownloadData extends Fragment {
     View v;
-
+    private Button btnKordinasiOutlet;
+    private Spinner spnKordinasiOutlet;
     private Button btnBranch;
     private Spinner spnBranch;
     private Button btnOutlet;
@@ -143,7 +144,7 @@ public class FragmentDownloadData extends Fragment {
     private Button btnAbsen, btnQuiz;
     private Spinner spnDataLeave, spnDataPO, spnDataQuantityStock;
     private Button btnDataLeave, btnDataPO, btnDataQuantityStock;
-    private LinearLayout ll_branch, ll_outlet, ll_product, ll_brand, ll_type_leave, ll_reso, ll_activity, ll_customerbased, ll_absen, ll_purchase_order, ll_data_leave;
+    private LinearLayout ll_kordinasi_outlet,ll_branch, ll_outlet, ll_product, ll_brand, ll_type_leave, ll_reso, ll_activity, ll_customerbased, ll_absen, ll_purchase_order, ll_data_leave;
 
     private PackageInfo pInfo = null;
     private List<String> arrData;
@@ -161,6 +162,9 @@ public class FragmentDownloadData extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.activity_download_data, container, false);
         btnAllDownload = (Button) v.findViewById(R.id.btnAllDownload);
+
+        btnKordinasiOutlet = (Button) v.findViewById(R.id.btnKordinasiOutlet);
+        spnKordinasiOutlet = (Spinner) v.findViewById(R.id.spnKordinasiOutlet);
         btnBranch = (Button) v.findViewById(R.id.btnBranch);
         spnBranch = (Spinner) v.findViewById(R.id.spnType);
         btnOutlet = (Button) v.findViewById(R.id.btnOutlet);
@@ -199,6 +203,7 @@ public class FragmentDownloadData extends Fragment {
         ll_absen = (LinearLayout) v.findViewById(R.id.ll_absen);
         ll_purchase_order = (LinearLayout) v.findViewById(R.id.ll_purchase_order);
         ll_data_leave = (LinearLayout) v.findViewById(R.id.ll_data_leave);
+        ll_kordinasi_outlet = (LinearLayout) v.findViewById(R.id.ll_kordinasi_outlet);
 
         spnVisitPlan = (Spinner) v.findViewById(R.id.spnVisitPlan);
         spnTrVisitPlan = (Spinner) v.findViewById(R.id.spnTrVisitPlan);
@@ -241,11 +246,22 @@ public class FragmentDownloadData extends Fragment {
                 ll_purchase_order.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_data_leave.getId()))){
                 ll_data_leave.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_kordinasi_outlet.getId()))){
+                ll_kordinasi_outlet.setVisibility(View.VISIBLE);
             }
         }
 
 
         loadData();
+
+        btnKordinasiOutlet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intProcesscancel = 0;
+//                AsyncCallKordinasiOutlet task = new AsyncCallKordinasiOutlet();
+//                task.execute();
+            }
+        });
 
         btnVisitPlan.setOnClickListener(new View.OnClickListener() {
             @Override

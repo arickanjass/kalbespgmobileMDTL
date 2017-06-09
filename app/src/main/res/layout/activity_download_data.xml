@@ -246,6 +246,51 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_kordinasi_outlet"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txtVwKordinasiOutlet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/view10"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Kordinasi Outlet"
+                    android:textColor="#000" />
+
+                <Spinner
+                    android:id="@+id/spnKordinasiOutlet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtVwKordinasiOutlet"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/bg_edtext" />
+
+                <Button
+                    android:id="@+id/btnKordinasiOutlet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/spnKordinasiOutlet"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/btn_on_click"
+                    android:text="Download Kordinasi Outlet" />
+
+                <View
+                    android:id="@+id/viewKordinasiOutlet"
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/btnKordinasiOutlet"
+                    android:layout_marginTop="10dp"
+                    android:background="#bfbfbf" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/ll_reso"
                 android:orientation="vertical"
                 android:visibility="gone"
@@ -256,7 +301,7 @@
                     android:id="@+id/txtVwReso"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/view9"
+                    android:layout_below="@+id/viewKordinasiOutlet"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:text="Reso"
