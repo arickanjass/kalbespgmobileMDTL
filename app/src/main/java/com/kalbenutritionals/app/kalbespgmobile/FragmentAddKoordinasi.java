@@ -210,8 +210,12 @@ public class FragmentAddKoordinasi extends Fragment implements View.OnClickListe
                                             savePicture1();
                                             savePicture2();
 
-                                            Intent nextScreen = new Intent(getContext(), MainMenu.class);
-                                            startActivity(nextScreen);
+//                                            Intent nextScreen = new Intent(getContext(), MainMenu.class);
+//                                            startActivity(nextScreen);
+
+                                            Intent myIntent = new Intent(getContext(), MainMenu.class);
+                                            getActivity().finish();
+                                            startActivity(myIntent);
 
                                             new clsMainActivity().showCustomToast(getActivity(), "Saved", true);
                                         }
