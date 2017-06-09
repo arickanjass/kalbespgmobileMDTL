@@ -49,7 +49,6 @@ public class tNotificationBL extends clsMainBL{
 		return listData;
 	}
 
-	
 	public int  getContactsCount(){
 		SQLiteDatabase db=getDb();
 		tNotificationDA _tNotificationDA=new tNotificationDA(db);

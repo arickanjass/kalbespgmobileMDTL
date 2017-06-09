@@ -98,6 +98,9 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
     private GoogleApiClient client;
 
+    String i_view = null;
+    Intent intent;
+
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -214,50 +217,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
             if (i_view != null){
 
-                if (i_view.equals("Notification")){
-                    Class<?> fragmentClass = null;
-                    try {
-                        fragmentClass = Class.forName("com.kalbenutritionals.app.kalbespgmobile.Fragment" + i_view);
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                    toolbar.setTitle("Information");
-                    Fragment fragment = null;
-                    try {
-                        fragment = (Fragment) fragmentClass.newInstance();
-                    } catch (InstantiationException e) {
-                        e.printStackTrace();
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    }
-                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.frame, fragment);
-                    fragmentTransaction.commit();
-                    selectedId = 99;
-                } else {
-                    try {
-                        Class<?> fragmentClass = Class.forName("com.kalbenutritionals.app.kalbespgmobile.Fragment" + i_view.replaceAll("\\s+", "") + "SPG");
-                        try {
-                            for (int i = 0; i < listMenu.length; i++) {
-                                if (("View " + listMenu[i]).equals(i_view + " SPG")) {
-                                    selectedId = i;
-                                    break;
-                                }
-                            }
-                            toolbar.setTitle(i_view);
-                            Fragment fragment = (Fragment) fragmentClass.newInstance();
-                            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                            fragmentTransaction.replace(R.id.frame, fragment);
-                            fragmentTransaction.commit();
-                        } catch (InstantiationException e) {
-                            e.printStackTrace();
-                        } catch (IllegalAccessException e) {
-                            e.printStackTrace();
-                        }
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                }
+                intent_activity();
             }
 
         }else if(dtAbsensVisitplan!=null && dtAbsensVisitplan.getType().toString().equals("absen")) {
@@ -277,51 +237,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
             }
 
             if (i_view != null){
-
-                if (i_view.equals("Notification")){
-                    Class<?> fragmentClass = null;
-                    try {
-                        fragmentClass = Class.forName("com.kalbenutritionals.app.kalbespgmobile.Fragment" + i_view);
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                    toolbar.setTitle("Information");
-                    Fragment fragment = null;
-                    try {
-                        fragment = (Fragment) fragmentClass.newInstance();
-                    } catch (InstantiationException e) {
-                        e.printStackTrace();
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    }
-                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.frame, fragment);
-                    fragmentTransaction.commit();
-                    selectedId = 99;
-                } else {
-                    try {
-                        Class<?> fragmentClass = Class.forName("com.kalbenutritionals.app.kalbespgmobile.Fragment" + i_view.replaceAll("\\s+", "") + "SPG");
-                        try {
-                            for (int i = 0; i < listMenu.length; i++) {
-                                if (("View " + listMenu[i]).equals(i_view + " SPG")) {
-                                    selectedId = i;
-                                    break;
-                                }
-                            }
-                            toolbar.setTitle(i_view);
-                            Fragment fragment = (Fragment) fragmentClass.newInstance();
-                            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                            fragmentTransaction.replace(R.id.frame, fragment);
-                            fragmentTransaction.commit();
-                        } catch (InstantiationException e) {
-                            e.printStackTrace();
-                        } catch (IllegalAccessException e) {
-                            e.printStackTrace();
-                        }
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                }
+                intent_activity();
             }
         } else {
             menuActive = R.id.groupListMenu;
@@ -531,18 +447,18 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                         fragmentTransactionVP.commit();
                         selectedId = 99;
                         return true;*/
-//                    case R.id.information:z
-//                        toolbar.setTitle("Information");
-//
-//                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
-//
-//                        FragmentInformation fragmentNotifcation = new FragmentInformation();
-//                        FragmentTransaction fragmentTransactionNotifcation = getSupportFragmentManager().beginTransaction();
-//                        fragmentTransactionNotifcation.replace(R.id.frame, fragmentNotifcation);
-//                        fragmentTransactionNotifcation.commit();
-//                        selectedId = 99;
-//
-//                        return  true;
+                    case R.id.information:
+                        toolbar.setTitle("Information");
+
+                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
+
+                        FragmentNotification fragmentNotification = new FragmentNotification();
+                        FragmentTransaction fragmentTransactionNotifcation = getSupportFragmentManager().beginTransaction();
+                        fragmentTransactionNotifcation.replace(R.id.frame, fragmentNotification);
+                        fragmentTransactionNotifcation.commit();
+                        selectedId = 99;
+
+                        return  true;
                     case R.id.checkoutVisitplan:
                         LayoutInflater _layoutInflater2 = LayoutInflater.from(MainMenu.this);
                         final View _promptView2 = _layoutInflater2.inflate(R.layout.confirm_data, null);
@@ -840,15 +756,15 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                     listAbsenData.add(dtTabsenData);
                     new tAbsenUserBL().saveData(listAbsenData);
                 }
-                clsPushData dtJson = new clsHelperBL().pushData();
+                String versionName = "";
+                try {
+                    versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+                } catch (PackageManager.NameNotFoundException e2) {
+                    // TODO Auto-generated catch block
+                    e2.printStackTrace();
+                }
+                clsPushData dtJson = new clsHelperBL().pushData(versionName);
                 if (dtJson != null) {
-                    String versionName = "";
-                    try {
-                        versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-                    } catch (PackageManager.NameNotFoundException e2) {
-                        // TODO Auto-generated catch block
-                        e2.printStackTrace();
-                    }
                     try {
                         JSONArray Jresult = null;
                         if (dtJson.getDtdataJson().getListOftAbsenUserData() != null) {
@@ -954,5 +870,96 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
             Dialog.dismiss();
         }
 
+    }
+
+    private void intent_activity(){
+        if (i_view.equals("Notification")){
+            String id = intent.getStringExtra("id");
+            Class<?> fragmentClass = null;
+            try {
+                fragmentClass = Class.forName("com.kalbenutritionals.app.kalbespgmobile.Fragment" + i_view);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            toolbar.setTitle("Information");
+            Fragment fragment = null;
+            try {
+                fragment = (Fragment) fragmentClass.newInstance();
+                Bundle bundle = new Bundle();
+                bundle.putString("TAG_UUID", id);
+                fragment.setArguments(bundle);
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.frame, fragment);
+            fragmentTransaction.commit();
+            selectedId = 99;
+        } else {
+            try {
+                Class<?> fragmentClass = Class.forName("com.kalbenutritionals.app.kalbespgmobile.Fragment" + i_view.replaceAll("\\s+", "") + "SPG");
+                try {
+                    for (int i = 0; i < listMenu.length; i++) {
+                        if (("View " + listMenu[i]).equals(i_view + " SPG")) {
+                            selectedId = i;
+                            break;
+                        }
+                    }
+                    toolbar.setTitle(i_view);
+                    Fragment fragment = (Fragment) fragmentClass.newInstance();
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.frame, fragment);
+                    fragmentTransaction.commit();
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if(intent!=null){
+            String view = intent .getStringExtra("key_view");
+            if(view!=null){
+                if (view.equals("Notification")){
+                    String id = intent.getStringExtra("id");
+                    Class<?> fragmentClass = null;
+                    try {
+                        fragmentClass = Class.forName("com.kalbenutritionals.app.kalbespgmobile.Fragment" + view);
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    toolbar.setTitle("Information");
+                    Fragment fragment = null;
+                    try {
+                        fragment = (Fragment) fragmentClass.newInstance();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("TAG_UUID", id);
+                        fragment.setArguments(bundle);
+                    } catch (InstantiationException e) {
+                        e.printStackTrace();
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.frame, fragment);
+                    fragmentTransaction.commit();
+                    selectedId = 99;
+                }
+            }
+        }
     }
 }

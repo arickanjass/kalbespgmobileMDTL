@@ -85,17 +85,17 @@ public class MyServiceNative extends Service{
 	
     private void doServiceWork() throws JSONException
     {
-    	clsPushData dtJson= new clsHelperBL().pushData();
+		String versionName="";
+		try {
+			versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+		} catch (NameNotFoundException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+    	clsPushData dtJson= new clsHelperBL().pushData(versionName);
     	if(dtJson==null){
     		_shutdownService();
     	}else{
-    		String versionName="";
-    		try {
-    			versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-    		} catch (NameNotFoundException e2) {
-    			// TODO Auto-generated catch block
-    			e2.printStackTrace();
-    		}
     		try {
     			JSONArray JsonArrayResult=new clsHelperBL().callPushDataReturnJson(versionName,dtJson.getDtdataJson().txtJSON().toString(),dtJson.getFileUpload());
 				new clsHelperBL().saveDataPush(dtJson.getDtdataJson(),JsonArrayResult);
@@ -111,13 +111,13 @@ public class MyServiceNative extends Service{
     	}
 
     	SQLiteDatabase db;
-    	String versionName="";
-    	try {
-			versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-		} catch (NameNotFoundException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
+//    	String versionName="";
+//    	try {
+//			versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+//		} catch (NameNotFoundException e2) {
+//			// TODO Auto-generated catch block
+//			e2.printStackTrace();
+//		}
 		clsHardCode clsdthc = new clsHardCode();
 		db = SQLiteDatabase.openOrCreateDatabase(clsdthc.txtDatabaseName,null); // create file database
 		tUserLoginDA _tUserLoginDA=new tUserLoginDA(db);

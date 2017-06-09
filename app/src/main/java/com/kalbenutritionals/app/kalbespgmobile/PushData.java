@@ -80,7 +80,14 @@ public class PushData extends AppCompatActivity {
     }
 
     private void loadData() {
-        clsPushData dtclsPushData=new clsHelperBL().pushData();
+        String versionName="";
+        try {
+            versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+        } catch (NameNotFoundException e2) {
+            // TODO Auto-generated catch block
+            e2.printStackTrace();
+        }
+        clsPushData dtclsPushData=new clsHelperBL().pushData(versionName);
 
         if(dtclsPushData!=null){
             dataJson dtJson =dtclsPushData.getDtdataJson();
@@ -563,19 +570,19 @@ public class PushData extends AppCompatActivity {
     private class AsyncCallRole extends AsyncTask<List<dataJson>, Void, List<dataJson>> {
         @Override
         protected List<dataJson> doInBackground(List<dataJson>... params) {
+            String versionName="";
+            try {
+                versionName = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0).versionName;
+//                    versionName = new clsMainActivity().getApplicationContext().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName;
+            } catch (NameNotFoundException e2) {
+                // TODO Auto-generated catch block
+                e2.printStackTrace();
+            }
             android.os.Debug.waitForDebugger();
             List<dataJson> roledata=new ArrayList<dataJson>();
-            clsPushData dtJson= new clsHelperBL().pushData();
+            clsPushData dtJson= new clsHelperBL().pushData(versionName);
             dataJson dtdataJson=new dataJson();
             if(dtJson!=null){
-                String versionName="";
-                try {
-                    versionName = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0).versionName;
-//                    versionName = new clsMainActivity().getApplicationContext().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName;
-                } catch (NameNotFoundException e2) {
-                    // TODO Auto-generated catch block
-                    e2.printStackTrace();
-                }
                 try {
                     JSONArray Jresult= new clsHelperBL().callPushDataReturnJson(versionName,dtJson.getDtdataJson().txtJSON().toString(),dtJson.getFileUpload());
                 } catch (Exception e) {

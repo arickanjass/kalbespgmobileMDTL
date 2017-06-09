@@ -97,6 +97,7 @@
             android:configChanges="orientation|keyboardHidden"/>
 
         <activity
+            android:launchMode="singleTop"
             android:name=".MainMenu"
             android:label=""
             android:configChanges="orientation|screenSize"/>

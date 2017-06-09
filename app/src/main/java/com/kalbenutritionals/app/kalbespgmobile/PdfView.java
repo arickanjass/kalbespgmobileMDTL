@@ -28,7 +28,7 @@ public class PdfView extends AppCompatActivity implements OnPageChangeListener, 
 
     private static final String TAG = PdfView.class.getSimpleName();
     File logFolder = new File(new clsHardCode().txtPathUserData);
-    File file = new File(logFolder, "/sample.pdf");
+    File file = new File(logFolder, "/Puasa.pdf");
     PDFView pdfView;
     Toolbar toolbar;
 

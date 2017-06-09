@@ -79,11 +79,11 @@
             android:title="Visit Plan"/>-->
 
 
-        <!--<item-->
-            <!--android:id="@+id/information"-->
-            <!--android:checked="false"-->
-            <!--android:orderInCategory="2"-->
-            <!--android:title="Information" />-->
+        <item
+            android:id="@+id/information"
+            android:checked="false"
+            android:orderInCategory="2"
+            android:title="Information" />
 
         <!--<item-->
             <!--android:id="@+id/pushData"-->

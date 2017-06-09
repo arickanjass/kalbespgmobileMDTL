@@ -596,7 +596,7 @@ public class clsMainActivity extends Activity {
                 clsRowItem getswipeList = swipeList.get(position);
                 if (action == "LNotifi") {
                     String uuid = getswipeList.get_txtId();
-                    Intent intent = new Intent(getApplicationContext(), FragmentNotifcation.class);
+                    Intent intent = new Intent(getApplicationContext(), FragmentNotification.class);
                     intent.putExtra("From", "Notif");
                     intent.putExtra(TAG_UUID, String.valueOf(uuid));
                     startActivity(intent);

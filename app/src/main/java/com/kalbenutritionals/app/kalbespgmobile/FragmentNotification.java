@@ -34,7 +34,9 @@ import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.Swipe
 import edu.swu.pulltorefreshswipemenulistview.library.util.RefreshTime;
 import library.salesforce.common.clsRowItem;
 import library.salesforce.common.clsSwipeList;
+import library.salesforce.common.tInformationData;
 import library.salesforce.common.tNotificationData;
+import service.MyNotificationService;
 
 import static com.kalbenutritionals.app.kalbespgmobile.clsMainActivity.setCreator;
 import static com.kalbenutritionals.app.kalbespgmobile.clsMainActivity.setListA;
@@ -42,7 +44,7 @@ import static com.kalbenutritionals.app.kalbespgmobile.clsMainActivity.setListA;
 /**
  * Created by ASUS ZE on 06/09/2016.
  */
-public class FragmentNotifcation extends Fragment implements IXListViewListener{
+public class FragmentNotification extends Fragment implements IXListViewListener{
 
     View v;
 
@@ -56,12 +58,14 @@ public class FragmentNotifcation extends Fragment implements IXListViewListener{
 
     private ImageView imgBdge;
     private Button play;
-    private Button show;
+    private Button show, push;
     public static final Integer images1 = R.drawable.ic_bbm_notif;
     public static final Integer images2 = R.drawable.ic_bbm_transp;
 
     private List<String> arrData;
     static List<tNotificationData> dt;
+
+    String idHeaderNotif=null;
 
 
     @Nullable
@@ -76,6 +80,47 @@ public class FragmentNotifcation extends Fragment implements IXListViewListener{
         list = (ListView) v.findViewById(R.id.listViewNotifikasi);
         mListView = (PullToRefreshSwipeMenuListView) v.findViewById(R.id.listView);
         imgBdge = (ImageView) v.findViewById(R.id.iv_icon);
+        push = (Button) v.findViewById(R.id.btn_push);
+
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR1) {
+                idHeaderNotif = bundle.getString("TAG_UUID", "id");
+            }
+        }
+
+        push.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                List<tNotificationData> dt = new ArrayList<tNotificationData>();
+
+//                Intent intent = new Intent(getActivity(), PdfView.class);
+//                startActivity(intent);
+                for(int i=0;i<3;i++){
+                    tNotificationData data = new tNotificationData();
+                    data.set_bitActive("");
+                    data.set_dtPublishEnd("");
+                    data.set_dtUpdate("");
+                    data.set_guiID(String.valueOf(i));
+                    data.set_intIndex(String.valueOf(i));
+                    data.set_intPriority("1");
+                    data.set_intSubmit("1");
+                    data.set_intSync("0");
+                    data.set_tPublishStart("");
+                    data.set_txtStatus("2");
+                    data.set_txtTitle("SPG Mobile" + String.valueOf(i) );
+                    data.set_txtDescription("Anda mendapat pesan baru" + String.valueOf(i));
+
+                    dt.add(data);
+                }
+
+
+
+                new tNotificationBL().saveData(dt);
+            }
+        });
+
         List<tNotificationData> listNotifikasi = new tNotificationBL().GetAllData();
 
         dt = new tNotificationBL().GetAllData();
@@ -154,7 +199,7 @@ public class FragmentNotifcation extends Fragment implements IXListViewListener{
 //                _tNotificationData.set_txtStatus("2");
 //                _tNotificationData.set_dtPublishEnd("shdshk");
 //                _tNotificationData.set_txtDescription("dicoba");
-//                _tNotificationData.set_txtLink("com.kalbenutritionals.app.kalbespgmobile.FragmentNotifcation");
+//                _tNotificationData.set_txtLink("com.kalbenutritionals.app.kalbespgmobile.FragmentNotification");
 //
 //                List<tNotificationData> dtList = new ArrayList<>();
 //                dtList.add(_tNotificationData);
@@ -171,6 +216,18 @@ public class FragmentNotifcation extends Fragment implements IXListViewListener{
 //                getActivity().startService(serviceIntent);
 //            }
 //        });
+
+        if(idHeaderNotif!=null){
+            int index = 0;
+            List<tNotificationData> _data = new tNotificationBL().GetAllData();
+            for (tNotificationData dt : _data){
+                if(idHeaderNotif.equals(dt.get_guiID().toString())){
+                    viewList(getContext(), index);
+                    break;
+                }
+                index++;
+            }
+        }
 
         return v;
     }

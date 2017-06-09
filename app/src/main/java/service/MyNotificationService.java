@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -65,13 +66,14 @@ public class MyNotificationService extends Service{
 		    					e.printStackTrace();
 		    				}
 		     				Intent i = new Intent(getApplicationContext(), MainMenu.class);
-		     				i.putExtra("key_view", "Notifcation");
+		     				i.putExtra("key_view", "Notification");
 		    				i.putExtra(TAG_UUID, String.valueOf(dttNotificationData.get_guiID()));
+							i.setAction("notif");
 		     				int idn = Integer.parseInt(index);
 		     				
 							PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),idn, i, PendingIntent.FLAG_ONE_SHOT);
 
-							int icon = R.mipmap.ic_kalbe_phonegap;
+							int icon = R.drawable.ic_alert;
 							String tickerText = dttNotificationData.get_txtTitle();
 							long when = System.currentTimeMillis();
 							Notification tnotification = new Notification.Builder(MyNotificationService.this)
@@ -79,6 +81,8 @@ public class MyNotificationService extends Service{
 			                .setContentTitle(title)
 			                .setContentText(desc)
 			                .setSmallIcon(icon)
+									.setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(),
+											R.mipmap.ic_kalbe_phonegap))
 			                .setWhen(when)
 			                .setTicker(tickerText)
 			                .setPriority(Notification.PRIORITY_HIGH)

@@ -945,6 +945,7 @@ public class dataJson {
         resJson.put(Property_txtValue, getTxtValue());
         resJson.put(Property_txtSessionLoginId, get_txtSessionLoginId());
         resJson.put(Property_txtUserId, get_txtUserId());
+        resJson.put(Property_txtVersionApp, get_txtVersionApp());
         return resJson;
     }
 
@@ -1143,6 +1144,16 @@ public class dataJson {
         this._txtUserId = _txtUserId;
     }
 
+    public String get_txtVersionApp() {
+        return _txtVersionApp;
+    }
+
+    public void set_txtVersionApp(String _txtVersionApp) {
+        this._txtVersionApp = _txtVersionApp;
+    }
+
+    public String _txtVersionApp;
+
     private String Property_txtUserId = "txtUserId";
     private String Property_txtSessionLoginId = "txtSessionLoginId";
     public String Property_intResult = "intResult";
@@ -1150,6 +1161,7 @@ public class dataJson {
     public String Property_txtDescription = "txtDescription";
     public String Property_txtMethod = "txtMethod";
     public String Property_txtValue = "txtValue";
+    public String Property_txtVersionApp = "txtVesionApp";
 
     public List<tCustomerBasedMobileHeaderData> getListOftCustomerBasedMobileHeaderData() {
         return ListOftCustomerBasedMobileHeaderData;

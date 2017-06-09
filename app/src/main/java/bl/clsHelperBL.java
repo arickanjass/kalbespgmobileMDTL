@@ -8,14 +8,13 @@ import org.json.simple.parser.ParseException;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
 import library.salesforce.common.APIData;
-import library.salesforce.common.KoordinasiOutletData;
-import library.salesforce.common.KoordinasiOutletImageData;
 import library.salesforce.common.clsHelper;
 import library.salesforce.common.clsPushData;
 import library.salesforce.common.dataJson;
@@ -29,6 +28,7 @@ import library.salesforce.common.tCustomerBasedMobileDetailProductData;
 import library.salesforce.common.tCustomerBasedMobileHeaderData;
 import library.salesforce.common.tJawabanUserData;
 import library.salesforce.common.tLeaveMobileData;
+import library.salesforce.common.tNotificationData;
 import library.salesforce.common.tPurchaseOrderDetailData;
 import library.salesforce.common.tPurchaseOrderHeaderData;
 import library.salesforce.common.tSalesProductDetailData;
@@ -41,8 +41,6 @@ import library.salesforce.common.tVisitPlanHeader_MobileData;
 import library.salesforce.common.tVisitPlanRealisasiData;
 import library.salesforce.common.trackingLocationData;
 import library.salesforce.common.visitplanAbsenData;
-import library.salesforce.dal.KoordinasiOutletDA;
-import library.salesforce.dal.KoordinasiOutletImageDA;
 import library.salesforce.dal.clsHardCode;
 import library.salesforce.dal.enumConfigData;
 import library.salesforce.dal.enumCounterData;
@@ -322,7 +320,7 @@ public class clsHelperBL extends clsMainBL {
         _db.close();
     }
 
-    public clsPushData pushData() {
+    public clsPushData pushData(String versionName) {
         clsPushData dtclsPushData = new clsPushData();
         dataJson dtPush = new dataJson();
         SQLiteDatabase db = getDb();
@@ -330,6 +328,7 @@ public class clsHelperBL extends clsMainBL {
         HashMap<String, byte[]> FileUpload = null;
         if (_tUserLoginDA.getContactsCount(db) > 0) {
             tUserLoginData _tUserLoginData = _tUserLoginDA.getData(db, 1);
+            dtPush.set_txtVersionApp(versionName);
             dtPush.set_txtUserId(_tUserLoginData.get_txtUserId());
             dtPush.set_txtSessionLoginId(_tUserLoginData.get_txtDataId());
             try {
@@ -365,8 +364,6 @@ public class clsHelperBL extends clsMainBL {
             tCustomerBasedMobileDetailDA _tCustomerBasedMobileDetailDA = new tCustomerBasedMobileDetailDA(db);
             tCustomerBasedMobileDetailProductDA _tCustomerBasedMobileDetailProductDA = new tCustomerBasedMobileDetailProductDA(db);
             trackingLocationDA _trackingLocationDA = new trackingLocationDA(db);
-            KoordinasiOutletDA _KoordinasiOutletDA = new KoordinasiOutletDA(db);
-            KoordinasiOutletImageDA _KoordinasiOutletImageDA = new KoordinasiOutletImageDA(db);
 
             List<tVisitPlanHeader_MobileData> ListOftVisitPlanHeader_MobileData = _tVisitPlanHeader_MobileDA.getPushData(db);
             List<tVisitPlanRealisasiData> ListOftVisitPlanRealisasiDataDetail = _tVisitPlanRealisasiDA.getPushData(db);
@@ -383,8 +380,6 @@ public class clsHelperBL extends clsMainBL {
             List<tSalesProductQuantityDetailData> ListOfSalesProductQuantityDetail = _tSalesProductQuantityDetailDA.getAllDataToPushData(db, ListOfSalesProductQuantityHeader);
             List<tSalesProductQuantityImageData> ListOfSalesProductQuantityImage = _tSalesProductQuantityImageDA.getAllDataToPushData(db, ListOfSalesProductQuantityHeader);
             List<trackingLocationData> ListOfTrackingLocation = _trackingLocationDA.getAllDataToPushData(db);
-            List<KoordinasiOutletData> ListOfKoordinasiOutlet = _KoordinasiOutletDA.getAllDataToPushData(db);
-            List<KoordinasiOutletImageData> ListOfKoordinasiOutletImage = _KoordinasiOutletImageDA.getAllDataToPushData(db, ListOfKoordinasiOutlet);
             List<tLeaveMobileData> ListOftLeaveData=_tLeaveMobileDA.getAllDataPushData(db);
             List<tAbsenUserData> ListOftAbsenUserData = _tAbsenUserDA.getAllDataToPushData(db);
             List<tActivityData> ListOftActivityData = _tActivityDA.getAllDataToPushData(db);
@@ -427,19 +422,6 @@ public class clsHelperBL extends clsMainBL {
                         }
                         if (dttQuantityImageData.get_txtType().equals("Before") &&  dttQuantityImageData.get_intPosition().equals("2")) {
                             FileUpload.put("FUQTS" + dttQuantityImageData.get_txtId(), dttQuantityImageData.get_txtImage());
-                        }
-                    }
-                }
-            }
-            if (ListOfKoordinasiOutletImage != null){
-                dtPush.setListOfKoordinasiOutletImageData(ListOfKoordinasiOutletImage);
-                for (KoordinasiOutletImageData dttKoordinasiOutletImageData : ListOfKoordinasiOutletImage) {
-                    if (dttKoordinasiOutletImageData.get_txtImage() != null) {
-                        if (dttKoordinasiOutletImageData.get_intPosition().equals("1")) {
-                            FileUpload.put("FUKDO" + dttKoordinasiOutletImageData.get_txtId(), dttKoordinasiOutletImageData.get_txtImage());
-                        }
-                        if (dttKoordinasiOutletImageData.get_intPosition().equals("2")) {
-                            FileUpload.put("FUKDO" + dttKoordinasiOutletImageData.get_txtId(), dttKoordinasiOutletImageData.get_txtImage());
                         }
                     }
                 }
@@ -492,10 +474,6 @@ public class clsHelperBL extends clsMainBL {
 
             if (ListOfTrackingLocation != null){
                 dtPush.setListOfTrackingLocationData(ListOfTrackingLocation);
-            }
-
-            if (ListOfKoordinasiOutlet != null) {
-                dtPush.setListOfKoordinasiOutletData(ListOfKoordinasiOutlet);
             }
 
             if (ListOftCustomerBasedMobileHeader != null) {
@@ -612,14 +590,6 @@ public class clsHelperBL extends clsMainBL {
             }
         }
 
-        if (dtJson.getListOfKoordinasiOutletData() != null){
-            for (KoordinasiOutletData dt : dtJson.getListOfKoordinasiOutletData()){
-                KoordinasiOutletDA _KoordinasiOutletDA = new KoordinasiOutletDA(db);
-                dt.set_intSync("1");
-                _KoordinasiOutletDA.SaveDataKoordinasiOutlet(db, dt);
-            }
-        }
-
         if (dtJson.get_ListOftCustomerBasedMobileHeaderData() != null) {
             for (tCustomerBasedMobileHeaderData dt : dtJson.get_ListOftCustomerBasedMobileHeaderData()) {
                 tCustomerBasedMobileHeaderDA _tCustomerBasedMobileHeaderDA = new tCustomerBasedMobileHeaderDA(db);
@@ -627,6 +597,78 @@ public class clsHelperBL extends clsMainBL {
                 _tCustomerBasedMobileHeaderDA.SaveDatatCustomerBasedMobileHeaderData(db, dt);
             }
         }
+
+        Iterator j2 = null;
+        j2 = JsonResult.iterator();
+        while (j2.hasNext()) {
+            org.json.simple.JSONObject innerObj_Header = (org.json.simple.JSONObject) j2.next();
+            org.json.simple.JSONArray JsonArray_Detail = (JSONArray) innerObj_Header.get("ListOfTNotificationHeaderSPG_mobile");
+            if (JsonArray_Detail != null) {
+                tNotificationBL _tNotificationBL = new tNotificationBL();
+                List<tNotificationData> listDatatNotificationData = new ArrayList<tNotificationData>();
+                Iterator jDetail = JsonArray_Detail.iterator();
+                int index = _tNotificationBL.getContactsCount() + 1;
+                while (jDetail.hasNext()) {
+                    org.json.simple.JSONObject innerObj_Detail = (org.json.simple.JSONObject) jDetail.next();
+                    tNotificationData dttNotificationData = new tNotificationData();
+                    dttNotificationData.set_bitActive(String.valueOf(innerObj_Detail.get("_intActive")));
+                    dttNotificationData.set_dtPublishEnd(String.valueOf(innerObj_Detail.get("_dtEnd")));
+                    dttNotificationData.set_guiID(String.valueOf(innerObj_Detail.get("_txtIdHeaderNotif")));
+                    dttNotificationData.set_intIndex(String.valueOf(index));
+//                    dttNotificationData.set_intPriority(String.valueOf(innerObj_Detail.get("IntPriority")));
+                    dttNotificationData.set_intSubmit("1");
+                    dttNotificationData.set_intSync("1");
+                    dttNotificationData.set_tPublishStart(String.valueOf(innerObj_Detail.get("_dtStart")));
+                    dttNotificationData.set_txtBranchCode("");
+                    dttNotificationData.set_txtDescription(String.valueOf(innerObj_Detail.get("_txtDesc")));
+                    dttNotificationData.set_txtImage("");
+                    dttNotificationData.set_txtLink(String.valueOf(innerObj_Detail.get("_txtLinkFileAttach")));
+                    dttNotificationData.set_txtOutlet("");
+                    dttNotificationData.set_txtOutletName("");
+                    dttNotificationData.set_txtStatus("2");
+                    dttNotificationData.set_txtTitle(String.valueOf(innerObj_Detail.get("_txtTitle")));
+                    listDatatNotificationData.add(dttNotificationData);
+                    index += 1;
+                }
+                _tNotificationBL.saveData(listDatatNotificationData);
+            }
+        }
+
+//        Iterator j3 = null;
+//        j3 = JsonResult.iterator();
+//        while (j3.hasNext()) {
+//            org.json.simple.JSONObject innerObj_Header = (org.json.simple.JSONObject) j3.next();
+//            org.json.simple.JSONArray JsonArray_Detail = (JSONArray) innerObj_Header.get("ListOfTNotificationHeaderSPG_mobile");
+//            if (JsonArray_Detail != null) {
+//                tNotificationBL _tNotificationBL = new tNotificationBL();
+//                List<tNotificationData> listDatatNotificationData = new ArrayList<tNotificationData>();
+//                Iterator jDetail = JsonArray_Detail.iterator();
+//                int index = _tNotificationBL.getContactsCount() + 1;
+//                while (jDetail.hasNext()) {
+//                    org.json.simple.JSONObject innerObj_Detail = (org.json.simple.JSONObject) jDetail.next();
+//                    tNotificationData dttNotificationData = new tNotificationData();
+//                    dttNotificationData.set_bitActive(String.valueOf(innerObj_Detail.get("_intActive")));
+//                    dttNotificationData.set_dtPublishEnd(String.valueOf(innerObj_Detail.get("_dtEnd")));
+//                    dttNotificationData.set_guiID(String.valueOf(innerObj_Detail.get("_txtIdHeaderNotif")));
+//                    dttNotificationData.set_intIndex(String.valueOf(index));
+////                    dttNotificationData.set_intPriority(String.valueOf(innerObj_Detail.get("IntPriority")));
+//                    dttNotificationData.set_intSubmit("1");
+//                    dttNotificationData.set_intSync("1");
+//                    dttNotificationData.set_tPublishStart(String.valueOf(innerObj_Detail.get("_dtStart")));
+//                    dttNotificationData.set_txtBranchCode("");
+//                    dttNotificationData.set_txtDescription(String.valueOf(innerObj_Detail.get("_txtDesc")));
+//                    dttNotificationData.set_txtImage("");
+//                    dttNotificationData.set_txtLink(String.valueOf(innerObj_Detail.get("_txtLinkFileAttach")));
+//                    dttNotificationData.set_txtOutlet("");
+//                    dttNotificationData.set_txtOutletName("");
+//                    dttNotificationData.set_txtStatus("2");
+//                    dttNotificationData.set_txtTitle(String.valueOf(innerObj_Detail.get("_txtTitle")));
+//                    listDatatNotificationData.add(dttNotificationData);
+//                    index += 1;
+//                }
+//                _tNotificationBL.saveData(listDatatNotificationData);
+//            }
+//        }
 
         db.close();
     }

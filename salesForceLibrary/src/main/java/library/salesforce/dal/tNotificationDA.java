@@ -68,6 +68,7 @@ public class tNotificationDA {
 					+ String.valueOf(data.get_intSubmit()) + "','"
 					+ String.valueOf(data.get_intSync()) + "','"
 					+ String.valueOf(data.get_intPriority()) + "')");
+			db.close();
 		}
 		public void DeleteAllData(SQLiteDatabase db) {
 			db.execSQL("DELETE FROM " + TABLE_CONTACTS );
@@ -267,7 +268,17 @@ public class tNotificationDA {
 						// return count
 						return num;
 					}
-					
+	public void InsertDefaultMconfig(SQLiteDatabase db) {
+		String txtQuery = "insert into mconfig(guiID,intIndex,tPublishStart,dtPublishEnd,bitActive,txtTitle,txtDescription,txtImage,txtLink,txtOutlet,txtOutletName,txtBranchCode,intPriority,txtStatus,dtUpdate,intSubmit,intSubmit,intSync )"
+				+ "select  1,'android:versionCode','5','5',1;";
+		db.execSQL(txtQuery);
+		txtQuery = "insert into mconfig(intId,txtName,txtValue,txtDefaultValue,intEditAdmin )"
+				+ "select  2,'API','http://10.171.11.69/webdashboard/api/api.aspx?callback=?','https://appgw01.kalbenutritionals.com/kndashboard/api/default.aspx?callback=?',1;";
+		db.execSQL(txtQuery);
+		txtQuery = "insert into mconfig(intId,txtName,txtValue,txtDefaultValue,intEditAdmin )"
+				+ "select  3,'Type Mobile','SPGMobile-Android','SPGMobile-Android',1;";
+		db.execSQL(txtQuery);
+	}
 					
 }
 

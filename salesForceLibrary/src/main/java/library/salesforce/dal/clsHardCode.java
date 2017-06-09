@@ -22,6 +22,7 @@ public class clsHardCode  {
 	public String txtVersion="1";
 	public String txtTable_mConfig = "mconfig";
 	public String txtTable_tNotification = "tNotification";
+	public String txtTable_clsFileAttach_mobile = "clsFileAttach_mobile";
 	public String txtTable_mEmployeeBranch = "mEmployeeBranch";
 	public String txtTable_mEmployeeArea = "mEmployeeArea";
 	public String txtTable_mBrosurMobile = "mBrosurMobile";
