@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.UUID;
 
 import library.salesforce.common.APIData;
+import library.salesforce.common.KoordinasiOutletData;
+import library.salesforce.common.KoordinasiOutletImageData;
 import library.salesforce.common.clsHelper;
 import library.salesforce.common.clsStatusMenuStart;
 import library.salesforce.common.dataJson;
@@ -32,6 +34,8 @@ import library.salesforce.common.tSalesProductQuantityImageData;
 import library.salesforce.common.tUserLoginData;
 import library.salesforce.common.tVisitPlanRealisasiData;
 import library.salesforce.common.trackingLocationData;
+import library.salesforce.dal.KoordinasiOutletDA;
+import library.salesforce.dal.KoordinasiOutletImageDA;
 import library.salesforce.dal.clsHardCode;
 import library.salesforce.dal.enumConfigData;
 import library.salesforce.dal.enumStatusMenuStart;
@@ -344,6 +348,43 @@ public class clsMainBL {
 					if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)){
 						dataHeader.set_intSync("1");
 						_trackingLocationDA.SaveDataTrackingLocation(_db, dataHeader);
+					}
+				}
+			}
+		}
+
+		dtlinkAPI = new linkAPI();
+		txtMethod = "PushDataKoordinasiOutlet";
+		dtlinkAPI.set_txtMethod(txtMethod);
+		dtlinkAPI.set_txtParam("");
+		dtlinkAPI.set_txtToken(new clsHardCode().txtTokenAPI);
+		dtlinkAPI.set_txtMethod(VersionName);
+		strLinkAPI = dtlinkAPI.QueryString(_StrLINKAPI);
+
+		KoordinasiOutletDA _KoordinasiOutletDA = new KoordinasiOutletDA(_db);
+		List<KoordinasiOutletData> ListDataKoordinasiOutlet = _KoordinasiOutletDA.getAllDataToPushData(_db);
+		if (ListDataKoordinasiOutlet != null) {
+			for (KoordinasiOutletData dataHeader : ListDataKoordinasiOutlet) {
+				dataJson Json = new dataJson();
+				List<KoordinasiOutletData> tmpListDataKoordinasiOutletData = new ArrayList<KoordinasiOutletData>();
+				tmpListDataKoordinasiOutletData.add(dataHeader);
+
+				KoordinasiOutletImageDA _KoordinasiOutletImageDA = new KoordinasiOutletImageDA(_db);
+				List<KoordinasiOutletImageData> tmpListKoordinasiOutletImage = _KoordinasiOutletImageDA.getDataHeaderId(_db, dataHeader.get_intId());
+				if (tmpListKoordinasiOutletImage != null) {
+					Json.setListOfKoordinasiOutletImageData(tmpListKoordinasiOutletImage);
+				}
+				Json.setListOfKoordinasiOutletData(tmpListDataKoordinasiOutletData);
+				String Html = new clsHelper().pushtData(strLinkAPI, Json.txtJSON().toString(), Integer.valueOf(TimeOut));
+				org.json.simple.JSONArray JsonArray = _help.ResultJsonArray(Html);
+				Iterator i = JsonArray.iterator();
+				while (i.hasNext()){
+					APIData dtAPIDATA = new APIData();
+					JSONObject InnerObj = (JSONObject) i.next();
+					int boolValid = Integer.valueOf(String.valueOf(InnerObj.get(dtAPIDATA.boolValid)));
+					if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)){
+						dataHeader.set_intSync("1");
+						_KoordinasiOutletDA.SaveDataKoordinasiOutlet(_db, dataHeader);
 					}
 				}
 			}

@@ -14,6 +14,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import library.salesforce.common.APIData;
+import library.salesforce.common.KoordinasiOutletData;
+import library.salesforce.common.KoordinasiOutletImageData;
 import library.salesforce.common.clsHelper;
 import library.salesforce.common.clsPushData;
 import library.salesforce.common.dataJson;
@@ -39,6 +41,8 @@ import library.salesforce.common.tVisitPlanHeader_MobileData;
 import library.salesforce.common.tVisitPlanRealisasiData;
 import library.salesforce.common.trackingLocationData;
 import library.salesforce.common.visitplanAbsenData;
+import library.salesforce.dal.KoordinasiOutletDA;
+import library.salesforce.dal.KoordinasiOutletImageDA;
 import library.salesforce.dal.clsHardCode;
 import library.salesforce.dal.enumConfigData;
 import library.salesforce.dal.enumCounterData;
@@ -361,6 +365,8 @@ public class clsHelperBL extends clsMainBL {
             tCustomerBasedMobileDetailDA _tCustomerBasedMobileDetailDA = new tCustomerBasedMobileDetailDA(db);
             tCustomerBasedMobileDetailProductDA _tCustomerBasedMobileDetailProductDA = new tCustomerBasedMobileDetailProductDA(db);
             trackingLocationDA _trackingLocationDA = new trackingLocationDA(db);
+            KoordinasiOutletDA _KoordinasiOutletDA = new KoordinasiOutletDA(db);
+            KoordinasiOutletImageDA _KoordinasiOutletImageDA = new KoordinasiOutletImageDA(db);
 
             List<tVisitPlanHeader_MobileData> ListOftVisitPlanHeader_MobileData = _tVisitPlanHeader_MobileDA.getPushData(db);
             List<tVisitPlanRealisasiData> ListOftVisitPlanRealisasiDataDetail = _tVisitPlanRealisasiDA.getPushData(db);
@@ -377,6 +383,8 @@ public class clsHelperBL extends clsMainBL {
             List<tSalesProductQuantityDetailData> ListOfSalesProductQuantityDetail = _tSalesProductQuantityDetailDA.getAllDataToPushData(db, ListOfSalesProductQuantityHeader);
             List<tSalesProductQuantityImageData> ListOfSalesProductQuantityImage = _tSalesProductQuantityImageDA.getAllDataToPushData(db, ListOfSalesProductQuantityHeader);
             List<trackingLocationData> ListOfTrackingLocation = _trackingLocationDA.getAllDataToPushData(db);
+            List<KoordinasiOutletData> ListOfKoordinasiOutlet = _KoordinasiOutletDA.getAllDataToPushData(db);
+            List<KoordinasiOutletImageData> ListOfKoordinasiOutletImage = _KoordinasiOutletImageDA.getAllDataToPushData(db, ListOfKoordinasiOutlet);
             List<tLeaveMobileData> ListOftLeaveData=_tLeaveMobileDA.getAllDataPushData(db);
             List<tAbsenUserData> ListOftAbsenUserData = _tAbsenUserDA.getAllDataToPushData(db);
             List<tActivityData> ListOftActivityData = _tActivityDA.getAllDataToPushData(db);
@@ -419,6 +427,19 @@ public class clsHelperBL extends clsMainBL {
                         }
                         if (dttQuantityImageData.get_txtType().equals("Before") &&  dttQuantityImageData.get_intPosition().equals("2")) {
                             FileUpload.put("FUQTS" + dttQuantityImageData.get_txtId(), dttQuantityImageData.get_txtImage());
+                        }
+                    }
+                }
+            }
+            if (ListOfKoordinasiOutletImage != null){
+                dtPush.setListOfKoordinasiOutletImageData(ListOfKoordinasiOutletImage);
+                for (KoordinasiOutletImageData dttKoordinasiOutletImageData : ListOfKoordinasiOutletImage) {
+                    if (dttKoordinasiOutletImageData.get_txtImage() != null) {
+                        if (dttKoordinasiOutletImageData.get_intPosition().equals("1")) {
+                            FileUpload.put("FUKDO" + dttKoordinasiOutletImageData.get_txtId(), dttKoordinasiOutletImageData.get_txtImage());
+                        }
+                        if (dttKoordinasiOutletImageData.get_intPosition().equals("2")) {
+                            FileUpload.put("FUKDO" + dttKoordinasiOutletImageData.get_txtId(), dttKoordinasiOutletImageData.get_txtImage());
                         }
                     }
                 }
@@ -471,6 +492,10 @@ public class clsHelperBL extends clsMainBL {
 
             if (ListOfTrackingLocation != null){
                 dtPush.setListOfTrackingLocationData(ListOfTrackingLocation);
+            }
+
+            if (ListOfKoordinasiOutlet != null) {
+                dtPush.setListOfKoordinasiOutletData(ListOfKoordinasiOutlet);
             }
 
             if (ListOftCustomerBasedMobileHeader != null) {
@@ -584,6 +609,14 @@ public class clsHelperBL extends clsMainBL {
                 trackingLocationDA _trackingLocationDA = new trackingLocationDA(db);
                 dt.set_intSync("1");
                 _trackingLocationDA.SaveDataTrackingLocation(db, dt);
+            }
+        }
+
+        if (dtJson.getListOfKoordinasiOutletData() != null){
+            for (KoordinasiOutletData dt : dtJson.getListOfKoordinasiOutletData()){
+                KoordinasiOutletDA _KoordinasiOutletDA = new KoordinasiOutletDA(db);
+                dt.set_intSync("1");
+                _KoordinasiOutletDA.SaveDataKoordinasiOutlet(db, dt);
             }
         }
 

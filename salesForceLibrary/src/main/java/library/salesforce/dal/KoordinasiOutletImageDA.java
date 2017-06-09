@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import library.salesforce.common.KoordinasiOutletData;
 import library.salesforce.common.KoordinasiOutletImageData;
 
 /**
@@ -68,6 +69,38 @@ public class KoordinasiOutletImageDA {
                     contactList.add(contact);
                 } while (cursor.moveToNext());
             }
+        }
+        cursor.close();
+        return contactList;
+    }
+
+    public List<KoordinasiOutletImageData> getAllDataToPushData(SQLiteDatabase db, List<KoordinasiOutletData> ListOfKoordinasiOutlet){
+        List<KoordinasiOutletImageData> contactList = null;
+        KoordinasiOutletImageData dt = new KoordinasiOutletImageData();
+
+        String KoordinasiOutlet = "()";
+
+        if (ListOfKoordinasiOutlet != null){
+            KoordinasiOutlet = "(";
+            for (int i = 0; i < ListOfKoordinasiOutlet.size(); i++){
+                KoordinasiOutlet = KoordinasiOutlet + "'" + ListOfKoordinasiOutlet.get(i).get_intId() +"'";
+                KoordinasiOutlet = KoordinasiOutlet + ((i + 1) != ListOfKoordinasiOutlet.size() ? "," : ")");
+            }
+        }
+        String selectQuery = "SELECT "+dt.Property_All+" FROM " + TABLE_CONTACTS + " WHERE "+dt.Property_txtHeaderId+" IN " + KoordinasiOutlet;
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            contactList = new ArrayList<KoordinasiOutletImageData>();
+            do {
+                KoordinasiOutletImageData contact = new KoordinasiOutletImageData();
+                contact.set_txtId(cursor.getString(0));
+                contact.set_txtHeaderId(cursor.getString(1));
+                contact.set_txtImage(cursor.getBlob(2));
+                contact.set_intPosition(cursor.getString(3));
+                contactList.add(contact);
+            } while (cursor.moveToNext());
         }
         cursor.close();
         return contactList;
