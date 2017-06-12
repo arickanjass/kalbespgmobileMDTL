@@ -48,6 +48,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import bl.KoordinasiOutletBL;
 import bl.clsMainBL;
 import bl.mCategoryVisitPlanBL;
 import bl.mDownloadMasterData_mobileBL;
@@ -77,6 +78,8 @@ import bl.tVisitPlanHeader_MobileBL;
 import bl.tVisitPlanRealisasiBL;
 import bl.trackingLocationBL;
 import library.salesforce.common.APIData;
+import library.salesforce.common.KoordinasiOutletData;
+import library.salesforce.common.KoordinasiOutletImageData;
 import library.salesforce.common.clsHelper;
 import library.salesforce.common.dataJson;
 import library.salesforce.common.mCategoryVisitPlanData;
@@ -109,6 +112,7 @@ import library.salesforce.common.tUserLoginData;
 import library.salesforce.common.tVisitPlanHeader_MobileData;
 import library.salesforce.common.tVisitPlanRealisasiData;
 import library.salesforce.common.trackingLocationData;
+import library.salesforce.dal.KoordinasiOutletImageDA;
 import library.salesforce.dal.clsHardCode;
 import library.salesforce.dal.tPurchaseOrderDetailDA;
 import library.salesforce.dal.tSalesProductDetailDA;
@@ -203,7 +207,6 @@ public class FragmentDownloadData extends Fragment {
         ll_absen = (LinearLayout) v.findViewById(R.id.ll_absen);
         ll_purchase_order = (LinearLayout) v.findViewById(R.id.ll_purchase_order);
         ll_data_leave = (LinearLayout) v.findViewById(R.id.ll_data_leave);
-        ll_kordinasi_outlet = (LinearLayout) v.findViewById(R.id.ll_kordinasi_outlet);
 
         spnVisitPlan = (Spinner) v.findViewById(R.id.spnVisitPlan);
         spnTrVisitPlan = (Spinner) v.findViewById(R.id.spnTrVisitPlan);
@@ -258,8 +261,8 @@ public class FragmentDownloadData extends Fragment {
             @Override
             public void onClick(View v) {
                 intProcesscancel = 0;
-//                AsyncCallKordinasiOutlet task = new AsyncCallKordinasiOutlet();
-//                task.execute();
+                AsyncCallDataKoordinasiOutlet task = new AsyncCallDataKoordinasiOutlet();
+                task.execute();
             }
         });
 
@@ -417,6 +420,7 @@ public class FragmentDownloadData extends Fragment {
         List<tPurchaseOrderHeaderData> listPurchaseOrderHeaderData = new tPurchaseOrderHeaderBL().getAllPurchaseOrderHeader();
         List<tSalesProductQuantityHeaderData> listQuantityStockHeaderData = new tSalesProductQuantityHeaderBL().getAllSalesQuantityHeader();
         List<trackingLocationData> listtrackingLocationData = new trackingLocationBL().getAllDataTrackingLocation();
+        List<KoordinasiOutletData> listKoordinasiOutletData = new KoordinasiOutletBL().getAllKoordinasiOutletData();
 
         arrData = new ArrayList<String>();
         if (listDataBranch.size() > 0) {
@@ -602,6 +606,20 @@ public class FragmentDownloadData extends Fragment {
         }
 
         arrData = new ArrayList<String>();
+        if (listKoordinasiOutletData != null) {
+            for (KoordinasiOutletData dt : listKoordinasiOutletData) {
+                arrData.add(dt.get_txtKeterangan());
+            }
+            spnKordinasiOutlet.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
+            spnKordinasiOutlet.setEnabled(true);
+        } else if (listKoordinasiOutletData == null) {
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<String>(getContext(),
+                    android.R.layout.simple_spinner_item, strip);
+            spnKordinasiOutlet.setAdapter(adapterspn);
+            spnKordinasiOutlet.setEnabled(false);
+        }
+
+        arrData = new ArrayList<String>();
         if (listtAbsenUserData != null) {
             for (tLeaveMobileData dt : listtLeaveData) {
                 arrData.add(dt.get_txtTypeAlasanName());
@@ -739,9 +757,15 @@ public class FragmentDownloadData extends Fragment {
 
                 Json = new trackingLocationBL().DownloadTrackingLocation(pInfo.versionName);
                 Iterator l = Json.iterator();
-                org.json.simple.JSONObject innerObj_trackingLocation = (org.json.simple.JSONObject) k.next();
+                org.json.simple.JSONObject innerObj_trackingLocation = (org.json.simple.JSONObject) l.next();
                 int boolValid_trackingLocation = Integer.valueOf(String.valueOf(innerObj_trackingLocation.get("_pboolValid")));
                 if (boolValid_trackingLocation == 1) SaveDataTrackingLocationData(Json);
+
+                Json = new KoordinasiOutletBL().DownloadDataKoordinasiOutlet(pInfo.versionName);
+                Iterator m = Json.iterator();
+                org.json.simple.JSONObject innerObj_koordinasiOutlet = (org.json.simple.JSONObject) m.next();
+                int boolValid_koordinasiOutlet = Integer.valueOf(String.valueOf(innerObj_koordinasiOutlet.get("_pboolValid")));
+                if (boolValid_koordinasiOutlet == 1) SaveDataKoordinasiOutletData(Json);
 
                 if(ll_activity!=null && ll_activity.getVisibility() == View.VISIBLE){
                     Json = new tActivityBL().DownloadActivity(pInfo.versionName);
@@ -1976,6 +2000,63 @@ public class FragmentDownloadData extends Fragment {
         }
     }
 
+    private class AsyncCallDataKoordinasiOutlet extends AsyncTask<JSONArray, Void, JSONArray> {
+        @Override
+        protected JSONArray doInBackground(JSONArray... params) {
+            JSONArray Json = null;
+            try {
+                Json = new KoordinasiOutletBL().DownloadDataKoordinasiOutlet(pInfo.versionName);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return Json;
+        }
+        private ProgressDialog dialog = new ProgressDialog(getContext());
+
+        @Override
+        protected void onCancelled() {
+            dialog.dismiss();
+            new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessCancelRequest, false);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog.setMessage("Getting Data Koordinasi Outlet");
+            dialog.setCancelable(false);
+            dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    intProcesscancel = 1;
+                }
+            });
+            dialog.show();
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray jsonArray) {
+            if (jsonArray != null && jsonArray.size() > 0){
+                arrData = SaveDataKoordinasiOutletData(jsonArray);
+                loadData();
+                new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
+            } else {
+                if (intProcesscancel == 1){
+                    onCancelled();
+                } else {
+                    new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
+                }
+            }
+            checkingDataTable();
+            dialog.dismiss();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+            dialog.dismiss();
+        }
+    }
+
     private class AsyncCallDataLeave extends AsyncTask<JSONArray, Void, JSONArray> {
         @Override
         protected JSONArray doInBackground(JSONArray... params) {
@@ -2783,6 +2864,70 @@ public class FragmentDownloadData extends Fragment {
                     }
                 }
             } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return _array;
+    }
+
+    private List<String> SaveDataKoordinasiOutletData(JSONArray jsonArray){
+        List<String> _array;
+        APIData dtAPIDATA = new APIData();
+        _array = new ArrayList<>();
+        Iterator i = jsonArray.iterator();
+        Boolean flag = true;
+        String ErrorMess = "";
+        List<KoordinasiOutletData> listDataHeader = new ArrayList<>();
+        while (i.hasNext()){
+            JSONObject innerObj = (JSONObject) i.next();
+            try {
+                JSONArray jsonArray_header = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListKoordinasiOutlet_mobile")));
+                if (jsonArray_header != null) {
+                    Iterator j = jsonArray_header.iterator();
+                    while (j.hasNext()){
+                        KoordinasiOutletData _data = new KoordinasiOutletData();
+                        JSONObject innerObj_header = (JSONObject) j.next();
+                        _data.set_intId(String.valueOf(innerObj_header.get("IntId")));
+                        _data.set_dtDate(String.valueOf(innerObj_header.get("DtDate")));
+                        _data.set_txtKeterangan(String.valueOf(innerObj_header.get("TxtKeterangan")));
+                        _data.set_txtUserId(String.valueOf(innerObj_header.get("TxtUserId")));
+                        _data.set_txtUsername(String.valueOf(innerObj_header.get("TxtUsername")));
+                        _data.set_txtRoleId(String.valueOf(innerObj_header.get("TxtRoleId")));
+                        _data.set_txtOutletCode(String.valueOf(innerObj_header.get("TxtOutletCode")));
+                        _data.set_txtOutletName(String.valueOf(innerObj_header.get("TxtOutletName")));
+                        _data.set_txtBranchCode(String.valueOf(innerObj_header.get("TxtBranchCode")));
+                        _data.set_txtBranchName(String.valueOf(innerObj_header.get("TxtBranchName")));
+                        _data.set_txtNIK(String.valueOf(innerObj_header.get("TxtNIK")));
+                        _data.set_intSubmit("1");
+                        _data.set_intSync("1");
+                        new KoordinasiOutletBL().SaveDataKoordinasiOutlet(_data);
+                    }
+
+                    JSONArray jsonArray_Image = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListKoordinasiOutletImage_mobile")));
+                    Iterator l = jsonArray_Image.iterator();
+                    clsMainBL _clsMainBL_image = new clsMainBL();
+                    SQLiteDatabase _db_image = _clsMainBL_image.getDb();
+                    while (l.hasNext()) {
+                        KoordinasiOutletImageData _data = new KoordinasiOutletImageData();
+                        JSONObject innerObj_image = (JSONObject) l.next();
+                        _data.set_txtId(String.valueOf(innerObj_image.get("TxtId")));
+                        _data.set_txtHeaderId(String.valueOf(innerObj_image.get("TxtHeaderId")));
+                        _data.set_intPosition(String.valueOf(innerObj_image.get("IntPosition")));
+
+                        String url = String.valueOf(innerObj_image.get("TxtImage"));
+
+                        byte[] logoImage = getLogoImage(url);
+
+                        if (logoImage != null) {
+                            _data.set_txtImage(logoImage);
+                        }
+
+                        new KoordinasiOutletImageDA(_db_image).SaveDataImage(_db_image, _data);
+                    }
+                } else {
+                    new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
+                }
+            } catch (ParseException e){
                 e.printStackTrace();
             }
         }

@@ -85,6 +85,14 @@ public class KoordinasiOutletData {
         this._txtKeterangan = _txtKeterangan;
     }
 
+    public synchronized String get_txtNIK() {
+        return _txtNIK;
+    }
+
+    public synchronized void set_txtNIK(String _txtNIK) {
+        this._txtNIK = _txtNIK;
+    }
+
     public synchronized String get_intSubmit() {
         return _intSubmit;
     }
@@ -111,6 +119,7 @@ public class KoordinasiOutletData {
     private String _txtOutletName;
     private String _txtBranchCode;
     private String _txtBranchName;
+    private String _txtNIK;
     private String _intSubmit;
     private String _intSync;
 
@@ -124,6 +133,7 @@ public class KoordinasiOutletData {
     public String Property_txtOutletName = "txtOutletName";
     public String Property_txtBranchCode = "txtBranchCode";
     public String Property_txtBranchName = "txtBranchName";
+    public String Property_txtNIK = "txtNIK";
     public String Property_intSubmit = "intSubmit";
     public String Property_intSync = "intSync";
     public String Property_ListOfKoordinasiOutlet = "ListOfKoordinasiOutletData";
@@ -137,6 +147,7 @@ public class KoordinasiOutletData {
             Property_txtOutletName + "," +
             Property_txtBranchCode + "," +
             Property_txtBranchName + "," +
+            Property_txtNIK + "," +
             Property_intSubmit + "," +
             Property_intSync;
 

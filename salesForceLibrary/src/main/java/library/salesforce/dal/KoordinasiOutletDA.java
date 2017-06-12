@@ -33,6 +33,7 @@ public class KoordinasiOutletDA {
                 + dt.Property_txtOutletName + " TEXT NULL,"
                 + dt.Property_txtBranchCode + " TEXT NULL,"
                 + dt.Property_txtBranchName + " TEXT NULL,"
+                + dt.Property_txtNIK + " TEXT NULL,"
                 + dt.Property_intSubmit + " TEXT NULL,"
                 + dt.Property_intSync + " TEXT NULL" + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
@@ -57,6 +58,7 @@ public class KoordinasiOutletDA {
         cv.put(dt.Property_txtOutletName, String.valueOf(data.get_txtOutletName()));
         cv.put(dt.Property_txtBranchCode, String.valueOf(data.get_txtBranchCode()));
         cv.put(dt.Property_txtBranchName, String.valueOf(data.get_txtBranchName()));
+        cv.put(dt.Property_txtNIK, String.valueOf(data.get_txtNIK()));
         cv.put(dt.Property_intSubmit, String.valueOf(data.get_intSubmit()));
         cv.put(dt.Property_intSync, String.valueOf(data.get_intSync()));
         if (data.get_intId() == null){
@@ -97,8 +99,9 @@ public class KoordinasiOutletDA {
                 contact.set_txtOutletName(cursor.getString(7));
                 contact.set_txtBranchCode(cursor.getString(8));
                 contact.set_txtBranchName(cursor.getString(9));
-                contact.set_intSubmit(cursor.getString(10));
-                contact.set_intSync(cursor.getString(11));
+                contact.set_txtNIK(cursor.getString(10));
+                contact.set_intSubmit(cursor.getString(11));
+                contact.set_intSync(cursor.getString(12));
                 contactList.add(contact);
             } while (cursor.moveToNext());
         }
@@ -111,7 +114,7 @@ public class KoordinasiOutletDA {
         Cursor cursor = db.query(TABLE_CONTACTS, new String[] {
                 dt.Property_intId, dt.Property_dtDate, dt.Property_txtKeterangan, dt.Property_txtUserId,
                 dt.Property_txtUsername, dt.Property_txtRoleId, dt.Property_txtOutletCode, dt.Property_txtOutletName,
-                dt.Property_txtBranchCode, dt.Property_txtBranchName, dt.Property_intSubmit, dt.Property_intSync},
+                dt.Property_txtBranchCode, dt.Property_txtBranchName, dt.Property_txtNIK, dt.Property_intSubmit, dt.Property_intSync},
                 dt.Property_intId + "=?", new String[] { String.valueOf(id) },
                 null, null, null, null);
         if (cursor != null)
@@ -128,8 +131,9 @@ public class KoordinasiOutletDA {
             contact.set_txtOutletName(cursor.getString(7));
             contact.set_txtBranchCode(cursor.getString(8));
             contact.set_txtBranchName(cursor.getString(9));
-            contact.set_intSubmit(cursor.getString(10));
-            contact.set_intSync(cursor.getString(11));
+            contact.set_txtNIK(cursor.getString(10));
+            contact.set_intSubmit(cursor.getString(11));
+            contact.set_intSync(cursor.getString(12));
         } else {
             contact = null;
         }
@@ -158,8 +162,9 @@ public class KoordinasiOutletDA {
                 contact.set_txtOutletName(cursor.getString(7));
                 contact.set_txtBranchCode(cursor.getString(8));
                 contact.set_txtBranchName(cursor.getString(9));
-                contact.set_intSubmit(cursor.getString(10));
-                contact.set_intSync(cursor.getString(11));
+                contact.set_txtNIK(cursor.getString(10));
+                contact.set_intSubmit(cursor.getString(11));
+                contact.set_intSync(cursor.getString(12));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -191,8 +196,9 @@ public class KoordinasiOutletDA {
                 contact.set_txtOutletName(cursor.getString(7));
                 contact.set_txtBranchCode(cursor.getString(8));
                 contact.set_txtBranchName(cursor.getString(9));
-                contact.set_intSubmit(cursor.getString(10));
-                contact.set_intSync(cursor.getString(11));
+                contact.set_txtNIK(cursor.getString(10));
+                contact.set_intSubmit(cursor.getString(11));
+                contact.set_intSync(cursor.getString(12));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());

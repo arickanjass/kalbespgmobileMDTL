@@ -203,6 +203,7 @@ public class FragmentAddKoordinasi extends Fragment implements View.OnClickListe
                                             koordinasiOutletData.set_txtOutletName(absenUserData.get_txtOutletName());
                                             koordinasiOutletData.set_txtBranchCode(absenUserData.get_txtBranchCode());
                                             koordinasiOutletData.set_txtBranchName(absenUserData.get_txtBranchName());
+                                            koordinasiOutletData.set_txtNIK(dataUserActive.get_TxtEmpId());
                                             koordinasiOutletData.set_intSubmit("1");
                                             koordinasiOutletData.set_intSync("0");
                                             new KoordinasiOutletBL().SaveDataKoordinasiOutlet(koordinasiOutletData);

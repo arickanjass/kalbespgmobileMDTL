@@ -612,6 +612,7 @@ public class dataJson {
                     item.put(dtKoordinasiOutletData.Property_txtOutletName, String.valueOf(data.get_txtOutletName()));
                     item.put(dtKoordinasiOutletData.Property_txtBranchCode, String.valueOf(data.get_txtBranchCode()));
                     item.put(dtKoordinasiOutletData.Property_txtBranchName, String.valueOf(data.get_txtBranchName()));
+                    item.put(dtKoordinasiOutletData.Property_txtNIK, String.valueOf(data.get_txtNIK()));
                     item.put(dtKoordinasiOutletData.Property_intSubmit, String.valueOf(data.get_intSubmit()));
                     item.put(dtKoordinasiOutletData.Property_intSync, String.valueOf(data.get_intSync()));
                     itemsListJquey.add(item);
