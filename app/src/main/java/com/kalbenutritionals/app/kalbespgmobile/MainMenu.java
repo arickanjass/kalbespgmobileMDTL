@@ -329,6 +329,8 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                                     public void onClick(DialogInterface dialog, int id) {
                                         stopService(new Intent(getApplicationContext(), MyServiceNative.class));
                                         stopService(new Intent(getApplicationContext(), MyTrackingLocationService.class));
+                                        MyTrackingLocationService service = new MyTrackingLocationService();
+                                        service.shutdownService();
                                         AsyncCallLogOut task = new AsyncCallLogOut();
                                         task.execute();
                                         //new clsHelperBL().DeleteAllDB();
