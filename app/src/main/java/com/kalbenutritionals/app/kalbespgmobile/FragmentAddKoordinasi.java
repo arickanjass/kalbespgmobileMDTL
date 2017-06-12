@@ -106,7 +106,8 @@ public class FragmentAddKoordinasi extends Fragment implements View.OnClickListe
         final tAbsenUserData absenUserData = new tAbsenUserBL().getDataCheckInActive();
         final tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
         final int index = new KoordinasiOutletBL().getContactCount() + 1;
-        txtHDId.setText(String.valueOf(index));
+//        txtHDId.setText(String.valueOf(index));
+        txtHDId.setText(String.valueOf(new clsMainActivity().GenerateGuid()));
 
         dtKoordinasi = new KoordinasiOutletData();
         dtKoordinasiImage = new KoordinasiOutletImageData();
