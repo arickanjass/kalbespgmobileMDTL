@@ -3,15 +3,10 @@ package com.kalbenutritionals.app.kalbespgmobile;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.Matrix;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -26,14 +21,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Spinner;
-import android.widget.TabHost;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -115,7 +108,8 @@ public class FragmentKuesioner extends Fragment {
                 //ini buat nyimpen widget di dalam list array di View
                 for (int i = 0; i < listDataPertanyaan.size(); i++) {
                     if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("5")) {
-                        linearLayout = (LinearLayout) v.findViewById(Integer.parseInt(HMPertanyaan.get(dataPertanyaan.get(i))));
+//                        linearLayout = (LinearLayout) v.findViewById(Integer.parseInt(HMPertanyaan.get(dataPertanyaan.get(i))));
+                        linearLayout = (LinearLayout) v.findViewById(i + 1);
                         for (int x = 0; x < linearLayout.getChildCount(); x++) {
                             View nextChild = linearLayout.getChildAt(x);
                             if (nextChild instanceof TextView) {
@@ -128,13 +122,16 @@ public class FragmentKuesioner extends Fragment {
                         }
                         listAnswer.add(linearLayout);
                     } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("1")) {
-                        spinner = (Spinner) v.findViewById(Integer.parseInt(HMPertanyaan.get(dataPertanyaan.get(i))));
+//                        spinner = (Spinner) v.findViewById(Integer.parseInt(HMPertanyaan.get(dataPertanyaan.get(i))));
+                        spinner = (Spinner) v.findViewById(i + 1);
                         listAnswer.add(spinner);
                     } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("3")) {
-                        etTestGet = (EditText) v.findViewById(Integer.parseInt(HMPertanyaan.get(dataPertanyaan.get(i))));
+//                        etTestGet = (EditText) v.findViewById(Integer.parseInt(HMPertanyaan.get(dataPertanyaan.get(i))));
+                        etTestGet = (EditText) v.findViewById(i + 1);
                         listAnswer.add(etTestGet);
                     } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("2")) {
-                        listView = (ListView) v.findViewById(Integer.parseInt(HMPertanyaan.get(dataPertanyaan.get(i))));
+//                        listView = (ListView) v.findViewById(Integer.parseInt(HMPertanyaan.get(dataPertanyaan.get(i))));
+                        listView = (ListView) v.findViewById(i + 1);
                         for (int x = 0; x < listView.getChildCount(); x++) {
                             View nextChild = listView.getChildAt(x);
                             if (nextChild instanceof CheckBox) {
@@ -143,7 +140,8 @@ public class FragmentKuesioner extends Fragment {
                         }
                         listAnswer.add(listView);
                     } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("6")) {
-                        rgTestGet = (RadioGroup) v.findViewById(Integer.parseInt(HMPertanyaan.get(dataPertanyaan.get(i))));
+//                        rgTestGet = (RadioGroup) v.findViewById(Integer.parseInt(HMPertanyaan.get(dataPertanyaan.get(i))));
+                        rgTestGet = (RadioGroup) v.findViewById(i + 1);
                         listAnswer.add(rgTestGet);
                     } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("4")) {
                         layoutDate = (LinearLayout) v.findViewById(Integer.parseInt(HMPertanyaan.get(dataPertanyaan.get(i))));
@@ -180,7 +178,7 @@ public class FragmentKuesioner extends Fragment {
                     if (jawaban instanceof LinearLayout) {
                         tabLayout.getTabAt(i).setCustomView(null);
                         LinearLayout layout = (LinearLayout) jawaban;
-                        if (layout == linearLayout){
+                        if (layout == linearLayout) {
                             for (int x = 0; x < linearLayout.getChildCount(); x++) {
                                 View nextChild = linearLayout.getChildAt(x);
                                 if (nextChild instanceof TextView) {
@@ -193,8 +191,8 @@ public class FragmentKuesioner extends Fragment {
                                     }
                                 }
                             }
-                        } else if (layout == layoutDate){
-                            for (int y = 0; y <layoutDate.getChildCount() ; y++){
+                        } else if (layout == layoutDate) {
+                            for (int y = 0; y < layoutDate.getChildCount(); y++) {
                                 View nextChild = layoutDate.getChildAt(y);
                                 if (nextChild instanceof EditText) {
                                     //ini masih ada bug
@@ -299,6 +297,7 @@ public class FragmentKuesioner extends Fragment {
                             SaveQuiz();
                             _clsMainActivity.showCustomToast(getActivity(), "Saved", true);
                             Intent myIntent = new Intent(getContext(), MainMenu.class);
+                            getActivity().finish();
                             startActivity(myIntent);
                         }
                     });
