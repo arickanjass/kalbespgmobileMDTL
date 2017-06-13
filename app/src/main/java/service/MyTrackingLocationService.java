@@ -234,7 +234,7 @@ public class MyTrackingLocationService extends Service implements GoogleApiClien
         mHandlerTask.run();
     }
 
-    private void shutdownService() {
+    public void shutdownService() {
         if (timer != null) timer.cancel();
         Log.i(getClass().getSimpleName(), "Timer stopped...");
     }
