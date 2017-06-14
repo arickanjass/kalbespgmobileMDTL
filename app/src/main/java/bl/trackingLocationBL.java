@@ -81,4 +81,10 @@ public class trackingLocationBL extends clsMainBL {
         return jsonArray;
 
     }
+
+    public int getContactCount() {
+        SQLiteDatabase db = getDb();
+        trackingLocationDA _trackingLocationDA = new trackingLocationDA(db);
+        return _trackingLocationDA.getContactsCount(db);
+    }
 }

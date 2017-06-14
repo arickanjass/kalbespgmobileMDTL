@@ -101,6 +101,14 @@ public class trackingLocationData {
         this._txtNIK = _txtNIK;
     }
 
+    public synchronized String get_intSequence() {
+        return _intSequence;
+    }
+
+    public synchronized void set_intSequence(String _intSequence) {
+        this._intSequence = _intSequence;
+    }
+
     public synchronized String get_intSubmit() {
         return _intSubmit;
     }
@@ -129,6 +137,7 @@ public class trackingLocationData {
     private String _txtBranchCode;
     private String _txtOutletCode;
     private String _txtNIK;
+    private String _intSequence;
     private String _intSubmit;
     private String _intSync;
 
@@ -144,6 +153,7 @@ public class trackingLocationData {
     public String Property_txtBranchCode = "txtBranchCode";
     public String Property_txtOutletCode = "txtOutletCode";
     public String Property_txtNIK = "txtNIK";
+    public String Property_intSequence = "intSequence";
     public String Property_intSubmit = "intSubmit";
     public String Property_intSync = "intSync";
     public String Property_ListOftrackingLocation = "ListOfTrackingLocationData";
@@ -159,6 +169,7 @@ public class trackingLocationData {
             Property_txtBranchCode + "," +
             Property_txtOutletCode + "," +
             Property_txtNIK + "," +
+            Property_intSequence + "," +
             Property_intSubmit + "," +
             Property_intSync;
 
@@ -169,7 +180,7 @@ public class trackingLocationData {
     public trackingLocationData(String _intId, String _txtLongitude, String _txtLatitude, String _txtAccuracy,
                                 String _txtTime, String _txtUserId, String _txtUsername, String _txtRoleId,
                                 String _txtDeviceId, String _txtBranchCode, String _txtOutletCode, String _txtNIK,
-                                String _intSubmit, String _intSync) {
+                                String _intSequence, String _intSubmit, String _intSync) {
         this._intId = _intId;
         this._txtLongitude = _txtLongitude;
         this._txtLatitude = _txtLatitude;
@@ -182,6 +193,7 @@ public class trackingLocationData {
         this._txtBranchCode = _txtBranchCode;
         this._txtOutletCode = _txtOutletCode;
         this._txtNIK = _txtNIK;
+        this._intSequence = _intSequence;
         this._intSubmit = _intSubmit;
         this._intSync = _intSync;
     }
