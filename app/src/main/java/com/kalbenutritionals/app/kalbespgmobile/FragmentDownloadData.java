@@ -2858,6 +2858,7 @@ public class FragmentDownloadData extends Fragment {
                         _data.set_txtBranchCode(String.valueOf(innerObj_header.get("TxtBranchCode")));
                         _data.set_txtOutletCode(String.valueOf(innerObj_header.get("TxtOutletCode")));
                         _data.set_txtNIK(String.valueOf(innerObj_header.get("TxtNIK")));
+                        _data.set_intSequence(String.valueOf(innerObj_header.get("IntSequence")));
                         _data.set_intSubmit("1");
                         _data.set_intSync("1");
                         new trackingLocationBL().SaveDataTrackingLocation(_data);

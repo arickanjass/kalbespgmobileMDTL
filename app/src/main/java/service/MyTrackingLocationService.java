@@ -31,8 +31,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import bl.clsMainBL;
-import bl.tAbsenUserBL;
 import bl.tUserLoginBL;
 import bl.trackingLocationBL;
 import library.salesforce.common.mCounterNumberData;
@@ -197,26 +195,58 @@ public class MyTrackingLocationService extends Service implements GoogleApiClien
 
         trackingLocationData dataLocation = new trackingLocationData();
         tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
-        tUserLoginData _tUserLoginData = new tUserLoginData();
-//        java.text.DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-//        Calendar cal = Calendar.getInstance();
+        final int index = new trackingLocationBL().getContactCount() + 1;
 
-        dataLocation.set_intId(new clsMainActivity().GenerateGuid());
-        dataLocation.set_txtLongitude(String.valueOf(mLastLocation.getLongitude()));
-        dataLocation.set_txtLatitude(String.valueOf(mLastLocation.getLongitude()));
-        dataLocation.set_txtAccuracy(String.valueOf(mLastLocation.getAccuracy()));
-        dataLocation.set_txtUserId(dataUserActive.get_txtUserId());
-        dataLocation.set_txtUsername(dataUserActive.get_txtUserName());
-        dataLocation.set_txtRoleId(dataUserActive.get_txtRoleId());
-        dataLocation.set_txtDeviceId(dataUserActive.get_txtDeviceId());
-        dataLocation.set_txtBranchCode(dataUserActive.get_txtBranchCode());
-        dataLocation.set_txtNIK(dataUserActive.get_TxtEmpId());
-        dataLocation.set_intSubmit("1");
-        dataLocation.set_intSync("0");
+        if (new trackingLocationBL().getContactCount() == 0) {
+            if (dataUserActive != null) {
+                dataLocation.set_intId(new clsMainActivity().GenerateGuid());
+                dataLocation.set_txtLongitude(String.valueOf(mLastLocation.getLongitude()));
+                dataLocation.set_txtLatitude(String.valueOf(mLastLocation.getLongitude()));
+                dataLocation.set_txtAccuracy(String.valueOf(mLastLocation.getAccuracy()));
+                dataLocation.set_txtUserId(dataUserActive.get_txtUserId());
+                dataLocation.set_txtUsername(dataUserActive.get_txtUserName());
+                dataLocation.set_txtRoleId(dataUserActive.get_txtRoleId());
+                dataLocation.set_txtDeviceId(dataUserActive.get_txtDeviceId());
+                dataLocation.set_txtBranchCode(dataUserActive.get_txtBranchCode());
+                dataLocation.set_txtNIK(dataUserActive.get_TxtEmpId());
+                dataLocation.set_intSequence(String.valueOf(index));
+                dataLocation.set_intSubmit("1");
+                dataLocation.set_intSync("0");
 
-        List<trackingLocationData> dtList = new ArrayList<>();
-        dtList.add(dataLocation);
-        new trackingLocationBL().SaveDataLocation(dtList);
+                List<trackingLocationData> dtList = new ArrayList<>();
+                dtList.add(dataLocation);
+                new trackingLocationBL().SaveDataLocation(dtList);
+            } else {
+                shutdownService();
+            }
+        }
+        else {
+            int data = 0;
+            List<trackingLocationData> listtrackingLocationData = new trackingLocationBL().getAllDataTrackingLocation();
+            data = Integer.valueOf(listtrackingLocationData.get(0).get_intSequence());
+
+            if (dataUserActive != null) {
+                dataLocation.set_intId(new clsMainActivity().GenerateGuid());
+                dataLocation.set_txtLongitude(String.valueOf(mLastLocation.getLongitude()));
+                dataLocation.set_txtLatitude(String.valueOf(mLastLocation.getLongitude()));
+                dataLocation.set_txtAccuracy(String.valueOf(mLastLocation.getAccuracy()));
+                dataLocation.set_txtUserId(dataUserActive.get_txtUserId());
+                dataLocation.set_txtUsername(dataUserActive.get_txtUserName());
+                dataLocation.set_txtRoleId(dataUserActive.get_txtRoleId());
+                dataLocation.set_txtDeviceId(dataUserActive.get_txtDeviceId());
+                dataLocation.set_txtBranchCode(dataUserActive.get_txtBranchCode());
+                dataLocation.set_txtNIK(dataUserActive.get_TxtEmpId());
+                dataLocation.set_intSequence(String.valueOf(data + 1));
+                dataLocation.set_intSubmit("1");
+                dataLocation.set_intSync("0");
+
+                List<trackingLocationData> dtList = new ArrayList<>();
+                dtList.add(dataLocation);
+                new trackingLocationBL().SaveDataLocation(dtList);
+            } else {
+                shutdownService();
+            }
+        }
 
         return mLastLocation;
     }

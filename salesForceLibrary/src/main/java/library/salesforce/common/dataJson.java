@@ -590,6 +590,7 @@ public class dataJson {
                     item1.put(dtTrackingLocationData.Property_txtBranchCode, String.valueOf(data.get_txtBranchCode()));
                     item1.put(dtTrackingLocationData.Property_txtOutletCode, String.valueOf(data.get_txtOutletCode()));
                     item1.put(dtTrackingLocationData.Property_txtNIK, String.valueOf(data.get_txtNIK()));
+                    item1.put(dtTrackingLocationData.Property_intSequence, String.valueOf(data.get_intSequence()));
                     item1.put(dtTrackingLocationData.Property_intSubmit, String.valueOf(data.get_intSubmit()));
                     item1.put(dtTrackingLocationData.Property_intSync, String.valueOf(data.get_intSync()));
                     itemsListJquey.add(item1);

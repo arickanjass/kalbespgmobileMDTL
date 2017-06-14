@@ -37,6 +37,7 @@ public class trackingLocationDA {
                 + dt.Property_txtBranchCode + " TEXT NULL,"
                 + dt.Property_txtOutletCode + " TEXT NULL,"
                 + dt.Property_txtNIK + " TEXT NULL,"
+                + dt.Property_intSequence + " TEXT NULL,"
                 + dt.Property_intSubmit + " TEXT NULL,"
                 + dt.Property_intSync + " TEXT NULL" + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
@@ -63,6 +64,7 @@ public class trackingLocationDA {
         cv.put(dt.Property_txtBranchCode, String.valueOf(data.get_txtBranchCode()));
         cv.put(dt.Property_txtOutletCode, String.valueOf(data.get_txtOutletCode()));
         cv.put(dt.Property_txtNIK, String.valueOf(data.get_txtNIK()));
+        cv.put(dt.Property_intSequence, String.valueOf(data.get_intSequence()));
         cv.put(dt.Property_intSubmit, String.valueOf(data.get_intSubmit()));
         cv.put(dt.Property_intSync, String.valueOf(data.get_intSync()));
         if (data.get_intId() == null){
@@ -87,6 +89,7 @@ public class trackingLocationDA {
         cv.put(dt.Property_txtBranchCode, String.valueOf(data.get_txtBranchCode()));
         cv.put(dt.Property_txtOutletCode, String.valueOf(data.get_txtOutletCode()));
         cv.put(dt.Property_txtNIK, String.valueOf(data.get_txtNIK()));
+        cv.put(dt.Property_intSequence, String.valueOf(data.get_intSequence()));
         cv.put(dt.Property_intSubmit, String.valueOf(data.get_intSubmit()));
         cv.put(dt.Property_intSync, String.valueOf(data.get_intSync()));
         if (data.get_intId() == null){
@@ -121,8 +124,9 @@ public class trackingLocationDA {
                 contact.set_txtBranchCode(cursor.getString(9));
                 contact.set_txtOutletCode(cursor.getString(10));
                 contact.set_txtNIK(cursor.getString(11));
-                contact.set_intSubmit(cursor.getString(12));
-                contact.set_intSync(cursor.getString(13));
+                contact.set_intSequence(cursor.getString(12));
+                contact.set_intSubmit(cursor.getString(13));
+                contact.set_intSync(cursor.getString(14));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -156,8 +160,9 @@ public class trackingLocationDA {
                 contact.set_txtBranchCode(cursor.getString(9));
                 contact.set_txtOutletCode(cursor.getString(10));
                 contact.set_txtNIK(cursor.getString(11));
-                contact.set_intSubmit(cursor.getString(12));
-                contact.set_intSync(cursor.getString(13));
+                contact.set_intSequence(cursor.getString(12));
+                contact.set_intSubmit(cursor.getString(13));
+                contact.set_intSync(cursor.getString(14));
 
                 // Adding contact to list
                 contactList.add(contact);
@@ -165,6 +170,17 @@ public class trackingLocationDA {
         }
         cursor.close();
         return contactList;
+    }
+
+    // Getting contacts Count
+    public int getContactsCount(SQLiteDatabase db) {
+        trackingLocationData dt = new trackingLocationData();
+        String countQuery = "SELECT * FROM " + TABLE_CONTACTS;
+//        String countSequence = "SELECT " + dt.Property_intSequence + " FROM " + TABLE_CONTACTS;
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int countData = cursor.getCount();
+        cursor.close();
+        return countData;
     }
 
 }
