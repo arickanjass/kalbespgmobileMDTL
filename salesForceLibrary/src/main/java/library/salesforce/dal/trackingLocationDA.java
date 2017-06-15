@@ -172,6 +172,43 @@ public class trackingLocationDA {
         return contactList;
     }
 
+    public List<trackingLocationData> getAllLastData(SQLiteDatabase db){
+        List<trackingLocationData> contactList = null;
+        // select query
+        trackingLocationData dt = new trackingLocationData();
+        String selectQuery = "SELECT " + dt.Property_All + " FROM " + TABLE_CONTACTS + " ORDER BY Time " ;
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToLast()) {
+            contactList = new ArrayList<trackingLocationData>();
+            do {
+                trackingLocationData contact = new trackingLocationData();
+                contact.set_intId(cursor.getString(0));
+                contact.set_txtLongitude(cursor.getString(1));
+                contact.set_txtLatitude(cursor.getString(2));
+                contact.set_txtAccuracy(cursor.getString(3));
+                contact.set_txtTime(cursor.getString(4));
+                contact.set_txtUserId(cursor.getString(5));
+                contact.set_txtUsername(cursor.getString(6));
+                contact.set_txtRoleId(cursor.getString(7));
+                contact.set_txtDeviceId(cursor.getString(8));
+                contact.set_txtBranchCode(cursor.getString(9));
+                contact.set_txtOutletCode(cursor.getString(10));
+                contact.set_txtNIK(cursor.getString(11));
+                contact.set_intSequence(cursor.getString(12));
+                contact.set_intSubmit(cursor.getString(13));
+                contact.set_intSync(cursor.getString(14));
+
+                // Adding contact to list
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return contactList;
+    }
+
     // Getting contacts Count
     public int getContactsCount(SQLiteDatabase db) {
         trackingLocationData dt = new trackingLocationData();

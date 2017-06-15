@@ -51,6 +51,14 @@ public class trackingLocationBL extends clsMainBL {
         return dt;
     }
 
+    public List<trackingLocationData> getAllLastData() {
+        SQLiteDatabase _db = getDb();
+        trackingLocationDA _trackingLocationDA = new trackingLocationDA(_db);
+        List<trackingLocationData> dt = _trackingLocationDA.getAllLastData(_db);
+        db.close();
+        return dt;
+    }
+
     public org.json.simple.JSONArray DownloadTrackingLocation(String versionName) throws Exception{
         SQLiteDatabase _db = getDb();
         tUserLoginDA _tUserLoginDA = new tUserLoginDA(_db);

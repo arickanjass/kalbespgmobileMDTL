@@ -222,7 +222,7 @@ public class MyTrackingLocationService extends Service implements GoogleApiClien
         }
         else {
             int data = 0;
-            List<trackingLocationData> listtrackingLocationData = new trackingLocationBL().getAllDataTrackingLocation();
+            List<trackingLocationData> listtrackingLocationData = new trackingLocationBL().getAllLastData();
             data = Integer.valueOf(listtrackingLocationData.get(0).get_intSequence());
 
             if (dataUserActive != null) {
