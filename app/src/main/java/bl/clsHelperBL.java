@@ -17,6 +17,7 @@ import java.util.List;
 import library.salesforce.common.APIData;
 import library.salesforce.common.KoordinasiOutletData;
 import library.salesforce.common.KoordinasiOutletImageData;
+import library.salesforce.common.clsFileAttach_mobile;
 import library.salesforce.common.clsHelper;
 import library.salesforce.common.clsPushData;
 import library.salesforce.common.dataJson;
@@ -667,41 +668,41 @@ public class clsHelperBL extends clsMainBL {
             }
         }
 
-//        Iterator j3 = null;
-//        j3 = JsonResult.iterator();
-//        while (j3.hasNext()) {
-//            org.json.simple.JSONObject innerObj_Header = (org.json.simple.JSONObject) j3.next();
-//            org.json.simple.JSONArray JsonArray_Detail = (JSONArray) innerObj_Header.get("ListOfTNotificationHeaderSPG_mobile");
-//            if (JsonArray_Detail != null) {
-//                tNotificationBL _tNotificationBL = new tNotificationBL();
-//                List<tNotificationData> listDatatNotificationData = new ArrayList<tNotificationData>();
-//                Iterator jDetail = JsonArray_Detail.iterator();
-//                int index = _tNotificationBL.getContactsCount() + 1;
-//                while (jDetail.hasNext()) {
-//                    org.json.simple.JSONObject innerObj_Detail = (org.json.simple.JSONObject) jDetail.next();
-//                    tNotificationData dttNotificationData = new tNotificationData();
-//                    dttNotificationData.set_bitActive(String.valueOf(innerObj_Detail.get("_intActive")));
-//                    dttNotificationData.set_dtPublishEnd(String.valueOf(innerObj_Detail.get("_dtEnd")));
-//                    dttNotificationData.set_guiID(String.valueOf(innerObj_Detail.get("_txtIdHeaderNotif")));
-//                    dttNotificationData.set_intIndex(String.valueOf(index));
-////                    dttNotificationData.set_intPriority(String.valueOf(innerObj_Detail.get("IntPriority")));
-//                    dttNotificationData.set_intSubmit("1");
-//                    dttNotificationData.set_intSync("1");
-//                    dttNotificationData.set_tPublishStart(String.valueOf(innerObj_Detail.get("_dtStart")));
-//                    dttNotificationData.set_txtBranchCode("");
-//                    dttNotificationData.set_txtDescription(String.valueOf(innerObj_Detail.get("_txtDesc")));
-//                    dttNotificationData.set_txtImage("");
-//                    dttNotificationData.set_txtLink(String.valueOf(innerObj_Detail.get("_txtLinkFileAttach")));
-//                    dttNotificationData.set_txtOutlet("");
-//                    dttNotificationData.set_txtOutletName("");
-//                    dttNotificationData.set_txtStatus("2");
-//                    dttNotificationData.set_txtTitle(String.valueOf(innerObj_Detail.get("_txtTitle")));
-//                    listDatatNotificationData.add(dttNotificationData);
-//                    index += 1;
-//                }
-//                _tNotificationBL.saveData(listDatatNotificationData);
-//            }
-//        }
+        Iterator j3 = null;
+        j3 = JsonResult.iterator();
+        while (j3.hasNext()) {
+            org.json.simple.JSONObject innerObj_Header = (org.json.simple.JSONObject) j3.next();
+            org.json.simple.JSONArray JsonArray_Detail = (JSONArray) innerObj_Header.get("ListOfTFileAttach_mobile");
+
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Calendar cal = Calendar.getInstance();
+
+            if (JsonArray_Detail != null) {
+                clsFileAttach_mobileBL _clsFileAttach_mobileBL = new clsFileAttach_mobileBL();
+                List<clsFileAttach_mobile> listDataclsFileAttach_mobile = new ArrayList<clsFileAttach_mobile>();
+                Iterator jDetail = JsonArray_Detail.iterator();
+                int index = _clsFileAttach_mobileBL.getContactsCount() + 1;
+                while (jDetail.hasNext()) {
+                    org.json.simple.JSONObject innerObj_Detail = (org.json.simple.JSONObject) jDetail.next();
+                    clsFileAttach_mobile dtclsFileAttach_mobile = new clsFileAttach_mobile();
+                    dtclsFileAttach_mobile.set_txtIdHeaderNotif(String.valueOf(innerObj_Detail.get("_txtIdHeaderNotif")));
+//                    dtclsFileAttach_mobile.set_byteInitialVector(String.valueOf(innerObj_Detail.get("_byteInitialVector")));
+                    dtclsFileAttach_mobile.set_txtIDFile(String.valueOf(innerObj_Detail.get("_txtIDFile")));
+                    dtclsFileAttach_mobile.set_dtInserted(String.valueOf(innerObj_Detail.get(dateFormat.format(cal.getTime()))));
+                    dtclsFileAttach_mobile.set_intSubmit("1");
+                    dtclsFileAttach_mobile.set_intSync("1");
+                    dtclsFileAttach_mobile.set_intActive("0");
+                    dtclsFileAttach_mobile.set_txtDesc(String.valueOf(innerObj_Detail.get("_txtDesc")));
+                    dtclsFileAttach_mobile.set_txtLinkFileAttach(String.valueOf(innerObj_Detail.get("_txtLinkFileAttach")));
+                    dtclsFileAttach_mobile.set_txtNameFileEncrypt(String.valueOf(innerObj_Detail.get("_txtNameFileEncrypt")));
+                    dtclsFileAttach_mobile.set_txtTypeFile(String.valueOf(innerObj_Detail.get("_txtTypeFile")));
+                    dtclsFileAttach_mobile.set_intStatus("RECEIVED");
+                    listDataclsFileAttach_mobile.add(dtclsFileAttach_mobile);
+                    index += 1;
+                }
+                _clsFileAttach_mobileBL.saveData(listDataclsFileAttach_mobile);
+            }
+        }
 
         db.close();
     }

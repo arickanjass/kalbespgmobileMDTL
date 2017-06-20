@@ -11,9 +11,11 @@ import java.util.List;
 import library.salesforce.common.APIData;
 import library.salesforce.common.clsHelper;
 import library.salesforce.common.linkAPI;
+import library.salesforce.common.mconfigData;
 import library.salesforce.common.tDeviceInfoUserData;
 import library.salesforce.common.tUserLoginData;
 import library.salesforce.dal.clsHardCode;
+import library.salesforce.dal.enumConfigData;
 import library.salesforce.dal.mconfigDA;
 import library.salesforce.dal.tDeviceInfoUserDA;
 import library.salesforce.dal.tUserLoginDA;
@@ -119,8 +121,15 @@ public class tUserLoginBL extends clsMainBL{
 		resJson.put("txtOutletCode", txtOutletCode);
 		resJson.put("txtOutletName", txtOutletName);
 		resJson.put("txtBranchCode", txtBranchCode);
+        mconfigData dataAPI = _mconfigDA.getData(db, enumConfigData.TypeMobile.getidConfigData());
+        String strVal2 = "";
+        strVal2 = dataAPI.get_txtValue();
+        if (dataAPI.get_txtValue() == "") {
+            strVal2 = dataAPI.get_txtDefaultValue();
+        }
+        resJson.put("TypeMobile", strVal2);
 		linkAPI dtlinkAPI=new linkAPI();
-		dtlinkAPI.set_txtMethod("GetDataMWebUserWithActiveDirectoryAndDatabaseNewInsentiveAndMenuAccess");
+		dtlinkAPI.set_txtMethod("GetDataMWebUserWithActiveDirectoryAndDatabaseNewInsentiveAndMenuAccessTypeMobile");
 		dtlinkAPI.set_txtParam("");
 		dtlinkAPI.set_txtToken(new clsHardCode().txtTokenAPI);
 		dtlinkAPI.set_txtVesion(versionApp);

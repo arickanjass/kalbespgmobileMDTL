@@ -99,6 +99,37 @@ public class clsFileAttach_mobileDA {
         return contact;
     }
 
+    public List<clsFileAttach_mobile> getDataByIdHeader(SQLiteDatabase db, String id) {
+        List<clsFileAttach_mobile> contactList = new ArrayList<clsFileAttach_mobile>();
+        clsFileAttach_mobile dt = new clsFileAttach_mobile();
+        String selectQuery = "SELECT  " + dt.PropertyAll + " FROM "
+                + TABLE_CONTACTS+" WHERE "+dt.Property_txtIdHeaderNotif+"='"+id+"'";;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            contactList=new ArrayList<clsFileAttach_mobile>();
+            do {
+                clsFileAttach_mobile contact = new clsFileAttach_mobile();
+                contact.set_txtIDFile(cursor.getString(0));
+                contact.set_txtIdHeaderNotif(cursor.getString(1));
+                contact.set_txtDesc(cursor.getString(2));
+                contact.set_byteInitialVector(cursor.getString(3));
+                contact.set_txtLinkFileAttach(cursor.getString(4));
+                contact.set_txtNameFileEncrypt(cursor.getString(5));
+                contact.set_txtTypeFile(cursor.getString(6));
+                contact.set_intActive(cursor.getString(7));
+                contact.set_dtInserted(cursor.getString(8));
+                contact.set_dtUpdated(cursor.getString(9));
+                contact.set_intSubmit(cursor.getString(10));
+                contact.set_intSync(cursor.getString(11));
+                contact.set_intStatus(cursor.getString(12));
+                // Adding contact to list
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return contactList;
+    }
+
     public List<clsFileAttach_mobile> getAllDataWillAlert(SQLiteDatabase db, String Status) {
         List<clsFileAttach_mobile> contactList = null;
         // Select All Query
