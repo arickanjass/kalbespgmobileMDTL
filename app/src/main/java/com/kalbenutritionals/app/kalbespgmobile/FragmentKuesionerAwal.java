@@ -31,18 +31,18 @@ public class FragmentKuesionerAwal extends Fragment {
     Button btn1, btn2;
     List<mKategoriData> kategoriDataList = new ArrayList<>();
     List<mPertanyaanData> pertanyaanDataList = new ArrayList<>();
+    List<mPertanyaanData> listPertanyaanbyQId = new ArrayList<>();
     List<String> dataPertanyaan;
     private LinearLayout lnBtn;
     final HashMap<String, String> HMPertanyaan = new HashMap<String, String>();
     List<Button> listButton = new ArrayList<Button>();
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_awal, container, false);
         lnBtn = (LinearLayout) v.findViewById(R.id.ln_quis_btn);
         kategoriDataList = new mKategoriBL().GetAllData();
-
+        int iterator = 0;
         for (int i = 0; i < kategoriDataList.size(); i++) {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
@@ -56,22 +56,26 @@ public class FragmentKuesionerAwal extends Fragment {
             btn2 = ((Button) v.findViewById(id_));
             listButton.add(btn2);
             final int finalJ = i;
+            final int kh = i+1;
+           listPertanyaanbyQId = new mPertanyaanBL().GetDataByCategoriId(kh);
+            final int h = iterator ;
             listButton.get(i).setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
                     final int a = listButton.get(finalJ).getId();
-                    final int b = 0;
                     pertanyaanDataList = new mPertanyaanBL().GetDataByCategoriId(a);
                     Bundle bundle = new Bundle();
-                    String c = pertanyaanDataList.get(b).get_intQuestionId();
-                    int d = Integer.parseInt(c) - 1;
-                    bundle.putInt("key_view", d);
-                    FragmentKuesioner fragmentKuesioner = new FragmentKuesioner();
-                    fragmentKuesioner.setArguments(bundle);
-                    FragmentTransaction fragmentTransactionkuesioner = getFragmentManager().beginTransaction();
-                    fragmentTransactionkuesioner.replace(R.id.frame, fragmentKuesioner);
-                    fragmentTransactionkuesioner.commit();
+                    //String c = pertanyaanDataList.get(b).get_intQuestionId();
+                   // dataPertanyaan.add(c);
+                        bundle.putInt("key_view", h);
+                        FragmentKuesioner fragmentKuesioner = new FragmentKuesioner();
+                        fragmentKuesioner.setArguments(bundle);
+                        FragmentTransaction fragmentTransactionkuesioner = getFragmentManager().beginTransaction();
+                        fragmentTransactionkuesioner.replace(R.id.frame, fragmentKuesioner);
+                        fragmentTransactionkuesioner.commit();
+                   // int d = Integer.parseInt(c) - 1;
                 }
             });
+            iterator = iterator + listPertanyaanbyQId.size();
         }
         return v;
     }

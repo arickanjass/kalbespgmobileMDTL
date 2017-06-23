@@ -1877,7 +1877,6 @@ public class FragmentDownloadData extends Fragment {
         protected void onPostExecute(JSONArray jsonArray) {
             if (jsonArray != null && jsonArray.size() > 0){
                 arrData = SaveDatatPurchaseOrderData(jsonArray);
-                arrData = SaveDataQuesioner(jsonArray);
                 loadData();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
@@ -2635,6 +2634,7 @@ public class FragmentDownloadData extends Fragment {
                         _data.set_intTypeQuestionId(String.valueOf(innerObj_Pertanyaan.get("IntTypeQuestionId")));
                         _data.set_decBobot(String.valueOf(innerObj_Pertanyaan.get("DecBobot")));
                         _data.set_bolHaveAnswerList(String.valueOf(innerObj_Pertanyaan.get("BolHaveAnswerList")));
+                        _data .set_inttGroupQuestionMapping(String.valueOf(innerObj_Pertanyaan.get("InttGroupQuestionMapping")));
                         new mPertanyaanBL().SaveData(_data);
                     }
 
