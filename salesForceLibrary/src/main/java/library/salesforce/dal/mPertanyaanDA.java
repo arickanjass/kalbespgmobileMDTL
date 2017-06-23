@@ -19,8 +19,8 @@ public class mPertanyaanDA {
     public mPertanyaanDA(SQLiteDatabase db){
         mPertanyaanData dt = new mPertanyaanData();
         String CREATE_CONTACTS_TABLE = "CREATE TABLE IF NOT EXISTS "
-                + TABLE_CONTACTS + "( " + dt.Property_intQuestionId + " INTEGER PRIMARY KEY," + dt.Property_intCategoryId + " TEXT NULL," + dt.Property_txtQuestionDesc + " TEXT NULL,"
-                + dt.Property_intTypeQuestionId + " TEXT NULL," + dt.Property_decBobot + " TEXT NULL," + dt.Property_bolHaveAnswerList + " TEXT NULL)";
+                + TABLE_CONTACTS + "( " + dt.Property_intQuestionId + " TEXT PRIMARY KEY," + dt.Property_intCategoryId + " TEXT NULL," + dt.Property_txtQuestionDesc + " TEXT NULL,"
+                + dt.Property_intTypeQuestionId + " TEXT NULL," + dt.Property_decBobot + " TEXT NULL," + dt.Property_bolHaveAnswerList + " TEXT NULL," + dt.Property_inttGroupQuestionMapping + " TEXT NULL)";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
     public void DropTable(SQLiteDatabase db){
@@ -34,13 +34,15 @@ public class mPertanyaanDA {
                 + dt.Property_txtQuestionDesc + ","
                 + dt.Property_intTypeQuestionId + ","
                 + dt.Property_decBobot + ","
-                + dt.Property_bolHaveAnswerList + ") " + "values('"
+                + dt.Property_bolHaveAnswerList + ","
+                + dt.Property_inttGroupQuestionMapping + ") " + "values('"
                 + String.valueOf(data.get_intQuestionId()) + "','"
                 + String.valueOf(data.get_intCategoryId()) + "','"
                 + String.valueOf(data.get_txtQuestionDesc()) + "','"
                 + String.valueOf(data.get_intTypeQuestionId()) + "','"
                 + String.valueOf(data.get_decBobot()) + "','"
-                + String.valueOf(data.get_bolHaveAnswerList()) + "')");
+                + String.valueOf(data.get_bolHaveAnswerList()) + "','"
+                + String.valueOf(data.get_inttGroupQuestionMapping()) + "')");
     }
     public void DeleteAllDatamPertanyaan(SQLiteDatabase db){
         db.execSQL("DELETE FROM " + TABLE_CONTACTS);
@@ -48,7 +50,7 @@ public class mPertanyaanDA {
     public List<mPertanyaanData> GetAllData(SQLiteDatabase db){
         List<mPertanyaanData> contactList = new ArrayList<mPertanyaanData>();
         mPertanyaanData dt = new mPertanyaanData();
-        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " ORDER BY intQuestionId ASC";
+        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " ORDER BY intCategoryId ASC";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()){
             do {
@@ -59,6 +61,7 @@ public class mPertanyaanDA {
                 contact.set_intTypeQuestionId(cursor.getString(3));
                 contact.set_decBobot(cursor.getString(4));
                 contact.set_bolHaveAnswerList(cursor.getString(5));
+                contact.set_inttGroupQuestionMapping(cursor.getString(6));
                 contactList.add(contact);
             }while (cursor.moveToNext());
         }
@@ -69,7 +72,7 @@ public class mPertanyaanDA {
     public List<mPertanyaanData> GetDataBYCategory(SQLiteDatabase db, int categoryId){
         List<mPertanyaanData> contactList = new ArrayList<mPertanyaanData>();
         mPertanyaanData dt = new mPertanyaanData();
-        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intCategoryId + "='" + categoryId +"' ORDER BY intQuestionId ASC";
+        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intCategoryId + "='" + categoryId +"' ORDER BY intCategoryId ASC";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()){
             do {
