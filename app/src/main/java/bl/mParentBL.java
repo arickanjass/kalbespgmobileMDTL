@@ -7,6 +7,7 @@ import org.json.simple.JSONObject;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import library.salesforce.common.clsHelper;
@@ -50,12 +51,16 @@ public class mParentBL extends clsMainBL{
         if (dataApi.get_txtValue() == ""){
             strVal2 = dataApi.get_txtDefaultValue();
         }
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        String dateNow = dateFormat.format(date);
+
         tUserLoginData _tUserLoginData = _tUserLoginDA.getData(db, 1);
         clsHelper _help = new clsHelper();
         linkAPI dtLinkAPI = new linkAPI();
         String txtMethod = "GetDataQuesioner_mobile";
         dtLinkAPI.set_txtMethod(txtMethod);
-        dtLinkAPI.set_txtParam(_tUserLoginData.get_txtRoleId());
+        dtLinkAPI.set_txtParam("|" + _tUserLoginData.get_txtRoleId() + "|" + dateNow);
         dtLinkAPI.set_txtToken(new clsHardCode().txtTokenAPI);
         dtLinkAPI.set_txtVesion(versionName);
         String strLinkAPI = dtLinkAPI.QueryString(strVal2);
