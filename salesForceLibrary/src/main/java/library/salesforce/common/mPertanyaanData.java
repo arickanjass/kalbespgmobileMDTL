@@ -11,6 +11,15 @@ public class mPertanyaanData {
     private String _intTypeQuestionId;
     private String _decBobot;
     private String _bolHaveAnswerList;
+    private String _inttGroupQuestionMapping;
+
+    public synchronized String get_inttGroupQuestionMapping() {
+        return _inttGroupQuestionMapping;
+    }
+
+    public synchronized void set_inttGroupQuestionMapping(String _inttGroupQuestionMapping) {
+        this._inttGroupQuestionMapping = _inttGroupQuestionMapping;
+    }
 
     public synchronized String get_intQuestionId() {
         return _intQuestionId;
@@ -66,8 +75,9 @@ public class mPertanyaanData {
     public String Property_decBobot = "decBobot";
     public String Property_bolHaveAnswerList = "bolHaveAnswerList";
     public String Property_ListOfmPertanyaanData = "ListOfmPertanyaanData";
+    public String Property_inttGroupQuestionMapping = "inttGroupQuestionMapping";
     public String Property_All = Property_intQuestionId + "," + Property_intCategoryId + "," + Property_txtQuestionDesc + "," + Property_intTypeQuestionId
-            + "," + Property_decBobot + "," + Property_bolHaveAnswerList;
+            + "," + Property_decBobot + "," + Property_bolHaveAnswerList + "," + Property_inttGroupQuestionMapping ;
     public mPertanyaanData(){
         super();
     }
