@@ -27,4 +27,10 @@ public class mTypePertanyaanBL extends clsMainBL{
         List<mTypePertanyaanData> dt = _mTypePertanyaanDA.GetAllData(_db);
         return dt;
     }
+
+    public void DeletemTypePertanyaan(){
+        SQLiteDatabase _db = getDb();
+        mTypePertanyaanDA _mTypePertanyaanDA = new mTypePertanyaanDA(_db);
+        _mTypePertanyaanDA.DeleteAllDatamTypePertanyaan(_db);
+    }
 }

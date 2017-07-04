@@ -19,6 +19,7 @@ public class mPertanyaanBL extends clsMainBL {
         mPertanyaanDA _mPertanyaanDA = new mPertanyaanDA(_db);
         _mPertanyaanDA.SaveDatamPertanyaan(_db, dt);
     }
+
     public List<mPertanyaanData> GetAllData(){
         SQLiteDatabase _db = getDb();
         mPertanyaanDA _mPertanyaanDA = new mPertanyaanDA(db);
@@ -31,5 +32,11 @@ public class mPertanyaanBL extends clsMainBL {
         mPertanyaanDA _mPertanyaanDA = new mPertanyaanDA(_db);
         List<mPertanyaanData> dt = _mPertanyaanDA.GetDataBYCategory(_db,categoriId);
         return dt;
+    }
+
+    public void DeletemPertanyaan(){
+        SQLiteDatabase _db = getDb();
+        mPertanyaanDA _mPertanyaanDA = new mPertanyaanDA(_db);
+        _mPertanyaanDA.DeleteAllDatamPertanyaan(_db) ;
     }
 }

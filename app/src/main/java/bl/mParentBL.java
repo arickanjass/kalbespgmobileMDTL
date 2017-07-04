@@ -32,7 +32,6 @@ public class mParentBL extends clsMainBL{
         SQLiteDatabase _db = getDb();
         mParentDA _mParentDA = new mParentDA(_db);
         _mParentDA.SaveDatamParent(_db, dt);
-
     }
     public List<mParentData> GetAllData(){
         SQLiteDatabase _db = getDb();
@@ -41,6 +40,14 @@ public class mParentBL extends clsMainBL{
         db.close();
         return listData;
     }
+
+    public void DeletemParent(){
+        SQLiteDatabase _db = getDb();
+        mParentDA _mParentDA = new mParentDA(_db);
+        _mParentDA.DeleteAllDatamParent(_db);
+
+    }
+
     public JSONArray DownlaodDataQuesioner(String versionName) throws Exception{
         SQLiteDatabase _db = getDb();
         tUserLoginDA _tUserLoginDA = new tUserLoginDA(_db);

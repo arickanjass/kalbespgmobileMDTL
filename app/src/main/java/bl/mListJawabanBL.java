@@ -32,4 +32,10 @@ public class mListJawabanBL extends clsMainBL {
         List<mListJawabanData> dt = _mListJawabanDA.GetDataByTypeQuestion(_db, typeId, qId);
         return dt;
     }
+
+    public void DeletemListJawaban(){
+        SQLiteDatabase _db = getDb();
+        mListJawabanDA _mListJawabanDA = new mListJawabanDA(_db);
+        _mListJawabanDA.DeleteAllDatamListJawaban(_db) ;
+    }
 }

@@ -26,4 +26,10 @@ public class mKategoriBL extends clsMainBL {
         List<mKategoriData> dt = _mKategoriDA.GetAllData(_db);
         return dt;
     }
+
+    public void DeletemKategori(){
+        SQLiteDatabase _db = getDb();
+        mKategoriDA _mKategoriDA = new mKategoriDA(db);
+        _mKategoriDA.DeleteAllDatamKategori(_db) ;
+    }
 }

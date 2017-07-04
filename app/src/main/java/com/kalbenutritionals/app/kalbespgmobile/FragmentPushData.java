@@ -36,6 +36,7 @@ import bl.tAbsenUserBL;
 import bl.tNotificationBL;
 import bl.tUserLoginBL;
 import come.example.viewbadger.ShortcutBadger;
+import library.salesforce.common.APIData;
 import library.salesforce.common.KoordinasiOutletData;
 import library.salesforce.common.clsPushData;
 import library.salesforce.common.dataJson;
@@ -924,7 +925,22 @@ public class FragmentPushData extends Fragment {
 
                 try {
                     JSONArray Jresult= new clsHelperBL().callPushDataReturnJson(versionName,dtJson.getDtdataJson().txtJSON().toString(),dtJson.getFileUpload());
-                    new clsHelperBL().deleteDataPush(dtJson.getDtdataJson(),Jresult);
+                    Iterator iterator = Jresult.iterator();
+                    Boolean flag = true;
+                    String errorMess = "";
+                    APIData dtAPIDATA = new APIData();
+                    while (iterator.hasNext()){
+                        org.json.JSONObject innerObj = (org.json.JSONObject)iterator.next();
+                        int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
+                        if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)){
+                            new clsHelperBL().deleteDataPush(dtJson.getDtdataJson(), Jresult);
+                        } else {
+                            flag = false;
+                            errorMess = (String) innerObj.get(dtAPIDATA.strMessage);
+                            break;
+                        }
+                    }
+                    //new clsHelperBL().deleteDataPush(dtJson.getDtdataJson(),Jresult);
                 }catch (Exception e3){
                     e3.printStackTrace();
                 }
