@@ -16,6 +16,7 @@ import com.kalbenutritionals.app.kalbespgmobile.MainMenu;
 import com.kalbenutritionals.app.kalbespgmobile.R;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.json.simple.JSONArray;
 
 import java.text.DateFormat;
@@ -23,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -31,6 +33,7 @@ import bl.clsHelperBL;
 import bl.clsMainBL;
 import bl.tNotificationBL;
 import come.example.viewbadger.ShortcutBadger;
+import library.salesforce.common.APIData;
 import library.salesforce.common.clsPushData;
 import library.salesforce.common.dataJson;
 import library.salesforce.common.mCounterNumberData;
@@ -111,7 +114,21 @@ public class MyServiceNative extends Service{
     		try {
     			JSONArray JsonArrayResult=new clsHelperBL().callPushDataReturnJson(versionName,dtJson.getDtdataJson().txtJSON().toString(),dtJson.getFileUpload());
 				new clsHelperBL().saveDataPush(dtJson.getDtdataJson(),JsonArrayResult);
-				new clsHelperBL().deleteDataPush(dtJson.getDtdataJson(), JsonArrayResult);
+				Iterator iterator = JsonArrayResult.iterator();
+				Boolean flag = true;    
+				String errorMess = "";
+				APIData dtAPIDATA = new APIData();
+				while (iterator.hasNext()){
+					JSONObject innerObj = (JSONObject)iterator.next();
+					int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
+					if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)){
+						new clsHelperBL().deleteDataPush(dtJson.getDtdataJson(), JsonArrayResult);
+					} else {
+						flag = false;
+						errorMess = (String) innerObj.get(dtAPIDATA.strMessage);
+						break;
+					}
+				}
 //				Intent serviceIntent = new Intent(this,MyNotificationService.class);
 //				serviceIntent.putExtra("From", "PUSHDATA");
 //				startService(serviceIntent);
