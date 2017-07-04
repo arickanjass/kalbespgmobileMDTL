@@ -960,6 +960,9 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                     fragmentTransaction.replace(R.id.frame, fragment);
                     fragmentTransaction.commit();
                     selectedId = 99;
+
+                    NotificationManager tnotificationManager=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+                    tnotificationManager.cancelAll();
                 }
             }
         }

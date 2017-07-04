@@ -855,4 +855,18 @@ public class clsMainActivity extends Activity {
         plainText = cipher.doFinal(plainText);
         return plainText;
     }
+
+    public String convertDateToText(String dateTime){
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        DateFormat outputFormat = new SimpleDateFormat("KK:mm a");
+
+        String outputDtFormat = "";
+
+        try {
+            outputDtFormat = outputFormat.format(inputFormat.parse(dateTime));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return outputDtFormat;
+    }
 }

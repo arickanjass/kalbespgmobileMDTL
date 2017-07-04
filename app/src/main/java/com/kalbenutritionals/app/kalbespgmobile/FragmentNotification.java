@@ -37,6 +37,9 @@ import java.net.URL;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -147,83 +150,7 @@ public class FragmentNotification extends Fragment implements IXListViewListener
             }
         });
 
-        List<tNotificationData> listNotifikasi = new tNotificationBL().GetAllData();
-
-        dt = new tNotificationBL().GetAllData();
-
-        swipeList.clear();
-
-        arrData=new ArrayList<String>();
-        rowItems = new ArrayList<clsRowItem>();
-        if(listNotifikasi!=null){
-
-            rowItems = new ArrayList<clsRowItem>();
-            for(tNotificationData dt :listNotifikasi ){
-                String status = String.valueOf(dt.get_txtStatus());
-                if(status.equals("0")){
-                    clsRowItem item = new clsRowItem();
-                    item.set_imageId(String.valueOf(images2));
-                    item.set_title(dt.get_txtTitle());
-                    item.set_txtId(dt.get_txtStatus());
-                    item.set_desc(dt.get_dtPublishEnd());
-                    rowItems.add(item);
-                } else if (status.equals("1")){
-                    clsRowItem item = new clsRowItem();
-                    item.set_imageId(String.valueOf(images1));
-                    item.set_title(dt.get_txtTitle());
-                    item.set_txtId(dt.get_txtStatus());
-                    item.set_desc(dt.get_dtPublishEnd());
-                    rowItems.add(item);
-                }
-
-            }
-
-        }
-
-        clsMainActivity clsMain = new clsMainActivity();
-
-        mmAdapter = setListA(getActivity(), rowItems);
-        mListView.setAdapter(mmAdapter);
-        mListView.setPullRefreshEnable(false);
-        mListView.setPullLoadEnable(true);
-        mListView.setXListViewListener(this);
-        mHandler = new Handler();
-        HashMap<String, String> mapView = new HashMap<String, String>();
-
-        mapView.put("name", "View");
-        mapView.put("bgColor", "#3498db");
-
-        mapMenu = new HashMap<String, HashMap>();
-        mapMenu.put("0", mapView);
-
-        SwipeMenuCreator creator = setCreator(getActivity(), mapMenu);
-        mListView.setMenuCreator(creator);
-
-//        mListView.setOnMenuItemClickListener(new clsMainActivity().mmenuSwipeListener(getActivity(), "LNotifi", mapMenu, rowItems));
-
-        creator = clsMain.setCreator(getActivity().getApplicationContext(), mapMenu);
-        mListView.setMenuCreator(creator);
-        mListView.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-            @Override
-            public void onMenuItemClick(int position, SwipeMenu menu, int index) {
-                switch (index) {
-                    case 0:
-                        viewList(getActivity().getApplicationContext(), position);
-                }
-            }
-        });
-
-        if(idHeaderNotif!=null){
-            int index = 0;
-            List<tNotificationData> _data = new tNotificationBL().GetAllData();
-            for (tNotificationData dt : _data){
-                if(idHeaderNotif.equals(dt.get_guiID().toString())){
-                    viewList(getContext(), index);
-                    break;
-                }
-                index++;
-            }
-        }
+        loadData();
 
         return v;
     }
@@ -354,20 +281,26 @@ public class FragmentNotification extends Fragment implements IXListViewListener
                             rowItems = new ArrayList<clsRowItem>();
                             rowItems = new ArrayList<clsRowItem>();
                             for(tNotificationData dt :listNotifikasi ){
+
                                 String status = String.valueOf(dt.get_txtStatus());
+
+                                String input = dt.get_dtInserted();
+
+                                String outputDtFormat = new clsMainActivity().convertDateToText(input);
+
                                 if(status.equals("0")){
                                     clsRowItem item = new clsRowItem();
                                     item.set_imageId(String.valueOf(images2));
                                     item.set_title(dt.get_txtTitle());
                                     item.set_txtId(dt.get_txtStatus());
-                                    item.set_desc(dt.get_dtPublishEnd());
+                                    item.set_txtDateTime(outputDtFormat);
                                     rowItems.add(item);
                                 } else if (status.equals("1")){
                                     clsRowItem item = new clsRowItem();
                                     item.set_imageId(String.valueOf(images1));
                                     item.set_title(dt.get_txtTitle());
                                     item.set_txtId(dt.get_txtStatus());
-                                    item.set_desc(dt.get_dtPublishEnd());
+                                    item.set_txtDateTime(outputDtFormat);
                                     rowItems.add(item);
                                 }
 
@@ -393,9 +326,12 @@ public class FragmentNotification extends Fragment implements IXListViewListener
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                onLoad();
+//                onLoad();
+                loadData();
+                mListView.stopRefresh();
+                mListView.stopLoadMore();
             }
-        }, 1);
+        }, 500);
     }
 
     private void onLoad() {
@@ -408,6 +344,98 @@ public class FragmentNotification extends Fragment implements IXListViewListener
 
     @Override
     public void onLoadMore() {
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loadData();
+            }
+        }, 1);
+    }
+
+    public void loadData(){
+        List<tNotificationData> listNotifikasi = new tNotificationBL().GetAllData();
+
+        dt = new tNotificationBL().GetAllData();
+
+        swipeList.clear();
+
+        arrData=new ArrayList<String>();
+        rowItems = new ArrayList<clsRowItem>();
+        if(listNotifikasi!=null){
+
+            rowItems = new ArrayList<clsRowItem>();
+            for(tNotificationData dt :listNotifikasi ){
+                String status = String.valueOf(dt.get_txtStatus());
+
+                String input = dt.get_dtInserted();
+
+                String outputDtFormat = new clsMainActivity().convertDateToText(input);
+
+                if(status.equals("0")){
+                    clsRowItem item = new clsRowItem();
+                    item.set_imageId(String.valueOf(images2));
+                    item.set_title(dt.get_txtTitle());
+                    item.set_txtId(dt.get_txtStatus());
+                    item.set_txtDateTime(outputDtFormat);
+                    rowItems.add(item);
+                } else if (status.equals("1")){
+                    clsRowItem item = new clsRowItem();
+                    item.set_imageId(String.valueOf(images1));
+                    item.set_title(dt.get_txtTitle());
+                    item.set_txtId(dt.get_txtStatus());
+                    item.set_txtDateTime(outputDtFormat);
+                    rowItems.add(item);
+                }
+
+            }
+
+        }
+
+        clsMainActivity clsMain = new clsMainActivity();
+
+        mmAdapter = setListA(getActivity(), rowItems);
+        mListView.setAdapter(mmAdapter);
+        mListView.setPullRefreshEnable(false);
+        mListView.setPullLoadEnable(true);
+        mListView.setXListViewListener(this);
+        mHandler = new Handler();
+        HashMap<String, String> mapView = new HashMap<String, String>();
+
+        mapView.put("name", "View");
+        mapView.put("bgColor", "#3498db");
+
+        mapMenu = new HashMap<String, HashMap>();
+        mapMenu.put("0", mapView);
+
+        SwipeMenuCreator creator = setCreator(getActivity(), mapMenu);
+        mListView.setMenuCreator(creator);
+
+//        mListView.setOnMenuItemClickListener(new clsMainActivity().mmenuSwipeListener(getActivity(), "LNotifi", mapMenu, rowItems));
+
+        creator = clsMain.setCreator(getActivity().getApplicationContext(), mapMenu);
+        mListView.setMenuCreator(creator);
+        mListView.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+            @Override
+            public void onMenuItemClick(int position, SwipeMenu menu, int index) {
+                switch (index) {
+                    case 0:
+                        viewList(getActivity().getApplicationContext(), position);
+                }
+            }
+        });
+
+        if(idHeaderNotif!=null){
+            int index = 0;
+            List<tNotificationData> _data = new tNotificationBL().GetAllData();
+            for (tNotificationData dt : _data){
+                if(idHeaderNotif.equals(dt.get_guiID().toString())){
+                    viewList(getContext(), index);
+                    break;
+                }
+                index++;
+            }
+        }
+
 
     }
 

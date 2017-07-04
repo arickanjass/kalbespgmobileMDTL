@@ -8,6 +8,16 @@ public class clsRowItem implements Serializable{
     private String _desc;
     private String _txtId;
     private String _txtLink;
+
+    public String get_txtDateTime() {
+        return _txtDateTime;
+    }
+
+    public void set_txtDateTime(String _txtDateTime) {
+        this._txtDateTime = _txtDateTime;
+    }
+
+    private String _txtDateTime;
     
 	//private String _txtId;
 	//private String _txtTitle;
@@ -17,8 +27,9 @@ public class clsRowItem implements Serializable{
 	public String Property_title="title";
 	public String Property_desc="desc";
 	public String Property_txtLink="txtLink";
+    public String Property_txtDateTime = "txtDateTime";
 	
-	public String PropertyAll=Property_txtId+","+Property_imageId+","+Property_title+ "," + Property_desc+ "," + Property_txtLink;
+	public String PropertyAll=Property_txtId+","+Property_imageId+","+Property_title+ "," + Property_desc+ "," + Property_txtLink+ "," + Property_txtDateTime;
      
 //    public clsRowItem(int imageId, String title, String desc) {
 //       this._imageId = imageId;

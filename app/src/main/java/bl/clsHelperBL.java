@@ -637,6 +637,9 @@ public class clsHelperBL extends clsMainBL {
         while (j2.hasNext()) {
             org.json.simple.JSONObject innerObj_Header = (org.json.simple.JSONObject) j2.next();
             org.json.simple.JSONArray JsonArray_Detail = (JSONArray) innerObj_Header.get("ListOfTNotificationHeaderSPG_mobile");
+
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Calendar cal = Calendar.getInstance();
             if (JsonArray_Detail != null) {
                 tNotificationBL _tNotificationBL = new tNotificationBL();
                 List<tNotificationData> listDatatNotificationData = new ArrayList<tNotificationData>();
@@ -649,6 +652,7 @@ public class clsHelperBL extends clsMainBL {
                     dttNotificationData.set_dtPublishEnd(String.valueOf(innerObj_Detail.get("_dtEnd")));
                     dttNotificationData.set_guiID(String.valueOf(innerObj_Detail.get("_txtIdHeaderNotif")));
                     dttNotificationData.set_intIndex(String.valueOf(index));
+                    dttNotificationData.set_dtInserted(String.valueOf(dateFormat.format(cal.getTime())));
 //                    dttNotificationData.set_intPriority(String.valueOf(innerObj_Detail.get("IntPriority")));
                     dttNotificationData.set_intSubmit("1");
                     dttNotificationData.set_intSync("1");
@@ -688,7 +692,7 @@ public class clsHelperBL extends clsMainBL {
                     dtclsFileAttach_mobile.set_txtIdHeaderNotif(String.valueOf(innerObj_Detail.get("_txtIdHeaderNotif")));
 //                    dtclsFileAttach_mobile.set_byteInitialVector(String.valueOf(innerObj_Detail.get("_byteInitialVector")));
                     dtclsFileAttach_mobile.set_txtIDFile(String.valueOf(innerObj_Detail.get("_txtIDFile")));
-                    dtclsFileAttach_mobile.set_dtInserted(String.valueOf(innerObj_Detail.get(dateFormat.format(cal.getTime()))));
+                    dtclsFileAttach_mobile.set_dtInserted(String.valueOf(dateFormat.format(cal.getTime())));
                     dtclsFileAttach_mobile.set_intSubmit("1");
                     dtclsFileAttach_mobile.set_intSync("1");
                     dtclsFileAttach_mobile.set_intActive("0");

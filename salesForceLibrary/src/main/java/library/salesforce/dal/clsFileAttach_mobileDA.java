@@ -63,7 +63,7 @@ public class clsFileAttach_mobileDA {
                 + String.valueOf(data.get_intSubmit()) + "','"
                 + String.valueOf(data.get_intSync()) + "','"
                 + String.valueOf(data.get_intStatus()) + "')");
-			db.close();
+//			db.close();
     }
     public void DeleteAllData(SQLiteDatabase db) {
         db.execSQL("DELETE FROM " + TABLE_CONTACTS );

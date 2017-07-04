@@ -1,17 +1,26 @@
 package service;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.BitmapFactory;
 import android.os.IBinder;
 import android.util.Log;
+
+import com.kalbenutritionals.app.kalbespgmobile.MainMenu;
+import com.kalbenutritionals.app.kalbespgmobile.R;
 
 import org.json.JSONException;
 import org.json.simple.JSONArray;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -20,11 +29,14 @@ import java.util.TimerTask;
 
 import bl.clsHelperBL;
 import bl.clsMainBL;
+import bl.tNotificationBL;
+import come.example.viewbadger.ShortcutBadger;
 import library.salesforce.common.clsPushData;
 import library.salesforce.common.dataJson;
 import library.salesforce.common.mCounterNumberData;
 import library.salesforce.common.tAbsenUserData;
 import library.salesforce.common.tActivityData;
+import library.salesforce.common.tNotificationData;
 import library.salesforce.common.tUserLoginData;
 import library.salesforce.dal.clsHardCode;
 import library.salesforce.dal.enumCounterData;
@@ -100,9 +112,11 @@ public class MyServiceNative extends Service{
     			JSONArray JsonArrayResult=new clsHelperBL().callPushDataReturnJson(versionName,dtJson.getDtdataJson().txtJSON().toString(),dtJson.getFileUpload());
 				new clsHelperBL().saveDataPush(dtJson.getDtdataJson(),JsonArrayResult);
 				new clsHelperBL().deleteDataPush(dtJson.getDtdataJson(), JsonArrayResult);
-				Intent serviceIntent = new Intent(this,MyNotificationService.class);
-				serviceIntent.putExtra("From", "PUSHDATA");
-				startService(serviceIntent);
+//				Intent serviceIntent = new Intent(this,MyNotificationService.class);
+//				serviceIntent.putExtra("From", "PUSHDATA");
+//				startService(serviceIntent);
+
+				startNotification();
 
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -204,4 +218,59 @@ public class MyServiceNative extends Service{
         //Toast.makeText(this, "Service Destroyed", Toast.LENGTH_LONG).show();
         _shutdownService();
     }
+
+    public void startNotification(){
+		tNotificationBL _tNotificationBL=new tNotificationBL();
+		List<tNotificationData> ListData=_tNotificationBL.getAllDataWillAlert("2");
+		List<tNotificationData> tmpListData= new ArrayList<tNotificationData>();
+		if(ListData!=null){
+			for (tNotificationData dttNotificationData : ListData) {
+				dttNotificationData.set_txtStatus("1");
+				tmpListData.add(dttNotificationData);
+				String index = String.valueOf(dttNotificationData.get_intIndex());
+				String title = String.valueOf(dttNotificationData.get_txtTitle());
+				String desc = String.valueOf(dttNotificationData.get_txtDescription());
+				String className = String.valueOf(dttNotificationData.get_txtLink());
+				Class<?> myClass = null;
+				try {
+					myClass = Class.forName(className);
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+				Intent i = new Intent(getApplicationContext(), MainMenu.class);
+				i.putExtra("key_view", "Notification");
+				i.putExtra("id", String.valueOf(dttNotificationData.get_guiID()));
+				i.setAction("notif");
+				int idn = Integer.parseInt(index);
+
+				PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),idn, i, PendingIntent.FLAG_ONE_SHOT);
+
+				int icon = R.drawable.ic_notif_name;
+				String tickerText = dttNotificationData.get_txtTitle();
+				long when = System.currentTimeMillis();
+				Notification tnotification = null;
+				if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+					tnotification = new Notification.Builder(MyServiceNative.this)
+                            .setContentIntent(pendingIntent)
+                            .setContentTitle(title)
+                            .setContentText(desc)
+                            .setSmallIcon(icon)
+                            .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(),
+                                    R.mipmap.ic_kalbe_phonegap))
+                            .setWhen(when)
+                            .setTicker(tickerText)
+                            .setPriority(Notification.PRIORITY_HIGH)
+                            .setAutoCancel(true)
+                            .setDefaults(Notification.DEFAULT_ALL | Notification.FLAG_SHOW_LIGHTS | Notification.PRIORITY_DEFAULT)
+                            .build();
+				}
+				NotificationManager tnotificationManager=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+				tnotification.defaults=Notification.DEFAULT_ALL;
+				tnotificationManager.notify(idn,tnotification);
+			}
+			_tNotificationBL.saveData(tmpListData);
+			int totalStatus = new tNotificationBL().getContactsCountStatus();
+			ShortcutBadger.applyCount(MyServiceNative.this, totalStatus);
+		}
+	}
 }

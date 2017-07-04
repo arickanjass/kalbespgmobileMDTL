@@ -30,7 +30,8 @@ public class tNotificationDA {
 		+ dt.Property_txtStatus + " TEXT NULL,"
 		+ dt.Property_dtUpdate + " TEXT NULL,"
 		+ dt.Property_intSubmit + " TEXT NULL,"
-		+ dt.Property_intSync + " TEXT NULL)";
+				+ dt.Property_intSync + " TEXT NULL,"
+		+ dt.Property_dtInserted + " TEXT NULL)";
 		db.execSQL(CREATE_CONTACTS_TABLE);
 	}
 	
@@ -67,8 +68,9 @@ public class tNotificationDA {
 					+ String.valueOf(data.get_dtUpdate()) + "','"
 					+ String.valueOf(data.get_intSubmit()) + "','"
 					+ String.valueOf(data.get_intSync()) + "','"
-					+ String.valueOf(data.get_intPriority()) + "')");
-			db.close();
+					+ String.valueOf(data.get_intPriority()) + "','"
+					+ String.valueOf(data.get_dtInserted()) + "')");
+//			db.close();
 		}
 		public void DeleteAllData(SQLiteDatabase db) {
 			db.execSQL("DELETE FROM " + TABLE_CONTACTS );
@@ -100,6 +102,7 @@ public class tNotificationDA {
 				contact.set_intSubmit(cursor.getString(14));
 				contact.set_intSync(cursor.getString(15));
 				contact.set_intPriority(cursor.getString(16));
+				contact.set_dtInserted(cursor.getString(17));
 				// return contact
 			} else {
 				contact = null;
@@ -137,6 +140,7 @@ public class tNotificationDA {
 					contact.set_intSubmit(cursor.getString(14));
 					contact.set_intSync(cursor.getString(15));
 					contact.set_intPriority(cursor.getString(16));
+					contact.set_dtInserted(cursor.getString(17));
 					// Adding contact to list
 					contactList.add(contact);
 				} while (cursor.moveToNext());
@@ -175,6 +179,7 @@ public class tNotificationDA {
 					contact.set_intSubmit(cursor.getString(14));
 					contact.set_intSync(cursor.getString(15));
 					contact.set_intPriority(cursor.getString(16));
+					contact.set_dtInserted(cursor.getString(17));
 					// Adding contact to list
 					contactList.add(contact);
 				} while (cursor.moveToNext());
@@ -214,6 +219,7 @@ public class tNotificationDA {
 				contact.set_intSubmit(cursor.getString(14));
 				contact.set_intSync(cursor.getString(15));
 				contact.set_intPriority(cursor.getString(16));
+				contact.set_dtInserted(cursor.getString(17));
 				// return contact
 			} else {
 				contact = null;

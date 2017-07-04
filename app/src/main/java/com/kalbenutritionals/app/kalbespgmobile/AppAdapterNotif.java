@@ -10,6 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 import edu.swu.pulltorefreshswipemenulistview.library.R;
@@ -62,6 +64,7 @@ public class AppAdapterNotif extends BaseAdapter {
             holder.txtDesc = (TextView) convertView.findViewById(R.id.description);
             holder.txtTitle = (TextView) convertView.findViewById(R.id.title);
             holder.imageView = (ImageView) convertView.findViewById(R.id.icon);
+            holder.txtDt = (TextView) convertView.findViewById(R.id.textView_date);
             holder.txtTitle.setTypeface(holder.txtTitle.getTypeface(), Typeface.BOLD);
             convertView.setTag(holder);
         } else
@@ -78,6 +81,7 @@ public class AppAdapterNotif extends BaseAdapter {
 //        }
             holder.txtTitle.setText(rowItem.get_title());
             holder.txtDesc.setText(rowItem.get_desc());
+        holder.txtDt.setText(rowItem.get_txtDateTime());
             holder.imageView.setImageResource(Integer.parseInt(rowItem.get_imageId()));
 
         return convertView;
@@ -88,6 +92,7 @@ public class AppAdapterNotif extends BaseAdapter {
     	ImageView imageView;
         TextView txtTitle;
         TextView txtDesc;
+        TextView txtDt;
     }
 
 //    class ViewHolder {

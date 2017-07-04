@@ -108,6 +108,14 @@ public class tNotificationData {
 	public void set_intPriority(String _intPriority) {
 		this._intPriority = _intPriority;
 	}
+
+	public String get_dtInserted() {
+		return _dtInserted;
+	}
+
+	public void set_dtInserted(String _dtInserted) {
+		this._dtInserted = _dtInserted;
+	}
 	
 	private String _guiID;
 	private String _intIndex;
@@ -123,6 +131,7 @@ public class tNotificationData {
 	private String _txtBranchCode;
 	private String _intPriority;
 	private String _txtStatus;
+	private String _dtInserted;
 	private String _dtUpdate;
 	private String _intSubmit;
 	private String _intSync;
@@ -144,10 +153,11 @@ public class tNotificationData {
 	public String Property_dtUpdate="dtUpdate";
 	public String Property_intSubmit="intSubmit";
 	public String Property_intSync="intSync";
+	public  String Property_dtInserted="dtInserted";
 	
 	public String PropertyAll=Property_intIndex+","+Property_guiID+","+Property_tPublishStart+","+Property_dtPublishEnd+","+Property_bitActive+","+
 			Property_txtTitle+","+Property_txtDescription+","+Property_txtImage+","+Property_txtLink+","+Property_txtOutlet+","+Property_txtOutletName+","+Property_txtBranchCode
 			+","+Property_txtStatus+","+Property_dtUpdate
-			+","+Property_intSubmit+","+Property_intSync+","+Property_intPriority;
+			+","+Property_intSubmit+","+Property_intSync+","+Property_intPriority+","+Property_dtInserted;
 
 }
