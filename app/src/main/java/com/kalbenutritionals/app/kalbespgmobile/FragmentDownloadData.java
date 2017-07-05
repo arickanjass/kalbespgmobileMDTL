@@ -418,6 +418,7 @@ public class FragmentDownloadData extends Fragment {
         List<mPertanyaanData> pertanyaanDataList = new mPertanyaanBL().GetAllData();
         List<mListJawabanData> jawabanDataList = new mListJawabanBL().GetAllData();
         List<mTypePertanyaanData> typePertanyaanDataList = new mTypePertanyaanBL().GetAllData();
+        List<tGroupQuestionMappingData> tGroupQuestionMappingDataList = new tGroupQuestionMappingBL().GetAllData();
         List<mKategoriData> kategoriDataList = new mKategoriBL().GetAllData();
         List<tPurchaseOrderHeaderData> listPurchaseOrderHeaderData = new tPurchaseOrderHeaderBL().getAllPurchaseOrderHeader();
         List<tSalesProductQuantityHeaderData> listQuantityStockHeaderData = new tSalesProductQuantityHeaderBL().getAllSalesQuantityHeader();
@@ -439,11 +440,11 @@ public class FragmentDownloadData extends Fragment {
         }
 
         arrData = new ArrayList<String>();
-        if (parentDataList.size() > 0 && kategoriDataList.size() > 0 && jawabanDataList.size() >0 && typePertanyaanDataList.size() > 0 && pertanyaanDataList.size() >0) {
+        if (parentDataList.size() > 0 && kategoriDataList.size() > 0 && jawabanDataList.size() >0 && typePertanyaanDataList.size() > 0 && pertanyaanDataList.size() >0 && tGroupQuestionMappingDataList.size() >0) {
                 arrData.add("Quesioner  Ready");
             spnQuiz.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
             spnQuiz.setEnabled(true);
-        } else if (parentDataList.size() == 0 && kategoriDataList.size() == 0 && jawabanDataList.size() == 0 && typePertanyaanDataList.size() == 0 && pertanyaanDataList.size() ==0) {
+        } else if (parentDataList.size() == 0 && kategoriDataList.size() == 0 && jawabanDataList.size() == 0 && typePertanyaanDataList.size() == 0 && pertanyaanDataList.size() ==0 && tGroupQuestionMappingDataList.size() >0) {
             ArrayAdapter<String> adapterspn = new ArrayAdapter<String>(getContext(),
                     android.R.layout.simple_spinner_item, strip);
             spnQuiz.setAdapter(adapterspn);
