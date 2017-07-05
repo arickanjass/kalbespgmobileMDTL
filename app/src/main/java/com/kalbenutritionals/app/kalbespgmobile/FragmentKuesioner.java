@@ -437,7 +437,7 @@ public class FragmentKuesioner extends Fragment {
                         dt.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
                         dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
                         dt.set_intAnswerId(HMJawaban.get(dateView.getText().toString()));
-                        dt.set_txtValue(HMJawaban.get(HMJawaban.get(dateView.getText().toString())));
+                        dt.set_txtValue(dateView.getText().toString());
                         dt.set_decBobot("");
                         new tJawabanUserBL().SaveDatatJawabanUser(dt);
                     }
