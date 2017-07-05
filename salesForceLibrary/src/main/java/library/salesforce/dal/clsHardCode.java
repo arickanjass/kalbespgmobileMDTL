@@ -62,6 +62,7 @@ public class clsHardCode  {
 	public String txtTable_tJawabanUser = "tJawabanUser";
 	public String txtTable_mTypePertanyaan = "mTypePertanyaan";
 	public String txtTable_mListJawaban = "mListJawaban";
+	public String txtTable_tGroupQuestionMapping = "tGroupQuestionMapping";
 	public String txtTable_tInventorySPGDetail_mobile = "tInventorySPGDetail_mobile";
 	public String txtTable_tInventorySPGHeader_mobile = "tInventorySPGHeader_mobile";
 	public String txtTable_tSalesOrderHeader_mobile = "tSalesOrderHeader_mobile";

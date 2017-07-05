@@ -50,7 +50,7 @@ public class mPertanyaanDA {
     public List<mPertanyaanData> GetAllData(SQLiteDatabase db){
         List<mPertanyaanData> contactList = new ArrayList<mPertanyaanData>();
         mPertanyaanData dt = new mPertanyaanData();
-        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " ORDER BY intCategoryId ASC";
+        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " ORDER BY inttGroupQuestionMapping ASC";  
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()){
             do {
@@ -69,10 +69,10 @@ public class mPertanyaanDA {
         return contactList;
     }
 
-    public List<mPertanyaanData> GetDataBYCategory(SQLiteDatabase db, int categoryId){
+    public List<mPertanyaanData> GetDataBYGroupQuestion(SQLiteDatabase db, int groupId){
         List<mPertanyaanData> contactList = new ArrayList<mPertanyaanData>();
         mPertanyaanData dt = new mPertanyaanData();
-        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intCategoryId + "='" + categoryId +"' ORDER BY intCategoryId ASC";
+        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_inttGroupQuestionMapping + "='" + groupId +"' ORDER BY inttGroupQuestionMapping ASC";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()){
             do {
@@ -83,6 +83,7 @@ public class mPertanyaanDA {
                 contact.set_intTypeQuestionId(cursor.getString(3));
                 contact.set_decBobot(cursor.getString(4));
                 contact.set_bolHaveAnswerList(cursor.getString(5));
+                contact.set_inttGroupQuestionMapping(cursor.getString(6));
                 contactList.add(contact);
             }while (cursor.moveToNext());
         }
