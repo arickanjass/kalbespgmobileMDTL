@@ -930,7 +930,7 @@ public class FragmentPushData extends Fragment {
                     String errorMess = "";
                     APIData dtAPIDATA = new APIData();
                     while (iterator.hasNext()){
-                        org.json.JSONObject innerObj = (org.json.JSONObject)iterator.next();
+                        JSONObject innerObj = (JSONObject) iterator.next();
                         int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
                         if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)){
                             new clsHelperBL().deleteDataPush(dtJson.getDtdataJson(), Jresult);
@@ -940,7 +940,6 @@ public class FragmentPushData extends Fragment {
                             break;
                         }
                     }
-                    //new clsHelperBL().deleteDataPush(dtJson.getDtdataJson(),Jresult);
                 }catch (Exception e3){
                     e3.printStackTrace();
                 }
