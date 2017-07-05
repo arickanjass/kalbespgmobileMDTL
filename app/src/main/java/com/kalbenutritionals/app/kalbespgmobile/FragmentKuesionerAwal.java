@@ -32,11 +32,8 @@ public class FragmentKuesionerAwal extends Fragment {
     View v;
     Button btn1, btn2;
     List<tGroupQuestionMappingData> groupQuestionMappingDataList = new ArrayList<>();
-    List<mPertanyaanData> pertanyaanDataList = new ArrayList<>();
     List<mPertanyaanData> listPertanyaanbyQId = new ArrayList<>();
-    List<String> dataPertanyaan;
     private LinearLayout lnBtn;
-    final HashMap<String, String> HMPertanyaan = new HashMap<String, String>();
     List<Button> listButton = new ArrayList<Button>();
     @Nullable
     @Override
@@ -55,7 +52,7 @@ public class FragmentKuesionerAwal extends Fragment {
             btn.setText(groupQuestionMappingDataList.get(i).get_txtGroupQuestion());
 //            btn.setBackgroundColor(Color.rgb(70, 80, 90));
             lnBtn.addView(btn, params);
-            btn2 = ((Button) v.findViewById(id_));   
+            btn2 = ((Button) v.findViewById(id_));
             listButton.add(btn2);
            listPertanyaanbyQId = new mPertanyaanBL().GetDataByGroupQuestion(id_);
             final int h = iterator ;
