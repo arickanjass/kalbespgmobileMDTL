@@ -24,7 +24,6 @@ public class tGroupQuestionMappingBL extends clsMainBL{
         SQLiteDatabase _db = getDb();
         tGroupQuestionMappingDA _tGroupQuestionMappingDA = new tGroupQuestionMappingDA(_db);
         List<tGroupQuestionMappingData> listData = _tGroupQuestionMappingDA.GetAllData(_db);
-        db.close();
         return listData;
     }
 

@@ -24,13 +24,13 @@ public class mPertanyaanBL extends clsMainBL {
         SQLiteDatabase _db = getDb();
         mPertanyaanDA _mPertanyaanDA = new mPertanyaanDA(db);
         List<mPertanyaanData> dt = _mPertanyaanDA.GetAllData(_db);
-        return dt;
+        return dt;  
     }
 
-    public List<mPertanyaanData> GetDataByCategoriId(int categoriId){
+    public List<mPertanyaanData> GetDataByGroupQuestion(int groupId){
         SQLiteDatabase _db = getDb();
         mPertanyaanDA _mPertanyaanDA = new mPertanyaanDA(_db);
-        List<mPertanyaanData> dt = _mPertanyaanDA.GetDataBYCategory(_db,categoriId);
+        List<mPertanyaanData> dt = _mPertanyaanDA.GetDataBYGroupQuestion(_db,groupId);
         return dt;
     }
 
