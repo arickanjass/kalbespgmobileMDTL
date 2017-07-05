@@ -144,7 +144,7 @@ public class FragmentKuesioner extends Fragment {
                         rgTestGet = (RadioGroup) v.findViewById(i + 1);
                         listAnswer.add(rgTestGet);
                     } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("4")) {
-                        layoutDate = (LinearLayout) v.findViewById(Integer.parseInt(HMPertanyaan.get(dataPertanyaan.get(i))));
+                        layoutDate = (LinearLayout) v.findViewById(i+1);
                         for (int x = 0; x < layoutDate.getChildCount(); x++) {
                             View nextChild = layoutDate.getChildAt(x);
                             if (nextChild instanceof EditText) {
