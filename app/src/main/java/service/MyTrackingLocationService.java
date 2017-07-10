@@ -83,6 +83,7 @@ public class MyTrackingLocationService extends Service implements GoogleApiClien
     private void startService() throws JSONException {
         try {
             doService();
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -125,7 +126,7 @@ public class MyTrackingLocationService extends Service implements GoogleApiClien
             }
 
 
-//            trackingLocation();
+           trackingLocation();
 
         } else {
             shutdownService();
@@ -201,7 +202,7 @@ public class MyTrackingLocationService extends Service implements GoogleApiClien
             if (dataUserActive != null) {
                 dataLocation.set_intId(new clsMainActivity().GenerateGuid());
                 dataLocation.set_txtLongitude(String.valueOf(mLastLocation.getLongitude()));
-                dataLocation.set_txtLatitude(String.valueOf(mLastLocation.getLongitude()));
+                dataLocation.set_txtLatitude(String.valueOf(mLastLocation.getLatitude()));
                 dataLocation.set_txtAccuracy(String.valueOf(mLastLocation.getAccuracy()));
                 dataLocation.set_txtUserId(dataUserActive.get_txtUserId());
                 dataLocation.set_txtUsername(dataUserActive.get_txtUserName());
@@ -228,7 +229,7 @@ public class MyTrackingLocationService extends Service implements GoogleApiClien
             if (dataUserActive != null) {
                 dataLocation.set_intId(new clsMainActivity().GenerateGuid());
                 dataLocation.set_txtLongitude(String.valueOf(mLastLocation.getLongitude()));
-                dataLocation.set_txtLatitude(String.valueOf(mLastLocation.getLongitude()));
+                dataLocation.set_txtLatitude(String.valueOf(mLastLocation.getLatitude()));
                 dataLocation.set_txtAccuracy(String.valueOf(mLastLocation.getAccuracy()));
                 dataLocation.set_txtUserId(dataUserActive.get_txtUserId());
                 dataLocation.set_txtUsername(dataUserActive.get_txtUserName());
