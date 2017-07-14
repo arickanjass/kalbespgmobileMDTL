@@ -68,8 +68,13 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import adapter.AppAdapterViewCusBase;
+import addons.adapter.AdapterListProductCustomerBased;
 import addons.adapter.AdapterListVisitplan;
 import addons.zoomview.CustomZoomView;
+import bl.clsFileAttach_mobileBL;
+import bl.clsLogReceiverDetail_mobileBL;
+import bl.clsLogReceiverHeader_mobileBL;
 import bl.mCounterNumberBL;
 import bl.tDeviceInfoUserBL;
 import bl.tUserLoginBL;
@@ -81,6 +86,7 @@ import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.Swipe
 import library.salesforce.common.AppAdapter;
 import library.salesforce.common.clsFileAttach_mobile;
 import library.salesforce.common.clsHelper;
+import library.salesforce.common.clsLogReceiverDetail_mobile;
 import library.salesforce.common.clsRowItem;
 import library.salesforce.common.clsSwipeList;
 import library.salesforce.common.mCounterNumberData;
@@ -464,6 +470,62 @@ public class clsMainActivity extends Activity {
 //	 }
     protected void onRestoreInstanceState1(Bundle savedInstanceState1) {
         // TODO Auto-generated method stub
+
+    }
+
+
+    public AppAdapterViewCusBase setListViewCusBase(Context _ctx, final List<clsSwipeList> swipeList) {
+        final AppAdapterViewCusBase mAdapter;
+        PullToRefreshSwipeMenuListView mListView;
+        Handler mHandler;
+
+        List<clsSwipeList> mAppList = new ArrayList<clsSwipeList>();
+
+        for (int i = 0; i < swipeList.size(); i++) {
+            clsSwipeList getswipeList = swipeList.get(i);
+            mAppList.add(getswipeList);
+        }
+
+        mAdapter = new AppAdapterViewCusBase(_ctx, mAppList);
+
+        return mAdapter;
+
+    }
+
+
+    public AppAdapter setList2(Context _ctx, final List<clsSwipeList> swipeList) {
+        final AppAdapter mAdapter;
+        PullToRefreshSwipeMenuListView mListView;
+        Handler mHandler;
+
+        List<String> mAppList = new ArrayList<String>();
+
+        for (int i = 0; i < swipeList.size(); i++) {
+            clsSwipeList getswipeList = swipeList.get(i);
+            mAppList.add(getswipeList.get_txtTitle() + "\n" + getswipeList.get_txtDescription() + "\n" + getswipeList.get_txtDescription2() + "\n" + getswipeList.get_txtDescription3());
+        }
+
+        mAdapter = new AppAdapter(_ctx, mAppList);
+
+        return mAdapter;
+
+    }
+
+    public static AdapterListProductCustomerBased setListProductCusBased(Context _ctx, final ArrayList<clsSwipeList> swipeList) {
+        final AdapterListProductCustomerBased mAdapter;
+        PullToRefreshSwipeMenuListView mListView;
+        Handler mHandler;
+
+        ArrayList<clsSwipeList> mAppList = new ArrayList<>();
+
+        for (int i = 0; i < swipeList.size(); i++) {
+            clsSwipeList getswipeList = swipeList.get(i);
+            mAppList.add(getswipeList);
+        }
+
+        mAdapter = new AdapterListProductCustomerBased(_ctx, mAppList);
+
+        return mAdapter;
 
     }
 
@@ -856,7 +918,7 @@ public class clsMainActivity extends Activity {
         return plainText;
     }
 
-    public String convertDateToText(String dateTime){
+        public String convertDateToText(String dateTime){
         DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         DateFormat outputFormat = new SimpleDateFormat("KK:mm a");
 
@@ -868,5 +930,112 @@ public class clsMainActivity extends Activity {
             e.printStackTrace();
         }
         return outputDtFormat;
+    }
+
+
+    public void saveLogFile(clsFileAttach_mobile data, String status) {
+
+        List<clsLogReceiverDetail_mobile> lisData = new ArrayList<>();
+        tUserLoginData dtLogin = new tUserLoginData();
+        dtLogin = new tUserLoginBL().getUserActive();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
+
+        int num = new clsLogReceiverDetail_mobileBL().getContactsCountStatus(data);
+        clsLogReceiverDetail_mobile dataR = new clsLogReceiverDetail_mobile();
+
+        if(num==0){
+            dataR.setTxtIdLogReceiverDetail(GenerateGuid());
+            dataR.setTxtStatus(status);
+            dataR.setTxtNIK(dtLogin.get_TxtEmpId().toString());
+            dataR.setTxtUSerName(dtLogin.get_txtUserId().toString());
+            dataR.setDtInserted(String.valueOf(dateFormat.format(cal.getTime())));
+            dataR.setIntActive("1");
+            dataR.setIntSubmit("1");
+            dataR.setIntSync("0");
+            dataR.setTxtIDFile(data.get_txtIDFile());
+            dataR.setTxtGuidLogin(dtLogin.get_txtDataId().toString());
+            dataR.setTxtIdHeaderNotif(data.get_txtIdHeaderNotif());
+
+            lisData.add(dataR);
+
+            new clsLogReceiverDetail_mobileBL().saveData(lisData);
+        }
+
+//        if(data.get_intLog().equals("1")){
+//            List<clsLogReceiverDetail_mobile> lisData = new ArrayList<>();
+//            List<clsFileAttach_mobile> lisDataClsFileAttach_mobile = new ArrayList<>();
+//            clsLogReceiverDetail_mobile _clsLogReceiverDetail_mobile = new clsLogReceiverDetail_mobile();
+//            tUserLoginData dtLogin = new tUserLoginData();
+//            dtLogin = new tUserLoginBL().getUserActive();
+//            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//            Calendar cal = Calendar.getInstance();
+//
+//            _clsLogReceiverDetail_mobile.setTxtIdLogReceiverDetail(new clsMainActivity().GenerateGuid());
+//            _clsLogReceiverDetail_mobile.setTxtStatus("READ");
+//            _clsLogReceiverDetail_mobile.setTxtNIK(dtLogin.get_TxtEmpId().toString());
+//            _clsLogReceiverDetail_mobile.setTxtUSerName(dtLogin.get_txtUserId().toString());
+//            _clsLogReceiverDetail_mobile.setDtInserted(String.valueOf(dateFormat.format(cal.getTime())));
+//            _clsLogReceiverDetail_mobile.setIntActive("1");
+//            _clsLogReceiverDetail_mobile.setIntSubmit("1");
+//            _clsLogReceiverDetail_mobile.setIntSync("0");
+//            _clsLogReceiverDetail_mobile.setTxtIDFile(data.get_txtIDFile());
+//            _clsLogReceiverDetail_mobile.setTxtGuidLogin(dtLogin.get_txtDataId().toString());
+//            _clsLogReceiverDetail_mobile.setTxtIdHeaderNotif(data.get_txtIdHeaderNotif());
+//
+//            lisData.add(_clsLogReceiverDetail_mobile);
+//
+//            new clsLogReceiverDetail_mobileBL().saveData(lisData);
+//
+//            data.set_intLog("0");
+//
+//            lisDataClsFileAttach_mobile.add(data);
+//
+//            new clsFileAttach_mobileBL().saveData(lisDataClsFileAttach_mobile);
+//        }
+    }
+
+    public SwipeMenuCreator setCreatorForCusBased(final Context _ctx, final Map<String, HashMap> map) {
+        SwipeMenuCreator creator = new SwipeMenuCreator() {
+
+            @Override
+            public void create(SwipeMenu menu) {
+
+                HashMap<String, String> map2 = new HashMap<String, String>();
+
+                for (int i = 0; i < map.size(); i++) {
+                    map2 = map.get(String.valueOf(i));
+
+                    SwipeMenuItem menuItem = new SwipeMenuItem(_ctx);
+                    menuItem.setWidth(dp2px(_ctx, 90));
+
+                    if (map2.get("name") == "View") {
+                        int icon = R.drawable.ic_view;
+                        menuItem.setIcon(icon);
+                        menuItem.setBackground(new ColorDrawable(Color.parseColor("#16a085")));
+                    } else if (map2.get("name") == "Edit") {
+                        int icon = R.drawable.ic_edit_white;
+                        menuItem.setIcon(icon);
+                        if(map2.get("status") == "Sync"){
+                            menuItem.setBackground(new ColorDrawable(Color.parseColor("#bfbfbf")));
+                        } else {
+                            menuItem.setBackground(new ColorDrawable(Color.parseColor("#2980b9")));
+                        }
+                    } else if (map2.get("name") == "Delete") {
+                        int icon = R.drawable.ic_delete_white;
+                        menuItem.setIcon(icon);
+                        if(map2.get("status") == "Sync"){
+                            menuItem.setBackground(new ColorDrawable(Color.parseColor("#bfbfbf")));
+                        } else {
+                            menuItem.setBackground(new ColorDrawable(Color.parseColor("#c0392b")));
+                        }
+                    }
+                    menu.addMenuItem(menuItem);
+                }
+            }
+        };
+
+        return creator;
+
     }
 }

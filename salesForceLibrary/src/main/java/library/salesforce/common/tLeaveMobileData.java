@@ -87,7 +87,7 @@ public class tLeaveMobileData {
 	public String Property_txtDeviceId="txtDeviceId";
 	public String Property_txtRoleId="txtRoleId";
 	public String PropertyListOftLeaveMobileData="ListOftLeaveMobileData";
-	public String PropertyAll=Property_dtLeave+","+Property_intLeaveId+","+Property_intLeaveIdSync+","+Property_intSubmit+","+
-			Property_txtAlasan+","+Property_txtDeviceId+","+Property_txtTypeAlasan+","+Property_txtUserId+","+Property_txtTypeAlasanName
+	public String PropertyAll=Property_intLeaveId+","+Property_intLeaveIdSync+","+Property_dtLeave+","+Property_intSubmit+","+
+			Property_txtAlasan+","+Property_txtDeviceId+","+Property_txtTypeAlasan+","+Property_txtTypeAlasanName+","+Property_txtUserId
 			+","+Property_txtRoleId;
 }

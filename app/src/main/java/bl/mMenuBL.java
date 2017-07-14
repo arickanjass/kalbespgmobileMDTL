@@ -47,7 +47,6 @@ public class mMenuBL extends clsMainBL {
         db.close();
         return dt;
     }
-
     public List<mMenuData> getDatabyParentId(int id) {
         SQLiteDatabase db = getDb();
         mMenuDA _mMenuDA = new mMenuDA(db);
@@ -60,7 +59,7 @@ public class mMenuBL extends clsMainBL {
                 if (_tSalesProductHeaderDA.getContactsCount(db) > 0) {
                     tmpData.add(data);
                 }
-            } else if (data.get_TxtDescription().contains("mnAbsenSPG")
+            } else if (data.get_TxtDescription().contains("mnVisitPlanMobile")
                     || data.get_TxtDescription().contains("mnPushDataSPG")
                     || data.get_TxtDescription().contains("mnLeaveSPG")) {
                 mEmployeeAreaDA _mEmployeeAreaDA = new mEmployeeAreaDA(db);
@@ -72,7 +71,7 @@ public class mMenuBL extends clsMainBL {
                     if (listDataLeave.size() == 0 && _mEmployeeAreaDA.getContactsCount(db) > 0 && _mEmployeeBranchDA.getContactsCount(db) > 0 && data.get_TxtDescription().contains("mnAbsenSPG")) {
 
                         int validate = 0;
-                        if (data.get_TxtDescription().contains("mnAbsenSPG")||data.get_TxtDescription().contains("mnVisitPlanMobile")) {
+                        if (data.get_TxtDescription().contains("mnVisitPlanMobile")||data.get_TxtDescription().contains("mnVisitPlanMobile")) {
 
                             validate = 1;
 
@@ -119,4 +118,51 @@ public class mMenuBL extends clsMainBL {
         db.close();
         return tmpData;
     }
+
+    public List<mMenuData> getDatabyParentIdNew(int id) {
+        SQLiteDatabase db = getDb();
+        mMenuDA _mMenuDA = new mMenuDA(db);
+        tSalesProductHeaderDA _tSalesProductHeaderDA = new tSalesProductHeaderDA(db);
+        List<mMenuData> listData = _mMenuDA.getDatabyParentId(db, id);
+        List<mMenuData> tmpData = new ArrayList<mMenuData>();
+        List<tLeaveMobileData> listDataLeave = new tLeaveMobileBL().getData("");
+        for (mMenuData data : listData) {
+            if(data.get_TxtDescription().contains("mnVisitPlanMobile")){
+                mEmployeeAreaDA _mEmployeeAreaDA = new mEmployeeAreaDA(db);
+                mEmployeeBranchDA _mEmployeeBranchDA = new mEmployeeBranchDA(db);
+                if(_mEmployeeAreaDA.getContactsCount(db) > 0 && _mEmployeeBranchDA.getContactsCount(db) > 0){
+                    int validate = 0;
+                    if(listDataLeave.size() == 0){
+                        if (data.get_TxtDescription().contains("mnVisitPlanMobile")||data.get_TxtDescription().contains("mnVisitPlanMobile")) {
+
+                            validate = 1;
+
+                            List<mEmployeeAreaData> datamEmployeeArea = new mEmployeeAreaBL().GetAllData();
+
+                            for (mEmployeeAreaData dt : datamEmployeeArea) {
+                                if (dt.get_txtLatitude() == "" || dt.get_txtLatitude() == null || dt.get_txtLatitude().equals("")
+                                        && dt.get_txtLongitude() == "" || dt.get_txtLongitude() == null || dt.get_txtLongitude().equals("")) {
+                                    validate = 0;
+                                }
+                            }
+                        }
+                    }
+                    if (validate == 1) {
+                        tmpData.add(data);
+                    }
+                }
+            } else if (data.get_TxtDescription().contains("mnLeave")) {
+                mTypeLeaveMobileDA _mTypeLeaveMobileDA = new mTypeLeaveMobileDA(db);
+                tAbsenUserDA _tAbsenUserDA = new tAbsenUserDA(db);
+                if (_tAbsenUserDA.getContactsCountSubmit(db) == 0 && _mTypeLeaveMobileDA.getContactsCount(db) > 0) {
+                    tmpData.add(data);
+                }
+            } else {
+                tmpData.add(data);
+            }
+        }
+        db.close();
+        return tmpData;
+    }
+
 }

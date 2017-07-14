@@ -101,7 +101,7 @@ public class PdfView extends AppCompatActivity implements OnPageChangeListener, 
 
                     file = _clsMainActivity.saveFile(arrayFileDecrypt, pathFolder, data.get_txtNameFileEncrypt());
 
-                    if (display(file)){
+                    if (display(file, data)){
                         data.set_intActive("1");
                         data.set_intStatus("READ");
 
@@ -111,7 +111,7 @@ public class PdfView extends AppCompatActivity implements OnPageChangeListener, 
                         new clsFileAttach_mobileBL().saveData(dt);
                     }
                 } else if (data.get_intActive().equals("1")){
-                    display(fileFolder);
+                    display(fileFolder, data);
                 }
             } else if (data.get_intStatus().equals("READ")) {
                 if(data.get_intActive().equals("0")){
@@ -121,7 +121,7 @@ public class PdfView extends AppCompatActivity implements OnPageChangeListener, 
 
                     file = _clsMainActivity.saveFile(arrayFileDecrypt, pathFolder, data.get_txtNameFileEncrypt());
 
-                    if (display(file)){
+                    if (display(file, data)){
                         data.set_intActive("1");
                         data.set_intStatus("READ");
 
@@ -131,7 +131,7 @@ public class PdfView extends AppCompatActivity implements OnPageChangeListener, 
                         new clsFileAttach_mobileBL().saveData(dt);
                     }
                 } else if (data.get_intActive().equals("1")){
-                    display(fileFolder);
+                    display(fileFolder, data);
                 }
             }
         } catch (FileNotFoundException e) {
@@ -196,10 +196,11 @@ public class PdfView extends AppCompatActivity implements OnPageChangeListener, 
         }
     }
 
-    private boolean display(File assetFileName){
+    private boolean display(File assetFileName, clsFileAttach_mobile data){
         fileFolder = assetFileName;
         pdfView.fromFile(fileFolder).defaultPage(pageNumber).onPageChange(this).swipeHorizontal(true)
                 .scrollHandle(new DefaultScrollHandle(this)).load();
+        new clsMainActivity().saveLogFile(data, "READ");
         return true;
     }
 

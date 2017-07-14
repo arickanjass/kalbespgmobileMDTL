@@ -153,7 +153,7 @@ public class FragmentAddLeave extends Fragment implements View.OnClickListener {
         });
 
         tLeaveMobileBL _tLeaveMobileBL=new tLeaveMobileBL();
-        List<tLeaveMobileData> listData=_tLeaveMobileBL.getData("");
+        List<tLeaveMobileData> listData=_tLeaveMobileBL.GetAllData();
         if(listData.size()>0){
             date.setText(listData.get(0).get_dtLeave());
             List<String> arrData=new ArrayList<>();

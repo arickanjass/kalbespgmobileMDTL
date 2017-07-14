@@ -47,15 +47,15 @@ public class tLeaveMobileDA {
 		tLeaveMobileData dt = new tLeaveMobileData();
 		db.execSQL("INSERT OR REPLACE into " + TABLE_CONTACTS + " ("
 				+ dt.PropertyAll + ") " + "values('"
-				+ String.valueOf(data.get_dtLeave()) + "','"
 				+ String.valueOf(data.get_intLeaveId()) + "','"
 				+ String.valueOf(data.get_intLeaveIdSync()) + "','"
+				+ String.valueOf(data.get_dtLeave()) + "','"
 				+ String.valueOf(data.get_intSubmit()) + "','"
 				+ String.valueOf(data.get_txtAlasan()) + "','"
 				+ String.valueOf(data.get_txtDeviceId()) + "','"
 				+ String.valueOf(data.get_txtTypeAlasan()) + "','"
-				+ String.valueOf(data.get_txtUserId()) + "','"
-				+ String.valueOf(data.get_txtTypeAlasanName()) +"','"
+				+ String.valueOf(data.get_txtTypeAlasanName()) + "','"
+				+ String.valueOf(data.get_txtUserId()) +"','"
 				+ String.valueOf(data.get_txtRoleId()) + "'"
 				+ ")");
 		// db.insert(TABLE_CONTACTS, null, values);
@@ -70,25 +70,25 @@ public class tLeaveMobileDA {
 	public tLeaveMobileData getData(SQLiteDatabase db, String id) {
 		tLeaveMobileData dt = new tLeaveMobileData();
 		Cursor cursor = db.query(TABLE_CONTACTS, new String[] {
-				dt.Property_dtLeave, dt.Property_intLeaveId, dt.Property_intLeaveIdSync,
+				dt.Property_intLeaveId, dt.Property_intLeaveIdSync, dt.Property_dtLeave,
 				dt.Property_intSubmit,dt.Property_txtAlasan,dt.Property_txtDeviceId,dt.Property_txtTypeAlasan,
-				dt.Property_txtUserId,dt.Property_txtRoleId,dt.Property_txtTypeAlasanName},
+				dt.Property_txtTypeAlasanName,dt.Property_txtUserId,dt.Property_txtRoleId},
 				dt.Property_intLeaveId + "=?", new String[] { String.valueOf(id) },
 				null, null, null, null);
 		if (cursor != null)
 			cursor.moveToFirst();
 		tLeaveMobileData contact = new tLeaveMobileData();
 		if (cursor.getCount() > 0) {
-			contact.set_dtLeave(String.valueOf( cursor.getString(0)));
-			contact.set_intLeaveId(cursor.getString(1));
-			contact.set_intLeaveIdSync(cursor.getString(2));
+			contact.set_intLeaveId(String.valueOf( cursor.getString(0)));
+			contact.set_intLeaveIdSync(cursor.getString(1));
+			contact.set_dtLeave(cursor.getString(2));
 			contact.set_intSubmit(cursor.getString(3));
 			contact.set_txtAlasan(cursor.getString(4));
 			contact.set_txtDeviceId(cursor.getString(5));
 			contact.set_txtTypeAlasan(cursor.getString(6));
-			contact.set_txtUserId(cursor.getString(7));
-			contact.set_txtRoleId(cursor.getString(8));
-			contact.set_txtTypeAlasanName(cursor.getString(9));
+			contact.set_txtTypeAlasanName(cursor.getString(7));
+			contact.set_txtUserId(cursor.getString(8));
+			contact.set_txtRoleId(cursor.getString(9));
 			// return contact
 		} else {
 			contact = null;
@@ -139,16 +139,16 @@ public class tLeaveMobileDA {
 			contactList=new ArrayList<tLeaveMobileData>();
 			do {
 				tLeaveMobileData contact = new tLeaveMobileData();
-				contact.set_dtLeave(String.valueOf( cursor.getString(0)));
-				contact.set_intLeaveId(cursor.getString(1));
-				contact.set_intLeaveIdSync(cursor.getString(2));
+				contact.set_intLeaveId(String.valueOf( cursor.getString(0)));
+				contact.set_intLeaveIdSync(cursor.getString(1));
+				contact.set_dtLeave(cursor.getString(2));
 				contact.set_intSubmit(cursor.getString(3));
 				contact.set_txtAlasan(cursor.getString(4));
 				contact.set_txtDeviceId(cursor.getString(5));
 				contact.set_txtTypeAlasan(cursor.getString(6));
-				contact.set_txtUserId(cursor.getString(7));
-				contact.set_txtRoleId(cursor.getString(8));
-				contact.set_txtTypeAlasanName(cursor.getString(9));
+				contact.set_txtTypeAlasanName(cursor.getString(7));
+				contact.set_txtUserId(cursor.getString(8));
+				contact.set_txtRoleId(cursor.getString(9));
 				// Adding contact to list
 				contactList.add(contact);
 			} while (cursor.moveToNext());
@@ -169,16 +169,16 @@ public class tLeaveMobileDA {
 		if (cursor.moveToFirst()) {
 			do {
 				tLeaveMobileData contact = new tLeaveMobileData();
-				contact.set_dtLeave(String.valueOf( cursor.getString(0)));
-				contact.set_intLeaveId(cursor.getString(1));
-				contact.set_intLeaveIdSync(cursor.getString(2));
+				contact.set_intLeaveId(String.valueOf( cursor.getString(0)));
+				contact.set_intLeaveIdSync(cursor.getString(1));
+				contact.set_dtLeave(cursor.getString(2));
 				contact.set_intSubmit(cursor.getString(3));
 				contact.set_txtAlasan(cursor.getString(4));
 				contact.set_txtDeviceId(cursor.getString(5));
 				contact.set_txtTypeAlasan(cursor.getString(6));
-				contact.set_txtUserId(cursor.getString(7));
-				contact.set_txtRoleId(cursor.getString(8));
-				contact.set_txtTypeAlasanName(cursor.getString(9));
+				contact.set_txtTypeAlasanName(cursor.getString(7));
+				contact.set_txtUserId(cursor.getString(8));
+				contact.set_txtRoleId(cursor.getString(9));
 				// Adding contact to list
 				contactList.add(contact);
 			} while (cursor.moveToNext());

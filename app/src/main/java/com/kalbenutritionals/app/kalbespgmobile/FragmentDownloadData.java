@@ -62,8 +62,12 @@ import bl.mPertanyaanBL;
 import bl.mPriceInOutletBL;
 import bl.mProductBarcodeBL;
 import bl.mProductBrandHeaderBL;
+import bl.mProductCompetitorBL;
+import bl.mProductPICBL;
+import bl.mProductSPGBL;
 import bl.mTypeLeaveBL;
 import bl.mTypePertanyaanBL;
+import bl.mTypeSubmissionMobileBL;
 import bl.tAbsenUserBL;
 import bl.tActivityBL;
 import bl.tCustomerBasedMobileDetailBL;
@@ -94,8 +98,12 @@ import library.salesforce.common.mParentData;
 import library.salesforce.common.mPertanyaanData;
 import library.salesforce.common.mProductBarcodeData;
 import library.salesforce.common.mProductBrandHeaderData;
+import library.salesforce.common.mProductCompetitorData;
+import library.salesforce.common.mProductPICData;
+import library.salesforce.common.mProductSPGData;
 import library.salesforce.common.mTypeLeaveMobileData;
 import library.salesforce.common.mTypePertanyaanData;
+import library.salesforce.common.mTypeSubmissionMobile;
 import library.salesforce.common.tAbsenUserData;
 import library.salesforce.common.tActivityData;
 import library.salesforce.common.tCustomerBasedMobileDetailData;
@@ -148,9 +156,9 @@ public class FragmentDownloadData extends Fragment {
     private Button btnCustomerBase;
     private Spinner spnAbsen, spnQuiz;
     private Button btnAbsen, btnQuiz;
-    private Spinner spnDataLeave, spnDataPO, spnDataQuantityStock;
-    private Button btnDataLeave, btnDataPO, btnDataQuantityStock;
-    private LinearLayout ll_kordinasi_outlet,ll_branch, ll_outlet, ll_product, ll_brand, ll_type_leave, ll_reso, ll_activity, ll_customerbased, ll_absen, ll_purchase_order, ll_data_leave;
+    private Spinner spnDataLeave, spnDataPO, spnDataQuantityStock, spnProductComp, spnTypeSubmission, spnProdSPGCusBased, spnProdPICCusBased;
+    private Button btnDataLeave, btnDataPO, btnDataQuantityStock, btnProductComp, btnTypeSubmission, btnProdSPGCusBased, btnProdPICCusBased ;
+    private LinearLayout ll_kordinasi_outlet,ll_branch, ll_outlet, ll_product, ll_brand, ll_type_leave, ll_reso, ll_activity, ll_customerbased, ll_absen, ll_purchase_order, ll_data_leave, ll__product_spg, ll_product_pic, ll_product_competitor, ll_type_submission;
 
     private PackageInfo pInfo = null;
     private List<String> arrData;
@@ -162,6 +170,8 @@ public class FragmentDownloadData extends Fragment {
     Handler mHandler = new Handler();
 
     clsMainActivity _clsMainActivity;
+
+    private String strMessage = "";
 
     @Nullable
     @Override
@@ -197,6 +207,14 @@ public class FragmentDownloadData extends Fragment {
         btnDataQuantityStock = (Button)v.findViewById(R.id.btnDlDataQuantityStock);
         spnQuiz = (Spinner) v.findViewById(R.id.spnQuiz);
         btnQuiz = (Button)v.findViewById(R.id.btnQuiz);
+        spnProductComp = (Spinner) v.findViewById(R.id.spnProdComp);
+        btnProductComp = (Button) v.findViewById(R.id.btnProdComp);
+        spnTypeSubmission = (Spinner) v.findViewById(R.id.spnTypeSubm);
+        btnTypeSubmission = (Button) v.findViewById(R.id.btnSumbisson);
+        spnProdSPGCusBased = (Spinner) v.findViewById(R.id.spnProdSPGCusBase);
+        btnProdSPGCusBased = (Button) v.findViewById(R.id.btnProdSPGCusBase);
+        spnProdPICCusBased = (Spinner) v.findViewById(R.id.spnProdPICCusBase);
+        btnProdPICCusBased = (Button) v.findViewById(R.id.btnProdPICCusBase);
 
         ll_branch = (LinearLayout) v.findViewById(R.id.ll_branch);
         ll_outlet = (LinearLayout) v.findViewById(R.id.ll_outlet);
@@ -209,6 +227,10 @@ public class FragmentDownloadData extends Fragment {
         ll_absen = (LinearLayout) v.findViewById(R.id.ll_absen);
         ll_purchase_order = (LinearLayout) v.findViewById(R.id.ll_purchase_order);
         ll_data_leave = (LinearLayout) v.findViewById(R.id.ll_data_leave);
+        ll__product_spg = (LinearLayout) v.findViewById(R.id.ll__product_spg);
+        ll_product_pic = (LinearLayout) v.findViewById(R.id.ll_product_pic) ;
+        ll_product_competitor = (LinearLayout) v.findViewById(R.id.ll_product_competitor);
+        ll_type_submission = (LinearLayout) v.findViewById(R.id.ll_type_submission);
 
         spnVisitPlan = (Spinner) v.findViewById(R.id.spnVisitPlan);
         spnTrVisitPlan = (Spinner) v.findViewById(R.id.spnTrVisitPlan);
@@ -253,6 +275,14 @@ public class FragmentDownloadData extends Fragment {
                 ll_data_leave.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_kordinasi_outlet.getId()))){
                 ll_kordinasi_outlet.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll__product_spg.getId()))){
+                ll__product_spg.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_product_pic.getId()))){
+                ll_product_pic.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_product_competitor.getId()))){
+                ll_product_competitor.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_type_submission.getId()))){
+                ll_type_submission.setVisibility(View.VISIBLE);
             }
         }
 
@@ -390,6 +420,36 @@ public class FragmentDownloadData extends Fragment {
                 task.execute();
             }
         });
+        btnProductComp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intProcesscancel = 0;
+                AsyncCallDataProdComp task = new AsyncCallDataProdComp();
+                task.execute();
+            }
+        });
+
+        btnTypeSubmission.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AsyncCallTypeSubmission task = new AsyncCallTypeSubmission();
+                task.execute();
+            }
+        });
+        btnProdSPGCusBased.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AsyncCallDataProdSPGCusBased task = new AsyncCallDataProdSPGCusBased();
+                task.execute();
+            }
+        });
+        btnProdPICCusBased.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AsyncCallDataProdPICCusBased task = new AsyncCallDataProdPICCusBased();
+                task.execute();
+            }
+        });
 
 
         return v;
@@ -441,7 +501,7 @@ public class FragmentDownloadData extends Fragment {
 
         arrData = new ArrayList<String>();
         if (parentDataList.size() > 0 && kategoriDataList.size() > 0 && jawabanDataList.size() >0 && typePertanyaanDataList.size() > 0 && pertanyaanDataList.size() >0 && tGroupQuestionMappingDataList.size() >0) {
-                arrData.add("Quesioner  Ready");
+            arrData.add("Quesioner  Ready");
             spnQuiz.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
             spnQuiz.setEnabled(true);
         } else if (parentDataList.size() == 0 && kategoriDataList.size() == 0 && jawabanDataList.size() == 0 && typePertanyaanDataList.size() == 0 && pertanyaanDataList.size() ==0 && tGroupQuestionMappingDataList.size() >0) {
@@ -744,11 +804,11 @@ public class FragmentDownloadData extends Fragment {
                     int boolValid_po = Integer.valueOf(String.valueOf(innerObj_po.get("_pboolValid")));
                     if(boolValid_po == 1) SaveDatatPurchaseOrderData(Json);
                 }
-                    Json = new mParentBL().DownlaodDataQuesioner(pInfo.versionName);
-                    Iterator x = Json.iterator();
-                    org.json.simple.JSONObject innerObj_Quiz = (org.json.simple.JSONObject) x.next();
-                    int boolValid_po = Integer.valueOf(String.valueOf(innerObj_Quiz.get("_pboolValid")));
-                    if(boolValid_po == 1) SaveDataQuesioner(Json);
+                Json = new mParentBL().DownlaodDataQuesioner(pInfo.versionName);
+                Iterator x = Json.iterator();
+                org.json.simple.JSONObject innerObj_Quiz = (org.json.simple.JSONObject) x.next();
+                int boolValid_po = Integer.valueOf(String.valueOf(innerObj_Quiz.get("_pboolValid")));
+                if(boolValid_po == 1) SaveDataQuesioner(Json);
 
 
 
@@ -785,6 +845,23 @@ public class FragmentDownloadData extends Fragment {
                 if(ll_data_leave!=null && ll_data_leave.getVisibility() == View.VISIBLE) {
                     Json = new tLeaveMobileBL().DownloadDataLeave(pInfo.versionName);
                     SaveDatatLeaveData(Json);
+                }
+
+                if(ll_product_competitor!=null && ll_product_competitor.getVisibility() == View.VISIBLE){
+                    Json = new mProductCompetitorBL().DownloadProdctCompetitor(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+                    SaveDatammProductCompetitorData(Json);
+                }
+                if(ll__product_spg!=null && ll__product_spg.getVisibility() == View.VISIBLE){
+                    Json = new mProductSPGBL().DownloadProductSPG(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+                    SaveDatammProductSPGData(Json);
+                }
+                if(ll_product_pic!=null && ll_product_pic.getVisibility() == View.VISIBLE){
+                    Json = new mProductPICBL().DownloadProductPIC(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+                    SaveDatammProductPICData(Json);
+                }
+                if(ll_type_submission!=null && ll_type_submission.getVisibility() == View.VISIBLE){
+                    Json = new mTypeSubmissionMobileBL().DownloadTypeSubmission(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+                    SaveDatamTypeSubmissionMobile(Json);
                 }
 
                 dtdataJson.setIntResult("1");
@@ -2590,6 +2667,336 @@ public class FragmentDownloadData extends Fragment {
         }
     }
 
+    private class AsyncCallDataProdComp extends AsyncTask<JSONArray, Void, JSONArray> {
+        @Override
+        protected JSONArray doInBackground(JSONArray... params) {
+            JSONArray Json = null;
+            try {
+                Json = new mProductCompetitorBL().DownloadProdctCompetitor(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return Json;
+        }
+
+        private ProgressDialog Dialog = new ProgressDialog(getContext());
+
+        @Override
+        protected void onCancelled(JSONArray jsonArray) {
+            Dialog.dismiss();
+            new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessCancelRequest, false);
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray jsonArray) {
+            if (jsonArray != null && jsonArray.size() > 0) {
+                arrData = SaveDatammProductCompetitorData(jsonArray);
+                //spnLeave.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
+                loadData();
+                new clsMainActivity().showCustomToast(getContext(), strMessage, true);
+            } else {
+                if (intProcesscancel == 1) {
+                    onCancelled();
+                } else {
+                    new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
+                }
+
+            }
+            checkingDataTable();
+            Dialog.dismiss();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            // Make ProgressBar invisible
+            // pg.setVisibility(View.VISIBLE);
+            Dialog.setMessage("Getting Product Competitor");
+            Dialog.setCancelable(false);
+            Dialog.show();
+        }
+    }
+
+    private List<String> SaveDatammProductCompetitorData(JSONArray jsonArray) {
+        List<String> _array;
+        APIData dtAPIDATA = new APIData();
+        _array = new ArrayList<>();
+        Iterator i = jsonArray.iterator();
+        List<mProductCompetitorData> _Listdata = new ArrayList<>();
+        while (i.hasNext()) {
+            org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
+            int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
+            if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
+                strMessage = (String) innerObj.get(dtAPIDATA.strMessage);
+                mProductCompetitorData _data = new mProductCompetitorData();
+                _data.set_txtID(new clsHelper().GenerateGuid());
+                _data.set_txtCRMCode(String.valueOf(innerObj.get("TxtBranchCRMCode")));
+                _data.set_GroupProduct(String.valueOf(innerObj.get("TxtGroupProduct")));
+                _data.set_txtLobName(String.valueOf(innerObj.get("TxtLobName")));
+                _data.set_txtNIK(String.valueOf(innerObj.get("TxtNIK")));
+                _data.set_txtName(String.valueOf(innerObj.get("TxtName")));
+                _data.set_txtProductDetailCode(String.valueOf(innerObj.get("TxtProductDetailCode")));
+                _data.set_txtProdukKompetitorID(String.valueOf(innerObj.get("TxtProdukKompetitorID")));
+                _data.set_txtProdukid(String.valueOf(innerObj.get("TxtProdukid")));
+                _array.add(_data.get_txtProdukKompetitorID());
+                _Listdata.add(_data);
+            } else {
+                strMessage = (String) innerObj.get(dtAPIDATA.strMessage);
+                break;
+            }
+        }
+        new mProductCompetitorBL().deleteAllData();
+        new mProductCompetitorBL().saveData(_Listdata);
+        return _array;
+    }
+
+    private class AsyncCallDataProdSPGCusBased extends AsyncTask<JSONArray, Void, JSONArray> {
+        @Override
+        protected JSONArray doInBackground(JSONArray... params) {
+            JSONArray Json = null;
+            try {
+                Json = new mProductSPGBL().DownloadProductSPG(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return Json;
+        }
+
+        private ProgressDialog Dialog = new ProgressDialog(getContext());
+
+        @Override
+        protected void onCancelled(JSONArray jsonArray) {
+            Dialog.dismiss();
+            new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessCancelRequest, false);
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray jsonArray) {
+            if (jsonArray != null && jsonArray.size() > 0) {
+                arrData = SaveDatammProductSPGData(jsonArray);
+                //spnLeave.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
+                loadData();
+                new clsMainActivity().showCustomToast(getContext(), strMessage, true);
+            } else {
+                if (intProcesscancel == 1) {
+                    onCancelled();
+                } else {
+                    new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
+                }
+
+            }
+            checkingDataTable();
+            Dialog.dismiss();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            // Make ProgressBar invisible
+            // pg.setVisibility(View.VISIBLE);
+            Dialog.setMessage("Getting Product SPG");
+            Dialog.setCancelable(false);
+            Dialog.show();
+        }
+    }
+
+    private List<String> SaveDatammProductSPGData(JSONArray jsonArray) {
+        List<String> _array;
+        APIData dtAPIDATA = new APIData();
+        _array = new ArrayList<>();
+        Iterator i = jsonArray.iterator();
+        List<mProductSPGData> _Listdata = new ArrayList<>();
+        new mProductSPGBL().deleteAllData();
+        int intsum = new mProductSPGBL().getContactCount();
+        while (i.hasNext()) {
+            org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
+            int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
+            if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
+                strMessage = (String) innerObj.get(dtAPIDATA.strMessage);
+                intsum += 1;
+                mProductSPGData _data = new mProductSPGData();
+                _data.set_intId(String.valueOf(intsum));
+                _data.set_decBobot((String) innerObj.get("DecBobot"));
+                _data.set_decHJD((String) innerObj.get("DecHJD"));
+                _data.set_txtBrandDetailGramCode((String) innerObj.get("TxtBrandDetailGramCode"));
+                _data.set_txtNIK((String) innerObj.get("TxtNIK"));
+                _data.set_txtName((String) innerObj.get("TxtName"));
+                _data.set_txtProductBrandDetailGramName((String) innerObj.get("TxtProductBrandDetailGramName"));
+                _data.set_txtProductDetailCode((String) innerObj.get("TxtProductDetailCode"));
+                _data.set_txtProductDetailName((String) innerObj.get("TxtProductDetailName"));
+                _data.set_txtLobName((String) innerObj.get("TxtLobName"));
+                _data.set_txtMasterId((String) innerObj.get("TxtMasterId"));
+                _data.set_txtNamaMasterData((String) innerObj.get("TxtNamaMasterData"));
+                _data.set_txtKeterangan((String) innerObj.get("TxtKeterangan"));
+                _Listdata.add(_data);
+            } else {
+                strMessage = (String) innerObj.get(dtAPIDATA.strMessage);
+                break;
+            }
+        }
+        new mProductSPGBL().saveData(_Listdata);
+        return _array;
+    }
+
+    private class AsyncCallDataProdPICCusBased extends AsyncTask<JSONArray, Void, JSONArray> {
+        @Override
+        protected JSONArray doInBackground(JSONArray... params) {
+//            android.os.Debug.waitForDebugger();
+            JSONArray Json = null;
+            try {
+                Json = new mProductPICBL().DownloadProductPIC(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return Json;
+        }
+
+        private ProgressDialog Dialog = new ProgressDialog(getContext());
+
+        @Override
+        protected void onCancelled(JSONArray jsonArray) {
+            Dialog.dismiss();
+            new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessCancelRequest, false);
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray jsonArray) {
+            if (jsonArray != null && jsonArray.size() > 0) {
+                arrData = SaveDatammProductPICData(jsonArray);
+                //spnLeave.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
+                loadData();
+                new clsMainActivity().showCustomToast(getContext(), strMessage, true);
+            } else {
+                if (intProcesscancel == 1) {
+                    onCancelled();
+                } else {
+                    new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
+                }
+
+            }
+            checkingDataTable();
+            Dialog.dismiss();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            Dialog.setMessage("Getting Product PIC");
+            Dialog.setCancelable(false);
+            Dialog.show();
+        }
+    }
+
+    private List<String> SaveDatammProductPICData(JSONArray jsonArray) {
+        List<String> _array;
+        APIData dtAPIDATA = new APIData();
+        _array = new ArrayList<>();
+        Iterator i = jsonArray.iterator();
+        List<mProductPICData> _Listdata = new ArrayList<>();
+        new mProductPICBL().deleteAllData();
+        int intsum = new mProductPICBL().getContactCount();
+        while (i.hasNext()) {
+            org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
+            int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
+            if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
+                strMessage = (String) innerObj.get(dtAPIDATA.strMessage);
+                intsum += 1;
+                mProductPICData _data = new mProductPICData();
+                _data.set_intId(String.valueOf(intsum));
+                _data.set_decBobot((String) innerObj.get("DecBobot"));
+                _data.set_decHJD((String) innerObj.get("DecHJD"));
+                _data.set_txtBrandDetailGramCode((String) innerObj.get("TxtBrandDetailGramCode"));
+                _data.set_txtNIK((String) innerObj.get("TxtNIK"));
+                _data.set_txtName((String) innerObj.get("TxtName"));
+                _data.set_txtProductBrandDetailGramName((String) innerObj.get("TxtProductBrandDetailGramName"));
+                _data.set_txtProductDetailCode((String) innerObj.get("TxtProductDetailCode"));
+                _data.set_txtProductDetailName((String) innerObj.get("TxtProductDetailName"));
+                _data.set_txtLobName((String) innerObj.get("TxtLobName"));
+                _data.set_txtMasterId((String) innerObj.get("TxtMasterId"));
+                _data.set_txtNamaMasterData((String) innerObj.get("TxtNamaMasterData"));
+                _data.set_txtKeterangan((String) innerObj.get("TxtKeterangan"));
+                _Listdata.add(_data);
+            } else {
+                strMessage = (String) innerObj.get(dtAPIDATA.strMessage);
+                break;
+            }
+        }
+        new mProductPICBL().saveData(_Listdata);
+        return _array;
+    }
+
+    private class AsyncCallTypeSubmission extends AsyncTask<JSONArray, Void, JSONArray> {
+        @Override
+        protected JSONArray doInBackground(JSONArray... params) {
+            JSONArray Json = null;
+            try {
+                Json = new mTypeSubmissionMobileBL().DownloadTypeSubmission(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return Json;
+        }
+
+        private ProgressDialog Dialog = new ProgressDialog(getContext());
+
+        @Override
+        protected void onCancelled(JSONArray jsonArray) {
+            Dialog.dismiss();
+            new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessCancelRequest, false);
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray jsonArray) {
+            if (jsonArray != null && jsonArray.size() > 0) {
+                arrData = SaveDatamTypeSubmissionMobile(jsonArray);
+                loadData();
+                new clsMainActivity().showCustomToast(getContext(), strMessage, true);
+            } else {
+                if (intProcesscancel == 1) {
+                    onCancelled();
+                } else {
+                    new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
+                }
+
+            }
+            checkingDataTable();
+            Dialog.dismiss();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            // Make ProgressBar invisible
+            // pg.setVisibility(View.VISIBLE);
+            Dialog.setMessage("Getting Type Submission");
+            Dialog.setCancelable(false);
+            Dialog.show();
+        }
+    }
+
+    private List<String> SaveDatamTypeSubmissionMobile(JSONArray jsonArray) {
+        List<String> _array = new ArrayList<>();
+        APIData dtAPIDATA = new APIData();
+        Iterator i = jsonArray.iterator();
+        List<mTypeSubmissionMobile> _Listdata = new ArrayList<>();
+        while (i.hasNext()) {
+            org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
+            int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
+            if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
+                strMessage = (String) innerObj.get(dtAPIDATA.strMessage);
+                mTypeSubmissionMobile _data = new mTypeSubmissionMobile();
+                _data.set_txtMasterID(String.valueOf(innerObj.get("TxtMasterID")));
+                _data.set_txtGrupMasterID(String.valueOf(innerObj.get("TxtGrupMasterID")));
+                _data.set_txtKeterangan(String.valueOf(innerObj.get("TxtKeterangan")));
+                _data.set_txtNamaMasterData(String.valueOf(innerObj.get("TxtNamaMasterData")));
+                _data.set_intLastActiveSelection("0");
+                _array.add(_data.get_txtMasterID());
+                _Listdata.add(_data);
+            } else {
+                strMessage = (String) innerObj.get(dtAPIDATA.strMessage);
+                break;
+            }
+        }
+        new mTypeSubmissionMobileBL().saveData(_Listdata);
+        return _array;
+    }
+
     private List<String> SaveDataQuesioner(JSONArray jsonArray) {
         List<String> _array;
         APIData dtAPIDATA = new APIData();
@@ -2841,7 +3248,8 @@ public class FragmentDownloadData extends Fragment {
                         new tSalesProductQuantityImageDA(_db_image).SaveDataImage(_db_image, _data);
                     }
                 } else {
-                    new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
+//                    new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
+                    _array.add("Data Quantity Stock Not Found");
                 }
             } catch (ParseException e){
                 e.printStackTrace();
@@ -2947,7 +3355,8 @@ public class FragmentDownloadData extends Fragment {
                         new KoordinasiOutletImageDA(_db_image).SaveDataImage(_db_image, _data);
                     }
                 } else {
-                    new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
+//                    new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
+                    _array.add("Data Koordinasi Outlet not Found");
                 }
             } catch (ParseException e){
                 e.printStackTrace();

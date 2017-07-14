@@ -19,6 +19,8 @@ import library.salesforce.common.KoordinasiOutletData;
 import library.salesforce.common.KoordinasiOutletImageData;
 import library.salesforce.common.clsFileAttach_mobile;
 import library.salesforce.common.clsHelper;
+import library.salesforce.common.clsLogReceiverDetail_mobile;
+import library.salesforce.common.clsLogReceiverHeader_mobile;
 import library.salesforce.common.clsPushData;
 import library.salesforce.common.dataJson;
 import library.salesforce.common.linkAPI;
@@ -47,6 +49,8 @@ import library.salesforce.common.visitplanAbsenData;
 import library.salesforce.dal.KoordinasiOutletDA;
 import library.salesforce.dal.KoordinasiOutletImageDA;
 import library.salesforce.dal.clsHardCode;
+import library.salesforce.dal.clsLogReceiverDetail_mobileDA;
+import library.salesforce.dal.clsLogReceiverHeader_mobileDA;
 import library.salesforce.dal.enumConfigData;
 import library.salesforce.dal.enumCounterData;
 import library.salesforce.dal.mCounterNumberDA;
@@ -372,6 +376,9 @@ public class clsHelperBL extends clsMainBL {
             KoordinasiOutletDA _KoordinasiOutletDA = new KoordinasiOutletDA(db);
             KoordinasiOutletImageDA _KoordinasiOutletImageDA = new KoordinasiOutletImageDA(db);
 
+            clsLogReceiverHeader_mobileDA _clsLogReceiverHeader_mobileDA = new clsLogReceiverHeader_mobileDA(db);
+            clsLogReceiverDetail_mobileDA _clsLogReceiverDetail_mobileDA = new clsLogReceiverDetail_mobileDA(db);
+
             List<tVisitPlanHeader_MobileData> ListOftVisitPlanHeader_MobileData = _tVisitPlanHeader_MobileDA.getPushData(db);
             List<tVisitPlanRealisasiData> ListOftVisitPlanRealisasiDataDetail = _tVisitPlanRealisasiDA.getPushData(db);
             List<tCustomerBasedMobileHeaderData> ListOftCustomerBasedMobileHeader = _tCustomerBasedMobileHeaderDA.getPushData(db);
@@ -392,6 +399,9 @@ public class clsHelperBL extends clsMainBL {
             List<tLeaveMobileData> ListOftLeaveData=_tLeaveMobileDA.getAllDataPushData(db);
             List<tAbsenUserData> ListOftAbsenUserData = _tAbsenUserDA.getAllDataToPushData(db);
             List<tActivityData> ListOftActivityData = _tActivityDA.getAllDataToPushData(db);
+
+            List<clsLogReceiverHeader_mobile> ListOfLogReceiverHeader_mobile = _clsLogReceiverHeader_mobileDA.getAllDataToPushData(db);
+            List<clsLogReceiverDetail_mobile> ListOfLogReceiverDetail_mobile = _clsLogReceiverDetail_mobileDA.getAllDataToPushData(db);
 
             FileUpload = new HashMap<String, byte[]>();
             if (ListOftAbsenUserData != null) {
@@ -517,6 +527,13 @@ public class clsHelperBL extends clsMainBL {
                 dtPush.setListOftVisitPlanHeader_MobileData(ListOftVisitPlanHeader_MobileData);
             }
 */
+            if (ListOfLogReceiverHeader_mobile != null){
+                dtPush.setListOfLogReceiverHeader_mobile(ListOfLogReceiverHeader_mobile);
+            }
+
+            if (ListOfLogReceiverDetail_mobile != null){
+                dtPush.setListOfLogReceiverDetail_mobile(ListOfLogReceiverDetail_mobile);
+            }
         } else {
             dtPush = null;
         }
@@ -632,6 +649,22 @@ public class clsHelperBL extends clsMainBL {
             }
         }
 
+        if(dtJson.getListOfLogReceiverHeader_mobile() != null){
+            for (clsLogReceiverHeader_mobile dt : dtJson.getListOfLogReceiverHeader_mobile()){
+                clsLogReceiverHeader_mobileDA _clsLogReceiverHeader_mobileDA = new clsLogReceiverHeader_mobileDA(db);
+                dt.setIntSync("1");
+                _clsLogReceiverHeader_mobileDA.SaveDataMConfig(db, dt);
+            }
+        }
+
+        if(dtJson.getListOfLogReceiverDetail_mobile() != null){
+            for (clsLogReceiverDetail_mobile dt : dtJson.getListOfLogReceiverDetail_mobile()){
+                clsLogReceiverDetail_mobileDA _clsLogReceiverDetail_mobileDA = new clsLogReceiverDetail_mobileDA(db);
+                dt.setIntSync("1");
+                _clsLogReceiverDetail_mobileDA.SaveDataMConfig(db, dt);
+            }
+        }
+
         Iterator j2 = null;
         j2 = JsonResult.iterator();
         while (j2.hasNext()) {
@@ -696,6 +729,7 @@ public class clsHelperBL extends clsMainBL {
                     dtclsFileAttach_mobile.set_intSubmit("1");
                     dtclsFileAttach_mobile.set_intSync("1");
                     dtclsFileAttach_mobile.set_intActive("0");
+                    dtclsFileAttach_mobile.set_intLog("1");
                     dtclsFileAttach_mobile.set_txtDesc(String.valueOf(innerObj_Detail.get("_txtDesc")));
                     dtclsFileAttach_mobile.set_txtLinkFileAttach(String.valueOf(innerObj_Detail.get("_txtLinkFileAttach")));
                     dtclsFileAttach_mobile.set_txtNameFileEncrypt(String.valueOf(innerObj_Detail.get("_txtNameFileEncrypt")));

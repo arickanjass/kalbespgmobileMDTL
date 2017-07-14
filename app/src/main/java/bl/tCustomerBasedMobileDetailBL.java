@@ -8,13 +8,13 @@ import library.salesforce.common.tCustomerBasedMobileDetailData;
 import library.salesforce.dal.tCustomerBasedMobileDetailDA;
 
 public class tCustomerBasedMobileDetailBL extends clsMainBL{
-	SQLiteDatabase db;
+    SQLiteDatabase db;
 
-	public void saveData(tCustomerBasedMobileDetailData dt){
-		SQLiteDatabase _db=getDb();
-		tCustomerBasedMobileDetailDA _tCustomerBasedMobileDetailDA = new tCustomerBasedMobileDetailDA(_db);
+    public void saveData(tCustomerBasedMobileDetailData dt){
+        SQLiteDatabase _db=getDb();
+        tCustomerBasedMobileDetailDA _tCustomerBasedMobileDetailDA = new tCustomerBasedMobileDetailDA(_db);
         _tCustomerBasedMobileDetailDA.SaveDatatCustomerBasedMobileDetailData(_db, dt);
-	}
+    }
 
     public void updateDataValueById(tCustomerBasedMobileDetailData dt, String id){
         SQLiteDatabase _db=getDb();
@@ -22,11 +22,11 @@ public class tCustomerBasedMobileDetailBL extends clsMainBL{
         _tCustomerBasedMobileDetailDA.updateDataById(_db, dt, id);
     }
 
-	public List<tCustomerBasedMobileDetailData> getAllDataByHeaderId(String id) {
-		SQLiteDatabase _db=getDb();
-		List<tCustomerBasedMobileDetailData> dtDetail = new tCustomerBasedMobileDetailDA(_db).getAllDataByHeaderId(_db, id);
-		return dtDetail;
-	}
+    public List<tCustomerBasedMobileDetailData> getAllDataByHeaderId(String id) {
+        SQLiteDatabase _db=getDb();
+        List<tCustomerBasedMobileDetailData> dtDetail = new tCustomerBasedMobileDetailDA(_db).getAllDataByHeaderId(_db, id);
+        return dtDetail;
+    }
 
     public tCustomerBasedMobileDetailData getAllDataByHeaderIdandintPIC(String id) {
         SQLiteDatabase _db=getDb();

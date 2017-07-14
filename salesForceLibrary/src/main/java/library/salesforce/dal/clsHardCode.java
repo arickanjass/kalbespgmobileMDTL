@@ -23,6 +23,8 @@ public class clsHardCode  {
 	public String txtTable_mConfig = "mconfig";
 	public String txtTable_tNotification = "tNotification";
 	public String txtTable_clsFileAttach_mobile = "clsFileAttach_mobile";
+	public String txtTable_clsLogReceiverHeader_mobile = "clsLogReceiverHeader_mobile";
+	public String txtTable_clsLogReceiverDetail_mobile = "clsLogReceiverDetail_mobile";
 	public String txtTable_mEmployeeBranch = "mEmployeeBranch";
 	public String txtTable_mEmployeeArea = "mEmployeeArea";
 	public String txtTable_mBrosurMobile = "mBrosurMobile";
@@ -36,6 +38,8 @@ public class clsHardCode  {
 	public String txtTable_mDownloadMasterData_mobile = "mDownloadMasterData_mobile";
 	public String txtTable_mUserCabang = "mUserCabang";
 	public String txtTable_mEmployeeSalesProduct = "mEmployeeSalesProduct";
+	String txtTable_mProductSPG = "mProductSPG";
+	String txtTable_mProductPIC = "mProductPIC";
 	public String txtTable_mNotification = "mNotification";
 	public String txtTable_mProductBrandHeaderData = "mProductBrandHeaderData";
 	public String txtTable_tErrorLog = "tErrorLog";

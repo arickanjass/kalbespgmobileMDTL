@@ -32,7 +32,9 @@ public class tCustomerBasedMobileDetailDA {
                 + dt.Property_dtInserted + " TEXT NULL,"
                 + dt.Property_dtUpdated + " TEXT NULL,"
                 + dt.Property_txtInsertedBy + " TEXT NULL,"
-                + dt.Property_txtUpdatedBy + " TEXT NULL" + ")";
+                + dt.Property_txtUpdatedBy + " TEXT NULL,"
+                + dt.Property_intAge + " TEXT NULL,"
+                + dt.Property_intAgeTypeFlag + " TEXT NULL" + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
 
@@ -63,7 +65,9 @@ public class tCustomerBasedMobileDetailDA {
                 + String.valueOf(data.get_dtInserted()) + "','"
                 + String.valueOf(data.get_dtUpdated()) + "','"
                 + String.valueOf(data.get_txtInsertedBy()) + "','"
-                + String.valueOf(data.get_txtUpdatedBy()) + "')"
+                + String.valueOf(data.get_txtUpdatedBy()) + "','"
+                + String.valueOf(data.get_intAge()) + "','"
+                + String.valueOf(data.get_intAgeTypeFlag()) + "')"
         );
     }
 
@@ -83,7 +87,9 @@ public class tCustomerBasedMobileDetailDA {
                 dt.Property_dtInserted,
                 dt.Property_dtUpdated,
                 dt.Property_txtInsertedBy,
-                dt.Property_txtUpdatedBy
+                dt.Property_txtUpdatedBy,
+                dt.Property_intAge,
+                dt.Property_intAgeTypeFlag
         };
         String whereClause = dt.Property_intTrCustomerIdDetail + "=?";
         String[] whereArgs = new String[]{
@@ -116,6 +122,8 @@ public class tCustomerBasedMobileDetailDA {
         contact.set_dtUpdated(cursor.getString(10));
         contact.set_txtInsertedBy(cursor.getString(11));
         contact.set_txtUpdatedBy(cursor.getString(12));
+        contact.set_intAge(cursor.getString(13));
+        contact.set_intAgeTypeFlag(cursor.getString(14));
         // return contact
         cursor.close();
         return contact;
@@ -146,6 +154,8 @@ public class tCustomerBasedMobileDetailDA {
                 contact.set_dtUpdated(cursor.getString(10));
                 contact.set_txtInsertedBy(cursor.getString(11));
                 contact.set_txtUpdatedBy(cursor.getString(12));
+                contact.set_intAge(cursor.getString(13));
+                contact.set_intAgeTypeFlag(cursor.getString(14));
                 contactList.add(contact);
             } while (cursor.moveToNext());
         }
@@ -158,7 +168,7 @@ public class tCustomerBasedMobileDetailDA {
         List<tCustomerBasedMobileDetailData> contactList = new ArrayList<tCustomerBasedMobileDetailData>();
         // Select All Query
         tCustomerBasedMobileDetailData dt = new tCustomerBasedMobileDetailData();
-        String selectQuery = "SELECT  " + dt.Property_ALL + " FROM " + TABLE_NAME + " WHERE " + dt.Property_intTrCustomerId + "='" + id + "' ORDER BY intNo";
+        String selectQuery = "SELECT  " + dt.Property_ALL + " FROM " + TABLE_NAME + " WHERE " + dt.Property_intTrCustomerId + "='" + id + "' ORDER BY " + dt.Property_dtInserted + " desc";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -178,6 +188,8 @@ public class tCustomerBasedMobileDetailDA {
                 contact.set_dtUpdated(cursor.getString(10));
                 contact.set_txtInsertedBy(cursor.getString(11));
                 contact.set_txtUpdatedBy(cursor.getString(12));
+                contact.set_intAge(cursor.getString(13));
+                contact.set_intAgeTypeFlag(cursor.getString(14));
                 contactList.add(contact);
             } while (cursor.moveToNext());
         }
@@ -224,6 +236,8 @@ public class tCustomerBasedMobileDetailDA {
                 contact.set_dtUpdated(cursor.getString(10));
                 contact.set_txtInsertedBy(cursor.getString(11));
                 contact.set_txtUpdatedBy(cursor.getString(12));
+                contact.set_intAge(cursor.getString(13));
+                contact.set_intAgeTypeFlag(cursor.getString(14));
                 contactList.add(contact);
             } while (cursor.moveToNext());
         }
@@ -292,7 +306,8 @@ public class tCustomerBasedMobileDetailDA {
             contact.set_dtUpdated(cursor.getString(10));
             contact.set_txtInsertedBy(cursor.getString(11));
             contact.set_txtUpdatedBy(cursor.getString(12));
-
+            contact.set_intAge(cursor.getString(13));
+            contact.set_intAgeTypeFlag(cursor.getString(14));
         }
         cursor.close();
         return contact;

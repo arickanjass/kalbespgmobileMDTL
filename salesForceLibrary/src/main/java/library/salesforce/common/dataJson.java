@@ -649,6 +649,7 @@ public class dataJson {
                     item1.put(dttCustomerBasedHeaderData.Property_txtNamaDepan, String.valueOf(data.get_txtNamaDepan()));
                     item1.put(dttCustomerBasedHeaderData.Property_txtGender, String.valueOf(data.get_txtGender()));
                     item1.put(dttCustomerBasedHeaderData.Property_txtTelp, String.valueOf(data.get_txtTelp()));
+                    item1.put(dttCustomerBasedHeaderData.Property_txtTelp2, String.valueOf(data.get_txtTelp2()));
                     item1.put(dttCustomerBasedHeaderData.Property_txtTelpKantor, String.valueOf(data.get_txtTelpKantor()));
                     item1.put(dttCustomerBasedHeaderData.Property_txtEmail, String.valueOf(data.get_txtEmail()));
                     item1.put(dttCustomerBasedHeaderData.Property_txtPINBBM, String.valueOf(data.get_txtPINBBM()));
@@ -660,7 +661,9 @@ public class dataJson {
                     item1.put(dttCustomerBasedHeaderData.Property_dtDate, String.valueOf(data.get_dtDate()));
                     item1.put(dttCustomerBasedHeaderData.Property_intSubmit, String.valueOf(data.get_intSubmit()));
                     item1.put(dttCustomerBasedHeaderData.Property_intSync, String.valueOf(data.get_intSync()));
-                    item1.put(dttCustomerBasedHeaderData.Property_txtRoleId, String.valueOf(data.get_txtRoleId()));
+                    item1.put(dttCustomerBasedHeaderData.Property_txtTglLahir, String.valueOf(data.get_txtTglLahir()));
+                    item1.put(dttCustomerBasedHeaderData.Property_intAge, String.valueOf(data.get_intAge()));
+                    item1.put(dttCustomerBasedHeaderData.Property_intAgeTypeFlag, String.valueOf(data.get_intAgeTypeFlag()));
                     itemsListJquey.add(item1);
                 }
                 resJson.put(dttCustomerBasedHeaderData.Property_ListOftCustomerBasedMobileHeaderData, new JSONArray(itemsListJquey));
@@ -675,8 +678,6 @@ public class dataJson {
                     item1.put(dttCustomerBasedDetailData.Property_intTrCustomerId, String.valueOf(data.get_intTrCustomerId()));
                     item1.put(dttCustomerBasedDetailData.Property_txtNamaDepan, String.valueOf(data.get_txtNamaDepan()));
                     item1.put(dttCustomerBasedDetailData.Property_txtGender, String.valueOf(data.get_txtGender()));
-                    item1.put(dttCustomerBasedDetailData.Property_txtTglLahir, String.valueOf(data.get_txtTglLahir()));
-                    item1.put(dttCustomerBasedDetailData.Property_txtUsiaKehamilan, String.valueOf(data.get_txtUsiaKehamilan()));
                     item1.put(dttCustomerBasedDetailData.Property_intNo, String.valueOf(data.get_intNo()));
                     item1.put(dttCustomerBasedDetailData.Property_intPIC, String.valueOf(data.get_intPIC()));
                     item1.put(dttCustomerBasedDetailData.Property_bitActive, String.valueOf(data.get_bitActive()));
@@ -684,6 +685,10 @@ public class dataJson {
                     item1.put(dttCustomerBasedDetailData.Property_dtUpdated, String.valueOf(data.get_dtUpdated()));
                     item1.put(dttCustomerBasedDetailData.Property_txtInsertedBy, String.valueOf(data.get_txtInsertedBy()));
                     item1.put(dttCustomerBasedDetailData.Property_txtUpdatedBy, String.valueOf(data.get_txtUpdatedBy()));
+                    item1.put(dttCustomerBasedDetailData.Property_txtUsiaKehamilan, String.valueOf(data.get_txtUsiaKehamilan()));
+                    item1.put(dttCustomerBasedDetailData.Property_txtTglLahir, String.valueOf(data.get_txtTglLahir()));
+                    item1.put(dttCustomerBasedDetailData.Property_intAge, String.valueOf(data.get_intAge()));
+                    item1.put(dttCustomerBasedDetailData.Property_intAgeTypeFlag, String.valueOf(data.get_intAgeTypeFlag()));
 
                     itemsListJquey.add(item1);
                 }
@@ -699,14 +704,16 @@ public class dataJson {
                     item1.put(dttCustomerBasedDetailProductData.Property_intTrCustomerIdDetail, String.valueOf(data.get_intTrCustomerIdDetail()));
                     item1.put(dttCustomerBasedDetailProductData.Property_txtProductBrandCode, String.valueOf(data.get_txtProductBrandCode()));
                     item1.put(dttCustomerBasedDetailProductData.Property_txtProductBrandName, String.valueOf(data.get_txtProductBrandName()));
-                    item1.put(dttCustomerBasedDetailProductData.Property_txtProductCompetitorCode, String.valueOf(data.get_txtProductCompetitorCode()));
-                    item1.put(dttCustomerBasedDetailProductData.Property_txtProductCompetitorName, String.valueOf(data.get_txtProductCompetitorName()));
                     item1.put(dttCustomerBasedDetailProductData.Property_txtProductBrandQty, String.valueOf(data.get_txtProductBrandQty()));
                     item1.put(dttCustomerBasedDetailProductData.Property_bitActive, String.valueOf(data.get_bitActive()));
                     item1.put(dttCustomerBasedDetailProductData.Property_dtInserted, String.valueOf(data.get_dtInserted()));
                     item1.put(dttCustomerBasedDetailProductData.Property_dtUpdated, String.valueOf(data.get_dtUpdated()));
                     item1.put(dttCustomerBasedDetailProductData.Property_txtInsertedBy, String.valueOf(data.get_txtInsertedBy()));
                     item1.put(dttCustomerBasedDetailProductData.Property_txtUpdatedBy, String.valueOf(data.get_txtUpdatedBy()));
+                    item1.put(dttCustomerBasedDetailProductData.Property_txtProductCompetitorCode, String.valueOf(data.get_txtProductCompetitorCode()));
+                    item1.put(dttCustomerBasedDetailProductData.Property_txtProductCompetitorName, String.valueOf(data.get_txtProductCompetitorName()));
+                    item1.put(dttCustomerBasedDetailProductData.Property_txtLOB, String.valueOf(data.get_txtLOB()));
+                    item1.put(dttCustomerBasedDetailProductData.Property_txtProductBrandCodeCRM, String.valueOf(data.get_txtProductBrandCodeCRM()));
 
                     itemsListJquey.add(item1);
                 }
@@ -937,6 +944,52 @@ public class dataJson {
                 }
                 resJson.put(dttEmployeeBRWithLOBData.Property_ListOftEmployeeBRWithLOBData, new JSONArray(itemsListJquey));
             }
+
+            if (this.getListOfLogReceiverHeader_mobile() != null) {
+                clsLogReceiverHeader_mobile dtclsLogReceiverHeader_mobile = new clsLogReceiverHeader_mobile();
+                itemsListJquey = new ArrayList<JSONObject>();
+                for (clsLogReceiverHeader_mobile data : this.getListOfLogReceiverHeader_mobile()) {
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtclsLogReceiverHeader_mobile.Property_txtIdLogReceiver, String.valueOf(data.getTxtIdLogReceiver()));
+                    item1.put(dtclsLogReceiverHeader_mobile.Property_txtStatus, String.valueOf(data.getTxtStatus()));
+                    item1.put(dtclsLogReceiverHeader_mobile.Property_txtNIK, String.valueOf(data.getTxtNIK()));
+                    item1.put(dtclsLogReceiverHeader_mobile.Property_txtUSerName, String.valueOf(data.getTxtUSerName()));
+                    item1.put(dtclsLogReceiverHeader_mobile.Property_dtInserted, String.valueOf(data.getDtInserted()));
+                    item1.put(dtclsLogReceiverHeader_mobile.Property_dtUpdated, String.valueOf(data.getDtUpdated()));
+                    item1.put(dtclsLogReceiverHeader_mobile.Property_intActive, String.valueOf(data.getIntActive()));
+                    item1.put(dtclsLogReceiverHeader_mobile.Property_intSubmit, String.valueOf(data.getIntSubmit()));
+                    item1.put(dtclsLogReceiverHeader_mobile.Property_intSync, String.valueOf(data.getIntSync()));
+                    item1.put(dtclsLogReceiverHeader_mobile.Property_txtIdReceiver, String.valueOf(data.getTxtIdReceiver()));
+                    item1.put(dtclsLogReceiverHeader_mobile.Property_txtGuidLogin, String.valueOf(data.getTxtGuidLogin()));
+                    item1.put(dtclsLogReceiverHeader_mobile.Property_txtIdHeaderNotif, String.valueOf(data.getTxtIdHeaderNotif()));
+                    itemsListJquey.add(item1);
+                }
+                resJson.put(dtclsLogReceiverHeader_mobile.Property_ListOfclsLogReceiverHeader_mobile, new JSONArray(itemsListJquey));
+            }
+
+            if (this.getListOfLogReceiverDetail_mobile() != null) {
+                clsLogReceiverDetail_mobile dtclsLogReceiverDetail_mobile = new clsLogReceiverDetail_mobile();
+                itemsListJquey = new ArrayList<JSONObject>();
+                for (clsLogReceiverDetail_mobile data : this.getListOfLogReceiverDetail_mobile()) {
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtclsLogReceiverDetail_mobile.Property_txtIdLogReceiverDetail, String.valueOf(data.getTxtIdLogReceiverDetail()));
+                    item1.put(dtclsLogReceiverDetail_mobile.Property_txtStatus, String.valueOf(data.getTxtStatus()));
+                    item1.put(dtclsLogReceiverDetail_mobile.Property_txtNIK, String.valueOf(data.getTxtNIK()));
+                    item1.put(dtclsLogReceiverDetail_mobile.Property_txtUSerName, String.valueOf(data.getTxtUSerName()));
+                    item1.put(dtclsLogReceiverDetail_mobile.Property_dtInserted, String.valueOf(data.getDtInserted()));
+                    item1.put(dtclsLogReceiverDetail_mobile.Property_dtUpdated, String.valueOf(data.getDtUpdated()));
+                    item1.put(dtclsLogReceiverDetail_mobile.Property_intActive, String.valueOf(data.getIntActive()));
+                    item1.put(dtclsLogReceiverDetail_mobile.Property_intSubmit, String.valueOf(data.getIntSubmit()));
+                    item1.put(dtclsLogReceiverDetail_mobile.Property_intSync, String.valueOf(data.getIntSync()));
+                    item1.put(dtclsLogReceiverDetail_mobile.Property_txtIDFile, String.valueOf(data.getTxtIDFile()));
+                    item1.put(dtclsLogReceiverDetail_mobile.Property_txtIdReceiver, String.valueOf(data.getTxtIdReceiver()));
+                    item1.put(dtclsLogReceiverDetail_mobile.Property_txtGuidLogin, String.valueOf(data.getTxtGuidLogin()));
+                    item1.put(dtclsLogReceiverDetail_mobile.Property_txtIdHeaderNotif, String.valueOf(data.getTxtIdHeaderNotif()));
+                    itemsListJquey.add(item1);
+                }
+                resJson.put(dtclsLogReceiverDetail_mobile.Property_ListOfclsLogReceiverDetail_mobile, new JSONArray(itemsListJquey));
+            }
+
         } catch (Exception ex) {
 
         }
@@ -1047,6 +1100,25 @@ public class dataJson {
     private List<trackingLocationData> ListOfTrackingLocationData;
     private List<KoordinasiOutletData> ListOfKoordinasiOutletData;
     private List<KoordinasiOutletImageData> ListOfKoordinasiOutletImageData;
+
+    public List<clsLogReceiverHeader_mobile> getListOfLogReceiverHeader_mobile() {
+        return ListOfLogReceiverHeader_mobile;
+    }
+
+    public void setListOfLogReceiverHeader_mobile(List<clsLogReceiverHeader_mobile> listOfLogReceiverHeader_mobile) {
+        ListOfLogReceiverHeader_mobile = listOfLogReceiverHeader_mobile;
+    }
+
+    public List<clsLogReceiverDetail_mobile> getListOfLogReceiverDetail_mobile() {
+        return ListOfLogReceiverDetail_mobile;
+    }
+
+    public void setListOfLogReceiverDetail_mobile(List<clsLogReceiverDetail_mobile> listOfLogReceiverDetail_mobile) {
+        ListOfLogReceiverDetail_mobile = listOfLogReceiverDetail_mobile;
+    }
+
+    private List<clsLogReceiverHeader_mobile> ListOfLogReceiverHeader_mobile;
+    private List<clsLogReceiverDetail_mobile> ListOfLogReceiverDetail_mobile;
 
     private List<mEmployeeAreaData> ListOfmEmployeeAreaData;
     private List<mEmployeeBranchData> ListOfmEmployeeBranchData;

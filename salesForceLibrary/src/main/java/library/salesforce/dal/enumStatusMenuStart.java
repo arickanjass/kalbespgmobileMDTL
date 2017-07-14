@@ -14,3 +14,4 @@ public enum enumStatusMenuStart {
     }
 	private  final int idConfigData;
 }
+

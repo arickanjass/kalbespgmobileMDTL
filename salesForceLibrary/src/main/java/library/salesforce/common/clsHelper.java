@@ -32,6 +32,8 @@ import library.salesforce.dal.KoordinasiOutletDA;
 import library.salesforce.dal.KoordinasiOutletImageDA;
 import library.salesforce.dal.clsFileAttach_mobileDA;
 import library.salesforce.dal.clsHardCode;
+import library.salesforce.dal.clsLogReceiverDetail_mobileDA;
+import library.salesforce.dal.clsLogReceiverHeader_mobileDA;
 import library.salesforce.dal.enumConfigData;
 import library.salesforce.dal.mCategoryVisitPlanDA;
 import library.salesforce.dal.mCounterNumberDA;
@@ -252,6 +254,8 @@ public class clsHelper {
 		mEmployeeSalesProductDA _mEmployeeSalesProductDA=new mEmployeeSalesProductDA(db);
 		mCounterNumberDA _mCounterNumberDA=new mCounterNumberDA(db);
 		clsFileAttach_mobileDA _clsFileAttach_mobileDA = new clsFileAttach_mobileDA(db);
+		clsLogReceiverHeader_mobileDA _clsLogReceiverHeader_mobileDA = new clsLogReceiverHeader_mobileDA(db);
+		clsLogReceiverDetail_mobileDA _clsLogReceiverDetail_mobileDA = new clsLogReceiverDetail_mobileDA(db);
 		tNotificationDA _tNotificationDA=new tNotificationDA(db);
 		tActivityDA _tActivityDA=new tActivityDA(db);
 		tAbsenUserDA _tAbsenUserDA=new tAbsenUserDA(db);
@@ -300,6 +304,8 @@ public class clsHelper {
 		_tCustomerBasedMobileDetailDA.DropTable(db);
 		_tCustomerBasedMobileDetailProductDA.DropTable(db);
 		_clsFileAttach_mobileDA.DropTable(db);
+		_clsLogReceiverHeader_mobileDA.DropTable(db);
+		_clsLogReceiverDetail_mobileDA.DropTable(db);
 		_tNotificationDA.DropTable(db);
 		_mPriceInOutletDA.DropTable(db);
 		_mProductBarcodeDA.DropTable(db);
@@ -374,6 +380,8 @@ public class clsHelper {
 		_mMenuDA=new mMenuDA(db);
 		_mProductBrandHeaderDA=new mProductBrandHeaderDA(db);
 		_clsFileAttach_mobileDA = new clsFileAttach_mobileDA(db);
+		_clsLogReceiverHeader_mobileDA = new clsLogReceiverHeader_mobileDA(db);
+		_clsLogReceiverDetail_mobileDA = new clsLogReceiverDetail_mobileDA(db);
 		_tNotificationDA=new tNotificationDA(db);
 		clsHardCode clsdthc=new clsHardCode();
 		clsHelper _clsHelper=new clsHelper();

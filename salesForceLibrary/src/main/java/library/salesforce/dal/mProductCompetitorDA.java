@@ -79,14 +79,14 @@ public class mProductCompetitorDA {
     public mProductCompetitorData getData(SQLiteDatabase db, String id) {
         mProductCompetitorData dt = new mProductCompetitorData();
         Cursor cursor = db.query(TABLE_CONTACTS, new String[]{
-                dt.Property_txtID, dt.Property_txtProductDetailCode
-                , dt.Property_txtLobName
-                , dt.Property_GroupProduct
-                , dt.Property_txtProdukid
-                , dt.Property_txtProdukKompetitorID
-                , dt.Property_txtCRMCode
-                , dt.Property_txtNIK
-                , dt.Property_txtName
+                        dt.Property_txtID, dt.Property_txtProductDetailCode
+                        , dt.Property_txtLobName
+                        , dt.Property_GroupProduct
+                        , dt.Property_txtProdukid
+                        , dt.Property_txtProdukKompetitorID
+                        , dt.Property_txtCRMCode
+                        , dt.Property_txtNIK
+                        , dt.Property_txtName
                 },
                 dt.Property_txtID + "=?", new String[] { String.valueOf(id) },
                 null, null, null, null);
@@ -117,7 +117,37 @@ public class mProductCompetitorDA {
         // Select All Query
         mProductCompetitorData dt = new mProductCompetitorData();
         String selectQuery = "SELECT  " + dt.Property_All + " FROM "
-                + TABLE_CONTACTS +" ORDER BY "+dt.Property_txtNIK+" ";
+                + TABLE_CONTACTS + " WHERE "+ dt.Property_txtProdukKompetitorID + " IS NOT NULL " + " ORDER BY "+dt.Property_txtProdukKompetitorID+" ";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+
+        if (cursor.moveToFirst()) {
+            do {
+                mProductCompetitorData contact = new mProductCompetitorData();
+                contact.set_txtID(cursor.getString(0));
+                contact.set_txtProductDetailCode(cursor.getString(1));
+                contact.set_txtLobName(cursor.getString(2));
+                contact.set_GroupProduct(cursor.getString(3));
+                contact.set_txtProdukid(cursor.getString(4));
+                contact.set_txtProdukKompetitorID(cursor.getString(5));
+                contact.set_txtCRMCode(cursor.getString(6));
+                contact.set_txtNIK(cursor.getString(7));
+                contact.set_txtName(cursor.getString(8));
+                // Adding contact to list
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        // return contact list
+        return contactList;
+    }
+
+    public List<mProductCompetitorData> getListDataByProductKN(SQLiteDatabase db, String idProductKN) {
+        List<mProductCompetitorData> contactList = new ArrayList<mProductCompetitorData>();
+        // Select All Query
+        mProductCompetitorData dt = new mProductCompetitorData();
+        String selectQuery = "SELECT  " + dt.Property_All + " FROM "
+                + TABLE_CONTACTS + " WHERE "+ dt.Property_txtProdukKompetitorID + " IS NOT NULL AND " + dt.Property_txtProductDetailCode + "='" + idProductKN + "' ORDER BY "+dt.Property_txtProdukKompetitorID+" ";
         Cursor cursor = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
 

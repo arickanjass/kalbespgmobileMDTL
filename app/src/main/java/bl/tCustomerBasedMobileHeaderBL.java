@@ -29,7 +29,7 @@ import library.salesforce.dal.tCustomerBasedMobileHeaderDA;
 import library.salesforce.dal.tUserLoginDA;
 
 public class tCustomerBasedMobileHeaderBL extends clsMainBL {
-    SQLiteDatabase db=getDb();
+    SQLiteDatabase db = getDb();
 
     public void saveData(tCustomerBasedMobileHeaderData dt) {
         SQLiteDatabase _db = getDb();
@@ -37,12 +37,18 @@ public class tCustomerBasedMobileHeaderBL extends clsMainBL {
 
         String txtSubmissionCode = new tUserLoginBL().getUserActive().get_txtSubmissionID();
 
-        if (getDataByBitActive().get_txtSubmissionId() == null && dt.get_txtSubmissionId() == null) {
-            dt.set_txtSubmissionId(generateSubmissionId());
-            dt.set_txtSubmissionCode(txtSubmissionCode);
-        }
-
         _tCustomerBasedMobileHeaderDA.SaveDatatCustomerBasedMobileHeaderData(_db, dt);
+    }
+
+    public void deleteTrId(String intTrCustomerId) {
+        SQLiteDatabase _db=getDb();
+        new tCustomerBasedMobileHeaderDA(_db).deleteByID(_db, intTrCustomerId);
+    }
+
+    public void updateDataSubmit(tCustomerBasedMobileHeaderData dt) {
+        SQLiteDatabase _db = getDb();
+        tCustomerBasedMobileHeaderDA _tCustomerBasedMobileHeaderDA = new tCustomerBasedMobileHeaderDA(_db);
+        _tCustomerBasedMobileHeaderDA.updateDataSubmit(_db, dt);
     }
 
     public tCustomerBasedMobileHeaderData getDataByBitActive() {
@@ -50,19 +56,69 @@ public class tCustomerBasedMobileHeaderBL extends clsMainBL {
         tCustomerBasedMobileHeaderData dt = new tCustomerBasedMobileHeaderDA(_db).getDataByBitActive(_db);
         return dt;
     }
-
-    public List<tCustomerBasedMobileHeaderData> getAllCustomerBasedMobileHeaderByOutletCode(String code){
-        SQLiteDatabase _db =getDb();
-        tCustomerBasedMobileHeaderDA _tCustomerBasedMobileHeaderDA = new tCustomerBasedMobileHeaderDA(_db);
-        List<tCustomerBasedMobileHeaderData> dt = _tCustomerBasedMobileHeaderDA.getAllDataByOutletCode(_db,code);
-        if(dt == null){
-            dt = new ArrayList<>(0);
-        }
-        return dt ;
+    public tCustomerBasedMobileHeaderData getDataById(String idTrCustomer) {
+        SQLiteDatabase _db = getDb();
+        tCustomerBasedMobileHeaderData dt = new tCustomerBasedMobileHeaderDA(_db).getData(_db, idTrCustomer);
+        return dt;
     }
 
-    public Boolean submit(Context context) {
+    public List<tCustomerBasedMobileHeaderData> getAllCustomerBasedMobileHeaderByOutletCode(String code) {
         SQLiteDatabase _db = getDb();
+        List<tCustomerBasedMobileHeaderData> dt;
+        tCustomerBasedMobileHeaderDA _tCustomerBasedMobileHeaderDA = new tCustomerBasedMobileHeaderDA(_db);
+        dt = _tCustomerBasedMobileHeaderDA.getAllDataByOutletCode(_db, code);
+        if (dt == null) {
+            dt = new ArrayList<>(0);
+        }
+        return dt;
+    }
+
+    public List<tCustomerBasedMobileHeaderData> getAllCustomerBasedMobileHeaderByOutletCodeForView(String code) {
+        SQLiteDatabase _db = getDb();
+        List<tCustomerBasedMobileHeaderData> dt;
+        tCustomerBasedMobileHeaderDA _tCustomerBasedMobileHeaderDA = new tCustomerBasedMobileHeaderDA(_db);
+        dt = _tCustomerBasedMobileHeaderDA.getAllDataByOutletCodeForView(_db, code);
+        if (dt == null) {
+            dt = new ArrayList<>(0);
+        }
+        return dt;
+    }
+
+    public List<tCustomerBasedMobileHeaderData> getAllCustomerBasedMobileHeaderByOutletCodeUnsubmit(String code) {
+        SQLiteDatabase _db = getDb();
+        List<tCustomerBasedMobileHeaderData> dt;
+        tCustomerBasedMobileHeaderDA _tCustomerBasedMobileHeaderDA = new tCustomerBasedMobileHeaderDA(_db);
+        dt = _tCustomerBasedMobileHeaderDA.getAllDataByOutletCodeUnsubmit(_db, code);
+        if (dt == null) {
+            dt = new ArrayList<>(0);
+        }
+        return dt;
+    }
+
+    public List<tCustomerBasedMobileHeaderData> getAllCustomerBasedMobileHeaderByOutletCodeReporting(String code) {
+        SQLiteDatabase _db = getDb();
+        List<tCustomerBasedMobileHeaderData> dt;
+        tCustomerBasedMobileHeaderDA _tCustomerBasedMobileHeaderDA = new tCustomerBasedMobileHeaderDA(_db);
+        if(code.equals("ALLOUTLET")){
+            dt = _tCustomerBasedMobileHeaderDA.getAllDataReporting(_db);
+        } else {
+            dt = _tCustomerBasedMobileHeaderDA.getAllDataByOutletCode(_db, code);
+        }
+        if (dt == null) {
+            dt = new ArrayList<>(0);
+        }
+        return dt;
+    }
+
+    public Boolean save(Context context) {
+        SQLiteDatabase _db = getDb();
+
+        Calendar c = Calendar.getInstance();
+        int lYear = c.get(Calendar.YEAR);
+        int lMonth = c.get(Calendar.MONTH) + 1;
+        int lDay = c.get(Calendar.DATE);
+
+        String dateNow = Integer.valueOf(lYear) + "-" + Integer.valueOf(lMonth) + "-" + Integer.valueOf(lDay);
 
         Boolean status = false;
         tCustomerBasedMobileHeaderData dtHeader = getDataByBitActive();
@@ -71,8 +127,13 @@ public class tCustomerBasedMobileHeaderBL extends clsMainBL {
             if (dtDetail != null) {
                 for (tCustomerBasedMobileDetailData dt : dtDetail) {
                     List<tCustomerBasedMobileDetailProductData> dtProduct = new tCustomerBasedMobileDetailProductBL().getDataByCustomerDetailId(dt.get_intTrCustomerIdDetail());
+                    if(dt.get_txtTglLahir().equals(dateNow) || dt.get_txtTglLahir() == null || dt.get_txtTglLahir().equals("null") || dt.get_txtTglLahir().equals("")){
+                        new clsMainActivity().showCustomToast(context, "Failed to save: \n" + dt.get_txtNamaDepan() + "'s Date of birth has not been set", false);
+                        status = false;
+                        break;
+                    }
                     if (dtProduct == null || dtProduct.size() == 0) {
-                        new clsMainActivity().showCustomToast(context, "Failed to save: " + dt.get_txtNamaDepan() + " belum memiliki produk", false);
+                        new clsMainActivity().showCustomToast(context, "Failed to save: \n" + dt.get_txtNamaDepan() + "'s product usage has not defined", false);
                         status = false;
                         break;
                     } else {
@@ -83,8 +144,8 @@ public class tCustomerBasedMobileHeaderBL extends clsMainBL {
         }
 
         if (status) {
-            dtHeader.set_bitActive("0");
-            dtHeader.set_intSubmit("1");
+            dtHeader.set_bitActive("1");
+            dtHeader.set_intSubmit("0");
             new tCustomerBasedMobileHeaderDA(_db).SaveDatatCustomerBasedMobileHeaderData(_db, dtHeader);
 
             List<tCustomerBasedMobileDetailData> dtDetail = new tCustomerBasedMobileDetailBL().getAllDataByHeaderId(dtHeader.get_intTrCustomerId());
@@ -111,6 +172,69 @@ public class tCustomerBasedMobileHeaderBL extends clsMainBL {
         SQLiteDatabase _db = getDb();
         List<tCustomerBasedMobileHeaderData> dt = new tCustomerBasedMobileHeaderDA(_db).getAllData(_db);
         return dt;
+    }
+
+    public List<tCustomerBasedMobileHeaderData> getAllDataNonSync() {
+        SQLiteDatabase _db = getDb();
+        List<tCustomerBasedMobileHeaderData> dt = new tCustomerBasedMobileHeaderDA(_db).getAllDataNonSync(_db);
+        return dt;
+    }
+
+    public List<tCustomerBasedMobileHeaderData> getAllDataToSubmit() {
+        SQLiteDatabase _db = getDb();
+        List<tCustomerBasedMobileHeaderData> dt = new tCustomerBasedMobileHeaderDA(_db).getDataToSubmit(_db);
+        return dt;
+    }
+
+    public int getCountAllCustomerBased() {
+        SQLiteDatabase _db = getDb();
+        int count = new tCustomerBasedMobileHeaderDA(_db).countCustomerBaseHome(_db);
+        return count;
+    }
+
+    public int getCountProductAllCustomerBased(String intTrCustomerId, String code) {
+        SQLiteDatabase _db = getDb();
+        int count = 0;
+        if(code.equals("ALLOUTLET")){
+            count = new tCustomerBasedMobileHeaderDA(_db).countCustomerBaseReportingAll(_db, intTrCustomerId);
+        } else {
+            count = new tCustomerBasedMobileHeaderDA(_db).countCustomerBaseReportingOutlet(_db, intTrCustomerId, code);
+        }
+
+        return count;
+    }
+
+    public int getCountAllCustomerBasedAbsen(String code) {
+        SQLiteDatabase _db = getDb();
+        int count = new tCustomerBasedMobileHeaderDA(_db).countCustomerBaseHomeAbsen(_db, code);
+        return count;
+    }
+
+    public int getCountAllCustomerBasedAbsenByStatus(String status, String code) {
+        SQLiteDatabase _db = getDb();
+        int count = new tCustomerBasedMobileHeaderDA(_db).countCustomerBaseHomeAbsenByStatus(_db, status, code);
+        return count;
+    }
+    public int getCountAllCustomerBasedAbsenUnpush( String code) {
+        SQLiteDatabase _db = getDb();
+        int count = new tCustomerBasedMobileHeaderDA(_db).countCustomerBaseHomeAbsenUnpush(_db, code);
+        return count;
+    }
+    public int countCustomerBaseHomeAbsenPush( String code) {
+        SQLiteDatabase _db = getDb();
+        int count = new tCustomerBasedMobileHeaderDA(_db).countCustomerBaseHomeAbsenPush(_db, code);
+        return count;
+    }
+    public int getCountAllCustomerBasedAbsenByStatusSave(String code) {
+        SQLiteDatabase _db = getDb();
+        int count = new tCustomerBasedMobileHeaderDA(_db).countCustomerBaseHomeAbsenByStatusSave(_db, code);
+        return count;
+    }
+
+    public int getCountAllCustomerBasedByStatus(String status) {
+        SQLiteDatabase _db = getDb();
+        int count = new tCustomerBasedMobileHeaderDA(_db).countCustomerBaseHomeByStatus(_db, status);
+        return count;
     }
 
     public List<tCustomerBasedMobileHeaderData> getAllDataByIntSyc(String val) {
@@ -163,7 +287,7 @@ public class tCustomerBasedMobileHeaderBL extends clsMainBL {
         String txtMethod = "GetDataCustomerBased";
         JSONObject resJson = new JSONObject();
         dtlinkAPI.set_txtMethod(txtMethod);
-        dtlinkAPI.set_txtParam(_dataUserLogin.get_txtUserId() + "|" + datenow);
+        dtlinkAPI.set_txtParam(_dataUserLogin.get_TxtEmpId() + "|" + datenow);
         dtlinkAPI.set_txtToken(new clsHardCode().txtTokenAPI);
         dtlinkAPI.set_txtVesion(versionName);
 
@@ -178,7 +302,7 @@ public class tCustomerBasedMobileHeaderBL extends clsMainBL {
         return JsonArray;
     }
 
-    public String generateSubmissionId(){
+    public String generateSubmissionId(String noCustomerBase) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Calendar cal = Calendar.getInstance();
 
@@ -192,28 +316,10 @@ public class tCustomerBasedMobileHeaderBL extends clsMainBL {
 
         String txtSubmissionCode = new tUserLoginBL().getUserActive().get_txtSubmissionID();
 
-        List<tCustomerBasedMobileHeaderData> dttas = getLastData();
-
-        String noCustomerBase = null;
-
-        if (dttas == null || dttas.size() == 0) {
-            noCustomerBase = "1";
-        } else {
-            String oldVersion = dttas.get(0).get_txtSubmissionId();
-            String[] splitSubmission = oldVersion.split("\\.");
-            if ((dd + mm + yy.substring(2)).equals(splitSubmission[1])) {
-                String lastCount = oldVersion.substring(oldVersion.length() - 3);
-                noCustomerBase = String.valueOf(Integer.parseInt(lastCount) + 1);
-            } else {
-                noCustomerBase = "1";
-            }
-        }
-
         String txtSubmissionId = null;
 
-        if (getDataByBitActive().get_txtSubmissionId() == null) {
-            txtSubmissionId = txtSubmissionCode + "." + dd + mm + yy.substring(2) + "." + String.format("%03d", Integer.parseInt(noCustomerBase));
-        }
+        txtSubmissionId = txtSubmissionCode;
+        //+ "." + dd + mm + yy.substring(2) + "." + noCustomerBase;
 
         return txtSubmissionId;
     }

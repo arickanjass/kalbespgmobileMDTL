@@ -156,6 +156,187 @@
             </LinearLayout>
 
             <LinearLayout
+            android:id="@+id/ll__product_spg"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txtVwProductSPGCusBase"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/view912"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Product SPG CustomerBased"
+                    android:textColor="#000" />
+
+                <Spinner
+                    android:id="@+id/spnProdSPGCusBase"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtVwProductSPGCusBase"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/bg_edtext" />
+
+                <Button
+                    android:id="@+id/btnProdSPGCusBase"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/spnLeave"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/btn_on_click"
+                    android:text="Download Product SPG CustomerBased" />
+
+                <View
+                    android:id="@+id/view913"
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/btnProdSPGCusBase"
+                    android:layout_marginTop="10dp"
+                    android:background="#bfbfbf" />
+
+            </LinearLayout>
+
+            <LinearLayout
+            android:id="@+id/ll_product_pic"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txtVwProductPICCusBase"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/view913"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Product PIC CustomerBased"
+                    android:textColor="#000" />
+
+                <Spinner
+                    android:id="@+id/spnProdPICCusBase"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtVwProductPICCusBase"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/bg_edtext" />
+
+                <Button
+                    android:id="@+id/btnProdPICCusBase"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/spnProdPICCusBase"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/btn_on_click"
+                    android:text="Download Product PIC CustomerBased" />
+
+                <View
+                    android:id="@+id/view91"
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/btnDlBrand"
+                    android:layout_marginTop="10dp"
+                    android:background="#bfbfbf" />
+
+            </LinearLayout>
+
+            <LinearLayout
+            android:id="@+id/ll_product_competitor"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txtVwProductComp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/view9"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Product Competitor"
+                    android:textColor="#000" />
+
+                <Spinner
+                    android:id="@+id/spnProdComp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtVwLeave"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/bg_edtext" />
+
+                <Button
+                    android:id="@+id/btnProdComp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/spnLeave"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/btn_on_click"
+                    android:text="Download Product Competitor" />
+
+                <View
+                    android:id="@+id/view92"
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/btnDlBrand"
+                    android:layout_marginTop="10dp"
+                    android:background="#bfbfbf" />
+
+            </LinearLayout>
+
+            <LinearLayout
+            android:id="@+id/ll_type_submission"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txtVwTypeSubm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/view9"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Type Submission"
+                    android:textColor="#000" />
+
+                <Spinner
+                    android:id="@+id/spnTypeSubm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtVwLeave"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/bg_edtext" />
+
+                <Button
+                    android:id="@+id/btnSumbisson"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/spnLeave"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/btn_on_click"
+                    android:text="Download Type Submission" />
+
+                <View
+                    android:id="@+id/view923"
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/btnDlBrand"
+                    android:layout_marginTop="10dp"
+                    android:background="#bfbfbf" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/ll_brand"
                 android:orientation="vertical"
                 android:visibility="gone"

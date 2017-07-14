@@ -14,6 +14,8 @@ public class tCustomerBasedMobileDetailData {
     private String _dtUpdated;
     private String _txtInsertedBy;
     private String _txtUpdatedBy;
+    private String _intAge;
+    private String _intAgeTypeFlag;
 
     public String Property_intTrCustomerIdDetail = "intTrCustomerIdDetail";
     public String Property_intTrCustomerId = "intTrCustomerId";
@@ -28,6 +30,8 @@ public class tCustomerBasedMobileDetailData {
     public String Property_dtUpdated = "dtUpdated";
     public String Property_txtInsertedBy = "txtInsertedBy";
     public String Property_txtUpdatedBy = "txtUpdatedBy";
+    public String Property_intAge = "intAge";
+    public String Property_intAgeTypeFlag = "intAgeTypeFlag";
 
     public String Property_ListOftCustomerBasedMobileDetailData = "ListOftCustomerBasedMobileDetailData";
     public String Property_ALL = Property_intTrCustomerIdDetail + "," +
@@ -42,7 +46,9 @@ public class tCustomerBasedMobileDetailData {
             Property_dtInserted + "," +
             Property_dtUpdated + "," +
             Property_txtInsertedBy + "," +
-            Property_txtUpdatedBy;
+            Property_txtUpdatedBy + "," +
+            Property_intAge + "," +
+            Property_intAgeTypeFlag;
 
     public String get_intTrCustomerIdDetail() {
         return _intTrCustomerIdDetail;
@@ -146,5 +152,21 @@ public class tCustomerBasedMobileDetailData {
 
     public void set_txtUsiaKehamilan(String _txtUsiaKehamilan) {
         this._txtUsiaKehamilan = _txtUsiaKehamilan;
+    }
+
+    public String get_intAge() {
+        return _intAge;
+    }
+
+    public void set_intAge(String _intAge) {
+        this._intAge = _intAge;
+    }
+
+    public String get_intAgeTypeFlag() {
+        return _intAgeTypeFlag;
+    }
+
+    public void set_intAgeTypeFlag(String _intAgeTypeFlag) {
+        this._intAgeTypeFlag = _intAgeTypeFlag;
     }
 }

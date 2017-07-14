@@ -115,6 +115,16 @@ public class clsFileAttach_mobile {
     private String _intSubmit;
     private String _intSync;
 
+    public synchronized String get_intLog() {
+        return _intLog;
+    }
+
+    public synchronized void set_intLog(String _intLog) {
+        this._intLog = _intLog;
+    }
+
+    private String _intLog;
+
     public synchronized String get_intStatus() {
         return _intStatus;
     }
@@ -138,8 +148,9 @@ public class clsFileAttach_mobile {
     public String Property_intSubmit="_intSubmit";
     public String Property_intSync="_intSync";
     public String Property_intStatus="_intStatus";
+    public String Property_intLog="_intLog";
 
     public String PropertyAll=Property_txtIDFile+","+Property_txtIdHeaderNotif+","+Property_txtDesc+","+Property_byteInitialVector+","+Property_txtLinkFileAttach+","+
-            Property_txtNameFileEncrypt+","+Property_txtTypeFile+","+Property_intActive+","+Property_dtInserted+","+Property_dtUpdated+","+Property_intSubmit+","+Property_intSync+","+Property_intStatus;
+            Property_txtNameFileEncrypt+","+Property_txtTypeFile+","+Property_intActive+","+Property_dtInserted+","+Property_dtUpdated+","+Property_intSubmit+","+Property_intSync+","+Property_intStatus+","+Property_intLog;
 
 }

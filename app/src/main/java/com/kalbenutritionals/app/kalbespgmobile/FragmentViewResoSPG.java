@@ -16,6 +16,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -28,32 +29,38 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import adapter.AppAdapterViewCusBase;
 import bl.clsHelperBL;
+import bl.tAbsenUserBL;
 import bl.tSalesProductDetailBL;
 import bl.tSalesProductHeaderBL;
+import bl.tUserLoginBL;
 import edu.swu.pulltorefreshswipemenulistview.library.PullToRefreshSwipeMenuListView;
 import edu.swu.pulltorefreshswipemenulistview.library.pulltorefresh.interfaces.IXListViewListener;
-import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.bean.SwipeMenu;
 import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.OnMenuItemClickListener;
 import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.SwipeMenuCreator;
 import edu.swu.pulltorefreshswipemenulistview.library.util.RefreshTime;
-import library.salesforce.common.AppAdapter;
 import library.salesforce.common.clsSwipeList;
+import library.salesforce.common.tAbsenUserData;
 import library.salesforce.common.tSalesProductDetailData;
 import library.salesforce.common.tSalesProductHeaderData;
+import library.salesforce.common.tUserLoginData;
 import library.salesforce.common.visitplanAbsenData;
+import library.salesforce.dal.enumRole;
 
 /**
  * Created by ASUS ZE on 26/07/2016.
  */
 public class FragmentViewResoSPG extends Fragment implements IXListViewListener {
     private static List<clsSwipeList> swipeList = new ArrayList<clsSwipeList>();
-    private AppAdapter mAdapter;
-    private PullToRefreshSwipeMenuListView mListView;
+    private AppAdapterViewCusBase mAdapter;
+
+    private PullToRefreshSwipeMenuListView mListView2;
+
     private Handler mHandler;
-    private static Map<String, HashMap> mapMenu;
-    static List<tSalesProductHeaderData> dt;
-    static List<tSalesProductDetailData> data;
+    private Map<String, HashMap> mapMenu;
+    private List<tSalesProductHeaderData> dt;
+    private List<tSalesProductDetailData> data;
     private FloatingActionButton fab;
 
     View v;
@@ -61,7 +68,7 @@ public class FragmentViewResoSPG extends Fragment implements IXListViewListener 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.fragment_customerbase_view,container,false);
+        v = inflater.inflate(R.layout.fragment_view_global,container,false);
 
         fab = (FloatingActionButton) v.findViewById(R.id.fab);
 
@@ -77,39 +84,32 @@ public class FragmentViewResoSPG extends Fragment implements IXListViewListener 
                 fragmentTransaction.commit();
             }
         });
+        final PullToRefreshSwipeMenuListView swipeMenuList = (PullToRefreshSwipeMenuListView) v.findViewById(R.id.SwipelistView);
+        swipeMenuList.setPullRefreshEnable(true);
+        swipeMenuList.setOnScrollListener(new AbsListView.OnScrollListener() {
+            private int previousDistanceFromFirstCellToTop;
 
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                View firstCell = mListView2.getChildAt(0);
+                if(firstCell == null){ return; }
+                int distanceFromFirstCellTop = mListView2.getFirstVisiblePosition() * firstCell.getHeight()-firstCell.getTop();
+                if(distanceFromFirstCellTop > previousDistanceFromFirstCellToTop){
+                    fab.hide();
+                }
+                if(distanceFromFirstCellTop < previousDistanceFromFirstCellToTop){
+                    fab.show();
+                }
+                previousDistanceFromFirstCellToTop = distanceFromFirstCellTop;
+
+            }
+        });
         loadData();
-
         return v;
-    }
-
-    @Override
-    public void onRefresh() {
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                loadData();
-                mListView.stopRefresh();
-                mListView.stopLoadMore();
-            }
-        }, 500);
-    }
-
-    @Override
-    public void onLoadMore() {
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                onLoad();
-            }
-        }, 1);
-    }
-
-    private void onLoad() {
-        mListView.setRefreshTime(RefreshTime.getRefreshTime(getActivity().getApplicationContext()));
-        mListView.stopRefresh();
-        mListView.stopLoadMore();
-
     }
 
     private void viewList(Context ctx, int position) {
@@ -239,21 +239,25 @@ public class FragmentViewResoSPG extends Fragment implements IXListViewListener 
     }
 
     private void loadData(){
-//        tAbsenUserData dtActive = new tAbsenUserBL().getDataCheckInActive();
-        visitplanAbsenData dtActive = new clsHelperBL().getDataCheckInActive();
+
+//        tUserLoginData dtLogin = new tUserLoginBL().getUserActive();
+        visitplanAbsenData _viAbsenData = new visitplanAbsenData();
+        _viAbsenData = new clsHelperBL().getDataCheckInActive();
+
         clsSwipeList swplist;
-        dt = new tSalesProductHeaderBL().getAllSalesProductHeaderByOutletCode(dtActive.get_txtOutletCode());
+        dt = new tSalesProductHeaderBL().getAllSalesProductHeaderByOutletCode(_viAbsenData.get_txtOutletCode());
 
         swipeList.clear();
 
         if(dt!=null) {
             for (int i = 0; i < dt.size(); i++) {
                 swplist = new clsSwipeList();
-                swplist.set_txtTitle(dt.get(i).get_txtNoSo());
+                swplist.set_txtTitle("No So : " + dt.get(i).get_txtNoSo());
+                swplist.set_txtDescription("Description : " + dt.get(i).get_txtKeterangan());
                 if (dt.get(i).get_intSubmit().equals("1")&&dt.get(i).get_intSync().equals("0")){
-                    swplist.set_txtDescription("Submit");
+                    swplist.set_txtDescription2("Submit");
                 } else if (dt.get(i).get_intSubmit().equals("1")&&dt.get(i).get_intSync().equals("1")){
-                    swplist.set_txtDescription("Sync");
+                    swplist.set_txtDescription2("Sync");
                 }
 
                 swipeList.add(swplist);
@@ -262,15 +266,14 @@ public class FragmentViewResoSPG extends Fragment implements IXListViewListener 
 
         clsMainActivity clsMain = new clsMainActivity();
 
-        mListView = (PullToRefreshSwipeMenuListView) v.findViewById(R.id.listView);
-        mAdapter = clsMain.setList(getActivity().getApplicationContext(), swipeList);
-        mListView.setAdapter(mAdapter);
-        mListView.setPullRefreshEnable(true);
-        mListView.setPullLoadEnable(true);
-        mListView.setEmptyView( v.findViewById(R.id.LayoutEmpty));
-        mListView.setXListViewListener(this);
+        mListView2 = (PullToRefreshSwipeMenuListView) v.findViewById(R.id.SwipelistView);
+        mAdapter = clsMain.setListViewCusBase(getActivity().getApplicationContext(), swipeList);
+        mListView2.setAdapter(mAdapter);
+        mListView2.setPullRefreshEnable(true);
+        mListView2.setPullLoadEnable(true);
+        mListView2.setEmptyView( v.findViewById(R.id.LayoutEmpty));
+        mListView2.setXListViewListener(this);
         mHandler = new Handler();
-
         HashMap<String, String> mapView = new HashMap<String, String>();
 
         mapView.put("name", "View");
@@ -280,20 +283,44 @@ public class FragmentViewResoSPG extends Fragment implements IXListViewListener 
         mapMenu.put("0", mapView);
 
         SwipeMenuCreator creator = clsMain.setCreator(getActivity().getApplicationContext(), mapMenu);
-        mListView.setMenuCreator(creator);
-        mListView.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+        mListView2.setMenuCreator(creator);
+        mListView2.setEmptyView(v.findViewById(R.id.LayoutEmpty));
+        mListView2.setOnMenuItemClickListener(new OnMenuItemClickListener() {
             @Override
-            public void onMenuItemClick(int position, SwipeMenu menu, int index) {
+            public void onMenuItemClick(int position, edu.swu.pulltorefreshswipemenulistview.library.swipemenu.bean.SwipeMenu menu, int index) {
                 clsSwipeList item = swipeList.get(position);
                 switch (index) {
                     case 0:
-                        viewList(getActivity().getApplicationContext(), position);
+                        viewList(getContext(), position);
+                        break;
                 }
             }
         });
 
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault());
         RefreshTime.setRefreshTime(getContext(), " " + df.format(new Date()));
-        mListView.setRefreshTime(RefreshTime.getRefreshTime(getActivity().getApplicationContext()));
+        mListView2.setRefreshTime(RefreshTime.getRefreshTime(getActivity().getApplicationContext()));
+    }
+
+    @Override
+    public void onRefresh() {
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loadData();
+                mListView2.stopRefresh();
+                mListView2.stopLoadMore();
+            }
+        }, 500);
+    }
+
+    @Override
+    public void onLoadMore() {
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loadData();
+            }
+        }, 1);
     }
 }

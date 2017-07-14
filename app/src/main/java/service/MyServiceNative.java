@@ -14,9 +14,9 @@ import android.util.Log;
 
 import com.kalbenutritionals.app.kalbespgmobile.MainMenu;
 import com.kalbenutritionals.app.kalbespgmobile.R;
+import com.kalbenutritionals.app.kalbespgmobile.clsMainActivity;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.json.simple.JSONArray;
 
 import java.text.DateFormat;
@@ -28,12 +28,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.UUID;
 
 import bl.clsHelperBL;
+import bl.clsLogReceiverHeader_mobileBL;
 import bl.clsMainBL;
 import bl.tNotificationBL;
+import bl.tUserLoginBL;
 import come.example.viewbadger.ShortcutBadger;
 import library.salesforce.common.APIData;
+import library.salesforce.common.clsLogReceiverHeader_mobile;
 import library.salesforce.common.clsPushData;
 import library.salesforce.common.dataJson;
 import library.salesforce.common.mCounterNumberData;
@@ -57,49 +61,49 @@ public class MyServiceNative extends Service{
 		// TODO: Return the communication channel to the service.
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
-	
-	
+
+
 	@Override
-    public void onCreate() {
-        //Toast.makeText(this, "Welcome Kalbe SPG Mobile", Toast.LENGTH_LONG).show();
-       
-    }
-	
+	public void onCreate() {
+		//Toast.makeText(this, "Welcome Kalbe SPG Mobile", Toast.LENGTH_LONG).show();
+
+	}
+
 	//private static long UPDATE_INTERVAL = 1*36*1000;  //default
 	private static long UPDATE_INTERVAL = 1*360*1000;;  //default
 	//private static long UPDATE_INTERVAL_DELAY = 180000;  //default
 	private static long UPDATE_INTERVAL_TESTING = 3000;  //default
-    private static Timer timer = new Timer(); 
+	private static Timer timer = new Timer();
 	private void _startService()
-    {      
+	{
 		long intInverval=0;
 		if(new clsMainBL().getLIVE().equals("1")){
 			intInverval=UPDATE_INTERVAL;
 		}else{
 			intInverval=UPDATE_INTERVAL_TESTING;
 		}
-			
+
 		if(timer != null)
-	    {
+		{
 			timer.cancel();
-	    }
+		}
 		timer = new Timer();
-        timer.scheduleAtFixedRate(    
-                new TimerTask() {
-                    public void run() {
-                    	try {
+		timer.scheduleAtFixedRate(
+				new TimerTask() {
+					public void run() {
+						try {
 							doServiceWork();
 						} catch (JSONException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-                    }
-                }, 3000,intInverval);
-        //Log.i(getClass().getSimpleName(), "FileScannerService Timer started....");
-    }
-	
-    private void doServiceWork() throws JSONException
-    {
+					}
+				}, 3000,intInverval);
+		//Log.i(getClass().getSimpleName(), "FileScannerService Timer started....");
+	}
+
+	private void doServiceWork() throws JSONException
+	{
 		String versionName="";
 		try {
 			versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
@@ -107,13 +111,14 @@ public class MyServiceNative extends Service{
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
-    	clsPushData dtJson= new clsHelperBL().pushData(versionName);
-    	if(dtJson==null){
-    		_shutdownService();
-    	}else{
-    		try {
-    			JSONArray JsonArrayResult=new clsHelperBL().callPushDataReturnJson(versionName,dtJson.getDtdataJson().txtJSON().toString(),dtJson.getFileUpload());
+		clsPushData dtJson= new clsHelperBL().pushData(versionName);
+		if(dtJson==null){
+			_shutdownService();
+		}else{
+			try {
+				JSONArray JsonArrayResult=new clsHelperBL().callPushDataReturnJson(versionName,dtJson.getDtdataJson().txtJSON().toString(),dtJson.getFileUpload());
 				new clsHelperBL().saveDataPush(dtJson.getDtdataJson(),JsonArrayResult);
+
 				Iterator iterator = JsonArrayResult.iterator();
 				Boolean flag = true;
 				String errorMess = "";
@@ -129,6 +134,7 @@ public class MyServiceNative extends Service{
 						break;
 					}
 				}
+
 //				Intent serviceIntent = new Intent(this,MyNotificationService.class);
 //				serviceIntent.putExtra("From", "PUSHDATA");
 //				startService(serviceIntent);
@@ -139,9 +145,9 @@ public class MyServiceNative extends Service{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-    	}
+		}
 
-    	SQLiteDatabase db;
+		SQLiteDatabase db;
 //    	String versionName="";
 //    	try {
 //			versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
@@ -157,7 +163,7 @@ public class MyServiceNative extends Service{
 
 			try {
 				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-	    		Calendar cal = Calendar.getInstance();
+				Calendar cal = Calendar.getInstance();
 				mCounterNumberDA _mCounterNumberDA=new mCounterNumberDA(db);
 				mCounterNumberData _data =new mCounterNumberData();
 				_data.set_intId(enumCounterData.MonitorSchedule.getidCounterData());
@@ -207,39 +213,48 @@ public class MyServiceNative extends Service{
 		}
 
 		db.close();
-    }
+	}
 
-    private void _shutdownService()
-    {
-        if (timer != null) timer.cancel();
-        Log.i(getClass().getSimpleName(), "Timer stopped...");
-    }
- 
-    @Override
-    public void onStart(Intent intent, int startId) {
-    	// For time consuming an long tasks you can launch a new thread here...
-        //Toast.makeText(this, "Welcome Kalbe SPG Mobile", Toast.LENGTH_LONG).show();
-    	_startService();
-   
-    }
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        // TODO Auto-generated method stub
-    	//Toast.makeText(this, " onStartCommand", Toast.LENGTH_LONG).show();
-    	_startService();
-        return START_STICKY;
-    }
- 
-    @Override
-    public void onDestroy() {
-        //Toast.makeText(this, "Service Destroyed", Toast.LENGTH_LONG).show();
-        _shutdownService();
-    }
+	private void _shutdownService()
+	{
+		if (timer != null) timer.cancel();
+		Log.i(getClass().getSimpleName(), "Timer stopped...");
+	}
 
-    public void startNotification(){
+	@Override
+	public void onStart(Intent intent, int startId) {
+		// For time consuming an long tasks you can launch a new thread here...
+		//Toast.makeText(this, "Welcome Kalbe SPG Mobile", Toast.LENGTH_LONG).show();
+		_startService();
+
+	}
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId) {
+		// TODO Auto-generated method stub
+		//Toast.makeText(this, " onStartCommand", Toast.LENGTH_LONG).show();
+		_startService();
+		return START_STICKY;
+	}
+
+	@Override
+	public void onDestroy() {
+		//Toast.makeText(this, "Service Destroyed", Toast.LENGTH_LONG).show();
+		_shutdownService();
+	}
+
+	public void startNotification(){
 		tNotificationBL _tNotificationBL=new tNotificationBL();
+		clsLogReceiverHeader_mobileBL _clsLogReceiverHeader_mobileBL= new clsLogReceiverHeader_mobileBL();
 		List<tNotificationData> ListData=_tNotificationBL.getAllDataWillAlert("2");
 		List<tNotificationData> tmpListData= new ArrayList<tNotificationData>();
+		List<clsLogReceiverHeader_mobile> tmpLisDataReceiver = new ArrayList<>();
+
+		clsLogReceiverHeader_mobile data = new clsLogReceiverHeader_mobile();
+		tUserLoginData dtLogin = new tUserLoginData();
+		dtLogin = new tUserLoginBL().getUserActive();
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Calendar cal = Calendar.getInstance();
+
 		if(ListData!=null){
 			for (tNotificationData dttNotificationData : ListData) {
 				dttNotificationData.set_txtStatus("1");
@@ -268,24 +283,43 @@ public class MyServiceNative extends Service{
 				Notification tnotification = null;
 				if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
 					tnotification = new Notification.Builder(MyServiceNative.this)
-                            .setContentIntent(pendingIntent)
-                            .setContentTitle(title)
-                            .setContentText(desc)
-                            .setSmallIcon(icon)
-                            .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(),
-                                    R.mipmap.ic_kalbe_phonegap))
-                            .setWhen(when)
-                            .setTicker(tickerText)
-                            .setPriority(Notification.PRIORITY_HIGH)
-                            .setAutoCancel(true)
-                            .setDefaults(Notification.DEFAULT_ALL | Notification.FLAG_SHOW_LIGHTS | Notification.PRIORITY_DEFAULT)
-                            .build();
+							.setContentIntent(pendingIntent)
+							.setContentTitle(title)
+							.setContentText(desc)
+							.setSmallIcon(icon)
+							.setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(),
+									R.mipmap.ic_kalbe_phonegap))
+							.setWhen(when)
+							.setTicker(tickerText)
+							.setPriority(Notification.PRIORITY_HIGH)
+							.setAutoCancel(true)
+							.setDefaults(Notification.DEFAULT_ALL | Notification.FLAG_SHOW_LIGHTS | Notification.PRIORITY_DEFAULT)
+							.build();
 				}
 				NotificationManager tnotificationManager=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
 				tnotification.defaults=Notification.DEFAULT_ALL;
 				tnotificationManager.notify(idn,tnotification);
+
+				data = new clsLogReceiverHeader_mobile();
+
+				UUID uuid = UUID.randomUUID();
+				String randomUUIDString = uuid.toString();
+
+				data.setTxtIdLogReceiver(randomUUIDString);
+				data.setTxtStatus("RECEIVED");
+				data.setTxtNIK(dtLogin.get_TxtEmpId().toString());
+				data.setTxtUSerName(dtLogin.get_txtUserId().toString());
+				data.setDtInserted(String.valueOf(dateFormat.format(cal.getTime())));
+				data.setIntActive("1");
+				data.setIntSubmit("1");
+				data.setIntSync("0");
+				data.setTxtGuidLogin(dtLogin.get_txtDataId().toString());
+				data.setTxtIdHeaderNotif(dttNotificationData.get_guiID());
+
+				tmpLisDataReceiver.add(data);
 			}
 			_tNotificationBL.saveData(tmpListData);
+			_clsLogReceiverHeader_mobileBL.saveData(tmpLisDataReceiver);
 			int totalStatus = new tNotificationBL().getContactsCountStatus();
 			ShortcutBadger.applyCount(MyServiceNative.this, totalStatus);
 		}

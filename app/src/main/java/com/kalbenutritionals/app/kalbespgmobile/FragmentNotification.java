@@ -41,6 +41,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +52,10 @@ import javax.crypto.NoSuchPaddingException;
 
 import addons.zoomview.CustomZoomView;
 import bl.clsFileAttach_mobileBL;
+import bl.clsLogReceiverDetail_mobileBL;
+import bl.clsLogReceiverHeader_mobileBL;
 import bl.tNotificationBL;
+import bl.tUserLoginBL;
 import come.example.viewbadger.ShortcutBadger;
 import edu.swu.pulltorefreshswipemenulistview.library.PullToRefreshSwipeMenuListView;
 import edu.swu.pulltorefreshswipemenulistview.library.pulltorefresh.interfaces.IXListViewListener;
@@ -60,10 +64,13 @@ import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.OnMen
 import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.SwipeMenuCreator;
 import edu.swu.pulltorefreshswipemenulistview.library.util.RefreshTime;
 import library.salesforce.common.clsFileAttach_mobile;
+import library.salesforce.common.clsLogReceiverDetail_mobile;
+import library.salesforce.common.clsLogReceiverHeader_mobile;
 import library.salesforce.common.clsRowItem;
 import library.salesforce.common.clsSwipeList;
 import library.salesforce.common.tInformationData;
 import library.salesforce.common.tNotificationData;
+import library.salesforce.common.tUserLoginData;
 import library.salesforce.dal.clsHardCode;
 import service.MyNotificationService;
 
@@ -93,6 +100,7 @@ public class FragmentNotification extends Fragment implements IXListViewListener
 
     private List<String> arrData;
     static List<tNotificationData> dt;
+    static List<clsFileAttach_mobile> dtFile;
 
     String idHeaderNotif=null;
 
@@ -220,7 +228,7 @@ public class FragmentNotification extends Fragment implements IXListViewListener
                     case 0:
 
                         clsFileAttach_mobile data = new clsFileAttach_mobile();
-                        data = lisclsFileAttach_mobile.get(index);
+                        data = lisclsFileAttach_mobile.get(position);
                         String txtPath = new clsHardCode().txtPathUserData + "FileAttach/";
 
                         File file = new File(txtPath + "/" + data.get_txtNameFileEncrypt());
@@ -318,6 +326,32 @@ public class FragmentNotification extends Fragment implements IXListViewListener
                 });
         final AlertDialog alertD = alertDialogBuilder.create();
         alertD.show();
+
+        List<clsLogReceiverHeader_mobile> lisData = new ArrayList<>();
+        clsLogReceiverHeader_mobile data = new clsLogReceiverHeader_mobile();
+        tUserLoginData dtLogin = new tUserLoginData();
+        dtLogin = new tUserLoginBL().getUserActive();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
+
+        int num = new clsLogReceiverHeader_mobileBL().getContactsCountStatus(dt.get(position));
+
+        if(num==0){
+            data.setTxtIdLogReceiver(new clsMainActivity().GenerateGuid());
+            data.setTxtStatus("READ");
+            data.setTxtNIK(dtLogin.get_TxtEmpId().toString());
+            data.setTxtUSerName(dtLogin.get_txtUserId().toString());
+            data.setDtInserted(String.valueOf(dateFormat.format(cal.getTime())));
+            data.setIntActive("1");
+            data.setIntSubmit("1");
+            data.setIntSync("0");
+            data.setTxtGuidLogin(dtLogin.get_txtDataId().toString());
+            data.setTxtIdHeaderNotif(dt.get(position).get_guiID());
+
+            lisData.add(data);
+
+            new clsLogReceiverHeader_mobileBL().saveData(lisData);
+        }
     }
 
     @Override
@@ -570,9 +604,11 @@ public class FragmentNotification extends Fragment implements IXListViewListener
             else {
                 Toast.makeText(context, "File downloaded", Toast.LENGTH_SHORT).show();
                 _clsFileAttach_mobile.set_intStatus("DOWNLOADED");
+                _clsFileAttach_mobile.set_intSubmit("1");
                 List<clsFileAttach_mobile> data = new ArrayList<>();
                 data.add(_clsFileAttach_mobile);
                 new clsFileAttach_mobileBL().saveData(data);
+//                new clsMainActivity().saveLogFile(data.get(0), "DOWNLOADED");
                 callShowFile(_clsFileAttach_mobile);
             }
         }
@@ -582,6 +618,8 @@ public class FragmentNotification extends Fragment implements IXListViewListener
         switch (data.get_txtTypeFile()){
             case ".pdf":
 //                Toast.makeText(getActivity(), data.get_txtTypeFile(), Toast.LENGTH_SHORT).show();
+//                    saveLogFile(data);
+
                 Intent intent = new Intent(getActivity(), PdfView.class);
                 intent.putExtra("idFile", data.get_txtIDFile());
                 startActivity(intent);
@@ -589,9 +627,35 @@ public class FragmentNotification extends Fragment implements IXListViewListener
             case ".jpg":
 //                Toast.makeText(getActivity(), data.get_txtTypeFile(), Toast.LENGTH_SHORT).show();
                 _dataclsFileAttach_mobile = data;
+//                saveLogFile(data);
                 decryptFile();
                 break;
         }
+    }
+
+    private void saveLogFile(clsFileAttach_mobile data) {
+        List<clsLogReceiverDetail_mobile> lisData = new ArrayList<>();
+        clsLogReceiverDetail_mobile _clsLogReceiverDetail_mobile = new clsLogReceiverDetail_mobile();
+        tUserLoginData dtLogin = new tUserLoginData();
+        dtLogin = new tUserLoginBL().getUserActive();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
+
+        _clsLogReceiverDetail_mobile.setTxtIdLogReceiverDetail(new clsMainActivity().GenerateGuid());
+        _clsLogReceiverDetail_mobile.setTxtStatus("READ");
+        _clsLogReceiverDetail_mobile.setTxtNIK(dtLogin.get_TxtEmpId().toString());
+        _clsLogReceiverDetail_mobile.setTxtUSerName(dtLogin.get_txtUserId().toString());
+        _clsLogReceiverDetail_mobile.setDtInserted(String.valueOf(dateFormat.format(cal.getTime())));
+        _clsLogReceiverDetail_mobile.setIntActive("1");
+        _clsLogReceiverDetail_mobile.setIntSubmit("1");
+        _clsLogReceiverDetail_mobile.setIntSync("0");
+        _clsLogReceiverDetail_mobile.setTxtIDFile(data.get_txtIDFile());
+        _clsLogReceiverDetail_mobile.setTxtGuidLogin(dtLogin.get_txtDataId().toString());
+        _clsLogReceiverDetail_mobile.setTxtIdHeaderNotif(data.get_txtIdHeaderNotif());
+
+        lisData.add(_clsLogReceiverDetail_mobile);
+
+        new clsLogReceiverDetail_mobileBL().saveData(lisData);
     }
 
     private String pathFolder = new clsHardCode().txtPathUserData + "FileAttach/";
@@ -719,6 +783,7 @@ public class FragmentNotification extends Fragment implements IXListViewListener
     }
 
     private boolean zoomImage (Bitmap bitmap){
+        new clsMainActivity().saveLogFile(_dataclsFileAttach_mobile, "READ");
         LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
         final View promptView = layoutInflater.inflate(R.layout.custom_zoom_image, null);
         final TextView tv_desc = (TextView) promptView.findViewById(R.id.desc_act);

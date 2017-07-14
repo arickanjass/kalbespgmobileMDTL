@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_add_customerbase"
+        android:icon="@drawable/mncustomerbasespg"
+        android:title="Add New Customer Base" />
+    <item
+        android:id="@+id/action_submitAll"
+        android:icon="@drawable/ic_input_black_48dp"
+        android:title="Submit All" />
+</menu>

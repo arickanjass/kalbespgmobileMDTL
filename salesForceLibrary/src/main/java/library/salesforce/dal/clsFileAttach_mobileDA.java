@@ -29,7 +29,8 @@ public class clsFileAttach_mobileDA {
                 + dt.Property_dtUpdated + " TEXT NULL,"
                 + dt.Property_intSubmit + " TEXT NULL,"
                 + dt.Property_intSync + " TEXT NULL,"
-                + dt.Property_intStatus + " TEXT NULL)";
+                + dt.Property_intStatus + " TEXT NULL,"
+                + dt.Property_intLog + " TEXT NULL)";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
 
@@ -62,7 +63,8 @@ public class clsFileAttach_mobileDA {
                 + String.valueOf(data.get_dtUpdated()) + "','"
                 + String.valueOf(data.get_intSubmit()) + "','"
                 + String.valueOf(data.get_intSync()) + "','"
-                + String.valueOf(data.get_intStatus()) + "')");
+                + String.valueOf(data.get_intStatus()) + "','"
+                + String.valueOf(data.get_intLog()) + "')");
 //			db.close();
     }
     public void DeleteAllData(SQLiteDatabase db) {
@@ -91,6 +93,7 @@ public class clsFileAttach_mobileDA {
             contact.set_intSubmit(cursor.getString(10));
             contact.set_intSync(cursor.getString(11));
             contact.set_intStatus(cursor.getString(12));
+            contact.set_intLog(cursor.getString(13));
             // return contact
         } else {
             contact = null;
@@ -122,6 +125,7 @@ public class clsFileAttach_mobileDA {
                 contact.set_intSubmit(cursor.getString(10));
                 contact.set_intSync(cursor.getString(11));
                 contact.set_intStatus(cursor.getString(12));
+                contact.set_intLog(cursor.getString(13));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -155,6 +159,7 @@ public class clsFileAttach_mobileDA {
                 contact.set_intSubmit(cursor.getString(10));
                 contact.set_intSync(cursor.getString(11));
                 contact.set_intStatus(cursor.getString(12));
+                contact.set_intLog(cursor.getString(13));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -189,6 +194,7 @@ public class clsFileAttach_mobileDA {
                 contact.set_intSubmit(cursor.getString(10));
                 contact.set_intSync(cursor.getString(11));
                 contact.set_intStatus(cursor.getString(12));
+                contact.set_intLog(cursor.getString(13));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());

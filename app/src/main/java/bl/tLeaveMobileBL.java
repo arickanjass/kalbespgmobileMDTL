@@ -8,11 +8,13 @@ import java.util.Date;
 import java.util.List;
 
 
+import library.salesforce.common.clsFileAttach_mobile;
 import library.salesforce.common.clsHelper;
 import library.salesforce.common.linkAPI;
 import library.salesforce.common.mconfigData;
 import library.salesforce.common.tLeaveMobileData;
 import library.salesforce.common.tUserLoginData;
+import library.salesforce.dal.clsFileAttach_mobileDA;
 import library.salesforce.dal.clsHardCode;
 import library.salesforce.dal.enumConfigData;
 import library.salesforce.dal.mconfigDA;
@@ -44,6 +46,12 @@ public class tLeaveMobileBL extends clsMainBL {
             listData.add(data);
         }
         return listData;
+    }
+
+    public List<tLeaveMobileData> GetAllData(){
+        SQLiteDatabase db=getDb();
+        tLeaveMobileDA _tLeaveMobileDA = new tLeaveMobileDA(db);
+        return _tLeaveMobileDA.getAllData(db);
     }
 
     public List<tLeaveMobileData> getAllDataToPushData() {

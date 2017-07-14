@@ -16,6 +16,7 @@ import library.salesforce.common.APIData;
 import library.salesforce.common.KoordinasiOutletData;
 import library.salesforce.common.KoordinasiOutletImageData;
 import library.salesforce.common.clsHelper;
+import library.salesforce.common.clsRole;
 import library.salesforce.common.clsStatusMenuStart;
 import library.salesforce.common.dataJson;
 import library.salesforce.common.linkAPI;
@@ -38,6 +39,7 @@ import library.salesforce.dal.KoordinasiOutletDA;
 import library.salesforce.dal.KoordinasiOutletImageDA;
 import library.salesforce.dal.clsHardCode;
 import library.salesforce.dal.enumConfigData;
+import library.salesforce.dal.enumRole;
 import library.salesforce.dal.enumStatusMenuStart;
 import library.salesforce.dal.mMenuDA;
 import library.salesforce.dal.mconfigDA;
@@ -173,6 +175,16 @@ public class clsMainBL {
     	}
     	this.db.close();
     	return _clsStatusMenuStart;
+	}
+	public clsRole checkUserRole() throws ParseException{
+		clsRole _clsRole = new clsRole();
+		tUserLoginData dt = new tUserLoginBL().getUserActive();
+		if(dt!=null){
+			if(dt.get_txtRoleId().equals(enumRole.MDMobile)){
+				_clsRole.set_txtRoleId(enumRole.MDMobile);
+			}
+		}
+		return _clsRole;
 	}
 	public dataJson GetAllPushData(String VersionName) throws Exception{
 		SQLiteDatabase db=getDb();

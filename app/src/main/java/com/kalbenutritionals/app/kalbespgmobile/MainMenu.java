@@ -184,119 +184,123 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
         ivProfile.setOnClickListener(this);
 
-        dtAbsensVisitplan = new clsHelperBL().getDataCheckInActive();
-        Menu header = navigationView.getMenu();
+        tUserLoginData data_tUserLoginData = new tUserLoginBL().getUserActive();
 
-        dtRealisasi = new tVisitPlanRealisasiBL().getDataCheckinActive();
+            dtAbsensVisitplan = new clsHelperBL().getDataCheckInActive();
+            Menu header = navigationView.getMenu();
 
-        Intent intent = getIntent();
-        String i_view = intent.getStringExtra("key_view");
+            dtRealisasi = new tVisitPlanRealisasiBL().getDataCheckinActive();
 
-        int statusAbsen = 0;
-        int menuActive = 0;
+            Intent intent = getIntent();
+            i_view = intent.getStringExtra("key_view");
 
-        if (dtRealisasi.get_txtDataIDRealisasi() == null){
-            menuActive = R.id.groupListMenu;
-            header.removeItem(R.id.checkoutVisitplan);
-        }
+            int statusAbsen = 0;
+            int menuActive = 0;
 
-        if (dtAbsensVisitplan!=null && dtAbsensVisitplan.getType().toString().equals("visitPlan")) {
-            header.removeItem(R.id.logout);
-            header.removeItem(R.id.checkout);
-            mMenuData data = new mMenuBL().getMenuDataByMenuName("mnVisitPlanMobile");
-            menuId = Integer.parseInt(data.get_IntMenuID());
-            statusAbsen = menuId;
-            menuActive = R.id.groupListMenu1;
+            if (dtRealisasi.get_txtDataIDRealisasi() == null){
+                // ini untuk data absen
+                menuActive = R.id.groupListMenu;
+                header.removeItem(R.id.checkoutVisitplan);
+            }
 
-            List<mMenuData> menu = new mMenuBL().getDatabyParentId(statusAbsen);
+            if (dtAbsensVisitplan!=null && dtAbsensVisitplan.getType().toString().equals("visitPlan")) {
+                header.removeItem(R.id.logout);
+                header.removeItem(R.id.checkout);
+                mMenuData data = new mMenuBL().getMenuDataByMenuName("mnVisitPlanMobile");
+                menuId = Integer.parseInt(data.get_IntMenuID());
+                statusAbsen = menuId;
+                menuActive = R.id.groupListMenu1;
+
+                List<mMenuData> menu = new mMenuBL().getDatabyParentId(statusAbsen);
+                listMenu = new String[menu.size()];
+
+                for (int i = 0; i < menu.size(); i++) {
+                    listMenu[i] = menu.get(i).get_TxtMenuName();
+                }
+
+                if (i_view != null){
+
+
+                    intent_activity();
+                }
+
+            }else if(dtAbsensVisitplan!=null && dtAbsensVisitplan.getType().toString().equals("absen")) {
+
+                header.removeItem(R.id.logout);
+                header.removeItem(R.id.checkoutVisitplan);
+                mMenuData data = new mMenuBL().getMenuDataByMenuName("mnAbsenSPG");
+                menuId = Integer.parseInt(data.get_IntMenuID());
+                statusAbsen = menuId;
+                menuActive = R.id.groupListMenu1;
+
+                List<mMenuData> menu = new mMenuBL().getDatabyParentId(statusAbsen);
+                listMenu = new String[menu.size()];
+
+                for (int i = 0; i < menu.size(); i++) {
+                    listMenu[i] = menu.get(i).get_TxtMenuName();
+                }
+
+                if (i_view != null){
+                    intent_activity();
+                }
+            } else {
+                menuActive = R.id.groupListMenu;
+                header.removeItem(R.id.checkout);
+            }
+
+            List<mMenuData> menu;
+
+            if (dtAbsensVisitplan == null) {
+                menu = new mMenuBL().getDatabyParentIdNew(0);
+            } else {
+                menu = new mMenuBL().getDatabyParentId(statusAbsen);
+            }
+
+            linkMenu = new String[menu.size()];
             listMenu = new String[menu.size()];
 
-            for (int i = 0; i < menu.size(); i++) {
-                listMenu[i] = menu.get(i).get_TxtMenuName();
+            if (menu != null) {
+                for (int i = 0; i < menu.size(); i++) {
+
+                    int resId = getResources().getIdentifier(String.valueOf(menu.get(i).get_TxtDescription().toLowerCase()), "drawable", MainMenu.this.getPackageName());
+                    Drawable icon = MainMenu.this.getResources().getDrawable(resId);
+
+                    header.add(menuActive, i, 1, menu.get(i).get_TxtMenuName()).setIcon(icon).setCheckable(true);
+
+                    linkMenu[i] = menu.get(i).get_TxtLink();
+                    listMenu[i] = menu.get(i).get_TxtMenuName();
+                }
             }
-
-            if (i_view != null){
-
-                intent_activity();
-            }
-
-        }else if(dtAbsensVisitplan!=null && dtAbsensVisitplan.getType().toString().equals("absen")) {
-
-            header.removeItem(R.id.logout);
-            header.removeItem(R.id.checkoutVisitplan);
-            mMenuData data = new mMenuBL().getMenuDataByMenuName("mnAbsenSPG");
-            menuId = Integer.parseInt(data.get_IntMenuID());
-            statusAbsen = menuId;
-            menuActive = R.id.groupListMenu1;
-
-            List<mMenuData> menu = new mMenuBL().getDatabyParentId(statusAbsen);
-            listMenu = new String[menu.size()];
-
-            for (int i = 0; i < menu.size(); i++) {
-                listMenu[i] = menu.get(i).get_TxtMenuName();
-            }
-
-            if (i_view != null){
-                intent_activity();
-            }
-        } else {
-            menuActive = R.id.groupListMenu;
-            header.removeItem(R.id.checkout);
-        }
-
-        List<mMenuData> menu;
-
-        if (dtAbsensVisitplan == null) {
-            menu = new mMenuBL().getDatabyParentId(0);
-        } else {
-            menu = new mMenuBL().getDatabyParentId(statusAbsen);
-        }
-
-        linkMenu = new String[menu.size()];
-        listMenu = new String[menu.size()];
-
-        if (menu != null) {
-            for (int i = 0; i < menu.size(); i++) {
-
-                int resId = getResources().getIdentifier(String.valueOf(menu.get(i).get_TxtDescription().toLowerCase()), "drawable", MainMenu.this.getPackageName());
-                Drawable icon = MainMenu.this.getResources().getDrawable(resId);
-
-                header.add(menuActive, i, 1, menu.get(i).get_TxtMenuName()).setIcon(icon).setCheckable(true);
-
-                linkMenu[i] = menu.get(i).get_TxtLink();
-                listMenu[i] = menu.get(i).get_TxtMenuName();
-            }
-        }
 
 //        TextView view = (TextView) navigationView.getMenu().findItem(R.id.home).getActionView();
 //        view.setText("99");
-        if (i_view!=null){
-            if (i_view.equals("View Reso")){
-                navigationView.getMenu().findItem(0).setChecked(true);
-            } else if (i_view.equals("View Actvity")){
-                navigationView.getMenu().findItem(1).setChecked(true);
-            } else if (i_view.equals("View Customer Base")){
+            if (i_view!=null){
+                if (i_view.equals("View Reso")){
+                    navigationView.getMenu().findItem(0).setChecked(true);
+                } else if (i_view.equals("View Actvity")){
+                    navigationView.getMenu().findItem(1).setChecked(true);
+                } else if (i_view.equals("View Customer Base")){
 //                navigationView.getMenu().findItem(2).setChecked(true);
-            } else if (i_view.equals("Notifcation")){
+                } else if (i_view.equals("Notifcation")){
 //                    navigationView.getMenu().findItem(R.id.information).setChecked(true);
-            } else if (i_view.equals("View PO")){
-                navigationView.getMenu().findItem(R.id.PO).setChecked(true);
-            } else if (i_view.equals("View Quantity")){
-                navigationView.getMenu().findItem(R.id.quantityStock).setChecked(true);
+                } else if (i_view.equals("View PO")){
+                    navigationView.getMenu().findItem(R.id.PO).setChecked(true);
+                } else if (i_view.equals("View Quantity")){
+                    navigationView.getMenu().findItem(R.id.quantityStock).setChecked(true);
+                }
             }
-        }
 
 
 //        TextView view = (TextView) navigationView.getMenu().findItem(R.id.information).getActionView();
 //        List<tNotificationData> ListData=new tNotificationBL().getAllDataWillAlert("2");
 //        view.setText("1");
 
-        SubMenu subMenuVersion = header.addSubMenu(R.id.groupVersion, 0, 3, "Version");
-        try {
-            subMenuVersion.add(getPackageManager().getPackageInfo(getPackageName(), 0).versionName + " \u00a9 KN-IT").setIcon(R.drawable.ic_android).setEnabled(false);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+            SubMenu subMenuVersion = header.addSubMenu(R.id.groupVersion, 0, 3, "Version");
+            try {
+                subMenuVersion.add(getPackageManager().getPackageInfo(getPackageName(), 0).versionName + " \u00a9 KN-IT").setIcon(R.drawable.ic_android).setEnabled(false);
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
@@ -384,18 +388,18 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
                         return true;
 
-                    case R.id.koordinasiOutlet:
-                        toolbar.setTitle("Koordinasi Outlet");
-
-                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
-
-                        FragmentAddKoordinasi koordinasi = new FragmentAddKoordinasi();
-                        FragmentTransaction FragmentTransactionKoordinasi = getSupportFragmentManager().beginTransaction();
-                        FragmentTransactionKoordinasi.replace(R.id.frame, koordinasi);
-                        FragmentTransactionKoordinasi.commit();
-                        selectedId = 99;
-
-                        return true;
+//                    case R.id.koordinasiOutlet:
+//                        toolbar.setTitle("Koordinasi Outlet");
+//
+//                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
+//
+//                        FragmentAddKoordinasi koordinasi = new FragmentAddKoordinasi();
+//                        FragmentTransaction FragmentTransactionKoordinasi = getSupportFragmentManager().beginTransaction();
+//                        FragmentTransactionKoordinasi.replace(R.id.frame, koordinasi);
+//                        FragmentTransactionKoordinasi.commit();
+//                        selectedId = 99;
+//
+//                        return true;
 
 
                     case R.id.historyAbsen:
@@ -421,14 +425,14 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                         selectedId = 99;
                         return true;
 
-                    case R.id.soalkuesioner:
-                        toolbar.setTitle("Kuesioner / Quiz");
-                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                        FragmentKuesionerAwal fragmentKuesioner = new FragmentKuesionerAwal();
-                        FragmentTransaction fragmentTransactionKuesioner = getSupportFragmentManager().beginTransaction();
-                        fragmentTransactionKuesioner.replace(R.id.frame, fragmentKuesioner);
-                        fragmentTransactionKuesioner.commit();
-                        return true;
+//                    case R.id.soalkuesioner:
+//                        toolbar.setTitle("Kuesioner / Quiz");
+//                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//                        FragmentKuesionerAwal fragmentKuesioner = new FragmentKuesionerAwal();
+//                        FragmentTransaction fragmentTransactionKuesioner = getSupportFragmentManager().beginTransaction();
+//                        fragmentTransactionKuesioner.replace(R.id.frame, fragmentKuesioner);
+//                        fragmentTransactionKuesioner.commit();
+//                        return true;
 
 //                    case R.id.soalkuesioner:
 //                        toolbar.setTitle("Kuesioner / Quiz");
