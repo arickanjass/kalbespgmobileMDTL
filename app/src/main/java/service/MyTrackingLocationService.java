@@ -224,6 +224,14 @@ public class MyTrackingLocationService extends Service implements GoogleApiClien
         else {
             int data = 0;
             List<trackingLocationData> listtrackingLocationData = new trackingLocationBL().getAllLastData();
+
+            String intSequence = "";
+            intSequence = listtrackingLocationData.get(0).get_intSequence();
+
+            if(intSequence.equals("null")){
+                data = 0;
+            }
+
             data = Integer.valueOf(listtrackingLocationData.get(0).get_intSequence());
 
             if (dataUserActive != null) {
