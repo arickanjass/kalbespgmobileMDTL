@@ -32,6 +32,8 @@ public class clsHardCode  {
 	public String txtTable_mCategoryBrosurMobile = "mCategoryBrosurMobile";
 	public String txtTable_tEmployeeBRWithLOB = "tEmployeeBRWithLOB";
 	public String txtTable_tUserLOB = "tUserLOB";
+	public String txtMessReset = "Your Password Sending to your Email..";
+	public String txtLogError = "tLogError";
 	public String txtTable_mAbsenCheckin = "mAbsenCheckin";
 	public String txtTable_mGeolocationOutletSPG = "mGeolocationOutletSPG";
 	public String txtTable_mUserRole = "mUserRole";

@@ -109,15 +109,6 @@ public class dataJson {
         ListOfmNotificationData = listOfmNotificationData;
     }
 
-    public synchronized List<tErrorLogData> getListOftErrorLogData() {
-        return ListOftErrorLogData;
-    }
-
-    public synchronized void setListOftErrorLogData(
-            List<tErrorLogData> listOftErrorLogData) {
-        ListOftErrorLogData = listOftErrorLogData;
-    }
-
     public synchronized List<tSalesProductDetailData> getListOftSalesProductDetailData() {
         return ListOftSalesProductDetailData;
     }
@@ -1108,6 +1099,14 @@ public class dataJson {
     public void setListOfLogReceiverHeader_mobile(List<clsLogReceiverHeader_mobile> listOfLogReceiverHeader_mobile) {
         ListOfLogReceiverHeader_mobile = listOfLogReceiverHeader_mobile;
     }
+    public synchronized List<tLogErrorData> getListOftErrorLogData() {
+        return ListOftErrorLogData;
+    }
+
+    public synchronized void setListOftErrorLogData(
+            List<tLogErrorData> listOftErrorLogData) {
+        ListOftErrorLogData = listOftErrorLogData;
+    }
 
     public List<clsLogReceiverDetail_mobile> getListOfLogReceiverDetail_mobile() {
         return ListOfLogReceiverDetail_mobile;
@@ -1124,7 +1123,7 @@ public class dataJson {
     private List<mEmployeeBranchData> ListOfmEmployeeBranchData;
     private List<mEmployeeSalesProductData> ListOfmEmployeeSalesProductData;
     private List<mNotificationData> ListOfmNotificationData;
-    private List<tErrorLogData> ListOftErrorLogData;
+    private List<tLogErrorData> ListOftErrorLogData;
     private List<tAbsenUserData> ListOftAbsenUserData;
     private List<mGeolocationOutletSPGData> ListOfmGeolocationOutletSPGData;
     private List<tActivityData> ListOftActivityData;

@@ -131,7 +131,11 @@
                 <action android:name="service.MyTrackingLocationService" />
             </intent-filter>
         </service>
-
+        <activity
+            android:name=".ActivityPushError"
+            android:configChanges="orientation|screenSize"
+            android:label=""
+            android:theme="@android:style/Theme.DeviceDefault.Light.DarkActionBar" />
         <activity
             android:name=".Login"
             android:label="@string/title_activity_login"

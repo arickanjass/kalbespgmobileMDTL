@@ -13,7 +13,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.StrictMode;
+import android.support.design.widget.TextInputLayout;
 import android.telephony.TelephonyManager;
+import android.text.InputFilter;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.KeyEvent;
@@ -56,10 +58,12 @@ import bl.mDownloadMasterData_mobileBL;
 import bl.mMenuBL;
 import bl.mUserRoleBL;
 import bl.tDeviceInfoUserBL;
+import bl.tLogErrorBL;
 import bl.tUserLoginBL;
 import library.salesforce.common.mDownloadMasterData_mobileData;
 import library.salesforce.common.mMenuData;
 import library.salesforce.common.mUserRoleData;
+import library.salesforce.common.tLogErrorData;
 import library.salesforce.common.tUserLoginData;
 import library.salesforce.dal.clsHardCode;
 import library.salesforce.dal.enumConfigData;
@@ -72,6 +76,7 @@ public class Login extends clsMainActivity {
     private String role = "Role";
     private String[] roles = new String[1];
     ProgressDialog progress;
+    private String userName = "";
     long Delay = 3000;
     private EditText txtLoginEmail;
     private EditText txtLoginPassword;
@@ -93,6 +98,7 @@ public class Login extends clsMainActivity {
     private String txtPassword;
     private String[] arrdefaultBranch = new String[]{"-"};
     private String[] arrdefaultOutlet = new String[]{"-"};
+    private TextView tvForgotPassword, tvPushError;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -260,6 +266,25 @@ public class Login extends clsMainActivity {
 
         });
 
+        List<tLogErrorData> datass = new tLogErrorBL().getAllData();
+
+        tvPushError = (TextView) findViewById(R.id.tv_push_error);
+        if (datass.size() > 0) {
+            tvPushError.setVisibility(View.VISIBLE);
+        } else {
+            tvPushError.setVisibility(View.GONE);
+        }
+        tvPushError = (TextView) findViewById(R.id.tv_push_error);
+        tvPushError.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent pushError = new Intent(Login.this, ActivityPushError.class);
+                pushError.putExtra("status", 0);
+                startActivity(pushError);
+//                pushError();
+            }
+        });
+
         btnLogin = (Button) findViewById(R.id.buttonLogin);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
@@ -347,6 +372,39 @@ public class Login extends clsMainActivity {
 
         AsyncCallAppVesion task = new AsyncCallAppVesion();
         task.execute();
+    }
+    private android.support.v7.app.AlertDialog alertDialog;
+
+    private void resetAccount() {
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View promptView = inflater.inflate(R.layout.fragment_reset_password, null);
+        final EditText etEmail = (EditText) promptView.findViewById(R.id.et_email_reset);
+        final TextInputLayout tiEmail = (TextInputLayout) promptView.findViewById(R.id.input_layout_email_reset);
+//        etEmail.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        etEmail.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
+
+        Button btnReset = (Button) promptView.findViewById(R.id.button_reset);
+        /*btnReset.setText("Forgot Password");
+        new clsMainActivity().removeErrorMessage(tiEmail);
+        btnReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                int a = 2/0;
+//                System.out.println(a);
+                if (etEmail.getText().toString().equals("")) {
+                    new clsMainActivity().setErrorMessage(getApplicationContext(), tiEmail, etEmail, "Email cannot empty");
+                } else if (!etEmail.getText().toString().equals("")) {
+                    userName = etEmail.getText().toString();
+                    AsyncCallReset task = new AsyncCallReset();
+                    task.execute();
+                }
+            }
+        });*/
+        android.support.v7.app.AlertDialog.Builder alertBuilder = new android.support.v7.app.AlertDialog.Builder(this);
+        alertBuilder.setView(promptView);
+        alertDialog = alertBuilder.create();
+        alertBuilder.setCancelable(false);
+        alertDialog.show();
     }
 
     int intProcesscancel = 0;
@@ -912,4 +970,72 @@ public class Login extends clsMainActivity {
             }
         }
     }
+    /*private class AsyncCallReset extends AsyncTask<JSONArray, Void, JSONArray> {
+        @Override
+        protected JSONArray doInBackground(JSONArray... params) {
+            JSONArray Json = null;
+            try {
+                Json = new tUserLoginBL().resetPassword(String.valueOf(userName), pInfo.versionName);
+            } catch (ParseException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return Json;
+        }
+
+        private ProgressDialog Dialog = new ProgressDialog(Login.this);
+
+        @Override
+        protected void onCancelled() {
+            Dialog.dismiss();
+            showCustomToast(Login.this, new clsHardCode().txtMessCancelRequest, false);
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray roledata) {
+            if (roledata != null && roledata.size() > 0) {
+                Iterator i = roledata.iterator();
+                while (i.hasNext()) {
+                    JSONObject innerObj = (JSONObject) i.next();
+                    Long IntResult = (Long) innerObj.get("_pboolValid");
+                    String PstrMessage = (String) innerObj.get("_pstrMessage");
+
+                    if (IntResult == 1) {
+                        showCustomToast(Login.this, PstrMessage, true);
+                        alertDialog.dismiss();
+                    } else {
+                        showCustomToast(Login.this, "Failed" + PstrMessage, false);
+                    }
+                }
+            } else {
+                if (intProcesscancel == 1) {
+                    onCancelled();
+                } else {
+                    showCustomToast(Login.this, new clsHardCode().txtMessUnableToConnect, false);
+                }
+            }
+            Dialog.dismiss();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            //Make ProgressBar invisible
+            //pg.setVisibility(View.VISIBLE);
+            Dialog.setMessage(new clsHardCode().txtMessReset);
+            Dialog.setCancelable(false);
+            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    intProcesscancel = 1;
+                }
+            });
+            Dialog.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            Dialog.dismiss();
+        }
+
+    }*/
 }

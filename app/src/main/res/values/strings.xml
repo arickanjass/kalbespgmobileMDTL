@@ -22,7 +22,7 @@
     <string name="tv_role">Role</string>
     <string name="title_activity_home">Home</string>
     <string name="copyright">Copyright \u00a9 KN IT</string>
-
+    <string name="error_advice">Your system has been detected some errors, my developers need this information. please push button below to send the errors</string>
     <string name="navigation_item_1">Home</string>
     <string name="navigation_item_2">Events</string>
     <string name="starred_string">Starred</string>

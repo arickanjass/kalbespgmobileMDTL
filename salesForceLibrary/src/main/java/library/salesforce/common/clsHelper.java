@@ -98,6 +98,57 @@ public class clsHelper {
 		String randomUUIDString = uuid.toString();
 		return randomUUIDString;
 	}
+	public String PushErrorFile(String urlToRead, String DataJson, Integer intTimeOut, HashMap<String, String> ListOfDataFile) {
+		String charset = "UTF-8";
+		File uploadFile1 = null;
+		String requestURL = urlToRead;
+		String Result = "";
+		clsHelper _clsClsHelper = new clsHelper();
+		clsHardCode _path = new clsHardCode();
+		File folder = new File(_path.txtPathApp);
+		try {
+			MultipartUtility multipart = new MultipartUtility(requestURL, charset, intTimeOut);
+
+			//multipart.addHeaderField("User-Agent", "CodeJava");
+			//multipart.addHeaderField("DataHeader", DataJson);
+
+			multipart.addFormField("dataField", DataJson);
+			//multipart.addFormField("keywords", "Java,upload,Spring");
+
+			for (Entry<String, String> entry : ListOfDataFile.entrySet()) {
+				String key = entry.getKey();
+//                String value = entry.getValue();
+
+//				byte [] array = entry.getValue();
+				File file = new File(entry.getValue());
+//				FileOutputStream out = new FileOutputStream( file );
+//				out.write( array );
+//				out.close();
+
+				multipart.addFilePart(key, new File(file.getAbsolutePath()));
+			}
+			List<String> response = multipart.finish();
+			//System.out.println("SERVER REPLIED:");
+
+			for (String line : response) {
+				Result += line;
+				System.out.println(line);
+			}
+		} catch (IOException ex) {
+			System.err.println(ex);
+		}
+
+//		if (folder.isDirectory())
+//		{
+//			String[] children = folder.list();
+//			for (int i = 0; i < children.length; i++)
+//			{
+//				new File(folder, children[i]).delete();
+//			}
+//			folder.delete();
+//		}
+		return _clsClsHelper.ResultJsonData(Result);
+	}
 	public String PushDataWithFile(String urlToRead,String DataJson,Integer intTimeOut,HashMap<String,byte[]> ListOfDataFile){
 		String charset = "UTF-8";
 
