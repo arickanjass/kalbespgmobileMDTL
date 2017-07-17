@@ -513,7 +513,7 @@ TextView tv_tgl, tv_noPO;
                 holder = new FragmentAddPO.MyAdapter.ViewHolder();
 
                 holder.name = (TextView) convertView.findViewById(R.id.textViewproduk);
-                holder.code = (EditText) convertView.findViewById(R.id.editText4);
+                holder.code = (EditText) convertView.findViewById(R.id.editTextQty);
 
                 convertView.setTag(holder);
 
