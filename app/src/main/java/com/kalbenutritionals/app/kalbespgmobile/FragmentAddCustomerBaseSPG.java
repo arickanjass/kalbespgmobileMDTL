@@ -54,6 +54,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import addons.adapter.AdapterListProductCustomerBased;
+import bl.clsHelperBL;
 import bl.mProductCompetitorBL;
 import bl.mProductPICBL;
 import bl.mProductSPGBL;
@@ -79,6 +80,7 @@ import library.salesforce.common.tCustomerBasedMobileDetailData;
 import library.salesforce.common.tCustomerBasedMobileDetailProductData;
 import library.salesforce.common.tCustomerBasedMobileHeaderData;
 import library.salesforce.common.tUserLoginData;
+import library.salesforce.common.visitplanAbsenData;
 
 public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClickListener, IXListViewListener {
     private ArrayList<ModelListview> modelItems;
@@ -1002,6 +1004,42 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
         final View promptView = layoutInflater.inflate(R.layout.popup_add_customerbase, null);
 
         final EditText nama = (EditText) promptView.findViewById(R.id.etNama);
+
+
+        InputFilter filter2 = new InputFilter() {
+            boolean canEnterSpace = false;
+
+            public CharSequence filter(CharSequence source, int start, int end,
+                                       Spanned dest, int dstart, int dend) {
+
+                if (nama.getText().toString().equals("")) {
+                    canEnterSpace = false;
+                }
+
+                StringBuilder builder = new StringBuilder();
+
+                for (int i = start; i < end; i++) {
+                    char currentChar = source.charAt(i);
+
+                    if (Character.isLetterOrDigit(currentChar) || currentChar == '_') {
+                        builder.append(currentChar);
+                        canEnterSpace = true;
+                    }
+
+                    if (Character.isWhitespace(currentChar) && canEnterSpace) {
+                        builder.append(currentChar);
+                    }
+
+                }
+                return builder.toString();
+            }
+
+        };
+
+        InputFilter[] filters = {filter2, new InputFilter.AllCaps()};
+
+        nama.setFilters(filters);
+
         final EditText usiaKehamilan = (EditText) promptView.findViewById(R.id.usiaKehamilan);
         final TextView tvNama = (TextView) promptView.findViewById(R.id.tvNamaPopUp);
         final TableRow trTanggalLahir = (TableRow) promptView.findViewById(R.id.row_tgl_lahir);
@@ -1559,9 +1597,12 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
             dtHeader.set_intTrCustomerId(new clsMainActivity().GenerateGuid());
         }
 
-        dtHeader.set_txtBranchCode(new tAbsenUserBL().getDataCheckInActive().get_txtBranchCode());
-        dtHeader.set_txtSumberData(new tAbsenUserBL().getDataCheckInActive().get_txtOutletCode());
-        dtHeader.set_txtNamaSumberData(new tAbsenUserBL().getDataCheckInActive().get_txtOutletName());
+        visitplanAbsenData _viAbsenData = new visitplanAbsenData();
+        _viAbsenData = new clsHelperBL().getDataCheckInActive();
+
+        dtHeader.set_txtBranchCode(_viAbsenData.get_txtBranchCode());
+        dtHeader.set_txtSumberData(_viAbsenData.get_txtOutletCode());
+        dtHeader.set_txtNamaSumberData(_viAbsenData.get_txtOutletName());
         dtHeader.set_txtNamaDepan(etNama.getText().toString());
         dtHeader.set_txtTelp(etTelpon.getText().toString());
         dtHeader.set_txtTelp2(etTelpon2.getText().toString());
@@ -1706,7 +1747,7 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
             }
         }
         dtHeader.set_txtTglLahir(tglLahir);
-        dtHeader.set_txtDeviceId(new tAbsenUserBL().getDataCheckInActive().get_txtDeviceId());
+        dtHeader.set_txtDeviceId(_viAbsenData.get_txtDeviceId());
         dtHeader.set_bitActive("0");
         dtHeader.set_dtDate(dateFormat.format(cal.getTime()));
         dtHeader.set_intSubmit("0");

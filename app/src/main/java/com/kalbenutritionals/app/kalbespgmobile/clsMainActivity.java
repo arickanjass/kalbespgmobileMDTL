@@ -548,7 +548,51 @@ public class clsMainActivity extends Activity {
 
     }
 
-    public static SwipeMenuCreator setCreator(final Context _ctx, final Map<String, HashMap> map) {
+    public SwipeMenuCreator setCreator(final Context _ctx, final Map<String, HashMap> map) {
+        SwipeMenuCreator creator = new SwipeMenuCreator() {
+
+            @Override
+            public void create(SwipeMenu menu) {
+
+                HashMap<String, String> map2 = new HashMap<String, String>();
+
+                for (int i = 0; i < map.size(); i++) {
+                    map2 = map.get(String.valueOf(i));
+
+                    SwipeMenuItem menuItem = new SwipeMenuItem(_ctx);
+                    menuItem.setWidth(dp2px(_ctx, 90));
+
+                    if (map2.get("name") == "View") {
+                        int icon = R.drawable.ic_view;
+                        menuItem.setIcon(icon);
+                        menuItem.setBackground(new ColorDrawable(Color.parseColor("#16a085")));
+                    } else if (map2.get("name") == "Edit") {
+                        int icon = R.drawable.ic_edit_white;
+                        menuItem.setIcon(icon);
+                        menuItem.setBackground(new ColorDrawable(Color.parseColor("#2980b9")));
+                    } else if (map2.get("name") == "Delete") {
+                        int icon = R.drawable.ic_delete_white;
+                        menuItem.setIcon(icon);
+                        menuItem.setBackground(new ColorDrawable(Color.parseColor("#c0392b")));
+                    } else if (map2.get("name") == "Add") {
+                        int icon = R.drawable.ic_add_white;
+                        menuItem.setIcon(icon);
+                        menuItem.setBackground(new ColorDrawable(Color.parseColor("#27ae60")));
+                    } else if (map2.get("name") == "AddProduct") {
+                        int icon = R.drawable.ic_shopping_cart;
+                        menuItem.setIcon(icon);
+                        menuItem.setBackground(new ColorDrawable(Color.parseColor("#27ae60")));
+                    }
+                    menu.addMenuItem(menuItem);
+                }
+            }
+        };
+
+        return creator;
+
+    }
+
+    public static SwipeMenuCreator setCreatorNotification(final Context _ctx, final Map<String, HashMap> map) {
         SwipeMenuCreator creator = new SwipeMenuCreator() {
 
             @Override

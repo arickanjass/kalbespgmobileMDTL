@@ -74,7 +74,7 @@ import library.salesforce.common.tUserLoginData;
 import library.salesforce.dal.clsHardCode;
 import service.MyNotificationService;
 
-import static com.kalbenutritionals.app.kalbespgmobile.clsMainActivity.setCreator;
+import static com.kalbenutritionals.app.kalbespgmobile.clsMainActivity.setCreatorNotification;
 import static com.kalbenutritionals.app.kalbespgmobile.clsMainActivity.setListA;
 
 /**
@@ -216,7 +216,7 @@ public class FragmentNotification extends Fragment implements IXListViewListener
         mapMenu = new HashMap<String, HashMap>();
         mapMenu.put("0", mapView);
 
-        SwipeMenuCreator creator = setCreator(getActivity(), mapMenu);
+        SwipeMenuCreator creator = setCreatorNotification(getActivity(), mapMenu);
         mListViewPopup.setMenuCreator(creator);
 
         creator = clsMain.setCreator(getActivity().getApplicationContext(), mapMenu);
@@ -441,7 +441,7 @@ public class FragmentNotification extends Fragment implements IXListViewListener
         mapMenu = new HashMap<String, HashMap>();
         mapMenu.put("0", mapView);
 
-        SwipeMenuCreator creator = setCreator(getActivity(), mapMenu);
+        SwipeMenuCreator creator = setCreatorNotification(getActivity(), mapMenu);
         mListView.setMenuCreator(creator);
 
 //        mListView.setOnMenuItemClickListener(new clsMainActivity().mmenuSwipeListener(getActivity(), "LNotifi", mapMenu, rowItems));

@@ -156,7 +156,7 @@
             </LinearLayout>
 
             <LinearLayout
-            android:id="@+id/ll__product_spg"
+            android:id="@+id/ll_product_spg"
             android:orientation="vertical"
             android:visibility="gone"
             android:layout_width="fill_parent"

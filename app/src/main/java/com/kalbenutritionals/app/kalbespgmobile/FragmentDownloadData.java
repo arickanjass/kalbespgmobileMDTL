@@ -158,7 +158,7 @@ public class FragmentDownloadData extends Fragment {
     private Button btnAbsen, btnQuiz;
     private Spinner spnDataLeave, spnDataPO, spnDataQuantityStock, spnProductComp, spnTypeSubmission, spnProdSPGCusBased, spnProdPICCusBased;
     private Button btnDataLeave, btnDataPO, btnDataQuantityStock, btnProductComp, btnTypeSubmission, btnProdSPGCusBased, btnProdPICCusBased ;
-    private LinearLayout ll_kordinasi_outlet,ll_branch, ll_outlet, ll_product, ll_brand, ll_type_leave, ll_reso, ll_activity, ll_customerbased, ll_absen, ll_purchase_order, ll_data_leave, ll__product_spg, ll_product_pic, ll_product_competitor, ll_type_submission;
+    private LinearLayout ll_kordinasi_outlet,ll_branch, ll_outlet, ll_product, ll_brand, ll_type_leave, ll_reso, ll_activity, ll_customerbased, ll_absen, ll_purchase_order, ll_data_leave, ll_product_spg, ll_product_pic, ll_product_competitor, ll_type_submission;
 
     private PackageInfo pInfo = null;
     private List<String> arrData;
@@ -227,7 +227,7 @@ public class FragmentDownloadData extends Fragment {
         ll_absen = (LinearLayout) v.findViewById(R.id.ll_absen);
         ll_purchase_order = (LinearLayout) v.findViewById(R.id.ll_purchase_order);
         ll_data_leave = (LinearLayout) v.findViewById(R.id.ll_data_leave);
-        ll__product_spg = (LinearLayout) v.findViewById(R.id.ll__product_spg);
+        ll_product_spg = (LinearLayout) v.findViewById(R.id.ll_product_spg);
         ll_product_pic = (LinearLayout) v.findViewById(R.id.ll_product_pic) ;
         ll_product_competitor = (LinearLayout) v.findViewById(R.id.ll_product_competitor);
         ll_type_submission = (LinearLayout) v.findViewById(R.id.ll_type_submission);
@@ -273,10 +273,12 @@ public class FragmentDownloadData extends Fragment {
                 ll_purchase_order.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_data_leave.getId()))){
                 ll_data_leave.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_kordinasi_outlet.getId()))){
-                ll_kordinasi_outlet.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll__product_spg.getId()))){
-                ll__product_spg.setVisibility(View.VISIBLE);
+            }
+//            else if (txt_id.equals(res.getResourceEntryName(ll_kordinasi_outlet.getId()))){
+//                ll_kordinasi_outlet.setVisibility(View.VISIBLE);
+//            }
+            else if (txt_id.equals(res.getResourceEntryName(ll_product_spg.getId()))){
+                ll_product_spg.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_product_pic.getId()))){
                 ll_product_pic.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_product_competitor.getId()))){
@@ -484,6 +486,65 @@ public class FragmentDownloadData extends Fragment {
         List<tSalesProductQuantityHeaderData> listQuantityStockHeaderData = new tSalesProductQuantityHeaderBL().getAllSalesQuantityHeader();
         List<trackingLocationData> listtrackingLocationData = new trackingLocationBL().getAllDataTrackingLocation();
         List<KoordinasiOutletData> listKoordinasiOutletData = new KoordinasiOutletBL().getAllKoordinasiOutletData();
+        List<mProductCompetitorData> productCompetitorDataList = new mProductCompetitorBL().GetAllData();
+        List<mTypeSubmissionMobile> typeSubmissionDataList = new mTypeSubmissionMobileBL().GetAllData();
+        List<mProductSPGData> mProductSPGDataList = new mProductSPGBL().GetAllData();
+        List<mProductPICData> mProductPICDataList = new mProductPICBL().GetAllData();
+
+
+        arrData = new ArrayList<>();
+        if (typeSubmissionDataList.size() > 0) {
+            for (mTypeSubmissionMobile dt : typeSubmissionDataList) {
+                arrData.add(dt.get_txtMasterID() + "-" + dt.get_txtNamaMasterData());
+            }
+            spnTypeSubmission.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
+            spnTypeSubmission.setEnabled(true);
+        } else if (typeSubmissionDataList.size() == 0) {
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<>(getContext(),
+                    android.R.layout.simple_spinner_item, strip);
+            spnTypeSubmission.setAdapter(adapterspn);
+            spnTypeSubmission.setEnabled(false);
+        }
+        arrData = new ArrayList<>();
+        if (mProductSPGDataList.size() > 0) {
+            for (mProductSPGData dt : mProductSPGDataList) {
+                arrData.add(dt.get_txtMasterId() + " - " + dt.get_txtProductBrandDetailGramName());
+            }
+            spnProdSPGCusBased.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
+            spnProdSPGCusBased.setEnabled(true);
+        } else if (mProductSPGDataList.size() == 0) {
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<>(getContext(),
+                    android.R.layout.simple_spinner_item, strip);
+            spnProdSPGCusBased.setAdapter(adapterspn);
+            spnProdSPGCusBased.setEnabled(false);
+        }
+        arrData = new ArrayList<>();
+        if (mProductPICDataList.size() > 0) {
+            for (mProductPICData dt : mProductPICDataList) {
+                arrData.add(dt.get_txtMasterId() + " - " + dt.get_txtProductBrandDetailGramName());
+            }
+            spnProdPICCusBased.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
+            spnProdPICCusBased.setEnabled(true);
+        } else if (mProductPICDataList.size() == 0) {
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<>(getContext(),
+                    android.R.layout.simple_spinner_item, strip);
+            spnProdPICCusBased.setAdapter(adapterspn);
+            spnProdPICCusBased.setEnabled(false);
+        }
+        arrData = new ArrayList<>();
+        if (productCompetitorDataList.size() > 0) {
+            for (mProductCompetitorData dt : productCompetitorDataList) {
+                arrData.add(dt.get_txtProductDetailCode() + "(" + dt.get_txtProdukKompetitorID() + ")");
+            }
+            spnProductComp.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
+            spnProductComp.setEnabled(true);
+        } else if (productCompetitorDataList.size() == 0) {
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<>(getContext(),
+                    android.R.layout.simple_spinner_item, strip);
+            spnProductComp.setAdapter(adapterspn);
+            spnProductComp.setEnabled(false);
+        }
+
 
         arrData = new ArrayList<String>();
         if (listDataBranch.size() > 0) {
@@ -851,7 +912,7 @@ public class FragmentDownloadData extends Fragment {
                     Json = new mProductCompetitorBL().DownloadProdctCompetitor(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
                     SaveDatammProductCompetitorData(Json);
                 }
-                if(ll__product_spg!=null && ll__product_spg.getVisibility() == View.VISIBLE){
+                if(ll_product_spg!=null && ll_product_spg.getVisibility() == View.VISIBLE){
                     Json = new mProductSPGBL().DownloadProductSPG(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
                     SaveDatammProductSPGData(Json);
                 }

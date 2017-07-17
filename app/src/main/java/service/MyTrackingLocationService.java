@@ -228,11 +228,11 @@ public class MyTrackingLocationService extends Service implements GoogleApiClien
             String intSequence = "";
             intSequence = listtrackingLocationData.get(0).get_intSequence();
 
-            if(intSequence.equals("null")){
+            if(intSequence.trim().equals("null")||intSequence.trim().equals("")){
                 data = 0;
+            } else {
+                data = Integer.valueOf(intSequence);
             }
-
-            data = Integer.valueOf(listtrackingLocationData.get(0).get_intSequence());
 
             if (dataUserActive != null) {
                 dataLocation.set_intId(new clsMainActivity().GenerateGuid());

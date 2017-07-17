@@ -1,8 +1,6 @@
 package addons.adapter;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -10,23 +8,23 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
-import com.kalbenutritionals.app.kalbespgmobile.FragmentAddCustomerBaseSPG;
 import com.kalbenutritionals.app.kalbespgmobile.R;
 
 import java.util.ArrayList;
 
 import bl.tCustomerBasedMobileDetailProductBL;
+import bl.tSalesProductQuantityDetailBL;
 import library.salesforce.common.clsSwipeList;
 
 /**
- * Created by ASUS ZE on 13/03/2017.
+ * Created by Rian Andrivani ZE on 13/03/2017.
  */
 
-public class AdapterListProductCustomerBased extends BaseAdapter implements ListAdapter{
+public class AdapterListProductQuantityDetail extends BaseAdapter implements ListAdapter{
     private Context context;
     private ArrayList<clsSwipeList> mAppList;
 
-    public AdapterListProductCustomerBased(Context context, ArrayList<clsSwipeList> mAppList) {
+    public AdapterListProductQuantityDetail(Context context, ArrayList<clsSwipeList> mAppList) {
         this.context = context;
         this.mAppList = mAppList;
     }
@@ -38,7 +36,7 @@ public class AdapterListProductCustomerBased extends BaseAdapter implements List
 
     @Override
     public String getItem(int position) {
-        return String.valueOf("Product : \n" + mAppList.get(position).get_txtTitle()+"\n"+"Kompetitor : \n" + mAppList.get(position).get_txtDescription()+"\n" + "Qty : " + mAppList.get(position).get_intPIC());
+        return String.valueOf("Product : " + mAppList.get(position).get_txtTitle()+"\n"+"TglExpire : " + mAppList.get(position).get_txtDescription()+"\n" + "Qty : " + mAppList.get(position).get_intPIC());
     }
 
     @Override
@@ -58,24 +56,11 @@ public class AdapterListProductCustomerBased extends BaseAdapter implements List
         holder.btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder alertbox = new AlertDialog.Builder(v.getRootView().getContext());
-                alertbox.setTitle("Warning");
-                alertbox.setMessage("Are Yo Sure Delete This Item?");
-                alertbox.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        new tCustomerBasedMobileDetailProductBL().deleteDataByProductId(mAppList.get(position).get_txtId());
-                        mAppList.remove(position);
-                        notifyDataSetChanged();
-                    }
-                });
-
-                alertbox.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //spnSubmissionCode.setSelection();
-                    }
-                });
-                alertbox.show();
+//                Toast.makeText(context, String.valueOf(position),Toast.LENGTH_SHORT).show();
+//                new tCustomerBasedMobileDetailProductBL().deleteDataByProductId(mAppList.get(position).get_txtId());
+                new tSalesProductQuantityDetailBL().deleteDataByProductId(mAppList.get(position).get_txtId());
+                mAppList.remove(position);
+                notifyDataSetChanged();
             }
         });
         return convertView;

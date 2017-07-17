@@ -45,6 +45,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import addons.adapter.AdapterListProductCustomerBased;
+import addons.adapter.AdapterListProductQuantityDetail;
 import bl.clsHelperBL;
 import bl.clsMainBL;
 import bl.mCounterNumberBL;
@@ -100,7 +101,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
     TextView tv_noQuantityStock;
     List<tSalesProductQuantityHeaderData> dtListDetailProduct;
     List<tSalesProductQuantityDetailData> dtListProduct;
-    AdapterListProductCustomerBased AdapterProduct;
+    AdapterListProductQuantityDetail AdapterProduct;
 
     private List<clsSwipeList> swipeList = new ArrayList<clsSwipeList>();
     private ArrayList<clsSwipeList> swipeListProduct = new ArrayList<clsSwipeList>();
