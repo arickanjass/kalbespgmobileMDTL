@@ -537,11 +537,7 @@ public class Login extends clsMainActivity {
                         if (!isMyServiceRunning(MyTrackingLocationService.class)){
                             startService(new Intent(Login.this, MyTrackingLocationService.class));
                         }
-
-                        boolean tes, tesTracking;
-                        tes = !isMyServiceRunning(MyServiceNative.class);
-                        tesTracking = isMyServiceRunning(MyTrackingLocationService.class);
-
+                        
                         finish();
                         Intent myIntent = new Intent(Login.this, MainMenu.class);
                         myIntent.putExtra("keyMainMenu", "main_menu");

@@ -342,15 +342,13 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                                         stopService(new Intent(getApplicationContext(), MyTrackingLocationService.class));
                                         MyTrackingLocationService service = new MyTrackingLocationService();
                                         service.shutdownService();
-                                        boolean tes;
-                                        tes = isMyServiceRunning(MyTrackingLocationService.class);
                                         AsyncCallLogOut task = new AsyncCallLogOut();
                                         task.execute();
                                         //new clsHelperBL().DeleteAllDB();
                                     }
                                 })
                                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {  
+                                    public void onClick(DialogInterface dialog, int id) {
                                         dialog.cancel();
                                     }
                                 });
