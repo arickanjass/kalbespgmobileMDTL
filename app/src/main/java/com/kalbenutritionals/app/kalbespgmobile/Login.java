@@ -1,5 +1,6 @@
 package com.kalbenutritionals.app.kalbespgmobile;
 
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -69,6 +70,7 @@ import library.salesforce.dal.clsHardCode;
 import library.salesforce.dal.enumConfigData;
 import library.salesforce.dal.mconfigDA;
 import service.MyServiceNative;
+import service.MyTrackingLocationService;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -145,7 +147,9 @@ public class Login extends clsMainActivity {
             // TODO Auto-generated catch block
             e2.printStackTrace();
         }
-
+            if (isMyServiceRunning(MyTrackingLocationService.class)){
+                stopService(new Intent(Login.this, MyTrackingLocationService.class));
+            }
 //        Timer RunSplash = new Timer();
 //
 //        // Note: declare ProgressDialog progress as a field in your class.
@@ -375,6 +379,22 @@ public class Login extends clsMainActivity {
     }
     private android.support.v7.app.AlertDialog alertDialog;
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (isMyServiceRunning(MyTrackingLocationService.class)){
+            stopService(new Intent(Login.this, MyTrackingLocationService.class));
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (isMyServiceRunning(MyTrackingLocationService.class)){
+            stopService(new Intent(Login.this, MyTrackingLocationService.class));
+        }
+    }
+
     private void resetAccount() {
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View promptView = inflater.inflate(R.layout.fragment_reset_password, null);
@@ -511,8 +531,17 @@ public class Login extends clsMainActivity {
                             }
                             new mDownloadMasterData_mobileBL().SaveData(listDatamDownloadData);
                         }
-                        startService(new Intent(Login.this, MyServiceNative.class));
-//                        startService(new Intent(Login.this, MyTrackingLocationService.class));
+                        if (!isMyServiceRunning(MyServiceNative.class)){
+                            startService(new Intent(Login.this, MyServiceNative.class));
+                        }
+                        if (!isMyServiceRunning(MyTrackingLocationService.class)){
+                            startService(new Intent(Login.this, MyTrackingLocationService.class));
+                        }
+
+                        boolean tes, tesTracking;
+                        tes = !isMyServiceRunning(MyServiceNative.class);
+                        tesTracking = isMyServiceRunning(MyTrackingLocationService.class);
+
                         finish();
                         Intent myIntent = new Intent(Login.this, MainMenu.class);
                         myIntent.putExtra("keyMainMenu", "main_menu");
@@ -599,7 +628,15 @@ public class Login extends clsMainActivity {
 //        AppIndex.AppIndexApi.end(client, viewAction);
 //        client.disconnect();
 //    }
-
+private boolean isMyServiceRunning(Class<?> serviceClass) {
+    ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+    for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+        if (serviceClass.getName().equals(service.service.getClassName())) {
+            return true;
+        }
+    }
+    return false;
+}
     private class AsyncCallRole extends AsyncTask<List<mUserRoleData>, Void, List<mUserRoleData>> {
         @Override
         protected List<mUserRoleData> doInBackground(List<mUserRoleData>... params) {

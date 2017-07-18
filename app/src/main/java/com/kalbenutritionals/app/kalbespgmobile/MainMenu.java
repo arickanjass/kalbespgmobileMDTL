@@ -2,6 +2,7 @@ package com.kalbenutritionals.app.kalbespgmobile;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -133,10 +134,16 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
         selectedId = 0;
 
         Intent serviceIntentMyServiceNative = new Intent(getApplicationContext(), MyServiceNative.class);
+        if (!isMyServiceRunning(MyServiceNative.class)){
+            getApplicationContext().startService(serviceIntentMyServiceNative);
+        }
         getApplicationContext().startService(serviceIntentMyServiceNative);
 
         Intent serviceIntentMyTrackingLocationService = new Intent(getApplicationContext(), MyTrackingLocationService.class);
-        getApplicationContext().startService(serviceIntentMyTrackingLocationService);
+        if (!isMyServiceRunning(MyTrackingLocationService.class)){
+            getApplicationContext().startService(serviceIntentMyTrackingLocationService);
+        }
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -335,13 +342,15 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                                         stopService(new Intent(getApplicationContext(), MyTrackingLocationService.class));
                                         MyTrackingLocationService service = new MyTrackingLocationService();
                                         service.shutdownService();
+                                        boolean tes;
+                                        tes = isMyServiceRunning(MyTrackingLocationService.class);
                                         AsyncCallLogOut task = new AsyncCallLogOut();
                                         task.execute();
                                         //new clsHelperBL().DeleteAllDB();
                                     }
                                 })
                                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
+                                    public void onClick(DialogInterface dialog, int id) {  
                                         dialog.cancel();
                                     }
                                 });
@@ -970,5 +979,14 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                 }
             }
         }
+    }
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

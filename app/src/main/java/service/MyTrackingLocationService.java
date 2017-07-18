@@ -1,7 +1,9 @@
 package service;
 
 import android.Manifest;
+import android.app.ActivityManager;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
@@ -18,6 +20,7 @@ import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.kalbenutritionals.app.kalbespgmobile.clsMainActivity;
 
@@ -73,6 +76,7 @@ public class MyTrackingLocationService extends Service implements GoogleApiClien
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API).build();
 
+
     }
     private Location mLastLocation;
     Handler mHandler = new Handler();
@@ -80,6 +84,8 @@ public class MyTrackingLocationService extends Service implements GoogleApiClien
     private static long UPDATE_INTERVAL = 1*360*1000;;  //default
     private static long UPDATE_INTERVAL_TESTING = /*1000 * 60 * 2*/3000; //2 minutes
     private static Timer timer = new Timer();
+
+
     private void startService() throws JSONException {
         try {
             doService();
@@ -125,14 +131,13 @@ public class MyTrackingLocationService extends Service implements GoogleApiClien
                 e1.printStackTrace();
             }
 
-
-           trackingLocation();
-
         } else {
             shutdownService();
         }
         db.close();
     }
+
+
 
     public Location trackingLocation() {
         try {
@@ -259,55 +264,64 @@ public class MyTrackingLocationService extends Service implements GoogleApiClien
 
         return mLastLocation;
     }
-
+    private static int timers;
     Runnable mHandlerTask = new Runnable()
     {
         @Override
         public void run() {
             trackingLocation();
-            mHandler.postDelayed(mHandlerTask, INTERVAL);
+            timers = INTERVAL;
+            mHandler.postDelayed(mHandlerTask, timers);
         }
     };
+
     void startRepeatingTask()
     {
-        mHandlerTask.run();
+
+            mHandlerTask.run();
     }
 
     public void shutdownService() {
-        if (timer != null) timer.cancel();
+        mHandler.removeCallbacks(mHandlerTask);
         Log.i(getClass().getSimpleName(), "Timer stopped...");
     }
+//
+//    @Override
+//    public void onStart(Intent intent, int startId) {
+//        // For time consuming an long tasks you can launch a new thread here...
+//        //Toast.makeText(this, "Welcome Kalbe SPG Mobile", Toast.LENGTH_LONG).show();
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    startService();
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }, 35000);
+//
+//    }
 
-    @Override
-    public void onStart(Intent intent, int startId) {
-        // For time consuming an long tasks you can launch a new thread here...
-        //Toast.makeText(this, "Welcome Kalbe SPG Mobile", Toast.LENGTH_LONG).show();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    startService();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, 35000);
-
-    }
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         // TODO Auto-generated method stub
         //Toast.makeText(this, " onStartCommand", Toast.LENGTH_LONG).show();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    startService();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, 35000);
+        try {
+            startService();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    startService();
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }, 35000);
         return START_STICKY;
     }
 

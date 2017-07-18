@@ -24,7 +24,7 @@ public class mPertanyaanBL extends clsMainBL {
         SQLiteDatabase _db = getDb();
         mPertanyaanDA _mPertanyaanDA = new mPertanyaanDA(db);
         List<mPertanyaanData> dt = _mPertanyaanDA.GetAllData(_db);
-        return dt;  
+        return dt;
     }
 
     public List<mPertanyaanData> GetDataByGroupQuestion(int groupId){
