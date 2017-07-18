@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import library.salesforce.common.tAbsenUserData;
 import library.salesforce.common.tVisitPlanRealisasiData;
 
 /**
@@ -330,6 +331,60 @@ public class tVisitPlanRealisasiDA {
                 contact.set_intPush(cursor.getString(27));
                 contact.set_intCheckout(cursor.getString(28));
                 contact.set_dateCheckout(cursor.getString(29));
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        // return contact list
+        return contactList;
+    }
+
+    public List<tVisitPlanRealisasiData> getAllDataActiveOrderByDate(SQLiteDatabase db) {
+        List<tVisitPlanRealisasiData> contactList = null;
+        // Select All Query
+        tVisitPlanRealisasiData dt=new tVisitPlanRealisasiData();
+        String selectQuery = "SELECT  "+dt.Property_All+" FROM " + TABLE_CONTACTS +" WHERE " + dt.Property_intSubmit+"=1" + " ORDER  BY dateCheckout DESC";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            contactList=new ArrayList<tVisitPlanRealisasiData>();
+            do {
+                tVisitPlanRealisasiData contact = new tVisitPlanRealisasiData();
+                contact.set_txtDataIDRealisasi(cursor.getString(0));
+                contact.set_intCategoryVisitPlan(cursor.getString(1));
+                contact.set_intDetailID(cursor.getString(2));
+                contact.set_intHeaderID(cursor.getString(3));
+                contact.set_intUserID(cursor.getString(4));
+                contact.set_txtOutletCode(cursor.getString(5));
+                contact.set_txtOutletName(cursor.getString(6));
+                contact.set_txtBranchCode(cursor.getString(7));
+                contact.set_txtBranchName(cursor.getString(8));
+                contact.set_dtDate(cursor.getString(9));
+                contact.set_intBobot(cursor.getString(10));
+                contact.set_dtDateRealisasi(cursor.getString(11));
+                contact.set_dtDateRealisasiDevice(cursor.getString(12));
+                contact.set_txtDesc(cursor.getString(13));
+                contact.set_txtDescReply(cursor.getString(14));
+                byte[] blob1 = cursor.getBlob(15);
+                contact.set_dtPhoto1(blob1);
+                byte[] blob2 = cursor.getBlob(16);
+                contact.set_dtPhoto2(blob2);
+                contact.set_txtLong(cursor.getString(17));
+                contact.set_txtLat(cursor.getString(18));
+                contact.set_txtAcc(cursor.getString(19));
+                contact.set_txtLongSource(cursor.getString(20));
+                contact.set_txtLatSource(cursor.getString(21));
+                contact.set_intDistance(cursor.getString(22));
+                contact.set_bitActive(cursor.getString(23));
+                contact.set_txtRoleId(cursor.getString(24));
+                contact.set_deviceId(cursor.getString(25));
+                contact.set_intSubmit(cursor.getString(26));
+                contact.set_intPush(cursor.getString(27));
+                contact.set_intCheckout(cursor.getString(28));
+                contact.set_dateCheckout(cursor.getString(29));
+                // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
         }

@@ -99,7 +99,7 @@ public class clsMainBL {
 	}
 	public tUserLoginData getUserActive() {
 		this.db = getDb();
-		List<tUserLoginData> listData;
+		List<tUserLoginData> listData= new ArrayList<>();
 		tUserLoginDA _tUserLoginDA=new tUserLoginDA(db);
 		listData=_tUserLoginDA.getUserLoginNow(db);
 		if (listData.size()==0){

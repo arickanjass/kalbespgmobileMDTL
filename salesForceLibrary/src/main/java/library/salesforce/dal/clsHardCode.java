@@ -110,6 +110,8 @@ public class clsHardCode  {
 	public String txtTable_tCustomerBasedMobileDetail = "tCustomerBasedMobileDetail";
 	public String txtTable_tCustomerBasedMobileDetailProduct = "tCustomerBasedMobileDetailProduct";
 
+	String txtTable_mCountConsumerMTD = "mCountConsumerMTD";
+
 	public String txtStatus_CheckDataActiveCheckIn = "CheckDataActiveCheckIn";
 	public String txtStatus_CheckOutAbsen = "CheckOutAbsen";
 	public String txtStatus_GetData = "GetData";

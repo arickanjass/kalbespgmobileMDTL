@@ -5,17 +5,20 @@ import android.database.sqlite.SQLiteDatabase;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import library.salesforce.common.APIData;
 import library.salesforce.common.clsHelper;
 import library.salesforce.common.linkAPI;
 import library.salesforce.common.mconfigData;
+import library.salesforce.common.tAbsenUserData;
 import library.salesforce.common.tUserLoginData;
 import library.salesforce.common.tVisitPlanRealisasiData;
 import library.salesforce.dal.clsHardCode;
 import library.salesforce.dal.enumConfigData;
 import library.salesforce.dal.mconfigDA;
+import library.salesforce.dal.tAbsenUserDA;
 import library.salesforce.dal.tUserLoginDA;
 import library.salesforce.dal.tVisitPlanRealisasiDA;
 
@@ -67,6 +70,13 @@ public class tVisitPlanRealisasiBL extends clsMainBL{
         tVisitPlanRealisasiData dt = new tVisitPlanRealisasiDA(_db).getDataCheckInActive(_db);
         _db.close();
         return dt;
+    }
+    public List<tVisitPlanRealisasiData>  getAllDataActiveOrderByDate(){
+        SQLiteDatabase db=getDb();
+        tVisitPlanRealisasiDA _tVisitPlanRealisasiDA=new tVisitPlanRealisasiDA(db);
+        List<tVisitPlanRealisasiData> ListData=new ArrayList<tVisitPlanRealisasiData>();
+        ListData=_tVisitPlanRealisasiDA.getAllDataActiveOrderByDate(db);
+        return ListData;
     }
     public List<tVisitPlanRealisasiData> getAllData(){
         SQLiteDatabase db=getDb();

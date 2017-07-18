@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -32,6 +34,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import bl.clsHelperBL;
+import bl.mDownloadMasterData_mobileBL;
 import bl.tAbsenUserBL;
 import bl.tNotificationBL;
 import bl.tUserLoginBL;
@@ -40,6 +43,7 @@ import library.salesforce.common.APIData;
 import library.salesforce.common.KoordinasiOutletData;
 import library.salesforce.common.clsPushData;
 import library.salesforce.common.dataJson;
+import library.salesforce.common.mDownloadMasterData_mobileData;
 import library.salesforce.common.tAbsenUserData;
 import library.salesforce.common.tActivityData;
 import library.salesforce.common.tCustomerBasedMobileHeaderData;
@@ -69,6 +73,7 @@ public class FragmentPushData extends Fragment {
     private TableLayout tlVisitPlan;
     private Button btnPush;
     private String myValue;
+    private LinearLayout ll_data_reso, ll_data_activity, ll_data_customerbased, ll_purchase_order, ll_dataQuantityStock, ll_data_absen, ll_dataVisitPlan, ll_data_leave, ll_data_koordinasi, ll_dataQuesioner;
 
     View v;
 
@@ -107,6 +112,49 @@ public class FragmentPushData extends Fragment {
         tlKoordinasi = (TableLayout) v.findViewById(R.id.tl_koordinasi);
         tlVisitPlan = (TableLayout) v.findViewById(R.id.tl_visit_plan);
         btnPush = (Button) v.findViewById(R.id.btnPush);
+
+        ll_data_reso = (LinearLayout) v.findViewById(R.id.ll_data_reso);
+        ll_data_activity = (LinearLayout) v.findViewById(R.id.ll_data_activity);
+        ll_data_customerbased = (LinearLayout) v.findViewById(R.id.ll_data_customerbased);
+        ll_purchase_order = (LinearLayout) v.findViewById(R.id.ll_purchase_order);
+        ll_dataQuantityStock = (LinearLayout) v.findViewById(R.id.ll_dataQuantityStock);
+        ll_data_absen = (LinearLayout) v.findViewById(R.id.ll_data_absen);
+        ll_dataVisitPlan = (LinearLayout) v.findViewById(R.id.ll_dataVisitPlan);
+        ll_data_leave = (LinearLayout) v.findViewById(R.id.ll_data_leave);
+        ll_data_koordinasi = (LinearLayout) v.findViewById(R.id.ll_data_koordinasi);
+        ll_dataQuesioner = (LinearLayout) v.findViewById(R.id.ll_dataQuesioner);
+
+        List<mDownloadMasterData_mobileData> mDownloadMasterData_mobileDataList = new ArrayList<>();
+
+        mDownloadMasterData_mobileDataList = new mDownloadMasterData_mobileBL().GetAllData();
+
+        Resources res = getResources();
+
+        for(mDownloadMasterData_mobileData data : mDownloadMasterData_mobileDataList){
+            String txt_id = data.get_txtMasterData().replaceAll(" ","");
+
+            if(txt_id.equals(res.getResourceEntryName(ll_data_reso.getId()))){
+                ll_data_reso.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_data_activity.getId()))){
+                ll_data_activity.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_data_customerbased.getId()))){
+                ll_data_customerbased.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_purchase_order.getId()))){
+                ll_purchase_order.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_dataQuantityStock.getId()))){
+                ll_dataQuantityStock.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_data_absen.getId()))){
+                ll_data_absen.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_dataVisitPlan.getId()))){
+                ll_dataVisitPlan.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_data_leave.getId()))){
+                ll_data_leave.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_data_koordinasi.getId()))){
+                ll_data_koordinasi.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_dataQuesioner.getId()))){
+                ll_dataQuesioner.setVisibility(View.VISIBLE);
+            }
+        }
 
         btnPush.setTextColor(Color.parseColor("#FFFFFF"));
 

@@ -34,6 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import bl.clsHelperBL;
 import bl.mMenuBL;
 import bl.tAbsenUserBL;
 import bl.tUserLoginBL;
@@ -50,6 +51,7 @@ import library.salesforce.common.clsSwipeList;
 import library.salesforce.common.mMenuData;
 import library.salesforce.common.tAbsenUserData;
 import library.salesforce.common.tUserLoginData;
+import library.salesforce.common.visitplanAbsenData;
 
 public class FragmentViewHistoryAbsen extends Fragment implements IXListViewListener {
 
@@ -59,7 +61,9 @@ public class FragmentViewHistoryAbsen extends Fragment implements IXListViewList
     private Handler mHandler;
     private static Map<String, HashMap> mapMenu;
 
-    static List<tAbsenUserData> dt;
+//    static List<tAbsenUserData> dt;
+
+    static List<visitplanAbsenData> data;
 
     private static Bitmap mybitmap1;
     private static Bitmap mybitmap2;
@@ -75,12 +79,17 @@ public class FragmentViewHistoryAbsen extends Fragment implements IXListViewList
 
         tAbsenUserData dtAbsens = new tAbsenUserBL().getDataCheckInActive();
 
+        visitplanAbsenData dtAbsensVisitplan = new visitplanAbsenData();
+        dtAbsensVisitplan = new clsHelperBL().getDataCheckInActive();
+
         List<mMenuData> menu;
 
-        if (dtAbsens == null) {
+        if(dtAbsensVisitplan!=null && dtAbsensVisitplan.getType().toString().equals("visitPlan")){
+            fabSpeedDial.setVisibility(View.GONE);
+        } else if (dtAbsensVisitplan!=null && dtAbsensVisitplan.getType().toString().equals("absen")){
             fabSpeedDial.setVisibility(View.GONE);
         } else {
-            fabSpeedDial.setVisibility(View.VISIBLE);
+            fabSpeedDial.setVisibility(View.GONE);
         }
 
         fabSpeedDial.setMenuListener(new SimpleMenuListenerAdapter() {
@@ -124,15 +133,16 @@ public class FragmentViewHistoryAbsen extends Fragment implements IXListViewList
 
 
         clsSwipeList swplist;
-        dt = new tAbsenUserBL().getAllDataActiveOrderByDate();
+//        dt = new tAbsenUserBL().getAllDataActiveOrderByDate();
+        data = new clsHelperBL().getAllDataActiveOrderByDate();
 
         swipeList.clear();
 
-        if (dt!=null){
-            for (int i = 0; i < dt.size(); i++) {
+        if (data!=null){
+            for (int i = 0; i < data.size(); i++) {
                 swplist = new clsSwipeList();
-                swplist.set_txtTitle("Outlet : " + dt.get(i).get_txtOutletName());
-                swplist.set_txtDescription("Check in : " + dt.get(i).get_dtDateCheckIn() + "\n" + "Check out : " + dt.get(i).get_dtDateCheckOut());
+                swplist.set_txtTitle("Outlet : " + data.get(i).get_txtOutletName());
+                swplist.set_txtDescription("Check in : " + data.get(i).get_dtDateCheckIn() + "\n" + "Check out : " + data.get(i).get_dtDateCheckOut());
                 swipeList.add(swplist);
             }
         }
@@ -206,15 +216,15 @@ public class FragmentViewHistoryAbsen extends Fragment implements IXListViewList
         final ImageView imgAbsen1 = (ImageView) promptView.findViewById(R.id.imgAbsen1);
         final ImageView imgAbsen2 = (ImageView) promptView.findViewById(R.id.imgAbsen2);
 
-        tUserLoginData dtLogin = new tUserLoginBL().getUserLoginByUserId(dt.get(position).get_txtUserId());
+        tUserLoginData dtLogin = new tUserLoginBL().getUserLoginByUserId(data.get(position).get_txtUserId());
 
         tvUsername.setText(dtLogin.get_txtUserName());
-        tvBranch.setText(dt.get(position).get_txtBranchName());
-        tvOutlet.setText(dt.get(position).get_txtOutletName());
-        tvCheckin.setText(dt.get(position).get_dtDateCheckIn());
-        tvCheckout.setText(dt.get(position).get_dtDateCheckOut());
+        tvBranch.setText(data.get(position).get_txtBranchName());
+        tvOutlet.setText(data.get(position).get_txtOutletName());
+        tvCheckin.setText(data.get(position).get_dtDateCheckIn());
+        tvCheckout.setText(data.get(position).get_dtDateCheckOut());
 
-        byte[] imgFile = dt.get(position).get_txtImg1();
+        byte[] imgFile = data.get(position).get_txtImg1();
         if (imgFile != null) {
             mybitmap1 = BitmapFactory.decodeByteArray(imgFile, 0, imgFile.length);
             Bitmap bitmap = Bitmap.createScaledBitmap(mybitmap1, 150, 150, true);
@@ -222,7 +232,7 @@ public class FragmentViewHistoryAbsen extends Fragment implements IXListViewList
         } else {
             imgAbsen1.setVisibility(View.INVISIBLE);
         }
-        byte[] imgFile2 = dt.get(position).get_txtImg2();
+        byte[] imgFile2 = data.get(position).get_txtImg2();
         if (imgFile2 != null && imgFile != null) {
             mybitmap2 = BitmapFactory.decodeByteArray(imgFile2, 0, imgFile2.length);
             Bitmap bitmap = Bitmap.createScaledBitmap(mybitmap2, 150, 150, true);
@@ -265,8 +275,8 @@ public class FragmentViewHistoryAbsen extends Fragment implements IXListViewList
         double longitude = 0;
 
         try{
-            latitude = Double.parseDouble(dt.get(position).get_txtLatitude());
-            longitude = Double.parseDouble(dt.get(position).get_txtLongitude());
+            latitude = Double.parseDouble(data.get(position).get_txtLatitude());
+            longitude = Double.parseDouble(data.get(position).get_txtLongitude());
         } catch (NumberFormatException e){
             e.printStackTrace();
         }

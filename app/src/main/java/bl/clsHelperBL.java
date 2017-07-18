@@ -160,6 +160,89 @@ public class clsHelperBL extends clsMainBL {
         return dataReturn;
     }
 
+    public List<visitplanAbsenData>  getAllDataActiveOrderByDate(){
+        SQLiteDatabase db=getDb();
+        tAbsenUserDA _tAbsenUserDA=new tAbsenUserDA(db);
+        List<tAbsenUserData> dataAbsen=new ArrayList<>();
+        dataAbsen=_tAbsenUserDA.getAllDataActiveOrderByDate(db);
+        tVisitPlanRealisasiDA  _tTVisitPlanRealisasiDA = new tVisitPlanRealisasiDA(db);
+        List<tVisitPlanRealisasiData> dataVisit = new ArrayList<>();
+        dataVisit = _tTVisitPlanRealisasiDA.getAllDataActiveOrderByDate(db);
+        List<visitplanAbsenData> dataReturn = new ArrayList<>();
+
+        if(dataAbsen == null && dataVisit == null){
+            dataReturn = null;
+        } else if (dataAbsen == null && dataVisit.size()!=0){
+
+            for(tVisitPlanRealisasiData data : dataVisit){
+                visitplanAbsenData visitAbsen = new visitplanAbsenData();
+                visitAbsen.set_txtId(data.get_txtDataIDRealisasi().toString());
+                visitAbsen.set_txtOutletCode(data.get_txtOutletCode().toString());
+                visitAbsen.set_txtOutletName(data.get_txtOutletName().toString());
+                visitAbsen.set_txtBranchCode(data.get_txtBranchCode().toString());
+                visitAbsen.set_txtBranchName(data.get_txtBranchName().toString());
+                visitAbsen.set_txtDeviceId(data.get_deviceId());
+
+                visitAbsen.set_dtDateCheckIn(data.get_dtDate().toString());
+                visitAbsen.set_dtDateCheckOut(data.get_dateCheckout().toString());
+                visitAbsen.set_intSubmit(data.get_intSubmit());
+                visitAbsen.set_intSync(data.get_intPush());
+                visitAbsen.set_txtAccuracy(data.get_txtAcc());
+                visitAbsen.set_txtLatitude(data.get_txtLat());
+                visitAbsen.set_txtLongitude(data.get_txtLong());
+                byte[] blob1 = data.get_dtPhoto1();
+//				Bitmap bmp1 = BitmapFactory.decodeByteArray(blob1, 0, blob1.length);
+                visitAbsen.set_txtImg1(blob1);
+                byte[] blob2 = data.get_dtPhoto2();
+                visitAbsen.set_txtUserId(data.get_intUserID());
+                visitAbsen.set_txtRoleId(data.get_txtRoleId());
+//				Bitmap bmp2 = BitmapFactory.decodeByteArray(blob2, 0, blob2.length);
+                visitAbsen.set_txtImg2(blob2);
+
+
+                visitAbsen.setType("visitPlan");
+                dataReturn.add(visitAbsen);
+            }
+        }else if (dataAbsen.size() != 0 && dataVisit==null){
+            for(tAbsenUserData data : dataAbsen){
+                visitplanAbsenData visitAbsen = new visitplanAbsenData();
+                visitAbsen.set_txtId(data.get_intId().toString());
+                visitAbsen.set_txtOutletCode(data.get_txtOutletCode().toString());
+                visitAbsen.set_txtOutletName(data.get_txtOutletName().toString());
+                visitAbsen.set_txtBranchCode(data.get_txtBranchCode().toString());
+                visitAbsen.set_txtBranchName(data.get_txtBranchName().toString());
+                visitAbsen.set_txtDeviceId(data.get_txtDeviceId());
+
+                visitAbsen.set_dtDateCheckIn(data.get_dtDateCheckIn().toString());
+                visitAbsen.set_dtDateCheckOut(data.get_dtDateCheckOut().toString());
+                visitAbsen.set_intSubmit(data.get_intSubmit());
+                visitAbsen.set_intSync(data.get_intSync());
+                visitAbsen.set_txtAbsen(data.get_txtAbsen());
+                visitAbsen.set_txtAccuracy(data.get_txtAccuracy());
+                visitAbsen.set_txtLatitude(data.get_txtLatitude());
+                visitAbsen.set_txtLongitude(data.get_txtLongitude());
+                if (data.get_txtImg1() != null){
+                    byte[] blob1 = data.get_txtImg1();
+                    visitAbsen.set_txtImg1(blob1);
+                }
+//				Bitmap bmp1 = BitmapFactory.decodeByteArray(blob1, 0, blob1.length);
+                if (data.get_txtImg2() != null){
+                    byte[] blob2 = data.get_txtImg2();
+                    visitAbsen.set_txtImg2(blob2);
+                }
+                visitAbsen.set_txtUserId(data.get_txtUserId());
+                visitAbsen.set_txtRoleId(data.get_txtRoleId());
+//				Bitmap bmp2 = BitmapFactory.decodeByteArray(blob2, 0, blob2.length);
+
+                visitAbsen.setType("absen");
+                dataReturn.add(visitAbsen);
+            }
+        }else{
+            dataReturn = null;
+        }
+        return dataReturn;
+    }
+
     public void DownloadData(String versionName) throws ParseException {
         SQLiteDatabase _db = getDb();
         tUserLoginDA _tUserLoginDA = new tUserLoginDA(_db);

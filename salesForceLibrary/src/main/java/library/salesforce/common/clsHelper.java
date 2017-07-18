@@ -36,6 +36,7 @@ import library.salesforce.dal.clsLogReceiverDetail_mobileDA;
 import library.salesforce.dal.clsLogReceiverHeader_mobileDA;
 import library.salesforce.dal.enumConfigData;
 import library.salesforce.dal.mCategoryVisitPlanDA;
+import library.salesforce.dal.mCountConsumerMTDDA;
 import library.salesforce.dal.mCounterNumberDA;
 import library.salesforce.dal.mDownloadMasterData_mobileDA;
 import library.salesforce.dal.mEmployeeAreaDA;
@@ -51,6 +52,8 @@ import library.salesforce.dal.mPriceInOutletDA;
 import library.salesforce.dal.mProductBarcodeDA;
 import library.salesforce.dal.mProductBrandHeaderDA;
 import library.salesforce.dal.mProductCompetitorDA;
+import library.salesforce.dal.mProductPICDA;
+import library.salesforce.dal.mProductSPGDA;
 import library.salesforce.dal.mTypeLeaveMobileDA;
 import library.salesforce.dal.mTypePertanyaanDA;
 import library.salesforce.dal.mTypeSubmissionMobileDA;
@@ -333,6 +336,8 @@ public class clsHelper {
 		tVisitPlanRealisasiDA _tVisitPlanRealisasiDA = new tVisitPlanRealisasiDA(db);
 		mProductCompetitorDA _mProductCompetitorDA = new mProductCompetitorDA(db);
 		mTypeSubmissionMobileDA _mTypeSubmissionMobileDA = new mTypeSubmissionMobileDA(db);
+		mProductSPGDA _mProductSPGDA = new mProductSPGDA(db);
+		mProductPICDA _mProductPICDA = new mProductPICDA(db);
 		tSalesProductQuantityHeaderDA _tSalesProductQuantityDA = new tSalesProductQuantityHeaderDA(db);
 		tSalesProductQuantityDetailDA _tSalesProductQuantityDetailDA = new tSalesProductQuantityDetailDA(db);
 		tSalesProductQuantityImageDA _tSalesProductQuantityImageDA = new tSalesProductQuantityImageDA(db);
@@ -340,12 +345,16 @@ public class clsHelper {
 		tCustomerBasedMobileDetailDA _tCustomerBasedMobileDetailDA = new tCustomerBasedMobileDetailDA(db);
 		tCustomerBasedMobileDetailProductDA _tCustomerBasedMobileDetailProductDA = new tCustomerBasedMobileDetailProductDA(db);
 		_tDisplayPictureDA = new tDisplayPictureDA(db);
+		mCountConsumerMTDDA _mCountConsumerMTDDA = new mCountConsumerMTDDA(db);
 
 		_mMCategoryVisitPlanDA.DropTable(db);
 		_tVisitPlanHeader_mobileDA.DropTable(db);
 		_tVisitPlanRealisasiDA.DropTable(db);
 		//_tDisplayPictureDA.DropTable(db);
 		_mDownloadMasterData_mobileDA.DropTable(db);
+		_mProductSPGDA.DropTable(db);
+		_mProductPICDA.DropTable(db);
+		_mCountConsumerMTDDA.DropTable(db);
 		_mProductCompetitorDA.DropTable(db);
 		_mTypeSubmissionMobileDA.DropTable(db);
 		_tSalesProductQuantityDA.Droptable(db);
@@ -410,6 +419,9 @@ public class clsHelper {
 		_trackingLocationDA = new trackingLocationDA(db);
 		_KoordinasiOutletDA = new KoordinasiOutletDA(db);
 		_KoordinasiOutletImageDA = new KoordinasiOutletImageDA(db);
+		new mProductSPGDA(db);
+		new mProductPICDA(db);
+		new mCountConsumerMTDDA(db);
 
 		_mPriceInOutletDA=new mPriceInOutletDA(db);
 		_mUserRoleDA=new mUserRoleDA(db);
