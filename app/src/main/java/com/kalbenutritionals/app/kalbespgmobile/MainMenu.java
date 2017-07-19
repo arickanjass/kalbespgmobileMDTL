@@ -27,7 +27,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
@@ -36,22 +35,22 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
 
 import bl.clsHelperBL;
+import bl.clsMainBL;
 import bl.mMenuBL;
 import bl.tAbsenUserBL;
 import bl.tDisplayPictureBL;
@@ -63,7 +62,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import library.salesforce.common.clsPushData;
 import library.salesforce.common.mMenuData;
 import library.salesforce.common.tAbsenUserData;
-import library.salesforce.common.tDisplayPictureData;
 import library.salesforce.common.tNotificationData;
 import library.salesforce.common.tUserLoginData;
 import library.salesforce.common.tVisitPlanRealisasiData;
@@ -75,29 +73,21 @@ import service.MyTrackingLocationService;
 public class MainMenu extends AppCompatActivity implements View.OnClickListener {
 
     private Toolbar toolbar;
-    private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private tAbsenUserBL _tAbsenUserBL;
     private tAbsenUserData dttAbsenUserData;
     private visitplanAbsenData dtAbsensVisitplan;
     private tVisitPlanRealisasiData dtRealisasi;
 
-    private TextView tvUsername, tvEmail;
-    private CircleImageView ivProfile;
-    private tDisplayPictureData tDisplayPictureData;
-
     PackageInfo pInfo = null;
 
     int selectedId;
-    private static int menuId = 0;
     Boolean isSubMenu = false;
 
     clsMainActivity _clsMainActivity = new clsMainActivity();
 
     String[] listMenu;
     String[] linkMenu;
-
-    private GoogleApiClient client;
 
     String i_view = null;
     Intent intent;
@@ -134,13 +124,13 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
         selectedId = 0;
 
         Intent serviceIntentMyServiceNative = new Intent(getApplicationContext(), MyServiceNative.class);
-        if (!isMyServiceRunning(MyServiceNative.class)){
+        if (!isMyServiceRunning(MyServiceNative.class)) {
             getApplicationContext().startService(serviceIntentMyServiceNative);
         }
         getApplicationContext().startService(serviceIntentMyServiceNative);
 
         Intent serviceIntentMyTrackingLocationService = new Intent(getApplicationContext(), MyTrackingLocationService.class);
-        if (!isMyServiceRunning(MyTrackingLocationService.class)){
+        if (!isMyServiceRunning(MyTrackingLocationService.class)) {
             getApplicationContext().startService(serviceIntentMyTrackingLocationService);
         }
 
@@ -170,144 +160,145 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
         tUserLoginData dt = new tUserLoginBL().getUserActive();
 
-        navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         View vwHeader = navigationView.getHeaderView(0);
 
-        ivProfile = (CircleImageView) vwHeader.findViewById(R.id.profile_image);
-        tvUsername = (TextView) vwHeader.findViewById(R.id.username);
-        tvEmail = (TextView) vwHeader.findViewById(R.id.email);
-        tvUsername.setText(_clsMainActivity.greetings() + dt.get_txtName());
+        CircleImageView ivProfile = (CircleImageView) vwHeader.findViewById(R.id.profile_image);
+        TextView tvUsername = (TextView) vwHeader.findViewById(R.id.username);
+        TextView tvEmail = (TextView) vwHeader.findViewById(R.id.email);
+        tvUsername.setText(String.format("%s%s", _clsMainActivity.greetings(), dt.get_txtName()));
         tvEmail.setText(dt.get_TxtEmail());
 
-        tDisplayPictureData = new tDisplayPictureBL().getData();
+        library.salesforce.common.tDisplayPictureData tDisplayPictureData = new tDisplayPictureBL().getData();
 
         if (tDisplayPictureData.get_image() != null) {
             Bitmap bitmap = BitmapFactory.decodeByteArray(tDisplayPictureData.get_image(), 0, tDisplayPictureData.get_image().length);
             ivProfile.setImageBitmap(bitmap);
         } else {
-            ivProfile.setImageBitmap(BitmapFactory.decodeResource(getApplicationContext().getResources(),
-                    R.drawable.profile));
+            ivProfile.setImageBitmap(BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.profile));
         }
 
         ivProfile.setOnClickListener(this);
 
-        tUserLoginData data_tUserLoginData = new tUserLoginBL().getUserActive();
+        dtAbsensVisitplan = new clsHelperBL().getDataCheckInActive();
+        Menu header = navigationView.getMenu();
 
-            dtAbsensVisitplan = new clsHelperBL().getDataCheckInActive();
-            Menu header = navigationView.getMenu();
+        dtRealisasi = new tVisitPlanRealisasiBL().getDataCheckinActive();
 
-            dtRealisasi = new tVisitPlanRealisasiBL().getDataCheckinActive();
+        Intent intent = getIntent();
+        i_view = intent.getStringExtra("key_view");
 
-            Intent intent = getIntent();
-            i_view = intent.getStringExtra("key_view");
+        int statusAbsen = 0;
+        int menuActive;
 
-            int statusAbsen = 0;
-            int menuActive = 0;
+        if (dtRealisasi.get_txtDataIDRealisasi() == null) {
+            header.removeItem(R.id.checkoutVisitplan);
+        }
 
-            if (dtRealisasi.get_txtDataIDRealisasi() == null){
-                // ini untuk data absen
-                menuActive = R.id.groupListMenu;
-                header.removeItem(R.id.checkoutVisitplan);
-            }
+        if (dtAbsensVisitplan != null && dtAbsensVisitplan.getType().equals("visitPlan")) {
+            header.removeItem(R.id.logout);
+            header.removeItem(R.id.checkout);
+            menuActive = R.id.groupListMenu1;
 
-            if (dtAbsensVisitplan!=null && dtAbsensVisitplan.getType().toString().equals("visitPlan")) {
-                header.removeItem(R.id.logout);
-                header.removeItem(R.id.checkout);
-                mMenuData data = new mMenuBL().getMenuDataByMenuName("mnVisitPlanMobile");
-                menuId = Integer.parseInt(data.get_IntMenuID());
-                statusAbsen = menuId;
-                menuActive = R.id.groupListMenu1;
-
-                List<mMenuData> menu = new mMenuBL().getDatabyParentId(statusAbsen);
-                listMenu = new String[menu.size()];
-
-                for (int i = 0; i < menu.size(); i++) {
-                    listMenu[i] = menu.get(i).get_TxtMenuName();
-                }
-
-                if (i_view != null){
-
-
-                    intent_activity();
-                }
-
-            }else if(dtAbsensVisitplan!=null && dtAbsensVisitplan.getType().toString().equals("absen")) {
-
-                header.removeItem(R.id.logout);
-                header.removeItem(R.id.checkoutVisitplan);
-                mMenuData data = new mMenuBL().getMenuDataByMenuName("mnAbsenSPG");
-                menuId = Integer.parseInt(data.get_IntMenuID());
-                statusAbsen = menuId;
-                menuActive = R.id.groupListMenu1;
-
-                List<mMenuData> menu = new mMenuBL().getDatabyParentId(statusAbsen);
-                listMenu = new String[menu.size()];
-
-                for (int i = 0; i < menu.size(); i++) {
-                    listMenu[i] = menu.get(i).get_TxtMenuName();
-                }
-
-                if (i_view != null){
-                    intent_activity();
-                }
-            } else {
-                menuActive = R.id.groupListMenu;
-                header.removeItem(R.id.checkout);
-            }
-
-            List<mMenuData> menu;
-
-            if (dtAbsensVisitplan == null) {
-                menu = new mMenuBL().getDatabyParentIdNew(0);
-            } else {
-                menu = new mMenuBL().getDatabyParentId(statusAbsen);
-            }
-
-            linkMenu = new String[menu.size()];
+            List<mMenuData> menu = new mMenuBL().getDatabyParentId(statusAbsen);
             listMenu = new String[menu.size()];
 
-            if (menu != null) {
-                for (int i = 0; i < menu.size(); i++) {
-
-                    int resId = getResources().getIdentifier(String.valueOf(menu.get(i).get_TxtDescription().toLowerCase()), "drawable", MainMenu.this.getPackageName());
-                    Drawable icon = MainMenu.this.getResources().getDrawable(resId);
-
-                    header.add(menuActive, i, 1, menu.get(i).get_TxtMenuName()).setIcon(icon).setCheckable(true);
-
-                    linkMenu[i] = menu.get(i).get_TxtLink();
-                    listMenu[i] = menu.get(i).get_TxtMenuName();
-                }
+            for (int i = 0; i < menu.size(); i++) {
+                listMenu[i] = menu.get(i).get_TxtMenuName();
             }
+
+            if (i_view != null) {
+                intent_activity();
+            }
+
+        } else if (dtAbsensVisitplan != null && dtAbsensVisitplan.getType().equals("absen")) {
+
+            header.removeItem(R.id.logout);
+            header.removeItem(R.id.checkoutVisitplan);
+            menuActive = R.id.groupListMenu1;
+
+            List<mMenuData> menu = new mMenuBL().getDatabyParentId(statusAbsen);
+            listMenu = new String[menu.size()];
+
+            for (int i = 0; i < menu.size(); i++) {
+                listMenu[i] = menu.get(i).get_TxtMenuName();
+            }
+
+            if (i_view != null) {
+                intent_activity();
+            }
+        } else {
+            menuActive = R.id.groupListMenu;
+            header.removeItem(R.id.checkout);
+        }
+
+        List<mMenuData> menu;
+
+        if (dtAbsensVisitplan == null) {
+            menu = new mMenuBL().getDatabyParentIdNew(0);
+        } else {
+            menu = new mMenuBL().getDatabyParentId(statusAbsen);
+        }
+
+        linkMenu = new String[menu.size()];
+        listMenu = new String[menu.size()];
+
+        for (int i = 0; i < menu.size(); i++) {
+
+            int resId = getResources().getIdentifier(String.valueOf(menu.get(i).get_TxtDescription().toLowerCase()), "drawable", MainMenu.this.getPackageName());
+            Drawable icon = MainMenu.this.getResources().getDrawable(resId);
+
+            header.add(menuActive, i, 1, menu.get(i).get_TxtMenuName()).setIcon(icon).setCheckable(true);
+
+            linkMenu[i] = menu.get(i).get_TxtLink();
+            listMenu[i] = menu.get(i).get_TxtMenuName();
+        }
 
 //        TextView view = (TextView) navigationView.getMenu().findItem(R.id.home).getActionView();
 //        view.setText("99");
-            if (i_view!=null){
-                if (i_view.equals("View Reso")){
+        if (i_view != null) {
+            switch (i_view) {
+                case "View Reso":
                     navigationView.getMenu().findItem(0).setChecked(true);
-                } else if (i_view.equals("View Actvity")){
+                    break;
+                case "View Actvity":
                     navigationView.getMenu().findItem(1).setChecked(true);
-                } else if (i_view.equals("View Customer Base")){
+                    break;
+                case "View Customer Base":
 //                navigationView.getMenu().findItem(2).setChecked(true);
-                } else if (i_view.equals("Notifcation")){
+                    break;
+                case "Notifcation":
 //                    navigationView.getMenu().findItem(R.id.information).setChecked(true);
-                } else if (i_view.equals("View PO")){
+                    break;
+                case "View PO":
                     navigationView.getMenu().findItem(R.id.PO).setChecked(true);
-                } else if (i_view.equals("View Quantity")){
+                    break;
+                case "View Quantity":
                     navigationView.getMenu().findItem(R.id.quantityStock).setChecked(true);
-                }
+                    break;
             }
+        }
 
 
 //        TextView view = (TextView) navigationView.getMenu().findItem(R.id.information).getActionView();
 //        List<tNotificationData> ListData=new tNotificationBL().getAllDataWillAlert("2");
 //        view.setText("1");
 
-            SubMenu subMenuVersion = header.addSubMenu(R.id.groupVersion, 0, 3, "Version");
-            try {
-                subMenuVersion.add(getPackageManager().getPackageInfo(getPackageName(), 0).versionName + " \u00a9 KN-IT").setIcon(R.drawable.ic_android).setEnabled(false);
-            } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
-            }
+        String linkAPI = new clsMainBL().getLinkAPI();
+        try {
+            URL u = new URL(linkAPI);
+            linkAPI = u.getHost();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        SubMenu subMenuVersion = header.addSubMenu(R.id.groupVersion, 0, 3, "Version");
+        try {
+            subMenuVersion.add(getPackageManager().getPackageInfo(getPackageName(), 0).versionName + " \u00a9 KN-IT").setIcon(R.drawable.ic_android).setEnabled(false);
+            subMenuVersion.add(linkAPI).setIcon(R.drawable.ic_action_link).setEnabled(false);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
@@ -318,22 +309,11 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
                 drawerLayout.closeDrawers();
 
-                Fragment fragment = null;
+                Fragment fragment;
 
                 switch (menuItem.getItemId()) {
                     case R.id.logout:
-                        //funcLogOut();
-                        LayoutInflater layoutInflater = LayoutInflater.from(MainMenu.this);
-                        final View promptView = layoutInflater.inflate(R.layout.confirm_data, null);
-
-                        final TextView _tvConfirm = (TextView) promptView.findViewById(R.id.tvTitle);
-                        final TextView _tvDesc = (TextView) promptView.findViewById(R.id.tvDesc);
-                        _tvDesc.setVisibility(View.INVISIBLE);
-                        _tvConfirm.setText("Log Out Application ?");
-                        _tvConfirm.setTextSize(18);
-
                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainMenu.this);
-                        alertDialogBuilder.setView(promptView);
                         alertDialogBuilder
                                 .setCancelable(false)
                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -344,7 +324,6 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                                         service.shutdownService();
                                         AsyncCallLogOut task = new AsyncCallLogOut();
                                         task.execute();
-                                        //new clsHelperBL().DeleteAllDB();
                                     }
                                 })
                                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -353,6 +332,8 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                                     }
                                 });
                         final AlertDialog alertD = alertDialogBuilder.create();
+                        alertD.setTitle("Confirm");
+                        alertD.setMessage("Logout Application?");
                         alertD.show();
                         return true;
 
@@ -372,7 +353,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                     case R.id.home:
                         toolbar.setTitle("Home");
 
-                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
+                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
                         FragmentInformation homeFragment = new FragmentInformation();
                         FragmentTransaction fragmentTransactionHome = getSupportFragmentManager().beginTransaction();
@@ -385,7 +366,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                     case R.id.quantityStock:
                         toolbar.setTitle("View Quantity Stock");
 
-                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
+                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
                         FragmentViewQuantityStock quantityStock = new FragmentViewQuantityStock();
                         FragmentTransaction fragmentTransactionQuantityStock = getSupportFragmentManager().beginTransaction();
@@ -412,7 +393,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                     case R.id.historyAbsen:
                         toolbar.setTitle("History Absen");
 
-                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
+                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
                         FragmentViewHistoryAbsen fragmentViewHistoryAbsen = new FragmentViewHistoryAbsen();
                         FragmentTransaction fragmentTransactionHistoryAbsen = getSupportFragmentManager().beginTransaction();
@@ -463,7 +444,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                     case R.id.information:
                         toolbar.setTitle("Information");
 
-                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
+                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
                         FragmentNotification fragmentNotification = new FragmentNotification();
                         FragmentTransaction fragmentTransactionNotifcation = getSupportFragmentManager().beginTransaction();
@@ -471,19 +452,9 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                         fragmentTransactionNotifcation.commit();
                         selectedId = 99;
 
-                        return  true;
+                        return true;
                     case R.id.checkoutVisitplan:
-                        LayoutInflater _layoutInflater2 = LayoutInflater.from(MainMenu.this);
-                        final View _promptView2 = _layoutInflater2.inflate(R.layout.confirm_data, null);
-
-                        final TextView tvConfirm2 = (TextView) _promptView2.findViewById(R.id.tvTitle);
-                        final TextView tvDesc2 = (TextView) _promptView2.findViewById(R.id.tvDesc);
-                        tvDesc2.setVisibility(View.INVISIBLE);
-                        tvConfirm2.setText("Check Out Data ?");
-                        tvConfirm2.setTextSize(18);
-
                         AlertDialog.Builder _alertDialogBuilder2 = new AlertDialog.Builder(MainMenu.this);
-                        _alertDialogBuilder2.setView(_promptView2);
                         _alertDialogBuilder2
                                 .setCancelable(false)
                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -530,22 +501,14 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                                     }
                                 });
                         final AlertDialog _alertD2 = _alertDialogBuilder2.create();
+                        _alertD2.setTitle("Confirm");
+                        _alertD2.setMessage("Checkout Data?");
                         _alertD2.show();
 
                         return true;
 
                     case R.id.checkout:
-                        LayoutInflater _layoutInflater = LayoutInflater.from(MainMenu.this);
-                        final View _promptView = _layoutInflater.inflate(R.layout.confirm_data, null);
-
-                        final TextView tvConfirm = (TextView) _promptView.findViewById(R.id.tvTitle);
-                        final TextView tvDesc = (TextView) _promptView.findViewById(R.id.tvDesc);
-                        tvDesc.setVisibility(View.INVISIBLE);
-                        tvConfirm.setText("Check Out Data ?");
-                        tvConfirm.setTextSize(18);
-
                         AlertDialog.Builder _alertDialogBuilder = new AlertDialog.Builder(MainMenu.this);
-                        _alertDialogBuilder.setView(_promptView);
                         _alertDialogBuilder
                                 .setCancelable(false)
                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -555,11 +518,11 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
                                         dttAbsenUserData = _tAbsenUserBL.getDataCheckInActive();
                                         tAbsenUserData datatAbsenUserData = dttAbsenUserData;
-                                        List<tAbsenUserData> absenUserDatas = new ArrayList<tAbsenUserData>();
+                                        List<tAbsenUserData> absenUserDatas = new ArrayList<>();
 
                                         if (dttAbsenUserData != null) {
                                             datatAbsenUserData.set_intId(dttAbsenUserData.get_intId());
-                                            datatAbsenUserData.set_dtDateCheckOut(_clsMainActivity.FormatDateDB().toString());
+                                            datatAbsenUserData.set_dtDateCheckOut(_clsMainActivity.FormatDateDB());
                                             datatAbsenUserData.set_intSubmit("1");
                                             datatAbsenUserData.set_intSync("0");
                                             datatAbsenUserData.set_txtAbsen("0");
@@ -580,6 +543,8 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                                     }
                                 });
                         final AlertDialog _alertD = _alertDialogBuilder.create();
+                        _alertD.setTitle("Confirm");
+                        _alertD.setMessage("Checkout Data?");
                         _alertD.show();
 
                         return true;
@@ -632,7 +597,6 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
@@ -656,7 +620,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
             fragmentTransaction.replace(R.id.frame, fragment);
             fragmentTransaction.commit();
 
-            selectedId=id;
+            selectedId = id;
 
             if (!isSubMenu) isSubMenu = true;
             else isSubMenu = false;
@@ -724,8 +688,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
         }
     }
 
-    public void pickImage2()
-    {
+    public void pickImage2() {
         CropImage.startPickImageActivity(this);
     }
 
@@ -746,7 +709,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                 startActivity(intent);
                 finish();
             }
-        } else if (requestCode==100 || requestCode == 130){
+        } else if (requestCode == 100 || requestCode == 130) {
             for (Fragment fragment : getSupportFragmentManager().getFragments()) {
                 fragment.onActivityResult(requestCode, resultCode, data);
             }
@@ -760,10 +723,10 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
             JSONArray Json = null;
 
             try {
-                List<tAbsenUserData> listAbsenData = new ArrayList<tAbsenUserData>();
+                List<tAbsenUserData> listAbsenData = new ArrayList<>();
                 tAbsenUserData dtTabsenData = new tAbsenUserBL().getDataCheckInActive();
                 if (dtTabsenData != null) {
-                    dtTabsenData.set_dtDateCheckOut(_clsMainActivity.FormatDateComplete().toString());
+                    dtTabsenData.set_dtDateCheckOut(_clsMainActivity.FormatDateComplete());
                     dtTabsenData.set_intSubmit("1");
                     dtTabsenData.set_intSync("0");
                     listAbsenData.add(dtTabsenData);
@@ -825,9 +788,8 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
         @Override
         protected void onPostExecute(JSONArray roledata) {
             if (roledata != null) {
-                Iterator i = roledata.iterator();
-                while (i.hasNext()) {
-                    JSONObject innerObj = (JSONObject) i.next();
+                for (Object aRoledata : roledata) {
+                    JSONObject innerObj = (JSONObject) aRoledata;
                     Long IntResult = (Long) innerObj.get("_pboolValid");
                     String PstrMessage = (String) innerObj.get("_pstrMessage");
 
@@ -885,8 +847,8 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
     }
 
-    private void intent_activity(){
-        if (i_view.equals("Notification")){
+    private void intent_activity() {
+        if (i_view.equals("Notification")) {
             String id = intent.getStringExtra("id");
             Class<?> fragmentClass = null;
             try {
@@ -897,10 +859,12 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
             toolbar.setTitle("Information");
             Fragment fragment = null;
             try {
-                fragment = (Fragment) fragmentClass.newInstance();
+                fragment = (Fragment) (fragmentClass != null ? fragmentClass.newInstance() : null);
                 Bundle bundle = new Bundle();
                 bundle.putString("TAG_UUID", id);
-                fragment.setArguments(bundle);
+                if (fragment != null) {
+                    fragment.setArguments(bundle);
+                }
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
@@ -944,10 +908,10 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        if(intent!=null){
-            String view = intent .getStringExtra("key_view");
-            if(view!=null){
-                if (view.equals("Notification")){
+        if (intent != null) {
+            String view = intent.getStringExtra("key_view");
+            if (view != null) {
+                if (view.equals("Notification")) {
                     String id = intent.getStringExtra("id");
                     Class<?> fragmentClass = null;
                     try {
@@ -958,7 +922,9 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                     toolbar.setTitle("Information");
                     Fragment fragment = null;
                     try {
-                        fragment = (Fragment) fragmentClass.newInstance();
+                        if (fragmentClass != null) {
+                            fragment = (Fragment) fragmentClass.newInstance();
+                        }
                         Bundle bundle = new Bundle();
                         bundle.putString("TAG_UUID", id);
                         fragment.setArguments(bundle);
@@ -972,12 +938,13 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                     fragmentTransaction.commit();
                     selectedId = 99;
 
-                    NotificationManager tnotificationManager=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+                    NotificationManager tnotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                     tnotificationManager.cancelAll();
                 }
             }
         }
     }
+
     private boolean isMyServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
