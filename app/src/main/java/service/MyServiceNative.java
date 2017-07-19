@@ -270,6 +270,7 @@ public class MyServiceNative extends Service{
 					e.printStackTrace();
 				}
 				Intent i = new Intent(getApplicationContext(), MainMenu.class);
+				i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 				i.putExtra("key_view", "Notification");
 				i.putExtra("id", String.valueOf(dttNotificationData.get_guiID()));
 				i.setAction("notif");

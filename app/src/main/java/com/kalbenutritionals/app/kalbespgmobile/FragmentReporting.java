@@ -150,19 +150,6 @@ public class FragmentReporting extends Fragment {
         spnTypeReport.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
         spnOutlet.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrDataOutlet));
 
-//        spnOutlet.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                spinnerSelected = spnTypeReport.getSelectedItem().toString();
-//                generateReport(spinnerSelected);
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
-
         return v;
     }
 
@@ -215,11 +202,6 @@ public class FragmentReporting extends Fragment {
                         rt.set_total_product(datas.get_intSumItem());
                         rt.set_total_price(new clsMainActivity().convertNumberDec(Double.valueOf(datas.get_intSumAmount())));
                         rt.set_status(datas.get_OutletName());
-//                        if (datas.get_intSubmit().equals("1")&&datas.get_intSync().equals("0")){
-//                            rt.set_status("Submit");
-//                        } else if (datas.get_intSubmit().equals("1")&&datas.get_intSync().equals("1")){
-//                            rt.set_status("Sync");
-//                        }
 
                         List<tSalesProductDetailData> dt_detail = new tSalesProductDetailBL().GetDataByNoSO(datas.get_txtNoSo());
 
@@ -291,12 +273,6 @@ public class FragmentReporting extends Fragment {
                         rt.set_no_cb(mtTypeSubmissionMobile.get_txtNamaMasterData());
                         rt.set_customer_name(datas.get_txtNamaDepan());
                         rt.set_no_tlp(datas.get_txtTelp());
-
-//                        if(datas.get_intPIC().equals("1")){
-//                            rt.set_pic("Yes");
-//                        } else {
-//                            rt.set_pic("No");
-//                        }
 
                         final List<tCustomerBasedMobileDetailData> dtListDetail = new tCustomerBasedMobileDetailBL().getAllDataByHeaderId(datas.get_intTrCustomerId());
                         rt.set_total_member(String.valueOf(dtListDetail.size()));

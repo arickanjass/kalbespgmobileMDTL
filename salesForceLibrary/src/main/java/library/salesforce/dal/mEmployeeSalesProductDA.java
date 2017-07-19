@@ -1,9 +1,10 @@
 package library.salesforce.dal;
 
-import java.util.ArrayList;
-import java.util.List;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import library.salesforce.common.mEmployeeSalesProductData;
 
@@ -18,7 +19,10 @@ public class mEmployeeSalesProductDA {
 				+ dt.Property_txtBrandDetailGramCode + " TEXT  NULL,"
 				+ dt.Property_txtName + " TEXT  NULL,"
 				+ dt.Property_txtNIK + " TEXT  NULL,"
-				+ dt.Property_txtProductBrandDetailGramName + " TEXT  NULL)";
+				+ dt.Property_txtProductBrandDetailGramName + " TEXT  NULL,"
+				+ dt.Property_txtProductDetailCode + " TEXT  NULL,"
+				+ dt.Property_txtProductDetailName + " TEXT  NULL,"
+				+ dt.Property_txtLobName + " TEXT  NULL)";
 		db.execSQL(CREATE_CONTACTS_TABLE);
 	}
 
@@ -43,12 +47,15 @@ public class mEmployeeSalesProductDA {
 		mEmployeeSalesProductData dt = new mEmployeeSalesProductData();
 		db.execSQL("INSERT OR REPLACE into " + TABLE_CONTACTS + " ("
 				+ dt.Property_intId
-				+ "," + dt.Property_decBobot 
-				+ ","+ dt.Property_decHJD 
-				+ "," + dt.Property_txtBrandDetailGramCode 
+				+ "," + dt.Property_decBobot
+				+ ","+ dt.Property_decHJD
+				+ "," + dt.Property_txtBrandDetailGramCode
 				+ "," + dt.Property_txtName
 				+ "," + dt.Property_txtNIK
 				+ "," + dt.Property_txtProductBrandDetailGramName
+				+ "," + dt.Property_txtProductDetailCode
+				+ "," + dt.Property_txtProductDetailName
+				+ "," + dt.Property_txtLobName
 				+ ") " + "values('"
 				+ String.valueOf(data.get_intId()) + "','"
 				+ String.valueOf(data.get_decBobot()) + "','"
@@ -56,7 +63,10 @@ public class mEmployeeSalesProductDA {
 				+ String.valueOf(data.get_txtBrandDetailGramCode()) + "','"
 				+ String.valueOf(data.get_txtName()) + "','"
 				+ String.valueOf(data.get_txtNIK()) + "','"
-				+ String.valueOf(data.get_txtProductBrandDetailGramName()) + "')");
+				+ String.valueOf(data.get_txtProductBrandDetailGramName()) + "','"
+				+ String.valueOf(data.get_txtProductDetailCode()) + "','"
+				+ String.valueOf(data.get_txtProductDetailName()) + "','"
+				+ String.valueOf(data.get_txtLobName()) + "')");
 		// db.insert(TABLE_CONTACTS, null, values);
 		// db.close(); // Closing database connection
 	}
@@ -69,12 +79,15 @@ public class mEmployeeSalesProductDA {
 	public mEmployeeSalesProductData getData(SQLiteDatabase db, int id) {
 		mEmployeeSalesProductData dt = new mEmployeeSalesProductData();
 		Cursor cursor = db.query(TABLE_CONTACTS, new String[] {
-				dt.Property_intId , dt.Property_decBobot 
-				, dt.Property_decHJD
-				, dt.Property_txtBrandDetailGramCode 
-				, dt.Property_txtName
-				, dt.Property_txtNIK
-				, dt.Property_txtProductBrandDetailGramName},
+						dt.Property_intId , dt.Property_decBobot
+						, dt.Property_decHJD
+						, dt.Property_txtBrandDetailGramCode
+						, dt.Property_txtName
+						, dt.Property_txtNIK
+						, dt.Property_txtProductBrandDetailGramName
+						, dt.Property_txtProductDetailCode
+						, dt.Property_txtProductDetailName
+						, dt.Property_txtLobName},
 				dt.Property_intId + "=?", new String[] { String.valueOf(id) },
 				null, null, null, null);
 		if (cursor != null)
@@ -88,6 +101,9 @@ public class mEmployeeSalesProductDA {
 			contact.set_txtName(cursor.getString(4));
 			contact.set_txtNIK(cursor.getString(5));
 			contact.set_txtProductBrandDetailGramName(cursor.getString(6));
+			contact.set_txtProductDetailCode(cursor.getString(7));
+			contact.set_txtProductDetailName(cursor.getString(8));
+			contact.set_txtLobName(cursor.getString(9));
 			// return contact
 		} else {
 			contact = null;
@@ -102,10 +118,10 @@ public class mEmployeeSalesProductDA {
 		// Select All Query
 		mEmployeeSalesProductData dt = new mEmployeeSalesProductData();
 		String selectQuery = "SELECT  " + dt.Property_All + " FROM "
-				+ TABLE_CONTACTS+" ORDER BY "+ dt.Property_txtBrandDetailGramCode+" ASC,"+dt.Property_decBobot+" DESC";
+				+ TABLE_CONTACTS+" WHERE " + dt.Property_txtBrandDetailGramCode + " NOT IN (SELECT txtCodeProduct FROM tSalesProductDetail GROUP BY txtCodeProduct) ORDER BY "+ dt.Property_txtProductBrandDetailGramName +" ASC";
 		Cursor cursor = db.rawQuery(selectQuery, null);
 		// looping through all rows and adding to list
-		
+
 		if (cursor.moveToFirst()) {
 			do {
 				mEmployeeSalesProductData contact = new mEmployeeSalesProductData();
@@ -116,6 +132,9 @@ public class mEmployeeSalesProductDA {
 				contact.set_txtName(cursor.getString(4));
 				contact.set_txtNIK(cursor.getString(5));
 				contact.set_txtProductBrandDetailGramName(cursor.getString(6));
+				contact.set_txtProductDetailCode(cursor.getString(7));
+				contact.set_txtProductDetailName(cursor.getString(8));
+				contact.set_txtLobName(cursor.getString(9));
 				// Adding contact to list
 				contactList.add(contact);
 			} while (cursor.moveToNext());
@@ -129,16 +148,16 @@ public class mEmployeeSalesProductDA {
 		// Select All Query
 		mEmployeeSalesProductData dt = new mEmployeeSalesProductData();
 		String selectQuery = "select a.intId,"+
-		" IFNULL(b.intQty,0) as decBobot,decHJD,a.[txtBrandDetailGramCode],a.[txtName],"+
-		" a.[txtNIK],a.[txtProductBrandDetailGramName] from mEmployeeSalesProduct a"+
-		" left join ("+
-		" select a.*,b.txtCodeProduct,b.intQty from [tSalesProductHeader] a"+
-		" left join [tSalesProductDetail] b on a.[intId]=b.[txtNoSo] and b.[intActive]=1"+
-		" where a.intId='"+IdSO+"'"+
-		" ) as b on a.txtBrandDetailGramCode = b.txtCodeProduct  ORDER BY IFNULL(cast(b.intQty as int),0) DESC ,a.txtBrandDetailGramCode ASC";
+				" IFNULL(b.intQty,0) as decBobot,decHJD,a.[txtBrandDetailGramCode],a.[txtName],"+
+				" a.[txtNIK],a.[txtProductBrandDetailGramName] from mEmployeeSalesProduct a"+
+				" left join ("+
+				" select a.*,b.txtCodeProduct,b.intQty from [tSalesProductHeader] a"+
+				" left join [tSalesProductDetail] b on a.[intId]=b.[txtNoSo] and b.[intActive]=1"+
+				" where a.intId='"+IdSO+"'"+
+				" ) as b on a.txtBrandDetailGramCode = b.txtCodeProduct  ORDER BY IFNULL(cast(b.intQty as int),0) DESC ,a.txtBrandDetailGramCode ASC";
 		Cursor cursor = db.rawQuery(selectQuery, null);
 		// looping through all rows and adding to list
-		
+
 		if (cursor.moveToFirst()) {
 			do {
 				mEmployeeSalesProductData contact = new mEmployeeSalesProductData();
@@ -149,6 +168,9 @@ public class mEmployeeSalesProductDA {
 				contact.set_txtName(cursor.getString(4));
 				contact.set_txtNIK(cursor.getString(5));
 				contact.set_txtProductBrandDetailGramName(cursor.getString(6));
+				contact.set_txtProductDetailCode(cursor.getString(7));
+				contact.set_txtProductDetailName(cursor.getString(8));
+				contact.set_txtLobName(cursor.getString(9));
 				// Adding contact to list
 				contactList.add(contact);
 			} while (cursor.moveToNext());
@@ -168,13 +190,13 @@ public class mEmployeeSalesProductDA {
 		if(Name.length()>0){
 			Param+=" And "+dt.Property_txtProductBrandDetailGramName+" like '%"+Name+"%'";
 		}
-		
+
 		String selectQuery = "SELECT  " + dt.Property_All + " FROM "
 				+ TABLE_CONTACTS + " Where "+Param
 				+" ORDER BY "+ dt.Property_txtBrandDetailGramCode+" ASC,"+dt.Property_decBobot+" DESC";
 		Cursor cursor = db.rawQuery(selectQuery, null);
 		// looping through all rows and adding to list
-		
+
 		if (cursor.moveToFirst()) {
 			do {
 				mEmployeeSalesProductData contact = new mEmployeeSalesProductData();
@@ -185,6 +207,9 @@ public class mEmployeeSalesProductDA {
 				contact.set_txtName(cursor.getString(4));
 				contact.set_txtNIK(cursor.getString(5));
 				contact.set_txtProductBrandDetailGramName(cursor.getString(6));
+				contact.set_txtProductDetailCode(cursor.getString(7));
+				contact.set_txtProductDetailName(cursor.getString(8));
+				contact.set_txtLobName(cursor.getString(9));
 				// Adding contact to list
 				contactList.add(contact);
 			} while (cursor.moveToNext());
@@ -193,7 +218,7 @@ public class mEmployeeSalesProductDA {
 		// return contact list
 		return contactList;
 	}
-	
+
 	// Deleting single contact
 	public void deleteContact(SQLiteDatabase db, int id) {
 		mEmployeeSalesProductData dt = new mEmployeeSalesProductData();

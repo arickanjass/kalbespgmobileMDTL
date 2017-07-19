@@ -28,7 +28,7 @@ public class mEmployeeSalesProductBL extends clsMainBL{
 		SQLiteDatabase _db=getDb();
 		tUserLoginDA _tUserLoginDA=new tUserLoginDA(_db);
 		mconfigDA _mconfigDA =new mconfigDA(_db);
-		
+
 		String strVal2="";
 		mconfigData dataAPI = _mconfigDA.getData(db,enumConfigData.ApiKalbe.getidConfigData());
 		strVal2 = dataAPI.get_txtValue();
@@ -58,7 +58,7 @@ public class mEmployeeSalesProductBL extends clsMainBL{
 		while (i.hasNext()) {
 			org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
 			int boolValid= Integer.valueOf(String.valueOf( innerObj.get(dtAPIDATA.boolValid)));
-			if(boolValid == Integer.valueOf(new clsHardCode().intSuccess)){				
+			if(boolValid == Integer.valueOf(new clsHardCode().intSuccess)){
 				intsum+=1;
 				mEmployeeSalesProductData _data =new mEmployeeSalesProductData();
 				//mEmployeeSalesProductData _dataProperty =new mEmployeeSalesProductData();
@@ -69,6 +69,9 @@ public class mEmployeeSalesProductBL extends clsMainBL{
 				_data.set_txtNIK((String) innerObj.get("TxtNIK"));
 				_data.set_txtName((String) innerObj.get("TxtName"));
 				_data.set_txtProductBrandDetailGramName((String) innerObj.get("TxtProductBrandDetailGramName"));
+				_data.set_txtProductDetailCode((String) innerObj.get("TxtProductDetailCode"));
+				_data.set_txtProductDetailName((String) innerObj.get("TxtProductDetailName"));
+				_data.set_txtLobName((String) innerObj.get("TxtLobName"));
 				_mEmployeeBranchDA.SaveDataMConfig(db, _data);
 			}else{
 				flag=false;
