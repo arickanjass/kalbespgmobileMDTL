@@ -14,14 +14,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import library.salesforce.common.APIData;
-import library.salesforce.common.clsHelper;
-import library.salesforce.common.linkAPI;
-import library.salesforce.common.mEmployeeAreaData;
-import library.salesforce.common.mUserRoleData;
-import library.salesforce.dal.clsHardCode;
-import library.salesforce.dal.mEmployeeAreaDA;
-import library.salesforce.dal.mUserRoleDA;
+import library.spgmobile.common.APIData;
+import library.spgmobile.common.clsHelper;
+import library.spgmobile.common.linkAPI;
+import library.spgmobile.common.mEmployeeAreaData;
+import library.spgmobile.common.mUserRoleData;
+import library.spgmobile.dal.clsHardCode;
+import library.spgmobile.dal.mEmployeeAreaDA;
+import library.spgmobile.dal.mUserRoleDA;
 
 public class mUserRoleBL extends clsMainBL{
 	public List<mUserRoleData> getRole(String username,String versionApp) throws ParseException{

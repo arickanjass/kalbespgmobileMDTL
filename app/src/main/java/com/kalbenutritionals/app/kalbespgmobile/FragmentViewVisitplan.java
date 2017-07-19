@@ -18,8 +18,8 @@ import java.util.List;
 import addons.adapter.AdapterListVisitplan;
 import bl.tVisitPlanRealisasiBL;
 import edu.swu.pulltorefreshswipemenulistview.library.pulltorefresh.interfaces.IXListViewListener;
-import library.salesforce.common.clsSwipeList;
-import library.salesforce.common.tVisitPlanRealisasiData;
+import library.spgmobile.common.clsSwipeList;
+import library.spgmobile.common.tVisitPlanRealisasiData;
 
 /**
  * Created by Robert on 16/05/2017.

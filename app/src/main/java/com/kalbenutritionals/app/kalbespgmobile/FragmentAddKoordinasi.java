@@ -1,7 +1,6 @@
 package com.kalbenutritionals.app.kalbespgmobile;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -9,7 +8,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Environment;
-import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -24,20 +22,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
-
-import org.apache.http.util.ByteArrayBuffer;
-
-import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -50,12 +39,11 @@ import bl.KoordinasiOutletImageBL;
 import bl.tAbsenUserBL;
 import bl.tUserLoginBL;
 import edu.swu.pulltorefreshswipemenulistview.library.pulltorefresh.interfaces.IXListViewListener;
-import library.salesforce.common.KoordinasiOutletData;
-import library.salesforce.common.KoordinasiOutletImageData;
-import library.salesforce.common.tAbsenUserData;
-import library.salesforce.common.tUserLoginData;
-import library.salesforce.dal.KoordinasiOutletDA;
-import library.salesforce.dal.clsHardCode;
+import library.spgmobile.common.KoordinasiOutletData;
+import library.spgmobile.common.KoordinasiOutletImageData;
+import library.spgmobile.common.tAbsenUserData;
+import library.spgmobile.common.tUserLoginData;
+import library.spgmobile.dal.clsHardCode;
 
 /**
  * Created by Rian Andrivani on 6/7/2017.

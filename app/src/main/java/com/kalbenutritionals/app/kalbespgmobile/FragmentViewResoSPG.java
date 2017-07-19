@@ -31,22 +31,17 @@ import java.util.Map;
 
 import adapter.AppAdapterViewCusBase;
 import bl.clsHelperBL;
-import bl.tAbsenUserBL;
 import bl.tSalesProductDetailBL;
 import bl.tSalesProductHeaderBL;
-import bl.tUserLoginBL;
 import edu.swu.pulltorefreshswipemenulistview.library.PullToRefreshSwipeMenuListView;
 import edu.swu.pulltorefreshswipemenulistview.library.pulltorefresh.interfaces.IXListViewListener;
 import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.OnMenuItemClickListener;
 import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.SwipeMenuCreator;
 import edu.swu.pulltorefreshswipemenulistview.library.util.RefreshTime;
-import library.salesforce.common.clsSwipeList;
-import library.salesforce.common.tAbsenUserData;
-import library.salesforce.common.tSalesProductDetailData;
-import library.salesforce.common.tSalesProductHeaderData;
-import library.salesforce.common.tUserLoginData;
-import library.salesforce.common.visitplanAbsenData;
-import library.salesforce.dal.enumRole;
+import library.spgmobile.common.clsSwipeList;
+import library.spgmobile.common.tSalesProductDetailData;
+import library.spgmobile.common.tSalesProductHeaderData;
+import library.spgmobile.common.visitplanAbsenData;
 
 /**
  * Created by ASUS ZE on 26/07/2016.

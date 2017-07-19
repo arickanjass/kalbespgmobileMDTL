@@ -5,18 +5,18 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import library.salesforce.common.mEmployeeAreaData;
-import library.salesforce.common.mMenuData;
-import library.salesforce.common.tLeaveMobileData;
-import library.salesforce.dal.mEmployeeAreaDA;
-import library.salesforce.dal.mEmployeeBranchDA;
-import library.salesforce.dal.mEmployeeSalesProductDA;
-import library.salesforce.dal.mMenuDA;
-import library.salesforce.dal.mProductBarcodeDA;
-import library.salesforce.dal.mTypeLeaveMobileDA;
-import library.salesforce.dal.tAbsenUserDA;
-import library.salesforce.dal.tLeaveMobileDA;
-import library.salesforce.dal.tSalesProductHeaderDA;
+import library.spgmobile.common.mEmployeeAreaData;
+import library.spgmobile.common.mMenuData;
+import library.spgmobile.common.tLeaveMobileData;
+import library.spgmobile.dal.mEmployeeAreaDA;
+import library.spgmobile.dal.mEmployeeBranchDA;
+import library.spgmobile.dal.mEmployeeSalesProductDA;
+import library.spgmobile.dal.mMenuDA;
+import library.spgmobile.dal.mProductBarcodeDA;
+import library.spgmobile.dal.mTypeLeaveMobileDA;
+import library.spgmobile.dal.tAbsenUserDA;
+import library.spgmobile.dal.tLeaveMobileDA;
+import library.spgmobile.dal.tSalesProductHeaderDA;
 
 public class mMenuBL extends clsMainBL {
     public void SaveData(List<mMenuData> Listdata) {

@@ -16,12 +16,8 @@ import android.widget.TextView;
 import com.owater.library.CircleTextView;
 import com.theartofdev.edmodo.cropper.CropImage;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
-import bl.mEmployeeSalesProductBL;
-import bl.mProductBrandHeaderBL;
 import bl.tAbsenUserBL;
 import bl.tActivityBL;
 import bl.tCustomerBasedMobileHeaderBL;
@@ -30,15 +26,13 @@ import bl.tLeaveMobileBL;
 import bl.tSalesProductHeaderBL;
 import bl.tUserLoginBL;
 import de.hdodenhof.circleimageview.CircleImageView;
-import library.salesforce.common.mEmployeeSalesProductData;
-import library.salesforce.common.mProductBrandHeaderData;
-import library.salesforce.common.tAbsenUserData;
-import library.salesforce.common.tActivityData;
-import library.salesforce.common.tCustomerBasedMobileHeaderData;
-import library.salesforce.common.tDisplayPictureData;
-import library.salesforce.common.tLeaveMobileData;
-import library.salesforce.common.tSalesProductHeaderData;
-import library.salesforce.common.tUserLoginData;
+import library.spgmobile.common.tAbsenUserData;
+import library.spgmobile.common.tActivityData;
+import library.spgmobile.common.tCustomerBasedMobileHeaderData;
+import library.spgmobile.common.tDisplayPictureData;
+import library.spgmobile.common.tLeaveMobileData;
+import library.spgmobile.common.tSalesProductHeaderData;
+import library.spgmobile.common.tUserLoginData;
 
 public class FragmentInformation extends Fragment implements View.OnClickListener {
 

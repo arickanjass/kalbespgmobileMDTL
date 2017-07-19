@@ -31,10 +31,10 @@ import bl.mTypeLeaveBL;
 import bl.tAbsenUserBL;
 import bl.tDeviceInfoUserBL;
 import bl.tLeaveMobileBL;
-import library.salesforce.common.mTypeLeaveMobileData;
-import library.salesforce.common.tDeviceInfoUserData;
-import library.salesforce.common.tLeaveMobileData;
-import library.salesforce.common.tUserLoginData;
+import library.spgmobile.common.mTypeLeaveMobileData;
+import library.spgmobile.common.tDeviceInfoUserData;
+import library.spgmobile.common.tLeaveMobileData;
+import library.spgmobile.common.tUserLoginData;
 
 /**
  * Created by ASUS ZE on 08/08/2016.

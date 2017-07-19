@@ -4,12 +4,9 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.List;
 
-import library.salesforce.common.clsFileAttach_mobile;
-import library.salesforce.common.clsLogReceiverDetail_mobile;
-import library.salesforce.common.clsLogReceiverHeader_mobile;
-import library.salesforce.common.tNotificationData;
-import library.salesforce.dal.clsLogReceiverDetail_mobileDA;
-import library.salesforce.dal.clsLogReceiverHeader_mobileDA;
+import library.spgmobile.common.clsFileAttach_mobile;
+import library.spgmobile.common.clsLogReceiverDetail_mobile;
+import library.spgmobile.dal.clsLogReceiverDetail_mobileDA;
 
 /**
  * Created by aan.junianto on 6/07/2017.

@@ -35,7 +35,6 @@ import java.util.Map;
 import adapter.AppAdapterViewCusBase;
 import bl.clsHelperBL;
 import bl.mTypeSubmissionMobileBL;
-import bl.tAbsenUserBL;
 import bl.tCustomerBasedMobileDetailBL;
 import bl.tCustomerBasedMobileDetailProductBL;
 import bl.tCustomerBasedMobileHeaderBL;
@@ -47,16 +46,12 @@ import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.Swipe
 import edu.swu.pulltorefreshswipemenulistview.library.util.RefreshTime;
 import io.github.yavski.fabspeeddial.FabSpeedDial;
 import io.github.yavski.fabspeeddial.SimpleMenuListenerAdapter;
-import library.salesforce.common.AppAdapter;
-import library.salesforce.common.clsSwipeList;
-import library.salesforce.common.mTypeSubmissionMobile;
-import library.salesforce.common.tAbsenUserData;
-import library.salesforce.common.tCustomerBasedMobileDetailData;
-import library.salesforce.common.tCustomerBasedMobileDetailProductData;
-import library.salesforce.common.tCustomerBasedMobileHeaderData;
-import library.salesforce.common.visitplanAbsenData;
-
-import static android.R.attr.name;
+import library.spgmobile.common.clsSwipeList;
+import library.spgmobile.common.mTypeSubmissionMobile;
+import library.spgmobile.common.tCustomerBasedMobileDetailData;
+import library.spgmobile.common.tCustomerBasedMobileDetailProductData;
+import library.spgmobile.common.tCustomerBasedMobileHeaderData;
+import library.spgmobile.common.visitplanAbsenData;
 
 public class FragmentViewCustomerBaseSPG extends Fragment implements IXListViewListener {
 

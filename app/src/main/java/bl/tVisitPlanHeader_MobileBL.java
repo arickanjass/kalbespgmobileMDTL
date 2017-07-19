@@ -4,8 +4,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.List;
 
-import library.salesforce.common.tVisitPlanHeader_MobileData;
-import library.salesforce.dal.tVisitPlanHeader_MobileDA;
+import library.spgmobile.common.tVisitPlanHeader_MobileData;
+import library.spgmobile.dal.tVisitPlanHeader_MobileDA;
 
 /**
  * Created by Robert on 27/04/2017.

@@ -20,7 +20,7 @@ import java.util.List;
 
 import bl.tNotificationBL;
 import come.example.viewbadger.ShortcutBadger;
-import library.salesforce.common.tNotificationData;
+import library.spgmobile.common.tNotificationData;
 
 public class MyNotificationService extends Service{
 	String titleFinal = null;

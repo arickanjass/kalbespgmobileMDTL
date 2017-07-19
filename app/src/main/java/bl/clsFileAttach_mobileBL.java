@@ -5,10 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import library.salesforce.common.clsFileAttach_mobile;
-import library.salesforce.common.tNotificationData;
-import library.salesforce.dal.clsFileAttach_mobileDA;
-import library.salesforce.dal.tNotificationDA;
+import library.spgmobile.common.clsFileAttach_mobile;
+import library.spgmobile.dal.clsFileAttach_mobileDA;
 
 /**
  * Created by aan.junianto on 8/06/2017.

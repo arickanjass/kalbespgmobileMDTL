@@ -12,9 +12,8 @@ import com.kalbenutritionals.app.kalbespgmobile.R;
 
 import java.util.ArrayList;
 
-import bl.tCustomerBasedMobileDetailProductBL;
 import bl.tSalesProductQuantityDetailBL;
-import library.salesforce.common.clsSwipeList;
+import library.spgmobile.common.clsSwipeList;
 
 /**
  * Created by Rian Andrivani ZE on 13/03/2017.

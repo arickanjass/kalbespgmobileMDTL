@@ -44,13 +44,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import addons.adapter.AdapterListProductCustomerBased;
 import addons.adapter.AdapterListProductQuantityDetail;
 import bl.clsHelperBL;
 import bl.clsMainBL;
 import bl.mCounterNumberBL;
 import bl.mEmployeeSalesProductBL;
-import bl.tAbsenUserBL;
 import bl.tSalesProductQuantityDetailBL;
 import bl.tSalesProductQuantityHeaderBL;
 import bl.tSalesProductQuantityImageBL;
@@ -60,19 +58,18 @@ import edu.swu.pulltorefreshswipemenulistview.library.pulltorefresh.interfaces.I
 import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.bean.SwipeMenu;
 import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.OnMenuItemClickListener;
 import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.SwipeMenuCreator;
-import library.salesforce.common.AppAdapter;
-import library.salesforce.common.ModelListview;
-import library.salesforce.common.clsHelper;
-import library.salesforce.common.clsSwipeList;
-import library.salesforce.common.mEmployeeSalesProductData;
-import library.salesforce.common.tAbsenUserData;
-import library.salesforce.common.tSalesProductQuantityHeaderData;
-import library.salesforce.common.tSalesProductQuantityDetailData;
-import library.salesforce.common.tSalesProductQuantityImageData;
-import library.salesforce.common.tUserLoginData;
-import library.salesforce.common.visitplanAbsenData;
-import library.salesforce.dal.clsHardCode;
-import library.salesforce.dal.enumCounterData;
+import library.spgmobile.common.AppAdapter;
+import library.spgmobile.common.ModelListview;
+import library.spgmobile.common.clsHelper;
+import library.spgmobile.common.clsSwipeList;
+import library.spgmobile.common.mEmployeeSalesProductData;
+import library.spgmobile.common.tSalesProductQuantityHeaderData;
+import library.spgmobile.common.tSalesProductQuantityDetailData;
+import library.spgmobile.common.tSalesProductQuantityImageData;
+import library.spgmobile.common.tUserLoginData;
+import library.spgmobile.common.visitplanAbsenData;
+import library.spgmobile.dal.clsHardCode;
+import library.spgmobile.dal.enumCounterData;
 
 /**
  * Created by Rian Andrivani on 16/03/2017.

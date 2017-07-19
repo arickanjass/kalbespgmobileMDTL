@@ -7,20 +7,20 @@ import org.json.simple.JSONArray;
 import java.util.Iterator;
 import java.util.List;
 
-import library.salesforce.common.APIData;
-import library.salesforce.common.clsHelper;
-import library.salesforce.common.linkAPI;
-import library.salesforce.common.mCounterNumberData;
-import library.salesforce.common.mEmployeeSalesProductData;
-import library.salesforce.common.mconfigData;
-import library.salesforce.common.tUserLoginData;
-import library.salesforce.dal.clsHardCode;
-import library.salesforce.dal.enumConfigData;
-import library.salesforce.dal.enumCounterData;
-import library.salesforce.dal.mCounterNumberDA;
-import library.salesforce.dal.mEmployeeSalesProductDA;
-import library.salesforce.dal.mconfigDA;
-import library.salesforce.dal.tUserLoginDA;
+import library.spgmobile.common.APIData;
+import library.spgmobile.common.clsHelper;
+import library.spgmobile.common.linkAPI;
+import library.spgmobile.common.mCounterNumberData;
+import library.spgmobile.common.mEmployeeSalesProductData;
+import library.spgmobile.common.mconfigData;
+import library.spgmobile.common.tUserLoginData;
+import library.spgmobile.dal.clsHardCode;
+import library.spgmobile.dal.enumConfigData;
+import library.spgmobile.dal.enumCounterData;
+import library.spgmobile.dal.mCounterNumberDA;
+import library.spgmobile.dal.mEmployeeSalesProductDA;
+import library.spgmobile.dal.mconfigDA;
+import library.spgmobile.dal.tUserLoginDA;
 
 public class mEmployeeSalesProductBL extends clsMainBL{
 	public JSONArray DownloadEmployeeSalesProduct(String versionName) throws Exception{

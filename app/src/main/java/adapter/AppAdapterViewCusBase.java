@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import library.salesforce.common.clsSwipeList;
+import library.spgmobile.common.clsSwipeList;
 
 /**
  * Created by ASUS ZE on 18/04/2017.

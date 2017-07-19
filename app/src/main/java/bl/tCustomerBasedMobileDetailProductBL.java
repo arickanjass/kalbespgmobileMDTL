@@ -4,8 +4,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.List;
 
-import library.salesforce.common.tCustomerBasedMobileDetailProductData;
-import library.salesforce.dal.tCustomerBasedMobileDetailProductDA;
+import library.spgmobile.common.tCustomerBasedMobileDetailProductData;
+import library.spgmobile.dal.tCustomerBasedMobileDetailProductDA;
 
 public class tCustomerBasedMobileDetailProductBL extends clsMainBL{
 	SQLiteDatabase db;

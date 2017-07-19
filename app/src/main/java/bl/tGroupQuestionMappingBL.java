@@ -4,8 +4,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.List;
 
-import library.salesforce.common.tGroupQuestionMappingData;
-import library.salesforce.dal.tGroupQuestionMappingDA;
+import library.spgmobile.common.tGroupQuestionMappingData;
+import library.spgmobile.dal.tGroupQuestionMappingDA;
 
 /**
  * Created by Dewi Oktaviani on 04/07/2017.

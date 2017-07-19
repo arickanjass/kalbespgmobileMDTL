@@ -59,7 +59,6 @@ import bl.mProductCompetitorBL;
 import bl.mProductPICBL;
 import bl.mProductSPGBL;
 import bl.mTypeSubmissionMobileBL;
-import bl.tAbsenUserBL;
 import bl.tCustomerBasedMobileDetailBL;
 import bl.tCustomerBasedMobileDetailProductBL;
 import bl.tCustomerBasedMobileHeaderBL;
@@ -69,18 +68,18 @@ import edu.swu.pulltorefreshswipemenulistview.library.pulltorefresh.interfaces.I
 import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.bean.SwipeMenu;
 import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.OnMenuItemClickListener;
 import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.SwipeMenuCreator;
-import library.salesforce.common.AppAdapter;
-import library.salesforce.common.ModelListview;
-import library.salesforce.common.clsSwipeList;
-import library.salesforce.common.mProductCompetitorData;
-import library.salesforce.common.mProductPICData;
-import library.salesforce.common.mProductSPGData;
-import library.salesforce.common.mTypeSubmissionMobile;
-import library.salesforce.common.tCustomerBasedMobileDetailData;
-import library.salesforce.common.tCustomerBasedMobileDetailProductData;
-import library.salesforce.common.tCustomerBasedMobileHeaderData;
-import library.salesforce.common.tUserLoginData;
-import library.salesforce.common.visitplanAbsenData;
+import library.spgmobile.common.AppAdapter;
+import library.spgmobile.common.ModelListview;
+import library.spgmobile.common.clsSwipeList;
+import library.spgmobile.common.mProductCompetitorData;
+import library.spgmobile.common.mProductPICData;
+import library.spgmobile.common.mProductSPGData;
+import library.spgmobile.common.mTypeSubmissionMobile;
+import library.spgmobile.common.tCustomerBasedMobileDetailData;
+import library.spgmobile.common.tCustomerBasedMobileDetailProductData;
+import library.spgmobile.common.tCustomerBasedMobileHeaderData;
+import library.spgmobile.common.tUserLoginData;
+import library.spgmobile.common.visitplanAbsenData;
 
 public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClickListener, IXListViewListener {
     private ArrayList<ModelListview> modelItems;

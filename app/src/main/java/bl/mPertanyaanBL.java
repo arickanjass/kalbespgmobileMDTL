@@ -4,8 +4,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.List;
 
-import library.salesforce.common.mPertanyaanData;
-import library.salesforce.dal.mPertanyaanDA;
+import library.spgmobile.common.mPertanyaanData;
+import library.spgmobile.dal.mPertanyaanDA;
 
 /**
  * Created by Dewi Oktaviani on 05/05/2017.

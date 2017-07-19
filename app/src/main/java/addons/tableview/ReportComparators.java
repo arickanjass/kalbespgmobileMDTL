@@ -2,7 +2,7 @@ package addons.tableview;
 
 import java.util.Comparator;
 
-import library.salesforce.common.ReportTable;
+import library.spgmobile.common.ReportTable;
 
 public final class ReportComparators {
 

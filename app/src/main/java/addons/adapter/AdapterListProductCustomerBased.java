@@ -10,13 +10,12 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
-import com.kalbenutritionals.app.kalbespgmobile.FragmentAddCustomerBaseSPG;
 import com.kalbenutritionals.app.kalbespgmobile.R;
 
 import java.util.ArrayList;
 
 import bl.tCustomerBasedMobileDetailProductBL;
-import library.salesforce.common.clsSwipeList;
+import library.spgmobile.common.clsSwipeList;
 
 /**
  * Created by ASUS ZE on 13/03/2017.

@@ -34,14 +34,14 @@ import bl.tCustomerBasedMobileHeaderBL;
 import bl.tSalesProductDetailBL;
 import bl.tSalesProductHeaderBL;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
-import library.salesforce.common.ReportTable;
-import library.salesforce.common.mEmployeeAreaData;
-import library.salesforce.common.mTypeSubmissionMobile;
-import library.salesforce.common.tCustomerBasedMobileDetailData;
-import library.salesforce.common.tCustomerBasedMobileDetailProductData;
-import library.salesforce.common.tCustomerBasedMobileHeaderData;
-import library.salesforce.common.tSalesProductDetailData;
-import library.salesforce.common.tSalesProductHeaderData;
+import library.spgmobile.common.ReportTable;
+import library.spgmobile.common.mEmployeeAreaData;
+import library.spgmobile.common.mTypeSubmissionMobile;
+import library.spgmobile.common.tCustomerBasedMobileDetailData;
+import library.spgmobile.common.tCustomerBasedMobileDetailProductData;
+import library.spgmobile.common.tCustomerBasedMobileHeaderData;
+import library.spgmobile.common.tSalesProductDetailData;
+import library.spgmobile.common.tSalesProductHeaderData;
 
 public class FragmentReporting extends Fragment {
 

@@ -4,8 +4,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.List;
 
-import library.salesforce.common.tDisplayPictureData;
-import library.salesforce.dal.tDisplayPictureDA;
+import library.spgmobile.common.tDisplayPictureData;
+import library.spgmobile.dal.tDisplayPictureDA;
 
 /**
  * Created by ASUS ZE on 23/08/2016.

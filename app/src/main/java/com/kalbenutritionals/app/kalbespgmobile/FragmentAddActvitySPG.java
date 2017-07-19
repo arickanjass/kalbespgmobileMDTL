@@ -39,10 +39,10 @@ import java.util.Locale;
 import bl.clsHelperBL;
 import bl.tActivityBL;
 import bl.tUserLoginBL;
-import library.salesforce.common.tActivityData;
-import library.salesforce.common.tUserLoginData;
-import library.salesforce.common.visitplanAbsenData;
-import library.salesforce.dal.clsHardCode;
+import library.spgmobile.common.tActivityData;
+import library.spgmobile.common.tUserLoginData;
+import library.spgmobile.common.visitplanAbsenData;
+import library.spgmobile.dal.clsHardCode;
 
 public class FragmentAddActvitySPG extends Fragment implements View.OnClickListener {
     View v;

@@ -22,7 +22,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import library.salesforce.dal.clsHardCode;
+import library.spgmobile.dal.clsHardCode;
 
 /**
  * Created by XSIS on 15/03/2017.

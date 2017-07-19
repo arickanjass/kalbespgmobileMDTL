@@ -10,7 +10,7 @@ import de.codecrafters.tableview.SortableTableView;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 import de.codecrafters.tableview.toolkit.SortStateViewProviders;
 import de.codecrafters.tableview.toolkit.TableDataRowBackgroundProviders;
-import library.salesforce.common.ReportTable;
+import library.spgmobile.common.ReportTable;
 
 
 public class SortableReportTableView extends SortableTableView<ReportTable> {
