@@ -100,13 +100,17 @@ public class clsMainBL {
 	public tUserLoginData getUserActive() {
 		this.db = getDb();
 		List<tUserLoginData> listData= new ArrayList<>();
+		tUserLoginData data = new tUserLoginData();
 		tUserLoginDA _tUserLoginDA=new tUserLoginDA(db);
 		listData=_tUserLoginDA.getUserLoginNow(db);
 		if (listData.size()==0){
 			listData=_tUserLoginDA.getAllData(db);
 		}
 		db.close();
-		return listData.get(0);
+		if(listData!=null){
+			data = listData.get(0);
+		}
+		return data;
 	}
 	public String GenerateGuid(){
 		 UUID uuid = UUID.randomUUID();

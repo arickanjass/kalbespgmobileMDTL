@@ -1,6 +1,6 @@
 package library.salesforce.common;
 
-public class tSalesProductHeaderData extends tSalesProductQuantityHeaderData {
+public class tSalesProductHeaderData {
     public synchronized String get_intIdAbsenUser() {
         return _intIdAbsenUser;
     }
@@ -113,14 +113,6 @@ public class tSalesProductHeaderData extends tSalesProductQuantityHeaderData {
         this._OutletName = _OutletName;
     }
 
-    public synchronized String get_txtRoleId() {
-        return _txtRoleId;
-    }
-
-    public synchronized void set_txtRoleId(String _txtRoleId) {
-        this._txtRoleId = _txtRoleId;
-    }
-
     private String _intId;
     private String _txtNoSo;
     private String _txtNIK;
@@ -136,7 +128,6 @@ public class tSalesProductHeaderData extends tSalesProductQuantityHeaderData {
     private String _txtBranchCode;
     private String _txtBranchName;
     private String _intIdAbsenUser;
-    private String _txtRoleId;
 
     public String Property_UserId = "UserId";
     public String Property_txtNoSo = "txtNoSo";
@@ -153,7 +144,6 @@ public class tSalesProductHeaderData extends tSalesProductQuantityHeaderData {
     public String Property_txtBranchCode = "txtBranchCode";
     public String Property_txtBranchName = "txtBranchName";
     public String Property_intIdAbsenUser = "intIdAbsenUser";
-    public String Property_txtRoleId = "txtRoleId";
     public String Property_ListOftSalesProductHeaderData = "ListOftSalesProductHeaderData";
 
     public tSalesProductHeaderData() {
@@ -163,21 +153,20 @@ public class tSalesProductHeaderData extends tSalesProductQuantityHeaderData {
 
     public String Property_All =
             Property_intId + "," +
-            Property_txtNoSo + "," +
-            Property_txtDate + "," +
-            Property_OutletCode + "," +
-            Property_OutletName + "," +
-            Property_txtKeterangan + "," +
-            Property_intSumItem + "," +
-            Property_intSumAmount + "," +
-            Property_UserId + "," +
-            Property_intSubmit + "," +
-            Property_intSync + "," +
-            Property_txtBranchCode + "," +
-            Property_txtBranchName + "," +
-            Property_intIdAbsenUser + "," +
-            Property_txtNIK + "," +
-            Property_txtRoleId;
+                    Property_txtNoSo + "," +
+                    Property_txtDate + "," +
+                    Property_OutletCode + "," +
+                    Property_OutletName + "," +
+                    Property_txtKeterangan + "," +
+                    Property_intSumItem + "," +
+                    Property_intSumAmount + "," +
+                    Property_UserId + "," +
+                    Property_intSubmit + "," +
+                    Property_intSync + "," +
+                    Property_txtBranchCode + "," +
+                    Property_txtBranchName + "," +
+                    Property_intIdAbsenUser + "," +
+                    Property_txtNIK;
 
     public String get_txtNoSo() {
         return _txtNoSo;

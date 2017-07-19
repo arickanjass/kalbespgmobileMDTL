@@ -33,7 +33,6 @@ public class tSalesProductHeaderDA {
                 + dt.Property_txtBranchCode + " TEXT NULL,"
                 + dt.Property_txtBranchName + " TEXT NULL,"
                 + dt.Property_intIdAbsenUser + " TEXT NULL,"
-                + dt.Property_txtRoleId + " TEXT NULL,"
                 + dt.Property_txtNIK + " TEXT NULL" + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
@@ -71,7 +70,6 @@ public class tSalesProductHeaderDA {
                 + dt.Property_txtBranchCode + ","
                 + dt.Property_txtBranchName + ","
                 + dt.Property_intIdAbsenUser + ","
-                + dt.Property_txtRoleId + ","
                 + dt.Property_txtNIK + ") " +
                 "values('" + String.valueOf(data.get_intId()) + "','"
                 + String.valueOf(data.get_txtNoSo()) + "','"
@@ -87,7 +85,6 @@ public class tSalesProductHeaderDA {
                 + String.valueOf(data.get_txtBranchCode()) + "','"
                 + String.valueOf(data.get_txtBranchName()) + "','"
                 + String.valueOf(data.get_intIdAbsenUser()) + "','"
-                + String.valueOf(data.get_txtRoleId()) + "','"
                 + String.valueOf(data.get_txtNIK()) + "')");
     }
 
@@ -119,7 +116,7 @@ public class tSalesProductHeaderDA {
         Cursor cursor = db.query(TABLE_CONTACTS, new String[]{dt.Property_intId,
                         dt.Property_OutletCode, dt.Property_OutletName,
                         dt.Property_txtDate, dt.Property_txtKeterangan, dt.Property_txtNIK
-                        , dt.Property_intSumAmount, dt.Property_intSumItem, dt.Property_UserId, dt.Property_intSubmit, dt.Property_txtRoleId
+                        , dt.Property_intSumAmount, dt.Property_intSumItem, dt.Property_UserId, dt.Property_intSubmit
                         , dt.Property_intSync, dt.Property_txtBranchCode, dt.Property_txtBranchName, dt.Property_intIdAbsenUser}, dt.Property_intId + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
         tSalesProductHeaderData contact = null;
@@ -141,7 +138,6 @@ public class tSalesProductHeaderDA {
             contact.set_txtBranchCode(cursor.getString(11));
             contact.set_txtBranchName(cursor.getString(12));
             contact.set_intIdAbsenUser(cursor.getString(13));
-            contact.set_txtRoleId(cursor.getString(14));
         }
         // return contact
         cursor.close();
@@ -162,6 +158,19 @@ public class tSalesProductHeaderDA {
     }
 
     // Getting All Contacts
+    public int getAllCheckToPushData(SQLiteDatabase db) {
+        // Select All Query
+        tSalesProductHeaderData dt = new tSalesProductHeaderData();
+        String selectQuery = "SELECT 1 FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intSubmit + "=1 AND " + dt.Property_intSync + "=0";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // return count
+        int index = cursor.getCount();
+        cursor.close();
+        return index;
+        // return contact list
+    }
+
     public List<tSalesProductHeaderData> getAllDataToPushData(SQLiteDatabase db) {
         List<tSalesProductHeaderData> contactList = null;
         // Select All Query
@@ -190,7 +199,6 @@ public class tSalesProductHeaderDA {
                 contact.set_txtBranchName(cursor.getString(12));
                 contact.set_intIdAbsenUser(cursor.getString(13));
                 contact.set_txtNIK(cursor.getString(14));
-                contact.set_txtRoleId(cursor.getString(15));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -228,7 +236,6 @@ public class tSalesProductHeaderDA {
                 contact.set_txtBranchName(cursor.getString(12));
                 contact.set_intIdAbsenUser(cursor.getString(13));
                 contact.set_txtNIK(cursor.getString(14));
-                contact.set_txtRoleId(cursor.getString(15));
 
                 // Adding contact to list
                 contactList.add(contact);
@@ -267,7 +274,6 @@ public class tSalesProductHeaderDA {
                 contact.set_txtBranchCode(cursor.getString(11));
                 contact.set_txtBranchName(cursor.getString(12));
                 contact.set_intIdAbsenUser(cursor.getString(13));
-                contact.set_txtRoleId(cursor.getString(14));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -304,7 +310,6 @@ public class tSalesProductHeaderDA {
                 contact.set_txtBranchCode(cursor.getString(11));
                 contact.set_txtBranchName(cursor.getString(12));
                 contact.set_intIdAbsenUser(cursor.getString(13));
-                contact.set_txtRoleId(cursor.getString(14));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -341,7 +346,6 @@ public class tSalesProductHeaderDA {
                 contact.set_txtBranchCode(cursor.getString(11));
                 contact.set_txtBranchName(cursor.getString(12));
                 contact.set_intIdAbsenUser(cursor.getString(13));
-                contact.set_txtRoleId(cursor.getString(14));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -378,7 +382,6 @@ public class tSalesProductHeaderDA {
                 contact.set_txtBranchCode(cursor.getString(11));
                 contact.set_txtBranchName(cursor.getString(12));
                 contact.set_intIdAbsenUser(cursor.getString(13));
-                contact.set_txtRoleId(cursor.getString(14));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -416,7 +419,6 @@ public class tSalesProductHeaderDA {
                 contact.set_txtBranchCode(cursor.getString(11));
                 contact.set_txtBranchName(cursor.getString(12));
                 contact.set_intIdAbsenUser(cursor.getString(13));
-                contact.set_txtRoleId(cursor.getString(14));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -453,7 +455,6 @@ public class tSalesProductHeaderDA {
                 contact.set_txtBranchCode(cursor.getString(11));
                 contact.set_txtBranchName(cursor.getString(12));
                 contact.set_intIdAbsenUser(cursor.getString(13));
-                contact.set_txtRoleId(cursor.getString(14));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -492,7 +493,6 @@ public class tSalesProductHeaderDA {
                 contact.set_txtBranchName(cursor.getString(12));
                 contact.set_intIdAbsenUser(cursor.getString(13));
                 contact.set_txtNIK(cursor.getString(14));
-                contact.set_txtRoleId(cursor.getString(15));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -531,7 +531,6 @@ public class tSalesProductHeaderDA {
                 contact.set_txtBranchName(cursor.getString(12));
                 contact.set_intIdAbsenUser(cursor.getString(13));
                 contact.set_txtNIK(cursor.getString(14));
-                contact.set_txtRoleId(cursor.getString(15));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -570,7 +569,6 @@ public class tSalesProductHeaderDA {
                 contact.set_txtBranchName(cursor.getString(12));
                 contact.set_intIdAbsenUser(cursor.getString(13));
                 contact.set_txtNIK(cursor.getString(14));
-                contact.set_txtRoleId(cursor.getString(15));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -630,7 +628,6 @@ public class tSalesProductHeaderDA {
                 contact.set_txtBranchName(cursor.getString(12));
                 contact.set_intIdAbsenUser(cursor.getString(13));
                 contact.set_txtNIK(cursor.getString(14));
-                contact.set_txtRoleId(cursor.getString(15));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());

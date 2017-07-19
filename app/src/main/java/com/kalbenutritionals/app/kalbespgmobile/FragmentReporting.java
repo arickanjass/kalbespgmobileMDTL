@@ -4,13 +4,14 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -26,14 +27,18 @@ import addons.tableview.ReportComparators;
 import addons.tableview.ReportTableDataAdapter;
 import addons.tableview.SortableReportTableView;
 import bl.mEmployeeAreaBL;
+import bl.mTypeSubmissionMobileBL;
 import bl.tCustomerBasedMobileDetailBL;
+import bl.tCustomerBasedMobileDetailProductBL;
 import bl.tCustomerBasedMobileHeaderBL;
 import bl.tSalesProductDetailBL;
 import bl.tSalesProductHeaderBL;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 import library.salesforce.common.ReportTable;
 import library.salesforce.common.mEmployeeAreaData;
+import library.salesforce.common.mTypeSubmissionMobile;
 import library.salesforce.common.tCustomerBasedMobileDetailData;
+import library.salesforce.common.tCustomerBasedMobileDetailProductData;
 import library.salesforce.common.tCustomerBasedMobileHeaderData;
 import library.salesforce.common.tSalesProductDetailData;
 import library.salesforce.common.tSalesProductHeaderData;
@@ -61,6 +66,7 @@ public class FragmentReporting extends Fragment {
         rlSearch = (RelativeLayout) v.findViewById(R.id.rlSearch);
 
         btnHide.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB_MR1)
             @Override
             public void onClick(View v) {
                 if(btnHide.getText().equals("Hide")){
@@ -89,8 +95,31 @@ public class FragmentReporting extends Fragment {
         });
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB_MR1)
             @Override
             public void onClick(View v) {
+                if(btnHide.getText().equals("Hide")){
+                    rlSearch.animate().alpha(0.0f).setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            rlSearch.setVisibility(View.GONE);
+                        }
+                    });
+                    btnHide.setText("Show");
+                    btnSearch.setEnabled(false);
+                }
+                else{
+                    rlSearch.setVisibility(View.VISIBLE);
+                    rlSearch.animate().alpha(1.0f).setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                        }
+                    });
+                    btnHide.setText("Hide");
+                    btnSearch.setEnabled(true);
+                }
                 spinnerSelected = spnTypeReport.getSelectedItem().toString();
                 String outletcode = arrOutlet.get(spnOutlet.getSelectedItem().toString());
                 generateReport(spinnerSelected, outletcode);
@@ -106,17 +135,22 @@ public class FragmentReporting extends Fragment {
         arrOutlet = new HashMap<>();
         arrData.add(0, "Reso");
         arrData.add(1, "Customer Base");
-        int i = 0;
+
+        arrDataOutlet.add(0, "ALL OUTLET");
+        int i = 1;
+
         for (mEmployeeAreaData outlet: listOutlet) {
             arrOutlet.put(outlet.get_txtOutletName(), outlet.get_txtOutletCode());
             arrDataOutlet.add(i, outlet.get_txtOutletName());
             i++;
         }
 
+        arrOutlet.put("ALL OUTLET","ALLOUTLET");
+
         spnTypeReport.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
         spnOutlet.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrDataOutlet));
 
-//        spnTypeReport.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//        spnOutlet.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 //            @Override
 //            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 //                spinnerSelected = spnTypeReport.getSelectedItem().toString();
@@ -142,10 +176,10 @@ public class FragmentReporting extends Fragment {
             case "Reso":
                 header = new String[6];
                 header[1] = "SO";
-                header[2] = "Tot. Product";
-                header[3] = "Tot. Item";
+                header[2] = "Tot. Prd";
+                header[3] = "Tot. Qty";
                 header[4] = "Tot. Price";
-                header[5] = "Status";
+                header[5] = "Outlet";
 
                 ReportTableView.setColumnCount(header.length);
 
@@ -172,7 +206,7 @@ public class FragmentReporting extends Fragment {
                 List<tSalesProductHeaderData> dt_so = new tSalesProductHeaderBL().getAllSalesProductHeaderByOutletCode(outletcode);
                 reportList = new ArrayList<>();
 
-                if(dt_so != null){
+                if(dt_so != null&&dt_so.size()>0){
                     for(tSalesProductHeaderData datas : dt_so ){
                         ReportTable rt = new ReportTable();
 
@@ -180,11 +214,12 @@ public class FragmentReporting extends Fragment {
                         rt.set_no_so(datas.get_txtNoSo());
                         rt.set_total_product(datas.get_intSumItem());
                         rt.set_total_price(new clsMainActivity().convertNumberDec(Double.valueOf(datas.get_intSumAmount())));
-                        if (datas.get_intSubmit().equals("1")&&datas.get_intSync().equals("0")){
-                            rt.set_status("Submit");
-                        } else if (datas.get_intSubmit().equals("1")&&datas.get_intSync().equals("1")){
-                            rt.set_status("Sync");
-                        }
+                        rt.set_status(datas.get_OutletName());
+//                        if (datas.get_intSubmit().equals("1")&&datas.get_intSync().equals("0")){
+//                            rt.set_status("Submit");
+//                        } else if (datas.get_intSubmit().equals("1")&&datas.get_intSync().equals("1")){
+//                            rt.set_status("Sync");
+//                        }
 
                         List<tSalesProductDetailData> dt_detail = new tSalesProductDetailBL().GetDataByNoSO(datas.get_txtNoSo());
 
@@ -199,6 +234,8 @@ public class FragmentReporting extends Fragment {
 
                         reportList.add(rt);
                     }
+                } else {
+                    new clsMainActivity().showCustomToast(getContext(), "No Data to Show", false);
                 }
 
                 ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
@@ -206,12 +243,12 @@ public class FragmentReporting extends Fragment {
 
             case "Customer Base":
                 header = new String[7];
-                header[1] = "Sub. Id";
+                header[1] = "Type";
                 header[2] = "Name";
-                header[3] = "No Telp";
-                header[4] = "PIC";
-                header[5] = "Tot. Member";
-                header[6] = "Tot. Product";
+                header[3] = "Phone";
+                header[4] = "Csmr";
+                header[5] = "Prod";
+                header[6] = "Qty";
 
                 ReportTableView.setColumnCount(header.length);
 
@@ -224,45 +261,67 @@ public class FragmentReporting extends Fragment {
                 ReportTableView.setColumnComparator(1, ReportComparators.getNoCbComparator());
                 ReportTableView.setColumnComparator(2, ReportComparators.getCustomerNameComparator());
                 ReportTableView.setColumnComparator(3, ReportComparators.getNoTelpComparator());
-                ReportTableView.setColumnComparator(4, ReportComparators.getPICComparator());
-                ReportTableView.setColumnComparator(5, ReportComparators.getTotalMemberComparator());
-                ReportTableView.setColumnComparator(6, ReportComparators.getTotalProductComparator());
+                ReportTableView.setColumnComparator(4, ReportComparators.getTotalMemberComparator());
+                ReportTableView.setColumnComparator(5, ReportComparators.getTotalProductComparator());
+                ReportTableView.setColumnComparator(6, ReportComparators.getTotalItemComparator());
 
                 ReportTableView.setColumnWeight(1, 2);
-                ReportTableView.setColumnWeight(2, 1);
-                ReportTableView.setColumnWeight(3, 1);
+                ReportTableView.setColumnWeight(2, 2);
+                ReportTableView.setColumnWeight(3, 2);
                 ReportTableView.setColumnWeight(4, 1);
                 ReportTableView.setColumnWeight(5, 1);
                 ReportTableView.setColumnWeight(6, 1);
 
                 ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
 
-                List<tCustomerBasedMobileHeaderData> data_cb = new tCustomerBasedMobileHeaderBL().getAllCustomerBasedMobileHeaderByOutletCode(outletcode);
+                List<tCustomerBasedMobileHeaderData> data_cb = new tCustomerBasedMobileHeaderBL().getAllCustomerBasedMobileHeaderByOutletCodeReporting(outletcode);
 
                 reportList = new ArrayList<>();
 
-                if (data_cb!=null){
+                if (data_cb!=null&&data_cb.size()>0){
 
                     for(tCustomerBasedMobileHeaderData datas : data_cb){
 
                         ReportTable rt = new ReportTable();
 
+                        mTypeSubmissionMobile mtTypeSubmissionMobile = new mTypeSubmissionMobile();
+                        mtTypeSubmissionMobile = new mTypeSubmissionMobileBL().getDataBySubmissionCode(datas.get_txtSubmissionCode());
+
                         rt.set_report_type("Customer Base");
-                        rt.set_no_cb(datas.get_txtSubmissionId());
+                        rt.set_no_cb(mtTypeSubmissionMobile.get_txtNamaMasterData());
                         rt.set_customer_name(datas.get_txtNamaDepan());
                         rt.set_no_tlp(datas.get_txtTelp());
-                        if(datas.get_intPIC().equals("1")){
-                            rt.set_pic("Yes");
-                        } else {
-                            rt.set_pic("No");
-                        }
+
+//                        if(datas.get_intPIC().equals("1")){
+//                            rt.set_pic("Yes");
+//                        } else {
+//                            rt.set_pic("No");
+//                        }
 
                         final List<tCustomerBasedMobileDetailData> dtListDetail = new tCustomerBasedMobileDetailBL().getAllDataByHeaderId(datas.get_intTrCustomerId());
                         rt.set_total_member(String.valueOf(dtListDetail.size()));
-                        rt.set_total_product("-");
+
+
+                        int totProduct = new tCustomerBasedMobileHeaderBL().getCountProductAllCustomerBased(datas.get_intTrCustomerId(), outletcode);
+                        rt.set_total_product(String.valueOf(totProduct));
+
+
+                        int count = 0;
+                        for(int j=0;j<dtListDetail.size();j++){
+                            final List<tCustomerBasedMobileDetailProductData> list = new tCustomerBasedMobileDetailProductBL().getDataByCustomerDetailId(dtListDetail.get(j).get_intTrCustomerIdDetail());
+                            for(i=0 ; i < list.size(); i++){
+                                int count2 = Integer.valueOf(list.get(i).get_txtProductBrandQty());
+                                count+=count2;
+                            }
+                        }
+
+
+                        rt.set_total_item(String.valueOf(count));
 
                         reportList.add(rt);
                     }
+                } else {
+                    new clsMainActivity().showCustomToast(getContext(), "No Data to Show", false);
                 }
 
                 ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));

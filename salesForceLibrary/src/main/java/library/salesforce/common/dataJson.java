@@ -488,7 +488,7 @@ public class dataJson {
                     item1.put(dttSalesProductHeaderData.Property_UserId, String.valueOf(data.get_UserId()));
                     item1.put(dttSalesProductHeaderData.Property_txtKeterangan, String.valueOf(data.get_txtKeterangan()));
                     item1.put(dttSalesProductHeaderData.Property_txtNIK, String.valueOf(data.get_txtNIK()));
-                    item1.put(dttSalesProductHeaderData.Property_txtRoleId, String.valueOf(data.get_txtRoleId()));
+//                    item1.put(dttSalesProductHeaderData.Property_txtRoleId, String.valueOf(data.get_txtRoleId()));
                     itemsListJquey.add(item1);
                 }
                 resJson.put(dttSalesProductHeaderData.Property_ListOftSalesProductHeaderData, new JSONArray(itemsListJquey));
@@ -1025,7 +1025,7 @@ public class dataJson {
         item1.put(data.Property_OutletCode, String.valueOf(data.get_OutletCode()));
         item1.put(data.Property_OutletName, String.valueOf(data.get_OutletName()));
         item1.put(data.Property_UserId, String.valueOf(data.get_UserId()));
-        item1.put(data.Property_txtRoleId, String.valueOf(data.get_txtRoleId()));
+//        item1.put(data.Property_txtRoleId, String.valueOf(data.get_txtRoleId()));
         return item1;
     }
 
