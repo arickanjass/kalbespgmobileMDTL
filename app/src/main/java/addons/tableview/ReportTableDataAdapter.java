@@ -10,7 +10,7 @@ import java.text.NumberFormat;
 import java.util.List;
 
 import de.codecrafters.tableview.TableDataAdapter;
-import library.salesforce.common.ReportTable;
+import library.spgmobile.common.ReportTable;
 
 
 public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {

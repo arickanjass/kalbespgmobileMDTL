@@ -3,16 +3,10 @@ package bl;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Build;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.telephony.TelephonyManager;
-import android.widget.TextView;
 
-import library.salesforce.common.tDeviceInfoUserData;
-import library.salesforce.dal.tDeviceInfoUserDA;
+import library.spgmobile.common.tDeviceInfoUserData;
+import library.spgmobile.dal.tDeviceInfoUserDA;
 
 public class tDeviceInfoUserBL extends clsMainBL {
 	public void SaveInfoDevice(String txtUserId,String txtDeviceId, String imeiNumber){

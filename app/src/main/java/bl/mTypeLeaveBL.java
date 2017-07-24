@@ -4,16 +4,16 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.List;
 
-import library.salesforce.common.clsHelper;
-import library.salesforce.common.linkAPI;
-import library.salesforce.common.mTypeLeaveMobileData;
-import library.salesforce.common.mconfigData;
-import library.salesforce.common.tUserLoginData;
-import library.salesforce.dal.clsHardCode;
-import library.salesforce.dal.enumConfigData;
-import library.salesforce.dal.mTypeLeaveMobileDA;
-import library.salesforce.dal.mconfigDA;
-import library.salesforce.dal.tUserLoginDA;
+import library.spgmobile.common.clsHelper;
+import library.spgmobile.common.linkAPI;
+import library.spgmobile.common.mTypeLeaveMobileData;
+import library.spgmobile.common.mconfigData;
+import library.spgmobile.common.tUserLoginData;
+import library.spgmobile.dal.clsHardCode;
+import library.spgmobile.dal.enumConfigData;
+import library.spgmobile.dal.mTypeLeaveMobileDA;
+import library.spgmobile.dal.mconfigDA;
+import library.spgmobile.dal.tUserLoginDA;
 
 public class mTypeLeaveBL extends clsMainBL{
 

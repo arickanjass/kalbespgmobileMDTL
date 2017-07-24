@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import library.salesforce.common.ModelListview;
+import library.spgmobile.common.ModelListview;
 
 public class customAdapter extends ArrayAdapter<ModelListview>{
         ModelListview[] modelItems = null;

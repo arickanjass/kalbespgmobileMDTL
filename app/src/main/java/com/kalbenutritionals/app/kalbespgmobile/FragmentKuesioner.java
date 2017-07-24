@@ -38,12 +38,12 @@ import bl.mListJawabanBL;
 import bl.mPertanyaanBL;
 import bl.tAbsenUserBL;
 import bl.tJawabanUserBL;
-import library.salesforce.common.jawabanModel;
-import library.salesforce.common.mKategoriData;
-import library.salesforce.common.mListJawabanData;
-import library.salesforce.common.mPertanyaanData;
-import library.salesforce.common.tJawabanUserData;
-import library.salesforce.common.tUserLoginData;
+import library.spgmobile.common.jawabanModel;
+import library.spgmobile.common.mKategoriData;
+import library.spgmobile.common.mListJawabanData;
+import library.spgmobile.common.mPertanyaanData;
+import library.spgmobile.common.tJawabanUserData;
+import library.spgmobile.common.tUserLoginData;
 
 /**
  * Created by Arick.Anjasmara on 11/05/2017.

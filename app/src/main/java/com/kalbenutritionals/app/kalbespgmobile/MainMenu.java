@@ -59,14 +59,14 @@ import bl.tUserLoginBL;
 import bl.tVisitPlanRealisasiBL;
 import come.example.viewbadger.ShortcutBadger;
 import de.hdodenhof.circleimageview.CircleImageView;
-import library.salesforce.common.clsPushData;
-import library.salesforce.common.mMenuData;
-import library.salesforce.common.tAbsenUserData;
-import library.salesforce.common.tNotificationData;
-import library.salesforce.common.tUserLoginData;
-import library.salesforce.common.tVisitPlanRealisasiData;
-import library.salesforce.common.visitplanAbsenData;
-import library.salesforce.dal.clsHardCode;
+import library.spgmobile.common.clsPushData;
+import library.spgmobile.common.mMenuData;
+import library.spgmobile.common.tAbsenUserData;
+import library.spgmobile.common.tNotificationData;
+import library.spgmobile.common.tUserLoginData;
+import library.spgmobile.common.tVisitPlanRealisasiData;
+import library.spgmobile.common.visitplanAbsenData;
+import library.spgmobile.dal.clsHardCode;
 import service.MyServiceNative;
 import service.MyTrackingLocationService;
 
@@ -169,7 +169,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
         tvUsername.setText(String.format("%s%s", _clsMainActivity.greetings(), dt.get_txtName()));
         tvEmail.setText(dt.get_TxtEmail());
 
-        library.salesforce.common.tDisplayPictureData tDisplayPictureData = new tDisplayPictureBL().getData();
+        library.spgmobile.common.tDisplayPictureData tDisplayPictureData = new tDisplayPictureBL().getData();
 
         if (tDisplayPictureData.get_image() != null) {
             Bitmap bitmap = BitmapFactory.decodeByteArray(tDisplayPictureData.get_image(), 0, tDisplayPictureData.get_image().length);

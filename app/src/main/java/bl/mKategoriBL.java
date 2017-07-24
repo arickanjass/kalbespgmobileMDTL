@@ -4,8 +4,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.List;
 
-import library.salesforce.common.mKategoriData;
-import library.salesforce.dal.mKategoriDA;
+import library.spgmobile.common.mKategoriData;
+import library.spgmobile.dal.mKategoriDA;
 
 /**
  * Created by Dewi Oktaviani on 05/05/2017.

@@ -1,29 +1,23 @@
 package bl;
 
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import library.salesforce.common.APIData;
-import library.salesforce.common.clsHelper;
-import library.salesforce.common.linkAPI;
-import library.salesforce.common.mconfigData;
-import library.salesforce.common.tActivityData;
-import library.salesforce.common.tUserLoginData;
-import library.salesforce.dal.clsHardCode;
-import library.salesforce.dal.enumConfigData;
-import library.salesforce.dal.mconfigDA;
-import library.salesforce.dal.tActivityDA;
-import library.salesforce.dal.tUserLoginDA;
+import library.spgmobile.common.clsHelper;
+import library.spgmobile.common.linkAPI;
+import library.spgmobile.common.mconfigData;
+import library.spgmobile.common.tActivityData;
+import library.spgmobile.common.tUserLoginData;
+import library.spgmobile.dal.clsHardCode;
+import library.spgmobile.dal.enumConfigData;
+import library.spgmobile.dal.mconfigDA;
+import library.spgmobile.dal.tActivityDA;
+import library.spgmobile.dal.tUserLoginDA;
 
 public class tActivityBL extends clsMainBL{
 	public JSONArray DownloadActivity(String versionName) throws Exception {

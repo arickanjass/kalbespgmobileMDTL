@@ -25,11 +25,11 @@ import java.util.List;
 
 import bl.clsHelperBL;
 import bl.tLogErrorBL;
-import library.salesforce.common.APIData;
-import library.salesforce.common.clsPushData;
-import library.salesforce.common.dataJson;
-import library.salesforce.common.tLogErrorData;
-import library.salesforce.dal.clsHardCode;
+import library.spgmobile.common.APIData;
+import library.spgmobile.common.clsPushData;
+import library.spgmobile.common.dataJson;
+import library.spgmobile.common.tLogErrorData;
+import library.spgmobile.dal.clsHardCode;
 
 /**
  * Created by Robert on 13/04/2017.

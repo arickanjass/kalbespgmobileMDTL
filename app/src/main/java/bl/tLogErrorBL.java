@@ -6,9 +6,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import library.salesforce.common.tLogErrorData;
-import library.salesforce.dal.clsHardCode;
-import library.salesforce.dal.tLogErrorDA;
+import library.spgmobile.common.tLogErrorData;
+import library.spgmobile.dal.clsHardCode;
+import library.spgmobile.dal.tLogErrorDA;
 
 /**
  * Created by Robert on 06/04/2017.

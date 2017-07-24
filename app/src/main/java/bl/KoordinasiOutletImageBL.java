@@ -4,8 +4,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.List;
 
-import library.salesforce.common.KoordinasiOutletImageData;
-import library.salesforce.dal.KoordinasiOutletImageDA;
+import library.spgmobile.common.KoordinasiOutletImageData;
+import library.spgmobile.dal.KoordinasiOutletImageDA;
 
 /**
  * Created by Rian Andrivani on 6/7/2017.

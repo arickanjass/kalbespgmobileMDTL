@@ -68,13 +68,13 @@ import bl.tDeviceInfoUserBL;
 import bl.tUserLoginBL;
 import bl.tVisitPlanHeader_MobileBL;
 import bl.tVisitPlanRealisasiBL;
-import library.salesforce.common.mMenuData;
-import library.salesforce.common.tAbsenUserData;
-import library.salesforce.common.tDeviceInfoUserData;
-import library.salesforce.common.tUserLoginData;
-import library.salesforce.common.tVisitPlanHeader_MobileData;
-import library.salesforce.common.tVisitPlanRealisasiData;
-import library.salesforce.dal.clsHardCode;
+import library.spgmobile.common.mMenuData;
+import library.spgmobile.common.tAbsenUserData;
+import library.spgmobile.common.tDeviceInfoUserData;
+import library.spgmobile.common.tUserLoginData;
+import library.spgmobile.common.tVisitPlanHeader_MobileData;
+import library.spgmobile.common.tVisitPlanRealisasiData;
+import library.spgmobile.dal.clsHardCode;
 
 import static android.content.Context.LOCATION_SERVICE;
 

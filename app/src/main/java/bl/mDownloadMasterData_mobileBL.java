@@ -8,15 +8,15 @@ import org.json.simple.parser.ParseException;
 
 import java.util.List;
 
-import library.salesforce.common.APIData;
-import library.salesforce.common.clsHelper;
-import library.salesforce.common.linkAPI;
-import library.salesforce.common.mDownloadMasterData_mobileData;
-import library.salesforce.common.tDeviceInfoUserData;
-import library.salesforce.dal.clsHardCode;
-import library.salesforce.dal.mDownloadMasterData_mobileDA;
-import library.salesforce.dal.mconfigDA;
-import library.salesforce.dal.tDeviceInfoUserDA;
+import library.spgmobile.common.APIData;
+import library.spgmobile.common.clsHelper;
+import library.spgmobile.common.linkAPI;
+import library.spgmobile.common.mDownloadMasterData_mobileData;
+import library.spgmobile.common.tDeviceInfoUserData;
+import library.spgmobile.dal.clsHardCode;
+import library.spgmobile.dal.mDownloadMasterData_mobileDA;
+import library.spgmobile.dal.mconfigDA;
+import library.spgmobile.dal.tDeviceInfoUserDA;
 
 /**
  * Created by ASUS ZE on 02/05/2017.

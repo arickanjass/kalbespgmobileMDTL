@@ -70,13 +70,13 @@ import bl.mMenuBL;
 import bl.tAbsenUserBL;
 import bl.tDeviceInfoUserBL;
 import bl.tUserLoginBL;
-import library.salesforce.common.mEmployeeAreaData;
-import library.salesforce.common.mEmployeeBranchData;
-import library.salesforce.common.mMenuData;
-import library.salesforce.common.tAbsenUserData;
-import library.salesforce.common.tDeviceInfoUserData;
-import library.salesforce.common.tUserLoginData;
-import library.salesforce.dal.clsHardCode;
+import library.spgmobile.common.mEmployeeAreaData;
+import library.spgmobile.common.mEmployeeBranchData;
+import library.spgmobile.common.mMenuData;
+import library.spgmobile.common.tAbsenUserData;
+import library.spgmobile.common.tDeviceInfoUserData;
+import library.spgmobile.common.tUserLoginData;
+import library.spgmobile.dal.clsHardCode;
 
 import static android.content.Context.LOCATION_SERVICE;
 

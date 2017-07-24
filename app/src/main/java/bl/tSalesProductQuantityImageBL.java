@@ -4,8 +4,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.List;
 
-import library.salesforce.common.tSalesProductQuantityImageData;
-import library.salesforce.dal.tSalesProductQuantityImageDA;
+import library.spgmobile.common.tSalesProductQuantityImageData;
+import library.spgmobile.dal.tSalesProductQuantityImageDA;
 
 /**
  * Created by Rian Andrivani on 4/26/2017.

@@ -26,15 +26,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bl.clsHelperBL;
-import library.salesforce.common.clsPushData;
-import library.salesforce.common.dataJson;
-import library.salesforce.common.tAbsenUserData;
-import library.salesforce.common.tActivityData;
-import library.salesforce.common.tCustomerBasedMobileHeaderData;
-import library.salesforce.common.tLeaveMobileData;
-import library.salesforce.common.tPurchaseOrderHeaderData;
-import library.salesforce.common.tSalesProductHeaderData;
-import library.salesforce.dal.clsHardCode;
+import library.spgmobile.common.clsPushData;
+import library.spgmobile.common.dataJson;
+import library.spgmobile.common.tAbsenUserData;
+import library.spgmobile.common.tActivityData;
+import library.spgmobile.common.tCustomerBasedMobileHeaderData;
+import library.spgmobile.common.tLeaveMobileData;
+import library.spgmobile.common.tPurchaseOrderHeaderData;
+import library.spgmobile.common.tSalesProductHeaderData;
+import library.spgmobile.dal.clsHardCode;
 
 public class PushData extends AppCompatActivity {
 
