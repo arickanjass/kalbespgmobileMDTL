@@ -74,81 +74,143 @@
                 android:layout_below="@+id/spnOutlet"
                 android:layout_marginTop="10dp"
                 android:background="#bfbfbf" />
-            <TableLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
+
+            <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/tlAbesen"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/view2"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/bg_rounded_normal">
 
                 <TableRow
                     android:background="#4CAF50"
-                    android:padding="5dp"
-                    android:gravity="center_horizontal">
+                    android:gravity="center_horizontal"
+                    android:padding="5dp">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Position"
-                        />
+                        android:text="Position" />
                 </TableRow>
 
                 <TableRow
                     android:background="#ffffff"
                     android:padding="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:text="My Location" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Outlet Location" />
+                </TableRow>
+
+                <TableRow
+                    android:background="#ffffff"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
                         android:text="Long" />
+
                     <TextView
                         android:id="@+id/tvLong"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="" />
+
                     <TextView
+                        android:id="@+id/tvLongOutlet"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="" />
                 </TableRow>
+
                 <TableRow
                     android:background="#ffffff"
                     android:padding="5dp">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="0.5"
                         android:text="Lat" />
+
                     <TextView
                         android:id="@+id/tvLat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="" />
+
                     <TextView
+                        android:id="@+id/tvLatOutlet"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="" />
                 </TableRow>
+
                 <TableRow
                     android:background="#ffffff"
                     android:padding="5dp">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="0.5"
                         android:text="Acc" />
+
                     <TextView
                         android:id="@+id/tvAcc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="" />
+
                     <TextView
+                        android:id="@+id/tvAccOutlet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="" />
+                </TableRow>
+
+                <TableRow
+                    android:background="#ffffff"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="Distance" />
+
+                    <TextView
+                        android:id="@+id/tvDis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="" />
+
+                    <TextView
+                        android:id="@+id/tvDistance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -213,7 +275,6 @@
                 android:layout_height="30dp"
                 android:text="Refresh Location"
                 android:textColor="#FFF"
-                android:background="@drawable/btn_download_all"
                 android:layout_below="@+id/llimgview"
                 android:layout_marginTop="10dp"
                 android:layout_alignParentLeft="true"
