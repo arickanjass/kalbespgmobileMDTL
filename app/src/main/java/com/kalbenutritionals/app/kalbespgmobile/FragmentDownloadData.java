@@ -148,7 +148,7 @@ public class FragmentDownloadData extends Fragment {
     private Button btnAbsen, btnQuiz;
     private Spinner spnDataLeave, spnDataPO, spnDataQuantityStock, spnProductComp, spnTypeSubmission, spnProdSPGCusBased, spnProdPICCusBased;
     private Button btnDataLeave, btnDataPO, btnDataQuantityStock, btnProductComp, btnTypeSubmission, btnProdSPGCusBased, btnProdPICCusBased ;
-    private LinearLayout ll_kordinasi_outlet,ll_branch, ll_outlet, ll_product, ll_brand, ll_type_leave, ll_reso, ll_activity, ll_data_customerbased, ll_absen, ll_purchase_order, ll_data_leave, ll_product_spg, ll_product_pic, ll_product_competitor, ll_type_submission, ll_kategoriVisitPlan, ll_dataVisitPlan, ll_dataQuantityStock, ll_dataKordinasiOutlet, ll_dataDownloadQuesioner;
+    private LinearLayout ll_kordinasi_outlet,ll_branch, ll_outlet, ll_product, ll_brand, ll_type_leave, ll_reso, ll_data_activity, ll_data_customerbased, ll_absen, ll_purchase_order, ll_data_leave, ll_product_spg, ll_product_pic, ll_product_competitor, ll_type_submission, ll_kategoriVisitPlan, ll_dataVisitPlan, ll_dataQuantityStock, ll_dataKordinasiOutlet, ll_dataDownloadQuesioner;
 
     private PackageInfo pInfo = null;
     private List<String> arrData;
@@ -212,7 +212,7 @@ public class FragmentDownloadData extends Fragment {
         ll_brand = (LinearLayout) v.findViewById(R.id.ll_brand);
         ll_type_leave = (LinearLayout) v.findViewById(R.id.ll_type_leave);
         ll_reso = (LinearLayout) v.findViewById(R.id.ll_reso);
-        ll_activity = (LinearLayout) v.findViewById(R.id.ll_activity);
+        ll_data_activity = (LinearLayout) v.findViewById(R.id.ll_data_activity);
         ll_data_customerbased = (LinearLayout) v.findViewById(R.id.ll_data_customerbased);
         ll_absen = (LinearLayout) v.findViewById(R.id.ll_absen);
         ll_purchase_order = (LinearLayout) v.findViewById(R.id.ll_purchase_order);
@@ -279,8 +279,8 @@ public class FragmentDownloadData extends Fragment {
                 ll_dataKordinasiOutlet.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_reso.getId()))){
                 ll_reso.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_activity.getId()))){
-                ll_activity.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_data_activity.getId()))){
+                ll_data_activity.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_data_customerbased.getId()))){
                 ll_data_customerbased.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_absen.getId()))){
@@ -908,7 +908,7 @@ public class FragmentDownloadData extends Fragment {
                     if (boolValid_koordinasiOutlet == 1) SaveDataKoordinasiOutletData(Json);
                 }
 
-                if(ll_activity!=null && ll_activity.getVisibility() == View.VISIBLE){
+                if(ll_data_activity!=null && ll_data_activity.getVisibility() == View.VISIBLE){
                     Json = new tActivityBL().DownloadActivity(pInfo.versionName);
                     SaveDatatActivityData(Json);
                 }
@@ -2630,7 +2630,8 @@ public class FragmentDownloadData extends Fragment {
                 && mEmployeeAreaDataList.size() > 0
                 && mProductBrandHeaderDataList.size() > 0
                 && mTypeLeaveMobileDataList.size() > 0
-                && mCategoryVisitPlanList.size()>0) {
+//                && mCategoryVisitPlanList.size()>0
+                ) {
 
             goToMainMenu();
             //validate = 1;

@@ -726,7 +726,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/ll_activity"
+                    android:id="@+id/ll_data_activity"
                     android:orientation="vertical"
                     android:visibility="gone"
                     android:layout_width="fill_parent"
