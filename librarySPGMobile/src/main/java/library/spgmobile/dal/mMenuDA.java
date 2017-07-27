@@ -153,7 +153,7 @@ public class mMenuDA {
 	}
 
 	// Getting single contact
-	public List<mMenuData> getDatabyParentId(SQLiteDatabase db, int IntParentID) {
+	public List<mMenuData> getDatabyParentId(SQLiteDatabase db, String IntParentID) {
 		List<mMenuData> contactList = new ArrayList<mMenuData>();
 		mMenuData dt = new mMenuData();
 		Cursor cursor = db.rawQuery("SELECT  " + dt.Property_All + " FROM "+ TABLE_CONTACTS
@@ -293,6 +293,24 @@ public class mMenuDA {
 		cursor.close();
 		// return count
 		return countData;
+	}
+
+	public String getIntParentID(SQLiteDatabase db) {
+		// Select All Query
+		mMenuData dt = new mMenuData();
+		String intParentID = null;
+		String selectQuery = "SELECT DISTINCT "+ dt.Property_IntParentID +" FROM "
+				+ TABLE_CONTACTS +" WHERE "+dt.Property_IntParentID+"!='0'";
+		Cursor cursor = db.rawQuery(selectQuery, null);
+		// looping through all rows and adding to list
+		if (cursor.moveToFirst()) {
+			do {
+				intParentID = cursor.getString(0);
+			} while (cursor.moveToNext());
+		}
+		cursor.close();
+		// return contact list
+		return intParentID;
 	}
 
 	public void InsertDefaultMconfig(SQLiteDatabase db) {

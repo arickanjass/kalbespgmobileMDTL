@@ -213,7 +213,7 @@ public class FragmentViewHistoryAbsen extends Fragment implements IXListViewList
         final ImageView imgAbsen1 = (ImageView) promptView.findViewById(R.id.imgAbsen1);
         final ImageView imgAbsen2 = (ImageView) promptView.findViewById(R.id.imgAbsen2);
 
-        tUserLoginData dtLogin = new tUserLoginBL().getUserLoginByUserId(data.get(position).get_txtUserId());
+        tUserLoginData dtLogin = new tUserLoginBL().getUserActive();
 
         tvUsername.setText(dtLogin.get_txtUserName());
         tvBranch.setText(data.get(position).get_txtBranchName());

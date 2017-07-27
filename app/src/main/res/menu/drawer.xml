@@ -14,11 +14,11 @@
             android:title="Home"
             app:actionLayout="@layout/menu_counter"/>
 
-        <item
-            android:id="@+id/soalkuesioner"
-            android:orderInCategory="0"
-            android:title="Kuesioner / Quiz"
-            app:actionLayout="@layout/menu_counter"/>
+        <!--<item-->
+            <!--android:id="@+id/soalkuesioner"-->
+            <!--android:orderInCategory="0"-->
+            <!--android:title="Kuesioner / Quiz"-->
+            <!--app:actionLayout="@layout/menu_counter"/>-->
 
     </group>
 

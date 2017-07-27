@@ -88,8 +88,14 @@ public class tPurchaseOrderHeaderBL extends clsMainBL {
     public List<tPurchaseOrderHeaderData> getAllPurchaseOrderHeaderByOutletCode(String code) {
         SQLiteDatabase _db = getDb();
         tPurchaseOrderHeaderDA _tPurchaseOrderHeaderDA = new tPurchaseOrderHeaderDA(_db);
-        List<tPurchaseOrderHeaderData> dt = _tPurchaseOrderHeaderDA.getAllDataByOutletCode(_db, code);
-        if (dt == null){
+        List<tPurchaseOrderHeaderData> dt;
+        if(code.equals("ALLOUTLET")){
+            dt = _tPurchaseOrderHeaderDA.getAllData(_db);
+        } else {
+            dt = _tPurchaseOrderHeaderDA.getAllDataByOutletCode(_db,code);
+        }
+
+        if(dt == null){
             dt = new ArrayList<>(0);
         }
         return dt;

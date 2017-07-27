@@ -75,6 +75,63 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
 	        }
         }
 
+        if(data.get_report_type() == "Activity"){
+            switch (columnIndex) {
+                case 1:
+                    renderedView = renderString(data.get_txtOutletName(), "left");
+                    break;
+                case 2:
+                    renderedView = renderString(data.get_txtDesc(), "left");
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if(data.get_report_type() == "Po"){
+            switch (columnIndex) {
+                case 1:
+                    renderedView = renderString(data.get_no_po(), "left");
+                    break;
+                case 2:
+                    renderedView = renderString(data.get_total_product(), "right");
+                    break;
+                case 3:
+                    renderedView = renderString(data.get_total_item(), "right");
+                    break;
+                case 4:
+                    renderedView = renderString(data.get_total_price(), "right");
+                    break;
+                case 5:
+                    renderedView = renderString(data.get_status(), "left");
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if(data.get_report_type() == "QStock"){
+            switch (columnIndex) {
+                case 1:
+                    renderedView = renderString(data.get_txtQuantityStock(), "left");
+                    break;
+                case 2:
+                    renderedView = renderString(data.get_total_product(), "right");
+                    break;
+                case 3:
+                    renderedView = renderString(data.get_total_item(), "right");
+                    break;
+                case 4:
+                    renderedView = renderString(data.get_total_price(), "right");
+                    break;
+                case 5:
+                    renderedView = renderString(data.get_status(), "left");
+                    break;
+                default:
+                    break;
+            }
+        }
+
         return renderedView;
     }
 

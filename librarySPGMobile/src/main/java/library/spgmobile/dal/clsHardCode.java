@@ -11,6 +11,7 @@ import library.spgmobile.common.tUserLoginData;
 
 public class clsHardCode  {
 	public String txtPathApp= Environment.getExternalStorageDirectory()+File.separator+"data"+File.separator+"data"+File.separator+"Kalbespgmobile"+File.separator+"app_database"+File.separator;
+	public String txtPathTempData = Environment.getExternalStorageDirectory() + File.separator + "data" + File.separator + "data" + File.separator + "Kalbespgmobile" + File.separator + "tempdata" + File.separator;
 	//public String txtPathApp= "data"+File.separator+"data"+File.separator+"com.example.kalbespgmobile"+File.separator+"databases"+File.separator;
 	//public String txtPathApp= "data"+File.separator+"data"+File.separator+"com.example.kalbespgmobile"+File.separator+"databases"+File.separator;
 	public String txtPathUserData= Environment.getExternalStorageDirectory()+File.separator+"data"+File.separator+"data"+File.separator+"Kalbespgmobile"+File.separator+"user_data"+File.separator;
@@ -195,6 +196,7 @@ public class clsHardCode  {
 	public String txtMessErrorConnection = "Error connecting to Server\r\n please try again!!";
 	public String txtMessCancelRequest = "Canceled Request Data";
 	public String txtMessDataNotFound = "Data Not Found";
+	public String txtMessDataSubmissionIdNotFound = "Data SubmissionId Not Found";
 	public String txtMessSuccessDownload = "Success Download";
 	public String txtMessUnableToConnect = "Unable To Connect";
 	public String txtTokenAPI = "129195202189197196195202189175";

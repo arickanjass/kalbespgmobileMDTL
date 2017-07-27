@@ -12,11 +12,13 @@ import library.spgmobile.common.clsHelper;
 import library.spgmobile.common.linkAPI;
 import library.spgmobile.common.mconfigData;
 import library.spgmobile.common.tActivityData;
+import library.spgmobile.common.tPurchaseOrderHeaderData;
 import library.spgmobile.common.tUserLoginData;
 import library.spgmobile.dal.clsHardCode;
 import library.spgmobile.dal.enumConfigData;
 import library.spgmobile.dal.mconfigDA;
 import library.spgmobile.dal.tActivityDA;
+import library.spgmobile.dal.tPurchaseOrderHeaderDA;
 import library.spgmobile.dal.tUserLoginDA;
 
 public class tActivityBL extends clsMainBL{
@@ -94,11 +96,22 @@ public class tActivityBL extends clsMainBL{
 	}
 
 	public List<tActivityData> getAllDataByOutletCode(String outletcode){
-		SQLiteDatabase db=getDb();
+		SQLiteDatabase _db = getDb();
 		tActivityDA _tActivityDA=new tActivityDA(db);
-		List<tActivityData> listData=_tActivityDA.getAllDataByOutletCode(db, outletcode);
-		return listData;
+		List<tActivityData> dt;
+		if(outletcode.equals("ALLOUTLET")){
+			dt = _tActivityDA.getAllData(_db);
+		} else {
+			dt = _tActivityDA.getAllDataByOutletCode(_db,outletcode);
+		}
+
+		if(dt == null){
+			dt = new ArrayList<>(0);
+		}
+		return dt;
 	}
+
+
 
 	public List<tActivityData> getAllDataByIntSyc(String val){
 		SQLiteDatabase _db =getDb();

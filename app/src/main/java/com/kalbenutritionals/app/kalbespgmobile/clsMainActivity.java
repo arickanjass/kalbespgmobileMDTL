@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -114,6 +115,17 @@ public class clsMainActivity extends Activity {
             txtStatus = "Open";
         }
         return txtStatus;
+    }
+
+    public SQLiteDatabase getDb() {
+        SQLiteDatabase db;
+        clsHardCode _clsHardCode;
+        clsHelper _clsHelper=new clsHelper();
+        _clsHardCode =new clsHardCode();
+        _clsHelper.createFolderApp();
+        String rootDB = _clsHardCode.txtDatabaseName;
+        db=SQLiteDatabase.openOrCreateDatabase(rootDB, null);
+        return db;
     }
 
     public static void showToastStatic(Context ctx, String str) {

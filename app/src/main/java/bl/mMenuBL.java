@@ -45,6 +45,15 @@ public class mMenuBL extends clsMainBL {
         return dt;
     }
 
+    public String getIntParentID(){
+        SQLiteDatabase db = getDb();
+        mMenuDA _mMenuDA = new mMenuDA(db);
+        String intParentID = null;
+        intParentID = _mMenuDA.getIntParentID(db);
+        db.close();
+        return intParentID;
+    }
+
     public mMenuData getMenuDataByMenuName2(String menuName) {
         SQLiteDatabase db = getDb();
         mMenuDA _mMenuDA = new mMenuDA(db);
@@ -53,7 +62,7 @@ public class mMenuBL extends clsMainBL {
         return dt;
     }
 
-    public List<mMenuData> getDatabyParentId(int id) {
+    public List<mMenuData> getDatabyParentId(String id) {
         SQLiteDatabase db = getDb();
         mMenuDA _mMenuDA = new mMenuDA(db);
         tSalesProductHeaderDA _tSalesProductHeaderDA = new tSalesProductHeaderDA(db);
@@ -123,7 +132,7 @@ public class mMenuBL extends clsMainBL {
         return tmpData;
     }
 
-    public List<mMenuData> getDatabyParentIdNew(int id) {
+    public List<mMenuData> getDatabyParentIdNew(String id) {
         SQLiteDatabase db = getDb();
         mMenuDA _mMenuDA = new mMenuDA(db);
         List<mMenuData> listData = _mMenuDA.getDatabyParentId(db, id);
@@ -168,7 +177,7 @@ public class mMenuBL extends clsMainBL {
                 if (_mEmployeeAreaDA.getContactsCount(db) > 0 &&
                         _mEmployeeBranchDA.getContactsCount(db) > 0 &&
                         _mEmployeeSalesProductDA.getContactsCount(db) > 0 &&
-                        _mProductBrandHeaderDA.getContactsCount(db) > 0 &&
+//                        _mProductBrandHeaderDA.getContactsCount(db) > 0 &&
                         _mProductSPGDA.getContactsCount(db) > 0 &&
                         _mProductPICDA.getContactsCount(db) > 0 &&
                         _mProductCompetitorDA.getContactsCount(db) > 0 &&

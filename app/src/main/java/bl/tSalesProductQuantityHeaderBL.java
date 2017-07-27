@@ -110,9 +110,16 @@ public class tSalesProductQuantityHeaderBL extends clsMainBL {
     public List<tSalesProductQuantityHeaderData> getAllSalesProductHeaderByOutletCode(String code){
         SQLiteDatabase _db = getDb();
         tSalesProductQuantityHeaderDA _tSalesQuantityHeaderDA = new tSalesProductQuantityHeaderDA(_db);
-        List<tSalesProductQuantityHeaderData> dt = _tSalesQuantityHeaderDA.getAllDataByOutletCode(_db, code);
+        List<tSalesProductQuantityHeaderData> dt;
+        if(code.equals("ALLOUTLET")){
+            dt = _tSalesQuantityHeaderDA.getAllData(_db);
+        } else {
+            dt = _tSalesQuantityHeaderDA.getAllDataByOutletCode(_db,code);
+        }
 
-        _db.close();
+        if(dt == null){
+            dt = new ArrayList<>(0);
+        }
         return dt ;
     }
 

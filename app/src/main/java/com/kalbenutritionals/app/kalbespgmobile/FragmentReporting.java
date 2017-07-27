@@ -21,27 +21,43 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import addons.tableview.ReportComparators;
 import addons.tableview.ReportTableDataAdapter;
 import addons.tableview.SortableReportTableView;
+import bl.mDownloadMasterData_mobileBL;
 import bl.mEmployeeAreaBL;
+import bl.mMenuBL;
 import bl.mTypeSubmissionMobileBL;
+import bl.tActivityBL;
 import bl.tCustomerBasedMobileDetailBL;
 import bl.tCustomerBasedMobileDetailProductBL;
 import bl.tCustomerBasedMobileHeaderBL;
+import bl.tPurchaseOrderDetailBL;
+import bl.tPurchaseOrderHeaderBL;
 import bl.tSalesProductDetailBL;
 import bl.tSalesProductHeaderBL;
+import bl.tSalesProductQuantityDetailBL;
+import bl.tSalesProductQuantityHeaderBL;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 import library.spgmobile.common.ReportTable;
+import library.spgmobile.common.mDownloadMasterData_mobileData;
 import library.spgmobile.common.mEmployeeAreaData;
+import library.spgmobile.common.mMenuData;
 import library.spgmobile.common.mTypeSubmissionMobile;
+import library.spgmobile.common.tActivityData;
 import library.spgmobile.common.tCustomerBasedMobileDetailData;
 import library.spgmobile.common.tCustomerBasedMobileDetailProductData;
 import library.spgmobile.common.tCustomerBasedMobileHeaderData;
+import library.spgmobile.common.tPurchaseOrderDetailData;
+import library.spgmobile.common.tPurchaseOrderHeaderData;
 import library.spgmobile.common.tSalesProductDetailData;
 import library.spgmobile.common.tSalesProductHeaderData;
+import library.spgmobile.common.tSalesProductQuantityDetailData;
+import library.spgmobile.common.tSalesProductQuantityHeaderData;
 
 public class FragmentReporting extends Fragment {
 
@@ -129,12 +145,36 @@ public class FragmentReporting extends Fragment {
         List<mEmployeeAreaData> listOutlet = new ArrayList<>();
 
         listOutlet = new mEmployeeAreaBL().GetAllData();
-        List<String> arrData=new ArrayList<>();
         List<String> arrDataOutlet=new ArrayList<>();
 
+        List<mDownloadMasterData_mobileData> mDownloadMasterData_mobileDataList = new ArrayList<>();
+
+        mDownloadMasterData_mobileDataList = new mDownloadMasterData_mobileBL().GetAllData();
+
+        List<String> arrData=new ArrayList<>();
+//        arrData.add(0, "Reso");
+//        arrData.add(1, "Customer Base");
+
+// add elements to al, including duplicates
+        Set<String> hs = new HashSet<>();
+        hs.addAll(arrData);
+        arrData.clear();
+        arrData.addAll(hs);
+
+        String intParentID = new mMenuBL().getIntParentID();
+        List<mMenuData> menu = new ArrayList<>();
+
+        if(intParentID != null){
+            menu = new mMenuBL().getDatabyParentId(intParentID);
+        }
+
+        if(menu.size()>0){
+            for(mMenuData _mMenuData : menu){
+                arrData.add(_mMenuData.get_TxtMenuName());
+            }
+        }
+
         arrOutlet = new HashMap<>();
-        arrData.add(0, "Reso");
-        arrData.add(1, "Customer Base");
 
         arrDataOutlet.add(0, "ALL OUTLET");
         int i = 1;
@@ -159,8 +199,7 @@ public class FragmentReporting extends Fragment {
         List<ReportTable> reportList;
         int i;
 
-        switch (spinnerSelected){
-            case "Reso":
+        if(spinnerSelected.contains("Reso")){
                 header = new String[6];
                 header[1] = "SO";
                 header[2] = "Tot. Prd";
@@ -221,9 +260,7 @@ public class FragmentReporting extends Fragment {
                 }
 
                 ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
-                break;
-
-            case "Customer Base":
+        } else if (spinnerSelected.contains("Customer Base")){
                 header = new String[7];
                 header[1] = "Type";
                 header[2] = "Name";
@@ -301,13 +338,325 @@ public class FragmentReporting extends Fragment {
                 }
 
                 ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
+        } else if (spinnerSelected.contains("Actvity")){
+//            Toast.makeText(getContext(), "Actvity", Toast.LENGTH_SHORT).show();
+            header = new String[6];
+            header[1] = "Outlet";
+            header[2] = "Desc.";
 
-                break;
+            ReportTableView.setColumnCount(header.length);
 
-            default:
-                Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
-                break;
+            simpleTableHeaderAdapter = new SimpleTableHeaderAdapter(getContext(), header);
+            simpleTableHeaderAdapter.setTextColor(ContextCompat.getColor(getContext(), R.color.table_header_text));
+            simpleTableHeaderAdapter.setTextSize(14);
+            simpleTableHeaderAdapter.setPaddingBottom(20);
+            simpleTableHeaderAdapter.setPaddingTop(20);
+
+            ReportTableView.setColumnComparator(1, ReportComparators.getOutletActivityComparator());
+            ReportTableView.setColumnComparator(2, ReportComparators.getDescActivityComparator());
+
+            ReportTableView.setColumnWeight(1, 2);
+            ReportTableView.setColumnWeight(2, 2);
+
+            ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
+
+            List<tActivityData> dt_act = new tActivityBL().getAllDataByOutletCode(outletcode);
+            reportList = new ArrayList<>();
+
+            if(dt_act != null&&dt_act.size()>0){
+                for(tActivityData datas : dt_act ){
+                    ReportTable rt = new ReportTable();
+
+                    rt.set_report_type("Activity");
+                    rt.set_txtDesc(datas.get_txtDesc());
+                    rt.set_txtOutletName(datas.get_txtOutletName());
+
+                    reportList.add(rt);
+                }
+            } else {
+                new clsMainActivity().showCustomToast(getContext(), "No Data to Show", false);
+            }
+
+            ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
+
+        } else if (spinnerSelected.contains("PO")){
+//            Toast.makeText(getContext(), "PO", Toast.LENGTH_SHORT).show();
+            header = new String[6];
+            header[1] = "NO";
+            header[2] = "Tot. Prd";
+            header[3] = "Tot. Qty";
+            header[4] = "Tot. Price";
+            header[5] = "Outlet";
+
+            ReportTableView.setColumnCount(header.length);
+
+            simpleTableHeaderAdapter = new SimpleTableHeaderAdapter(getContext(), header);
+            simpleTableHeaderAdapter.setTextColor(ContextCompat.getColor(getContext(), R.color.table_header_text));
+            simpleTableHeaderAdapter.setTextSize(14);
+            simpleTableHeaderAdapter.setPaddingBottom(20);
+            simpleTableHeaderAdapter.setPaddingTop(20);
+
+            ReportTableView.setColumnComparator(1, ReportComparators.getNoPoComparator());
+            ReportTableView.setColumnComparator(2, ReportComparators.getTotalProductComparator());
+            ReportTableView.setColumnComparator(3, ReportComparators.getTotalItemComparator());
+            ReportTableView.setColumnComparator(4, ReportComparators.getTotalPriceComparator());
+            ReportTableView.setColumnComparator(5, ReportComparators.getStatusComparator());
+
+            ReportTableView.setColumnWeight(1, 2);
+            ReportTableView.setColumnWeight(2, 1);
+            ReportTableView.setColumnWeight(3, 1);
+            ReportTableView.setColumnWeight(4, 2);
+            ReportTableView.setColumnWeight(5, 1);
+
+            ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
+
+            List<tPurchaseOrderHeaderData> dt_po = new tPurchaseOrderHeaderBL().getAllPurchaseOrderHeaderByOutletCode(outletcode);
+            reportList = new ArrayList<>();
+
+            if(dt_po != null&&dt_po.size()>0){
+                for(tPurchaseOrderHeaderData datas : dt_po ){
+                    ReportTable rt = new ReportTable();
+
+                    rt.set_report_type("Po");
+                    rt.set_no_po(datas.get_txtNoOrder());
+                    rt.set_total_product(datas.get_intSumItem());
+                    rt.set_total_price(new clsMainActivity().convertNumberDec(Double.valueOf(datas.get_intSumAmount())));
+                    rt.set_status(datas.get_OutletName());
+
+                    List<tPurchaseOrderDetailData> dt_detail = new tPurchaseOrderDetailBL().getDataByNoPO(datas.get_txtNoOrder());
+
+                    int total_item = 0;
+
+                    for(i = 0; i < dt_detail.size(); i++){
+                        total_item = total_item + Integer.parseInt(dt_detail.get(i).get_intQty());
+                    }
+
+                    rt.set_total_item(String.valueOf(total_item));
+                    rt.set_total_product(String.valueOf(dt_detail.size()));
+
+                    reportList.add(rt);
+                }
+            } else {
+                new clsMainActivity().showCustomToast(getContext(), "No Data to Show", false);
+            }
+
+            ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
+
+        } else if (spinnerSelected.contains("Quantity Stock")){
+//            Toast.makeText(getContext(), "Quantity Stock", Toast.LENGTH_SHORT).show();
+            header = new String[6];
+            header[1] = "NO";
+            header[2] = "Tot. Prd";
+            header[3] = "Tot. Qty";
+            header[4] = "Tot. Price";
+            header[5] = "Outlet";
+
+            ReportTableView.setColumnCount(header.length);
+
+            simpleTableHeaderAdapter = new SimpleTableHeaderAdapter(getContext(), header);
+            simpleTableHeaderAdapter.setTextColor(ContextCompat.getColor(getContext(), R.color.table_header_text));
+            simpleTableHeaderAdapter.setTextSize(14);
+            simpleTableHeaderAdapter.setPaddingBottom(20);
+            simpleTableHeaderAdapter.setPaddingTop(20);
+
+            ReportTableView.setColumnComparator(1, ReportComparators.getNoQStockComparator());
+            ReportTableView.setColumnComparator(2, ReportComparators.getTotalProductComparator());
+            ReportTableView.setColumnComparator(3, ReportComparators.getTotalItemComparator());
+            ReportTableView.setColumnComparator(4, ReportComparators.getTotalPriceComparator());
+            ReportTableView.setColumnComparator(5, ReportComparators.getStatusComparator());
+
+            ReportTableView.setColumnWeight(1, 2);
+            ReportTableView.setColumnWeight(2, 1);
+            ReportTableView.setColumnWeight(3, 1);
+            ReportTableView.setColumnWeight(4, 2);
+            ReportTableView.setColumnWeight(5, 1);
+
+            ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
+
+            List<tSalesProductQuantityHeaderData> dt_qs = new tSalesProductQuantityHeaderBL().getAllSalesProductHeaderByOutletCode(outletcode);
+            reportList = new ArrayList<>();
+
+            if(dt_qs != null&&dt_qs.size()>0){
+                for(tSalesProductQuantityHeaderData datas : dt_qs ){
+                    ReportTable rt = new ReportTable();
+
+                    rt.set_report_type("QStock");
+                    rt.set_txtQuantityStock(datas.get_txtQuantityStock());
+                    rt.set_total_product(datas.get_intSumItem());
+                    rt.set_total_price(new clsMainActivity().convertNumberDec(Double.valueOf(datas.get_intSumAmount())));
+                    rt.set_status(datas.get_OutletName());
+
+                    List<tSalesProductQuantityDetailData> dt_detail = new tSalesProductQuantityDetailBL().GetDataByNoQuantityStock(datas.get_txtQuantityStock());
+
+                    int total_item = 0;
+
+                    for(i = 0; i < dt_detail.size(); i++){
+                        total_item = total_item + Integer.parseInt(dt_detail.get(i).getTxtQuantity());
+                    }
+
+                    rt.set_total_item(String.valueOf(total_item));
+                    rt.set_total_product(String.valueOf(dt_detail.size()));
+
+                    reportList.add(rt);
+                }
+            } else {
+                new clsMainActivity().showCustomToast(getContext(), "No Data to Show", false);
+            }
+
+            ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
+        } else {
+                Toast.makeText(getContext(), "No Data to Show", Toast.LENGTH_SHORT).show();
         }
+
+//        switch (spinnerSelected){
+//            case "Reso":
+//                header = new String[6];
+//                header[1] = "SO";
+//                header[2] = "Tot. Prd";
+//                header[3] = "Tot. Qty";
+//                header[4] = "Tot. Price";
+//                header[5] = "Outlet";
+//
+//                ReportTableView.setColumnCount(header.length);
+//
+//                simpleTableHeaderAdapter = new SimpleTableHeaderAdapter(getContext(), header);
+//                simpleTableHeaderAdapter.setTextColor(ContextCompat.getColor(getContext(), R.color.table_header_text));
+//                simpleTableHeaderAdapter.setTextSize(14);
+//                simpleTableHeaderAdapter.setPaddingBottom(20);
+//                simpleTableHeaderAdapter.setPaddingTop(20);
+//
+//                ReportTableView.setColumnComparator(1, ReportComparators.getNoSoComparator());
+//                ReportTableView.setColumnComparator(2, ReportComparators.getTotalProductComparator());
+//                ReportTableView.setColumnComparator(3, ReportComparators.getTotalItemComparator());
+//                ReportTableView.setColumnComparator(4, ReportComparators.getTotalPriceComparator());
+//                ReportTableView.setColumnComparator(5, ReportComparators.getStatusComparator());
+//
+//                ReportTableView.setColumnWeight(1, 2);
+//                ReportTableView.setColumnWeight(2, 1);
+//                ReportTableView.setColumnWeight(3, 1);
+//                ReportTableView.setColumnWeight(4, 2);
+//                ReportTableView.setColumnWeight(5, 1);
+//
+//                ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
+//
+//                List<tSalesProductHeaderData> dt_so = new tSalesProductHeaderBL().getAllSalesProductHeaderByOutletCode(outletcode);
+//                reportList = new ArrayList<>();
+//
+//                if(dt_so != null&&dt_so.size()>0){
+//                    for(tSalesProductHeaderData datas : dt_so ){
+//                        ReportTable rt = new ReportTable();
+//
+//                        rt.set_report_type("Reso");
+//                        rt.set_no_so(datas.get_txtNoSo());
+//                        rt.set_total_product(datas.get_intSumItem());
+//                        rt.set_total_price(new clsMainActivity().convertNumberDec(Double.valueOf(datas.get_intSumAmount())));
+//                        rt.set_status(datas.get_OutletName());
+//
+//                        List<tSalesProductDetailData> dt_detail = new tSalesProductDetailBL().GetDataByNoSO(datas.get_txtNoSo());
+//
+//                        int total_item = 0;
+//
+//                        for(i = 0; i < dt_detail.size(); i++){
+//                            total_item = total_item + Integer.parseInt(dt_detail.get(i).get_intQty());
+//                        }
+//
+//                        rt.set_total_item(String.valueOf(total_item));
+//                        rt.set_total_product(String.valueOf(dt_detail.size()));
+//
+//                        reportList.add(rt);
+//                    }
+//                } else {
+//                    new clsMainActivity().showCustomToast(getContext(), "No Data to Show", false);
+//                }
+//
+//                ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
+//                break;
+//
+//            case "Customer Base":
+//                header = new String[7];
+//                header[1] = "Type";
+//                header[2] = "Name";
+//                header[3] = "Phone";
+//                header[4] = "Csmr";
+//                header[5] = "Prod";
+//                header[6] = "Qty";
+//
+//                ReportTableView.setColumnCount(header.length);
+//
+//                simpleTableHeaderAdapter = new SimpleTableHeaderAdapter(getContext(), header);
+//                simpleTableHeaderAdapter.setTextColor(ContextCompat.getColor(getContext(), R.color.table_header_text));
+//                simpleTableHeaderAdapter.setTextSize(14);
+//                simpleTableHeaderAdapter.setPaddingBottom(20);
+//                simpleTableHeaderAdapter.setPaddingTop(20);
+//
+//                ReportTableView.setColumnComparator(1, ReportComparators.getNoCbComparator());
+//                ReportTableView.setColumnComparator(2, ReportComparators.getCustomerNameComparator());
+//                ReportTableView.setColumnComparator(3, ReportComparators.getNoTelpComparator());
+//                ReportTableView.setColumnComparator(4, ReportComparators.getTotalMemberComparator());
+//                ReportTableView.setColumnComparator(5, ReportComparators.getTotalProductComparator());
+//                ReportTableView.setColumnComparator(6, ReportComparators.getTotalItemComparator());
+//
+//                ReportTableView.setColumnWeight(1, 2);
+//                ReportTableView.setColumnWeight(2, 2);
+//                ReportTableView.setColumnWeight(3, 2);
+//                ReportTableView.setColumnWeight(4, 1);
+//                ReportTableView.setColumnWeight(5, 1);
+//                ReportTableView.setColumnWeight(6, 1);
+//
+//                ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
+//
+//                List<tCustomerBasedMobileHeaderData> data_cb = new tCustomerBasedMobileHeaderBL().getAllCustomerBasedMobileHeaderByOutletCodeReporting(outletcode);
+//
+//                reportList = new ArrayList<>();
+//
+//                if (data_cb!=null&&data_cb.size()>0){
+//
+//                    for(tCustomerBasedMobileHeaderData datas : data_cb){
+//
+//                        ReportTable rt = new ReportTable();
+//
+//                        mTypeSubmissionMobile mtTypeSubmissionMobile = new mTypeSubmissionMobile();
+//                        mtTypeSubmissionMobile = new mTypeSubmissionMobileBL().getDataBySubmissionCode(datas.get_txtSubmissionCode());
+//
+//                        rt.set_report_type("Customer Base");
+//                        rt.set_no_cb(mtTypeSubmissionMobile.get_txtNamaMasterData());
+//                        rt.set_customer_name(datas.get_txtNamaDepan());
+//                        rt.set_no_tlp(datas.get_txtTelp());
+//
+//                        final List<tCustomerBasedMobileDetailData> dtListDetail = new tCustomerBasedMobileDetailBL().getAllDataByHeaderId(datas.get_intTrCustomerId());
+//                        rt.set_total_member(String.valueOf(dtListDetail.size()));
+//
+//
+//                        int totProduct = new tCustomerBasedMobileHeaderBL().getCountProductAllCustomerBased(datas.get_intTrCustomerId(), outletcode);
+//                        rt.set_total_product(String.valueOf(totProduct));
+//
+//
+//                        int count = 0;
+//                        for(int j=0;j<dtListDetail.size();j++){
+//                            final List<tCustomerBasedMobileDetailProductData> list = new tCustomerBasedMobileDetailProductBL().getDataByCustomerDetailId(dtListDetail.get(j).get_intTrCustomerIdDetail());
+//                            for(i=0 ; i < list.size(); i++){
+//                                int count2 = Integer.valueOf(list.get(i).get_txtProductBrandQty());
+//                                count+=count2;
+//                            }
+//                        }
+//
+//
+//                        rt.set_total_item(String.valueOf(count));
+//
+//                        reportList.add(rt);
+//                    }
+//                } else {
+//                    new clsMainActivity().showCustomToast(getContext(), "No Data to Show", false);
+//                }
+//
+//                ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
+//
+//                break;
+//
+//            default:
+//                Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+//                break;
+//        }
     }
 
     public class MyAdapter extends ArrayAdapter<String>

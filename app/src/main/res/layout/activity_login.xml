@@ -25,6 +25,30 @@
 
         <!-- BODY -->
         <LinearLayout
+            android:id="@+id/llContentWarning"
+            android:layout_width="fill_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="16dp">
+            <TextView
+                android:id="@+id/tvWarning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/press_go"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+            <Button
+                android:id="@+id/btnCheckVersion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_edtext"
+                android:text="Check Version"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+        <LinearLayout
             android:id="@+id/llContent"
             android:layout_width="fill_parent"
             android:layout_height="0dip"
@@ -75,6 +99,14 @@
                 android:layout_marginTop="2dp"
                 android:background="@drawable/bg_edtext" />
 
+            <Spinner
+                android:id="@+id/spnOutlet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/bg_edtext"
+                android:visibility="gone" />
+
             <View
                 android:id="@+id/viewFlipper2"
                 android:layout_width="match_parent"
@@ -98,17 +130,29 @@
                 android:singleLine="true" />
 
             <TextView
+                android:id="@+id/tv_forgot_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:clickable="true"
+                android:text="Forgot your password ?"
+                android:textColor="@color/colorForgotPass"
+                android:textStyle="italic|bold" />
+
+            <TextView
                 android:id="@+id/tv_push_error"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/bg_edtext"
                 android:clickable="true"
                 android:text="Report Error"
                 android:textColor="@color/red"
-                android:textStyle="italic|bold" />
+                android:textStyle="italic|bold"
+                android:background="@drawable/bg_edtext"/>
 
             <Button
                 android:id="@+id/buttonLogin"
@@ -119,6 +163,7 @@
                 android:text="Login"
                 android:textStyle="bold" />
 
+
         </LinearLayout>
 
         <!-- FOOTER -->
@@ -127,6 +172,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorAccent"
             android:orientation="vertical">
+
 
             <Button
                 android:id="@+id/buttonExit"
@@ -148,7 +194,20 @@
                 android:layout_marginTop="5dp"
                 android:background="@drawable/btn_on_click"
                 android:text="Ping"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+            <Button
+                android:id="@+id/button_reset"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/btn_on_click"
+                android:text="Forgot password"
+                android:textStyle="bold"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/txtVersionLogin"
@@ -158,7 +217,6 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="10dp"
                 android:text="@string/tv_version"
-                android:textAlignment="center"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/white"
                 android:textStyle="bold" />

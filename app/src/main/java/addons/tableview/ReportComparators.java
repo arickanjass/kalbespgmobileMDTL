@@ -3,11 +3,20 @@ package addons.tableview;
 import java.util.Comparator;
 
 import library.spgmobile.common.ReportTable;
+import library.spgmobile.common.tActivityData;
 
 public final class ReportComparators {
 
     private ReportComparators() {
         //no instance
+    }
+
+    public static Comparator<ReportTable> getDescActivityComparator() {
+        return new desc_ActivityComparator();
+    }
+
+    public static Comparator<ReportTable> getOutletActivityComparator() {
+        return new outlet_ActivityComparator();
     }
 
     public static Comparator<ReportTable> getCustomerNameComparator() {
@@ -48,6 +57,14 @@ public final class ReportComparators {
 
     public static Comparator<ReportTable> getNoSoComparator() {
         return new noSoComparator();
+    }
+
+    public static Comparator<ReportTable> getNoPoComparator() {
+        return new noPoComparator();
+    }
+
+    public static Comparator<ReportTable> getNoQStockComparator() {
+        return new noQStockComparator();
     }
 
     public static Comparator<ReportTable> getTotalItemComparator() {
@@ -161,6 +178,36 @@ public final class ReportComparators {
         @Override
         public int compare(ReportTable data1, ReportTable data2) {
             return data1.get_total_member().compareTo(data2.get_total_member());
+        }
+    }
+
+    //activity
+    private static class desc_ActivityComparator implements Comparator<ReportTable> {
+        @Override
+        public int compare(ReportTable data1, ReportTable data2) {
+            return data1.get_txtDesc().compareTo(data2.get_txtDesc());
+        }
+    }
+    private static class outlet_ActivityComparator implements Comparator<ReportTable> {
+        @Override
+        public int compare(ReportTable data1, ReportTable data2) {
+            return data1.get_txtOutletName().compareTo(data2.get_txtOutletName());
+        }
+    }
+
+    private static class noPoComparator implements Comparator<ReportTable> {
+
+        @Override
+        public int compare(final ReportTable data1, final ReportTable data2) {
+            return data1.get_no_po().compareTo(data2.get_no_po());
+        }
+    }
+
+    private static class noQStockComparator implements Comparator<ReportTable> {
+
+        @Override
+        public int compare(final ReportTable data1, final ReportTable data2) {
+            return data1.get_txtQuantityStock().compareTo(data2.get_txtQuantityStock());
         }
     }
 }

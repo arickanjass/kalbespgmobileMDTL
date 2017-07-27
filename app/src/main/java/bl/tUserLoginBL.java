@@ -142,6 +142,29 @@ public class tUserLoginBL extends clsMainBL{
 		return res;
 	}
 
+	public JSONArray resetPassword(String txtUserName, String versionApp) throws ParseException{
+		SQLiteDatabase db=getDb();
+		JSONArray res=new JSONArray();
+		mconfigDA _mconfigDA=new mconfigDA(db);
+		tDeviceInfoUserData dt= new tDeviceInfoUserDA(db).getData(db, 1);
+		String txtDomain= _mconfigDA.getDomainKalbeData(db);
+		//String txtParam= txtDomain+"|"+txtUserName+"|"+txtPass+"||"+dt.get_txtVersion()+"|"+dt.get_txtDevice()+"|"+dt.get_txtModel()+"|"+intRoleId;
+		JSONObject resJson = new JSONObject();
+		resJson.put("txtUserID", txtUserName);
+		linkAPI dtlinkAPI=new linkAPI();
+		dtlinkAPI.set_txtMethod("ForgotPassword");
+		dtlinkAPI.set_txtParam("");
+		dtlinkAPI.set_txtToken(new clsHardCode().txtTokenAPI);
+		dtlinkAPI.set_txtVesion(versionApp);
+		String strLinkAPI= dtlinkAPI.QueryString(getLinkAPI());
+		APIData dtAPIDATA=new APIData();
+		clsHelper _clsHelper=new clsHelper();
+		String JsonData= _clsHelper.pushtData(strLinkAPI, String.valueOf(resJson), Integer.valueOf(getBackGroundServiceOnline()));
+		res= _clsHelper.ResultJsonArray(JsonData);
+		//String txtParam=
+		return res;
+	}
+
 
 	public void saveData(tUserLoginData data){
 		SQLiteDatabase db=getDb();

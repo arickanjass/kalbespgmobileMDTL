@@ -20,6 +20,45 @@ public class ReportTable implements Serializable {
     private String _total_price;
     private String _status;
     private String _no_cb;
+    private String _txtDesc;
+
+    public String get_txtQuantityStock() {
+        return _txtQuantityStock;
+    }
+
+    public void set_txtQuantityStock(String _txtQuantityStock) {
+        this._txtQuantityStock = _txtQuantityStock;
+    }
+
+    private String _txtQuantityStock;
+
+    public String get_no_po() {
+        return _no_po;
+    }
+
+    public void set_no_po(String _no_po) {
+        this._no_po = _no_po;
+    }
+
+    private String _no_po;
+
+    public String get_txtDesc() {
+        return _txtDesc;
+    }
+
+    public void set_txtDesc(String _txtDesc) {
+        this._txtDesc = _txtDesc;
+    }
+
+    public String get_txtOutletName() {
+        return _txtOutletName;
+    }
+
+    public void set_txtOutletName(String _txtOutletName) {
+        this._txtOutletName = _txtOutletName;
+    }
+
+    private String _txtOutletName;
 
     public String get_total_member() {
         return _total_member;

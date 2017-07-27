@@ -61,6 +61,26 @@ public class mUserRoleBL extends clsMainBL{
 		}
 		return Listdata;
 	}
+
+	public org.json.simple.JSONArray getRoleAndOutletReturnJSON(String username, String versionApp, final Context context) throws ParseException{
+		List<mUserRoleData> Listdata=new ArrayList<mUserRoleData>();
+		linkAPI dtlinkAPI=new linkAPI();
+		String txtMethod="GetAllUserRoleByUserNameSalesInsentivePostDataFPRSNew";
+		JSONObject resJson = new JSONObject();
+		resJson.put("username", username);
+		dtlinkAPI.set_txtMethod(txtMethod);
+		//dtlinkAPI.set_txtParam(username);
+		dtlinkAPI.set_txtToken(new clsHardCode().txtTokenAPI);
+		dtlinkAPI.set_txtVesion(versionApp);
+		String strLinkAPI= dtlinkAPI.QueryString(getLinkAPI());
+		APIData dtAPIDATA=new APIData();
+		clsHelper _clsHelper=new clsHelper();
+		String JsonData= _clsHelper.pushtData(strLinkAPI,String.valueOf(resJson), Integer.valueOf(getBackGroundServiceOnline()));
+		org.json.simple.JSONArray JsonArray= _clsHelper.ResultJsonArray(JsonData);
+		return JsonArray;
+
+	}
+
 	public List<mUserRoleData> getRoleAndOutlet(String username,String versionApp,final Context context) throws ParseException{
 		List<mUserRoleData> Listdata=new ArrayList<mUserRoleData>();
 		linkAPI dtlinkAPI=new linkAPI();
