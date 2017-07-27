@@ -3275,17 +3275,20 @@ public class FragmentDownloadData extends Fragment {
 
 
                     JSONArray jsonArray_listJawaban = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListmListJawaban_mobile")));
-                    Iterator n = jsonArray_listJawaban.iterator();
-                    while (n.hasNext()) {
-                        mListJawabanData _data = new mListJawabanData();
-                        JSONObject innerObj_listJawaban = (JSONObject) n.next();
-                        _data.set_intListAnswerId(String.valueOf(innerObj_listJawaban.get("IntListAnswerId")));
-                        _data.set_intQuestionId(String.valueOf(innerObj_listJawaban.get("IntQuestionId")));
-                        _data.set_intTypeQuestionId(String.valueOf(innerObj_listJawaban.get("IntTypeQuestionId")));
-                        _data.set_txtKey(String.valueOf(innerObj_listJawaban.get("TxtKey")));
-                        _data.set_txtValue(String.valueOf(innerObj_listJawaban.get("TxtValue")));
-                        new mListJawabanBL().SaveData(_data);
+                    if (jsonArray_listJawaban != null ) {
+                        Iterator n = jsonArray_listJawaban.iterator();
+                        while (n.hasNext()) {
+                            mListJawabanData _data = new mListJawabanData();
+                            JSONObject innerObj_listJawaban = (JSONObject) n.next();
+                            _data.set_intListAnswerId(String.valueOf(innerObj_listJawaban.get("IntListAnswerId")));
+                            _data.set_intQuestionId(String.valueOf(innerObj_listJawaban.get("IntQuestionId")));
+                            _data.set_intTypeQuestionId(String.valueOf(innerObj_listJawaban.get("IntTypeQuestionId")));
+                            _data.set_txtKey(String.valueOf(innerObj_listJawaban.get("TxtKey")));
+                            _data.set_txtValue(String.valueOf(innerObj_listJawaban.get("TxtValue")));
+                            new mListJawabanBL().SaveData(_data);
+                        }
                     }
+
 
 
                     JSONArray jsonArray_typePertanyaan = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListDatamTypePertanyaan_mobile")));
