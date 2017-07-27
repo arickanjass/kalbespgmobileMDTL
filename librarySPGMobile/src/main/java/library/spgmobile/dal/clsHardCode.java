@@ -41,6 +41,7 @@ public class clsHardCode  {
 	public String txtTable_mDownloadMasterData_mobile = "mDownloadMasterData_mobile";
 	public String txtTable_mUserCabang = "mUserCabang";
 	public String txtTable_mEmployeeSalesProduct = "mEmployeeSalesProduct";
+	public String txtTable_tSubTypeActivity="tSubTypeActivity";
 	String txtTable_mProductSPG = "mProductSPG";
 	String txtTable_mProductPIC = "mProductPIC";
 	public String txtTable_mNotification = "mNotification";
