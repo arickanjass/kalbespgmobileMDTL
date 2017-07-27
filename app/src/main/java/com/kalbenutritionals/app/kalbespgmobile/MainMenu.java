@@ -127,7 +127,6 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
         if (!isMyServiceRunning(MyServiceNative.class)) {
             getApplicationContext().startService(serviceIntentMyServiceNative);
         }
-        getApplicationContext().startService(serviceIntentMyServiceNative);
 
         Intent serviceIntentMyTrackingLocationService = new Intent(getApplicationContext(), MyTrackingLocationService.class);
         if (!isMyServiceRunning(MyTrackingLocationService.class)) {
