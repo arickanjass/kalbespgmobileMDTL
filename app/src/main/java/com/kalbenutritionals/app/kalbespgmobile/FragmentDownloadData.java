@@ -70,6 +70,7 @@ import bl.tLeaveMobileBL;
 import bl.tPurchaseOrderHeaderBL;
 import bl.tSalesProductHeaderBL;
 import bl.tSalesProductQuantityHeaderBL;
+import bl.tSubTypeActivityBL;
 import bl.tUserLoginBL;
 import bl.tVisitPlanHeader_MobileBL;
 import bl.tVisitPlanRealisasiBL;
@@ -110,6 +111,7 @@ import library.spgmobile.common.tSalesProductHeaderData;
 import library.spgmobile.common.tSalesProductQuantityDetailData;
 import library.spgmobile.common.tSalesProductQuantityHeaderData;
 import library.spgmobile.common.tSalesProductQuantityImageData;
+import library.spgmobile.common.tSubTypeActivityData;
 import library.spgmobile.common.tUserLoginData;
 import library.spgmobile.common.tVisitPlanHeader_MobileData;
 import library.spgmobile.common.tVisitPlanRealisasiData;
@@ -146,9 +148,9 @@ public class FragmentDownloadData extends Fragment {
     private Button btnCustomerBase;
     private Spinner spnAbsen, spnQuiz;
     private Button btnAbsen, btnQuiz;
-    private Spinner spnDataLeave, spnDataPO, spnDataQuantityStock, spnProductComp, spnTypeSubmission, spnProdSPGCusBased, spnProdPICCusBased;
-    private Button btnDataLeave, btnDataPO, btnDataQuantityStock, btnProductComp, btnTypeSubmission, btnProdSPGCusBased, btnProdPICCusBased ;
-    private LinearLayout ll_kordinasi_outlet,ll_branch, ll_outlet, ll_product, ll_brand, ll_type_leave, ll_reso, ll_data_activity, ll_data_customerbased, ll_absen, ll_purchase_order, ll_data_leave, ll_product_spg, ll_product_pic, ll_product_competitor, ll_type_submission, ll_kategoriVisitPlan, ll_dataVisitPlan, ll_dataQuantityStock, ll_dataKordinasiOutlet, ll_dataDownloadQuesioner;
+    private Spinner spnDataLeave,spnSubTypeActivity, spnDataPO, spnDataQuantityStock, spnProductComp, spnTypeSubmission, spnProdSPGCusBased, spnProdPICCusBased;
+    private Button btnDataLeave, btnSubTypeActivity, btnDataPO, btnDataQuantityStock, btnProductComp, btnTypeSubmission, btnProdSPGCusBased, btnProdPICCusBased ;
+    private LinearLayout ll_subtypeactivity, ll_kordinasi_outlet,ll_branch, ll_outlet, ll_product, ll_brand, ll_type_leave, ll_reso, ll_data_activity, ll_data_customerbased, ll_absen, ll_purchase_order, ll_data_leave, ll_product_spg, ll_product_pic, ll_product_competitor, ll_type_submission, ll_kategoriVisitPlan, ll_dataVisitPlan, ll_dataQuantityStock, ll_dataKordinasiOutlet, ll_dataQuesioner;
 
     private PackageInfo pInfo = null;
     private List<String> arrData;
@@ -205,6 +207,8 @@ public class FragmentDownloadData extends Fragment {
         btnProdSPGCusBased = (Button) v.findViewById(R.id.btnProdSPGCusBase);
         spnProdPICCusBased = (Spinner) v.findViewById(R.id.spnProdPICCusBase);
         btnProdPICCusBased = (Button) v.findViewById(R.id.btnProdPICCusBase);
+        spnSubTypeActivity = (Spinner) v.findViewById(R.id.spnSubTypeActivity);
+        btnSubTypeActivity = (Button) v.findViewById(R.id.btnSubTypeActivity);
 
         ll_branch = (LinearLayout) v.findViewById(R.id.ll_branch);
         ll_outlet = (LinearLayout) v.findViewById(R.id.ll_outlet);
@@ -225,7 +229,8 @@ public class FragmentDownloadData extends Fragment {
         ll_dataVisitPlan = (LinearLayout) v.findViewById(R.id.ll_dataVisitPlan);
         ll_dataQuantityStock = (LinearLayout) v.findViewById(R.id.ll_dataQuantityStock);
         ll_dataKordinasiOutlet = (LinearLayout) v.findViewById(R.id.ll_dataKordinasiOutlet);
-        ll_dataDownloadQuesioner = (LinearLayout) v.findViewById(R.id.ll_dataDownloadQuesioner);
+        ll_dataQuesioner = (LinearLayout) v.findViewById(R.id.ll_dataQuesioner);
+        ll_subtypeactivity = (LinearLayout) v.findViewById(R.id.ll_subtypeactivity);
 
         spnVisitPlan = (Spinner) v.findViewById(R.id.spnVisitPlan);
         spnTrVisitPlan = (Spinner) v.findViewById(R.id.spnTrVisitPlan);
@@ -267,8 +272,10 @@ public class FragmentDownloadData extends Fragment {
                 ll_type_submission.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_kategoriVisitPlan.getId()))){
                 ll_kategoriVisitPlan.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_dataDownloadQuesioner.getId()))){
-                ll_dataDownloadQuesioner.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_dataQuesioner.getId()))){
+                ll_dataQuesioner.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_subtypeactivity.getId()))){
+                ll_subtypeactivity.setVisibility(View.VISIBLE);
             }
             // show data transaksi
             else if (txt_id.equals(res.getResourceEntryName(ll_dataVisitPlan.getId()))){
@@ -319,6 +326,14 @@ public class FragmentDownloadData extends Fragment {
             public void onClick(View v) {
                 intProcesscancel = 0;
                 AsyncCalltTransaksiVisitPlan task = new AsyncCalltTransaksiVisitPlan();
+                task.execute();
+            }
+        });
+        btnSubTypeActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intProcesscancel = 0;
+                AsyncCallSubTypeActivity task = new AsyncCallSubTypeActivity();
                 task.execute();
             }
         });
@@ -495,7 +510,21 @@ public class FragmentDownloadData extends Fragment {
         List<mTypeSubmissionMobile> typeSubmissionDataList = new mTypeSubmissionMobileBL().GetAllData();
         List<mProductSPGData> mProductSPGDataList = new mProductSPGBL().GetAllData();
         List<mProductPICData> mProductPICDataList = new mProductPICBL().GetAllData();
+        List<tSubTypeActivityData> tSubTypeActivityDataList = new tSubTypeActivityBL().getAllData();
 
+        arrData = new ArrayList<>();
+        if (tSubTypeActivityDataList.size() > 0) {
+            for (tSubTypeActivityData dt : tSubTypeActivityDataList) {
+                arrData.add(dt.get_txtType() + "-" + dt.get_txtName());
+            }
+            spnSubTypeActivity.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
+            spnSubTypeActivity.setEnabled(true);
+        } else if (tSubTypeActivityDataList.size() == 0) {
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<>(getContext(),
+                    android.R.layout.simple_spinner_item, strip);
+            spnSubTypeActivity.setAdapter(adapterspn);
+            spnSubTypeActivity.setEnabled(false);
+        }
 
         arrData = new ArrayList<>();
         if (typeSubmissionDataList.size() > 0) {
@@ -829,6 +858,12 @@ public class FragmentDownloadData extends Fragment {
             JSONParser parser = new JSONParser();
             try {
                 new mPriceInOutletBL().DownloadmPriceInOutlet(pInfo.versionName);
+
+                if(ll_subtypeactivity!=null && ll_subtypeactivity.getVisibility() == View.VISIBLE){
+                    Json = new tSubTypeActivityBL().DownloadtSubTypeActivity(pInfo.versionName);
+                    SaveDatatSubTypeActivityData(Json);
+                }
+
                 if(ll_branch!=null && ll_branch.getVisibility() == View.VISIBLE){
                     Json = new mEmployeeBranchBL().DownloadEmployeeBranch2(pInfo.versionName);
                     SaveDatamEmployeeBranchData(Json);
@@ -877,7 +912,7 @@ public class FragmentDownloadData extends Fragment {
                     if(boolValid_po == 1) SaveDatatPurchaseOrderData(Json);
                 }
 
-                if(ll_dataDownloadQuesioner!=null && ll_dataDownloadQuesioner.getVisibility() == View.VISIBLE){
+                if(ll_dataQuesioner!=null && ll_dataQuesioner.getVisibility() == View.VISIBLE){
                     Json = new mParentBL().DownlaodDataQuesioner(pInfo.versionName);
                     Iterator x = Json.iterator();
                     org.json.simple.JSONObject innerObj_Quiz = (org.json.simple.JSONObject) x.next();
@@ -1308,6 +1343,39 @@ public class FragmentDownloadData extends Fragment {
             new tActivityBL().saveData(ListdataActivity);
         }
 
+        return _array;
+    }
+
+    private List<String> SaveDatatSubTypeActivityData(JSONArray JData) {
+        List<String> _array;
+        List<tSubTypeActivityData> ListDatatSubTypeActivityData= null;
+        APIData dtAPIDATA = new APIData();
+        _array = new ArrayList<>();
+        Iterator i = JData.iterator();
+        Boolean flag = true;
+        String ErrorMess = "";
+        List<tSubTypeActivityData> ListdataHeader = new ArrayList<>();
+        ListDatatSubTypeActivityData=new ArrayList<>();
+        while (i.hasNext()) {
+            org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
+            tSubTypeActivityData _data = new tSubTypeActivityData();
+            String txtValid= String.valueOf(innerObj.get("_pboolValid"));
+            if(txtValid.equals("1")){
+                _data.set_bitActive(String.valueOf(innerObj.get("BitActive")));
+                _data.set_txtType(String.valueOf(innerObj.get("TxtType")));
+                _data.set_txtName(String.valueOf(innerObj.get("TxtName")));
+                _data.set_intSubTypeActivity(String.valueOf(innerObj.get("IntSubTypeActivity")));
+                ListDatatSubTypeActivityData.add(_data);
+            }else{
+                ErrorMess = String.valueOf(innerObj.get("_pstrMessage"));
+                new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessCancelRequest, false);
+                break;
+            }
+
+        }
+        if(ListDatatSubTypeActivityData.size()>0){
+            new tSubTypeActivityBL().saveData(ListDatatSubTypeActivityData);
+        }
         return _array;
     }
 
@@ -2529,6 +2597,67 @@ public class FragmentDownloadData extends Fragment {
             Dialog.dismiss();
         }
 
+    }
+
+    private class AsyncCallSubTypeActivity extends AsyncTask<JSONArray, Void, JSONArray> {
+        @Override
+        protected JSONArray doInBackground(JSONArray... params) {
+            JSONArray Json = null;
+            try {
+                Json = new tSubTypeActivityBL().DownloadtSubTypeActivity(pInfo.versionName);
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return Json;
+        }
+
+        private ProgressDialog Dialog = new ProgressDialog(getContext());
+
+        @Override
+        protected void onCancelled() {
+            Dialog.dismiss();
+            new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessCancelRequest, false);
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray roledata) {
+            if (roledata != null && roledata.size() > 0) {
+                arrData = SaveDatatSubTypeActivityData(roledata);
+                //spnBranch.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
+                loadData();
+                new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
+            } else {
+                if (intProcesscancel == 1) {
+                    onCancelled();
+                } else {
+                    new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
+                }
+
+            }
+            checkingDataTable();
+            Dialog.dismiss();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            // Make ProgressBar invisible
+            // pg.setVisibility(View.VISIBLE);
+            Dialog.setMessage("Getting Sub Type Activity");
+            Dialog.setCancelable(false);
+            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    intProcesscancel = 1;
+                }
+            });
+            Dialog.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            Dialog.dismiss();
+        }
     }
 
     private class AsyncCalltTransaksiVisitPlan extends AsyncTask<JSONArray, Void, JSONArray> {

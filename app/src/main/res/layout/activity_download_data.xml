@@ -492,7 +492,52 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/ll_dataDownloadQuesioner"
+                        android:id="@+id/ll_subtypeactivity"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/txtsubTypeActivity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/view2"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:text="Sub Type Activity"
+                            android:textColor="#000" />
+
+                        <Spinner
+                            android:id="@+id/spnSubTypeActivity"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/txtProduct"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/bg_edtext" />
+
+                        <Button
+                            android:id="@+id/btnSubTypeActivity"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/spnProduct"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/btn_on_click"
+                            android:text="Download Type Activity" />
+
+                        <View
+                            android:id="@+id/view30"
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dp"
+                            android:layout_below="@+id/btnSubTypeActivity"
+                            android:layout_marginTop="10dp"
+                            android:background="#bfbfbf" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_dataQuesioner"
                         android:orientation="vertical"
                         android:visibility="gone"
                         android:layout_width="fill_parent"
