@@ -28,7 +28,6 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile project(':librarySPGMobile')
     compile project(':badgeall')
     compile project(':tableview_lib')
     compile project(':library_PullToRefreshSwipeMenuListView')
@@ -53,5 +52,5 @@ dependencies {
     compile 'com.android.volley:volley:1.0.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha6'
     testCompile 'junit:junit:4.12'
-    compile files('D:/AndroidStudioProjects/kalbespgmobileMDTL/librarySPGMobile/libs/json-simple-1.1.1.jar')
+    compile project(':librarySPGMobile')
 }

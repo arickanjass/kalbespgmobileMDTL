@@ -85,7 +85,7 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         selectedId = 0;
-        v = inflater.inflate(R.layout.coordinator_layout,container,false);
+        v = inflater.inflate(R.layout.coordinator_layout, container, false);
         tv_noso = (TextView) v.findViewById(R.id.txtNoreso);
         tv_date = (TextView) v.findViewById(R.id.txtviewDate);
         edketerangan = (EditText) v.findViewById(R.id.etKeterangan);
@@ -119,19 +119,19 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
 
         InputFilter inputFilter_edketerangan2 = new InputFilter.AllCaps();
 
-        edketerangan.setFilters(new InputFilter[]{inputFilter_edketerangan1,inputFilter_edketerangan2});
+        edketerangan.setFilters(new InputFilter[]{inputFilter_edketerangan1, inputFilter_edketerangan2});
 
         List<tSalesProductHeaderData> dtLast = new tSalesProductHeaderBL().getLastData();
-        if(dtLast==null || dtLast.size()==0) {
+        if (dtLast == null || dtLast.size() == 0) {
             noso = new mCounterNumberBL().getData(enumCounterData.NoDataSO);
 
         } else {
             noso = new mCounterNumberBL().getData(enumCounterData.NoDataSO);
             List<tSalesProductHeaderData> dataFirstIsExist = new tSalesProductHeaderBL().getDataByNoSO(noso);
-            if (dataFirstIsExist.size()==1){
-                clsHelper _clsHelper=new clsHelper();
+            if (dataFirstIsExist.size() == 1) {
+                clsHelper _clsHelper = new clsHelper();
                 String oldVersion = dtLast.get(0).get_txtNoSo();
-                noso = _clsHelper.generateNewId(oldVersion, "-" , "5");
+                noso = _clsHelper.generateNewId(oldVersion, "-", "5");
             } else {
                 noso = new mCounterNumberBL().getData(enumCounterData.NoDataSO);
             }
@@ -156,16 +156,15 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
             public void onScrollChanged() {
                 LinearLayout lnLayout = (LinearLayout) v.findViewById(R.id.lnReso);
 
-                int coords[]={0,0};
+                int coords[] = {0, 0};
                 lnLayout.getLocationInWindow(coords);
 
                 int absoluteTop = coords[1];
 
-                if(absoluteTop < 90){
+                if (absoluteTop < 90) {
 //                    fab.setVisibility(View.VISIBLE);
                     fab.show();
-                }
-                else{
+                } else {
 //                    fab.setVisibility(View.INVISIBLE);
                     fab.hide();
                 }
@@ -206,16 +205,17 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
 
         searchProduct.addTextChangedListener(new TextWatcher() {
 
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
 
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length()==0){
+                if (s.length() == 0) {
                     dataAdapter.getFilter().filter(s.toString());
                     Collections.sort(modelItems, ModelListview.StuRollno);
-                }
-                else if(s.length()>0){
+                } else if (s.length() > 0) {
                     dataAdapter.getFilter().filter(s.toString());
 
                 } else {
@@ -230,7 +230,7 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(searchProduct.getWindowToken(), 0);
                 CharSequence s = searchProduct.getText();
-                if(s.length()>0){
+                if (s.length() > 0) {
                     searchProduct.getText().clear();
 
                 }
@@ -246,16 +246,16 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
         return v;
     }
 
-    public void viewResoFragment(){
+    public void viewResoFragment() {
         Intent myIntent = new Intent(getContext(), MainMenu.class);
-        myIntent.putExtra("key_view","View Reso");
+        myIntent.putExtra("key_view", "View Reso");
         getActivity().finish();
         startActivity(myIntent);
     }
 
     @Override
     public void onClick(View v) {
-        switch ( v.getId()) {
+        switch (v.getId()) {
             case R.id.btnPreviewReso:
                 arrdataPriv = new ArrayList<>();
                 for (int i = 0; i < modelItems.size(); i++) {
@@ -269,13 +269,12 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
                     }
                 }
                 if (edketerangan.getText().toString().equals("")) {
-                    _clsMainActivity.showCustomToast(getActivity(), "Please fill Description...", false);
+                    _clsMainActivity.showCustomToast(getActivity(), "Please fill Description", false);
 
-                } else
-                if (arrdataPriv.size()==0){
-                    _clsMainActivity.showCustomToast(getActivity(), "Please fill Quantity Product...", false);
+                } else if (arrdataPriv.size() == 0) {
+                    _clsMainActivity.showCustomToast(getActivity(), "Please fill Quantity Product", false);
 
-                } else if (arrdataPriv.size()>0){
+                } else if (arrdataPriv.size() > 0) {
                     LayoutInflater layoutInflater = LayoutInflater.from(getContext());
                     final View promptView = layoutInflater.inflate(R.layout.activity_preview_so, null);
 
@@ -288,31 +287,28 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
                     arr = modelItems;
 
                     TableLayout tlb = (TableLayout) promptView.findViewById(R.id.tlProduct);
-                    tlb.removeAllViews();
 
-                    TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
-                    params.setMargins(1, 1, 1, 1);
+//                    TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
+//                    params.setMargins(1, 1, 1, 1);
 
                     TableRow tr = new TableRow(getContext());
 
-                    TableLayout tl = new TableLayout(getContext());
 
                     String[] colTextHeader = {"Name", "Qty", "Price", "Amount"};
 
                     for (String text : colTextHeader) {
+                        TableRow.LayoutParams params = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
                         TextView tv = new TextView(getContext());
-                        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 1));
-
                         tv.setTextSize(14);
                         tv.setPadding(10, 10, 10, 10);
                         tv.setText(text);
                         tv.setGravity(Gravity.CENTER);
                         tv.setBackgroundColor(Color.parseColor("#4CAF50"));
-
                         tv.setTextColor(Color.WHITE);
-                        tr.addView(tv,params);
+                        tv.setLayoutParams(params);
+                        tr.addView(tv);
                     }
-                    tl.addView(tr);
+                    tlb.addView(tr);
 
                     double qtySum = 0;
                     double qtyNum;
@@ -321,17 +317,13 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
                         tr = new TableRow(getContext());
 
                         tr.setGravity(Gravity.CENTER_HORIZONTAL);
-                        TableLayout.LayoutParams tableRowParams =
-                                new TableLayout.LayoutParams
-                                        (TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT);
 
                         int leftMargin = 0;
                         int topMargin = 0;
                         int rightMargin = 0;
                         int bottomMargin = 0;
-                        tableRowParams.setMargins(leftMargin, topMargin, rightMargin, bottomMargin);
 
-                        tr.setLayoutParams(tableRowParams);
+                        TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.MATCH_PARENT, 1f);
 
                         TextView product = new TextView(getContext());
                         product.setTextSize(12);
@@ -340,7 +332,8 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
                         product.setBackgroundColor(Color.parseColor("#f0f0f0"));
                         product.setTextColor(Color.BLACK);
                         product.setText(dt.get_name());
-                        tr.addView(product,params);
+                        product.setLayoutParams(params);
+                        tr.addView(product);
 
                         TextView qty = new TextView(getContext());
                         qty.setTextSize(12);
@@ -349,7 +342,8 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
                         qty.setTextColor(Color.BLACK);
                         qty.setGravity(Gravity.RIGHT);
                         qty.setText(String.valueOf(dt.get_value()));
-                        tr.addView(qty,params);
+                        qty.setLayoutParams(params);
+                        tr.addView(qty);
 
                         TextView price = new TextView(getContext());
                         price.setTextSize(12);
@@ -358,7 +352,8 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
                         price.setTextColor(Color.BLACK);
                         price.setGravity(Gravity.RIGHT);
                         price.setText(new clsMainActivity().convertNumberDec(Double.valueOf(dt.get_price())));
-                        tr.addView(price,params);
+                        price.setLayoutParams(params);
+                        tr.addView(price);
 
                         TextView amount = new TextView(getContext());
                         amount.setTextSize(12);
@@ -372,11 +367,11 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
                         qtyNum = prc * itm;
                         qtySum += qtyNum;
                         amount.setText(new clsMainActivity().convertNumberDec(qtyNum));
-                        tr.addView(amount,params);
+                        amount.setLayoutParams(params);
+                        tr.addView(amount);
 
-                        tl.addView(tr, tableRowParams);
+                        tlb.addView(tr);
                     }
-                    tlb.addView(tl);
 
                     final TextView tv_item = (TextView) promptView.findViewById(R.id.tvItemtbl);
                     tv_item.setTypeface(null, Typeface.BOLD);
@@ -385,8 +380,6 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
 
                     final TextView tv_amount = (TextView) promptView.findViewById(R.id.tvSumAmount);
                     tv_amount.setTypeface(null, Typeface.BOLD);
-                    String nilai = new clsMainActivity().convertNumberDec(qtySum);
-                    tv_amount.setText(String.format(": %s", String.valueOf(nilai)));
 
                     final TextView tv_status = (TextView) promptView.findViewById(R.id.tvStatus);
                     tv_status.setTypeface(null, Typeface.BOLD);
@@ -423,7 +416,7 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
                             .setNegativeButton("Close",
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
-                                            if (searchProduct.getText().length()>0){
+                                            if (searchProduct.getText().length() > 0) {
                                                 Collections.sort(modelItems, ModelListview.StuRollno);
                                             } else {
                                                 Collections.sort(modelItems, ModelListview.StuRollno);
@@ -443,7 +436,7 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
     private void saveReso() {
         String nik = null;
         arrdataPriv = new ArrayList<>();
-        double qntySum=0;
+        double qntySum = 0;
         double qntyNum;
         double value;
         double price;
@@ -458,7 +451,7 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
                 nik = data.set_NIK(String.valueOf(modelItems.get(i).get_NIK()));
                 price = Double.parseDouble(modelItems.get(i).get_price());
                 value = Double.parseDouble(String.valueOf(modelItems.get(i).get_value()));
-                qntyNum =  price * value;
+                qntyNum = price * value;
                 qntySum += qntyNum;
                 result = new clsMainActivity().convertNumberDec2(qntySum);
                 arrdataPriv.add(data);
@@ -475,27 +468,27 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
         visitplanAbsenData _viAbsenData = new visitplanAbsenData();
         _viAbsenData = new clsHelperBL().getDataCheckInActive();
 
-                dt.set_intId(new clsMainActivity().GenerateGuid());
-                dt.set_txtNoSo(tv_noso.getText().toString());
-                dt.set_dtDate(dateFormat.format(cal.getTime()));
-                dt.set_OutletCode(_viAbsenData.get_txtOutletCode());
-                dt.set_OutletName(_viAbsenData.get_txtOutletName());
-                dt.set_txtKeterangan(edketerangan.getText().toString());
-                dt.set_intSumItem(String.valueOf(arrdataPriv.size()));
-                dt.set_intSumAmount(String.valueOf(result));
-                dt.set_UserId(_viAbsenData.get_txtUserId());
-                dt.set_intSubmit("1");
-                dt.set_intSync("0");
-                dt.set_txtBranchCode(_viAbsenData.get_txtBranchCode());
-                dt.set_txtBranchName(_viAbsenData.get_txtBranchName());
-                dt.set_intIdAbsenUser(_viAbsenData.get_intId());
-                dt.set_txtNIK(nik);
+        dt.set_intId(new clsMainActivity().GenerateGuid());
+        dt.set_txtNoSo(tv_noso.getText().toString());
+        dt.set_dtDate(dateFormat.format(cal.getTime()));
+        dt.set_OutletCode(_viAbsenData.get_txtOutletCode());
+        dt.set_OutletName(_viAbsenData.get_txtOutletName());
+        dt.set_txtKeterangan(edketerangan.getText().toString());
+        dt.set_intSumItem(String.valueOf(arrdataPriv.size()));
+        dt.set_intSumAmount(String.valueOf(result));
+        dt.set_UserId(_viAbsenData.get_txtUserId());
+        dt.set_intSubmit("1");
+        dt.set_intSync("0");
+        dt.set_txtBranchCode(_viAbsenData.get_txtBranchCode());
+        dt.set_txtBranchName(_viAbsenData.get_txtBranchName());
+        dt.set_intIdAbsenUser(_viAbsenData.get_intId());
+        dt.set_txtNIK(nik);
 
         new tSalesProductHeaderBL().SaveData(dt);
 
         clsMainBL _clsMainBL = new clsMainBL();
 
-        SQLiteDatabase _db=_clsMainBL.getDb();
+        SQLiteDatabase _db = _clsMainBL.getDb();
         for (int i = 0; i < modelItems.size(); i++) {
             if (modelItems.get(i).get_value() > 0) {
                 double prc = Double.valueOf(modelItems.get(i).get_price());
@@ -508,7 +501,7 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
                 dtDetail.set_txtCodeProduct(modelItems.get(i).get_id());
                 dtDetail.set_txtKeterangan(edketerangan.getText().toString());
                 dtDetail.set_txtNameProduct(String.valueOf(modelItems.get(i).get_name()));
-                dtDetail.set_intTotal(new clsMainActivity().convertNumberDec2(prc*itm));
+                dtDetail.set_intTotal(new clsMainActivity().convertNumberDec2(prc * itm));
                 dtDetail.set_txtNoSo(tv_noso.getText().toString());
                 dtDetail.set_intActive("1");
                 dtDetail.set_txtNIK(modelItems.get(i).get_NIK());
@@ -547,8 +540,7 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
             return position;
         }
 
-        private class ViewHolder
-        {
+        private class ViewHolder {
             EditText code;
             TextView name;
             //CheckBox name;
@@ -562,8 +554,7 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
 
             Log.v("ConvertView", String.valueOf(position));
 
-            if (convertView == null)
-            {
+            if (convertView == null) {
 
                 LayoutInflater vi = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -588,9 +579,9 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
                         //Collections.sort(mDisplayedValues, ModelListview.StuRollno);
                         EditText et = finalHolder.code;
-                        for(int i = 0; i < mOriginalValues.size(); i++) {
-                            if(finalHolder.name.getText().equals(mOriginalValues.get(i).get_id() + "\n" + mOriginalValues.get(i).get_name())){
-                                if(s.length()==0){
+                        for (int i = 0; i < mOriginalValues.size(); i++) {
+                            if (finalHolder.name.getText().equals(mOriginalValues.get(i).get_id() + "\n" + mOriginalValues.get(i).get_name())) {
+                                if (s.length() == 0) {
                                     mOriginalValues.get(i).set_value(0);
                                     break;
 
@@ -610,10 +601,10 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
                 holder.code.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     @Override
                     public void onFocusChange(View v, boolean hasFocus) {
-                        for(int i=0;i< mOriginalValues.size();i++){
-                            if(finalHolder.name.getText().equals(mOriginalValues.get(i).get_id() + "\n" + mOriginalValues.get(i).get_name())) {
-                                if(hasFocus){
-                                    if (mOriginalValues.get(i).get_value()==0)
+                        for (int i = 0; i < mOriginalValues.size(); i++) {
+                            if (finalHolder.name.getText().equals(mOriginalValues.get(i).get_id() + "\n" + mOriginalValues.get(i).get_name())) {
+                                if (hasFocus) {
+                                    if (mOriginalValues.get(i).get_value() == 0)
                                         finalHolder.code.setText("");
                                     else {
                                         finalHolder.code.setText(String.valueOf(mOriginalValues.get(i).get_value()));
@@ -629,9 +620,7 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
 
                 });
 
-            }
-            else
-            {
+            } else {
                 holder = (ViewHolder) convertView.getTag();
             }
 
@@ -642,7 +631,7 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
 //                holder.name.setText(state.get_id()+"\n"+state.get_name());
 //                holder.code.setText("");
 //            } else {
-            holder.name.setText(state.get_id()+"\n"+state.get_name());
+            holder.name.setText(state.get_id() + "\n" + state.get_name());
             holder.code.setText(String.valueOf(state.get_value()));
 //            final ViewHolder finalHolder1 = holder;
 
@@ -659,7 +648,7 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
 
                 @SuppressWarnings("unchecked")
                 @Override
-                protected void publishResults(CharSequence constraint,FilterResults results) {
+                protected void publishResults(CharSequence constraint, FilterResults results) {
 
                     mDisplayedValues = (ArrayList<ModelListview>) results.values; // has the filtered values
                     notifyDataSetChanged();  // notifies the data with new filtered values
@@ -690,7 +679,8 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
                                 dt.set_name(mOriginalValues.get(i).get_name());
                                 dt.set_value(mOriginalValues.get(i).get_value());
                                 dt.set_selected(mOriginalValues.get(i).isSelected());
-                                FilteredArrList.add(dt);}
+                                FilteredArrList.add(dt);
+                            }
                         }
                         // set the Filtered result to return
                         results.count = FilteredArrList.size();
@@ -701,6 +691,7 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
             };
         }
     }
+
     public static boolean setListViewHeightBasedOnItems(ListView listView) {
 
         ListAdapter listAdapter = listView.getAdapter();
@@ -735,7 +726,6 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
     }
 
     private class GetAllemployeeSalesProductDataList extends AsyncTask<ArrayList<ModelListview>, Void, ArrayList<ModelListview>> {
-
 
 
         @Override

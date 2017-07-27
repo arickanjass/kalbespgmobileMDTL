@@ -1,23 +1,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="top"
-    android:orientation="vertical"
-    android:paddingBottom="5dp"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp"
-    android:paddingTop="5dp"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
-    tools:context="com.kalbenutritionals.app.kalbespgmobile.FragmentAbsen" >
-
+    android:orientation="vertical"
+    tools:context="com.kalbenutritionals.app.kalbespgmobile.FragmentAbsen">
 
 
     <ScrollView
         android:id="@+id/scrollViewABsen"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:scrollbars="none">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -27,23 +25,26 @@
                 android:id="@+id/tvBranch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
                 android:text="Branch :"
                 android:textColor="#000" />
+
             <TextView
                 android:id="@+id/txtHDId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="txthdId"
                 android:visibility="gone" />
+
             <Spinner
                 android:id="@+id/spnType"
-                android:layout_below="@+id/tvBranch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/tvBranch"
                 android:layout_marginTop="2dp"
-                android:background="@drawable/bg_edtext"/>
+                android:background="@drawable/bg_edtext" />
+
             <View
                 android:id="@+id/view1"
                 android:layout_width="match_parent"
@@ -51,22 +52,25 @@
                 android:layout_below="@+id/spnType"
                 android:layout_marginTop="10dp"
                 android:background="#bfbfbf" />
+
             <TextView
                 android:id="@+id/tvOutlet"
-                android:layout_below="@+id/view1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_below="@+id/view1"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
                 android:text="Outlet :"
-                android:textColor="#000"/>
+                android:textColor="#000" />
+
             <Spinner
                 android:id="@+id/spnOutlet"
-                android:layout_below="@+id/tvOutlet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/tvOutlet"
                 android:layout_marginTop="2dp"
                 android:background="@drawable/bg_edtext" />
+
             <View
                 android:id="@+id/view2"
                 android:layout_width="match_parent"
@@ -75,148 +79,155 @@
                 android:layout_marginTop="10dp"
                 android:background="#bfbfbf" />
 
-            <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            <android.support.v7.widget.CardView
                 android:id="@+id/tlAbesen"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/view2"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/bg_rounded_normal">
+                android:padding="5dp"
+                app:cardCornerRadius="10dp">
 
-                <TableRow
-                    android:background="#4CAF50"
-                    android:gravity="center_horizontal"
-                    android:padding="5dp">
+                <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/tlAbesen2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Position" />
-                </TableRow>
+                    <TableRow
+                        android:background="#4CAF50"
+                        android:gravity="center_horizontal"
+                        android:padding="5dp">
 
-                <TableRow
-                    android:background="#ffffff"
-                    android:padding="5dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Position" />
+                    </TableRow>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:text="" />
+                    <TableRow
+                        android:background="#ffffff"
+                        android:padding="5dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="My Location" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:text="" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Outlet Location" />
-                </TableRow>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="My Location" />
 
-                <TableRow
-                    android:background="#ffffff"
-                    android:padding="5dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Outlet Location" />
+                    </TableRow>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:text="Long" />
+                    <TableRow
+                        android:background="#ffffff"
+                        android:padding="5dp">
 
-                    <TextView
-                        android:id="@+id/tvLong"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:text="Long" />
 
-                    <TextView
-                        android:id="@+id/tvLongOutlet"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="" />
-                </TableRow>
+                        <TextView
+                            android:id="@+id/tvLong"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="" />
 
-                <TableRow
-                    android:background="#ffffff"
-                    android:padding="5dp">
+                        <TextView
+                            android:id="@+id/tvLongOutlet"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="" />
+                    </TableRow>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:text="Lat" />
+                    <TableRow
+                        android:background="#ffffff"
+                        android:padding="5dp">
 
-                    <TextView
-                        android:id="@+id/tvLat"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:text="Lat" />
 
-                    <TextView
-                        android:id="@+id/tvLatOutlet"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="" />
-                </TableRow>
+                        <TextView
+                            android:id="@+id/tvLat"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="" />
 
-                <TableRow
-                    android:background="#ffffff"
-                    android:padding="5dp">
+                        <TextView
+                            android:id="@+id/tvLatOutlet"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="" />
+                    </TableRow>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:text="Acc" />
+                    <TableRow
+                        android:background="#ffffff"
+                        android:padding="5dp">
 
-                    <TextView
-                        android:id="@+id/tvAcc"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:text="Acc" />
 
-                    <TextView
-                        android:id="@+id/tvAccOutlet"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="" />
-                </TableRow>
+                        <TextView
+                            android:id="@+id/tvAcc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="" />
 
-                <TableRow
-                    android:background="#ffffff"
-                    android:padding="5dp">
+                        <TextView
+                            android:id="@+id/tvAccOutlet"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="" />
+                    </TableRow>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:text="Distance" />
+                    <TableRow
+                        android:background="#ffffff"
+                        android:padding="5dp">
 
-                    <TextView
-                        android:id="@+id/tvDis"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:text="Distance" />
 
-                    <TextView
-                        android:id="@+id/tvDistance"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="" />
-                </TableRow>
-            </TableLayout>
+                        <TextView
+                            android:id="@+id/tvDis"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="" />
+
+                        <TextView
+                            android:id="@+id/tvDistance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="" />
+                    </TableRow>
+                </TableLayout>
+            </android.support.v7.widget.CardView>
 
             <View
                 android:id="@+id/view3"
@@ -226,71 +237,168 @@
                 android:layout_marginTop="10dp"
                 android:background="#bfbfbf" />
 
-            <LinearLayout android:background="@drawable/bg_rounded_normal" android:layout_marginTop="10dp" android:gravity="center" android:id="@+id/llimgview" android:layout_below="@+id/view3" android:weightSum="3" android:layout_height="wrap_content" android:layout_width="wrap_content" android:orientation="horizontal">
-                <TextView
+            <android.support.v7.widget.CardView
+                android:id="@+id/llimgview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view3"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                app:cardCornerRadius="10dp">
+
+                <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/tlAbesen3"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_weight="1"
-                    android:text="Image"/>
-                <ImageView
-                    android:id="@+id/imageViewCamera1"
-                    android:layout_marginLeft="5dp"
-                    android:background="@mipmap/ic_maps_local_see"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-                <ImageView
-                    android:id="@+id/imageViewCamera2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:background="@mipmap/ic_maps_local_see"
-                    android:layout_weight="1" />
-            </LinearLayout>
+                    android:layout_height="match_parent">
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#4CAF50"
+                        android:gravity="center_horizontal"
+                        android:padding="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Images"
+                            android:textAlignment="center" />
+                    </TableRow>
+
+
+                    <TableRow
+                        android:background="#ffffff"
+                        android:padding="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:text="Image 1"
+                            android:textAlignment="center" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:text="Image 2"
+                            android:textAlignment="center" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:background="#ffffff"
+                        android:paddingBottom="10dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:id="@+id/imageViewCamera1"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:background="@mipmap/ic_maps_local_see" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:id="@+id/imageViewCamera2"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:background="@mipmap/ic_maps_local_see" />
+                        </LinearLayout>
+
+                    </TableRow>
+                </TableLayout>
+            </android.support.v7.widget.CardView>
+
+            <!--<LinearLayout-->
+            <!--android:id="@+id/llimgview"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@+id/view3"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:background="@drawable/bg_rounded_normal"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:weightSum="3">-->
+
+            <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="5dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:text="Image" />-->
+
+            <!--<ImageView-->
+            <!--android:id="@+id/imageViewCamera1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="5dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@mipmap/ic_maps_local_see" />-->
+
+            <!--<ImageView-->
+            <!--android:id="@+id/imageViewCamera2"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="5dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@mipmap/ic_maps_local_see" />-->
+            <!--</LinearLayout>-->
 
             <View
                 android:id="@+id/view4"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#bfbfbf"
                 android:layout_below="@+id/btnRefreshMaps"
-                android:layout_marginBottom="10dp" />
+                android:layout_marginBottom="10dp"
+                android:background="#bfbfbf" />
 
             <Button
                 android:id="@+id/buttonCheckIn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/white"
-                android:text="Check In"
-                android:background="@drawable/btn_download_all"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/view4" />
+                android:layout_below="@+id/view4"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/btn_download_all"
+                android:text="Check In"
+                android:textColor="@color/white"
+                android:layout_marginBottom="15dp"/>
 
             <Button
                 android:id="@+id/btnRefreshMaps"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:text="Refresh Location"
-                android:textColor="#FFF"
-                android:layout_below="@+id/llimgview"
-                android:layout_marginTop="10dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginBottom="10dp" />
+                android:layout_below="@+id/llimgview"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/btn_download_all"
+                android:text="Refresh Location"
+                android:textColor="#FFF" />
 
             <Button
                 android:id="@+id/viewMap"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:text="View Location on Map"
-                android:textColor="#FFF"
-                android:background="@drawable/btn_download_all"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:layout_alignTop="@+id/btnRefreshMaps" />
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/btnRefreshMaps"
+                android:background="@drawable/btn_download_all"
+                android:text="View location on Map"
+                android:textColor="#FFF" />
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

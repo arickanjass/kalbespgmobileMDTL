@@ -18,7 +18,7 @@
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
-    <uses-permission android:name="android.permission.READ_LOGS"/>
+    <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
@@ -48,9 +48,9 @@
     <uses-permission android:name="com.anddoes.launcher.permission.UPDATE_COUNT" />
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_kalbe_phonegap"
-        android:name=".MyApplication"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
@@ -73,16 +73,17 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name="org.acra.CrashReportDialog"
-            android:theme="@android:style/Theme.Dialog"
-            android:launchMode="singleInstance"
+        <activity
+            android:name="org.acra.CrashReportDialog"
             android:excludeFromRecents="true"
-            android:finishOnTaskLaunch="true" />
+            android:finishOnTaskLaunch="true"
+            android:launchMode="singleInstance"
+            android:theme="@android:style/Theme.Dialog" />
 
         <activity
             android:name=".Splash"
-            android:theme="@style/Theme.AppCompat.Translucent"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Translucent">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -91,17 +92,18 @@
         </activity>
         <activity
             android:name=".CropDisplayPicture"
+            android:configChanges="orientation|keyboardHidden"
             android:label=""
-            android:theme="@style/Theme.AppCompat"
             android:screenOrientation="portrait"
-            android:configChanges="orientation|keyboardHidden"/>
+            android:theme="@style/Theme.AppCompat" />
 
         <activity
             android:name=".MainMenu"
-            android:label=""
-            android:configChanges="orientation|screenSize"/>
+            android:configChanges="orientation|screenSize"
+            android:label="" />
 
-        <activity android:name=".PdfView"
+        <activity
+            android:name=".PdfView"
             android:label="">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -109,12 +111,12 @@
         </activity>
         <activity
             android:name=".PushData"
-            android:label=""
-            android:configChanges="orientation|screenSize"/>
+            android:configChanges="orientation|screenSize"
+            android:label="" />
         <!--<activity-->
-            <!--android:name=".CropResultActivity"-->
-            <!--android:label=""-->
-            <!--android:configChanges="orientation|screenSize"/>-->
+        <!--android:name=".CropResultActivity"-->
+        <!--android:label=""-->
+        <!--android:configChanges="orientation|screenSize"/>-->
 
         <service android:name="service.MyServiceNative">
             <intent-filter>
@@ -131,6 +133,7 @@
                 <action android:name="service.MyTrackingLocationService" />
             </intent-filter>
         </service>
+
         <activity
             android:name=".ActivityPushError"
             android:configChanges="orientation|screenSize"
@@ -138,20 +141,21 @@
             android:theme="@android:style/Theme.DeviceDefault.Light.DarkActionBar" />
         <activity
             android:name=".Login"
+            android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_login"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:configChanges="orientation|screenSize"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
         -->
         <!--<activity-->
-            <!--android:name=".LNotifi"-->
-            <!--android:label="@string/title_activity_login"></activity>-->
+        <!--android:name=".LNotifi"-->
+        <!--android:label="@string/title_activity_login"></activity>-->
         <!--<activity-->
-            <!--android:name=".TableNotif"-->
-            <!--android:label="@string/title_activity_login"></activity>-->
+        <!--android:name=".TableNotif"-->
+        <!--android:label="@string/title_activity_login"></activity>-->
 
 
         <meta-data

@@ -5,7 +5,6 @@
     android:layout_height="match_parent">
 
 
-
     <LinearLayout
         android:id="@+id/LayoutEmpty"
         android:layout_width="match_parent"
@@ -58,13 +57,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
         app:fabGravity="bottom_end"
         app:fabMenu="@menu/menu_main_view_cb"
         app:miniFabBackgroundTint="@android:color/white"
         app:miniFabDrawableTint="@color/black"
         app:miniFabTitleTextColor="@color/black"
-        android:layout_marginBottom="16dp"
-        android:layout_marginRight="16dp"
-        app:touchGuardDrawable="#B3000000"/>
+        app:touchGuardDrawable="#B3000000" />
 
 </android.support.design.widget.CoordinatorLayout>

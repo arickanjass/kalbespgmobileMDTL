@@ -83,7 +83,7 @@ public class FragmentInformation extends Fragment implements View.OnClickListene
         int dt_cb_unpush;
         int dt_cb_push;
 
-        tvUsername.setText(dt.get_txtUserName());
+        tvUsername.setText(dt.get_txtUserName().toUpperCase());
 
         if (dtLeave.size() > 0) {
             tvBranchOutlet.setText(dtLeave.get(0).get_txtTypeAlasanName() + " - " + dtLeave.get(0).get_txtAlasan());

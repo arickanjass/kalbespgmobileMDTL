@@ -18,6 +18,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.internal.NavigationMenuView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -127,6 +128,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
         if (!isMyServiceRunning(MyServiceNative.class)) {
             getApplicationContext().startService(serviceIntentMyServiceNative);
         }
+        getApplicationContext().startService(serviceIntentMyServiceNative);
 
         Intent serviceIntentMyTrackingLocationService = new Intent(getApplicationContext(), MyTrackingLocationService.class);
         if (!isMyServiceRunning(MyTrackingLocationService.class)) {
@@ -160,6 +162,8 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
         tUserLoginData dt = new tUserLoginBL().getUserActive();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        disableNavigationViewScrollbars(navigationView);
+
         View vwHeader = navigationView.getHeaderView(0);
 
         CircleImageView ivProfile = (CircleImageView) vwHeader.findViewById(R.id.profile_image);
@@ -556,7 +560,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
                         return true;
                     default:
-                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
+                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                         try {
                             Class<?> fragmentClass = Class.forName(linkMenu[menuItem.getItemId()]);
                             try {
@@ -960,5 +964,15 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
             }
         }
         return false;
+    }
+
+    //remove scrollbar di navigation view
+    private void disableNavigationViewScrollbars(NavigationView navigationView) {
+        if (navigationView != null) {
+            NavigationMenuView navigationMenuView = (NavigationMenuView) navigationView.getChildAt(0);
+            if (navigationMenuView != null) {
+                navigationMenuView.setVerticalScrollBarEnabled(false);
+            }
+        }
     }
 }
