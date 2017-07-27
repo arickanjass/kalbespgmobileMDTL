@@ -149,9 +149,6 @@ public class Login extends clsMainActivity {
         } catch (PackageManager.NameNotFoundException e2) {
             e2.printStackTrace();
         }
-        if (isMyServiceRunning(MyTrackingLocationService.class)) {
-            stopService(new Intent(Login.this, MyTrackingLocationService.class));
-        }
 
         TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         String imeiNumber = tm.getDeviceId();
