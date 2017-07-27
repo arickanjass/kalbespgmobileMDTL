@@ -2,7 +2,6 @@ package bl;
 
 import android.database.sqlite.SQLiteDatabase;
 
-import org.json.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
@@ -14,22 +13,22 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import library.salesforce.common.APIData;
-import library.salesforce.common.clsHelper;
-import library.salesforce.common.linkAPI;
-import library.salesforce.common.mCounterNumberData;
-import library.salesforce.common.mconfigData;
-import library.salesforce.common.tDeviceInfoUserData;
-import library.salesforce.common.tSalesProductQuantityHeaderData;
-import library.salesforce.common.tUserLoginData;
-import library.salesforce.dal.clsHardCode;
-import library.salesforce.dal.enumConfigData;
-import library.salesforce.dal.enumCounterData;
-import library.salesforce.dal.mCounterNumberDA;
-import library.salesforce.dal.mconfigDA;
-import library.salesforce.dal.tDeviceInfoUserDA;
-import library.salesforce.dal.tSalesProductQuantityHeaderDA;
-import library.salesforce.dal.tUserLoginDA;
+import library.spgmobile.common.APIData;
+import library.spgmobile.common.clsHelper;
+import library.spgmobile.common.linkAPI;
+import library.spgmobile.common.mCounterNumberData;
+import library.spgmobile.common.mconfigData;
+import library.spgmobile.common.tDeviceInfoUserData;
+import library.spgmobile.common.tSalesProductQuantityHeaderData;
+import library.spgmobile.common.tUserLoginData;
+import library.spgmobile.dal.clsHardCode;
+import library.spgmobile.dal.enumConfigData;
+import library.spgmobile.dal.enumCounterData;
+import library.spgmobile.dal.mCounterNumberDA;
+import library.spgmobile.dal.mconfigDA;
+import library.spgmobile.dal.tDeviceInfoUserDA;
+import library.spgmobile.dal.tSalesProductQuantityHeaderDA;
+import library.spgmobile.dal.tUserLoginDA;
 
 /**
  * Created by Rian Andrivani on 3/23/2017.
@@ -111,9 +110,16 @@ public class tSalesProductQuantityHeaderBL extends clsMainBL {
     public List<tSalesProductQuantityHeaderData> getAllSalesProductHeaderByOutletCode(String code){
         SQLiteDatabase _db = getDb();
         tSalesProductQuantityHeaderDA _tSalesQuantityHeaderDA = new tSalesProductQuantityHeaderDA(_db);
-        List<tSalesProductQuantityHeaderData> dt = _tSalesQuantityHeaderDA.getAllDataByOutletCode(_db, code);
+        List<tSalesProductQuantityHeaderData> dt;
+        if(code.equals("ALLOUTLET")){
+            dt = _tSalesQuantityHeaderDA.getAllData(_db);
+        } else {
+            dt = _tSalesQuantityHeaderDA.getAllDataByOutletCode(_db,code);
+        }
 
-        _db.close();
+        if(dt == null){
+            dt = new ArrayList<>(0);
+        }
         return dt ;
     }
 

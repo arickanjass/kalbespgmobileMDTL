@@ -4,8 +4,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.List;
 
-import library.salesforce.common.tJawabanUserData;
-import library.salesforce.dal.tJawabanUserDA;
+import library.spgmobile.common.tJawabanUserData;
+import library.spgmobile.dal.tJawabanUserDA;
 
 /**
  * Created by XSIS on 18/05/2017.

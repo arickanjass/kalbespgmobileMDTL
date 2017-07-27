@@ -14,14 +14,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import library.salesforce.common.APIData;
-import library.salesforce.common.clsHelper;
-import library.salesforce.common.linkAPI;
-import library.salesforce.common.mEmployeeAreaData;
-import library.salesforce.common.mUserRoleData;
-import library.salesforce.dal.clsHardCode;
-import library.salesforce.dal.mEmployeeAreaDA;
-import library.salesforce.dal.mUserRoleDA;
+import library.spgmobile.common.APIData;
+import library.spgmobile.common.clsHelper;
+import library.spgmobile.common.linkAPI;
+import library.spgmobile.common.mEmployeeAreaData;
+import library.spgmobile.common.mUserRoleData;
+import library.spgmobile.dal.clsHardCode;
+import library.spgmobile.dal.mEmployeeAreaDA;
+import library.spgmobile.dal.mUserRoleDA;
 
 public class mUserRoleBL extends clsMainBL{
 	public List<mUserRoleData> getRole(String username,String versionApp) throws ParseException{
@@ -61,6 +61,26 @@ public class mUserRoleBL extends clsMainBL{
 		}
 		return Listdata;
 	}
+
+	public org.json.simple.JSONArray getRoleAndOutletReturnJSON(String username, String versionApp, final Context context) throws ParseException{
+		List<mUserRoleData> Listdata=new ArrayList<mUserRoleData>();
+		linkAPI dtlinkAPI=new linkAPI();
+		String txtMethod="GetAllUserRoleByUserNameSalesInsentivePostDataFPRSNew";
+		JSONObject resJson = new JSONObject();
+		resJson.put("username", username);
+		dtlinkAPI.set_txtMethod(txtMethod);
+		//dtlinkAPI.set_txtParam(username);
+		dtlinkAPI.set_txtToken(new clsHardCode().txtTokenAPI);
+		dtlinkAPI.set_txtVesion(versionApp);
+		String strLinkAPI= dtlinkAPI.QueryString(getLinkAPI());
+		APIData dtAPIDATA=new APIData();
+		clsHelper _clsHelper=new clsHelper();
+		String JsonData= _clsHelper.pushtData(strLinkAPI,String.valueOf(resJson), Integer.valueOf(getBackGroundServiceOnline()));
+		org.json.simple.JSONArray JsonArray= _clsHelper.ResultJsonArray(JsonData);
+		return JsonArray;
+
+	}
+
 	public List<mUserRoleData> getRoleAndOutlet(String username,String versionApp,final Context context) throws ParseException{
 		List<mUserRoleData> Listdata=new ArrayList<mUserRoleData>();
 		linkAPI dtlinkAPI=new linkAPI();

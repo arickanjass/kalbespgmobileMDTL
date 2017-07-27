@@ -10,12 +10,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 import edu.swu.pulltorefreshswipemenulistview.library.R;
-import library.salesforce.common.clsRowItem;
+import library.spgmobile.common.clsRowItem;
 
 public class AppAdapterNotif extends BaseAdapter {
 
@@ -59,7 +57,7 @@ public class AppAdapterNotif extends BaseAdapter {
         LayoutInflater mInflater = (LayoutInflater) context
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.item_list_app2, null);
+            convertView = mInflater.inflate(R.layout.item_list_app3, null);
             holder = new ViewHolder();
             holder.txtDesc = (TextView) convertView.findViewById(R.id.description);
             holder.txtTitle = (TextView) convertView.findViewById(R.id.title);

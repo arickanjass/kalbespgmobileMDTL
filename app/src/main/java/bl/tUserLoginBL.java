@@ -8,17 +8,17 @@ import org.json.simple.parser.ParseException;
 
 import java.util.List;
 
-import library.salesforce.common.APIData;
-import library.salesforce.common.clsHelper;
-import library.salesforce.common.linkAPI;
-import library.salesforce.common.mconfigData;
-import library.salesforce.common.tDeviceInfoUserData;
-import library.salesforce.common.tUserLoginData;
-import library.salesforce.dal.clsHardCode;
-import library.salesforce.dal.enumConfigData;
-import library.salesforce.dal.mconfigDA;
-import library.salesforce.dal.tDeviceInfoUserDA;
-import library.salesforce.dal.tUserLoginDA;
+import library.spgmobile.common.APIData;
+import library.spgmobile.common.clsHelper;
+import library.spgmobile.common.linkAPI;
+import library.spgmobile.common.mconfigData;
+import library.spgmobile.common.tDeviceInfoUserData;
+import library.spgmobile.common.tUserLoginData;
+import library.spgmobile.dal.clsHardCode;
+import library.spgmobile.dal.enumConfigData;
+import library.spgmobile.dal.mconfigDA;
+import library.spgmobile.dal.tDeviceInfoUserDA;
+import library.spgmobile.dal.tUserLoginDA;
 
 public class tUserLoginBL extends clsMainBL{
 	public JSONArray Logout(String versionApp) throws ParseException{
@@ -130,6 +130,29 @@ public class tUserLoginBL extends clsMainBL{
         resJson.put("TypeMobile", strVal2);
 		linkAPI dtlinkAPI=new linkAPI();
 		dtlinkAPI.set_txtMethod("GetDataMWebUserWithActiveDirectoryAndDatabaseNewInsentiveAndMenuAccessTypeMobile");
+		dtlinkAPI.set_txtParam("");
+		dtlinkAPI.set_txtToken(new clsHardCode().txtTokenAPI);
+		dtlinkAPI.set_txtVesion(versionApp);
+		String strLinkAPI= dtlinkAPI.QueryString(getLinkAPI());
+		APIData dtAPIDATA=new APIData();
+		clsHelper _clsHelper=new clsHelper();
+		String JsonData= _clsHelper.pushtData(strLinkAPI, String.valueOf(resJson), Integer.valueOf(getBackGroundServiceOnline()));
+		res= _clsHelper.ResultJsonArray(JsonData);
+		//String txtParam=
+		return res;
+	}
+
+	public JSONArray resetPassword(String txtUserName, String versionApp) throws ParseException{
+		SQLiteDatabase db=getDb();
+		JSONArray res=new JSONArray();
+		mconfigDA _mconfigDA=new mconfigDA(db);
+		tDeviceInfoUserData dt= new tDeviceInfoUserDA(db).getData(db, 1);
+		String txtDomain= _mconfigDA.getDomainKalbeData(db);
+		//String txtParam= txtDomain+"|"+txtUserName+"|"+txtPass+"||"+dt.get_txtVersion()+"|"+dt.get_txtDevice()+"|"+dt.get_txtModel()+"|"+intRoleId;
+		JSONObject resJson = new JSONObject();
+		resJson.put("txtUserID", txtUserName);
+		linkAPI dtlinkAPI=new linkAPI();
+		dtlinkAPI.set_txtMethod("ForgotPassword");
 		dtlinkAPI.set_txtParam("");
 		dtlinkAPI.set_txtToken(new clsHardCode().txtTokenAPI);
 		dtlinkAPI.set_txtVesion(versionApp);

@@ -15,18 +15,18 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import library.salesforce.common.clsHelper;
-import library.salesforce.common.linkAPI;
-import library.salesforce.common.mconfigData;
-import library.salesforce.common.tCustomerBasedMobileDetailData;
-import library.salesforce.common.tCustomerBasedMobileDetailProductData;
-import library.salesforce.common.tCustomerBasedMobileHeaderData;
-import library.salesforce.common.tUserLoginData;
-import library.salesforce.dal.clsHardCode;
-import library.salesforce.dal.enumConfigData;
-import library.salesforce.dal.mconfigDA;
-import library.salesforce.dal.tCustomerBasedMobileHeaderDA;
-import library.salesforce.dal.tUserLoginDA;
+import library.spgmobile.common.clsHelper;
+import library.spgmobile.common.linkAPI;
+import library.spgmobile.common.mconfigData;
+import library.spgmobile.common.tCustomerBasedMobileDetailData;
+import library.spgmobile.common.tCustomerBasedMobileDetailProductData;
+import library.spgmobile.common.tCustomerBasedMobileHeaderData;
+import library.spgmobile.common.tUserLoginData;
+import library.spgmobile.dal.clsHardCode;
+import library.spgmobile.dal.enumConfigData;
+import library.spgmobile.dal.mconfigDA;
+import library.spgmobile.dal.tCustomerBasedMobileHeaderDA;
+import library.spgmobile.dal.tUserLoginDA;
 
 public class tCustomerBasedMobileHeaderBL extends clsMainBL {
     SQLiteDatabase db = getDb();

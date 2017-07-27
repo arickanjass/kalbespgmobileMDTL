@@ -52,20 +52,15 @@ import bl.clsHelperBL;
 import bl.clsMainBL;
 import bl.mCounterNumberBL;
 import bl.mEmployeeSalesProductBL;
-import bl.tAbsenUserBL;
 import bl.tSalesProductHeaderBL;
-import bl.tUserLoginBL;
-import library.salesforce.common.ModelListview;
-import library.salesforce.common.clsHelper;
-import library.salesforce.common.mEmployeeSalesProductData;
-import library.salesforce.common.tAbsenUserData;
-import library.salesforce.common.tSalesProductDetailData;
-import library.salesforce.common.tSalesProductHeaderData;
-import library.salesforce.common.tUserLoginData;
-import library.salesforce.common.visitplanAbsenData;
-import library.salesforce.dal.enumCounterData;
-import library.salesforce.dal.enumRole;
-import library.salesforce.dal.tSalesProductDetailDA;
+import library.spgmobile.common.ModelListview;
+import library.spgmobile.common.clsHelper;
+import library.spgmobile.common.mEmployeeSalesProductData;
+import library.spgmobile.common.tSalesProductDetailData;
+import library.spgmobile.common.tSalesProductHeaderData;
+import library.spgmobile.common.visitplanAbsenData;
+import library.spgmobile.dal.enumCounterData;
+import library.spgmobile.dal.tSalesProductDetailDA;
 
 public class FragmentAddResoSPG extends Fragment implements View.OnClickListener {
     TextView tv_date;

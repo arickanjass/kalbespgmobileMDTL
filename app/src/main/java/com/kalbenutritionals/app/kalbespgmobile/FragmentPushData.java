@@ -39,22 +39,22 @@ import bl.tAbsenUserBL;
 import bl.tNotificationBL;
 import bl.tUserLoginBL;
 import come.example.viewbadger.ShortcutBadger;
-import library.salesforce.common.APIData;
-import library.salesforce.common.KoordinasiOutletData;
-import library.salesforce.common.clsPushData;
-import library.salesforce.common.dataJson;
-import library.salesforce.common.mDownloadMasterData_mobileData;
-import library.salesforce.common.tAbsenUserData;
-import library.salesforce.common.tActivityData;
-import library.salesforce.common.tCustomerBasedMobileHeaderData;
-import library.salesforce.common.tJawabanUserData;
-import library.salesforce.common.tLeaveMobileData;
-import library.salesforce.common.tNotificationData;
-import library.salesforce.common.tPurchaseOrderHeaderData;
-import library.salesforce.common.tSalesProductHeaderData;
-import library.salesforce.common.tSalesProductQuantityHeaderData;
-import library.salesforce.common.tVisitPlanRealisasiData;
-import library.salesforce.dal.clsHardCode;
+import library.spgmobile.common.APIData;
+import library.spgmobile.common.KoordinasiOutletData;
+import library.spgmobile.common.clsPushData;
+import library.spgmobile.common.dataJson;
+import library.spgmobile.common.mDownloadMasterData_mobileData;
+import library.spgmobile.common.tAbsenUserData;
+import library.spgmobile.common.tActivityData;
+import library.spgmobile.common.tCustomerBasedMobileHeaderData;
+import library.spgmobile.common.tJawabanUserData;
+import library.spgmobile.common.tLeaveMobileData;
+import library.spgmobile.common.tNotificationData;
+import library.spgmobile.common.tPurchaseOrderHeaderData;
+import library.spgmobile.common.tSalesProductHeaderData;
+import library.spgmobile.common.tSalesProductQuantityHeaderData;
+import library.spgmobile.common.tVisitPlanRealisasiData;
+import library.spgmobile.dal.clsHardCode;
 import service.MyServiceNative;
 
 public class FragmentPushData extends Fragment {
@@ -73,7 +73,7 @@ public class FragmentPushData extends Fragment {
     private TableLayout tlVisitPlan;
     private Button btnPush;
     private String myValue;
-    private LinearLayout ll_data_reso, ll_data_activity, ll_data_customerbased, ll_purchase_order, ll_dataQuantityStock, ll_data_absen, ll_dataVisitPlan, ll_data_leave, ll_data_koordinasi, ll_dataQuesioner;
+    private LinearLayout ll_reso, ll_data_activity, ll_data_customerbased, ll_purchase_order, ll_dataQuantityStock, ll_absen, ll_dataVisitPlan, ll_data_leave, ll_data_koordinasi, ll_dataQuesioner;
 
     View v;
 
@@ -113,12 +113,12 @@ public class FragmentPushData extends Fragment {
         tlVisitPlan = (TableLayout) v.findViewById(R.id.tl_visit_plan);
         btnPush = (Button) v.findViewById(R.id.btnPush);
 
-        ll_data_reso = (LinearLayout) v.findViewById(R.id.ll_data_reso);
+        ll_reso = (LinearLayout) v.findViewById(R.id.ll_reso);
         ll_data_activity = (LinearLayout) v.findViewById(R.id.ll_data_activity);
         ll_data_customerbased = (LinearLayout) v.findViewById(R.id.ll_data_customerbased);
         ll_purchase_order = (LinearLayout) v.findViewById(R.id.ll_purchase_order);
         ll_dataQuantityStock = (LinearLayout) v.findViewById(R.id.ll_dataQuantityStock);
-        ll_data_absen = (LinearLayout) v.findViewById(R.id.ll_data_absen);
+        ll_absen = (LinearLayout) v.findViewById(R.id.ll_absen);
         ll_dataVisitPlan = (LinearLayout) v.findViewById(R.id.ll_dataVisitPlan);
         ll_data_leave = (LinearLayout) v.findViewById(R.id.ll_data_leave);
         ll_data_koordinasi = (LinearLayout) v.findViewById(R.id.ll_data_koordinasi);
@@ -133,8 +133,8 @@ public class FragmentPushData extends Fragment {
         for(mDownloadMasterData_mobileData data : mDownloadMasterData_mobileDataList){
             String txt_id = data.get_txtMasterData().replaceAll(" ","");
 
-            if(txt_id.equals(res.getResourceEntryName(ll_data_reso.getId()))){
-                ll_data_reso.setVisibility(View.VISIBLE);
+            if(txt_id.equals(res.getResourceEntryName(ll_reso.getId()))){
+                ll_reso.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_data_activity.getId()))){
                 ll_data_activity.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_data_customerbased.getId()))){
@@ -143,8 +143,8 @@ public class FragmentPushData extends Fragment {
                 ll_purchase_order.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_dataQuantityStock.getId()))){
                 ll_dataQuantityStock.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_data_absen.getId()))){
-                ll_data_absen.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_absen.getId()))){
+                ll_absen.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_dataVisitPlan.getId()))){
                 ll_dataVisitPlan.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_data_leave.getId()))){

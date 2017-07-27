@@ -48,14 +48,14 @@ import bl.clsMainBL;
 import bl.mCounterNumberBL;
 import bl.mEmployeeSalesProductBL;
 import bl.tPurchaseOrderHeaderBL;
-import library.salesforce.common.ModelListview;
-import library.salesforce.common.clsHelper;
-import library.salesforce.common.mEmployeeSalesProductData;
-import library.salesforce.common.tPurchaseOrderDetailData;
-import library.salesforce.common.tPurchaseOrderHeaderData;
-import library.salesforce.common.visitplanAbsenData;
-import library.salesforce.dal.enumCounterData;
-import library.salesforce.dal.tPurchaseOrderDetailDA;
+import library.spgmobile.common.ModelListview;
+import library.spgmobile.common.clsHelper;
+import library.spgmobile.common.mEmployeeSalesProductData;
+import library.spgmobile.common.tPurchaseOrderDetailData;
+import library.spgmobile.common.tPurchaseOrderHeaderData;
+import library.spgmobile.common.visitplanAbsenData;
+import library.spgmobile.dal.enumCounterData;
+import library.spgmobile.dal.tPurchaseOrderDetailDA;
 
 /**
  * Created by XSIS on 21/03/2017.

@@ -13,7 +13,7 @@ import com.kalbenutritionals.app.kalbespgmobile.R;
 
 import java.util.ArrayList;
 
-import library.salesforce.common.clsSwipeList;
+import library.spgmobile.common.clsSwipeList;
 
 /**
  * Created by ASUS ZE on 13/03/2017.

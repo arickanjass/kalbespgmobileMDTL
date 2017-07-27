@@ -14,7 +14,6 @@ import android.util.Log;
 
 import com.kalbenutritionals.app.kalbespgmobile.MainMenu;
 import com.kalbenutritionals.app.kalbespgmobile.R;
-import com.kalbenutritionals.app.kalbespgmobile.clsMainActivity;
 
 import org.json.JSONException;
 import org.json.simple.JSONArray;
@@ -36,21 +35,21 @@ import bl.clsMainBL;
 import bl.tNotificationBL;
 import bl.tUserLoginBL;
 import come.example.viewbadger.ShortcutBadger;
-import library.salesforce.common.APIData;
-import library.salesforce.common.clsLogReceiverHeader_mobile;
-import library.salesforce.common.clsPushData;
-import library.salesforce.common.dataJson;
-import library.salesforce.common.mCounterNumberData;
-import library.salesforce.common.tAbsenUserData;
-import library.salesforce.common.tActivityData;
-import library.salesforce.common.tNotificationData;
-import library.salesforce.common.tUserLoginData;
-import library.salesforce.dal.clsHardCode;
-import library.salesforce.dal.enumCounterData;
-import library.salesforce.dal.mCounterNumberDA;
-import library.salesforce.dal.tAbsenUserDA;
-import library.salesforce.dal.tActivityDA;
-import library.salesforce.dal.tUserLoginDA;
+import library.spgmobile.common.APIData;
+import library.spgmobile.common.clsLogReceiverHeader_mobile;
+import library.spgmobile.common.clsPushData;
+import library.spgmobile.common.dataJson;
+import library.spgmobile.common.mCounterNumberData;
+import library.spgmobile.common.tAbsenUserData;
+import library.spgmobile.common.tActivityData;
+import library.spgmobile.common.tNotificationData;
+import library.spgmobile.common.tUserLoginData;
+import library.spgmobile.dal.clsHardCode;
+import library.spgmobile.dal.enumCounterData;
+import library.spgmobile.dal.mCounterNumberDA;
+import library.spgmobile.dal.tAbsenUserDA;
+import library.spgmobile.dal.tActivityDA;
+import library.spgmobile.dal.tUserLoginDA;
 
 public class MyServiceNative extends Service{
 	public MyServiceNative() {
@@ -270,6 +269,7 @@ public class MyServiceNative extends Service{
 					e.printStackTrace();
 				}
 				Intent i = new Intent(getApplicationContext(), MainMenu.class);
+				i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 				i.putExtra("key_view", "Notification");
 				i.putExtra("id", String.valueOf(dttNotificationData.get_guiID()));
 				i.setAction("notif");

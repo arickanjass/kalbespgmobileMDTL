@@ -1,6 +1,5 @@
 package com.kalbenutritionals.app.kalbespgmobile;
 
-import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,14 +10,11 @@ import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.location.Location;
-import android.location.LocationListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,11 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-
 import org.apache.http.util.ByteArrayBuffer;
-import org.json.JSONException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -82,54 +74,52 @@ import bl.tUserLoginBL;
 import bl.tVisitPlanHeader_MobileBL;
 import bl.tVisitPlanRealisasiBL;
 import bl.trackingLocationBL;
-import library.salesforce.common.APIData;
-import library.salesforce.common.KoordinasiOutletData;
-import library.salesforce.common.KoordinasiOutletImageData;
-import library.salesforce.common.clsHelper;
-import library.salesforce.common.dataJson;
-import library.salesforce.common.mCategoryVisitPlanData;
-import library.salesforce.common.mDownloadMasterData_mobileData;
-import library.salesforce.common.mEmployeeAreaData;
-import library.salesforce.common.mEmployeeBranchData;
-import library.salesforce.common.mEmployeeSalesProductData;
-import library.salesforce.common.mKategoriData;
-import library.salesforce.common.mListJawabanData;
-import library.salesforce.common.mParentData;
-import library.salesforce.common.mPertanyaanData;
-import library.salesforce.common.mProductBarcodeData;
-import library.salesforce.common.mProductBrandHeaderData;
-import library.salesforce.common.mProductCompetitorData;
-import library.salesforce.common.mProductPICData;
-import library.salesforce.common.mProductSPGData;
-import library.salesforce.common.mTypeLeaveMobileData;
-import library.salesforce.common.mTypePertanyaanData;
-import library.salesforce.common.mTypeSubmissionMobile;
-import library.salesforce.common.tAbsenUserData;
-import library.salesforce.common.tActivityData;
-import library.salesforce.common.tCustomerBasedMobileDetailData;
-import library.salesforce.common.tCustomerBasedMobileDetailProductData;
-import library.salesforce.common.tCustomerBasedMobileHeaderData;
-import library.salesforce.common.tGroupQuestionMappingData;
-import library.salesforce.common.tLeaveMobileData;
-import library.salesforce.common.tPurchaseOrderDetailData;
-import library.salesforce.common.tPurchaseOrderHeaderData;
-import library.salesforce.common.tSalesProductDetailData;
-import library.salesforce.common.tSalesProductHeaderData;
-import library.salesforce.common.tSalesProductQuantityDetailData;
-import library.salesforce.common.tSalesProductQuantityHeaderData;
-import library.salesforce.common.tSalesProductQuantityImageData;
-import library.salesforce.common.tUserLoginData;
-import library.salesforce.common.tVisitPlanHeader_MobileData;
-import library.salesforce.common.tVisitPlanRealisasiData;
-import library.salesforce.common.trackingLocationData;
-import library.salesforce.dal.KoordinasiOutletImageDA;
-import library.salesforce.dal.clsHardCode;
-import library.salesforce.dal.tPurchaseOrderDetailDA;
-import library.salesforce.dal.tSalesProductDetailDA;
-import library.salesforce.dal.tSalesProductQuantityDetailDA;
-import library.salesforce.dal.tSalesProductQuantityImageDA;
-import service.MyServiceNative;
-import service.MyTrackingLocationService;
+import library.spgmobile.common.APIData;
+import library.spgmobile.common.KoordinasiOutletData;
+import library.spgmobile.common.KoordinasiOutletImageData;
+import library.spgmobile.common.clsHelper;
+import library.spgmobile.common.dataJson;
+import library.spgmobile.common.mCategoryVisitPlanData;
+import library.spgmobile.common.mDownloadMasterData_mobileData;
+import library.spgmobile.common.mEmployeeAreaData;
+import library.spgmobile.common.mEmployeeBranchData;
+import library.spgmobile.common.mEmployeeSalesProductData;
+import library.spgmobile.common.mKategoriData;
+import library.spgmobile.common.mListJawabanData;
+import library.spgmobile.common.mParentData;
+import library.spgmobile.common.mPertanyaanData;
+import library.spgmobile.common.mProductBarcodeData;
+import library.spgmobile.common.mProductBrandHeaderData;
+import library.spgmobile.common.mProductCompetitorData;
+import library.spgmobile.common.mProductPICData;
+import library.spgmobile.common.mProductSPGData;
+import library.spgmobile.common.mTypeLeaveMobileData;
+import library.spgmobile.common.mTypePertanyaanData;
+import library.spgmobile.common.mTypeSubmissionMobile;
+import library.spgmobile.common.tAbsenUserData;
+import library.spgmobile.common.tActivityData;
+import library.spgmobile.common.tCustomerBasedMobileDetailData;
+import library.spgmobile.common.tCustomerBasedMobileDetailProductData;
+import library.spgmobile.common.tCustomerBasedMobileHeaderData;
+import library.spgmobile.common.tGroupQuestionMappingData;
+import library.spgmobile.common.tLeaveMobileData;
+import library.spgmobile.common.tPurchaseOrderDetailData;
+import library.spgmobile.common.tPurchaseOrderHeaderData;
+import library.spgmobile.common.tSalesProductDetailData;
+import library.spgmobile.common.tSalesProductHeaderData;
+import library.spgmobile.common.tSalesProductQuantityDetailData;
+import library.spgmobile.common.tSalesProductQuantityHeaderData;
+import library.spgmobile.common.tSalesProductQuantityImageData;
+import library.spgmobile.common.tUserLoginData;
+import library.spgmobile.common.tVisitPlanHeader_MobileData;
+import library.spgmobile.common.tVisitPlanRealisasiData;
+import library.spgmobile.common.trackingLocationData;
+import library.spgmobile.dal.KoordinasiOutletImageDA;
+import library.spgmobile.dal.clsHardCode;
+import library.spgmobile.dal.tPurchaseOrderDetailDA;
+import library.spgmobile.dal.tSalesProductDetailDA;
+import library.spgmobile.dal.tSalesProductQuantityDetailDA;
+import library.spgmobile.dal.tSalesProductQuantityImageDA;
 
 public class FragmentDownloadData extends Fragment {
     View v;
@@ -158,7 +148,7 @@ public class FragmentDownloadData extends Fragment {
     private Button btnAbsen, btnQuiz;
     private Spinner spnDataLeave, spnDataPO, spnDataQuantityStock, spnProductComp, spnTypeSubmission, spnProdSPGCusBased, spnProdPICCusBased;
     private Button btnDataLeave, btnDataPO, btnDataQuantityStock, btnProductComp, btnTypeSubmission, btnProdSPGCusBased, btnProdPICCusBased ;
-    private LinearLayout ll_kordinasi_outlet,ll_branch, ll_outlet, ll_product, ll_brand, ll_type_leave, ll_reso, ll_activity, ll_customerbased, ll_absen, ll_purchase_order, ll_data_leave, ll_product_spg, ll_product_pic, ll_product_competitor, ll_type_submission;
+    private LinearLayout ll_kordinasi_outlet,ll_branch, ll_outlet, ll_product, ll_brand, ll_type_leave, ll_reso, ll_data_activity, ll_data_customerbased, ll_absen, ll_purchase_order, ll_data_leave, ll_product_spg, ll_product_pic, ll_product_competitor, ll_type_submission, ll_kategoriVisitPlan, ll_dataVisitPlan, ll_dataQuantityStock, ll_dataKordinasiOutlet, ll_dataDownloadQuesioner;
 
     private PackageInfo pInfo = null;
     private List<String> arrData;
@@ -222,8 +212,8 @@ public class FragmentDownloadData extends Fragment {
         ll_brand = (LinearLayout) v.findViewById(R.id.ll_brand);
         ll_type_leave = (LinearLayout) v.findViewById(R.id.ll_type_leave);
         ll_reso = (LinearLayout) v.findViewById(R.id.ll_reso);
-        ll_activity = (LinearLayout) v.findViewById(R.id.ll_activity);
-        ll_customerbased = (LinearLayout) v.findViewById(R.id.ll_customerbased);
+        ll_data_activity = (LinearLayout) v.findViewById(R.id.ll_data_activity);
+        ll_data_customerbased = (LinearLayout) v.findViewById(R.id.ll_data_customerbased);
         ll_absen = (LinearLayout) v.findViewById(R.id.ll_absen);
         ll_purchase_order = (LinearLayout) v.findViewById(R.id.ll_purchase_order);
         ll_data_leave = (LinearLayout) v.findViewById(R.id.ll_data_leave);
@@ -231,6 +221,11 @@ public class FragmentDownloadData extends Fragment {
         ll_product_pic = (LinearLayout) v.findViewById(R.id.ll_product_pic) ;
         ll_product_competitor = (LinearLayout) v.findViewById(R.id.ll_product_competitor);
         ll_type_submission = (LinearLayout) v.findViewById(R.id.ll_type_submission);
+        ll_kategoriVisitPlan = (LinearLayout) v.findViewById(R.id.ll_kategoriVisitPlan);
+        ll_dataVisitPlan = (LinearLayout) v.findViewById(R.id.ll_dataVisitPlan);
+        ll_dataQuantityStock = (LinearLayout) v.findViewById(R.id.ll_dataQuantityStock);
+        ll_dataKordinasiOutlet = (LinearLayout) v.findViewById(R.id.ll_dataKordinasiOutlet);
+        ll_dataDownloadQuesioner = (LinearLayout) v.findViewById(R.id.ll_dataDownloadQuesioner);
 
         spnVisitPlan = (Spinner) v.findViewById(R.id.spnVisitPlan);
         spnTrVisitPlan = (Spinner) v.findViewById(R.id.spnTrVisitPlan);
@@ -251,6 +246,7 @@ public class FragmentDownloadData extends Fragment {
         for(mDownloadMasterData_mobileData data : mDownloadMasterData_mobileDataList){
             String txt_id = data.get_txtMasterData().replaceAll(" ","");
 
+            //show master data
             if(txt_id.equals(res.getResourceEntryName(ll_branch.getId()))){
                 ll_branch.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_outlet.getId()))){
@@ -261,23 +257,7 @@ public class FragmentDownloadData extends Fragment {
                 ll_brand.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_type_leave.getId()))){
                 ll_type_leave.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_reso.getId()))){
-                ll_reso.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_activity.getId()))){
-                ll_activity.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_customerbased.getId()))){
-                ll_customerbased.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_absen.getId()))){
-                ll_absen.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_purchase_order.getId()))){
-                ll_purchase_order.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_data_leave.getId()))){
-                ll_data_leave.setVisibility(View.VISIBLE);
-            }
-//            else if (txt_id.equals(res.getResourceEntryName(ll_kordinasi_outlet.getId()))){
-//                ll_kordinasi_outlet.setVisibility(View.VISIBLE);
-//            }
-            else if (txt_id.equals(res.getResourceEntryName(ll_product_spg.getId()))){
+            }  else if (txt_id.equals(res.getResourceEntryName(ll_product_spg.getId()))){
                 ll_product_spg.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_product_pic.getId()))){
                 ll_product_pic.setVisibility(View.VISIBLE);
@@ -285,7 +265,32 @@ public class FragmentDownloadData extends Fragment {
                 ll_product_competitor.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_type_submission.getId()))){
                 ll_type_submission.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_kategoriVisitPlan.getId()))){
+                ll_kategoriVisitPlan.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_dataDownloadQuesioner.getId()))){
+                ll_dataDownloadQuesioner.setVisibility(View.VISIBLE);
             }
+            // show data transaksi
+            else if (txt_id.equals(res.getResourceEntryName(ll_dataVisitPlan.getId()))){
+                ll_dataVisitPlan.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_dataQuantityStock.getId()))){
+                ll_dataQuantityStock.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_dataKordinasiOutlet.getId()))){
+                ll_dataKordinasiOutlet.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_reso.getId()))){
+                ll_reso.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_data_activity.getId()))){
+                ll_data_activity.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_data_customerbased.getId()))){
+                ll_data_customerbased.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_absen.getId()))){
+                ll_absen.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_purchase_order.getId()))){
+                ll_purchase_order.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_data_leave.getId()))){
+                ll_data_leave.setVisibility(View.VISIBLE);
+            }
+
         }
 
 
@@ -730,13 +735,13 @@ public class FragmentDownloadData extends Fragment {
         }
 
         arrData = new ArrayList<String>();
-        if (listKoordinasiOutletData != null) {
+        if (listKoordinasiOutletData != null && listKoordinasiOutletData.size() != 0) {
             for (KoordinasiOutletData dt : listKoordinasiOutletData) {
                 arrData.add(dt.get_txtKeterangan());
             }
             spnKordinasiOutlet.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
             spnKordinasiOutlet.setEnabled(true);
-        } else if (listKoordinasiOutletData == null) {
+        } else  {
             ArrayAdapter<String> adapterspn = new ArrayAdapter<String>(getContext(),
                     android.R.layout.simple_spinner_item, strip);
             spnKordinasiOutlet.setAdapter(adapterspn);
@@ -840,16 +845,21 @@ public class FragmentDownloadData extends Fragment {
                     Json = new mProductBrandHeaderBL().DownloadBrandHeader(pInfo.versionName);
                     SaveDatamProductBarcodeData(Json);
                 }
-                Json = new mCategoryVisitPlanBL().DownloadCategoryVisitPlanData(pInfo.versionName);
-                SaveDatamCategoryVisitPlanData(Json);
 
-                Json = new tVisitPlanRealisasiBL().DownloadRealisasiVisitPlan(pInfo.versionName);
-                SaveDatatTransaksiVisitPlanHeaderData(Json);
-                SaveDatatTransaksiVisitPlanData(Json);
-                new tPurchaseOrderHeaderBL().DownloadNOPO(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
-                new tSalesProductQuantityHeaderBL().DownloadNOQuantityStock(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+                if(ll_brand!=null && ll_kategoriVisitPlan.getVisibility() == View.VISIBLE){
+                    Json = new mCategoryVisitPlanBL().DownloadCategoryVisitPlanData(pInfo.versionName);
+                    SaveDatamCategoryVisitPlanData(Json);
+                }
+
+                if(ll_brand!=null && ll_dataVisitPlan.getVisibility() == View.VISIBLE){
+                    Json = new tVisitPlanRealisasiBL().DownloadRealisasiVisitPlan(pInfo.versionName);
+                    SaveDatatTransaksiVisitPlanHeaderData(Json);
+                    SaveDatatTransaksiVisitPlanData(Json);
+                }
+
                 Json = new mEmployeeAreaBL().DownloadEmployeeArea2(pInfo.versionName);
                 SaveDatamEmployeeAreaData(Json);
+
                 if(ll_reso!=null && ll_reso.getVisibility() == View.VISIBLE){
                     Json = new tSalesProductHeaderBL().DownloadReso(pInfo.versionName);
                     Iterator i = Json.iterator();
@@ -859,25 +869,30 @@ public class FragmentDownloadData extends Fragment {
                 }
 
                 if(ll_purchase_order!=null && ll_purchase_order.getVisibility() == View.VISIBLE){
+                    new tPurchaseOrderHeaderBL().DownloadNOPO(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
                     Json = new tPurchaseOrderHeaderBL().DownloadTransactionPO(pInfo.versionName);
                     Iterator j = Json.iterator();
                     org.json.simple.JSONObject innerObj_po = (org.json.simple.JSONObject) j.next();
                     int boolValid_po = Integer.valueOf(String.valueOf(innerObj_po.get("_pboolValid")));
                     if(boolValid_po == 1) SaveDatatPurchaseOrderData(Json);
                 }
-                Json = new mParentBL().DownlaodDataQuesioner(pInfo.versionName);
-                Iterator x = Json.iterator();
-                org.json.simple.JSONObject innerObj_Quiz = (org.json.simple.JSONObject) x.next();
-                int boolValid_po = Integer.valueOf(String.valueOf(innerObj_Quiz.get("_pboolValid")));
-                if(boolValid_po == 1) SaveDataQuesioner(Json);
 
+                if(ll_dataDownloadQuesioner!=null && ll_dataDownloadQuesioner.getVisibility() == View.VISIBLE){
+                    Json = new mParentBL().DownlaodDataQuesioner(pInfo.versionName);
+                    Iterator x = Json.iterator();
+                    org.json.simple.JSONObject innerObj_Quiz = (org.json.simple.JSONObject) x.next();
+                    int boolValid_po = Integer.valueOf(String.valueOf(innerObj_Quiz.get("_pboolValid")));
+                    if(boolValid_po == 1) SaveDataQuesioner(Json);
+                }
 
-
-                Json = new tSalesProductQuantityHeaderBL().DownloadTransactionQuantityStock(pInfo.versionName);
-                Iterator k = Json.iterator();
-                org.json.simple.JSONObject innerObj_quantityStock = (org.json.simple.JSONObject) k.next();
-                int boolValid_quantityStock = Integer.valueOf(String.valueOf(innerObj_quantityStock.get("_pboolValid")));
-                if (boolValid_quantityStock == 1) SaveDatatSalesProductQuantityData(Json);
+                if(ll_dataQuantityStock!=null && ll_dataQuantityStock.getVisibility() == View.VISIBLE){
+                    new tSalesProductQuantityHeaderBL().DownloadNOQuantityStock(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+                    Json = new tSalesProductQuantityHeaderBL().DownloadTransactionQuantityStock(pInfo.versionName);
+                    Iterator k = Json.iterator();
+                    org.json.simple.JSONObject innerObj_quantityStock = (org.json.simple.JSONObject) k.next();
+                    int boolValid_quantityStock = Integer.valueOf(String.valueOf(innerObj_quantityStock.get("_pboolValid")));
+                    if (boolValid_quantityStock == 1) SaveDatatSalesProductQuantityData(Json);
+                }
 
                 Json = new trackingLocationBL().DownloadTrackingLocation(pInfo.versionName);
                 Iterator l = Json.iterator();
@@ -885,17 +900,19 @@ public class FragmentDownloadData extends Fragment {
                 int boolValid_trackingLocation = Integer.valueOf(String.valueOf(innerObj_trackingLocation.get("_pboolValid")));
                 if (boolValid_trackingLocation == 1) SaveDataTrackingLocationData(Json);
 
-                Json = new KoordinasiOutletBL().DownloadDataKoordinasiOutlet(pInfo.versionName);
-                Iterator m = Json.iterator();
-                org.json.simple.JSONObject innerObj_koordinasiOutlet = (org.json.simple.JSONObject) m.next();
-                int boolValid_koordinasiOutlet = Integer.valueOf(String.valueOf(innerObj_koordinasiOutlet.get("_pboolValid")));
-                if (boolValid_koordinasiOutlet == 1) SaveDataKoordinasiOutletData(Json);
+                if(ll_dataKordinasiOutlet!=null && ll_dataKordinasiOutlet.getVisibility() == View.VISIBLE){
+                    Json = new KoordinasiOutletBL().DownloadDataKoordinasiOutlet(pInfo.versionName);
+                    Iterator m = Json.iterator();
+                    org.json.simple.JSONObject innerObj_koordinasiOutlet = (org.json.simple.JSONObject) m.next();
+                    int boolValid_koordinasiOutlet = Integer.valueOf(String.valueOf(innerObj_koordinasiOutlet.get("_pboolValid")));
+                    if (boolValid_koordinasiOutlet == 1) SaveDataKoordinasiOutletData(Json);
+                }
 
-                if(ll_activity!=null && ll_activity.getVisibility() == View.VISIBLE){
+                if(ll_data_activity!=null && ll_data_activity.getVisibility() == View.VISIBLE){
                     Json = new tActivityBL().DownloadActivity(pInfo.versionName);
                     SaveDatatActivityData(Json);
                 }
-                if(ll_customerbased!=null && ll_customerbased.getVisibility() == View.VISIBLE){
+                if(ll_data_customerbased!=null && ll_data_customerbased.getVisibility() == View.VISIBLE){
                     Json = new tCustomerBasedMobileHeaderBL().DownloadCustomerBase(pInfo.versionName);
                     SaveDatatCustomerBasedData(Json);
                 }
@@ -907,7 +924,6 @@ public class FragmentDownloadData extends Fragment {
                     Json = new tLeaveMobileBL().DownloadDataLeave(pInfo.versionName);
                     SaveDatatLeaveData(Json);
                 }
-
                 if(ll_product_competitor!=null && ll_product_competitor.getVisibility() == View.VISIBLE){
                     Json = new mProductCompetitorBL().DownloadProdctCompetitor(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
                     SaveDatammProductCompetitorData(Json);
@@ -973,12 +989,12 @@ public class FragmentDownloadData extends Fragment {
             // pg.setVisibility(View.VISIBLE);
             Dialog.setMessage(new clsHardCode().txtMessGetAllData);
             Dialog.setCancelable(false);
-            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    intProcesscancel = 1;
-                }
-            });
+//            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    intProcesscancel = 1;
+//                }
+//            });
             Dialog.show();
         }
 
@@ -2614,7 +2630,8 @@ public class FragmentDownloadData extends Fragment {
                 && mEmployeeAreaDataList.size() > 0
                 && mProductBrandHeaderDataList.size() > 0
                 && mTypeLeaveMobileDataList.size() > 0
-                && mCategoryVisitPlanList.size()>0) {
+//                && mCategoryVisitPlanList.size()>0
+                ) {
 
             goToMainMenu();
             //validate = 1;

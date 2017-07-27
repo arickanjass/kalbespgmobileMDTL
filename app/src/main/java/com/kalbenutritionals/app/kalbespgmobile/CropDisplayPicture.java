@@ -16,10 +16,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.theartofdev.edmodo.cropper.CropImage;
+
 import addons.cropper.CropDemoPreset;
 import addons.cropper.CropImageViewOptions;
 import addons.cropper.MainFragment;
-import com.theartofdev.edmodo.cropper.CropImage;
 
 public class CropDisplayPicture extends AppCompatActivity {
 

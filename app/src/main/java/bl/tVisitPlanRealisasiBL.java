@@ -8,19 +8,17 @@ import org.json.simple.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import library.salesforce.common.APIData;
-import library.salesforce.common.clsHelper;
-import library.salesforce.common.linkAPI;
-import library.salesforce.common.mconfigData;
-import library.salesforce.common.tAbsenUserData;
-import library.salesforce.common.tUserLoginData;
-import library.salesforce.common.tVisitPlanRealisasiData;
-import library.salesforce.dal.clsHardCode;
-import library.salesforce.dal.enumConfigData;
-import library.salesforce.dal.mconfigDA;
-import library.salesforce.dal.tAbsenUserDA;
-import library.salesforce.dal.tUserLoginDA;
-import library.salesforce.dal.tVisitPlanRealisasiDA;
+import library.spgmobile.common.APIData;
+import library.spgmobile.common.clsHelper;
+import library.spgmobile.common.linkAPI;
+import library.spgmobile.common.mconfigData;
+import library.spgmobile.common.tUserLoginData;
+import library.spgmobile.common.tVisitPlanRealisasiData;
+import library.spgmobile.dal.clsHardCode;
+import library.spgmobile.dal.enumConfigData;
+import library.spgmobile.dal.mconfigDA;
+import library.spgmobile.dal.tUserLoginDA;
+import library.spgmobile.dal.tVisitPlanRealisasiDA;
 
 /**
  * Created by Robert on 27/04/2017.

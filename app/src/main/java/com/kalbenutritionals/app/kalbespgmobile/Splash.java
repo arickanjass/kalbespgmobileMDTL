@@ -22,11 +22,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import bl.clsMainBL;
-import library.salesforce.common.clsHelper;
-import library.salesforce.common.clsStatusMenuStart;
-import library.salesforce.dal.enumStatusMenuStart;
+import library.spgmobile.common.clsHelper;
+import library.spgmobile.common.clsStatusMenuStart;
+import library.spgmobile.dal.enumStatusMenuStart;
 import service.MyServiceNative;
-import service.MyTrackingLocationService;
 
 public class Splash extends AppCompatActivity {
     long delay = 5000;

@@ -14,22 +14,22 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import library.salesforce.common.APIData;
-import library.salesforce.common.clsHelper;
-import library.salesforce.common.linkAPI;
-import library.salesforce.common.mCounterNumberData;
-import library.salesforce.common.mconfigData;
-import library.salesforce.common.tDeviceInfoUserData;
-import library.salesforce.common.tPurchaseOrderHeaderData;
-import library.salesforce.common.tUserLoginData;
-import library.salesforce.dal.clsHardCode;
-import library.salesforce.dal.enumConfigData;
-import library.salesforce.dal.enumCounterData;
-import library.salesforce.dal.mCounterNumberDA;
-import library.salesforce.dal.mconfigDA;
-import library.salesforce.dal.tDeviceInfoUserDA;
-import library.salesforce.dal.tPurchaseOrderHeaderDA;
-import library.salesforce.dal.tUserLoginDA;
+import library.spgmobile.common.APIData;
+import library.spgmobile.common.clsHelper;
+import library.spgmobile.common.linkAPI;
+import library.spgmobile.common.mCounterNumberData;
+import library.spgmobile.common.mconfigData;
+import library.spgmobile.common.tDeviceInfoUserData;
+import library.spgmobile.common.tPurchaseOrderHeaderData;
+import library.spgmobile.common.tUserLoginData;
+import library.spgmobile.dal.clsHardCode;
+import library.spgmobile.dal.enumConfigData;
+import library.spgmobile.dal.enumCounterData;
+import library.spgmobile.dal.mCounterNumberDA;
+import library.spgmobile.dal.mconfigDA;
+import library.spgmobile.dal.tDeviceInfoUserDA;
+import library.spgmobile.dal.tPurchaseOrderHeaderDA;
+import library.spgmobile.dal.tUserLoginDA;
 
 /**
  * Created by XSIS on 22/03/2017.
@@ -88,8 +88,14 @@ public class tPurchaseOrderHeaderBL extends clsMainBL {
     public List<tPurchaseOrderHeaderData> getAllPurchaseOrderHeaderByOutletCode(String code) {
         SQLiteDatabase _db = getDb();
         tPurchaseOrderHeaderDA _tPurchaseOrderHeaderDA = new tPurchaseOrderHeaderDA(_db);
-        List<tPurchaseOrderHeaderData> dt = _tPurchaseOrderHeaderDA.getAllDataByOutletCode(_db, code);
-        if (dt == null){
+        List<tPurchaseOrderHeaderData> dt;
+        if(code.equals("ALLOUTLET")){
+            dt = _tPurchaseOrderHeaderDA.getAllData(_db);
+        } else {
+            dt = _tPurchaseOrderHeaderDA.getAllDataByOutletCode(_db,code);
+        }
+
+        if(dt == null){
             dt = new ArrayList<>(0);
         }
         return dt;

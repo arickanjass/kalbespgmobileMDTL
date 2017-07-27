@@ -5,8 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import library.salesforce.common.tNotificationData;
-import library.salesforce.dal.tNotificationDA;
+import library.spgmobile.common.tNotificationData;
+import library.spgmobile.dal.tNotificationDA;
 
 public class tNotificationBL extends clsMainBL{
 	public void saveData(List<tNotificationData> Listdata){

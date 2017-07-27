@@ -1,9 +1,9 @@
 package bl;
 
 import android.database.sqlite.SQLiteDatabase;
-import library.salesforce.common.mCounterNumberData;
-import library.salesforce.dal.enumCounterData;
-import library.salesforce.dal.mCounterNumberDA;
+import library.spgmobile.common.mCounterNumberData;
+import library.spgmobile.dal.enumCounterData;
+import library.spgmobile.dal.mCounterNumberDA;
 
 public class mCounterNumberBL extends clsMainBL {
 	public void saveDateTimeServer(String datetimeNow){

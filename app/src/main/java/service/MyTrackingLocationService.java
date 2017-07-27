@@ -1,9 +1,7 @@
 package service;
 
 import android.Manifest;
-import android.app.ActivityManager;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
@@ -20,7 +18,6 @@ import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.kalbenutritionals.app.kalbespgmobile.clsMainActivity;
 
@@ -32,20 +29,18 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import bl.tUserLoginBL;
 import bl.trackingLocationBL;
-import library.salesforce.common.mCounterNumberData;
-import library.salesforce.common.mDownloadMasterData_mobileData;
-import library.salesforce.common.tAbsenUserData;
-import library.salesforce.common.tUserLoginData;
-import library.salesforce.common.trackingLocationData;
-import library.salesforce.dal.clsHardCode;
-import library.salesforce.dal.enumCounterData;
-import library.salesforce.dal.mCounterNumberDA;
-import library.salesforce.dal.mDownloadMasterData_mobileDA;
-import library.salesforce.dal.tUserLoginDA;
+import library.spgmobile.common.mCounterNumberData;
+import library.spgmobile.common.mDownloadMasterData_mobileData;
+import library.spgmobile.common.tUserLoginData;
+import library.spgmobile.common.trackingLocationData;
+import library.spgmobile.dal.clsHardCode;
+import library.spgmobile.dal.enumCounterData;
+import library.spgmobile.dal.mCounterNumberDA;
+import library.spgmobile.dal.mDownloadMasterData_mobileDA;
+import library.spgmobile.dal.tUserLoginDA;
 
 /**
  * Created by Rian Andrivani on 5/18/2017.

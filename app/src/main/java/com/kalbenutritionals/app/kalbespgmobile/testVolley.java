@@ -23,11 +23,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import bl.clsMainBL;
-import library.salesforce.common.linkAPI;
-import library.salesforce.common.tDeviceInfoUserData;
-import library.salesforce.dal.clsHardCode;
-import library.salesforce.dal.mconfigDA;
-import library.salesforce.dal.tDeviceInfoUserDA;
+import library.spgmobile.common.linkAPI;
+import library.spgmobile.common.tDeviceInfoUserData;
+import library.spgmobile.dal.clsHardCode;
+import library.spgmobile.dal.mconfigDA;
+import library.spgmobile.dal.tDeviceInfoUserDA;
 
 public class testVolley extends Activity implements View.OnClickListener {
 

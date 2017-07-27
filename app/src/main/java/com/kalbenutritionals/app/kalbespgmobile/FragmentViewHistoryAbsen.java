@@ -8,7 +8,6 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.design.internal.NavigationMenu;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -18,7 +17,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -35,7 +33,6 @@ import java.util.List;
 import java.util.Map;
 
 import bl.clsHelperBL;
-import bl.mMenuBL;
 import bl.tAbsenUserBL;
 import bl.tUserLoginBL;
 import edu.swu.pulltorefreshswipemenulistview.library.PullToRefreshSwipeMenuListView;
@@ -46,12 +43,12 @@ import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.Swipe
 import edu.swu.pulltorefreshswipemenulistview.library.util.RefreshTime;
 import io.github.yavski.fabspeeddial.FabSpeedDial;
 import io.github.yavski.fabspeeddial.SimpleMenuListenerAdapter;
-import library.salesforce.common.AppAdapter;
-import library.salesforce.common.clsSwipeList;
-import library.salesforce.common.mMenuData;
-import library.salesforce.common.tAbsenUserData;
-import library.salesforce.common.tUserLoginData;
-import library.salesforce.common.visitplanAbsenData;
+import library.spgmobile.common.AppAdapter;
+import library.spgmobile.common.clsSwipeList;
+import library.spgmobile.common.mMenuData;
+import library.spgmobile.common.tAbsenUserData;
+import library.spgmobile.common.tUserLoginData;
+import library.spgmobile.common.visitplanAbsenData;
 
 public class FragmentViewHistoryAbsen extends Fragment implements IXListViewListener {
 
@@ -216,7 +213,7 @@ public class FragmentViewHistoryAbsen extends Fragment implements IXListViewList
         final ImageView imgAbsen1 = (ImageView) promptView.findViewById(R.id.imgAbsen1);
         final ImageView imgAbsen2 = (ImageView) promptView.findViewById(R.id.imgAbsen2);
 
-        tUserLoginData dtLogin = new tUserLoginBL().getUserLoginByUserId(data.get(position).get_txtUserId());
+        tUserLoginData dtLogin = new tUserLoginBL().getUserActive();
 
         tvUsername.setText(dtLogin.get_txtUserName());
         tvBranch.setText(data.get(position).get_txtBranchName());

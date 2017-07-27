@@ -1,28 +1,22 @@
 package com.kalbenutritionals.app.kalbespgmobile;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import bl.mKategoriBL;
 import bl.mPertanyaanBL;
 import bl.tGroupQuestionMappingBL;
-import library.salesforce.common.mKategoriData;
-import library.salesforce.common.mPertanyaanData;
-import library.salesforce.common.tGroupQuestionMappingData;
+import library.spgmobile.common.mPertanyaanData;
+import library.spgmobile.common.tGroupQuestionMappingData;
 
 /**
  * Created by Dewi Oktaviani on 17/03/2017.

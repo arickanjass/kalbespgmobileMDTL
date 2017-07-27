@@ -38,7 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bl.tDisplayPictureBL;
-import library.salesforce.common.tDisplayPictureData;
+import library.spgmobile.common.tDisplayPictureData;
 
 /**
  * The fragment that will show the Image Cropping UI by requested preset.

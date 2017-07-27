@@ -12,7 +12,7 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/ll_data_reso"
+        android:id="@+id/ll_reso"
         android:orientation="vertical"
         android:visibility="gone"
         android:layout_width="fill_parent"
@@ -137,7 +137,7 @@
 
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/ll_data_absen"
+        android:id="@+id/ll_absen"
         android:orientation="vertical"
         android:visibility="gone"
         android:layout_width="fill_parent"

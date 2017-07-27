@@ -48,10 +48,10 @@ import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.bean.SwipeMenu;
 import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.OnMenuItemClickListener;
 import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.SwipeMenuCreator;
 import edu.swu.pulltorefreshswipemenulistview.library.util.RefreshTime;
-import library.salesforce.common.AppAdapter;
-import library.salesforce.common.clsSwipeList;
-import library.salesforce.common.tActivityData;
-import library.salesforce.common.visitplanAbsenData;
+import library.spgmobile.common.AppAdapter;
+import library.spgmobile.common.clsSwipeList;
+import library.spgmobile.common.tActivityData;
+import library.spgmobile.common.visitplanAbsenData;
 
 import static com.kalbenutritionals.app.kalbespgmobile.R.id.textView9;
 

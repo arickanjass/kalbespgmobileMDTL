@@ -4,8 +4,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.List;
 
-import library.salesforce.common.mCountConsumerMTDData;
-import library.salesforce.dal.mCountConsumerMTDDA;
+import library.spgmobile.common.mCountConsumerMTDData;
+import library.spgmobile.dal.mCountConsumerMTDDA;
 
 public class mCountConsumerMTDBL extends clsMainBL {
 

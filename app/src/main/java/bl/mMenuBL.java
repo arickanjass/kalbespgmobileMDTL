@@ -5,18 +5,23 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import library.salesforce.common.mEmployeeAreaData;
-import library.salesforce.common.mMenuData;
-import library.salesforce.common.tLeaveMobileData;
-import library.salesforce.dal.mEmployeeAreaDA;
-import library.salesforce.dal.mEmployeeBranchDA;
-import library.salesforce.dal.mEmployeeSalesProductDA;
-import library.salesforce.dal.mMenuDA;
-import library.salesforce.dal.mProductBarcodeDA;
-import library.salesforce.dal.mTypeLeaveMobileDA;
-import library.salesforce.dal.tAbsenUserDA;
-import library.salesforce.dal.tLeaveMobileDA;
-import library.salesforce.dal.tSalesProductHeaderDA;
+import library.spgmobile.common.mEmployeeAreaData;
+import library.spgmobile.common.mMenuData;
+import library.spgmobile.common.tLeaveMobileData;
+import library.spgmobile.dal.mEmployeeAreaDA;
+import library.spgmobile.dal.mEmployeeBranchDA;
+import library.spgmobile.dal.mEmployeeSalesProductDA;
+import library.spgmobile.dal.mMenuDA;
+import library.spgmobile.dal.mProductBarcodeDA;
+import library.spgmobile.dal.mProductBrandHeaderDA;
+import library.spgmobile.dal.mProductCompetitorDA;
+import library.spgmobile.dal.mProductPICDA;
+import library.spgmobile.dal.mProductSPGDA;
+import library.spgmobile.dal.mTypeLeaveMobileDA;
+import library.spgmobile.dal.mTypeSubmissionMobileDA;
+import library.spgmobile.dal.tAbsenUserDA;
+import library.spgmobile.dal.tLeaveMobileDA;
+import library.spgmobile.dal.tSalesProductHeaderDA;
 
 public class mMenuBL extends clsMainBL {
     public void SaveData(List<mMenuData> Listdata) {
@@ -40,6 +45,15 @@ public class mMenuBL extends clsMainBL {
         return dt;
     }
 
+    public String getIntParentID(){
+        SQLiteDatabase db = getDb();
+        mMenuDA _mMenuDA = new mMenuDA(db);
+        String intParentID = null;
+        intParentID = _mMenuDA.getIntParentID(db);
+        db.close();
+        return intParentID;
+    }
+
     public mMenuData getMenuDataByMenuName2(String menuName) {
         SQLiteDatabase db = getDb();
         mMenuDA _mMenuDA = new mMenuDA(db);
@@ -47,12 +61,13 @@ public class mMenuBL extends clsMainBL {
         db.close();
         return dt;
     }
-    public List<mMenuData> getDatabyParentId(int id) {
+
+    public List<mMenuData> getDatabyParentId(String id) {
         SQLiteDatabase db = getDb();
         mMenuDA _mMenuDA = new mMenuDA(db);
         tSalesProductHeaderDA _tSalesProductHeaderDA = new tSalesProductHeaderDA(db);
         List<mMenuData> listData = _mMenuDA.getDatabyParentId(db, id);
-        List<mMenuData> tmpData = new ArrayList<mMenuData>();
+        List<mMenuData> tmpData = new ArrayList<>();
         List<tLeaveMobileData> listDataLeave = new tLeaveMobileBL().getData("");
         for (mMenuData data : listData) {
             if (listDataLeave.size() == 0 && data.get_TxtDescription().contains("mnReporting")) {
@@ -71,7 +86,7 @@ public class mMenuBL extends clsMainBL {
                     if (listDataLeave.size() == 0 && _mEmployeeAreaDA.getContactsCount(db) > 0 && _mEmployeeBranchDA.getContactsCount(db) > 0 && data.get_TxtDescription().contains("mnAbsenSPG")) {
 
                         int validate = 0;
-                        if (data.get_TxtDescription().contains("mnVisitPlanMobile")||data.get_TxtDescription().contains("mnVisitPlanMobile")) {
+                        if (data.get_TxtDescription().contains("mnVisitPlanMobile") || data.get_TxtDescription().contains("mnVisitPlanMobile")) {
 
                             validate = 1;
 
@@ -93,9 +108,7 @@ public class mMenuBL extends clsMainBL {
 
                     } else if (data.get_TxtDescription().contains("mnPushDataSPG") && listDataLeave.size() == 0) {
                         tmpData.add(data);
-                    }
-
-                    else if (data.get_TxtDescription().contains("mnLeave")) {
+                    } else if (data.get_TxtDescription().contains("mnLeave")) {
                         mTypeLeaveMobileDA _mTypeLeaveMobileDA = new mTypeLeaveMobileDA(db);
                         tAbsenUserDA _tAbsenUserDA = new tAbsenUserDA(db);
                         if (_tAbsenUserDA.getContactsCountSubmit(db) == 0 && _mTypeLeaveMobileDA.getContactsCount(db) > 0) {
@@ -119,31 +132,27 @@ public class mMenuBL extends clsMainBL {
         return tmpData;
     }
 
-    public List<mMenuData> getDatabyParentIdNew(int id) {
+    public List<mMenuData> getDatabyParentIdNew(String id) {
         SQLiteDatabase db = getDb();
         mMenuDA _mMenuDA = new mMenuDA(db);
-        tSalesProductHeaderDA _tSalesProductHeaderDA = new tSalesProductHeaderDA(db);
         List<mMenuData> listData = _mMenuDA.getDatabyParentId(db, id);
-        List<mMenuData> tmpData = new ArrayList<mMenuData>();
+        List<mMenuData> tmpData = new ArrayList<>();
         List<tLeaveMobileData> listDataLeave = new tLeaveMobileBL().getData("");
+
         for (mMenuData data : listData) {
-            if(data.get_TxtDescription().contains("mnVisitPlanMobile")){
+            //Untuk visitplan harus pengecekan master data
+            if (data.get_TxtDescription().contains("mnVisitPlanMobile")) {
                 mEmployeeAreaDA _mEmployeeAreaDA = new mEmployeeAreaDA(db);
                 mEmployeeBranchDA _mEmployeeBranchDA = new mEmployeeBranchDA(db);
-                if(_mEmployeeAreaDA.getContactsCount(db) > 0 && _mEmployeeBranchDA.getContactsCount(db) > 0){
+                if (_mEmployeeAreaDA.getContactsCount(db) > 0 && _mEmployeeBranchDA.getContactsCount(db) > 0) {
                     int validate = 0;
-                    if(listDataLeave.size() == 0){
-                        if (data.get_TxtDescription().contains("mnVisitPlanMobile")||data.get_TxtDescription().contains("mnVisitPlanMobile")) {
+                    if (listDataLeave.size() == 0) {
+                        validate = 1;
+                        List<mEmployeeAreaData> datamEmployeeArea = new mEmployeeAreaBL().GetAllData();
 
-                            validate = 1;
-
-                            List<mEmployeeAreaData> datamEmployeeArea = new mEmployeeAreaBL().GetAllData();
-
-                            for (mEmployeeAreaData dt : datamEmployeeArea) {
-                                if (dt.get_txtLatitude() == "" || dt.get_txtLatitude() == null || dt.get_txtLatitude().equals("")
-                                        && dt.get_txtLongitude() == "" || dt.get_txtLongitude() == null || dt.get_txtLongitude().equals("")) {
-                                    validate = 0;
-                                }
+                        for (mEmployeeAreaData dt : datamEmployeeArea) {
+                            if (dt.get_txtLatitude().equals("") || dt.get_txtLatitude() == null || dt.get_txtLatitude().equals("") && dt.get_txtLongitude().equals("") || dt.get_txtLongitude() == null || dt.get_txtLongitude().equals("")) {
+                                validate = 0;
                             }
                         }
                     }
@@ -151,16 +160,50 @@ public class mMenuBL extends clsMainBL {
                         tmpData.add(data);
                     }
                 }
-            } else if (data.get_TxtDescription().contains("mnLeave")) {
+            }
+
+            //Untuk absen SPG Mobile harus pengecekan master data: Branch, Outlet, Product, Brand, Product SPG Customerbased, Product PIC Customerbased, Product Competitor, Type Submission, Type Leave
+            else if (data.get_TxtDescription().contains("mnAbsenSPG")) {
+                mEmployeeBranchDA _mEmployeeBranchDA = new mEmployeeBranchDA(db);
+                mEmployeeAreaDA _mEmployeeAreaDA = new mEmployeeAreaDA(db);
+                mEmployeeSalesProductDA _mEmployeeSalesProductDA = new mEmployeeSalesProductDA(db);
+                mProductBrandHeaderDA _mProductBrandHeaderDA = new mProductBrandHeaderDA(db);
+                mProductSPGDA _mProductSPGDA = new mProductSPGDA(db);
+                mProductPICDA _mProductPICDA = new mProductPICDA(db);
+                mProductCompetitorDA _mProductCompetitorDA = new mProductCompetitorDA(db);
+                mTypeSubmissionMobileDA _mTypeSubmissionMobileDA = new mTypeSubmissionMobileDA(db);
+                mTypeLeaveMobileDA _mTypeLeaveMobileDA = new mTypeLeaveMobileDA(db);
+
+                if (_mEmployeeAreaDA.getContactsCount(db) > 0 &&
+                        _mEmployeeBranchDA.getContactsCount(db) > 0 &&
+                        _mEmployeeSalesProductDA.getContactsCount(db) > 0 &&
+//                        _mProductBrandHeaderDA.getContactsCount(db) > 0 &&
+                        _mProductSPGDA.getContactsCount(db) > 0 &&
+                        _mProductPICDA.getContactsCount(db) > 0 &&
+                        _mProductCompetitorDA.getContactsCount(db) > 0 &&
+                        _mTypeSubmissionMobileDA.getContactsCount(db) > 0 &&
+                        _mTypeLeaveMobileDA.getContactsCount(db) > 0
+                        ) {
+                    if (listDataLeave.size() == 0) {
+                        tmpData.add(data);
+                    }
+                }
+            }
+
+            //Jika menu leave
+            else if (data.get_TxtDescription().contains("mnLeave")) {
                 mTypeLeaveMobileDA _mTypeLeaveMobileDA = new mTypeLeaveMobileDA(db);
                 tAbsenUserDA _tAbsenUserDA = new tAbsenUserDA(db);
                 if (_tAbsenUserDA.getContactsCountSubmit(db) == 0 && _mTypeLeaveMobileDA.getContactsCount(db) > 0) {
                     tmpData.add(data);
                 }
-            } else {
+            }
+
+            else {
                 tmpData.add(data);
             }
         }
+
         db.close();
         return tmpData;
     }

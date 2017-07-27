@@ -1,12 +1,11 @@
 package bl;
 
 import android.database.sqlite.SQLiteDatabase;
-import android.widget.LinearLayout;
 
 import java.util.List;
 
-import library.salesforce.common.mTypePertanyaanData;
-import library.salesforce.dal.mTypePertanyaanDA;
+import library.spgmobile.common.mTypePertanyaanData;
+import library.spgmobile.dal.mTypePertanyaanDA;
 
 /**
  * Created by Dewi Oktaviani on 05/05/2017.

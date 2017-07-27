@@ -38,13 +38,13 @@ import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.bean.SwipeMenu;
 import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.OnMenuItemClickListener;
 import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.SwipeMenuCreator;
 import edu.swu.pulltorefreshswipemenulistview.library.util.RefreshTime;
-import library.salesforce.common.AppAdapter;
-import library.salesforce.common.clsSwipeList;
-import library.salesforce.common.tPurchaseOrderDetailData;
-import library.salesforce.common.tPurchaseOrderHeaderData;
-import library.salesforce.common.tSalesProductDetailData;
-import library.salesforce.common.tSalesProductHeaderData;
-import library.salesforce.common.visitplanAbsenData;
+import library.spgmobile.common.AppAdapter;
+import library.spgmobile.common.clsSwipeList;
+import library.spgmobile.common.tPurchaseOrderDetailData;
+import library.spgmobile.common.tPurchaseOrderHeaderData;
+import library.spgmobile.common.tSalesProductDetailData;
+import library.spgmobile.common.tSalesProductHeaderData;
+import library.spgmobile.common.visitplanAbsenData;
 
 /**
  * Created by XSIS on 21/03/2017.
