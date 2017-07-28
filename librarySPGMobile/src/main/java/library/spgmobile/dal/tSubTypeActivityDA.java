@@ -4,6 +4,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import library.spgmobile.common.tActivityMobileData;
 import library.spgmobile.common.tSubTypeActivityData;
 import library.spgmobile.common.tUserLoginData;
 
@@ -33,7 +35,7 @@ public class tSubTypeActivityDA {
                 +dt.Property_txtName+","
                 +dt.Property_txtType+","
                 +dt.Property_bitActive+") "+
-                "values("
+                "values("+"'"
                 +String.valueOf(data.get_intSubTypeActivity())+"','"
                 +String.valueOf(data.get_txtName())+"','"
                 +String.valueOf(data.get_txtType())+"','"
@@ -44,6 +46,32 @@ public class tSubTypeActivityDA {
         // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTACTS);
         // Create tables again
+    }
+
+    //get data by txt type
+    public List<tSubTypeActivityData> getAllDataByTxtType(SQLiteDatabase db, String txtType) {
+        List<tSubTypeActivityData> contactList = null;
+        // Select All Query
+        tSubTypeActivityData dt=new tSubTypeActivityData();
+        String selectQuery = "SELECT  "+dt.Property_All+" FROM " + TABLE_CONTACTS +" WHERE "+dt.Property_txtType +"='"+txtType+"'";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            contactList=new ArrayList<tSubTypeActivityData>();
+            do {
+                tSubTypeActivityData contact = new tSubTypeActivityData();
+                contact.set_intSubTypeActivity(String.valueOf(cursor.getString(0)));
+                contact.set_bitActive(cursor.getString(1));
+                contact.set_txtName(cursor.getString(2));
+                contact.set_txtType(cursor.getString(3));
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        // return contact list
+        return contactList;
     }
 
 
