@@ -53,7 +53,8 @@ public class FragmentKuesionerAwal extends Fragment {
             listButton.get(i).setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
                     Bundle bundle = new Bundle();
-                        bundle.putInt("key_view", h);
+//                        bundle.putInt("key_view", h);
+                        bundle.putInt("Key_GroupId", id_);
                         FragmentKuesioner fragmentKuesioner = new FragmentKuesioner();
                         fragmentKuesioner.setArguments(bundle);
                         FragmentTransaction fragmentTransactionkuesioner = getFragmentManager().beginTransaction();

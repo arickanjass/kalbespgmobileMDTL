@@ -3264,6 +3264,7 @@ public class FragmentDownloadData extends Fragment {
                         mPertanyaanData _data = new mPertanyaanData();
                         JSONObject innerObj_Pertanyaan = (JSONObject) l.next();
                         _data.set_intQuestionId(String.valueOf(innerObj_Pertanyaan.get("IntQuestionId")));
+                        _data.set_intSoalId(String.valueOf(innerObj_Pertanyaan.get("IntSoalId")));
                         _data.set_intCategoryId(String.valueOf(innerObj_Pertanyaan.get("IntCategoryId")));
                         _data.set_txtQuestionDesc(String.valueOf(innerObj_Pertanyaan.get("TxtQuestionDesc")));
                         _data.set_intTypeQuestionId(String.valueOf(innerObj_Pertanyaan.get("IntTypeQuestionId")));
