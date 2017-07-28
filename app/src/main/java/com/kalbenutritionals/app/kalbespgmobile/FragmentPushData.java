@@ -768,7 +768,9 @@ public class FragmentPushData extends Fragment {
         tlsQuis.addView(tr);
 
         if(listOftJawabanUserData!=null){
+            int index = 1;
             for(tJawabanUserData dat : listOftJawabanUserData){
+
                 tr = new TableRow(getContext());
                 TextView tv_no_quis = new TextView(getContext());
                 tv_no_quis.setTextSize(12);
@@ -776,7 +778,7 @@ public class FragmentPushData extends Fragment {
                 tv_no_quis.setBackgroundColor(Color.parseColor("#f0f0f0"));
                 tv_no_quis.setGravity(Gravity.CENTER);
                 tv_no_quis.setTextColor(Color.BLACK);
-                tv_no_quis.setText(String.valueOf(dat.get_intQuestionId() + "."));
+                tv_no_quis.setText(String.valueOf(index + "."));
                 tv_no_quis.setLayoutParams(params);
                 tr.addView(tv_no_quis);
 
@@ -786,12 +788,12 @@ public class FragmentPushData extends Fragment {
                 answer.setBackgroundColor(Color.parseColor("#f0f0f0"));
                 answer.setTextColor(Color.BLACK);
                 answer.setGravity(Gravity.CENTER);
-                answer.setText("Done Question no. " + dat.get_intQuestionId());
+                answer.setText("Done Question no. " + index);
                 answer.setLayoutParams(params);
 
                 tr.addView(answer);
 
-                tlsQuis.addView(tr);
+                tlsQuis.addView(tr, index ++);
             }
         }
 
@@ -971,26 +973,6 @@ public class FragmentPushData extends Fragment {
             dataJson dtdataJson=new dataJson();
             if(dtJson!=null){
 
-                try {
-                    JSONArray Jresult= new clsHelperBL().callPushDataReturnJson(versionName,dtJson.getDtdataJson().txtJSON().toString(),dtJson.getFileUpload());
-                    Iterator iterator = Jresult.iterator();
-                    Boolean flag = true;
-                    String errorMess = "";
-                    APIData dtAPIDATA = new APIData();
-                    while (iterator.hasNext()){
-                        JSONObject innerObj = (JSONObject) iterator.next();
-                        int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
-                        if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)){
-                            new clsHelperBL().deleteDataPush(dtJson.getDtdataJson(), Jresult);
-                        } else {
-                            flag = false;
-                            errorMess = (String) innerObj.get(dtAPIDATA.strMessage);
-                            break;
-                        }
-                    }
-                }catch (Exception e3){
-                    e3.printStackTrace();
-                }
                 try {
                     JSONArray Jresult= new clsHelperBL().callPushDataReturnJson(versionName,dtJson.getDtdataJson().txtJSON().toString(),dtJson.getFileUpload());
                     new clsHelperBL().saveDataPush(dtJson.getDtdataJson(),Jresult);
