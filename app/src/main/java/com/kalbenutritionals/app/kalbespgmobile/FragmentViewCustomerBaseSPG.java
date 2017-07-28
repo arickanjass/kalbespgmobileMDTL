@@ -104,7 +104,7 @@ public class FragmentViewCustomerBaseSPG extends Fragment implements IXListViewL
                 switch(menuItem.getItemId()){
 
                     case R.id.action_add_customerbase:
-                        toolbar.setTitle("Add Customer Base SPG");
+                        toolbar.setTitle("Add Customer Base");
                         nv.setCheckedItem(2);
                         FragmentAddCustomerBaseSPG fragmentAddCustomerBaseSPG = new FragmentAddCustomerBaseSPG();
                         Bundle args = new Bundle();

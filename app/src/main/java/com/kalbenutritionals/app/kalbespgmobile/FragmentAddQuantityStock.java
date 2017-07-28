@@ -979,17 +979,17 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
     }
 
     public void viewQuantityFragment(){
-        Bundle bundle = new Bundle();
-        bundle.putString("key_view", "View_QuantityStock");
-        FragmentAddQuantityStock fragmentAddQuantityStock = new FragmentAddQuantityStock();
-        fragmentAddQuantityStock.setArguments(bundle);
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.frame, new FragmentViewQuantityStock()).commit();
+//        Bundle bundle = new Bundle();
+//        bundle.putString("key_view", "View_QuantityStock");
+//        FragmentAddQuantityStock fragmentAddQuantityStock = new FragmentAddQuantityStock();
+//        fragmentAddQuantityStock.setArguments(bundle);
+//        FragmentManager fragmentManager = getFragmentManager();
+//        fragmentManager.beginTransaction().replace(R.id.frame, new FragmentViewQuantityStock()).commit();
 
-//        Intent myIntent = new Intent(getContext(), MainMenu.class);
-//        myIntent.putExtra("key_view","View Quantity");
-//        getActivity().finish();
-//        startActivity(myIntent);
+        Intent myIntent = new Intent(getContext(), MainMenu.class);
+        myIntent.putExtra("key_view","View Quantity Stock");
+        getActivity().finish();
+        startActivity(myIntent);
 //        return;
     }
 

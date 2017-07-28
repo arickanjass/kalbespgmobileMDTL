@@ -18,7 +18,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.internal.NavigationMenuView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -128,7 +127,6 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
         if (!isMyServiceRunning(MyServiceNative.class)) {
             getApplicationContext().startService(serviceIntentMyServiceNative);
         }
-        getApplicationContext().startService(serviceIntentMyServiceNative);
 
         Intent serviceIntentMyTrackingLocationService = new Intent(getApplicationContext(), MyTrackingLocationService.class);
         if (!isMyServiceRunning(MyTrackingLocationService.class)) {
@@ -162,8 +160,6 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
         tUserLoginData dt = new tUserLoginBL().getUserActive();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        disableNavigationViewScrollbars(navigationView);
-
         View vwHeader = navigationView.getHeaderView(0);
 
         CircleImageView ivProfile = (CircleImageView) vwHeader.findViewById(R.id.profile_image);
@@ -402,7 +398,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
 
                     case R.id.historyAbsen:
-                        toolbar.setTitle("History Absen");
+                        toolbar.setTitle("Attendance History");
 
                         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -414,15 +410,28 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
                         return true;
 
-                    case R.id.PO:
-                        toolbar.setTitle("Purchase Order");
-                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                        FragmentPO fragmentPO = new FragmentPO();
-                        FragmentTransaction fragmentTransactionPO = getSupportFragmentManager().beginTransaction();
-                        fragmentTransactionPO.replace(R.id.frame, fragmentPO);
-                        fragmentTransactionPO.commit();
+                    case R.id.settings:
+                        toolbar.setTitle("Settings");
+
+                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+
+                        FragmentSettings fragmentSettings = new FragmentSettings();
+                        FragmentTransaction fragmentTransactionSettings = getSupportFragmentManager().beginTransaction();
+                        fragmentTransactionSettings.replace(R.id.frame, fragmentSettings);
+                        fragmentTransactionSettings.commit();
                         selectedId = 99;
+
                         return true;
+
+//                    case R.id.PO:
+//                        toolbar.setTitle("Purchase Order");
+//                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//                        FragmentPO fragmentPO = new FragmentPO();
+//                        FragmentTransaction fragmentTransactionPO = getSupportFragmentManager().beginTransaction();
+//                        fragmentTransactionPO.replace(R.id.frame, fragmentPO);
+//                        fragmentTransactionPO.commit();
+//                        selectedId = 99;
+//                        return true;
 
 //                    case R.id.soalkuesioner:
 //                        toolbar.setTitle("Kuesioner / Quiz");
@@ -560,7 +569,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
                         return true;
                     default:
-                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
                         try {
                             Class<?> fragmentClass = Class.forName(linkMenu[menuItem.getItemId()]);
                             try {
@@ -887,10 +896,10 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
             selectedId = 99;
         } else {
             try {
-                Class<?> fragmentClass = Class.forName("com.kalbenutritionals.app.kalbespgmobile.Fragment" + i_view.replaceAll("\\s+", "") + "SPG");
+                Class<?> fragmentClass = Class.forName("com.kalbenutritionals.app.kalbespgmobile.Fragment" + i_view.replaceAll("\\s+", ""));
                 try {
                     for (int i = 0; i < listMenu.length; i++) {
-                        if (("View " + listMenu[i]).equals(i_view + " SPG")) {
+                        if (("View " + listMenu[i]).equals(i_view)) {
                             selectedId = i;
                             break;
                         }
@@ -964,15 +973,5 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
             }
         }
         return false;
-    }
-
-    //remove scrollbar di navigation view
-    private void disableNavigationViewScrollbars(NavigationView navigationView) {
-        if (navigationView != null) {
-            NavigationMenuView navigationMenuView = (NavigationMenuView) navigationView.getChildAt(0);
-            if (navigationMenuView != null) {
-                navigationMenuView.setVerticalScrollBarEnabled(false);
-            }
-        }
     }
 }

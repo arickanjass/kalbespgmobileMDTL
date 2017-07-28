@@ -7,17 +7,20 @@ import org.json.simple.JSONObject;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import library.spgmobile.common.clsHelper;
 import library.spgmobile.common.linkAPI;
 import library.spgmobile.common.mconfigData;
+import library.spgmobile.common.tActivityMobileData;
 import library.spgmobile.common.tSubTypeActivityData;
 import library.spgmobile.common.tUserLoginData;
 import library.spgmobile.dal.clsHardCode;
 import library.spgmobile.dal.enumConfigData;
 import library.spgmobile.dal.mconfigDA;
+import library.spgmobile.dal.tActivityMobileDA;
 import library.spgmobile.dal.tSubTypeActivityDA;
 import library.spgmobile.dal.tUserLoginDA;
 
@@ -41,6 +44,17 @@ public class tSubTypeActivityBL extends clsMainBL{
         _db.close();
         return dtDetail;
     }
+
+    public List<tSubTypeActivityData> getAllDataByTxtType(String txtType){
+        SQLiteDatabase _db =getDb();
+        tSubTypeActivityDA _tSubTypeActivityDA = new tSubTypeActivityDA(db);
+        List<tSubTypeActivityData> dtDetail = _tSubTypeActivityDA.getAllDataByTxtType(db, txtType);
+        if(dtDetail == null){
+            dtDetail = new ArrayList<>();
+        }
+        return dtDetail;
+    }
+
     public JSONArray DownloadtSubTypeActivity(String versionName) throws Exception{
         SQLiteDatabase _db=getDb();
         tUserLoginDA _tUserLoginDA=new tUserLoginDA(_db);

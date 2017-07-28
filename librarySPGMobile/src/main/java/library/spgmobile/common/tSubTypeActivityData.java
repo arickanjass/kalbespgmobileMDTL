@@ -15,9 +15,9 @@ public class tSubTypeActivityData {
     public String Property_txtName = "txtName";
     public String Property_bitActive = "bitActive";
     public String Property_All = Property_intSubTypeActivity + "," +
-            Property_txtType + "," +
+            Property_bitActive + "," +
             Property_txtName + "," +
-            Property_bitActive;
+            Property_txtType;
 
     public String get_intSubTypeActivity() {
         return _intSubTypeActivity;

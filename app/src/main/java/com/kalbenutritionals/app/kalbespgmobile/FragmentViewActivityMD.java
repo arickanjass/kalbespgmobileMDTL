@@ -42,6 +42,7 @@ import java.util.Map;
 
 import bl.clsHelperBL;
 import bl.tActivityBL;
+import bl.tActivityMobileBL;
 import edu.swu.pulltorefreshswipemenulistview.library.PullToRefreshSwipeMenuListView;
 import edu.swu.pulltorefreshswipemenulistview.library.pulltorefresh.interfaces.IXListViewListener;
 import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.bean.SwipeMenu;
@@ -51,6 +52,7 @@ import edu.swu.pulltorefreshswipemenulistview.library.util.RefreshTime;
 import library.spgmobile.common.AppAdapter;
 import library.spgmobile.common.clsSwipeList;
 import library.spgmobile.common.tActivityData;
+import library.spgmobile.common.tActivityMobileData;
 import library.spgmobile.common.visitplanAbsenData;
 
 import static com.kalbenutritionals.app.kalbespgmobile.R.id.textView9;
@@ -64,7 +66,7 @@ public class FragmentViewActivityMD extends Fragment implements IXListViewListen
     private static Map<String, HashMap> mapMenu;
     private SliderLayout mDemoSlider;
 
-    static List<tActivityData> dt;
+    static List<tActivityMobileData> dt;
 
     private static Bitmap mybitmap1;
     private static Bitmap mybitmap2;
@@ -83,7 +85,7 @@ public class FragmentViewActivityMD extends Fragment implements IXListViewListen
             @Override
             public void onClick(View v) {
                 Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-                toolbar.setTitle("Add Activity MD");
+                toolbar.setTitle("Add Activity");
 
                 FragmentAddActivityMD fragmentAddActivityMD = new FragmentAddActivityMD();
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
@@ -279,7 +281,7 @@ public class FragmentViewActivityMD extends Fragment implements IXListViewListen
 
 //        tAbsenUserData dtAbsen = new tAbsenUserBL().getDataCheckInActive();
         visitplanAbsenData dtAbsen = new clsHelperBL().getDataCheckInActive();
-        dt = new tActivityBL().getAllDataByOutletCode(dtAbsen.get_txtOutletCode());
+        dt = new tActivityMobileBL().getAllDataByOutletCode(dtAbsen.get_txtOutletCode());
 
         swipeList.clear();
 

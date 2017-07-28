@@ -27,6 +27,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TableRow;
+import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -37,13 +38,18 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
 import bl.clsHelperBL;
 import bl.tActivityBL;
+import bl.tActivityMobileBL;
+import bl.tSubTypeActivityBL;
 import bl.tUserLoginBL;
-import library.spgmobile.common.tActivityData;
+import library.spgmobile.common.mUserRoleData;
+import library.spgmobile.common.tActivityMobileData;
+import library.spgmobile.common.tSubTypeActivityData;
 import library.spgmobile.common.tUserLoginData;
 import library.spgmobile.common.visitplanAbsenData;
 import library.spgmobile.dal.clsHardCode;
@@ -53,6 +59,7 @@ public class FragmentAddActivityMD extends Fragment implements View.OnClickListe
     ImageButton imgActivity1, imgActivity2;
     EditText etDescription;
     RadioGroup rdFlag;
+    RadioButton rbKalbe, rbComp;
     Spinner spnTypeActivity;
     TextInputLayout textInputLayoutDescription;
 
@@ -63,8 +70,8 @@ public class FragmentAddActivityMD extends Fragment implements View.OnClickListe
     private Uri uriImage;
     private int countActivity;
 
-    private tActivityData dtActivityData;
-    private tActivityBL _tActivityBL;
+    private tActivityMobileData dtActivityMobileData;
+    private tActivityMobileBL _tActivityBL;
 
     private static Bitmap photo1, photo2;
     private static ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -73,6 +80,8 @@ public class FragmentAddActivityMD extends Fragment implements View.OnClickListe
 
     private ArrayList<String> arrTypeActivity = new ArrayList<>();
     private String selectedTypeActivity;
+    private String selectedRbName;
+    private HashMap<String, String> HMsubType = new HashMap<>();
 
     @Nullable
     @Override
@@ -91,22 +100,26 @@ public class FragmentAddActivityMD extends Fragment implements View.OnClickListe
 
         etDescription = (EditText) v.findViewById(R.id.etNama);
         rdFlag = (RadioGroup) v.findViewById(R.id.radioFlag);
+        rbKalbe = (RadioButton) v.findViewById(R.id.rbKalbe);
+        rbComp = (RadioButton) v.findViewById(R.id.rbCompetitor);
 
         spnTypeActivity = (Spinner) v.findViewById(R.id.spn_typeActivity);
-
-        m_fillSpinner();
 
         TableRow tableRow = (TableRow) v.findViewById(R.id.tr_header_act);
         tableRow.setVisibility(View.GONE);
 
 //        countActivity = new tActivityBL().getCountActivity();
-        dtActivityData = new tActivityBL().getDataByBitActive();
+        dtActivityMobileData = new tActivityMobileBL().getDataByBitActive();
 
-        _tActivityBL = new tActivityBL();
+        _tActivityBL = new tActivityMobileBL();
 
         pht1=null;
         pht2=null;
 
+        arrTypeActivity.add("Select Type Kalbe");
+        selectedRbName = rbKalbe.getText().toString();
+
+        m_fillSpinner();
 
         rdFlag.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -114,30 +127,34 @@ public class FragmentAddActivityMD extends Fragment implements View.OnClickListe
                 if(i == R.id.rbKalbe){
                     arrTypeActivity.clear();
                     arrTypeActivity.add("Select Type Kalbe");
-                    ArrayAdapter<String> adapterspnTypeActivity = new ArrayAdapter<String>(getActivity(),
-                            android.R.layout.simple_spinner_item, arrTypeActivity);
-                    spnTypeActivity.setAdapter(adapterspnTypeActivity);
+//                    ArrayAdapter<String> adapterspnTypeActivity = new ArrayAdapter<String>(getActivity(),
+//                            android.R.layout.simple_spinner_item, arrTypeActivity);
+//                    spnTypeActivity.setAdapter(adapterspnTypeActivity);
+                    selectedRbName = rbKalbe.getText().toString();
+                    m_fillSpinner();
 //                    Toast.makeText(getActivity(), "kalbe", Toast.LENGTH_SHORT).show();
                 } else if (i == R.id.rbCompetitor){
                     arrTypeActivity.clear();
                     arrTypeActivity.add("Select Type Competitor");
-                    ArrayAdapter<String> adapterspnTypeActivity = new ArrayAdapter<String>(getActivity(),
-                            android.R.layout.simple_spinner_item, arrTypeActivity);
-                    spnTypeActivity.setAdapter(adapterspnTypeActivity);
+//                    ArrayAdapter<String> adapterspnTypeActivity = new ArrayAdapter<String>(getActivity(),
+//                            android.R.layout.simple_spinner_item, arrTypeActivity);
+//                    spnTypeActivity.setAdapter(adapterspnTypeActivity);
+                    selectedRbName = rbComp.getText().toString();
+                    m_fillSpinner();
 //                    Toast.makeText(getActivity(), "competitor", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
 
-        if(dtActivityData.get_intId() != null){
-            byte[] imgFile = dtActivityData.get_txtImg1();
+        if(dtActivityMobileData.get_intId() != null){
+            byte[] imgFile = dtActivityMobileData.get_txtImg1();
             if(imgFile!=null){
                 Bitmap myBitmap = BitmapFactory.decodeByteArray(imgFile, 0 , imgFile.length);
                 imgActivity1.setImageBitmap(myBitmap);
             }
 
-            byte[] imgFile2 = dtActivityData.get_txtImg2();
+            byte[] imgFile2 = dtActivityMobileData.get_txtImg2();
             if(imgFile2!=null){
                 Bitmap myBitmap = BitmapFactory.decodeByteArray(imgFile2, 0 , imgFile2.length);
                 imgActivity2.setImageBitmap(myBitmap);
@@ -177,7 +194,15 @@ public class FragmentAddActivityMD extends Fragment implements View.OnClickListe
     }
 
     private void m_fillSpinner() {
-        arrTypeActivity.add("Select Type Kalbe");
+//        arrTypeActivity.clear();
+//        arrTypeActivity.add("Select Type Kalbe");
+
+        List<tSubTypeActivityData> _tSubTypeActivityData = new tSubTypeActivityBL().getAllDataByTxtType(selectedRbName);
+
+        for (tSubTypeActivityData dt : _tSubTypeActivityData) {
+            arrTypeActivity.add(dt.get_txtName());
+            HMsubType.put(dt.get_txtName(), dt.get_intSubTypeActivity());
+        }
 
         ArrayAdapter<String> adapterspnTypeActivity = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_item, arrTypeActivity);
@@ -200,33 +225,7 @@ public class FragmentAddActivityMD extends Fragment implements View.OnClickListe
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.imageButton:
-//                Intent intentCamera1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                startActivityForResult(intentCamera1, CAMERA_CAPTURE_IMAGE1_REQUEST_CODE);
-//                tActivityData dt = null;
-//
-//                if(dtActivityData.get_intId() == null){
-//
-//                    dt = new tActivityData();
-//                    dt.set_intId("'" + String.valueOf(new clsMainActivity().GenerateGuid()) + "'");
-//                    dt.set_intActive("1");
-//                    dt.set_intIdSyn("0");
-//                    dt.set_intSubmit("0");
-//                    dt.set_txtDesc("");
-//
-//                    tAbsenUserData dtAbsen = new tAbsenUserBL().getDataCheckInActive();
-//                    dt.set_txtOutletCode(dtAbsen.get_txtOutletCode());
-//                    dt.set_txtOutletName(dtAbsen.get_txtOutletName());
-//                    dt.set_txtUserId(dtAbsen.get_txtUserId());
-//                    dt.set_intFlag("0");
-//                    dt.set_txtBranch(dtAbsen.get_txtBranchCode());
-//                    dt.set_txtDeviceId(dtAbsen.get_txtDeviceId());
-//
-//                    List<tActivityData> dtListActivityData = new ArrayList<>();
-//                    dtListActivityData.add(dt);
-//                    new tActivityBL().saveData(dtListActivityData);
-//
-//                    dtActivityData = dt;
-//                }
+
                 captureImage1();
 
                 break;
@@ -261,32 +260,33 @@ public class FragmentAddActivityMD extends Fragment implements View.OnClickListe
                             visitplanAbsenData dtAbsen = new clsHelperBL().getDataCheckInActive();
                             tUserLoginData dtLogin = new tUserLoginBL().getUserLogin();
 
-                            dtActivityData.set_intActive("0");
-                            dtActivityData.set_intIdSyn("0");
-                            dtActivityData.set_txtDesc(String.valueOf(etDescription.getText()));
-                            dtActivityData.set_intFlag(String.valueOf(radioFlag.getText()));
-//                            dtActivityData.set_intId(String.valueOf(new clsMainActivity().GenerateGuid()));
-                            dtActivityData.set_intSubmit("1");
-                            dtActivityData.set_txtOutletCode(dtAbsen.get_txtOutletCode());
-                            dtActivityData.set_txtOutletName(dtAbsen.get_txtOutletName());
+                            dtActivityMobileData.set_intActive("0");
+                            dtActivityMobileData.set_intIdSyn("0");
+                            dtActivityMobileData.set_txtDesc(String.valueOf(etDescription.getText()));
+                            dtActivityMobileData.set_intFlag(String.valueOf(radioFlag.getText()));
+//                            dtActivityMobileData.set_intId(String.valueOf(new clsMainActivity().GenerateGuid()));
+                            dtActivityMobileData.set_intSubmit("1");
+                            dtActivityMobileData.set_txtOutletCode(dtAbsen.get_txtOutletCode());
+                            dtActivityMobileData.set_txtOutletName(dtAbsen.get_txtOutletName());
                             if (dtAbsen.get_txtDeviceId() != null){
-                                dtActivityData.set_txtDeviceId(dtAbsen.get_txtDeviceId());
+                                dtActivityMobileData.set_txtDeviceId(dtAbsen.get_txtDeviceId());
                             }
-                            dtActivityData.set_txtBranch(dtAbsen.get_txtBranchCode());
-                            dtActivityData.set_txtUserId(dtLogin.get_TxtEmpId());
-                            dtActivityData.set_txtRoleId(dtLogin.get_txtRoleId());
-                            dtActivityData.set_txtImg1(pht1);
-                            dtActivityData.set_txtImg2(pht2);
+                            dtActivityMobileData.set_txtBranch(dtAbsen.get_txtBranchCode());
+                            dtActivityMobileData.set_txtUserId(dtLogin.get_TxtEmpId());
+                            dtActivityMobileData.set_txtRoleId(dtLogin.get_txtRoleId());
+                            dtActivityMobileData.set_txtImg1(pht1);
+                            dtActivityMobileData.set_txtImg2(pht2);
+                            dtActivityMobileData.set_txtTypeActivity(spnTypeActivity.getSelectedItem().toString());
 
                             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                             Calendar cal = Calendar.getInstance();
 
-                            dtActivityData.set_dtActivity(dateFormat.format(cal.getTime()));
+                            dtActivityMobileData.set_dtActivity(dateFormat.format(cal.getTime()));
 
-                            List<tActivityData> dtList = new ArrayList<>();
-                            dtList.add(dtActivityData);
+                            List<tActivityMobileData> dtList = new ArrayList<>();
+                            dtList.add(dtActivityMobileData);
 
-                            new tActivityBL().saveData(dtList);
+                            new tActivityMobileBL().saveData(dtList);
 
                             new clsMainActivity().showCustomToast(getContext(), "Saved", true);
                             viewActivityFragment();
@@ -398,21 +398,21 @@ public class FragmentAddActivityMD extends Fragment implements View.OnClickListe
             pht1 = output.toByteArray();
             imgActivity1.setImageBitmap(photo_view);
 
-            dtActivityData = new tActivityBL().getDataByBitActive();
+            dtActivityMobileData = new tActivityMobileBL().getDataByBitActive();
 
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Calendar cal = Calendar.getInstance();
 
-            if (dtActivityData != null) {
-                dtActivityData.set_txtImg1(pht1);
-                dtActivityData.set_txtImg2(pht2);
+            if (dtActivityMobileData != null) {
+                dtActivityMobileData.set_txtImg1(pht1);
+                dtActivityMobileData.set_txtImg2(pht2);
             } else {
-                dtActivityData.set_txtImg1(pht1);
-                dtActivityData.set_txtImg2(pht2);
+                dtActivityMobileData.set_txtImg1(pht1);
+                dtActivityMobileData.set_txtImg2(pht2);
             }
 
-            List<tActivityData> dtListActivity = new ArrayList<>();
-            dtListActivity.add(dtActivityData);
+            List<tActivityMobileData> dtListActivity = new ArrayList<>();
+            dtListActivity.add(dtActivityMobileData);
 
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -440,17 +440,17 @@ public class FragmentAddActivityMD extends Fragment implements View.OnClickListe
             pht2 = output.toByteArray();
             imgActivity2.setImageBitmap(photo_view);
 
-            dtActivityData = new tActivityBL().getDataByBitActive();
+            dtActivityMobileData = new tActivityMobileBL().getDataByBitActive();
 
-            if (dtActivityData != null) {
-                dtActivityData.set_txtImg1(pht1);
-                dtActivityData.set_txtImg2(pht2);
+            if (dtActivityMobileData != null) {
+                dtActivityMobileData.set_txtImg1(pht1);
+                dtActivityMobileData.set_txtImg2(pht2);
             } else {
-                dtActivityData.set_txtImg1(pht1);
-                dtActivityData.set_txtImg2(pht2);
+                dtActivityMobileData.set_txtImg1(pht1);
+                dtActivityMobileData.set_txtImg2(pht2);
             }
-            List<tActivityData> dtListActivity = new ArrayList<>();
-            dtListActivity.add(dtActivityData);
+            List<tActivityMobileData> dtListActivity = new ArrayList<>();
+            dtListActivity.add(dtActivityMobileData);
 
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -481,7 +481,7 @@ public class FragmentAddActivityMD extends Fragment implements View.OnClickListe
 
     public void viewActivityFragment(){
         Intent intent = new Intent(getContext(),MainMenu.class);
-        intent.putExtra("key_view", "View Actvity");
+        intent.putExtra("key_view", "View Activity MD");
         getActivity().finish();
         startActivity(intent);
         return;

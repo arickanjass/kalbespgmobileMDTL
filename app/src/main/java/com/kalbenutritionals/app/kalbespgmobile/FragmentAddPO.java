@@ -3,6 +3,7 @@ package com.kalbenutritionals.app.kalbespgmobile;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -183,17 +184,16 @@ TextView tv_tgl, tv_noPO;
     }
 
     public void viewPOFragment(){
-        Bundle bundle = new Bundle();
-        bundle.putString("key_view", "View_PO");
-        FragmentAddPO fragmentAddPO = new FragmentAddPO();
-        fragmentAddPO.setArguments(bundle);
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.frame, new FragmentPO()).commit();
-//        Intent myIntent = new Intent(getContext(), MainMenu.class);
-//        myIntent.putExtra("key_view","View PO");
-//        getActivity().finish();
-//        startActivity(myIntent);
-//        return;
+//        Bundle bundle = new Bundle();
+//        bundle.putString("key_view", "View_PO");
+//        FragmentAddPO fragmentAddPO = new FragmentAddPO();
+//        fragmentAddPO.setArguments(bundle);
+//        FragmentManager fragmentManager = getFragmentManager();
+//        fragmentManager.beginTransaction().replace(R.id.frame, new FragmentPO()).commit();
+        Intent myIntent = new Intent(getContext(), MainMenu.class);
+        myIntent.putExtra("key_view","PO");
+        getActivity().finish();
+        startActivity(myIntent);
     }
 
     @Override

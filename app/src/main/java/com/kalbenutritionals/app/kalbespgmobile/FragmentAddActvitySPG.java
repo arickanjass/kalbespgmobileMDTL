@@ -406,7 +406,7 @@ public class FragmentAddActvitySPG extends Fragment implements View.OnClickListe
 
     public void viewActivityFragment() {
         Intent intent = new Intent(getContext(), MainMenu.class);
-        intent.putExtra("key_view", "View Actvity");
+        intent.putExtra("key_view", "View Actvity SPG");
         getActivity().finish();
         startActivity(intent);
     }
