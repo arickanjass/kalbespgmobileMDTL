@@ -22,7 +22,8 @@ public class tJawabanUserDA {
                 + dt.Property_intUserId + " TEXT NULL," + dt.Property_intRoleId + " TEXT NULL,"
                 + dt.Property_intQuestionId + " TEXT NULL," + dt.Property_intTypeQuestionId + " TEXT NULL,"
                 + dt.Property_bolHaveAnswerList + " TEXT NULL," + dt.Property_intAnswerId + " TEXT NULL,"
-                + dt.Property_txtValue + " TEXT NULL," + dt.Property_decBobot + " TEXT NULL)";
+                + dt.Property_txtValue + " TEXT NULL," + dt.Property_decBobot + " TEXT NULL,"
+                + dt.Property_intSubmit + " TEXT NULL," + dt.Property_intSync + " TEXT NULL)";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
     public void DropTable(SQLiteDatabase db){
@@ -39,7 +40,9 @@ public class tJawabanUserDA {
                 + dt.Property_bolHaveAnswerList + ","
                 + dt.Property_intAnswerId + ","
                 + dt.Property_txtValue + ","
-                + dt.Property_decBobot + ") " + "values('"
+                + dt.Property_decBobot + ","
+                + dt.Property_intSubmit  + ","
+                + dt.Property_intSync  + ") " + "values('"
                 + String.valueOf(data.get_intUserAnswer()) + "','"
                 + String.valueOf(data.get_intUserId()) + "','"
                 + String.valueOf(data.get_intRoleId()) + "','"
@@ -48,7 +51,9 @@ public class tJawabanUserDA {
                 + String.valueOf(data.get_bolHaveAnswerList()) + "','"
                 + String.valueOf(data.get_intAnswerId()) + "','"
                 + String.valueOf(data.get_txtValue()) + "','"
-                + String.valueOf(data.get_decBobot()) + "')");
+                + String.valueOf(data.get_decBobot()) + "','"
+                + String.valueOf(data.get_intSubmit()) + "','"
+                + String.valueOf(data.get_intSync()) +"')");
     }
     public void DeleteAllDatatJawabanUser(SQLiteDatabase db){
         db.execSQL("DELETE FROM " + TABLE_CONTACTS);
@@ -70,6 +75,33 @@ public class tJawabanUserDA {
                 contact.set_intAnswerId(cursor.getString(6));
                 contact.set_txtValue(cursor.getString(7));
                 contact.set_decBobot(cursor.getString(8));
+                contact.set_intSubmit(cursor.getString(9));
+                contact.set_intSync(cursor.getString(10));
+                contactList.add(contact);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return contactList;
+    }
+    public List<tJawabanUserData> GetDataToPushAnswer(SQLiteDatabase db){
+        List<tJawabanUserData> contactList = new ArrayList<tJawabanUserData>();
+        tJawabanUserData dt = new tJawabanUserData();
+        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intSubmit + "=1 AND " + dt.Property_intSync + " =0";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()){
+            do {
+                tJawabanUserData contact = new tJawabanUserData();
+                contact.set_intUserAnswer(cursor.getString(0));
+                contact.set_intUserId(cursor.getString(1));
+                contact.set_intRoleId(cursor.getString(2));
+                contact.set_intQuestionId(cursor.getString(3));
+                contact.set_intTypeQuestionId(cursor.getString(4));
+                contact.set_bolHaveAnswerList(cursor.getString(5));
+                contact.set_intAnswerId(cursor.getString(6));
+                contact.set_txtValue(cursor.getString(7));
+                contact.set_decBobot(cursor.getString(8));
+                contact.set_intSubmit(cursor.getString(9));
+                contact.set_intSync(cursor.getString(10));
                 contactList.add(contact);
             }while (cursor.moveToNext());
         }
