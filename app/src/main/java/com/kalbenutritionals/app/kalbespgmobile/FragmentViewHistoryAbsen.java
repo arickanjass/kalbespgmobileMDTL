@@ -216,7 +216,7 @@ public class FragmentViewHistoryAbsen extends Fragment implements IXListViewList
         tUserLoginData dtLogin = new tUserLoginBL().getUserActive();
 
         tvUsername.setText(dtLogin.get_txtUserName());
-        tvBranch.setText(data.get(position).get_txtBranchName());
+        tvBranch.setText(data.get(position).get_txtBranchName().equals("null") ? "Not Set":data.get(position).get_txtBranchName());
         tvOutlet.setText(data.get(position).get_txtOutletName());
         tvCheckin.setText(data.get(position).get_dtDateCheckIn());
         tvCheckout.setText(data.get(position).get_dtDateCheckOut());

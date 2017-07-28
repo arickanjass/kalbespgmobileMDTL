@@ -798,7 +798,7 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
 
     private void viewCustomerBaseFragment() {
         Intent intent = new Intent(getContext(), MainMenu.class);
-        intent.putExtra("key_view", "View Customer Base");
+        intent.putExtra("key_view", "View Customer Base SPG");
         getActivity().finish();
         startActivity(intent);
     }

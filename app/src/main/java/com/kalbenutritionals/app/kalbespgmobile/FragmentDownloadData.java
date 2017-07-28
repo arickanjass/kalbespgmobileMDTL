@@ -599,7 +599,7 @@ public class FragmentDownloadData extends Fragment {
             arrData.add("Quesioner  Ready");
             spnQuiz.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
             spnQuiz.setEnabled(true);
-        } else if (parentDataList.size() == 0 && kategoriDataList.size() == 0 && jawabanDataList.size() == 0 && typePertanyaanDataList.size() == 0 && pertanyaanDataList.size() ==0 && tGroupQuestionMappingDataList.size() >0) {
+        } else {
             ArrayAdapter<String> adapterspn = new ArrayAdapter<String>(getContext(),
                     android.R.layout.simple_spinner_item, strip);
             spnQuiz.setAdapter(adapterspn);
@@ -1504,26 +1504,25 @@ public class FragmentDownloadData extends Fragment {
         List<String> _array;
         APIData dtAPIDATA = new APIData();
         _array = new ArrayList<>();
-        Iterator i = JData.iterator();
-        Boolean flag = true;
-        String ErrorMess = "";
-        List<tCustomerBasedMobileHeaderData> ListdataHeader = new ArrayList<>();
-        while (i.hasNext()) {
-            org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
+        for (Object aJData : JData) {
+            JSONObject innerObj = (JSONObject) aJData;
 
             try {
                 JSONArray JsonArray_header = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListDatatCustomerBasedHeader_mobile")));
                 if (JsonArray_header != null) {
-                    Iterator j = JsonArray_header.iterator();
 
-                    while (j.hasNext()) {
+                    for (Object aJsonArray_header : JsonArray_header) {
                         tCustomerBasedMobileHeaderData _data = new tCustomerBasedMobileHeaderData();
-                        org.json.simple.JSONObject innerObj_detail = (org.json.simple.JSONObject) j.next();
+                        JSONObject innerObj_detail = (JSONObject) aJsonArray_header;
                         _data.set_bitActive(String.valueOf(innerObj_detail.get("_bitActive")));
                         _data.set_dtDate(String.valueOf(innerObj_detail.get("_dtDate")));
                         _data.set_intSubmit("1");
                         _data.set_intSync("1");
                         _data.set_intPIC(String.valueOf(innerObj_detail.get("_intPIC")));
+                        _data.set_intAge(String.valueOf(innerObj_detail.get("_intAge")));
+                        _data.set_intAgeTypeFlag(String.valueOf(innerObj_detail.get("_intAgeTypeFlag")));
+                        _data.set_txtLOB(String.valueOf(innerObj_detail.get("_txtLOB")));
+                        _data.set_txtTglLahir(String.valueOf(innerObj_detail.get("_txtTglLahir")));
                         _data.set_txtALamat(String.valueOf(innerObj_detail.get("_txtALamat")));
                         _data.set_txtBranchCode(String.valueOf(innerObj_detail.get("_txtBranchCode")));
                         _data.set_txtDeviceId(String.valueOf(innerObj_detail.get("_txtDeviceId")));
@@ -1539,15 +1538,15 @@ public class FragmentDownloadData extends Fragment {
                         _data.set_txtTelpKantor(String.valueOf(innerObj_detail.get("_txtTelpKantor")));
                         _data.set_intTrCustomerId(String.valueOf(innerObj_detail.get("_txtTrCustomerId")));
                         _data.set_txtUserId(String.valueOf(innerObj_detail.get("_txtUserId")));
+                        _data.set_txtTelp2(String.valueOf(innerObj_detail.get("_txtTelp2")));
                         new tCustomerBasedMobileHeaderBL().saveData(_data);
                     }
 
                     JSONArray JsonArray_detail = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListDatatCustomerBasedDetail_mobile")));
-                    Iterator k = JsonArray_detail.iterator();
 
-                    while (k.hasNext()) {
+                    for (Object aJsonArray_detail : JsonArray_detail) {
                         tCustomerBasedMobileDetailData _data = new tCustomerBasedMobileDetailData();
-                        org.json.simple.JSONObject innerObj_detail = (org.json.simple.JSONObject) k.next();
+                        JSONObject innerObj_detail = (JSONObject) aJsonArray_detail;
                         _data.set_bitActive(String.valueOf(innerObj_detail.get("_bitActive")));
                         _data.set_dtInserted(String.valueOf(innerObj_detail.get("_dtInserted")));
                         _data.set_dtUpdated(String.valueOf(innerObj_detail.get("_dtUpdated")));
@@ -1559,15 +1558,18 @@ public class FragmentDownloadData extends Fragment {
                         _data.set_intTrCustomerId(String.valueOf(innerObj_detail.get("_txtTrCustomerId")));
                         _data.set_intTrCustomerIdDetail(String.valueOf(innerObj_detail.get("_txtTrCustomerIdDetail")));
                         _data.set_txtUpdatedBy(String.valueOf(innerObj_detail.get("_txtUpdatedBy")));
+                        _data.set_txtUsiaKehamilan(String.valueOf(innerObj_detail.get("_intUsiaKehamilan")));
+                        _data.set_txtTglLahir(String.valueOf(innerObj_detail.get("_txtDateOfBirth")));
+                        _data.set_intAge(String.valueOf(innerObj_detail.get("_intUmur")));
+                        _data.set_intAgeTypeFlag(String.valueOf(innerObj_detail.get("_intAgeTypeFlag")));
                         new tCustomerBasedMobileDetailBL().saveData(_data);
                     }
 
                     JSONArray JsonArray_detailProduct = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListDatatCustomerBasedDetailProduct_mobile")));
-                    Iterator l = JsonArray_detailProduct.iterator();
 
-                    while (l.hasNext()) {
+                    for (Object aJsonArray_detailProduct : JsonArray_detailProduct) {
                         tCustomerBasedMobileDetailProductData _data = new tCustomerBasedMobileDetailProductData();
-                        org.json.simple.JSONObject innerObj_detail = (org.json.simple.JSONObject) l.next();
+                        JSONObject innerObj_detail = (JSONObject) aJsonArray_detailProduct;
                         _data.set_bitActive(String.valueOf(innerObj_detail.get("_bitActive")));
                         _data.set_dtInserted(String.valueOf(innerObj_detail.get("_dtInserted")));
                         _data.set_dtUpdated(String.valueOf(innerObj_detail.get("_dtUpdated")));
@@ -1578,6 +1580,9 @@ public class FragmentDownloadData extends Fragment {
                         _data.set_intTrCustomerIdDetail(String.valueOf(innerObj_detail.get("_txtTrCustomerIdDetail")));
                         _data.set_txtUpdatedBy(String.valueOf(innerObj_detail.get("_txtUpdatedBy")));
                         _data.set_txtProductBrandQty(String.valueOf(innerObj_detail.get("_intProductBrandQty")));
+                        _data.set_txtProductCompetitorCode(String.valueOf(innerObj_detail.get("_txtProductCodeCompetitor")));
+                        _data.set_txtProductCompetitorName(String.valueOf(innerObj_detail.get("_txtProductNameCompetitor")));
+                        _data.set_txtProductBrandCodeCRM(String.valueOf(innerObj_detail.get("_txtProductBrandCodeCRM")));
                         new tCustomerBasedMobileDetailProductBL().saveData(_data);
                     }
                 }
@@ -1600,8 +1605,6 @@ public class FragmentDownloadData extends Fragment {
                 _array.add(_data.get_txtBranchCode() + " - " + _data.get_txtBranchName());
 //                _Listdata.add(_data);
             } else {
-                flag = false;
-                ErrorMess = (String) innerObj.get(dtAPIDATA.strMessage);
                 break;
             }
         }
@@ -3276,19 +3279,18 @@ public class FragmentDownloadData extends Fragment {
 
 
                     JSONArray jsonArray_listJawaban = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListmListJawaban_mobile")));
-                    if (jsonArray_listJawaban != null ) {
-                        Iterator n = jsonArray_listJawaban.iterator();
-                        while (n.hasNext()) {
-                            mListJawabanData _data = new mListJawabanData();
-                            JSONObject innerObj_listJawaban = (JSONObject) n.next();
-                            _data.set_intListAnswerId(String.valueOf(innerObj_listJawaban.get("IntListAnswerId")));
-                            _data.set_intQuestionId(String.valueOf(innerObj_listJawaban.get("IntQuestionId")));
-                            _data.set_intTypeQuestionId(String.valueOf(innerObj_listJawaban.get("IntTypeQuestionId")));
-                            _data.set_txtKey(String.valueOf(innerObj_listJawaban.get("TxtKey")));
-                            _data.set_txtValue(String.valueOf(innerObj_listJawaban.get("TxtValue")));
-                            new mListJawabanBL().SaveData(_data);
-                        }
+                    Iterator n = jsonArray_listJawaban.iterator();
+                    while (n.hasNext()) {
+                        mListJawabanData _data = new mListJawabanData();
+                        JSONObject innerObj_listJawaban = (JSONObject) n.next();
+                        _data.set_intListAnswerId(String.valueOf(innerObj_listJawaban.get("IntListAnswerId")));
+                        _data.set_intQuestionId(String.valueOf(innerObj_listJawaban.get("IntQuestionId")));
+                        _data.set_intTypeQuestionId(String.valueOf(innerObj_listJawaban.get("IntTypeQuestionId")));
+                        _data.set_txtKey(String.valueOf(innerObj_listJawaban.get("TxtKey")));
+                        _data.set_txtValue(String.valueOf(innerObj_listJawaban.get("TxtValue")));
+                        new mListJawabanBL().SaveData(_data);
                     }
+
 
                     JSONArray jsonArray_typePertanyaan = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListDatamTypePertanyaan_mobile")));
 

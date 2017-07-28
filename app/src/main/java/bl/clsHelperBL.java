@@ -175,6 +175,9 @@ public class clsHelperBL extends clsMainBL {
         } else if (dataAbsen == null && dataVisit.size()!=0){
 
             for(tVisitPlanRealisasiData data : dataVisit){
+                if(data.get_dateCheckout().equals("null")){
+                    continue;
+                }
                 visitplanAbsenData visitAbsen = new visitplanAbsenData();
                 visitAbsen.set_txtId(data.get_txtDataIDRealisasi().toString());
                 visitAbsen.set_txtOutletCode(data.get_txtOutletCode().toString());
@@ -543,7 +546,7 @@ public class clsHelperBL extends clsMainBL {
             List<tPurchaseOrderHeaderData> ListOfPurchaseOrderHeader = _tPurchaseOrderHeaderDA.getAllDataToPushData(db);
             List<tPurchaseOrderDetailData> ListOfPurchaseOrderDetail = _tPurchaseOrderDetailDA.getAllDataToPushDataPO(db, ListOfPurchaseOrderHeader);
             List<tSalesProductQuantityHeaderData> ListOfSalesProductQuantityHeader = _tSalesProductQuantityDA.getAllDataToPushData(db);
-            List<tJawabanUserData> ListOfJawabanUser = _tJawabanUserDA.GetDataToPushAnswer(db);
+            List<tJawabanUserData> ListOfJawabanUser = _tJawabanUserDA.GetAllData(db);
             List<tSalesProductQuantityDetailData> ListOfSalesProductQuantityDetail = _tSalesProductQuantityDetailDA.getAllDataToPushData(db, ListOfSalesProductQuantityHeader);
             List<tSalesProductQuantityImageData> ListOfSalesProductQuantityImage = _tSalesProductQuantityImageDA.getAllDataToPushData(db, ListOfSalesProductQuantityHeader);
             List<trackingLocationData> ListOfTrackingLocation = _trackingLocationDA.getAllDataToPushData(db);
@@ -709,8 +712,21 @@ public class clsHelperBL extends clsMainBL {
 
     public void saveDataPush(dataJson dtJson, org.json.simple.JSONArray JsonResult) {
         SQLiteDatabase db = getDb();
+        APIData dtAPIDATA = new APIData();
+        Iterator i = JsonResult.iterator();
+        boolean validPush = false;
+        while (i.hasNext()) {
+            org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
+            int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
+            if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
+                validPush = true;
+            } else {
+                validPush = false;
+                break;
+            }
+        }
 
-        if (dtJson.getListOftAbsenUserData() != null) {
+        if (validPush && dtJson.getListOftAbsenUserData() != null) {
             Iterator j = null;
             j = JsonResult.iterator();
             while (j.hasNext()) {
@@ -731,14 +747,14 @@ public class clsHelperBL extends clsMainBL {
             }
         }
 
-        if (dtJson.getListOftVisitPlanRealisasiData() != null) {
+        if (validPush && dtJson.getListOftVisitPlanRealisasiData() != null) {
             for (tVisitPlanRealisasiData dt : dtJson.getListOftVisitPlanRealisasiData()) {
                 tVisitPlanRealisasiDA _tVisitPlanRealisasiDA = new tVisitPlanRealisasiDA(db);
                 dt.set_intPush("1");
                 _tVisitPlanRealisasiDA.UpdatePushVisitPlan_MobileData(db, dt);
             }
         }
-        if (dtJson.getListOftActivityData() != null) {
+        if (validPush && dtJson.getListOftActivityData() != null) {
             for (tActivityData dt : dtJson.getListOftActivityData()) {
                 tActivityDA _tActivityDA = new tActivityDA(db);
                 dt.set_intIdSyn("1");
@@ -746,7 +762,7 @@ public class clsHelperBL extends clsMainBL {
             }
         }
 
-        if (dtJson.getListOftLeaveMobileData() != null) {
+        if (validPush && dtJson.getListOftLeaveMobileData() != null) {
             for (tLeaveMobileData dt : dtJson.getListOftLeaveMobileData()) {
                 tLeaveMobileDA _tLeaveMobileDA = new tLeaveMobileDA(db);
                 dt.set_intLeaveIdSync("1");
@@ -754,7 +770,7 @@ public class clsHelperBL extends clsMainBL {
             }
         }
 
-        if (dtJson.getListOftSalesProductHeaderData() != null) {
+        if (validPush && dtJson.getListOftSalesProductHeaderData() != null) {
             for (tSalesProductHeaderData dt : dtJson.getListOftSalesProductHeaderData()) {
                 tSalesProductHeaderDA _tSalesProductHeaderDA = new tSalesProductHeaderDA(db);
                 dt.set_intSync("1");
@@ -762,7 +778,7 @@ public class clsHelperBL extends clsMainBL {
             }
         }
 
-        if (dtJson.getListOftPurchaseOrderHeaderData() != null){
+        if (validPush && dtJson.getListOftPurchaseOrderHeaderData() != null){
             for (tPurchaseOrderHeaderData dt : dtJson.getListOftPurchaseOrderHeaderData()){
                 tPurchaseOrderHeaderDA _tPurchaseOrderHeaderDA = new tPurchaseOrderHeaderDA(db);
                 dt.set_intSync("1");
@@ -770,15 +786,7 @@ public class clsHelperBL extends clsMainBL {
             }
         }
 
-        if (dtJson.getListOftJawabanUserData() != null) {
-            for (tJawabanUserData dt : dtJson.getListOftJawabanUserData()) {
-                tJawabanUserDA _tJawabanUserDA = new tJawabanUserDA(db);
-                dt.set_intSync("1");
-              _tJawabanUserDA.SaveDatatJawabanUser(db, dt);
-            }
-        }
-
-        if (dtJson.getListOftSalesProductQuantityHeaderData() != null){
+        if (validPush && dtJson.getListOftSalesProductQuantityHeaderData() != null){
             for (tSalesProductQuantityHeaderData dt : dtJson.getListOftSalesProductQuantityHeaderData()){
                 tSalesProductQuantityHeaderDA _tSalesProductQuantityDA = new tSalesProductQuantityHeaderDA(db);
                 dt.set_intSync("1");
@@ -786,7 +794,7 @@ public class clsHelperBL extends clsMainBL {
             }
         }
 
-        if (dtJson.getListOfTrackingLocationData() != null){
+        if (validPush && dtJson.getListOfTrackingLocationData() != null){
             for (trackingLocationData dt : dtJson.getListOfTrackingLocationData()){
                 trackingLocationDA _trackingLocationDA = new trackingLocationDA(db);
                 dt.set_intSync("1");
@@ -794,7 +802,7 @@ public class clsHelperBL extends clsMainBL {
             }
         }
 
-        if (dtJson.getListOfKoordinasiOutletData() != null){
+        if (validPush && dtJson.getListOfKoordinasiOutletData() != null){
             for (KoordinasiOutletData dt : dtJson.getListOfKoordinasiOutletData()){
                 KoordinasiOutletDA _KoordinasiOutletDA = new KoordinasiOutletDA(db);
                 dt.set_intSync("1");
@@ -802,15 +810,29 @@ public class clsHelperBL extends clsMainBL {
             }
         }
 
-        if (dtJson.get_ListOftCustomerBasedMobileHeaderData() != null) {
-            for (tCustomerBasedMobileHeaderData dt : dtJson.get_ListOftCustomerBasedMobileHeaderData()) {
-                tCustomerBasedMobileHeaderDA _tCustomerBasedMobileHeaderDA = new tCustomerBasedMobileHeaderDA(db);
-                dt.set_intSync("1");
-                _tCustomerBasedMobileHeaderDA.SaveDatatCustomerBasedMobileHeaderData(db, dt);
+        if (validPush && dtJson.get_ListOftCustomerBasedMobileHeaderData() != null) {
+            Iterator j = null;
+            j = JsonResult.iterator();
+            while (j.hasNext()) {
+                org.json.simple.JSONObject innerObj_Header = (org.json.simple.JSONObject) j.next();
+                org.json.simple.JSONArray JsonArray_Detail = (JSONArray) innerObj_Header.get("ListOftCustomerBasedMobileHeader");
+                Iterator jDetail = JsonArray_Detail.iterator();
+                while (jDetail.hasNext()) {
+                    org.json.simple.JSONObject innerObj_Detail = (org.json.simple.JSONObject) jDetail.next();
+                    for (tCustomerBasedMobileHeaderData dt : dtJson.get_ListOftCustomerBasedMobileHeaderData()) {
+                        tCustomerBasedMobileHeaderDA _tCustomerBasedMobileHeaderDA = new tCustomerBasedMobileHeaderDA(db);
+                        if (String.valueOf(innerObj_Detail.get("_txtTrCustomerId")).equals(dt.get_intTrCustomerId())) {
+                            dt.set_intSync("1");
+                            dt.set_txtSubmissionId(String.valueOf(innerObj_Detail.get("_txtSubmissionId")));
+
+                            _tCustomerBasedMobileHeaderDA.SaveDatatCustomerBasedMobileHeaderData(db, dt);
+                        }
+                    }
+                }
             }
         }
 
-        if(dtJson.getListOfLogReceiverHeader_mobile() != null){
+        if(validPush && dtJson.getListOfLogReceiverHeader_mobile() != null){
             for (clsLogReceiverHeader_mobile dt : dtJson.getListOfLogReceiverHeader_mobile()){
                 clsLogReceiverHeader_mobileDA _clsLogReceiverHeader_mobileDA = new clsLogReceiverHeader_mobileDA(db);
                 dt.setIntSync("1");
@@ -818,7 +840,7 @@ public class clsHelperBL extends clsMainBL {
             }
         }
 
-        if(dtJson.getListOfLogReceiverDetail_mobile() != null){
+        if(validPush && dtJson.getListOfLogReceiverDetail_mobile() != null){
             for (clsLogReceiverDetail_mobile dt : dtJson.getListOfLogReceiverDetail_mobile()){
                 clsLogReceiverDetail_mobileDA _clsLogReceiverDetail_mobileDA = new clsLogReceiverDetail_mobileDA(db);
                 dt.setIntSync("1");

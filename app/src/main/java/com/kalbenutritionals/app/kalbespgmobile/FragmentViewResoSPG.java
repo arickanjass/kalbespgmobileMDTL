@@ -71,7 +71,7 @@ public class FragmentViewResoSPG extends Fragment implements IXListViewListener 
             @Override
             public void onClick(View v) {
                 Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-                toolbar.setTitle("Add Reso SPG");
+                toolbar.setTitle("Add Reso");
 
                 FragmentAddResoSPG fragmentAddResoSPG = new FragmentAddResoSPG();
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();

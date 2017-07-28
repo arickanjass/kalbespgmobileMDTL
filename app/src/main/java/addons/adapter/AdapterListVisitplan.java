@@ -54,9 +54,9 @@ public class AdapterListVisitplan extends BaseAdapter implements ListAdapter{
         holder.tv_name.setText(item);
         ImageView icon = (ImageView) convertView.findViewById(R.id.iconRealisasi);
         if (mAppList.get(position).get_intPIC().equals("Done")){
-            icon.setImageResource(R.drawable.ic_check_circle_black_24dp);
+            icon.setImageResource(R.drawable.ic_check_circle_green);
         }else{
-            icon.setImageResource(R.drawable.ic_error_black);
+            icon.setImageResource(R.drawable.ic_notice_red);
         }
         /*holder.btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override

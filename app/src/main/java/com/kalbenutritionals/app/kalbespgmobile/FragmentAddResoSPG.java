@@ -248,7 +248,7 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
 
     public void viewResoFragment() {
         Intent myIntent = new Intent(getContext(), MainMenu.class);
-        myIntent.putExtra("key_view", "View Reso");
+        myIntent.putExtra("key_view", "View Reso SPG");
         getActivity().finish();
         startActivity(myIntent);
     }

@@ -5,9 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import library.spgmobile.common.tActivityMobileData;
 import library.spgmobile.common.tSubTypeActivityData;
-import library.spgmobile.common.tUserLoginData;
 
 /**
  * Created by rhezaTesar on 7/18/2017.

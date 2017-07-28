@@ -34,6 +34,7 @@ public class clsHardCode  {
 	public String txtTable_tEmployeeBRWithLOB = "tEmployeeBRWithLOB";
 	public String txtTable_tUserLOB = "tUserLOB";
 	public String txtMessReset = "Your Password Sending to your Email..";
+	public String txtMessChangePass = "Change Password..";
 	public String txtLogError = "tLogError";
 	public String txtTable_mAbsenCheckin = "mAbsenCheckin";
 	public String txtTable_mGeolocationOutletSPG = "mGeolocationOutletSPG";
@@ -59,6 +60,7 @@ public class clsHardCode  {
 	public String txtTable_tCustomerBaseDetail = "tCustomerBaseDetail";
 	public String txtTable_tAbsenUser = "tAbsenUser";
 	public String txtTable_tActivity = "tActivity";
+	public String txtTable_tActivityMobile = "tActivityMobile";
 	public String txtTable_tCheckinOutletMD = "tCheckinOutletMD";
 	public String txtTable_tSalesProductDetail = "tSalesProductDetail";
 	public String txtTable_tSalesProductHeader = "tSalesProductHeader";

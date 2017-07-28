@@ -18,310 +18,339 @@
             android:layout_gravity="right"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:padding="15dp">
+            android:padding="10dp"
+            android:background="#e5e5e5">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Submission Type" />
-
-            <Spinner
-                android:id="@+id/spn_submission"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_edtext" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Submission ID" />
-
-            <EditText
-                android:id="@+id/etCustomerBasedNo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/bg_edtext"
-                android:enabled="false"
-                android:inputType=""
-                android:singleLine="true" />
-
-            <TextView
-                android:id="@+id/tvNama"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="PIC Name *" />
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/input_layout_nama"
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <EditText
-                    android:id="@+id/etNama"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_edtext"
-                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ "
-                    android:maxLength="100"
-                    android:singleLine="true" />
+                    android:orientation="vertical"
+                    android:padding="10dp">
 
-            </android.support.design.widget.TextInputLayout>
 
-            <TextView
-                android:id="@+id/textView2"
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Submission Type" />
+
+                    <Spinner
+                        android:id="@+id/spn_submission"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_edtext" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Submission ID" />
+
+                    <EditText
+                        android:id="@+id/etCustomerBasedNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/bg_edtext"
+                        android:enabled="false"
+                        android:inputType=""
+                        android:singleLine="true" />
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="PIC Gender" />
-
-            <RadioGroup
-                android:id="@+id/radioGender"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/radioMale"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="Male" />
-
-                <RadioButton
-                    android:id="@+id/radioFemale"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Female" />
-
-            </RadioGroup>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Options" />
-
-            <RadioGroup
-                android:id="@+id/radioDateType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/radioDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="PIC Date of Birth" />
-
-                <RadioButton
-                    android:id="@+id/radioAge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="PIC Age (years)" />
-
-            </RadioGroup>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="PIC Date of Birth"
-                android:visibility="gone" />
-
-            <DatePicker
-                android:id="@+id/dp_tgl_lahir_header"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_below="@+id/tv_tgl_lahir"
-                android:layout_marginBottom="10dp"
-                android:calendarViewShown="false"
-                android:datePickerMode="spinner"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/tv_tgl_lahir2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="PIC Date of Birth"
-                android:visibility="gone" />
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/input_layout_tgl_lahir"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/etTanggalLahir"
+                android:layout_marginTop="10dp">
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_edtext"
-                    android:clickable="true"
-                    android:drawableRight="@drawable/ic_date_range_black_24dp"
-                    android:editable="false"
-                    android:hint=""
-                    android:maxLength="100"
-                    android:singleLine="true" />
-            </android.support.design.widget.TextInputLayout>
+                    android:orientation="vertical"
+                    android:padding="5dp">
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/input_layout_age"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
+                    <TextView
+                        android:id="@+id/tvNama"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="PIC Name *" />
 
-                <EditText
-                    android:id="@+id/etAge"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_edtext"
-                    android:clickable="true"
-                    android:digits="0123456789"
-                    android:editable="false"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:singleLine="true" />
-            </android.support.design.widget.TextInputLayout>
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_layout_nama"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="PIC Address" />
+                        <EditText
+                            android:id="@+id/etNama"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_edtext"
+                            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ "
+                            android:maxLength="100"
+                            android:singleLine="true" />
 
-            <EditText
-                android:id="@+id/etAlamat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_edtext"
-                android:gravity="top"
-                android:maxLength="100"
-                android:maxLines="2"
-                android:minLines="2" />
+                    </android.support.design.widget.TextInputLayout>
 
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="PIC Phone *" />
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="PIC Gender" />
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/input_layout_telp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                    <RadioGroup
+                        android:id="@+id/radioGender"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/etTelpon"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_edtext"
-                    android:digits="0123456789-"
-                    android:drawableRight="@mipmap/ic_call"
-                    android:inputType="number"
-                    android:maxLength="15" />
+                        <RadioButton
+                            android:id="@+id/radioMale"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:text="Male" />
 
-            </android.support.design.widget.TextInputLayout>
+                        <RadioButton
+                            android:id="@+id/radioFemale"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Female" />
 
-            <TextView
-                android:id="@+id/textView10_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="PIC Phone 2 (Optional)" />
+                    </RadioGroup>
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/input_layout_telp2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Options" />
 
-                <EditText
-                    android:id="@+id/etTelpon2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_edtext"
-                    android:digits="0123456789-"
-                    android:drawableRight="@mipmap/ic_call"
-                    android:inputType="number"
-                    android:maxLength="15" />
+                    <RadioGroup
+                        android:id="@+id/radioDateType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-            </android.support.design.widget.TextInputLayout>
+                        <RadioButton
+                            android:id="@+id/radioDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:text="PIC Date of Birth" />
+
+                        <RadioButton
+                            android:id="@+id/radioAge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="PIC Age (years)" />
+
+                    </RadioGroup>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="PIC Date of Birth"
+                        android:visibility="gone" />
+
+                    <DatePicker
+                        android:id="@+id/dp_tgl_lahir_header"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:layout_below="@+id/tv_tgl_lahir"
+                        android:layout_marginBottom="10dp"
+                        android:calendarViewShown="false"
+                        android:datePickerMode="spinner"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tv_tgl_lahir2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="PIC Date of Birth"
+                        android:visibility="gone" />
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_layout_tgl_lahir"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/etTanggalLahir"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_edtext"
+                            android:clickable="true"
+                            android:drawableRight="@drawable/ic_date_range_black_24dp"
+                            android:editable="false"
+                            android:hint=""
+                            android:maxLength="100"
+                            android:singleLine="true" />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_layout_age"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone">
+
+                        <EditText
+                            android:id="@+id/etAge"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_edtext"
+                            android:clickable="true"
+                            android:digits="0123456789"
+                            android:editable="false"
+                            android:inputType="number"
+                            android:maxLength="2"
+                            android:singleLine="true" />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <TextView
+                        android:id="@+id/textView8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="PIC Address" />
+
+                    <EditText
+                        android:id="@+id/etAlamat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_edtext"
+                        android:gravity="top"
+                        android:maxLength="100"
+                        android:maxLines="2"
+                        android:minLines="2" />
+
+                    <TextView
+                        android:id="@+id/textView10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="PIC Phone *" />
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_layout_telp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/etTelpon"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_edtext"
+                            android:digits="0123456789-"
+                            android:drawableRight="@mipmap/ic_call"
+                            android:inputType="number"
+                            android:maxLength="15" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <TextView
+                        android:id="@+id/textView10_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="PIC Phone 2 (Optional)" />
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_layout_telp2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/etTelpon2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_edtext"
+                            android:digits="0123456789-"
+                            android:drawableRight="@mipmap/ic_call"
+                            android:inputType="number"
+                            android:maxLength="15" />
+
+                    </android.support.design.widget.TextInputLayout>
 
 
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="PIC Office Phone Number" />
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="PIC Office Phone Number" />
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/input_layout_telpKantor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_layout_telpKantor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                <EditText
-                    android:id="@+id/etTelponKantor"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_edtext"
-                    android:digits="0123456789-"
-                    android:inputType="number"
-                    android:maxLength="15"
-                    android:phoneNumber="true"
-                    android:singleLine="true" />
+                        <EditText
+                            android:id="@+id/etTelponKantor"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_edtext"
+                            android:digits="0123456789-"
+                            android:inputType="number"
+                            android:maxLength="15"
+                            android:phoneNumber="true"
+                            android:singleLine="true" />
 
-            </android.support.design.widget.TextInputLayout>
+                    </android.support.design.widget.TextInputLayout>
 
-            <TextView
-                android:id="@+id/textView22"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="PIC Pin BBM " />
+                    <TextView
+                        android:id="@+id/textView22"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="PIC Pin BBM " />
 
-            <EditText
-                android:id="@+id/etPinBBM"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_edtext"
-                android:maxLength="8" />
+                    <EditText
+                        android:id="@+id/etPinBBM"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_edtext"
+                        android:maxLength="8" />
 
-            <TextView
-                android:id="@+id/textView21"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="PIC Email (Optional)" />
+                    <TextView
+                        android:id="@+id/textView21"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="PIC Email (Optional)" />
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/input_layout_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_layout_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                <EditText
-                    android:id="@+id/etEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_edtext"
-                    android:ems="10"
-                    android:inputType="textEmailAddress"
-                    android:maxLength="100" />
+                        <EditText
+                            android:id="@+id/etEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_edtext"
+                            android:ems="10"
+                            android:inputType="textEmailAddress"
+                            android:maxLength="100" />
 
-            </android.support.design.widget.TextInputLayout>
+                    </android.support.design.widget.TextInputLayout>
 
-            <CheckBox
-                android:id="@+id/cbPIC"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:checked="false"
-                android:text="PIC as Consumer" />
+                    <CheckBox
+                        android:id="@+id/cbPIC"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:checked="false"
+                        android:text="PIC as Consumer" />
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
 
             <Button
                 android:id="@+id/btnAdd"
@@ -340,7 +369,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:visibility="gone"
+            android:visibility="visible"
             android:weightSum="1">
 
             <LinearLayout
