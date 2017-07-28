@@ -205,7 +205,7 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
 
         };
         InputFilter inputFilter = new InputFilter.AllCaps();
-        etNama.setFilters(new InputFilter[]{filter2,inputFilter});
+        etNama.setFilters(new InputFilter[]{filter2, inputFilter});
 
         etTglLhr.setOnTouchListener(new DrawableClickListener.RightDrawableClickListener(etTglLhr) {
             @Override
@@ -501,7 +501,7 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
 
         InputFilter inputFilter_etAlamat2 = new InputFilter.AllCaps();
 
-        etAlamat.setFilters(new InputFilter[]{inputFilter_etAlamat1,inputFilter_etAlamat2});
+        etAlamat.setFilters(new InputFilter[]{inputFilter_etAlamat1, inputFilter_etAlamat2});
 
         return v;
     }
@@ -2030,11 +2030,10 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
                 validate = false;
                 new clsMainActivity().setErrorMessage(getContext(), textInputLayoutAge, etAge, "PIC must set PIC Age");
                 etAge.setFocusable(true);
-            } else if(index == 1 && !etAge.toString().equals("")){
-                try{
+            } else if (index == 1 && !etAge.toString().equals("")) {
+                try {
                     Integer.parseInt(etAge.getText().toString());
-                }
-                catch (Exception ex){
+                } catch (Exception ex) {
                     validate = false;
                     new clsMainActivity().setErrorMessage(getContext(), textInputLayoutAge, etAge, "Age must a number");
                     etAge.setFocusable(true);
