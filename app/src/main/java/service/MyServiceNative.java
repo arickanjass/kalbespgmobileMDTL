@@ -118,22 +118,6 @@ public class MyServiceNative extends Service{
 				JSONArray JsonArrayResult=new clsHelperBL().callPushDataReturnJson(versionName,dtJson.getDtdataJson().txtJSON().toString(),dtJson.getFileUpload());
 				new clsHelperBL().saveDataPush(dtJson.getDtdataJson(),JsonArrayResult);
 
-				Iterator iterator = JsonArrayResult.iterator();
-				Boolean flag = true;
-				String errorMess = "";
-				APIData dtAPIDATA = new APIData();
-				while (iterator.hasNext()){
-					org.json.simple.JSONObject  innerObj = (org.json.simple.JSONObject )iterator.next();
-					int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
-					if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)){
-						new clsHelperBL().deleteDataPush(dtJson.getDtdataJson(), JsonArrayResult);
-					} else {
-						flag = false;
-						errorMess = (String) innerObj.get(dtAPIDATA.strMessage);
-						break;
-					}
-				}
-
 //				Intent serviceIntent = new Intent(this,MyNotificationService.class);
 //				serviceIntent.putExtra("From", "PUSHDATA");
 //				startService(serviceIntent);

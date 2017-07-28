@@ -172,7 +172,7 @@ public class FragmentKuesionerPart extends Fragment {
             dateView = new EditText(getContext());
             LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(35, 35);
             layoutParams1.gravity = Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL;
-            dateView.setId(linearLayout.getId() * 165);
+            dateView.setId(linearLayout.getId() * 145);
             dateView.setEnabled(false);
             ImageView imageView = new ImageView(getContext());
             imageView.setImageResource(R.drawable.ic_cal);
@@ -183,7 +183,7 @@ public class FragmentKuesionerPart extends Fragment {
             year=calendar.get(Calendar.YEAR);
             month=calendar.get(Calendar.MONTH);
             day=calendar.get(Calendar.DAY_OF_MONTH);
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             dateView.setHint(simpleDateFormat.format(calendar.getTime()));
 //            showDate(year,month,day);
 
@@ -223,7 +223,7 @@ public class FragmentKuesionerPart extends Fragment {
             };
     private void displayDate(){
         GregorianCalendar c = new GregorianCalendar(year, month, day);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateView.setText(simpleDateFormat.format(c.getTime()));
     }
 

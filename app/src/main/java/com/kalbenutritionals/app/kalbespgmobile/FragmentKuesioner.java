@@ -148,8 +148,9 @@ public class FragmentKuesioner extends Fragment {
                         for (int x = 0; x < layoutDate.getChildCount(); x++) {
                             View nextChild = layoutDate.getChildAt(x);
                             if (nextChild instanceof EditText) {
-                                dateView = (EditText) nextChild;
-                                dateView = (EditText) v.findViewById(linearLayout.getId() * 145);
+                                EditText editText = (EditText) nextChild;
+                                //dateView = (EditText) v.findViewById(linearLayout.getId() * 145);
+                                dateView = (EditText) v.findViewById(editText.getId());
                             }
                         }
                         listAnswer.add(layoutDate);
@@ -351,6 +352,8 @@ public class FragmentKuesioner extends Fragment {
                         dt.set_intAnswerId(HMJawaban.get(seekbar.getProgress()));
                         dt.set_txtValue(String.valueOf(seekbar.getProgress()));
                         dt.set_decBobot("");
+                        dt.set_intSubmit("1");
+                        dt.set_intSync("0");
                         new tJawabanUserBL().SaveDatatJawabanUser(dt);
                     }
                 }
@@ -366,6 +369,8 @@ public class FragmentKuesioner extends Fragment {
                 dt.set_intAnswerId(HMJawaban.get(spinner.getSelectedItem().toString()));
                 dt.set_txtValue(HMJawaban.get(HMJawaban.get(spinner.getSelectedItem().toString())));
                 dt.set_decBobot("");
+                dt.set_intSubmit("1");
+                dt.set_intSync("0");
                 new tJawabanUserBL().SaveDatatJawabanUser(dt);
             } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("3")) {
                 EditText editText = (EditText) listAnswer.get(i);
@@ -379,6 +384,8 @@ public class FragmentKuesioner extends Fragment {
                 dt.set_intAnswerId(HMJawaban.get(editText.getText().toString()));
                 dt.set_txtValue(editText.getText().toString());
                 dt.set_decBobot("");
+                dt.set_intSubmit("1");
+                dt.set_intSync("0");
                 new tJawabanUserBL().SaveDatatJawabanUser(dt);
             } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("2")) {
                 ListView listView = (ListView) listAnswer.get(i);
@@ -397,6 +404,8 @@ public class FragmentKuesioner extends Fragment {
                             dt.set_intAnswerId(HMJawaban.get(cbTestGet.getText().toString()));
                             dt.set_txtValue(HMJawaban.get(HMJawaban.get(cbTestGet.getText().toString())));
                             dt.set_decBobot("");
+                            dt.set_intSubmit("1");
+                            dt.set_intSync("0");
                             new tJawabanUserBL().SaveDatatJawabanUser(dt);
                         }
                     }
@@ -419,6 +428,8 @@ public class FragmentKuesioner extends Fragment {
                             dt.set_intAnswerId(HMJawaban.get(radioButton.getText().toString()));
                             dt.set_txtValue(HMJawaban.get(HMJawaban.get(radioButton.getText().toString())));
                             dt.set_decBobot("");
+                            dt.set_intSubmit("1");
+                            dt.set_intSync("0");
                             new tJawabanUserBL().SaveDatatJawabanUser(dt);
                         }
                     }
@@ -439,6 +450,8 @@ public class FragmentKuesioner extends Fragment {
                         dt.set_intAnswerId(HMJawaban.get(dateView.getText().toString()));
                         dt.set_txtValue(dateView.getText().toString());
                         dt.set_decBobot("");
+                        dt.set_intSubmit("1");
+                        dt.set_intSync("0");
                         new tJawabanUserBL().SaveDatatJawabanUser(dt);
                     }
                 }

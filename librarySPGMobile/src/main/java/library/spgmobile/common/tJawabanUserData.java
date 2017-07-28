@@ -14,6 +14,24 @@ public class tJawabanUserData {
     private String _intAnswerId;
     private String _txtValue;
     private String _decBobot;
+    private String _intSubmit;
+    private String _intSync;
+
+    public String get_intSubmit() {
+        return _intSubmit;
+    }
+
+    public void set_intSubmit(String _intSubmit) {
+        this._intSubmit = _intSubmit;
+    }
+
+    public String get_intSync() {
+        return _intSync;
+    }
+
+    public void set_intSync(String _intSync) {
+        this._intSync = _intSync;
+    }
 
     public synchronized String get_intUserAnswer() {
         return _intUserAnswer;
@@ -96,9 +114,11 @@ public class tJawabanUserData {
     public String Property_intAnswerId = "intAnswerId";
     public String Property_txtValue = "txtValue";
     public String Property_decBobot = "decBobot";
+    public String Property_intSubmit = "intSubmit";
+    public String Property_intSync = "intSync";
     public String Property_ListOftJawabanUserData = "ListOftJawabanUserData";
     public String Property_All = Property_intUserAnswer + "," + Property_intUserId + "," + Property_intRoleId + "," + Property_intQuestionId + "," + Property_intTypeQuestionId + "," + Property_bolHaveAnswerList
-            + "," + Property_intAnswerId + "," + Property_txtValue + "," + Property_decBobot;
+            + "," + Property_intAnswerId + "," + Property_txtValue + "," + Property_decBobot + "," + Property_intSubmit + "," + Property_intSync;
     public tJawabanUserData(){
         super();
     }

@@ -543,7 +543,7 @@ public class clsHelperBL extends clsMainBL {
             List<tPurchaseOrderHeaderData> ListOfPurchaseOrderHeader = _tPurchaseOrderHeaderDA.getAllDataToPushData(db);
             List<tPurchaseOrderDetailData> ListOfPurchaseOrderDetail = _tPurchaseOrderDetailDA.getAllDataToPushDataPO(db, ListOfPurchaseOrderHeader);
             List<tSalesProductQuantityHeaderData> ListOfSalesProductQuantityHeader = _tSalesProductQuantityDA.getAllDataToPushData(db);
-            List<tJawabanUserData> ListOfJawabanUser = _tJawabanUserDA.GetAllData(db);
+            List<tJawabanUserData> ListOfJawabanUser = _tJawabanUserDA.GetDataToPushAnswer(db);
             List<tSalesProductQuantityDetailData> ListOfSalesProductQuantityDetail = _tSalesProductQuantityDetailDA.getAllDataToPushData(db, ListOfSalesProductQuantityHeader);
             List<tSalesProductQuantityImageData> ListOfSalesProductQuantityImage = _tSalesProductQuantityImageDA.getAllDataToPushData(db, ListOfSalesProductQuantityHeader);
             List<trackingLocationData> ListOfTrackingLocation = _trackingLocationDA.getAllDataToPushData(db);
@@ -767,6 +767,14 @@ public class clsHelperBL extends clsMainBL {
                 tPurchaseOrderHeaderDA _tPurchaseOrderHeaderDA = new tPurchaseOrderHeaderDA(db);
                 dt.set_intSync("1");
                 _tPurchaseOrderHeaderDA.SaveDatatPurchaseOrderHeaderData(db,dt);
+            }
+        }
+
+        if (dtJson.getListOftJawabanUserData() != null) {
+            for (tJawabanUserData dt : dtJson.getListOftJawabanUserData()) {
+                tJawabanUserDA _tJawabanUserDA = new tJawabanUserDA(db);
+                dt.set_intSync("1");
+              _tJawabanUserDA.SaveDatatJawabanUser(db, dt);
             }
         }
 

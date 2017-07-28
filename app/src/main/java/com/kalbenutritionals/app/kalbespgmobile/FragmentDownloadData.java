@@ -3289,8 +3289,6 @@ public class FragmentDownloadData extends Fragment {
                         }
                     }
 
-
-
                     JSONArray jsonArray_typePertanyaan = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListDatamTypePertanyaan_mobile")));
 
                     Iterator m = jsonArray_typePertanyaan.iterator();
