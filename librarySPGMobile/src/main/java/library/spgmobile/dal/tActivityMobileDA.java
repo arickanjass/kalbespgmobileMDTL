@@ -40,6 +40,7 @@ public class tActivityMobileDA {
                 + dt.Property_txtBranch + " TEXT NULL,"
                 + dt.Property_txtRoleId + " TEXT NULL,"
                 + dt.Property_txtTypeActivity + " TEXT NULL,"
+                + dt.Property_intSubTypeActivity + " TEXT NULL,"
                 + dt.Property_txtDeviceId + " TEXT NULL"
                 +")";
         db.execSQL(CREATE_CONTACTS_TABLE);
@@ -97,6 +98,7 @@ public class tActivityMobileDA {
         cv.put(dt.Property_txtRoleId, String.valueOf(data.get_txtRoleId()));
         cv.put(dt.Property_txtBranch, data.get_txtBranch());
         cv.put(dt.Property_txtTypeActivity, data.get_txtTypeActivity());
+        cv.put(dt.Property_intSubTypeActivity, data.get_intSubTypeActivity());
         if(data.get_intId() == null){
             db.insert(TABLE_CONTACTS, null, cv);
         } else {
@@ -261,6 +263,7 @@ public class tActivityMobileDA {
                 contact.set_txtBranch(cursor.getString(13));
                 contact.set_txtRoleId(cursor.getString(14));
                 contact.set_txtTypeActivity(cursor.getString(15));
+                contact.set_intSubTypeActivity(cursor.getString(16));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -298,6 +301,7 @@ public class tActivityMobileDA {
                 contact.set_txtBranch(cursor.getString(13));
                 contact.set_txtRoleId(cursor.getString(14));
                 contact.set_txtTypeActivity(cursor.getString(15));
+                contact.set_intSubTypeActivity(cursor.getString(16));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -336,6 +340,7 @@ public class tActivityMobileDA {
                 contact.set_txtBranch(cursor.getString(13));
                 contact.set_txtRoleId(cursor.getString(14));
                 contact.set_txtTypeActivity(cursor.getString(15));
+                contact.set_intSubTypeActivity(cursor.getString(16));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -372,6 +377,7 @@ public class tActivityMobileDA {
                 contact.set_txtBranch(cursor.getString(13));
                 contact.set_txtRoleId(cursor.getString(14));
                 contact.set_txtTypeActivity(cursor.getString(15));
+                contact.set_intSubTypeActivity(cursor.getString(16));
                 // Adding contact to list
 //						contactList.add(contact);
             } while (cursor.moveToNext());
@@ -411,6 +417,7 @@ public class tActivityMobileDA {
                 contact.set_txtBranch(cursor.getString(13));
                 contact.set_txtRoleId(cursor.getString(14));
                 contact.set_txtTypeActivity(cursor.getString(15));
+                contact.set_intSubTypeActivity(cursor.getString(16));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -451,6 +458,7 @@ public class tActivityMobileDA {
                 contact.set_txtBranch(cursor.getString(13));
                 contact.set_txtRoleId(cursor.getString(14));
                 contact.set_txtTypeActivity(cursor.getString(15));
+                contact.set_intSubTypeActivity(cursor.getString(16));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -534,6 +542,7 @@ public class tActivityMobileDA {
                 contact.set_txtBranch(cursor.getString(13));
                 contact.set_txtRoleId(cursor.getString(14));
                 contact.set_txtTypeActivity(cursor.getString(15));
+                contact.set_intSubTypeActivity(cursor.getString(16));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());

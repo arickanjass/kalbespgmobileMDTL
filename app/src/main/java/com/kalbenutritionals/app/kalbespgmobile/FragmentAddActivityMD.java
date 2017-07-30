@@ -27,7 +27,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TableRow;
-import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -43,11 +42,9 @@ import java.util.List;
 import java.util.Locale;
 
 import bl.clsHelperBL;
-import bl.tActivityBL;
 import bl.tActivityMobileBL;
 import bl.tSubTypeActivityBL;
 import bl.tUserLoginBL;
-import library.spgmobile.common.mUserRoleData;
 import library.spgmobile.common.tActivityMobileData;
 import library.spgmobile.common.tSubTypeActivityData;
 import library.spgmobile.common.tUserLoginData;
@@ -277,6 +274,7 @@ public class FragmentAddActivityMD extends Fragment implements View.OnClickListe
                             dtActivityMobileData.set_txtImg1(pht1);
                             dtActivityMobileData.set_txtImg2(pht2);
                             dtActivityMobileData.set_txtTypeActivity(spnTypeActivity.getSelectedItem().toString());
+                            dtActivityMobileData.set_intSubTypeActivity(HMsubType.get(spnTypeActivity.getSelectedItem().toString()));
 
                             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                             Calendar cal = Calendar.getInstance();

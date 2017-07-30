@@ -28,6 +28,7 @@ import library.spgmobile.common.mCounterNumberData;
 import library.spgmobile.common.mconfigData;
 import library.spgmobile.common.tAbsenUserData;
 import library.spgmobile.common.tActivityData;
+import library.spgmobile.common.tActivityMobileData;
 import library.spgmobile.common.tCustomerBasedMobileDetailData;
 import library.spgmobile.common.tCustomerBasedMobileDetailProductData;
 import library.spgmobile.common.tCustomerBasedMobileHeaderData;
@@ -58,6 +59,7 @@ import library.spgmobile.dal.mCounterNumberDA;
 import library.spgmobile.dal.mconfigDA;
 import library.spgmobile.dal.tAbsenUserDA;
 import library.spgmobile.dal.tActivityDA;
+import library.spgmobile.dal.tActivityMobileDA;
 import library.spgmobile.dal.tCustomerBasedMobileDetailDA;
 import library.spgmobile.dal.tCustomerBasedMobileDetailProductDA;
 import library.spgmobile.dal.tCustomerBasedMobileHeaderDA;
@@ -516,6 +518,7 @@ public class clsHelperBL extends clsMainBL {
             tVisitPlanHeader_MobileDA _tVisitPlanHeader_MobileDA = new tVisitPlanHeader_MobileDA(db);
             tAbsenUserDA _tAbsenUserDA = new tAbsenUserDA(db);
             tActivityDA _tActivityDA = new tActivityDA(db);
+            tActivityMobileDA _tActivityMobileDA = new tActivityMobileDA(db);
             tLeaveMobileDA _tLeaveMobileDA =new tLeaveMobileDA(db);
             tSalesProductHeaderDA _tSalesProductHeaderDA = new tSalesProductHeaderDA(db);
             tSalesProductDetailDA _tSalesProductDetailDA = new tSalesProductDetailDA(db);
@@ -555,6 +558,7 @@ public class clsHelperBL extends clsMainBL {
             List<tLeaveMobileData> ListOftLeaveData=_tLeaveMobileDA.getAllDataPushData(db);
             List<tAbsenUserData> ListOftAbsenUserData = _tAbsenUserDA.getAllDataToPushData(db);
             List<tActivityData> ListOftActivityData = _tActivityDA.getAllDataToPushData(db);
+            List<tActivityMobileData> ListOftActivityMobileData = _tActivityMobileDA.getAllDataToPushData(db);
 
             List<clsLogReceiverHeader_mobile> ListOfLogReceiverHeader_mobile = _clsLogReceiverHeader_mobileDA.getAllDataToPushData(db);
             List<clsLogReceiverDetail_mobile> ListOfLogReceiverDetail_mobile = _clsLogReceiverDetail_mobileDA.getAllDataToPushData(db);
@@ -579,6 +583,17 @@ public class clsHelperBL extends clsMainBL {
                     }
                     if (dttActivityData.get_txtImg2() != null) {
                         FileUpload.put("FUActivity" + dttActivityData.get_intId() + "-2", dttActivityData.get_txtImg2());
+                    }
+                }
+            }
+            if (ListOftActivityMobileData != null) {
+                dtPush.setListOftActivityMobileData(ListOftActivityMobileData);
+                for (tActivityMobileData dttActivityMobileData : ListOftActivityMobileData) {
+                    if (dttActivityMobileData.get_txtImg1() != null) {
+                        FileUpload.put("FUActivityMobileNew" + dttActivityMobileData.get_intId() + "-1", dttActivityMobileData.get_txtImg1());
+                    }
+                    if (dttActivityMobileData.get_txtImg2() != null) {
+                        FileUpload.put("FUActivityMobileNew" + dttActivityMobileData.get_intId() + "-2", dttActivityMobileData.get_txtImg2());
                     }
                 }
             }
