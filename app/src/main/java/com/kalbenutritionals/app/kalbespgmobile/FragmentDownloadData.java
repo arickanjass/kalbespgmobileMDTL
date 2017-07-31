@@ -2909,7 +2909,7 @@ public class FragmentDownloadData extends Fragment {
 //                && mCategoryVisitPlanList.size()>0
                 ) {
 
-            goToMainMenu();
+//            goToMainMenu();
             //validate = 1;
 
 //            for(mEmployeeAreaData dt : data){
@@ -2918,6 +2918,7 @@ public class FragmentDownloadData extends Fragment {
 //                }
 //            }
         }
+        goToMainMenu();
 
 //        if(validate==1){
 //            goToMainMenu();
