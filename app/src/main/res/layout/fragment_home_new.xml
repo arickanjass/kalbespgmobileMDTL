@@ -8,69 +8,327 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/cardview_shadow_end_color"
-        android:orientation="vertical"
-        android:weightSum="4">
+        android:orientation="vertical">
 
-            <LinearLayout
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="#4CAF50"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/profile" />
+
+            <TextView
+                android:id="@+id/tvUsername"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#4CAF50"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:gravity="center"
-                android:orientation="vertical"
-                android:padding="10dp">
+                android:text="SUSANTI"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/profile_image"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:src="@drawable/profile" />
+            <TextView
+                android:id="@+id/tvBranchOutlet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="KEDIRI - DRAGON, TOKO"
+                android:textColor="@color/white" />
 
-                <TextView
-                    android:id="@+id/tvUsername"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center"
-                    android:text="SUSANTI"
-                    android:textColor="@color/white"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tvEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="arick_anjasmara@ymail.com"
+                android:textColor="@color/white" />
+        </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tvBranchOutlet"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:text="KEDIRI - DRAGON, TOKO"
-                    android:textColor="@color/white" />
-
-                <TextView
-                    android:id="@+id/tvEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:text="arick_anjasmara@ymail.com"
-                    android:textColor="@color/white" />
-            </LinearLayout>
-
-        <HorizontalScrollView
-            android:id="@+id/hsv"
-            android:layout_width="fill_parent"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginBottom="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
-            android:fillViewport="true"
-            android:measureAllChildren="false"
-            android:scrollbars="none">
+            android:orientation="vertical">
 
-            <!--parent layout bunder2-->
+            <HorizontalScrollView
+                android:id="@+id/hsv"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:fillViewport="true"
+                android:measureAllChildren="false"
+                android:scrollbars="none">
+
+                <!--parent layout bunder2-->
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <!--Reso-->
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <com.owater.library.CircleTextView
+                                android:id="@+id/tvTotalReso"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_weight="0.25"
+                                android:gravity="center"
+                                android:text="1234"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="25dp"
+                                app:ct_backgroundColor="#FFFFFF"
+                                app:ct_border_alpha="0.5"
+                                app:ct_border_color="@color/colorAccent"
+                                app:ct_border_width="10dp"
+                                app:ct_type="shadow_alpha" />
+
+                            <TextView
+                                android:id="@+id/textView38"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="RESO"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                        <!--Activity-->
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <com.owater.library.CircleTextView
+                                android:id="@+id/tvTotalActivity"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_weight="0.25"
+                                android:gravity="center"
+                                android:text="1234"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="25dp"
+                                app:ct_backgroundColor="#FFFFFF"
+                                app:ct_border_alpha="0.5"
+                                app:ct_border_color="@color/colorAccent"
+                                app:ct_border_width="10dp"
+                                app:ct_type="shadow_alpha" />
+
+                            <TextView
+                                android:id="@+id/textView40"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="ACTIVITY"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                        <!--Customer Based-->
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <com.owater.library.CircleTextView
+                                android:id="@+id/tvTotalCustomerBase"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_weight="0.25"
+                                android:gravity="center"
+                                android:text="1234"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="25dp"
+                                app:ct_backgroundColor="#FFFFFF"
+                                app:ct_border_alpha="0.5"
+                                app:ct_border_color="@color/colorAccent"
+                                app:ct_border_width="10dp"
+                                app:ct_type="shadow_alpha" />
+
+                            <TextView
+                                android:id="@+id/textView42"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="CONSUMER"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                        <!--Customer Based MTD-->
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <com.owater.library.CircleTextView
+                                android:id="@+id/tvTotalConsumerMTD"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_weight="0.25"
+                                android:gravity="center"
+                                android:text="1234"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="25dp"
+                                app:ct_backgroundColor="#FFFFFF"
+                                app:ct_border_alpha="0.5"
+                                app:ct_border_color="@color/colorAccent"
+                                app:ct_border_width="10dp"
+                                app:ct_type="shadow_alpha" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="CONSUMER MTD"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                        <!--Po Mobile-->
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="5dp"
+                            android:visibility="visible">
+
+                            <com.owater.library.CircleTextView
+                                android:id="@+id/tvTotalPO"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_weight="0.25"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="25dp"
+                                app:ct_backgroundColor="#FFFFFF"
+                                app:ct_border_alpha="0.5"
+                                app:ct_border_color="@color/colorAccent"
+                                app:ct_border_width="10dp"
+                                app:ct_type="shadow_alpha" />
+
+                            <TextView
+                                android:id="@+id/textView384"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="PO"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                        <!--Quantity Stock-->
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <com.owater.library.CircleTextView
+                                android:id="@+id/tvTotalQStock"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_weight="0.25"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="25dp"
+                                app:ct_backgroundColor="#FFFFFF"
+                                app:ct_border_alpha="0.5"
+                                app:ct_border_color="@color/colorAccent"
+                                app:ct_border_width="10dp"
+                                app:ct_type="shadow_alpha" />
+
+                            <TextView
+                                android:id="@+id/textView123"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Q.STOCK"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                        <!--<LinearLayout-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:gravity="center"-->
+                        <!--android:orientation="vertical">-->
+
+                        <!--<com.owater.library.CircleTextView-->
+                        <!--android:id="@+id/tvTotalCustomerBase2"-->
+                        <!--android:layout_width="80dp"-->
+                        <!--android:layout_height="80dp"-->
+                        <!--android:layout_weight="0.25"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="1234"-->
+                        <!--android:textColor="@color/colorAccent"-->
+                        <!--android:textSize="25dp"-->
+                        <!--app:ct_backgroundColor="#FFFFFF"-->
+                        <!--app:ct_border_alpha="0.5"-->
+                        <!--app:ct_border_color="@color/colorAccent"-->
+                        <!--app:ct_border_width="10dp"-->
+                        <!--app:ct_type="shadow_alpha" />-->
+
+                        <!--<TextView-->
+                        <!--android:id="@+id/textView423"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="MONTH TO DATE"-->
+                        <!--android:textSize="11sp" />-->
+                        <!--</LinearLayout>-->
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+            </HorizontalScrollView>
+
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -80,423 +338,172 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.3"
                     android:background="@color/white"
-                    android:gravity="center"
                     android:orientation="horizontal">
 
-                    <!--Reso-->
-
-                    <LinearLayout
+                    <TableLayout
+                        android:id="@+id/tlAbesen"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="5dp">
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/textView19">
 
-                        <com.owater.library.CircleTextView
-                            android:id="@+id/tvTotalReso"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_weight="0.25"
-                            android:gravity="center"
-                            android:text="1234"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="25dp"
-                            app:ct_backgroundColor="#FFFFFF"
-                            app:ct_border_alpha="0.5"
-                            app:ct_border_color="@color/colorAccent"
-                            app:ct_border_width="10dp"
-                            app:ct_type="shadow_alpha" />
+                        <TableRow
+                            android:background="#4CAF50"
+                            android:gravity="center_horizontal"
+                            android:padding="5dp">
 
-                        <TextView
-                            android:id="@+id/textView38"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="RESO"
-                            android:textSize="11sp" />
-                    </LinearLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Type"
+                                android:textColor="@color/white" />
 
-                    <!--Activity-->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Save"
+                                android:textColor="@color/white" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="5dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Unpushed"
+                                android:textColor="@color/white" />
 
-                        <com.owater.library.CircleTextView
-                            android:id="@+id/tvTotalActivity"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_weight="0.25"
-                            android:gravity="center"
-                            android:text="1234"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="25dp"
-                            app:ct_backgroundColor="#FFFFFF"
-                            app:ct_border_alpha="0.5"
-                            app:ct_border_color="@color/colorAccent"
-                            app:ct_border_width="10dp"
-                            app:ct_type="shadow_alpha" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Pushed"
+                                android:textColor="@color/white" />
+                        </TableRow>
 
-                        <TextView
-                            android:id="@+id/textView40"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="ACTIVITY"
-                            android:textSize="11sp" />
-                    </LinearLayout>
+                        <TableRow
+                            android:background="#f0f0f0"
+                            android:gravity="center_horizontal"
+                            android:padding="5dp">
 
-                    <!--Customer Based-->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Reso" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="5dp">
+                            <TextView
+                                android:id="@+id/tv_reso0"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:paddingRight="5dp"
+                                android:text="" />
 
-                        <com.owater.library.CircleTextView
-                            android:id="@+id/tvTotalCustomerBase"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_weight="0.25"
-                            android:gravity="center"
-                            android:text="1234"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="25dp"
-                            app:ct_backgroundColor="#FFFFFF"
-                            app:ct_border_alpha="0.5"
-                            app:ct_border_color="@color/colorAccent"
-                            app:ct_border_width="10dp"
-                            app:ct_type="shadow_alpha" />
+                            <TextView
+                                android:id="@+id/tv_reso1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:paddingRight="5dp"
+                                android:text="" />
 
-                        <TextView
-                            android:id="@+id/textView42"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="CONSUMER"
-                            android:textSize="11sp" />
-                    </LinearLayout>
+                            <TextView
+                                android:id="@+id/tv_reso2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:paddingRight="5dp"
+                                android:text="" />
+                        </TableRow>
 
-                    <!--Customer Based MTD-->
+                        <TableRow
+                            android:background="#f0f0f0"
+                            android:gravity="center_horizontal"
+                            android:padding="5dp">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="5dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Activity" />
 
-                        <com.owater.library.CircleTextView
-                            android:id="@+id/tvTotalConsumerMTD"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_weight="0.25"
-                            android:gravity="center"
-                            android:text="1234"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="25dp"
-                            app:ct_backgroundColor="#FFFFFF"
-                            app:ct_border_alpha="0.5"
-                            app:ct_border_color="@color/colorAccent"
-                            app:ct_border_width="10dp"
-                            app:ct_type="shadow_alpha" />
+                            <TextView
+                                android:id="@+id/tv_act0"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:paddingRight="5dp"
+                                android:text="" />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="CONSUMER MTD"
-                            android:textSize="11sp" />
-                    </LinearLayout>
+                            <TextView
+                                android:id="@+id/tv_act1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:paddingRight="5dp"
+                                android:text="" />
 
-                    <!--Po Mobile-->
+                            <TextView
+                                android:id="@+id/tv_act2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:paddingRight="5dp"
+                                android:text="" />
+                        </TableRow>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="5dp"
-                        android:visibility="visible">
+                        <TableRow
+                            android:background="#f0f0f0"
+                            android:gravity="center_horizontal"
+                            android:padding="5dp">
 
-                        <com.owater.library.CircleTextView
-                            android:id="@+id/tvTotalPO"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_weight="0.25"
-                            android:gravity="center"
-                            android:text="0"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="25dp"
-                            app:ct_backgroundColor="#FFFFFF"
-                            app:ct_border_alpha="0.5"
-                            app:ct_border_color="@color/colorAccent"
-                            app:ct_border_width="10dp"
-                            app:ct_type="shadow_alpha" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:paddingRight="5dp"
+                                android:text="PIC Customer" />
 
-                        <TextView
-                            android:id="@+id/textView384"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="PO"
-                            android:textSize="11sp" />
-                    </LinearLayout>
+                            <TextView
+                                android:id="@+id/tv_cb0"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:paddingRight="5dp"
+                                android:text="" />
 
-                    <!--Quantity Stock-->
+                            <TextView
+                                android:id="@+id/tv_cb1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:paddingRight="5dp"
+                                android:text="" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="5dp">
-
-                        <com.owater.library.CircleTextView
-                            android:id="@+id/tvTotalQStock"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_weight="0.25"
-                            android:gravity="center"
-                            android:text="0"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="25dp"
-                            app:ct_backgroundColor="#FFFFFF"
-                            app:ct_border_alpha="0.5"
-                            app:ct_border_color="@color/colorAccent"
-                            app:ct_border_width="10dp"
-                            app:ct_type="shadow_alpha" />
-
-                        <TextView
-                            android:id="@+id/textView123"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="Q.STOCK"
-                            android:textSize="11sp" />
-                    </LinearLayout>
-
-                    <!--<LinearLayout-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:gravity="center"-->
-                    <!--android:orientation="vertical">-->
-
-                    <!--<com.owater.library.CircleTextView-->
-                    <!--android:id="@+id/tvTotalCustomerBase2"-->
-                    <!--android:layout_width="80dp"-->
-                    <!--android:layout_height="80dp"-->
-                    <!--android:layout_weight="0.25"-->
-                    <!--android:gravity="center"-->
-                    <!--android:text="1234"-->
-                    <!--android:textColor="@color/colorAccent"-->
-                    <!--android:textSize="25dp"-->
-                    <!--app:ct_backgroundColor="#FFFFFF"-->
-                    <!--app:ct_border_alpha="0.5"-->
-                    <!--app:ct_border_color="@color/colorAccent"-->
-                    <!--app:ct_border_width="10dp"-->
-                    <!--app:ct_type="shadow_alpha" />-->
-
-                    <!--<TextView-->
-                    <!--android:id="@+id/textView423"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:gravity="center"-->
-                    <!--android:text="MONTH TO DATE"-->
-                    <!--android:textSize="11sp" />-->
-                    <!--</LinearLayout>-->
-
+                            <TextView
+                                android:id="@+id/tv_cb2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:paddingRight="5dp"
+                                android:text="" />
+                        </TableRow>
+                    </TableLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
-        </HorizontalScrollView>
+        </LinearLayout>
 
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1.3"
-                android:background="@color/white"
-                android:orientation="horizontal">
-
-                <TableLayout
-                    android:id="@+id/tlAbesen"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@+id/textView19">
-
-                    <TableRow
-                        android:background="#4CAF50"
-                        android:gravity="center_horizontal"
-                        android:padding="5dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Type"
-                            android:textColor="@color/white" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Save"
-                            android:textColor="@color/white" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Unpushed"
-                            android:textColor="@color/white" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Pushed"
-                            android:textColor="@color/white" />
-                    </TableRow>
-
-                    <TableRow
-                        android:background="#f0f0f0"
-                        android:gravity="center_horizontal"
-                        android:padding="5dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Reso" />
-
-                        <TextView
-                            android:id="@+id/tv_reso0"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:paddingRight="5dp"
-                            android:text="" />
-
-                        <TextView
-                            android:id="@+id/tv_reso1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:paddingRight="5dp"
-                            android:text="" />
-
-                        <TextView
-                            android:id="@+id/tv_reso2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:paddingRight="5dp"
-                            android:text="" />
-                    </TableRow>
-
-                    <TableRow
-                        android:background="#f0f0f0"
-                        android:gravity="center_horizontal"
-                        android:padding="5dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Activity" />
-
-                        <TextView
-                            android:id="@+id/tv_act0"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:paddingRight="5dp"
-                            android:text="" />
-
-                        <TextView
-                            android:id="@+id/tv_act1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:paddingRight="5dp"
-                            android:text="" />
-
-                        <TextView
-                            android:id="@+id/tv_act2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:paddingRight="5dp"
-                            android:text="" />
-                    </TableRow>
-
-                    <TableRow
-                        android:background="#f0f0f0"
-                        android:gravity="center_horizontal"
-                        android:padding="5dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:paddingRight="5dp"
-                            android:text="PIC Customer" />
-
-                        <TextView
-                            android:id="@+id/tv_cb0"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:paddingRight="5dp"
-                            android:text="" />
-
-                        <TextView
-                            android:id="@+id/tv_cb1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:paddingRight="5dp"
-                            android:text="" />
-
-                        <TextView
-                            android:id="@+id/tv_cb2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:paddingRight="5dp"
-                            android:text="" />
-                    </TableRow>
-                </TableLayout>
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
     </LinearLayout>
 
 </ScrollView>
