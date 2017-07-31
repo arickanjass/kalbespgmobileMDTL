@@ -780,6 +780,14 @@ public class clsHelperBL extends clsMainBL {
             }
         }
 
+        if (validPush && dtJson.getListOftActivityMobileData() != null) {
+            for (tActivityMobileData dt : dtJson.getListOftActivityMobileData()) {
+                tActivityMobileDA _tActivityMobileDA = new tActivityMobileDA(db);
+                dt.set_intIdSyn("1");
+                _tActivityMobileDA.SaveDatatActivityData(db, dt);
+            }
+        }
+
         if (validPush && dtJson.getListOftLeaveMobileData() != null) {
             for (tLeaveMobileData dt : dtJson.getListOftLeaveMobileData()) {
                 tLeaveMobileDA _tLeaveMobileDA = new tLeaveMobileDA(db);

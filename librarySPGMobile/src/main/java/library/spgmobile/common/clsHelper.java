@@ -61,6 +61,7 @@ import library.spgmobile.dal.mUserRoleDA;
 import library.spgmobile.dal.mconfigDA;
 import library.spgmobile.dal.tAbsenUserDA;
 import library.spgmobile.dal.tActivityDA;
+import library.spgmobile.dal.tActivityMobileDA;
 import library.spgmobile.dal.tCustomerBasedMobileDetailDA;
 import library.spgmobile.dal.tCustomerBasedMobileDetailProductDA;
 import library.spgmobile.dal.tCustomerBasedMobileHeaderDA;
@@ -313,6 +314,7 @@ public class clsHelper {
 		clsLogReceiverDetail_mobileDA _clsLogReceiverDetail_mobileDA = new clsLogReceiverDetail_mobileDA(db);
 		tNotificationDA _tNotificationDA=new tNotificationDA(db);
 		tActivityDA _tActivityDA=new tActivityDA(db);
+		tActivityMobileDA _tActivityMobileDA=new tActivityMobileDA(db);
 		tAbsenUserDA _tAbsenUserDA=new tAbsenUserDA(db);
 		tLeaveMobileDA _tLeaveMobileDA=new tLeaveMobileDA(db);
 		mMenuDA _mMenuDA=new mMenuDA(db);
@@ -376,6 +378,7 @@ public class clsHelper {
 		_tLeaveMobileDA.DropTable(db);
 		_mProductBrandHeaderDA.DropTable(db);
 		_tActivityDA.DropTable(db);
+		_tActivityMobileDA.DropTable(db);
 		_mEmployeeAreaDA.DropTable(db);
 		_mNotificationDA.DropTable(db);
 		_mEmployeeBranchDA.DropTable(db);
@@ -437,6 +440,7 @@ public class clsHelper {
 		_tPurchaseOrderDetailDA = new tPurchaseOrderDetailDA(db);
 		_tSalesProductDetailDA=new tSalesProductDetailDA(db);
 		_tActivityDA=new tActivityDA(db);
+		_tActivityMobileDA=new tActivityMobileDA(db);
 		_tDeviceInfoUserDA=new tDeviceInfoUserDA(db);
 		_mNotificationDA=new mNotificationDA(db);
 		_mEmployeeAreaDA=new mEmployeeAreaDA(db);
