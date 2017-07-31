@@ -56,15 +56,17 @@ public class FragmentKuesioner extends Fragment {
     private ArrayList<jawabanModel> modelJawaban;
     final HashMap<String, String> HMPertanyaan = new HashMap<String, String>();
     final HashMap<String, String> HMPertanyaan2 = new HashMap<String, String>();
+    final HashMap<String, String> HMPertanyaan3 = new HashMap<String, String>();
     final HashMap<String, String> HMJawaban = new HashMap<String, String>();
     final HashMap<String, String> HMKategori = new HashMap<String, String>();
     List<String> dataPertanyaan;
     List<String> dataPertanyaan2;
+    List<String> dataPertanyaan3;
     List<String> dataKategori;
     List<String> dataJawaban;
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
-    final List<mPertanyaanData> listDataPertanyaan = new mPertanyaanBL().GetAllData();
+//    final List<mPertanyaanData> listDataPertanyaan = new mPertanyaanBL().GetAllData();
     List<View> listAnswer = new ArrayList<View>();
     private SeekBar seekbar;
     private CheckBox cbTestGet;
@@ -76,8 +78,8 @@ public class FragmentKuesioner extends Fragment {
     private RadioGroup rgTestGet;
     private EditText dateView;
     clsMainActivity _clsMainActivity;
-    private int value;
-    ;
+    private int value, intGroupId;
+
 
     @Nullable
     @Override
@@ -85,17 +87,23 @@ public class FragmentKuesioner extends Fragment {
         v = inflater.inflate(R.layout.fragment_kuesioner, container, false);
 
         viewPager = (ViewPager) v.findViewById(R.id.viewpager);
+
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            intGroupId = bundle.getInt("Key_GroupId");
+        }
+        final  List<mPertanyaanData> listDataPertanyaan = new mPertanyaanBL().GetDataByGroupQuestion(intGroupId);
         final ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
 
         //disesuaikan jumlah soal
         viewPager.setOffscreenPageLimit(listDataPertanyaan.size());
 
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            value = bundle.getInt("key_view");
-        }
+//        Bundle bundle = this.getArguments();
+//        if (bundle != null) {
+//            value = bundle.getInt("key_view");
+//        }
         setupViewPager(viewPager);
-        viewPager.setCurrentItem(value);
+       // viewPager.setCurrentItem(value);
 
         tabLayout = (TabLayout) v.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
@@ -323,6 +331,11 @@ public class FragmentKuesioner extends Fragment {
     }
 
     private void SaveQuiz() {
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            intGroupId = bundle.getInt("Key_GroupId");
+        }
+        final  List<mPertanyaanData> listDataPertanyaan = new mPertanyaanBL().GetDataByGroupQuestion(intGroupId);
         for (int i = 0; i < listDataPertanyaan.size(); i++) {
             tJawabanUserData dt = new tJawabanUserData();
             tUserLoginData dataUserActive = new tAbsenUserBL().getUserActive();
@@ -463,21 +476,35 @@ public class FragmentKuesioner extends Fragment {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         dataPertanyaan = new ArrayList<>();
         dataPertanyaan2 = new ArrayList<>();
+        dataPertanyaan3 = new ArrayList<>();
         dataKategori = new ArrayList<>();
-        List<mPertanyaanData> listDataPertanyaan = new mPertanyaanBL().GetAllData();
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            intGroupId = bundle.getInt("Key_GroupId");
+        }
+//        List<mPertanyaanData> listDataPertanyaan = new mPertanyaanBL().GetAllData();
+        List<mPertanyaanData > pertanyaanDataListbyGroupid = new mPertanyaanBL().GetDataByGroupQuestion(intGroupId);
         List<mKategoriData> kategoriDataList = new mKategoriBL().GetAllData();
 
 //mapping pertanyaan
-        if (listDataPertanyaan.size() > 0) {
-            for (mPertanyaanData dt : listDataPertanyaan) {
+        if (pertanyaanDataListbyGroupid.size() > 0) {
+            for (mPertanyaanData dt : pertanyaanDataListbyGroupid) {
                 dataPertanyaan.add(dt.get_txtQuestionDesc());
                 HMPertanyaan.put(dt.get_txtQuestionDesc(), dt.get_intQuestionId());
                 HMPertanyaan.put(dt.get_intQuestionId(), dt.get_intTypeQuestionId());
             }
         }
+
+        if (pertanyaanDataListbyGroupid.size() > 0) {
+            for (mPertanyaanData dt : pertanyaanDataListbyGroupid) {
+                dataPertanyaan3.add(dt.get_txtQuestionDesc());
+                HMPertanyaan3.put(dt.get_txtQuestionDesc(), dt.get_intQuestionId());
+                HMPertanyaan3.put(dt.get_intQuestionId(), dt.get_intSoalId());
+            }
+        }
         //mapping pertanyaan yang kedua
-        if (listDataPertanyaan.size() > 0) {
-            for (mPertanyaanData data : listDataPertanyaan) {
+        if (pertanyaanDataListbyGroupid.size() > 0) {
+            for (mPertanyaanData data : pertanyaanDataListbyGroupid) {
                 dataPertanyaan2.add(data.get_intQuestionId());
                 HMPertanyaan2.put(data.get_intQuestionId(), data.get_intCategoryId());
             }
@@ -492,10 +519,10 @@ public class FragmentKuesioner extends Fragment {
         }
 //isi fragment dan get jawaban berdasarkan type pertanyaan
 
-        for (int i = 0; i < listDataPertanyaan.size(); i++) {
+        for (int i = 0; i < pertanyaanDataListbyGroupid.size(); i++) {
             modelJawaban = new ArrayList<jawabanModel>();
             List<mListJawabanData> mListJawabanDatas = new mListJawabanBL().GetDataByTypeQuestion(HMPertanyaan.get(HMPertanyaan.get(dataPertanyaan.get(i))), HMPertanyaan.get(dataPertanyaan.get(i)));
-            if (mListJawabanDatas.size() > 0 && listDataPertanyaan.get(i).get_intTypeQuestionId() == HMPertanyaan.get(HMPertanyaan.get(dataPertanyaan.get(i)))) {
+            if (mListJawabanDatas.size() > 0 && pertanyaanDataListbyGroupid.get(i).get_intTypeQuestionId() == HMPertanyaan.get(HMPertanyaan.get(dataPertanyaan.get(i)))) {
                 for (int j = 0; j < mListJawabanDatas.size(); j++) {
                     jawabanModel dt = new jawabanModel();
                     dt.setKey(mListJawabanDatas.get(j).get_txtKey());
@@ -503,7 +530,7 @@ public class FragmentKuesioner extends Fragment {
                     modelJawaban.add(dt);
                 }
             }
-            adapter.addFrag(new FragmentKuesionerPart(HMKategori.get(HMPertanyaan2.get(HMPertanyaan.get(dataPertanyaan.get(i)))), i + 1, dataPertanyaan.get(i), Integer.parseInt(HMPertanyaan.get(HMPertanyaan.get(dataPertanyaan.get(i)))), modelJawaban), "SOAL " + (i + 1));
+            adapter.addFrag(new FragmentKuesionerPart(HMKategori.get(HMPertanyaan2.get(HMPertanyaan.get(dataPertanyaan.get(i)))), i + 1, dataPertanyaan.get(i), Integer.parseInt( HMPertanyaan.get(HMPertanyaan.get(dataPertanyaan.get(i)))), modelJawaban), "SOAL " + HMPertanyaan3.get(HMPertanyaan3.get(dataPertanyaan3.get(i))));
         }
         viewPager.setAdapter(adapter);
     }

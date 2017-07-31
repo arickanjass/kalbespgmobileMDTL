@@ -55,6 +55,15 @@ public class dataJson {
         ListOftActivityData = listOftActivityData;
     }
 
+    public synchronized List<tActivityMobileData> getListOftActivityMobileData() {
+        return ListOftActivityMobileData;
+    }
+
+    public synchronized void setListOftActivityMobileData(
+            List<tActivityMobileData> listOftActivityMobileData) {
+        ListOftActivityMobileData = listOftActivityMobileData;
+    }
+
     public synchronized List<mGeolocationOutletSPGData> getListOfmGeolocationOutletSPGData() {
         return ListOfmGeolocationOutletSPGData;
     }
@@ -865,6 +874,33 @@ public class dataJson {
                 resJson.put(dttActivityData.Property_ListOfTActivity, new JSONArray(itemsListJquey));
             }
 
+            if (this.getListOftActivityMobileData() != null) {
+                tActivityMobileData dttActivityMobileData = new tActivityMobileData();
+                itemsListJquey = new ArrayList<JSONObject>();
+                for (tActivityMobileData data : this.getListOftActivityMobileData()) {
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dttActivityMobileData.Property_dtActivity, String.valueOf(data.get_dtActivity()));
+                    item1.put(dttActivityMobileData.Property_intActive, String.valueOf(data.get_intActive()));
+                    item1.put(dttActivityMobileData.Property_intId, String.valueOf(data.get_intId()));
+                    item1.put(dttActivityMobileData.Property_intIdSyn, String.valueOf(data.get_intIdSyn()));
+                    item1.put(dttActivityMobileData.Property_intFlag, String.valueOf(data.get_intFlag()));
+                    item1.put(dttActivityMobileData.Property_intSubmit, String.valueOf(data.get_intSubmit()));
+                    item1.put(dttActivityMobileData.Property_txtDesc, String.valueOf(data.get_txtDesc()));
+                    item1.put(dttActivityMobileData.Property_txtDeviceId, String.valueOf(data.get_txtDeviceId()));
+                    item1.put(dttActivityMobileData.Property_txtImg1, String.valueOf(data.get_txtImg1()));
+                    item1.put(dttActivityMobileData.Property_txtImg2, String.valueOf(data.get_txtImg2()));
+                    item1.put(dttActivityMobileData.Property_txtOutletCode, String.valueOf(data.get_txtOutletCode()));
+                    item1.put(dttActivityMobileData.Property_txtOutletName, String.valueOf(data.get_txtOutletName()));
+                    item1.put(dttActivityMobileData.Property_txtUserId, String.valueOf(data.get_txtUserId()));
+                    item1.put(dttActivityMobileData.Property_txtBranch, String.valueOf(data.get_txtBranch()));
+                    item1.put(dttActivityMobileData.Property_txtRoleId, String.valueOf(data.get_txtRoleId()));
+                    item1.put(dttActivityMobileData.Property_intSubTypeActivity, String.valueOf(data.get_intSubTypeActivity()));
+                    item1.put(dttActivityMobileData.Property_txtTypeActivity, String.valueOf(data.get_txtTypeActivity()));
+                    itemsListJquey.add(item1);
+                }
+                resJson.put(dttActivityMobileData.Property_ListOfTActivityMobile, new JSONArray(itemsListJquey));
+            }
+
             if (this.getListOfmProductBrandHeaderData() != null) {
                 mProductBrandHeaderData dtmProductBrandHeaderData = new mProductBrandHeaderData();
                 itemsListJquey = new ArrayList<JSONObject>();
@@ -1127,6 +1163,7 @@ public class dataJson {
     private List<tAbsenUserData> ListOftAbsenUserData;
     private List<mGeolocationOutletSPGData> ListOfmGeolocationOutletSPGData;
     private List<tActivityData> ListOftActivityData;
+    private List<tActivityMobileData> ListOftActivityMobileData;
     private List<mProductBrandHeaderData> ListOfmProductBrandHeaderData;
     private List<tLeaveMobileData> ListOftLeaveMobileData;
     private List<mTypeLeaveMobileData> ListOfmTypeLeaveMobileData;

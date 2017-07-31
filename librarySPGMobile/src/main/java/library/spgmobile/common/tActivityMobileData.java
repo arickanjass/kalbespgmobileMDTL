@@ -158,5 +158,5 @@ public class tActivityMobileData {
 
     public String Property_All=Property_dtActivity+","+Property_intActive+","+Property_intId+","+Property_intIdSyn+","+Property_intSubmit+","+Property_txtDesc+","+
             Property_txtDeviceId+","+Property_txtImg1+","+Property_txtImg2+","+Property_txtOutletCode+","+Property_txtOutletName+","+
-            Property_txtUserId+","+Property_intFlag+","+Property_txtBranch+","+Property_txtRoleId+","+Property_txtTypeActivity;
+            Property_txtUserId+","+Property_intFlag+","+Property_txtBranch+","+Property_txtRoleId+","+Property_txtTypeActivity+","+Property_intSubTypeActivity;
 }
