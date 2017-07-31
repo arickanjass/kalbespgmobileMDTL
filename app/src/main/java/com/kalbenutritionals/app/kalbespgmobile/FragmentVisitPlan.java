@@ -684,8 +684,13 @@ public class FragmentVisitPlan extends Fragment {
                                         if (pRes) {
                                             double latitude = Double.parseDouble(String.valueOf(lblLang.getText()));
                                             double longitude = Double.parseDouble(String.valueOf(lblLong.getText()));
-                                            double latitudeOutlet = Double.parseDouble(dataDetail.get_txtLatSource());
-                                            double longitudeOutlet = Double.parseDouble(dataDetail.get_txtLongSource());
+                                            if(dataDetail.get_txtLatSource().toString().equals("")||dataDetail.get_txtLatSource().toString().equals("null")){
+                                                latitudeOutlet = 0.0;
+                                                longitudeOutlet = 0.0;
+                                            } else {
+                                                latitudeOutlet = Double.parseDouble(dataDetail.get_txtLatSource().toString());
+                                                longitudeOutlet = Double.parseDouble(dataDetail.get_txtLongSource().toString());
+                                            }
 
                                             Location locationA = new Location("point A");
 
