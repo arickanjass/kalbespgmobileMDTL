@@ -1,5 +1,7 @@
 package library.spgmobile.common;
 
+import library.spgmobile.dal.clsHardCode;
+
 /**
  * Created by Dewi Oktaviani on 03/05/2017.
  */
@@ -19,7 +21,7 @@ public class mPertanyaanData {
     }
 
     public void set_intSoalId(String _intSoalId) {
-        this._intSoalId = _intSoalId;   
+        this._intSoalId = _intSoalId;
     }
 
     public synchronized String get_inttGroupQuestionMapping() {
@@ -77,6 +79,7 @@ public class mPertanyaanData {
     public synchronized void set_bolHaveAnswerList(String _bolHaveAnswerList) {
         this._bolHaveAnswerList = _bolHaveAnswerList;
     }
+    public static final String TABLE_Question = new clsHardCode().txtTable_mPertanyaan;
     public String Property_intQuestionId = "intQuestionId";
     public String Property_intCategoryId = "intCategoryId";
     public String Property_txtQuestionDesc = "txtQuestionDesc";
@@ -88,6 +91,8 @@ public class mPertanyaanData {
     public String Property_inttGroupQuestionMapping = "inttGroupQuestionMapping";
     public String Property_All = Property_intQuestionId + "," + Property_intSoalId + "," + Property_intCategoryId + "," + Property_txtQuestionDesc + "," + Property_intTypeQuestionId
             + "," + Property_decBobot + "," + Property_bolHaveAnswerList + "," + Property_intSoalId + "," + Property_inttGroupQuestionMapping ;
+    public String Property_AllS = TABLE_Question+ "."+ Property_intQuestionId + "," + TABLE_Question+ "." + Property_intSoalId + "," +  TABLE_Question+ "." + Property_intCategoryId + "," + TABLE_Question+ "." + Property_txtQuestionDesc + "," + TABLE_Question+ "." +  Property_intTypeQuestionId
+            + "," + TABLE_Question+ "." + Property_decBobot + "," + TABLE_Question+ "." + Property_bolHaveAnswerList + "," + TABLE_Question+ "." + Property_intSoalId + "," + TABLE_Question+ "." + Property_inttGroupQuestionMapping ;
     public mPertanyaanData(){
         super();
     }

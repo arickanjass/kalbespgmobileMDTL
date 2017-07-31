@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import library.spgmobile.common.mPertanyaanData;
+import library.spgmobile.common.tJawabanUserData;
 
 
 /**
@@ -16,6 +17,7 @@ import library.spgmobile.common.mPertanyaanData;
 
 public class mPertanyaanDA {
     private static final String TABLE_CONTACTS = new clsHardCode().txtTable_mPertanyaan;
+    private static final String TEBLE_JAWABANSPG = new clsHardCode().txtTable_tJawabanUser;
     public mPertanyaanDA(SQLiteDatabase db){
         mPertanyaanData dt = new mPertanyaanData();
         String CREATE_CONTACTS_TABLE = "CREATE TABLE IF NOT EXISTS "
@@ -52,7 +54,7 @@ public class mPertanyaanDA {
     public List<mPertanyaanData> GetAllData(SQLiteDatabase db){
         List<mPertanyaanData> contactList = new ArrayList<mPertanyaanData>();
         mPertanyaanData dt = new mPertanyaanData();
-        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " ORDER BY inttGroupQuestionMapping ASC";  
+        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " ORDER BY inttGroupQuestionMapping ASC";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()){
             do {
@@ -79,7 +81,33 @@ public class mPertanyaanDA {
         String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_inttGroupQuestionMapping + "='" + groupId +"' ORDER BY intCategoryId, intSoalId ASC";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()){
-            do {   
+            do {
+                mPertanyaanData contact = new mPertanyaanData();
+                contact.set_intQuestionId(cursor.getString(0));
+                contact.set_intSoalId(cursor.getString(1));
+                contact.set_intCategoryId(cursor.getString(2));
+                contact.set_txtQuestionDesc(cursor.getString(3));
+                contact.set_intTypeQuestionId(cursor.getString(4));
+                contact.set_decBobot(cursor.getString(5));
+                contact.set_bolHaveAnswerList(cursor.getString(6));
+                contact.set_inttGroupQuestionMapping(cursor.getString(7));
+                contactList.add(contact);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return contactList;
+    }
+
+    public List<mPertanyaanData> GetDataBYGroupQuestionCheck(SQLiteDatabase db, int groupId){
+
+        List<mPertanyaanData> contactList = new ArrayList<mPertanyaanData>();
+        mPertanyaanData dt = new mPertanyaanData();
+        tJawabanUserData dtJawaban = new tJawabanUserData();
+        String selectQuery = "Select " + dt.Property_AllS + " FROM " + TABLE_CONTACTS +  " LEFT OUTER JOIN " + TEBLE_JAWABANSPG + " ON " + TABLE_CONTACTS + "." + dt.Property_intQuestionId + "="
+                + TEBLE_JAWABANSPG + "." + dtJawaban.Property_intQuestionId + " WHERE " + TEBLE_JAWABANSPG + "." + dtJawaban.Property_intQuestionId + " IS NULL AND " +dt.Property_inttGroupQuestionMapping + "='" + groupId +"' ORDER BY intCategoryId, intSoalId ASC ";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()){
+            do {
                 mPertanyaanData contact = new mPertanyaanData();
                 contact.set_intQuestionId(cursor.getString(0));
                 contact.set_intSoalId(cursor.getString(1));
@@ -96,3 +124,4 @@ public class mPertanyaanDA {
         return contactList;
     }
 }
+

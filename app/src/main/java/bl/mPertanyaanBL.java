@@ -34,6 +34,13 @@ public class mPertanyaanBL extends clsMainBL {
         return dt;
     }
 
+    public List<mPertanyaanData> GetDataBYGroupQuestionCheck(int groupId){
+        SQLiteDatabase _db = getDb();
+        mPertanyaanDA _mPertanyaanDA = new mPertanyaanDA(_db);
+        List<mPertanyaanData> dt = _mPertanyaanDA.GetDataBYGroupQuestionCheck(_db,groupId);
+        return dt;
+    }
+
     public void DeletemPertanyaan(){
         SQLiteDatabase _db = getDb();
         mPertanyaanDA _mPertanyaanDA = new mPertanyaanDA(_db);
