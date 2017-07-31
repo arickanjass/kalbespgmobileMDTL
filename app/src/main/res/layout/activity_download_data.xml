@@ -812,6 +812,47 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_data_activityV2"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/txtVwActivityV2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="ActivityV2"
+                        android:textColor="#000" />
+
+                    <Spinner
+                        android:id="@+id/spnActivityV2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/bg_edtext" />
+
+                    <Button
+                        android:id="@+id/btnDlActivityV2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/btn_on_click"
+                        android:text="Download ActivityV2" />
+
+                    <View
+                        android:id="@+id/view11V2"
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="10dp"
+                        android:background="#bfbfbf" />
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/ll_data_customerbased"
                     android:orientation="vertical"
                     android:visibility="gone"

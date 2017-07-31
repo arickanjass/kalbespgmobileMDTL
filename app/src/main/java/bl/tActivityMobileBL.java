@@ -26,7 +26,7 @@ import library.spgmobile.dal.tUserLoginDA;
  */
 
 public class tActivityMobileBL extends clsMainBL{
-    public JSONArray DownloadActivity(String versionName) throws Exception {
+    public JSONArray DownloadActivityV2(String versionName) throws Exception {
         SQLiteDatabase _db = getDb();
         tUserLoginDA _tUserLoginDA = new tUserLoginDA(_db);
         mconfigDA _mconfigDA = new mconfigDA(_db);
@@ -42,7 +42,7 @@ public class tActivityMobileBL extends clsMainBL{
         clsHelper _help = new clsHelper();
         linkAPI dtlinkAPI = new linkAPI();
 //		String txtMethod = "GetActivity";
-        String txtMethod = "GetActivityMobile";
+        String txtMethod = "GetDataTActivityMobileNew";
         JSONObject resJson = new JSONObject();
         dtlinkAPI.set_txtMethod(txtMethod);
         dtlinkAPI.set_txtParam("||||||" + _dataUserLogin.get_TxtEmpId());
@@ -55,7 +55,7 @@ public class tActivityMobileBL extends clsMainBL{
 //		String strLinkAPI= dtlinkAPI.QueryString(strVal2);
 //		String JsonData= _help.ResultJsonData(_help.getHTML(strLinkAPI));
 
-        JSONArray JsonArray = _help.ResultJsonArray(JsonData);
+        org.json.simple.JSONArray JsonArray = _help.ResultJsonArray(JsonData);
 
         _db.close();
         return JsonArray;

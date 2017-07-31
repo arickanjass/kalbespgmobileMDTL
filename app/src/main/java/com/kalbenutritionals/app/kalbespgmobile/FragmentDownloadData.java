@@ -62,6 +62,7 @@ import bl.mTypePertanyaanBL;
 import bl.mTypeSubmissionMobileBL;
 import bl.tAbsenUserBL;
 import bl.tActivityBL;
+import bl.tActivityMobileBL;
 import bl.tCustomerBasedMobileDetailBL;
 import bl.tCustomerBasedMobileDetailProductBL;
 import bl.tCustomerBasedMobileHeaderBL;
@@ -99,6 +100,7 @@ import library.spgmobile.common.mTypePertanyaanData;
 import library.spgmobile.common.mTypeSubmissionMobile;
 import library.spgmobile.common.tAbsenUserData;
 import library.spgmobile.common.tActivityData;
+import library.spgmobile.common.tActivityMobileData;
 import library.spgmobile.common.tCustomerBasedMobileDetailData;
 import library.spgmobile.common.tCustomerBasedMobileDetailProductData;
 import library.spgmobile.common.tCustomerBasedMobileHeaderData;
@@ -142,15 +144,15 @@ public class FragmentDownloadData extends Fragment {
     private Button btnBrand;
     private Spinner spnReso;
     private Button btnReso;
-    private Spinner spnActivity;
-    private Button btnActivity;
+    private Spinner spnActivity, spnActivityV2;
+    private Button btnActivity, btnActivityV2;
     private Spinner spnCustomerBase;
     private Button btnCustomerBase;
     private Spinner spnAbsen, spnQuiz;
     private Button btnAbsen, btnQuiz;
     private Spinner spnDataLeave,spnSubTypeActivity, spnDataPO, spnDataQuantityStock, spnProductComp, spnTypeSubmission, spnProdSPGCusBased, spnProdPICCusBased;
     private Button btnDataLeave, btnSubTypeActivity, btnDataPO, btnDataQuantityStock, btnProductComp, btnTypeSubmission, btnProdSPGCusBased, btnProdPICCusBased ;
-    private LinearLayout ll_subtypeactivity, ll_kordinasi_outlet,ll_branch, ll_outlet, ll_product, ll_brand, ll_type_leave, ll_reso, ll_data_activity, ll_data_customerbased, ll_absen, ll_purchase_order, ll_data_leave, ll_product_spg, ll_product_pic, ll_product_competitor, ll_type_submission, ll_kategoriVisitPlan, ll_dataVisitPlan, ll_dataQuantityStock, ll_dataKordinasiOutlet, ll_dataQuesioner;
+    private LinearLayout ll_subtypeactivity, ll_kordinasi_outlet,ll_branch, ll_outlet, ll_product, ll_brand, ll_type_leave, ll_reso, ll_data_activity, ll_data_activityV2 , ll_data_customerbased, ll_absen, ll_purchase_order, ll_data_leave, ll_product_spg, ll_product_pic, ll_product_competitor, ll_type_submission, ll_kategoriVisitPlan, ll_dataVisitPlan, ll_dataQuantityStock, ll_dataKordinasiOutlet, ll_dataQuesioner;
 
     private PackageInfo pInfo = null;
     private List<String> arrData;
@@ -187,6 +189,8 @@ public class FragmentDownloadData extends Fragment {
         btnReso = (Button) v.findViewById(R.id.btnDlReso);
         spnActivity = (Spinner) v.findViewById(R.id.spnActivity);
         btnActivity = (Button) v.findViewById(R.id.btnDlActivity);
+        spnActivityV2 = (Spinner) v.findViewById(R.id.spnActivityV2);
+        btnActivityV2 = (Button) v.findViewById(R.id.btnDlActivityV2);
         spnCustomerBase = (Spinner) v.findViewById(R.id.spnCustomerBase);
         btnCustomerBase = (Button) v.findViewById(R.id.btnDlCustomerBase);
         spnAbsen = (Spinner) v.findViewById(R.id.spnAbsen);
@@ -217,6 +221,7 @@ public class FragmentDownloadData extends Fragment {
         ll_type_leave = (LinearLayout) v.findViewById(R.id.ll_type_leave);
         ll_reso = (LinearLayout) v.findViewById(R.id.ll_reso);
         ll_data_activity = (LinearLayout) v.findViewById(R.id.ll_data_activity);
+        ll_data_activityV2 = (LinearLayout) v.findViewById(R.id.ll_data_activityV2);
         ll_data_customerbased = (LinearLayout) v.findViewById(R.id.ll_data_customerbased);
         ll_absen = (LinearLayout) v.findViewById(R.id.ll_absen);
         ll_purchase_order = (LinearLayout) v.findViewById(R.id.ll_purchase_order);
@@ -288,6 +293,8 @@ public class FragmentDownloadData extends Fragment {
                 ll_reso.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_data_activity.getId()))){
                 ll_data_activity.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_data_activityV2.getId()))){
+                ll_data_activityV2.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_data_customerbased.getId()))){
                 ll_data_customerbased.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_absen.getId()))){
@@ -394,6 +401,15 @@ public class FragmentDownloadData extends Fragment {
                 task.execute();
             }
         });
+
+        btnActivityV2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                intProcesscancel = 0;
+                AsyncCallActivityV2 task = new AsyncCallActivityV2();
+                task.execute();
+            }
+        });
+
         btnCustomerBase.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 intProcesscancel = 0;
@@ -494,6 +510,7 @@ public class FragmentDownloadData extends Fragment {
         List<tSalesProductHeaderData> listtSalesProductHeaderData = new tSalesProductHeaderBL().getAllSalesProductHeader();
         List<tCustomerBasedMobileHeaderData> listtCustomerBasedHeaderData = new tCustomerBasedMobileHeaderBL().getAllData();
         List<tActivityData> listtActivityData = new tActivityBL().getAllData();
+        List<tActivityMobileData> listtActivityMobileData = new tActivityMobileBL().getAllData();
         List<tAbsenUserData> listtAbsenUserData = new tAbsenUserBL().getAllDataActive();
         List<tLeaveMobileData> listtLeaveData = new tLeaveMobileBL().getData("");
         List<mParentData> parentDataList = new mParentBL().GetAllData();
@@ -722,6 +739,19 @@ public class FragmentDownloadData extends Fragment {
                     android.R.layout.simple_spinner_item, strip);
             spnActivity.setAdapter(adapterspn);
             spnActivity.setEnabled(false);
+        }
+        arrData = new ArrayList<String>();
+        if (listtActivityMobileData != null && listtActivityMobileData.size() != 0) {
+            for (tActivityMobileData dt : listtActivityMobileData) {
+                arrData.add(dt.get_intFlag() + "-" + dt.get_txtDesc());
+            }
+            spnActivityV2.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
+            spnActivityV2.setEnabled(true);
+        } else {
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<String>(getContext(),
+                    android.R.layout.simple_spinner_item, strip);
+            spnActivityV2.setAdapter(adapterspn);
+            spnActivityV2.setEnabled(false);
         }
         arrData = new ArrayList<String>();
         if (listtAbsenUserData != null) {
@@ -1346,6 +1376,58 @@ public class FragmentDownloadData extends Fragment {
         return _array;
     }
 
+    private List<String> SaveDatatActivityDataV2(JSONArray JData) {
+        List<String> _array;
+        APIData dtAPIDATA = new APIData();
+        _array = new ArrayList<>();
+        Iterator i = JData.iterator();
+        Boolean flag = true;
+        String ErrorMess = "";
+        List<tActivityMobileData> ListdataActivity = new ArrayList<>();
+        while (i.hasNext()) {
+            org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
+
+            tActivityMobileData _data = new tActivityMobileData();
+            _data.set_dtActivity(String.valueOf(innerObj.get("DtActivity")));
+            _data.set_intActive(String.valueOf(innerObj.get("IntActive")));
+            _data.set_intSubmit("1");
+            _data.set_intIdSyn("1");
+            _data.set_intId(String.valueOf(innerObj.get("IntIdData")));
+            _data.set_txtBranch(String.valueOf(innerObj.get("TxtCabId")));
+            _data.set_txtDesc(String.valueOf(innerObj.get("TxtDesc")));
+            _data.set_txtDeviceId(String.valueOf(innerObj.get("TxtDeviceId")));
+            _data.set_txtOutletCode(String.valueOf(innerObj.get("TxtOutletCode")));
+            _data.set_txtOutletName(String.valueOf(innerObj.get("TxtOutletName")));
+            _data.set_txtUserId(String.valueOf(innerObj.get("TxtUserId")));
+            _data.set_intFlag(String.valueOf(innerObj.get("TxtType")));
+            _data.set_intActive(String.valueOf(innerObj.get("IntActive")));
+            _data.set_intSubTypeActivity(String.valueOf(innerObj.get("txtSubTypeId")));
+            _data.set_txtTypeActivity(String.valueOf(innerObj.get("txtSubTypeName")));
+
+            String url1 = String.valueOf(innerObj.get("TxtLinkImg1"));
+            String url2 = String.valueOf(innerObj.get("TxtLinkImg2"));
+
+            byte[] logoImage1 = getLogoImage(url1);
+            byte[] logoImage2 = getLogoImage(url2);
+
+            if (logoImage1 != null) {
+                _data.set_txtImg1(logoImage1);
+            }
+
+            if (logoImage2 != null) {
+                _data.set_txtImg2(logoImage2);
+            }
+
+            ListdataActivity.add(_data);
+        }
+
+        if(ListdataActivity.size() > 0){
+            new tActivityMobileBL().saveData(ListdataActivity);
+        }
+
+        return _array;
+    }
+
     private List<String> SaveDatatSubTypeActivityData(JSONArray JData) {
         List<String> _array;
         List<tSubTypeActivityData> ListDatatSubTypeActivityData= null;
@@ -1927,6 +2009,68 @@ public class FragmentDownloadData extends Fragment {
             // Make ProgressBar invisible
             // pg.setVisibility(View.VISIBLE);
             Dialog.setMessage("Getting Activity");
+            Dialog.setCancelable(false);
+            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    intProcesscancel = 1;
+                }
+            });
+            Dialog.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            Dialog.dismiss();
+        }
+    }
+
+    private class AsyncCallActivityV2 extends AsyncTask<JSONArray, Void, JSONArray> {
+        @Override
+        protected JSONArray doInBackground(JSONArray... params) {
+//            android.os.Debug.waitForDebugger();
+            JSONArray Json = null;
+            try {
+                Json = new tActivityMobileBL().DownloadActivityV2(pInfo.versionName);
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return Json;
+        }
+
+        private ProgressDialog Dialog = new ProgressDialog(getContext());
+
+        @Override
+        protected void onCancelled() {
+            Dialog.dismiss();
+            new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessCancelRequest, false);
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray roledata) {
+            if (roledata != null && roledata.size() > 0) {
+                arrData = SaveDatatActivityDataV2(roledata);
+                //spnBranch.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
+                loadData();
+                new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
+            } else {
+                if (intProcesscancel == 1) {
+                    onCancelled();
+                } else {
+                    new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
+                }
+
+            }
+            checkingDataTable();
+            Dialog.dismiss();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            // Make ProgressBar invisible
+            // pg.setVisibility(View.VISIBLE);
+            Dialog.setMessage("Getting ActivityV2");
             Dialog.setCancelable(false);
             Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
                 @Override

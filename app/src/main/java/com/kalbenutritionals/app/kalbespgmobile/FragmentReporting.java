@@ -33,6 +33,7 @@ import bl.mEmployeeAreaBL;
 import bl.mMenuBL;
 import bl.mTypeSubmissionMobileBL;
 import bl.tActivityBL;
+import bl.tActivityMobileBL;
 import bl.tCustomerBasedMobileDetailBL;
 import bl.tCustomerBasedMobileDetailProductBL;
 import bl.tCustomerBasedMobileHeaderBL;
@@ -49,6 +50,7 @@ import library.spgmobile.common.mEmployeeAreaData;
 import library.spgmobile.common.mMenuData;
 import library.spgmobile.common.mTypeSubmissionMobile;
 import library.spgmobile.common.tActivityData;
+import library.spgmobile.common.tActivityMobileData;
 import library.spgmobile.common.tCustomerBasedMobileDetailData;
 import library.spgmobile.common.tCustomerBasedMobileDetailProductData;
 import library.spgmobile.common.tCustomerBasedMobileHeaderData;
@@ -361,10 +363,21 @@ public class FragmentReporting extends Fragment {
             ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
 
             List<tActivityData> dt_act = new tActivityBL().getAllDataByOutletCode(outletcode);
+            List<tActivityMobileData> dt_actV2 = new tActivityMobileBL().getAllDataByOutletCode(outletcode);
             reportList = new ArrayList<>();
 
             if(dt_act != null&&dt_act.size()>0){
                 for(tActivityData datas : dt_act ){
+                    ReportTable rt = new ReportTable();
+
+                    rt.set_report_type("Activity");
+                    rt.set_txtDesc(datas.get_txtDesc());
+                    rt.set_txtOutletName(datas.get_txtOutletName());
+
+                    reportList.add(rt);
+                }
+            } else if(dt_actV2 != null&&dt_actV2.size()>0){
+                for(tActivityMobileData datas : dt_actV2 ){
                     ReportTable rt = new ReportTable();
 
                     rt.set_report_type("Activity");

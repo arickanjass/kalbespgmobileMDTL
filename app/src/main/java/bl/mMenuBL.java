@@ -157,9 +157,10 @@ public class mMenuBL extends clsMainBL {
                         }
                     }
                     if (validate == 1) {
-                        tmpData.add(data);
+//                        tmpData.add(data);
                     }
                 }
+                tmpData.add(data);
             }
 
             //Untuk absen SPG Mobile harus pengecekan master data: Branch, Outlet, Product, Brand, Product SPG Customerbased, Product PIC Customerbased, Product Competitor, Type Submission, Type Leave
