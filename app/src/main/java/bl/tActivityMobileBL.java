@@ -100,10 +100,19 @@ public class tActivityMobileBL extends clsMainBL{
     }
 
     public List<tActivityMobileData> getAllDataByOutletCode(String outletcode){
-        SQLiteDatabase db=getDb();
+        SQLiteDatabase _db = getDb();
         tActivityMobileDA _tActivityDA=new tActivityMobileDA(db);
-        List<tActivityMobileData> listData=_tActivityDA.getAllDataByOutletCode(db, outletcode);
-        return listData;
+        List<tActivityMobileData> dt;
+        if(outletcode.equals("ALLOUTLET")){
+            dt = _tActivityDA.getAllData(_db);
+        } else {
+            dt = _tActivityDA.getAllDataByOutletCode(_db,outletcode);
+        }
+
+        if(dt == null){
+            dt = new ArrayList<>(0);
+        }
+        return dt;
     }
 
     public List<tActivityMobileData> getAllDataByIntSyc(String val){

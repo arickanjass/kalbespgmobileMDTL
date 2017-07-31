@@ -977,6 +977,10 @@ public class FragmentDownloadData extends Fragment {
                     Json = new tActivityBL().DownloadActivity(pInfo.versionName);
                     SaveDatatActivityData(Json);
                 }
+                if(ll_data_activityV2!=null && ll_data_activityV2.getVisibility() == View.VISIBLE){
+                    Json = new tActivityMobileBL().DownloadActivityV2(pInfo.versionName);
+                    SaveDatatActivityDataV2(Json);
+                }
                 if(ll_data_customerbased!=null && ll_data_customerbased.getVisibility() == View.VISIBLE){
                     Json = new tCustomerBasedMobileHeaderBL().DownloadCustomerBase(pInfo.versionName);
                     SaveDatatCustomerBasedData(Json);
@@ -1401,8 +1405,8 @@ public class FragmentDownloadData extends Fragment {
             _data.set_txtUserId(String.valueOf(innerObj.get("TxtUserId")));
             _data.set_intFlag(String.valueOf(innerObj.get("TxtType")));
             _data.set_intActive(String.valueOf(innerObj.get("IntActive")));
-            _data.set_intSubTypeActivity(String.valueOf(innerObj.get("txtSubTypeId")));
-            _data.set_txtTypeActivity(String.valueOf(innerObj.get("txtSubTypeName")));
+            _data.set_intSubTypeActivity(String.valueOf(innerObj.get("TxtSubTypeId")));
+            _data.set_txtTypeActivity(String.valueOf(innerObj.get("TxtSubTypeName")));
 
             String url1 = String.valueOf(innerObj.get("TxtLinkImg1"));
             String url2 = String.valueOf(innerObj.get("TxtLinkImg2"));
