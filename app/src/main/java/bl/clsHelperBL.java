@@ -158,7 +158,7 @@ public class clsHelperBL extends clsMainBL {
             dataReturn.set_txtRoleId(dataAbsen.get_txtRoleId());
 //				Bitmap bmp2 = BitmapFactory.decodeByteArray(blob2, 0, blob2.length);
 
-            dataReturn.setType("absen");
+            dataReturn.setType("absen");   
         }else{
             dataReturn = null;
         }
@@ -552,7 +552,7 @@ public class clsHelperBL extends clsMainBL {
             List<tPurchaseOrderHeaderData> ListOfPurchaseOrderHeader = _tPurchaseOrderHeaderDA.getAllDataToPushData(db);
             List<tPurchaseOrderDetailData> ListOfPurchaseOrderDetail = _tPurchaseOrderDetailDA.getAllDataToPushDataPO(db, ListOfPurchaseOrderHeader);
             List<tSalesProductQuantityHeaderData> ListOfSalesProductQuantityHeader = _tSalesProductQuantityDA.getAllDataToPushData(db);
-            List<tJawabanUserData> ListOfJawabanUser = _tJawabanUserDA.GetAllData(db);
+            List<tJawabanUserData> ListOfJawabanUser = _tJawabanUserDA.GetDataToPushAnswer(db);
             List<tSalesProductQuantityDetailData> ListOfSalesProductQuantityDetail = _tSalesProductQuantityDetailDA.getAllDataToPushData(db, ListOfSalesProductQuantityHeader);
             List<tSalesProductQuantityImageData> ListOfSalesProductQuantityImage = _tSalesProductQuantityImageDA.getAllDataToPushData(db, ListOfSalesProductQuantityHeader);
             List<trackingLocationData> ListOfTrackingLocation = _trackingLocationDA.getAllDataToPushData(db);
