@@ -19,7 +19,7 @@ public class mPertanyaanDA {
     public mPertanyaanDA(SQLiteDatabase db){
         mPertanyaanData dt = new mPertanyaanData();
         String CREATE_CONTACTS_TABLE = "CREATE TABLE IF NOT EXISTS "
-                + TABLE_CONTACTS + "( " + dt.Property_intQuestionId + " TEXT PRIMARY KEY," + dt.Property_intCategoryId + " TEXT NULL," + dt.Property_txtQuestionDesc + " TEXT NULL,"
+                + TABLE_CONTACTS + "( " + dt.Property_intQuestionId + " TEXT PRIMARY KEY," + dt.Property_intSoalId + " INTEGER NULL," + dt.Property_intCategoryId + " INTEGER NULL," + dt.Property_txtQuestionDesc + " TEXT NULL,"
                 + dt.Property_intTypeQuestionId + " TEXT NULL," + dt.Property_decBobot + " TEXT NULL," + dt.Property_bolHaveAnswerList + " TEXT NULL," + dt.Property_inttGroupQuestionMapping + " TEXT NULL)";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
@@ -30,6 +30,7 @@ public class mPertanyaanDA {
         mPertanyaanData dt = new mPertanyaanData();
         db.execSQL("INSERT OR REPLACE into " + TABLE_CONTACTS + " ("
                 + dt.Property_intQuestionId + ","
+                + dt.Property_intSoalId + ","
                 + dt.Property_intCategoryId + ","
                 + dt.Property_txtQuestionDesc + ","
                 + dt.Property_intTypeQuestionId + ","
@@ -37,6 +38,7 @@ public class mPertanyaanDA {
                 + dt.Property_bolHaveAnswerList + ","
                 + dt.Property_inttGroupQuestionMapping + ") " + "values('"
                 + String.valueOf(data.get_intQuestionId()) + "','"
+                + String.valueOf(data.get_intSoalId()) + "','"
                 + String.valueOf(data.get_intCategoryId()) + "','"
                 + String.valueOf(data.get_txtQuestionDesc()) + "','"
                 + String.valueOf(data.get_intTypeQuestionId()) + "','"
@@ -56,12 +58,13 @@ public class mPertanyaanDA {
             do {
                 mPertanyaanData contact = new mPertanyaanData();
                 contact.set_intQuestionId(cursor.getString(0));
-                contact.set_intCategoryId(cursor.getString(1));
-                contact.set_txtQuestionDesc(cursor.getString(2));
-                contact.set_intTypeQuestionId(cursor.getString(3));
-                contact.set_decBobot(cursor.getString(4));
-                contact.set_bolHaveAnswerList(cursor.getString(5));
-                contact.set_inttGroupQuestionMapping(cursor.getString(6));
+                contact.set_intSoalId(cursor.getString(1));
+                contact.set_intCategoryId(cursor.getString(2));
+                contact.set_txtQuestionDesc(cursor.getString(3));
+                contact.set_intTypeQuestionId(cursor.getString(4));
+                contact.set_decBobot(cursor.getString(5));
+                contact.set_bolHaveAnswerList(cursor.getString(6));
+                contact.set_inttGroupQuestionMapping(cursor.getString(7));
                 contactList.add(contact);
             }while (cursor.moveToNext());
         }
@@ -70,20 +73,22 @@ public class mPertanyaanDA {
     }
 
     public List<mPertanyaanData> GetDataBYGroupQuestion(SQLiteDatabase db, int groupId){
+
         List<mPertanyaanData> contactList = new ArrayList<mPertanyaanData>();
         mPertanyaanData dt = new mPertanyaanData();
-        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_inttGroupQuestionMapping + "='" + groupId +"' ORDER BY inttGroupQuestionMapping ASC";
+        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_inttGroupQuestionMapping + "='" + groupId +"' ORDER BY intCategoryId, intSoalId ASC";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()){
-            do {
+            do {   
                 mPertanyaanData contact = new mPertanyaanData();
                 contact.set_intQuestionId(cursor.getString(0));
-                contact.set_intCategoryId(cursor.getString(1));
-                contact.set_txtQuestionDesc(cursor.getString(2));
-                contact.set_intTypeQuestionId(cursor.getString(3));
-                contact.set_decBobot(cursor.getString(4));
-                contact.set_bolHaveAnswerList(cursor.getString(5));
-                contact.set_inttGroupQuestionMapping(cursor.getString(6));
+                contact.set_intSoalId(cursor.getString(1));
+                contact.set_intCategoryId(cursor.getString(2));
+                contact.set_txtQuestionDesc(cursor.getString(3));
+                contact.set_intTypeQuestionId(cursor.getString(4));
+                contact.set_decBobot(cursor.getString(5));
+                contact.set_bolHaveAnswerList(cursor.getString(6));
+                contact.set_inttGroupQuestionMapping(cursor.getString(7));
                 contactList.add(contact);
             }while (cursor.moveToNext());
         }
