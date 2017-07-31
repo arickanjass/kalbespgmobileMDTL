@@ -21,6 +21,7 @@ import java.text.ParseException;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import bl.clsHelperBL;
 import bl.clsMainBL;
 import library.spgmobile.common.clsHelper;
 import library.spgmobile.common.clsStatusMenuStart;
@@ -133,6 +134,7 @@ public class Splash extends AppCompatActivity {
                 Intent myIntent = new Intent(Splash.this, Login.class);
                 clsHelper _clsHelper = new clsHelper();
                 _clsHelper.createFolderApp();
+                new clsHelperBL().InsertDefaultMconfig();
                 //_clsHelper.createFolderUserData();
                 try {
                     clsStatusMenuStart _clsStatusMenuStart = new clsMainBL().checkUserActive();

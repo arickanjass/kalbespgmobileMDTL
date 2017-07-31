@@ -88,7 +88,10 @@ public class clsHelperBL extends clsMainBL {
         new clsHelper().DeleteAllDB(db);
         db.close();
     }
-
+    public void InsertDefaultMconfig() {
+        mconfigDA _mconfigDA = new mconfigDA(db);
+        _mconfigDA.InsertDefaultMconfig(db);
+    }
     public visitplanAbsenData getDataCheckInActive(){
         SQLiteDatabase db=getDb();
         tAbsenUserDA _tAbsenUserDA=new tAbsenUserDA(db);

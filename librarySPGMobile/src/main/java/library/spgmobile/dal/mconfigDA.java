@@ -141,33 +141,33 @@ public class mconfigDA {
 	}
 
 	public void InsertDefaultMconfig(SQLiteDatabase db) {
-		String txtQuery = "insert into mconfig(intId,txtName,txtValue,txtDefaultValue,intEditAdmin )"
+		String txtQuery = "insert or replace into mconfig(intId,txtName,txtValue,txtDefaultValue,intEditAdmin )"
 				+ "select  1,'android:versionCode','5','5',1;";
 		db.execSQL(txtQuery);
 		//http://xteam1985.kalbenutritionals.co.id/api/Default.aspx?callback=?
 		//http://10.171.85.238/WebDashboard/api/Default.aspx?callback=?
 		//https://appgw01.kalbenutritionals.com/kndashboard
-		txtQuery = "insert into mconfig(intId,txtName,txtValue,txtDefaultValue,intEditAdmin )"
+		txtQuery = "insert or replace into mconfig(intId,txtName,txtValue,txtDefaultValue,intEditAdmin )"
 				//+ "select  2,'API','http://xt34m.kalbenutritionals.co.id/WebDashboard/api/api.aspx?callback=?','https://appgw01.kalbenutritionals.com/kndashboard/api/default.aspx?callback=?',1;";
-				+ "select  2,'API','http://10.171.10.15/webdashboard/api/api.aspx?callback=?','https://appgw01.kalbenutritionals.com/kndashboard/api/default.aspx?callback=?',1;";
+				+ "select  2,'API','http://10.171.10.16:8001/api/api.aspx?callback=?','https://appgw01.kalbenutritionals.com/kndashboard/api/default.aspx?callback=?',1;";
 //				+ "select  2,'API','http://10.171.11.87/webdashboard/api/APIRoberto.aspx?callback=?','https://appgw01.kalbenutritionals.com/kndashboard/api/default.aspx?callback=?',1;";
 		db.execSQL(txtQuery);
-		txtQuery = "insert into mconfig(intId,txtName,txtValue,txtDefaultValue,intEditAdmin )"
+		txtQuery = "insert or replace into mconfig(intId,txtName,txtValue,txtDefaultValue,intEditAdmin )"
 				+ "select  3,'Type Mobile','SPGMobile-Android','SPGMobile-Android',1;";
 		db.execSQL(txtQuery);
-		txtQuery = "insert into mconfig(intId,txtName,txtValue,txtDefaultValue,intEditAdmin )"
+		txtQuery = "insert or replace into mconfig(intId,txtName,txtValue,txtDefaultValue,intEditAdmin )"
 				+ "select  4,'Domain Kalbe','KALBEFOOD.LOCAL','KALBEFOOD.LOCAL',1;";
 		db.execSQL(txtQuery);
-		txtQuery = "insert into mconfig(intId,txtName,txtValue,txtDefaultValue,intEditAdmin )"
+		txtQuery = "insert or replace into mconfig(intId,txtName,txtValue,txtDefaultValue,intEditAdmin )"
 				+ "select  5,'Application Name','KNDashboard','KNDashboard',1 ;";
 		db.execSQL(txtQuery);
-		txtQuery = "insert into mconfig(intId,txtName,txtValue,txtDefaultValue,intEditAdmin )"
+		txtQuery = "insert or replace into mconfig(intId,txtName,txtValue,txtDefaultValue,intEditAdmin )"
 				+ "select  6,'Text Footer','Copyright &copy; KN IT','Copyright &copy; KN IT',1;";
 		db.execSQL(txtQuery);
-		txtQuery = "insert into mconfig(intId,txtName,txtValue,txtDefaultValue,intEditAdmin )"
+		txtQuery = "insert or replace into mconfig(intId,txtName,txtValue,txtDefaultValue,intEditAdmin )"
 				+ "select  7,'WidthScreen','','',1;";
 		db.execSQL(txtQuery);
-		txtQuery = "insert into mconfig(intId,txtName,txtValue,txtDefaultValue,intEditAdmin )"
+		txtQuery = "insert or replace into mconfig(intId,txtName,txtValue,txtDefaultValue,intEditAdmin )"
 				+ "select  8,'Background Service Online','1000','1000',1;";
 		db.execSQL(txtQuery);
 	}

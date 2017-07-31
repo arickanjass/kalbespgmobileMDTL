@@ -506,20 +506,22 @@ public class Login extends clsMainActivity {
                         }
 
                         JSONArray JsonArrayDetailCountConsumer = (JSONArray) innerObj.get("ListOfmEmployeeAreaCountConsumerMTD");
-                        Iterator iDetailConsumer = JsonArrayDetailCountConsumer.iterator();
-                        List<mCountConsumerMTDData> listDataConsumer = new ArrayList<>();
-                        while (iDetailConsumer.hasNext()) {
-                            JSONObject innerObjDetail = (JSONObject) iDetailConsumer.next();
-                            mCountConsumerMTDData data = new mCountConsumerMTDData();
-                            data.setJumlah(innerObjDetail.get("_jumlah").toString());
-                            data.setTxtBranchCode(innerObjDetail.get("_txtBranchCode").toString());
-                            data.setTxtBranchName(innerObjDetail.get("_txtBranchName").toString());
-                            data.setTxtOutletCode(innerObjDetail.get("_txtOutletCode").toString());
-                            data.setTxtOutletName(innerObjDetail.get("_txtOutletName").toString());
-                            data.setTxtRegionName(innerObjDetail.get("_txtRegionName").toString());
-                            listDataConsumer.add(data);
+                        if(JsonArrayDetailCountConsumer!=null){
+                            Iterator iDetailConsumer = JsonArrayDetailCountConsumer.iterator();
+                            List<mCountConsumerMTDData> listDataConsumer = new ArrayList<>();
+                            while (iDetailConsumer.hasNext()) {
+                                JSONObject innerObjDetail = (JSONObject) iDetailConsumer.next();
+                                mCountConsumerMTDData data = new mCountConsumerMTDData();
+                                data.setJumlah(innerObjDetail.get("_jumlah").toString());
+                                data.setTxtBranchCode(innerObjDetail.get("_txtBranchCode").toString());
+                                data.setTxtBranchName(innerObjDetail.get("_txtBranchName").toString());
+                                data.setTxtOutletCode(innerObjDetail.get("_txtOutletCode").toString());
+                                data.setTxtOutletName(innerObjDetail.get("_txtOutletName").toString());
+                                data.setTxtRegionName(innerObjDetail.get("_txtRegionName").toString());
+                                listDataConsumer.add(data);
+                            }
+                            new mCountConsumerMTDBL().SaveData(listDataConsumer);
                         }
-                        new mCountConsumerMTDBL().SaveData(listDataConsumer);
 
                         JSONArray JsonArrayDetailmDownloadData = (JSONArray) innerObj.get("ListOftDownloadData_mobile");
                         if (JsonArrayDetailmDownloadData != null) {
