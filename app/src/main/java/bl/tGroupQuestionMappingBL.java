@@ -27,6 +27,13 @@ public class tGroupQuestionMappingBL extends clsMainBL{
         return listData;
     }
 
+    public List<tGroupQuestionMappingData> GetDataById(int intId){
+        SQLiteDatabase _db = getDb();
+        tGroupQuestionMappingDA _tGroupQuestionMappingDA = new tGroupQuestionMappingDA(_db);
+        List<tGroupQuestionMappingData> listData = _tGroupQuestionMappingDA.GetDataById(_db, intId);
+        return listData;
+    }
+
     public void deleteAllDatatGroupQuestionMapping(){
         SQLiteDatabase _db = getDb();
         tGroupQuestionMappingDA _tGroupQuestionMappingDA = new tGroupQuestionMappingDA(_db);

@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.view.LayoutInflater;
@@ -37,11 +38,13 @@ import bl.mKategoriBL;
 import bl.mListJawabanBL;
 import bl.mPertanyaanBL;
 import bl.tAbsenUserBL;
+import bl.tGroupQuestionMappingBL;
 import bl.tJawabanUserBL;
 import library.spgmobile.common.jawabanModel;
 import library.spgmobile.common.mKategoriData;
 import library.spgmobile.common.mListJawabanData;
 import library.spgmobile.common.mPertanyaanData;
+import library.spgmobile.common.tGroupQuestionMappingData;
 import library.spgmobile.common.tJawabanUserData;
 import library.spgmobile.common.tUserLoginData;
 
@@ -53,6 +56,7 @@ public class FragmentKuesioner extends Fragment {
     View v;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private Toolbar toolbar;
     private ArrayList<jawabanModel> modelJawaban;
     final HashMap<String, String> HMPertanyaan = new HashMap<String, String>();
     final HashMap<String, String> HMPertanyaan2 = new HashMap<String, String>();
@@ -87,12 +91,24 @@ public class FragmentKuesioner extends Fragment {
         v = inflater.inflate(R.layout.fragment_kuesioner, container, false);
 
         viewPager = (ViewPager) v.findViewById(R.id.viewpager);
+        final FloatingActionButton fb = (FloatingActionButton) v.findViewById(R.id.fab);
+        toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             intGroupId = bundle.getInt("Key_GroupId");
         }
         final  List<mPertanyaanData> listDataPertanyaan = new mPertanyaanBL().GetDataByGroupQuestion(intGroupId);
+        final  List<mPertanyaanData> mPertanyaanDataList = new mPertanyaanBL().GetDataBYGroupQuestionCheck(intGroupId);
+        if (mPertanyaanDataList.size() == 0){
+            fb.setVisibility(View.INVISIBLE);
+        }
+        final List<tGroupQuestionMappingData> mappingDataList = new tGroupQuestionMappingBL().GetDataById(intGroupId);
+        for (tGroupQuestionMappingData dt : mappingDataList){
+            toolbar.setTitle(dt.get_txtGroupQuestion());
+//            toolbar.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        }
+
         final ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
 
         //disesuaikan jumlah soal
@@ -108,8 +124,6 @@ public class FragmentKuesioner extends Fragment {
         tabLayout = (TabLayout) v.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         _clsMainActivity = new clsMainActivity();
-
-        final FloatingActionButton fb = (FloatingActionButton) v.findViewById(R.id.fab);
         fb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
