@@ -12,6 +12,15 @@ public class mPertanyaanData {
     private String _decBobot;
     private String _bolHaveAnswerList;
     private String _inttGroupQuestionMapping;
+    private String _intSoalId;
+
+    public String get_intSoalId() {
+        return _intSoalId;
+    }
+
+    public void set_intSoalId(String _intSoalId) {
+        this._intSoalId = _intSoalId;   
+    }
 
     public synchronized String get_inttGroupQuestionMapping() {
         return _inttGroupQuestionMapping;
@@ -74,10 +83,11 @@ public class mPertanyaanData {
     public String Property_intTypeQuestionId = "intTypeQuestionId";
     public String Property_decBobot = "decBobot";
     public String Property_bolHaveAnswerList = "bolHaveAnswerList";
+    public String Property_intSoalId = "intSoalId";
     public String Property_ListOfmPertanyaanData = "ListOfmPertanyaanData";
     public String Property_inttGroupQuestionMapping = "inttGroupQuestionMapping";
-    public String Property_All = Property_intQuestionId + "," + Property_intCategoryId + "," + Property_txtQuestionDesc + "," + Property_intTypeQuestionId
-            + "," + Property_decBobot + "," + Property_bolHaveAnswerList + "," + Property_inttGroupQuestionMapping ;
+    public String Property_All = Property_intQuestionId + "," + Property_intSoalId + "," + Property_intCategoryId + "," + Property_txtQuestionDesc + "," + Property_intTypeQuestionId
+            + "," + Property_decBobot + "," + Property_bolHaveAnswerList + "," + Property_intSoalId + "," + Property_inttGroupQuestionMapping ;
     public mPertanyaanData(){
         super();
     }
