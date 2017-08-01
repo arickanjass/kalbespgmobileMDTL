@@ -161,9 +161,8 @@ public class Login extends clsMainActivity {
         imgBanner.setAdjustViewBounds(true);
         imgBanner.setScaleType(ImageView.ScaleType.CENTER_CROP);
         txtLoginEmail = (EditText) findViewById(R.id.txtLoginEmail);
-        txtLoginEmail.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
-
         txtLoginPassword = (EditText) findViewById(R.id.editTextPass);
+
         txtLoginEmail.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 // If the event is a key-down event on the "enter" button
@@ -184,6 +183,8 @@ public class Login extends clsMainActivity {
                 return false;
             }
         });
+
+        txtLoginEmail.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
 
 //        AsyncCallAppVesion task1 = new AsyncCallAppVesion();
 //        task1.execute();
@@ -294,6 +295,8 @@ public class Login extends clsMainActivity {
                 intProcesscancel = 0;
                 if (txtLoginEmail.getText().length() == 0) {
                     showCustomToast(Login.this, "Please input username", false);
+                } else if(txtLoginPassword.getText().length() == 0){
+                    showCustomToast(Login.this, "Please input password", false);
                 } else {
                     if (spnRole.getCount() == 0) {
                         txtEmail1 = txtLoginEmail.getText().toString();
@@ -687,6 +690,7 @@ public class Login extends clsMainActivity {
                                 }
                                 spnRole.setAdapter(new MyAdapter(Login.this, R.layout.custom_spinner, arrrole));
                                 spnRole.setEnabled(true);
+                                txtLoginPassword.requestFocus();
 
                             } else if (Listdata.size() == 0) {
                                 txtLoginEmail.requestFocus();
@@ -703,6 +707,9 @@ public class Login extends clsMainActivity {
                             final String finalMessage = message;
                             h.post(new Runnable() {
                                 public void run() {
+                                    ArrayAdapter<String> adapterspnBranch = new ArrayAdapter<>(Login.this, android.R.layout.simple_spinner_item, arrdefaultBranch);
+                                    spnRole.setAdapter(adapterspnBranch);
+                                    spnRole.setEnabled(false);
                                     new clsMainActivity().showCustomToast(Login.this, finalMessage, false);
                                 }
                             });
