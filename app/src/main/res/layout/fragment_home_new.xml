@@ -79,7 +79,8 @@
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp">
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -92,6 +93,8 @@
                         <!--Reso-->
 
                         <LinearLayout
+                            android:id="@+id/ll_reso"
+                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -126,6 +129,8 @@
                         <!--Activity-->
 
                         <LinearLayout
+                            android:id="@+id/ll_data_activity"
+                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -157,9 +162,47 @@
                                 android:textSize="11sp" />
                         </LinearLayout>
 
+                        <!--activity v2-->
+
+                        <LinearLayout
+                            android:id="@+id/ll_data_activityV2"
+                            android:visibility="gone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <com.owater.library.CircleTextView
+                                android:id="@+id/tvTotalActivityV2"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_weight="0.25"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="25dp"
+                                app:ct_backgroundColor="#FFFFFF"
+                                app:ct_border_alpha="0.5"
+                                app:ct_border_color="@color/colorAccent"
+                                app:ct_border_width="10dp"
+                                app:ct_type="shadow_alpha" />
+
+                            <TextView
+                                android:id="@+id/textView40V2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="ACTIVITY V2"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
                         <!--Customer Based-->
 
                         <LinearLayout
+                            android:id="@+id/ll_data_customerbased"
+                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -194,6 +237,8 @@
                         <!--Customer Based MTD-->
 
                         <LinearLayout
+                            android:id="@+id/ll_data_customerbasedMTD"
+                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -227,13 +272,14 @@
                         <!--Po Mobile-->
 
                         <LinearLayout
+                            android:id="@+id/ll_purchase_order"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center"
                             android:orientation="vertical"
                             android:padding="5dp"
-                            android:visibility="visible">
+                            android:visibility="gone">
 
                             <com.owater.library.CircleTextView
                                 android:id="@+id/tvTotalPO"
@@ -262,6 +308,8 @@
                         <!--Quantity Stock-->
 
                         <LinearLayout
+                            android:id="@+id/ll_dataQuantityStock"
+                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -328,6 +376,7 @@
                 </android.support.v7.widget.CardView>
             </HorizontalScrollView>
 
+            <!--table row-->
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -380,8 +429,10 @@
                                 android:text="Pushed"
                                 android:textColor="@color/white" />
                         </TableRow>
-
+                        <!--table reso-->
                         <TableRow
+                            android:id="@+id/tr_reso"
+                            android:visibility="gone"
                             android:background="#f0f0f0"
                             android:gravity="center_horizontal"
                             android:padding="5dp">
@@ -419,8 +470,10 @@
                                 android:paddingRight="5dp"
                                 android:text="" />
                         </TableRow>
-
+                        <!--table activity-->
                         <TableRow
+                            android:id="@+id/tr_activity"
+                            android:visibility="gone"
                             android:background="#f0f0f0"
                             android:gravity="center_horizontal"
                             android:padding="5dp">
@@ -458,8 +511,51 @@
                                 android:paddingRight="5dp"
                                 android:text="" />
                         </TableRow>
-
+                        <!--table activityV2-->
                         <TableRow
+                            android:id="@+id/tr_activityV2"
+                            android:visibility="gone"
+                            android:background="#f0f0f0"
+                            android:gravity="center_horizontal"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="ActivityV2" />
+
+                            <TextView
+                                android:id="@+id/tv_actV20"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:paddingRight="5dp"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tv_actV21"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:paddingRight="5dp"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tv_actV22"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:paddingRight="5dp"
+                                android:text="" />
+                        </TableRow>
+                        <!--table cunsomer-->
+                        <TableRow
+                            android:id="@+id/tr_cunsomer"
+                            android:visibility="gone"
                             android:background="#f0f0f0"
                             android:gravity="center_horizontal"
                             android:padding="5dp">
@@ -491,6 +587,90 @@
 
                             <TextView
                                 android:id="@+id/tv_cb2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:paddingRight="5dp"
+                                android:text="" />
+                        </TableRow>
+                        <!--table po-->
+                        <TableRow
+                            android:id="@+id/tr_po"
+                            android:visibility="gone"
+                            android:background="#f0f0f0"
+                            android:gravity="center_horizontal"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:paddingRight="5dp"
+                                android:text="PO" />
+
+                            <TextView
+                                android:id="@+id/tv_po0"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:paddingRight="5dp"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tv_po1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:paddingRight="5dp"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tv_po2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:paddingRight="5dp"
+                                android:text="" />
+                        </TableRow>
+                        <!--table qStock-->
+                        <TableRow
+                            android:id="@+id/tr_qStock"
+                            android:background="#f0f0f0"
+                            android:visibility="gone"
+                            android:gravity="center_horizontal"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:paddingRight="5dp"
+                                android:text="Q. Stock" />
+
+                            <TextView
+                                android:id="@+id/tv_qs0"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:paddingRight="5dp"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tv_qs1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:paddingRight="5dp"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tv_qs2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
