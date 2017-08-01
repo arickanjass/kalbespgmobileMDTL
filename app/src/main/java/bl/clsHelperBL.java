@@ -158,7 +158,7 @@ public class clsHelperBL extends clsMainBL {
             dataReturn.set_txtRoleId(dataAbsen.get_txtRoleId());
 //				Bitmap bmp2 = BitmapFactory.decodeByteArray(blob2, 0, blob2.length);
 
-            dataReturn.setType("absen");   
+            dataReturn.setType("absen");
         }else{
             dataReturn = null;
         }
@@ -778,7 +778,7 @@ public class clsHelperBL extends clsMainBL {
                 dt.set_intIdSyn("1");
                 _tActivityDA.SaveDatatActivityData(db, dt);
             }
-        }
+        }    
 
         if (validPush && dtJson.getListOftActivityMobileData() != null) {
             for (tActivityMobileData dt : dtJson.getListOftActivityMobileData()) {
