@@ -2,18 +2,17 @@ package com.kalbenutritionals.app.kalbespgmobile;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
-import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -29,7 +28,6 @@ import android.widget.TextView;
 import org.apache.http.util.ByteArrayBuffer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.BufferedInputStream;
@@ -127,40 +125,45 @@ import library.spgmobile.dal.tSalesProductQuantityImageDA;
 
 public class FragmentDownloadData extends Fragment {
     View v;
-    private Button btnKordinasiOutlet;
     private Spinner spnKordinasiOutlet;
-    private Button btnBranch;
     private Spinner spnBranch;
-    private Button btnOutlet;
-    private Button btnVisitPlan, btnTrVisitPlan;
     private Spinner spnVisitPlan, spnTrVisitPlan;
     private Spinner spnOutlet;
-    private Button btnProduct;
     private Spinner spnProduct;
-    private Button btnAllDownload;
     private Spinner spnLeave;
-    private Button btnLeave;
     private Spinner spnBrand;
-    private Button btnBrand;
     private Spinner spnReso;
-    private Button btnReso;
     private Spinner spnActivity, spnActivityV2;
-    private Button btnActivity, btnActivityV2;
     private Spinner spnCustomerBase;
-    private Button btnCustomerBase;
     private Spinner spnAbsen, spnQuiz;
-    private Button btnAbsen, btnQuiz;
-    private Spinner spnDataLeave,spnSubTypeActivity, spnDataPO, spnDataQuantityStock, spnProductComp, spnTypeSubmission, spnProdSPGCusBased, spnProdPICCusBased;
-    private Button btnDataLeave, btnSubTypeActivity, btnDataPO, btnDataQuantityStock, btnProductComp, btnTypeSubmission, btnProdSPGCusBased, btnProdPICCusBased ;
-    private LinearLayout ll_subtypeactivity, ll_kordinasi_outlet,ll_branch, ll_outlet, ll_product, ll_brand, ll_type_leave, ll_reso, ll_data_activity, ll_data_activityV2 , ll_data_customerbased, ll_absen, ll_purchase_order, ll_data_leave, ll_product_spg, ll_product_pic, ll_product_competitor, ll_type_submission, ll_kategoriVisitPlan, ll_dataVisitPlan, ll_dataQuantityStock, ll_dataKordinasiOutlet, ll_dataQuesioner;
+    private Spinner spnDataLeave, spnSubTypeActivity, spnDataPO, spnDataQuantityStock, spnProductComp, spnTypeSubmission, spnProdSPGCusBased, spnProdPICCusBased;
+    private LinearLayout ll_subtypeactivity;
+    private LinearLayout ll_branch;
+    private LinearLayout ll_product;
+    private LinearLayout ll_brand;
+    private LinearLayout ll_type_leave;
+    private LinearLayout ll_reso;
+    private LinearLayout ll_data_activity;
+    private LinearLayout ll_data_activityV2;
+    private LinearLayout ll_data_customerbased;
+    private LinearLayout ll_absen;
+    private LinearLayout ll_purchase_order;
+    private LinearLayout ll_data_leave;
+    private LinearLayout ll_product_spg;
+    private LinearLayout ll_product_pic;
+    private LinearLayout ll_product_competitor;
+    private LinearLayout ll_type_submission;
+    private LinearLayout ll_kategoriVisitPlan;
+    private LinearLayout ll_dataVisitPlan;
+    private LinearLayout ll_dataQuantityStock;
+    private LinearLayout ll_dataKordinasiOutlet;
+    private LinearLayout ll_dataQuesioner;
 
     private PackageInfo pInfo = null;
     private List<String> arrData;
     private String[] strip = new String[]{"-"};
     int intProcesscancel = 0;
     tUserLoginData loginData;
-    private Location mLastLocation;
-    private final static int INTERVAL = 1000 * 60 * 2; //2 minutes
     Handler mHandler = new Handler();
 
     clsMainActivity _clsMainActivity;
@@ -171,51 +174,51 @@ public class FragmentDownloadData extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.activity_download_data, container, false);
-        btnAllDownload = (Button) v.findViewById(R.id.btnAllDownload);
+        Button btnAllDownload = (Button) v.findViewById(R.id.btnAllDownload);
 
-        btnKordinasiOutlet = (Button) v.findViewById(R.id.btnKordinasiOutlet);
+        Button btnKordinasiOutlet = (Button) v.findViewById(R.id.btnKordinasiOutlet);
         spnKordinasiOutlet = (Spinner) v.findViewById(R.id.spnKordinasiOutlet);
-        btnBranch = (Button) v.findViewById(R.id.btnBranch);
+        Button btnBranch = (Button) v.findViewById(R.id.btnBranch);
         spnBranch = (Spinner) v.findViewById(R.id.spnType);
-        btnOutlet = (Button) v.findViewById(R.id.btnOutlet);
+        Button btnOutlet = (Button) v.findViewById(R.id.btnOutlet);
         spnOutlet = (Spinner) v.findViewById(R.id.spnOutlet);
-        btnProduct = (Button) v.findViewById(R.id.btnProduct);
+        Button btnProduct = (Button) v.findViewById(R.id.btnProduct);
         spnProduct = (Spinner) v.findViewById(R.id.spnProduct);
-        btnLeave = (Button) v.findViewById(R.id.btnLeave);
+        Button btnLeave = (Button) v.findViewById(R.id.btnLeave);
         spnLeave = (Spinner) v.findViewById(R.id.spnLeave);
         spnBrand = (Spinner) v.findViewById(R.id.spnBrand);
-        btnBrand = (Button) v.findViewById(R.id.btnDlBrand);
+        Button btnBrand = (Button) v.findViewById(R.id.btnDlBrand);
         spnReso = (Spinner) v.findViewById(R.id.spnReso);
-        btnReso = (Button) v.findViewById(R.id.btnDlReso);
+        Button btnReso = (Button) v.findViewById(R.id.btnDlReso);
         spnActivity = (Spinner) v.findViewById(R.id.spnActivity);
-        btnActivity = (Button) v.findViewById(R.id.btnDlActivity);
+        Button btnActivity = (Button) v.findViewById(R.id.btnDlActivity);
         spnActivityV2 = (Spinner) v.findViewById(R.id.spnActivityV2);
-        btnActivityV2 = (Button) v.findViewById(R.id.btnDlActivityV2);
+        Button btnActivityV2 = (Button) v.findViewById(R.id.btnDlActivityV2);
         spnCustomerBase = (Spinner) v.findViewById(R.id.spnCustomerBase);
-        btnCustomerBase = (Button) v.findViewById(R.id.btnDlCustomerBase);
+        Button btnCustomerBase = (Button) v.findViewById(R.id.btnDlCustomerBase);
         spnAbsen = (Spinner) v.findViewById(R.id.spnAbsen);
-        btnAbsen = (Button) v.findViewById(R.id.btnDlAbsen);
+        Button btnAbsen = (Button) v.findViewById(R.id.btnDlAbsen);
         spnDataLeave = (Spinner) v.findViewById(R.id.spnDataLeave);
-        btnDataLeave = (Button) v.findViewById(R.id.btnDlDataLeave);
-        spnDataPO = (Spinner)v.findViewById(R.id.spnDataPO);
-        btnDataPO = (Button)v.findViewById(R.id.btnDlDataPO);
-        spnDataQuantityStock = (Spinner)v.findViewById(R.id.spnDataQuantityStock);
-        btnDataQuantityStock = (Button)v.findViewById(R.id.btnDlDataQuantityStock);
+        Button btnDataLeave = (Button) v.findViewById(R.id.btnDlDataLeave);
+        spnDataPO = (Spinner) v.findViewById(R.id.spnDataPO);
+        Button btnDataPO = (Button) v.findViewById(R.id.btnDlDataPO);
+        spnDataQuantityStock = (Spinner) v.findViewById(R.id.spnDataQuantityStock);
+        Button btnDataQuantityStock = (Button) v.findViewById(R.id.btnDlDataQuantityStock);
         spnQuiz = (Spinner) v.findViewById(R.id.spnQuiz);
-        btnQuiz = (Button)v.findViewById(R.id.btnQuiz);
+        Button btnQuiz = (Button) v.findViewById(R.id.btnQuiz);
         spnProductComp = (Spinner) v.findViewById(R.id.spnProdComp);
-        btnProductComp = (Button) v.findViewById(R.id.btnProdComp);
+        Button btnProductComp = (Button) v.findViewById(R.id.btnProdComp);
         spnTypeSubmission = (Spinner) v.findViewById(R.id.spnTypeSubm);
-        btnTypeSubmission = (Button) v.findViewById(R.id.btnSumbisson);
+        Button btnTypeSubmission = (Button) v.findViewById(R.id.btnSumbisson);
         spnProdSPGCusBased = (Spinner) v.findViewById(R.id.spnProdSPGCusBase);
-        btnProdSPGCusBased = (Button) v.findViewById(R.id.btnProdSPGCusBase);
+        Button btnProdSPGCusBased = (Button) v.findViewById(R.id.btnProdSPGCusBase);
         spnProdPICCusBased = (Spinner) v.findViewById(R.id.spnProdPICCusBase);
-        btnProdPICCusBased = (Button) v.findViewById(R.id.btnProdPICCusBase);
+        Button btnProdPICCusBased = (Button) v.findViewById(R.id.btnProdPICCusBase);
         spnSubTypeActivity = (Spinner) v.findViewById(R.id.spnSubTypeActivity);
-        btnSubTypeActivity = (Button) v.findViewById(R.id.btnSubTypeActivity);
+        Button btnSubTypeActivity = (Button) v.findViewById(R.id.btnSubTypeActivity);
 
         ll_branch = (LinearLayout) v.findViewById(R.id.ll_branch);
-        ll_outlet = (LinearLayout) v.findViewById(R.id.ll_outlet);
+        LinearLayout ll_outlet = (LinearLayout) v.findViewById(R.id.ll_outlet);
         ll_product = (LinearLayout) v.findViewById(R.id.ll_product);
         ll_brand = (LinearLayout) v.findViewById(R.id.ll_brand);
         ll_type_leave = (LinearLayout) v.findViewById(R.id.ll_type_leave);
@@ -227,7 +230,7 @@ public class FragmentDownloadData extends Fragment {
         ll_purchase_order = (LinearLayout) v.findViewById(R.id.ll_purchase_order);
         ll_data_leave = (LinearLayout) v.findViewById(R.id.ll_data_leave);
         ll_product_spg = (LinearLayout) v.findViewById(R.id.ll_product_spg);
-        ll_product_pic = (LinearLayout) v.findViewById(R.id.ll_product_pic) ;
+        ll_product_pic = (LinearLayout) v.findViewById(R.id.ll_product_pic);
         ll_product_competitor = (LinearLayout) v.findViewById(R.id.ll_product_competitor);
         ll_type_submission = (LinearLayout) v.findViewById(R.id.ll_type_submission);
         ll_kategoriVisitPlan = (LinearLayout) v.findViewById(R.id.ll_kategoriVisitPlan);
@@ -240,73 +243,72 @@ public class FragmentDownloadData extends Fragment {
         spnVisitPlan = (Spinner) v.findViewById(R.id.spnVisitPlan);
         spnTrVisitPlan = (Spinner) v.findViewById(R.id.spnTrVisitPlan);
 
-        btnVisitPlan = (Button) v.findViewById(R.id.btnVisitPlan);
-        btnTrVisitPlan = (Button) v.findViewById(R.id.btnTrVisitPlan);
+        Button btnVisitPlan = (Button) v.findViewById(R.id.btnVisitPlan);
+        Button btnTrVisitPlan = (Button) v.findViewById(R.id.btnTrVisitPlan);
 
 
         loginData = new tUserLoginData();
         loginData = new tUserLoginBL().getUserActive();
 
-        List<mDownloadMasterData_mobileData> mDownloadMasterData_mobileDataList = new ArrayList<>();
+        List<mDownloadMasterData_mobileData> mDownloadMasterData_mobileDataList;
 
         mDownloadMasterData_mobileDataList = new mDownloadMasterData_mobileBL().GetAllData();
 
         Resources res = getResources();
 
-        for(mDownloadMasterData_mobileData data : mDownloadMasterData_mobileDataList){
-            String txt_id = data.get_txtMasterData().replaceAll(" ","");
+        for (mDownloadMasterData_mobileData data : mDownloadMasterData_mobileDataList) {
+            String txt_id = data.get_txtMasterData().replaceAll(" ", "");
 
             //show master data
-            if(txt_id.equals(res.getResourceEntryName(ll_branch.getId()))){
+            if (txt_id.equals(res.getResourceEntryName(ll_branch.getId()))) {
                 ll_branch.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_outlet.getId()))){
+            } else if (txt_id.equals(res.getResourceEntryName(ll_outlet.getId()))) {
                 ll_outlet.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_product.getId()))){
+            } else if (txt_id.equals(res.getResourceEntryName(ll_product.getId()))) {
                 ll_product.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_brand.getId()))){
+            } else if (txt_id.equals(res.getResourceEntryName(ll_brand.getId()))) {
                 ll_brand.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_type_leave.getId()))){
+            } else if (txt_id.equals(res.getResourceEntryName(ll_type_leave.getId()))) {
                 ll_type_leave.setVisibility(View.VISIBLE);
-            }  else if (txt_id.equals(res.getResourceEntryName(ll_product_spg.getId()))){
+            } else if (txt_id.equals(res.getResourceEntryName(ll_product_spg.getId()))) {
                 ll_product_spg.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_product_pic.getId()))){
+            } else if (txt_id.equals(res.getResourceEntryName(ll_product_pic.getId()))) {
                 ll_product_pic.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_product_competitor.getId()))){
+            } else if (txt_id.equals(res.getResourceEntryName(ll_product_competitor.getId()))) {
                 ll_product_competitor.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_type_submission.getId()))){
+            } else if (txt_id.equals(res.getResourceEntryName(ll_type_submission.getId()))) {
                 ll_type_submission.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_kategoriVisitPlan.getId()))){
+            } else if (txt_id.equals(res.getResourceEntryName(ll_kategoriVisitPlan.getId()))) {
                 ll_kategoriVisitPlan.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_dataQuesioner.getId()))){
+            } else if (txt_id.equals(res.getResourceEntryName(ll_dataQuesioner.getId()))) {
                 ll_dataQuesioner.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_subtypeactivity.getId()))){
+            } else if (txt_id.equals(res.getResourceEntryName(ll_subtypeactivity.getId()))) {
                 ll_subtypeactivity.setVisibility(View.VISIBLE);
             }
             // show data transaksi
-            else if (txt_id.equals(res.getResourceEntryName(ll_dataVisitPlan.getId()))){
+            else if (txt_id.equals(res.getResourceEntryName(ll_dataVisitPlan.getId()))) {
                 ll_dataVisitPlan.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_dataQuantityStock.getId()))){
+            } else if (txt_id.equals(res.getResourceEntryName(ll_dataQuantityStock.getId()))) {
                 ll_dataQuantityStock.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_dataKordinasiOutlet.getId()))){
+            } else if (txt_id.equals(res.getResourceEntryName(ll_dataKordinasiOutlet.getId()))) {
                 ll_dataKordinasiOutlet.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_reso.getId()))){
+            } else if (txt_id.equals(res.getResourceEntryName(ll_reso.getId()))) {
                 ll_reso.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_data_activity.getId()))){
+            } else if (txt_id.equals(res.getResourceEntryName(ll_data_activity.getId()))) {
                 ll_data_activity.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_data_activityV2.getId()))){
+            } else if (txt_id.equals(res.getResourceEntryName(ll_data_activityV2.getId()))) {
                 ll_data_activityV2.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_data_customerbased.getId()))){
+            } else if (txt_id.equals(res.getResourceEntryName(ll_data_customerbased.getId()))) {
                 ll_data_customerbased.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_absen.getId()))){
+            } else if (txt_id.equals(res.getResourceEntryName(ll_absen.getId()))) {
                 ll_absen.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_purchase_order.getId()))){
+            } else if (txt_id.equals(res.getResourceEntryName(ll_purchase_order.getId()))) {
                 ll_purchase_order.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_data_leave.getId()))){
+            } else if (txt_id.equals(res.getResourceEntryName(ll_data_leave.getId()))) {
                 ll_data_leave.setVisibility(View.VISIBLE);
             }
 
         }
-
 
         loadData();
 
@@ -521,7 +523,7 @@ public class FragmentDownloadData extends Fragment {
         List<mKategoriData> kategoriDataList = new mKategoriBL().GetAllData();
         List<tPurchaseOrderHeaderData> listPurchaseOrderHeaderData = new tPurchaseOrderHeaderBL().getAllPurchaseOrderHeader();
         List<tSalesProductQuantityHeaderData> listQuantityStockHeaderData = new tSalesProductQuantityHeaderBL().getAllSalesQuantityHeader();
-        List<trackingLocationData> listtrackingLocationData = new trackingLocationBL().getAllDataTrackingLocation();
+//        List<trackingLocationData> listtrackingLocationData = new trackingLocationBL().getAllDataTrackingLocation();
         List<KoordinasiOutletData> listKoordinasiOutletData = new KoordinasiOutletBL().getAllKoordinasiOutletData();
         List<mProductCompetitorData> productCompetitorDataList = new mProductCompetitorBL().GetAllData();
         List<mTypeSubmissionMobile> typeSubmissionDataList = new mTypeSubmissionMobileBL().GetAllData();
@@ -597,7 +599,7 @@ public class FragmentDownloadData extends Fragment {
         }
 
 
-        arrData = new ArrayList<String>();
+        arrData = new ArrayList<>();
         if (listDataBranch.size() > 0) {
             for (mEmployeeBranchData dt : listDataBranch) {
                 arrData.add(dt.get_txtBranchCode() + " - " + dt.get_txtBranchName());
@@ -605,25 +607,25 @@ public class FragmentDownloadData extends Fragment {
             spnBranch.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
             spnBranch.setEnabled(true);
         } else if (listDataBranch.size() == 0) {
-            ArrayAdapter<String> adapterspn = new ArrayAdapter<String>(getContext(),
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<>(getContext(),
                     android.R.layout.simple_spinner_item, strip);
             spnBranch.setAdapter(adapterspn);
             spnBranch.setEnabled(false);
         }
 
-        arrData = new ArrayList<String>();
-        if (parentDataList.size() > 0 && kategoriDataList.size() > 0 && jawabanDataList.size() >0 && typePertanyaanDataList.size() > 0 && pertanyaanDataList.size() >0 && tGroupQuestionMappingDataList.size() >0) {
+        arrData = new ArrayList<>();
+        if (parentDataList.size() > 0 && kategoriDataList.size() > 0 && jawabanDataList.size() > 0 && typePertanyaanDataList.size() > 0 && pertanyaanDataList.size() > 0 && tGroupQuestionMappingDataList.size() > 0) {
             arrData.add("Quesioner  Ready");
             spnQuiz.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
             spnQuiz.setEnabled(true);
         } else {
-            ArrayAdapter<String> adapterspn = new ArrayAdapter<String>(getContext(),
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<>(getContext(),
                     android.R.layout.simple_spinner_item, strip);
             spnQuiz.setAdapter(adapterspn);
             spnQuiz.setEnabled(false);
         }
 
-        arrData = new ArrayList<String>();
+        arrData = new ArrayList<>();
         if (listVisitPlanRealisasi.size() > 0) {
             for (tVisitPlanRealisasiData dt : listVisitPlanRealisasi) {
                 arrData.add(dt.get_txtOutletName() + " - " + dt.get_txtDesc() + " - " + dt.get_dtDate());
@@ -631,12 +633,11 @@ public class FragmentDownloadData extends Fragment {
             spnTrVisitPlan.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
             spnTrVisitPlan.setEnabled(true);
         } else if (listVisitPlanRealisasi.size() == 0) {
-            ArrayAdapter<String> adapterspn = new ArrayAdapter<String>(getContext(),
-                    android.R.layout.simple_spinner_item, strip);
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, strip);
             spnTrVisitPlan.setAdapter(adapterspn);
             spnTrVisitPlan.setEnabled(false);
         }
-        arrData = new ArrayList<String>();
+        arrData = new ArrayList<>();
         if (listDataCategoryVisitPlan.size() > 0) {
             for (mCategoryVisitPlanData dt : listDataCategoryVisitPlan) {
                 arrData.add(dt.getIntCategoryVisitPlan() + " - " + dt.getTxtCatVisitPlan());
@@ -644,12 +645,12 @@ public class FragmentDownloadData extends Fragment {
             spnVisitPlan.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
             spnVisitPlan.setEnabled(true);
         } else if (listDataCategoryVisitPlan.size() == 0) {
-            ArrayAdapter<String> adapterspn = new ArrayAdapter<String>(getContext(),
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<>(getContext(),
                     android.R.layout.simple_spinner_item, strip);
             spnVisitPlan.setAdapter(adapterspn);
             spnVisitPlan.setEnabled(false);
         }
-        arrData = new ArrayList<String>();
+        arrData = new ArrayList<>();
         if (listDataLeave.size() > 0) {
             for (mTypeLeaveMobileData dt : listDataLeave) {
                 arrData.add(dt.get_intTipeLeave() + " - " + dt.get_txtTipeLeaveName());
@@ -657,12 +658,12 @@ public class FragmentDownloadData extends Fragment {
             spnLeave.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
             spnLeave.setEnabled(true);
         } else if (listDataLeave.size() == 0) {
-            ArrayAdapter<String> adapterspn = new ArrayAdapter<String>(getContext(),
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<>(getContext(),
                     android.R.layout.simple_spinner_item, strip);
             spnLeave.setAdapter(adapterspn);
             spnLeave.setEnabled(false);
         }
-        arrData = new ArrayList<String>();
+        arrData = new ArrayList<>();
         if (listDataArea.size() > 0) {
             for (mEmployeeAreaData dt : listDataArea) {
                 arrData.add(dt.get_txtOutletCode() + " - " + dt.get_txtOutletName());
@@ -670,12 +671,12 @@ public class FragmentDownloadData extends Fragment {
             spnOutlet.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
             spnOutlet.setEnabled(true);
         } else if (listDataArea.size() == 0) {
-            ArrayAdapter<String> adapterspn = new ArrayAdapter<String>(getContext(),
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<>(getContext(),
                     android.R.layout.simple_spinner_item, strip);
             spnOutlet.setAdapter(adapterspn);
             spnOutlet.setEnabled(false);
         }
-        arrData = new ArrayList<String>();
+        arrData = new ArrayList<>();
         if (listDataProduct.size() > 0) {
             for (mEmployeeSalesProductData dt : listDataProduct) {
                 arrData.add(dt.get_txtProductBrandDetailGramName());
@@ -683,12 +684,12 @@ public class FragmentDownloadData extends Fragment {
             spnProduct.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
             spnProduct.setEnabled(true);
         } else if (listDataProduct.size() == 0) {
-            ArrayAdapter<String> adapterspn = new ArrayAdapter<String>(getContext(),
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<>(getContext(),
                     android.R.layout.simple_spinner_item, strip);
             spnProduct.setAdapter(adapterspn);
             spnProduct.setEnabled(false);
         }
-        arrData = new ArrayList<String>();
+        arrData = new ArrayList<>();
         if (listmProductBrandData.size() > 0) {
             for (mProductBrandHeaderData dt : listmProductBrandData) {
                 arrData.add(dt.get_txtProductBrandName());
@@ -696,25 +697,25 @@ public class FragmentDownloadData extends Fragment {
             spnBrand.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
             spnBrand.setEnabled(true);
         } else if (listmProductBrandData.size() == 0) {
-            ArrayAdapter<String> adapterspn = new ArrayAdapter<String>(getContext(),
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<>(getContext(),
                     android.R.layout.simple_spinner_item, strip);
             spnBrand.setAdapter(adapterspn);
             spnBrand.setEnabled(false);
         }
-        arrData = new ArrayList<String>();
+        arrData = new ArrayList<>();
         if (listtSalesProductHeaderData != null) {
             for (tSalesProductHeaderData dt : listtSalesProductHeaderData) {
                 arrData.add(dt.get_txtNoSo());
             }
             spnReso.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
             spnReso.setEnabled(true);
-        } else if (listtSalesProductHeaderData == null) {
-            ArrayAdapter<String> adapterspn = new ArrayAdapter<String>(getContext(),
+        } else {
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<>(getContext(),
                     android.R.layout.simple_spinner_item, strip);
             spnReso.setAdapter(adapterspn);
             spnReso.setEnabled(false);
         }
-        arrData = new ArrayList<String>();
+        arrData = new ArrayList<>();
         if (listtCustomerBasedHeaderData != null && listtCustomerBasedHeaderData.size() != 0) {
             for (tCustomerBasedMobileHeaderData dt : listtCustomerBasedHeaderData) {
                 arrData.add(dt.get_txtSubmissionId());
@@ -722,12 +723,12 @@ public class FragmentDownloadData extends Fragment {
             spnCustomerBase.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
             spnCustomerBase.setEnabled(true);
         } else {
-            ArrayAdapter<String> adapterspn = new ArrayAdapter<String>(getContext(),
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<>(getContext(),
                     android.R.layout.simple_spinner_item, strip);
             spnCustomerBase.setAdapter(adapterspn);
             spnCustomerBase.setEnabled(false);
         }
-        arrData = new ArrayList<String>();
+        arrData = new ArrayList<>();
         if (listtActivityData != null && listtActivityData.size() != 0) {
             for (tActivityData dt : listtActivityData) {
                 arrData.add(dt.get_intFlag() + "-" + dt.get_txtDesc());
@@ -735,12 +736,12 @@ public class FragmentDownloadData extends Fragment {
             spnActivity.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
             spnActivity.setEnabled(true);
         } else {
-            ArrayAdapter<String> adapterspn = new ArrayAdapter<String>(getContext(),
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<>(getContext(),
                     android.R.layout.simple_spinner_item, strip);
             spnActivity.setAdapter(adapterspn);
             spnActivity.setEnabled(false);
         }
-        arrData = new ArrayList<String>();
+        arrData = new ArrayList<>();
         if (listtActivityMobileData != null && listtActivityMobileData.size() != 0) {
             for (tActivityMobileData dt : listtActivityMobileData) {
                 arrData.add(dt.get_intFlag() + "-" + dt.get_txtDesc());
@@ -748,89 +749,89 @@ public class FragmentDownloadData extends Fragment {
             spnActivityV2.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
             spnActivityV2.setEnabled(true);
         } else {
-            ArrayAdapter<String> adapterspn = new ArrayAdapter<String>(getContext(),
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<>(getContext(),
                     android.R.layout.simple_spinner_item, strip);
             spnActivityV2.setAdapter(adapterspn);
             spnActivityV2.setEnabled(false);
         }
-        arrData = new ArrayList<String>();
+        arrData = new ArrayList<>();
         if (listtAbsenUserData != null) {
             for (tAbsenUserData dt : listtAbsenUserData) {
                 arrData.add(dt.get_txtBranchName() + " - " + dt.get_txtOutletName());
             }
             spnAbsen.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
             spnAbsen.setEnabled(true);
-        } else if (listtAbsenUserData == null) {
-            ArrayAdapter<String> adapterspn = new ArrayAdapter<String>(getContext(),
+        } else {
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<>(getContext(),
                     android.R.layout.simple_spinner_item, strip);
             spnAbsen.setAdapter(adapterspn);
             spnAbsen.setEnabled(false);
         }
-        arrData = new ArrayList<String>();
+        arrData = new ArrayList<>();
         if (listPurchaseOrderHeaderData != null) {
             for (tPurchaseOrderHeaderData dt : listPurchaseOrderHeaderData) {
                 arrData.add(dt.get_txtNoOrder());
             }
             spnDataPO.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
             spnDataPO.setEnabled(true);
-        } else if (listPurchaseOrderHeaderData == null) {
-            ArrayAdapter<String> adapterspn = new ArrayAdapter<String>(getContext(),
+        } else {
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<>(getContext(),
                     android.R.layout.simple_spinner_item, strip);
             spnDataPO.setAdapter(adapterspn);
             spnDataPO.setEnabled(false);
         }
-        arrData = new ArrayList<String>();
+        arrData = new ArrayList<>();
         if (listQuantityStockHeaderData != null) {
             for (tSalesProductQuantityHeaderData dt : listQuantityStockHeaderData) {
                 arrData.add(dt.get_txtQuantityStock());
             }
             spnDataQuantityStock.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
             spnDataQuantityStock.setEnabled(true);
-        } else if (listQuantityStockHeaderData == null) {
-            ArrayAdapter<String> adapterspn = new ArrayAdapter<String>(getContext(),
+        } else {
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<>(getContext(),
                     android.R.layout.simple_spinner_item, strip);
             spnDataQuantityStock.setAdapter(adapterspn);
             spnDataQuantityStock.setEnabled(false);
         }
 
-        arrData = new ArrayList<String>();
+        arrData = new ArrayList<>();
         if (listKoordinasiOutletData != null && listKoordinasiOutletData.size() != 0) {
             for (KoordinasiOutletData dt : listKoordinasiOutletData) {
                 arrData.add(dt.get_txtKeterangan());
             }
             spnKordinasiOutlet.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
             spnKordinasiOutlet.setEnabled(true);
-        } else  {
-            ArrayAdapter<String> adapterspn = new ArrayAdapter<String>(getContext(),
+        } else {
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<>(getContext(),
                     android.R.layout.simple_spinner_item, strip);
             spnKordinasiOutlet.setAdapter(adapterspn);
             spnKordinasiOutlet.setEnabled(false);
         }
 
-        arrData = new ArrayList<String>();
+        arrData = new ArrayList<>();
         if (listtAbsenUserData != null) {
             for (tLeaveMobileData dt : listtLeaveData) {
                 arrData.add(dt.get_txtTypeAlasanName());
             }
             spnDataLeave.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
             spnDataLeave.setEnabled(true);
-        } else if (listtAbsenUserData == null) {
-            ArrayAdapter<String> adapterspn = new ArrayAdapter<String>(getContext(),
+        } else {
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<>(getContext(),
                     android.R.layout.simple_spinner_item, strip);
             spnDataLeave.setAdapter(adapterspn);
             spnDataLeave.setEnabled(false);
         }
     }
 
-    public class MyAdapter extends ArrayAdapter<String> {
+    private class MyAdapter extends ArrayAdapter<String> {
         private List<String> arrayDataAdapyter;
         private Context Ctx;
 
-        public List<String> getArrayDataAdapyter() {
+        List<String> getArrayDataAdapyter() {
             return arrayDataAdapyter;
         }
 
-        public void setArrayDataAdapyter(List<String> arrayDataAdapyter) {
+        void setArrayDataAdapyter(List<String> arrayDataAdapyter) {
             this.arrayDataAdapyter = arrayDataAdapyter;
         }
 
@@ -842,7 +843,7 @@ public class FragmentDownloadData extends Fragment {
             Ctx = ctx;
         }
 
-        public MyAdapter(Context context, int textViewResourceId, List<String> objects) {
+        MyAdapter(Context context, int textViewResourceId, List<String> objects) {
             super(context, textViewResourceId, objects);
             setCtx(context);
             setArrayDataAdapyter(objects);
@@ -850,27 +851,28 @@ public class FragmentDownloadData extends Fragment {
         }
 
         @Override
-        public View getDropDownView(int position, View convertView, ViewGroup parent) {
-            return getCustomView(position, convertView, parent);
+        public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
+            return getCustomView(position, parent);
         }
 
+        @NonNull
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            return getCustomView(position, convertView, parent);
+        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+            return getCustomView(position, parent);
         }
 
-        public View getCustomView(int position, View convertView, ViewGroup parent) {
+        View getCustomView(int position, ViewGroup parent) {
             LayoutInflater inflater = getActivity().getLayoutInflater();
             View row = inflater.inflate(R.layout.custom_spinner, parent, false);
             if (getArrayDataAdapyter().size() > 0) {
                 TextView label = (TextView) row.findViewById(R.id.tvTitle);
                 //label.setText(arrData.get(position));
                 label.setText(getArrayDataAdapyter().get(position));
-                label.setTextColor(new Color().parseColor("#000000"));
+                label.setTextColor(Color.parseColor("#000000"));
                 TextView sub = (TextView) row.findViewById(R.id.tvDesc);
                 sub.setVisibility(View.INVISIBLE);
                 sub.setVisibility(View.GONE);
-                row.setBackgroundColor(new Color().parseColor("#FFFFFF"));
+                row.setBackgroundColor(Color.parseColor("#FFFFFF"));
             }
             //sub.setText(mydata2[position]);
             return row;
@@ -878,45 +880,48 @@ public class FragmentDownloadData extends Fragment {
 
     }
 
-    private class  AsyncCallDownloadAll extends AsyncTask<JSONArray, Void, List<dataJson>> {
+    private Boolean checkVisibility(LinearLayout view) {
+        return view.getVisibility() == View.VISIBLE;
+    }
+
+    private class AsyncCallDownloadAll extends AsyncTask<JSONArray, Void, List<dataJson>> {
         @Override
         protected List<dataJson> doInBackground(JSONArray... params) {
             //android.os.Debug.waitForDebugger();
-            JSONArray Json = null;
-            List<dataJson> listDataJson = new ArrayList<dataJson>();
+            JSONArray Json;
+            List<dataJson> listDataJson = new ArrayList<>();
             dataJson dtdataJson = new dataJson();
-            JSONParser parser = new JSONParser();
             try {
                 new mPriceInOutletBL().DownloadmPriceInOutlet(pInfo.versionName);
 
-                if(ll_subtypeactivity!=null && ll_subtypeactivity.getVisibility() == View.VISIBLE){
+                if (ll_subtypeactivity != null && checkVisibility(ll_subtypeactivity)) {
                     Json = new tSubTypeActivityBL().DownloadtSubTypeActivity(pInfo.versionName);
                     SaveDatatSubTypeActivityData(Json);
                 }
 
-                if(ll_branch!=null && ll_branch.getVisibility() == View.VISIBLE){
+                if (ll_branch != null && checkVisibility(ll_branch)) {
                     Json = new mEmployeeBranchBL().DownloadEmployeeBranch2(pInfo.versionName);
                     SaveDatamEmployeeBranchData(Json);
                 }
-                if(ll_type_leave!=null && ll_type_leave.getVisibility() == View.VISIBLE){
+                if (ll_type_leave != null && checkVisibility(ll_type_leave)) {
                     Json = new mTypeLeaveBL().DownloadTypeLeave2(pInfo.versionName);
                     SaveDatamTypeLeaveMobileData(Json);
                 }
-                if(ll_product!=null && ll_product.getVisibility() == View.VISIBLE){
+                if (ll_product != null && checkVisibility(ll_product)) {
                     Json = new mEmployeeSalesProductBL().DownloadEmployeeSalesProduct(pInfo.versionName);
                     SaveDatamProductBarcodeData(Json);
                 }
-                if(ll_brand!=null && ll_brand.getVisibility() == View.VISIBLE){
+                if (ll_brand != null && checkVisibility(ll_brand)) {
                     Json = new mProductBrandHeaderBL().DownloadBrandHeader(pInfo.versionName);
                     SaveDatamProductBarcodeData(Json);
                 }
 
-                if(ll_brand!=null && ll_kategoriVisitPlan.getVisibility() == View.VISIBLE){
+                if (ll_kategoriVisitPlan != null && checkVisibility(ll_kategoriVisitPlan)) {
                     Json = new mCategoryVisitPlanBL().DownloadCategoryVisitPlanData(pInfo.versionName);
                     SaveDatamCategoryVisitPlanData(Json);
                 }
 
-                if(ll_brand!=null && ll_dataVisitPlan.getVisibility() == View.VISIBLE){
+                if (ll_dataVisitPlan != null && checkVisibility(ll_dataVisitPlan)) {
                     Json = new tVisitPlanRealisasiBL().DownloadRealisasiVisitPlan(pInfo.versionName);
                     SaveDatatTransaksiVisitPlanHeaderData(Json);
                     SaveDatatTransaksiVisitPlanData(Json);
@@ -925,32 +930,32 @@ public class FragmentDownloadData extends Fragment {
                 Json = new mEmployeeAreaBL().DownloadEmployeeArea2(pInfo.versionName);
                 SaveDatamEmployeeAreaData(Json);
 
-                if(ll_reso!=null && ll_reso.getVisibility() == View.VISIBLE){
+                if (ll_reso != null && checkVisibility(ll_reso)) {
                     Json = new tSalesProductHeaderBL().DownloadReso(pInfo.versionName);
                     Iterator i = Json.iterator();
                     org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
                     int boolValid = Integer.valueOf(String.valueOf(innerObj.get("_pboolValid")));
-                    if(boolValid == 1) SaveDatatSalesProductData(Json);
+                    if (boolValid == 1) SaveDatatSalesProductData(Json);
                 }
 
-                if(ll_purchase_order!=null && ll_purchase_order.getVisibility() == View.VISIBLE){
+                if (ll_purchase_order != null && checkVisibility(ll_purchase_order)) {
                     new tPurchaseOrderHeaderBL().DownloadNOPO(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
                     Json = new tPurchaseOrderHeaderBL().DownloadTransactionPO(pInfo.versionName);
                     Iterator j = Json.iterator();
                     org.json.simple.JSONObject innerObj_po = (org.json.simple.JSONObject) j.next();
                     int boolValid_po = Integer.valueOf(String.valueOf(innerObj_po.get("_pboolValid")));
-                    if(boolValid_po == 1) SaveDatatPurchaseOrderData(Json);
+                    if (boolValid_po == 1) SaveDatatPurchaseOrderData(Json);
                 }
 
-                if(ll_dataQuesioner!=null && ll_dataQuesioner.getVisibility() == View.VISIBLE){
+                if (ll_dataQuesioner != null && checkVisibility(ll_dataQuesioner)) {
                     Json = new mParentBL().DownlaodDataQuesioner(pInfo.versionName);
                     Iterator x = Json.iterator();
                     org.json.simple.JSONObject innerObj_Quiz = (org.json.simple.JSONObject) x.next();
                     int boolValid_po = Integer.valueOf(String.valueOf(innerObj_Quiz.get("_pboolValid")));
-                    if(boolValid_po == 1) SaveDataQuesioner(Json);
+                    if (boolValid_po == 1) SaveDataQuesioner(Json);
                 }
 
-                if(ll_dataQuantityStock!=null && ll_dataQuantityStock.getVisibility() == View.VISIBLE){
+                if (ll_dataQuantityStock != null && checkVisibility(ll_dataQuantityStock)) {
                     new tSalesProductQuantityHeaderBL().DownloadNOQuantityStock(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
                     Json = new tSalesProductQuantityHeaderBL().DownloadTransactionQuantityStock(pInfo.versionName);
                     Iterator k = Json.iterator();
@@ -965,7 +970,7 @@ public class FragmentDownloadData extends Fragment {
                 int boolValid_trackingLocation = Integer.valueOf(String.valueOf(innerObj_trackingLocation.get("_pboolValid")));
                 if (boolValid_trackingLocation == 1) SaveDataTrackingLocationData(Json);
 
-                if(ll_dataKordinasiOutlet!=null && ll_dataKordinasiOutlet.getVisibility() == View.VISIBLE){
+                if (ll_dataKordinasiOutlet != null && checkVisibility(ll_dataKordinasiOutlet)) {
                     Json = new KoordinasiOutletBL().DownloadDataKoordinasiOutlet(pInfo.versionName);
                     Iterator m = Json.iterator();
                     org.json.simple.JSONObject innerObj_koordinasiOutlet = (org.json.simple.JSONObject) m.next();
@@ -973,39 +978,39 @@ public class FragmentDownloadData extends Fragment {
                     if (boolValid_koordinasiOutlet == 1) SaveDataKoordinasiOutletData(Json);
                 }
 
-                if(ll_data_activity!=null && ll_data_activity.getVisibility() == View.VISIBLE){
+                if (ll_data_activity != null && checkVisibility(ll_data_activity)) {
                     Json = new tActivityBL().DownloadActivity(pInfo.versionName);
                     SaveDatatActivityData(Json);
                 }
-                if(ll_data_activityV2!=null && ll_data_activityV2.getVisibility() == View.VISIBLE){
+                if (ll_data_activityV2 != null && checkVisibility(ll_data_activityV2)) {
                     Json = new tActivityMobileBL().DownloadActivityV2(pInfo.versionName);
                     SaveDatatActivityDataV2(Json);
                 }
-                if(ll_data_customerbased!=null && ll_data_customerbased.getVisibility() == View.VISIBLE){
+                if (ll_data_customerbased != null && checkVisibility(ll_data_customerbased)) {
                     Json = new tCustomerBasedMobileHeaderBL().DownloadCustomerBase(pInfo.versionName);
                     SaveDatatCustomerBasedData(Json);
                 }
-                if(ll_absen!=null && ll_absen.getVisibility() == View.VISIBLE){
+                if (ll_absen != null && checkVisibility(ll_absen)) {
                     Json = new tAbsenUserBL().DownloadAbsen(pInfo.versionName);
                     SaveDatatAbsenUserData(Json);
                 }
-                if(ll_data_leave!=null && ll_data_leave.getVisibility() == View.VISIBLE) {
+                if (ll_data_leave != null && checkVisibility(ll_data_leave)) {
                     Json = new tLeaveMobileBL().DownloadDataLeave(pInfo.versionName);
                     SaveDatatLeaveData(Json);
                 }
-                if(ll_product_competitor!=null && ll_product_competitor.getVisibility() == View.VISIBLE){
+                if (ll_product_competitor != null && checkVisibility(ll_product_competitor)) {
                     Json = new mProductCompetitorBL().DownloadProdctCompetitor(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
                     SaveDatammProductCompetitorData(Json);
                 }
-                if(ll_product_spg!=null && ll_product_spg.getVisibility() == View.VISIBLE){
+                if (ll_product_spg != null && checkVisibility(ll_product_spg)) {
                     Json = new mProductSPGBL().DownloadProductSPG(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
                     SaveDatammProductSPGData(Json);
                 }
-                if(ll_product_pic!=null && ll_product_pic.getVisibility() == View.VISIBLE){
+                if (ll_product_pic != null && checkVisibility(ll_product_pic)) {
                     Json = new mProductPICBL().DownloadProductPIC(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
                     SaveDatammProductPICData(Json);
                 }
-                if(ll_type_submission!=null && ll_type_submission.getVisibility() == View.VISIBLE){
+                if (ll_type_submission != null && checkVisibility(ll_type_submission)) {
                     Json = new mTypeSubmissionMobileBL().DownloadTypeSubmission(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
                     SaveDatamTypeSubmissionMobile(Json);
                 }
@@ -1031,9 +1036,7 @@ public class FragmentDownloadData extends Fragment {
 
         @Override
         protected void onPostExecute(List<dataJson> listdataJson) {
-            String txtMess = new clsHardCode().txtMessSuccessDownload;
             if (listdataJson.get(0).getIntResult().equals("0")) {
-                //txtMess=listdataJson.get(0).getTxtMessage();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessUnableToConnect, false);
                 Dialog.dismiss();
 
@@ -1041,15 +1044,8 @@ public class FragmentDownloadData extends Fragment {
                 loadData();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
                 Dialog.dismiss();
-//                getActivity().finish();
                 checkingDataTable();
-//                Intent nextScreen = new Intent(getContext(), MainMenu.class);
-//                nextScreen.putExtra(clsParameterPutExtra.MenuID, MenuID);
-//                startActivity(nextScreen);
             }
-//            Toast toast = Toast.makeText(getContext(), txtMess, Toast.LENGTH_LONG);
-//            toast.setGravity(Gravity.TOP, 25, 400);
-//            toast.show();
         }
 
         @Override
@@ -1076,13 +1072,11 @@ public class FragmentDownloadData extends Fragment {
 
 
     private List<String> SaveDatamCategoryVisitPlanData(JSONArray JData) {
-        List<String> _array = new ArrayList<String>();
+        List<String> _array;
         APIData dtAPIDATA = new APIData();
-        _array = new ArrayList<String>();
+        _array = new ArrayList<>();
         Iterator i = JData.iterator();
-        Boolean flag = true;
-        String ErrorMess = "";
-        List<mCategoryVisitPlanData> _Listdata = new ArrayList<mCategoryVisitPlanData>();
+        List<mCategoryVisitPlanData> _Listdata = new ArrayList<>();
         while (i.hasNext()) {
             org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
             int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
@@ -1094,8 +1088,6 @@ public class FragmentDownloadData extends Fragment {
                 _array.add(_data.getIntCategoryVisitPlan());
                 _Listdata.add(_data);
             } else {
-                flag = false;
-                ErrorMess = (String) innerObj.get(dtAPIDATA.strMessage);
                 break;
             }
         }
@@ -1104,13 +1096,11 @@ public class FragmentDownloadData extends Fragment {
     }
 
     private List<String> SaveDatatTransaksiVisitPlanData(JSONArray JData) {
-        List<String> _array = new ArrayList<String>();
+        List<String> _array;
         APIData dtAPIDATA = new APIData();
-        _array = new ArrayList<String>();
+        _array = new ArrayList<>();
         Iterator i = JData.iterator();
-        Boolean flag = true;
-        String ErrorMess = "";
-        List<tVisitPlanRealisasiData> _Listdata = new ArrayList<tVisitPlanRealisasiData>();
+        List<tVisitPlanRealisasiData> _Listdata = new ArrayList<>();
         while (i.hasNext()) {
             org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
             String ListoftTransaksiRealisasiVisitPlanData = String.valueOf(String.valueOf(innerObj.get("ListoftTransaksiRealisasiVisitPlanData")));
@@ -1119,10 +1109,9 @@ public class FragmentDownloadData extends Fragment {
             if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
                 try {
                     JSONArray JsonArrayListoftTransaksiRealisasiVisitPlanData = _help.ResultJsonArray(ListoftTransaksiRealisasiVisitPlanData);
-                    Iterator iJsonArrayListoftTransaksiRealisasiVisitPlanData = JsonArrayListoftTransaksiRealisasiVisitPlanData.iterator();
-                    List<tVisitPlanRealisasiData> datadetail = new tVisitPlanRealisasiBL().GetAllData();
-                    while (iJsonArrayListoftTransaksiRealisasiVisitPlanData.hasNext()) {
-                        org.json.simple.JSONObject innerObjListoftTransaksiRealisasiVisitPlanData = (org.json.simple.JSONObject) iJsonArrayListoftTransaksiRealisasiVisitPlanData.next();
+                    //                    List<tVisitPlanRealisasiData> datadetail = new tVisitPlanRealisasiBL().GetAllData();
+                    for (Object aJsonArrayListoftTransaksiRealisasiVisitPlanData : JsonArrayListoftTransaksiRealisasiVisitPlanData) {
+                        JSONObject innerObjListoftTransaksiRealisasiVisitPlanData = (JSONObject) aJsonArrayListoftTransaksiRealisasiVisitPlanData;
                         int boolValid2 = Integer.valueOf(String.valueOf(innerObjListoftTransaksiRealisasiVisitPlanData.get(dtAPIDATA.boolValid)));
                         if (boolValid2 == Integer.valueOf(new clsHardCode().intSuccess)) {
                             tVisitPlanRealisasiData _data = new tVisitPlanRealisasiData();
@@ -1148,8 +1137,6 @@ public class FragmentDownloadData extends Fragment {
                             _array.add(_data.get_txtOutletName() + "-" + _data.get_txtDesc());
                             _Listdata.add(_data);
                         } else {
-                            flag = false;
-                            ErrorMess = (String) innerObj.get(dtAPIDATA.strMessage);
                             break;
                         }
                     }
@@ -1159,8 +1146,6 @@ public class FragmentDownloadData extends Fragment {
                     e.printStackTrace();
                 }
             } else {
-                flag = false;
-                ErrorMess = (String) innerObj.get(dtAPIDATA.strMessage);
                 break;
             }
 
@@ -1170,13 +1155,9 @@ public class FragmentDownloadData extends Fragment {
     }
 
     private void SaveDatatTransaksiVisitPlanHeaderData(JSONArray JData) {
-        List<String> _array = new ArrayList<String>();
         APIData dtAPIDATA = new APIData();
-        _array = new ArrayList<String>();
         Iterator i = JData.iterator();
-        Boolean flag = true;
-        String ErrorMess = "";
-        List<tVisitPlanHeader_MobileData> _Listdata = new ArrayList<tVisitPlanHeader_MobileData>();
+        List<tVisitPlanHeader_MobileData> _Listdata = new ArrayList<>();
         while (i.hasNext()) {
             org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
             String ListoftTransaksiRealisasiVisitPlanHeaderData = String.valueOf(String.valueOf(innerObj.get("ListoftTransaksiRealisasiVisitPlanHeaderData")));
@@ -1185,9 +1166,8 @@ public class FragmentDownloadData extends Fragment {
             if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
                 try {
                     JSONArray JsonArrayListoftTransaksiRealisasiVisitPlanHeaderData = _help.ResultJsonArray(ListoftTransaksiRealisasiVisitPlanHeaderData);
-                    Iterator iJsonArrayListoftTransaksiRealisasiVisitPlanHeaderData = JsonArrayListoftTransaksiRealisasiVisitPlanHeaderData.iterator();
-                    while (iJsonArrayListoftTransaksiRealisasiVisitPlanHeaderData.hasNext()) {
-                        org.json.simple.JSONObject innerObjListoftTransaksiRealisasiVisitPlanHeaderData = (org.json.simple.JSONObject) iJsonArrayListoftTransaksiRealisasiVisitPlanHeaderData.next();
+                    for (Object aJsonArrayListoftTransaksiRealisasiVisitPlanHeaderData : JsonArrayListoftTransaksiRealisasiVisitPlanHeaderData) {
+                        JSONObject innerObjListoftTransaksiRealisasiVisitPlanHeaderData = (JSONObject) aJsonArrayListoftTransaksiRealisasiVisitPlanHeaderData;
                         int boolValid2 = Integer.valueOf(String.valueOf(innerObjListoftTransaksiRealisasiVisitPlanHeaderData.get(dtAPIDATA.boolValid)));
                         if (boolValid2 == Integer.valueOf(new clsHardCode().intSuccess)) {
                             tVisitPlanHeader_MobileData _data = new tVisitPlanHeader_MobileData();
@@ -1207,8 +1187,6 @@ public class FragmentDownloadData extends Fragment {
                             _data.set_intPush("0");
                             _Listdata.add(_data);
                         } else {
-                            flag = false;
-                            ErrorMess = (String) innerObj.get(dtAPIDATA.strMessage);
                             break;
                         }
 
@@ -1218,8 +1196,6 @@ public class FragmentDownloadData extends Fragment {
                     e.printStackTrace();
                 }
             } else {
-                flag = false;
-                ErrorMess = (String) innerObj.get(dtAPIDATA.strMessage);
                 break;
             }
 
@@ -1230,13 +1206,11 @@ public class FragmentDownloadData extends Fragment {
 
 
     private List<String> SaveDatamEmployeeBranchData(JSONArray JData) {
-        List<String> _array = new ArrayList<String>();
+        List<String> _array;
         APIData dtAPIDATA = new APIData();
-        _array = new ArrayList<String>();
+        _array = new ArrayList<>();
         Iterator i = JData.iterator();
-        Boolean flag = true;
-        String ErrorMess = "";
-        List<mEmployeeBranchData> _Listdata = new ArrayList<mEmployeeBranchData>();
+        List<mEmployeeBranchData> _Listdata = new ArrayList<>();
         while (i.hasNext()) {
             org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
             int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
@@ -1253,8 +1227,6 @@ public class FragmentDownloadData extends Fragment {
                 _array.add(_data.get_txtBranchCode() + " - " + _data.get_txtBranchName());
                 _Listdata.add(_data);
             } else {
-                flag = false;
-                ErrorMess = (String) innerObj.get(dtAPIDATA.strMessage);
                 break;
             }
         }
@@ -1263,26 +1235,19 @@ public class FragmentDownloadData extends Fragment {
     }
 
 
-
     private List<String> SaveDatatSalesProductData(JSONArray JData) {
         List<String> _array;
-        APIData dtAPIDATA = new APIData();
         _array = new ArrayList<>();
-        Iterator i = JData.iterator();
-        Boolean flag = true;
-        String ErrorMess = "";
-        List<tSalesProductHeaderData> ListdataHeader = new ArrayList<>();
-        while (i.hasNext()) {
-            org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
+        for (Object aJData : JData) {
+            JSONObject innerObj = (JSONObject) aJData;
 
             try {
                 JSONArray JsonArray_header = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListDatatSalesProductHeader_mobile")));
                 if (JsonArray_header != null) {
-                    Iterator j = JsonArray_header.iterator();
 
-                    while (j.hasNext()) {
+                    for (Object aJsonArray_header : JsonArray_header) {
                         tSalesProductHeaderData _data = new tSalesProductHeaderData();
-                        org.json.simple.JSONObject innerObj_detail = (org.json.simple.JSONObject) j.next();
+                        JSONObject innerObj_detail = (JSONObject) aJsonArray_header;
                         _data.set_txtNoSo(String.valueOf(innerObj_detail.get("TxtNoSO")));
                         _data.set_txtBranchCode(String.valueOf(innerObj_detail.get("TxtBranchCode")));
                         _data.set_intSubmit("1");
@@ -1308,7 +1273,7 @@ public class FragmentDownloadData extends Fragment {
 
                     while (k.hasNext()) {
                         tSalesProductDetailData _data = new tSalesProductDetailData();
-                        org.json.simple.JSONObject innerObj_detail = (org.json.simple.JSONObject) k.next();
+                        JSONObject innerObj_detail = (JSONObject) k.next();
                         _data.set_txtNoSo(String.valueOf(innerObj_detail.get("TxtNoSO")));
                         _data.set_txtNameProduct(String.valueOf(innerObj_detail.get("TxtNameProduct")));
                         _data.set_txtNoSo(String.valueOf(innerObj_detail.get("TxtNoSO")));
@@ -1332,11 +1297,8 @@ public class FragmentDownloadData extends Fragment {
 
     private List<String> SaveDatatActivityData(JSONArray JData) {
         List<String> _array;
-        APIData dtAPIDATA = new APIData();
         _array = new ArrayList<>();
         Iterator i = JData.iterator();
-        Boolean flag = true;
-        String ErrorMess = "";
         List<tActivityData> ListdataActivity = new ArrayList<>();
         while (i.hasNext()) {
             org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
@@ -1373,7 +1335,7 @@ public class FragmentDownloadData extends Fragment {
             ListdataActivity.add(_data);
         }
 
-        if(ListdataActivity.size() > 0){
+        if (ListdataActivity.size() > 0) {
             new tActivityBL().saveData(ListdataActivity);
         }
 
@@ -1382,11 +1344,8 @@ public class FragmentDownloadData extends Fragment {
 
     private List<String> SaveDatatActivityDataV2(JSONArray JData) {
         List<String> _array;
-        APIData dtAPIDATA = new APIData();
         _array = new ArrayList<>();
         Iterator i = JData.iterator();
-        Boolean flag = true;
-        String ErrorMess = "";
         List<tActivityMobileData> ListdataActivity = new ArrayList<>();
         while (i.hasNext()) {
             org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
@@ -1425,7 +1384,7 @@ public class FragmentDownloadData extends Fragment {
             ListdataActivity.add(_data);
         }
 
-        if(ListdataActivity.size() > 0){
+        if (ListdataActivity.size() > 0) {
             new tActivityMobileBL().saveData(ListdataActivity);
         }
 
@@ -1434,32 +1393,27 @@ public class FragmentDownloadData extends Fragment {
 
     private List<String> SaveDatatSubTypeActivityData(JSONArray JData) {
         List<String> _array;
-        List<tSubTypeActivityData> ListDatatSubTypeActivityData= null;
-        APIData dtAPIDATA = new APIData();
+        List<tSubTypeActivityData> ListDatatSubTypeActivityData;
         _array = new ArrayList<>();
         Iterator i = JData.iterator();
-        Boolean flag = true;
-        String ErrorMess = "";
-        List<tSubTypeActivityData> ListdataHeader = new ArrayList<>();
-        ListDatatSubTypeActivityData=new ArrayList<>();
+        ListDatatSubTypeActivityData = new ArrayList<>();
         while (i.hasNext()) {
             org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
             tSubTypeActivityData _data = new tSubTypeActivityData();
-            String txtValid= String.valueOf(innerObj.get("_pboolValid"));
-            if(txtValid.equals("1")){
+            String txtValid = String.valueOf(innerObj.get("_pboolValid"));
+            if (txtValid.equals("1")) {
                 _data.set_bitActive(String.valueOf(innerObj.get("BitActive")));
                 _data.set_txtType(String.valueOf(innerObj.get("TxtType")));
                 _data.set_txtName(String.valueOf(innerObj.get("TxtName")));
                 _data.set_intSubTypeActivity(String.valueOf(innerObj.get("IntSubTypeActivity")));
                 ListDatatSubTypeActivityData.add(_data);
-            }else{
-                ErrorMess = String.valueOf(innerObj.get("_pstrMessage"));
+            } else {
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessCancelRequest, false);
                 break;
             }
 
         }
-        if(ListDatatSubTypeActivityData.size()>0){
+        if (ListDatatSubTypeActivityData.size() > 0) {
             new tSubTypeActivityBL().saveData(ListDatatSubTypeActivityData);
         }
         return _array;
@@ -1470,8 +1424,6 @@ public class FragmentDownloadData extends Fragment {
         APIData dtAPIDATA = new APIData();
         _array = new ArrayList<>();
         Iterator i = JData.iterator();
-        Boolean flag = true;
-        String ErrorMess = "";
         List<tAbsenUserData> ListdataAbsen = new ArrayList<>();
         while (i.hasNext()) {
             org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
@@ -1512,8 +1464,6 @@ public class FragmentDownloadData extends Fragment {
                 ListdataAbsen.add(_data);
 
             } else {
-                flag = false;
-                ErrorMess = (String) innerObj.get(dtAPIDATA.strMessage);
                 break;
             }
         }
@@ -1526,8 +1476,6 @@ public class FragmentDownloadData extends Fragment {
         APIData dtAPIDATA = new APIData();
         _array = new ArrayList<>();
         Iterator i = JData.iterator();
-        Boolean flag = true;
-        String ErrorMess = "";
         List<tLeaveMobileData> ListdataLeave = new ArrayList<>();
         while (i.hasNext()) {
             org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
@@ -1547,8 +1495,6 @@ public class FragmentDownloadData extends Fragment {
                 _data.set_txtTypeAlasanName(new mTypeLeaveBL().GetDataByintTypeLeave(_data.get_txtTypeAlasan()).get_txtTipeLeaveName());
                 ListdataLeave.add(_data);
             } else {
-                flag = false;
-                ErrorMess = (String) innerObj.get(dtAPIDATA.strMessage);
                 break;
             }
         }
@@ -1571,7 +1517,7 @@ public class FragmentDownloadData extends Fragment {
                 BufferedInputStream bis = new BufferedInputStream(is);
 
                 ByteArrayBuffer baf = new ByteArrayBuffer(500);
-                int current = 0;
+                int current;
                 while ((current = bis.read()) != -1) {
                     baf.append((byte) current);
                 }
@@ -1699,13 +1645,10 @@ public class FragmentDownloadData extends Fragment {
     }
 
     private List<String> SaveDatamProductBarcodeData(JSONArray JData) {
-        List<String> _array = new ArrayList<String>();
+        List<String> _array = new ArrayList<>();
         APIData dtAPIDATA = new APIData();
-        _array = new ArrayList<String>();
         Iterator i = JData.iterator();
-        Boolean flag = true;
-        String ErrorMess = "";
-        List<mProductBarcodeData> _Listdata = new ArrayList<mProductBarcodeData>();
+        List<mProductBarcodeData> _Listdata = new ArrayList<>();
         while (i.hasNext()) {
             org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
             int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
@@ -1721,8 +1664,6 @@ public class FragmentDownloadData extends Fragment {
                 _array.add(_data.get_txtProductCode() + " - " + _data.get_txtProductName());
                 _Listdata.add(_data);
             } else {
-                flag = false;
-                ErrorMess = (String) innerObj.get(dtAPIDATA.strMessage);
                 break;
             }
         }
@@ -1753,12 +1694,12 @@ public class FragmentDownloadData extends Fragment {
 
         @Override
         protected void onPostExecute(JSONArray jsonArray) {
-            if (jsonArray != null && jsonArray.size() > 0){
+            if (jsonArray != null && jsonArray.size() > 0) {
                 arrData = SaveDataQuesioner(jsonArray);
                 loadData();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
-                if (intProcesscancel == 1){
+                if (intProcesscancel == 1) {
                     onCancelled();
                 } else {
                     new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
@@ -1772,12 +1713,12 @@ public class FragmentDownloadData extends Fragment {
         protected void onPreExecute() {
             Dialog.setMessage("Getting Question");
             Dialog.setCancelable(false);
-            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    intProcesscancel = 1;
-                }
-            });
+//            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    intProcesscancel = 1;
+//                }
+//            });
             Dialog.show();
         }
 
@@ -1832,12 +1773,12 @@ public class FragmentDownloadData extends Fragment {
             // pg.setVisibility(View.VISIBLE);
             Dialog.setMessage(new clsHardCode().txtMessGetProduct);
             Dialog.setCancelable(false);
-            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    intProcesscancel = 1;
-                }
-            });
+//            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    intProcesscancel = 1;
+//                }
+//            });
             Dialog.show();
         }
 
@@ -1891,12 +1832,12 @@ public class FragmentDownloadData extends Fragment {
             // pg.setVisibility(View.VISIBLE);
             Dialog.setMessage(new clsHardCode().txtMessGetProduct);
             Dialog.setCancelable(false);
-            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    intProcesscancel = 1;
-                }
-            });
+//            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    intProcesscancel = 1;
+//                }
+//            });
             Dialog.show();
         }
 
@@ -1952,12 +1893,12 @@ public class FragmentDownloadData extends Fragment {
             // pg.setVisibility(View.VISIBLE);
             Dialog.setMessage("Getting Reso");
             Dialog.setCancelable(false);
-            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    intProcesscancel = 1;
-                }
-            });
+//            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    intProcesscancel = 1;
+//                }
+//            });
             Dialog.show();
         }
 
@@ -2014,12 +1955,12 @@ public class FragmentDownloadData extends Fragment {
             // pg.setVisibility(View.VISIBLE);
             Dialog.setMessage("Getting Activity");
             Dialog.setCancelable(false);
-            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    intProcesscancel = 1;
-                }
-            });
+//            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    intProcesscancel = 1;
+//                }
+//            });
             Dialog.show();
         }
 
@@ -2076,12 +2017,12 @@ public class FragmentDownloadData extends Fragment {
             // pg.setVisibility(View.VISIBLE);
             Dialog.setMessage("Getting ActivityV2");
             Dialog.setCancelable(false);
-            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    intProcesscancel = 1;
-                }
-            });
+//            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    intProcesscancel = 1;
+//                }
+//            });
             Dialog.show();
         }
 
@@ -2137,12 +2078,12 @@ public class FragmentDownloadData extends Fragment {
             // pg.setVisibility(View.VISIBLE);
             Dialog.setMessage("Getting Customer Base");
             Dialog.setCancelable(false);
-            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    intProcesscancel = 1;
-                }
-            });
+//            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    intProcesscancel = 1;
+//                }
+//            });
             Dialog.show();
         }
 
@@ -2199,12 +2140,12 @@ public class FragmentDownloadData extends Fragment {
             // pg.setVisibility(View.VISIBLE);
             Dialog.setMessage("Getting Absen");
             Dialog.setCancelable(false);
-            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    intProcesscancel = 1;
-                }
-            });
+//            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    intProcesscancel = 1;
+//                }
+//            });
             Dialog.show();
         }
 
@@ -2214,7 +2155,7 @@ public class FragmentDownloadData extends Fragment {
         }
     }
 
-    private class AsyncCallDataPO extends AsyncTask<JSONArray, Void, JSONArray>{
+    private class AsyncCallDataPO extends AsyncTask<JSONArray, Void, JSONArray> {
 
         @Override
         protected JSONArray doInBackground(JSONArray... params) {
@@ -2222,11 +2163,12 @@ public class FragmentDownloadData extends Fragment {
             try {
                 Json = new tPurchaseOrderHeaderBL().DownloadTransactionPO(pInfo.versionName);
                 new tPurchaseOrderHeaderBL().DownloadNOPO(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return Json;
         }
+
         private ProgressDialog dialog = new ProgressDialog(getContext());
 
         @Override
@@ -2240,23 +2182,23 @@ public class FragmentDownloadData extends Fragment {
             super.onPreExecute();
             dialog.setMessage("Getting Data Purchase Order");
             dialog.setCancelable(false);
-            dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    intProcesscancel = 1;
-                }
-            });
+//            dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    intProcesscancel = 1;
+//                }
+//            });
             dialog.show();
         }
 
         @Override
         protected void onPostExecute(JSONArray jsonArray) {
-            if (jsonArray != null && jsonArray.size() > 0){
+            if (jsonArray != null && jsonArray.size() > 0) {
                 arrData = SaveDatatPurchaseOrderData(jsonArray);
                 loadData();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
-                if (intProcesscancel == 1){
+                if (intProcesscancel == 1) {
                     onCancelled();
                 } else {
                     new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
@@ -2281,11 +2223,12 @@ public class FragmentDownloadData extends Fragment {
                 Json = new tSalesProductQuantityHeaderBL().DownloadTransactionQuantityStock(pInfo.versionName);
                 new tSalesProductQuantityHeaderBL().DownloadNOQuantityStock(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
 //                new tSalesProductQuantityHeaderBL().DownloadNOQuantityStock(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return Json;
         }
+
         private ProgressDialog dialog = new ProgressDialog(getContext());
 
         @Override
@@ -2299,23 +2242,23 @@ public class FragmentDownloadData extends Fragment {
             super.onPreExecute();
             dialog.setMessage("Getting Data Quantity Stock");
             dialog.setCancelable(false);
-            dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    intProcesscancel = 1;
-                }
-            });
+//            dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    intProcesscancel = 1;
+//                }
+//            });
             dialog.show();
         }
 
         @Override
         protected void onPostExecute(JSONArray jsonArray) {
-            if (jsonArray != null && jsonArray.size() > 0){
+            if (jsonArray != null && jsonArray.size() > 0) {
                 arrData = SaveDatatSalesProductQuantityData(jsonArray);
                 loadData();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
-                if (intProcesscancel == 1){
+                if (intProcesscancel == 1) {
                     onCancelled();
                 } else {
                     new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
@@ -2338,11 +2281,12 @@ public class FragmentDownloadData extends Fragment {
             JSONArray Json = null;
             try {
                 Json = new trackingLocationBL().DownloadTrackingLocation(pInfo.versionName);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return Json;
         }
+
         private ProgressDialog dialog = new ProgressDialog(getContext());
 
         @Override
@@ -2353,12 +2297,12 @@ public class FragmentDownloadData extends Fragment {
 
         @Override
         protected void onPostExecute(JSONArray jsonArray) {
-            if (jsonArray != null && jsonArray.size() > 0){
+            if (jsonArray != null && jsonArray.size() > 0) {
                 arrData = SaveDataTrackingLocationData(jsonArray);
                 loadData();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
-                if (intProcesscancel == 1){
+                if (intProcesscancel == 1) {
                     onCancelled();
                 } else {
                     new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
@@ -2381,11 +2325,12 @@ public class FragmentDownloadData extends Fragment {
             JSONArray Json = null;
             try {
                 Json = new KoordinasiOutletBL().DownloadDataKoordinasiOutlet(pInfo.versionName);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return Json;
         }
+
         private ProgressDialog dialog = new ProgressDialog(getContext());
 
         @Override
@@ -2399,23 +2344,23 @@ public class FragmentDownloadData extends Fragment {
             super.onPreExecute();
             dialog.setMessage("Getting Data Koordinasi Outlet");
             dialog.setCancelable(false);
-            dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    intProcesscancel = 1;
-                }
-            });
+//            dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    intProcesscancel = 1;
+//                }
+//            });
             dialog.show();
         }
 
         @Override
         protected void onPostExecute(JSONArray jsonArray) {
-            if (jsonArray != null && jsonArray.size() > 0){
+            if (jsonArray != null && jsonArray.size() > 0) {
                 arrData = SaveDataKoordinasiOutletData(jsonArray);
                 loadData();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
-                if (intProcesscancel == 1){
+                if (intProcesscancel == 1) {
                     onCancelled();
                 } else {
                     new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
@@ -2478,12 +2423,12 @@ public class FragmentDownloadData extends Fragment {
             // pg.setVisibility(View.VISIBLE);
             Dialog.setMessage("Getting Absen");
             Dialog.setCancelable(false);
-            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    intProcesscancel = 1;
-                }
-            });
+//            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    intProcesscancel = 1;
+//                }
+//            });
             Dialog.show();
         }
 
@@ -2494,13 +2439,11 @@ public class FragmentDownloadData extends Fragment {
     }
 
     private List<String> SaveDatamEmployeeAreaData(JSONArray JData) {
-        List<String> _array = new ArrayList<String>();
+        List<String> _array;
         APIData dtAPIDATA = new APIData();
-        _array = new ArrayList<String>();
+        _array = new ArrayList<>();
         Iterator i = JData.iterator();
-        Boolean flag = true;
-        String ErrorMess = "";
-        List<mEmployeeAreaData> _Listdata = new ArrayList<mEmployeeAreaData>();
+        List<mEmployeeAreaData> _Listdata = new ArrayList<>();
         while (i.hasNext()) {
             org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
             int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
@@ -2549,8 +2492,6 @@ public class FragmentDownloadData extends Fragment {
                 _array.add(_data.get_txtOutletCode() + " - " + _data.get_txtOutletName());
                 _Listdata.add(_data);
             } else {
-                flag = false;
-                ErrorMess = (String) innerObj.get(dtAPIDATA.strMessage);
                 break;
             }
         }
@@ -2605,12 +2546,12 @@ public class FragmentDownloadData extends Fragment {
             // pg.setVisibility(View.VISIBLE);
             Dialog.setMessage(new clsHardCode().txtMessGetOutlet);
             Dialog.setCancelable(false);
-            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    intProcesscancel = 1;
-                }
-            });
+//            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    intProcesscancel = 1;
+//                }
+//            });
             Dialog.show();
         }
 
@@ -2669,12 +2610,12 @@ public class FragmentDownloadData extends Fragment {
             // pg.setVisibility(View.VISIBLE);
             Dialog.setMessage(new clsHardCode().txtMessGetBranch);
             Dialog.setCancelable(false);
-            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    intProcesscancel = 1;
-                }
-            });
+//            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    intProcesscancel = 1;
+//                }
+//            });
             Dialog.show();
         }
 
@@ -2734,12 +2675,12 @@ public class FragmentDownloadData extends Fragment {
             // pg.setVisibility(View.VISIBLE);
             Dialog.setMessage(new clsHardCode().txtMessGetVisitPLan);
             Dialog.setCancelable(false);
-            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    intProcesscancel = 1;
-                }
-            });
+//            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    intProcesscancel = 1;
+//                }
+//            });
             Dialog.show();
         }
 
@@ -2796,12 +2737,12 @@ public class FragmentDownloadData extends Fragment {
             // pg.setVisibility(View.VISIBLE);
             Dialog.setMessage("Getting Sub Type Activity");
             Dialog.setCancelable(false);
-            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    intProcesscancel = 1;
-                }
-            });
+//            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    intProcesscancel = 1;
+//                }
+//            });
             Dialog.show();
         }
 
@@ -2860,12 +2801,12 @@ public class FragmentDownloadData extends Fragment {
             // pg.setVisibility(View.VISIBLE);
             Dialog.setMessage(new clsHardCode().txtMessGetVisitPlanTr);
             Dialog.setCancelable(false);
-            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    intProcesscancel = 1;
-                }
-            });
+//            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    intProcesscancel = 1;
+//                }
+//            });
             Dialog.show();
         }
 
@@ -2877,16 +2818,16 @@ public class FragmentDownloadData extends Fragment {
     }
 
     private void checkingDataTable() {
-        List<mEmployeeBranchData> mEmployeeBranchDataList = new ArrayList<>();
-        List<mEmployeeSalesProductData> employeeSalesProductDataList = new ArrayList<>();
-        List<mEmployeeAreaData> mEmployeeAreaDataList = new ArrayList<>();
-        List<mProductBrandHeaderData> mProductBrandHeaderDataList = new ArrayList<>();
-        List<mTypeLeaveMobileData> mTypeLeaveMobileDataList = new ArrayList<>();
-        List<mCategoryVisitPlanData> mCategoryVisitPlanList = new ArrayList<>();
+        List<mEmployeeBranchData> mEmployeeBranchDataList;
+        List<mEmployeeSalesProductData> employeeSalesProductDataList;
+        List<mEmployeeAreaData> mEmployeeAreaDataList;
+        List<mProductBrandHeaderData> mProductBrandHeaderDataList;
+        List<mTypeLeaveMobileData> mTypeLeaveMobileDataList;
+//        List<mCategoryVisitPlanData> mCategoryVisitPlanList = new ArrayList<>();
 
         mCategoryVisitPlanBL _mCategoryVisitPlanBL = new mCategoryVisitPlanBL();
 
-        mCategoryVisitPlanList = _mCategoryVisitPlanBL.GetAllData();
+//        mCategoryVisitPlanList = _mCategoryVisitPlanBL.GetAllData();
 
         mEmployeeBranchBL _mEmployeeBranchBL = new mEmployeeBranchBL();
         mEmployeeSalesProductBL _mEmployeeSalesProductBL = new mEmployeeSalesProductBL();
@@ -2901,9 +2842,9 @@ public class FragmentDownloadData extends Fragment {
         mProductBrandHeaderDataList = _mProductBrandHeaderBL.GetAllData();
         mTypeLeaveMobileDataList = _mTypeLeaveBL.GetAllData();
 
-        List<mEmployeeAreaData> data = _mEmployeeAreaBL.GetAllData();
+//        List<mEmployeeAreaData> data = _mEmployeeAreaBL.GetAllData();
 
-        int validate = 0;
+//        int validate = 0;
 
         if (mEmployeeBranchDataList.size() > 0
                 && employeeSalesProductDataList.size() > 0
@@ -2928,24 +2869,20 @@ public class FragmentDownloadData extends Fragment {
 //            goToMainMenu();
 //        }
 
-        return;
     }
 
     private void goToMainMenu() {
         Intent myIntent = new Intent(getContext(), MainMenu.class);
         getActivity().finish();
         startActivity(myIntent);
-        return;
     }
 
     private List<String> SaveDatamTypeLeaveMobileData(JSONArray JData) {
-        List<String> _array = new ArrayList<String>();
+        List<String> _array;
         APIData dtAPIDATA = new APIData();
-        _array = new ArrayList<String>();
+        _array = new ArrayList<>();
         Iterator i = JData.iterator();
-        Boolean flag = true;
-        String ErrorMess = "";
-        List<mTypeLeaveMobileData> _Listdata = new ArrayList<mTypeLeaveMobileData>();
+        List<mTypeLeaveMobileData> _Listdata = new ArrayList<>();
         while (i.hasNext()) {
             org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
             int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
@@ -2956,8 +2893,6 @@ public class FragmentDownloadData extends Fragment {
                 _array.add(_data.get_intTipeLeave() + " - " + _data.get_txtTipeLeaveName());
                 _Listdata.add(_data);
             } else {
-                flag = false;
-                ErrorMess = (String) innerObj.get(dtAPIDATA.strMessage);
                 break;
             }
         }
@@ -3011,12 +2946,12 @@ public class FragmentDownloadData extends Fragment {
             // pg.setVisibility(View.VISIBLE);
             Dialog.setMessage(new clsHardCode().txtMessGetUserRole);
             Dialog.setCancelable(false);
-            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    intProcesscancel = 1;
-                }
-            });
+//            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    intProcesscancel = 1;
+//                }
+//            });
             Dialog.show();
         }
 
@@ -3360,37 +3295,30 @@ public class FragmentDownloadData extends Fragment {
         List<String> _array;
         APIData dtAPIDATA = new APIData();
         _array = new ArrayList<>();
-        Iterator i = jsonArray.iterator();
-        Boolean flag = true;
-        String ErrorMess = "";
-        List<mParentData> listDataParent = new ArrayList<>();
-        while (i.hasNext()) {
-            JSONObject innerObj = (JSONObject) i.next();
+        for (Object aJsonArray : jsonArray) {
+            JSONObject innerObj = (JSONObject) aJsonArray;
             try {
                 int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
-                ErrorMess = String.valueOf(innerObj.get("_pstrMessage"));
                 if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
                     new tGroupQuestionMappingBL().deleteAllDatatGroupQuestionMapping();
                     new mKategoriBL().DeletemKategori();
-                    new mPertanyaanBL().DeletemPertanyaan() ;
-                    new mParentBL().DeletemParent() ;
+                    new mPertanyaanBL().DeletemPertanyaan();
+                    new mParentBL().DeletemParent();
                     new mTypePertanyaanBL().DeletemTypePertanyaan();
                     new mListJawabanBL().DeletemListJawaban();
                     JSONArray jsonArray_parent = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListDatamParent_mobile")));
-                    Iterator j = jsonArray_parent.iterator();
-                    while (j.hasNext()) {
+                    for (Object aJsonArray_parent : jsonArray_parent) {
                         mParentData _data = new mParentData();
-                        JSONObject innerObj_parent = (JSONObject) j.next();
+                        JSONObject innerObj_parent = (JSONObject) aJsonArray_parent;
                         _data.set_intParentId(String.valueOf(innerObj_parent.get("IntParentId")));
                         _data.set_txtParentName(String.valueOf(innerObj_parent.get("TxtParentName")));
                         new mParentBL().SaveDatamParent(_data);
                     }
 
                     JSONArray jsonArray_kategori = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListDatamKategori_mobile")));
-                    Iterator k = jsonArray_kategori.iterator();
-                    while (k.hasNext()) {
+                    for (Object aJsonArray_kategori : jsonArray_kategori) {
                         mKategoriData _data = new mKategoriData();
-                        JSONObject innerObj_kategori = (JSONObject) k.next();
+                        JSONObject innerObj_kategori = (JSONObject) aJsonArray_kategori;
                         _data.set_intCategoryId(String.valueOf(innerObj_kategori.get("IntCategoryId")));
                         _data.set_intParentId(String.valueOf(innerObj_kategori.get("IntParentId")));
                         _data.set_txtCategoryName(String.valueOf(innerObj_kategori.get("TxtCategoryName")));
@@ -3398,10 +3326,9 @@ public class FragmentDownloadData extends Fragment {
                     }
 
                     JSONArray jsonArray_groupQuestion = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListtGroupQuestion_mobile")));
-                    Iterator z = jsonArray_groupQuestion.iterator();
-                    while (z.hasNext()){
+                    for (Object aJsonArray_groupQuestion : jsonArray_groupQuestion) {
                         tGroupQuestionMappingData _data = new tGroupQuestionMappingData();
-                        JSONObject innerObj_GroupQuestion = (JSONObject) z.next();
+                        JSONObject innerObj_GroupQuestion = (JSONObject) aJsonArray_groupQuestion;
                         _data.set_intId(String.valueOf(innerObj_GroupQuestion.get("IntQuestionGroupId")));
                         _data.set_txtGroupQuestion(String.valueOf(innerObj_GroupQuestion.get("TxtQuestionGroupName")));
                         _data.set_intRoleId(String.valueOf(innerObj_GroupQuestion.get("TxtRoleName")));
@@ -3411,10 +3338,9 @@ public class FragmentDownloadData extends Fragment {
                     }
 
                     JSONArray jsonArray_Pertanyaan = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListDatamPertanyaan_mobile")));
-                    Iterator l = jsonArray_Pertanyaan.iterator();
-                    while (l.hasNext()) {
+                    for (Object aJsonArray_Pertanyaan : jsonArray_Pertanyaan) {
                         mPertanyaanData _data = new mPertanyaanData();
-                        JSONObject innerObj_Pertanyaan = (JSONObject) l.next();
+                        JSONObject innerObj_Pertanyaan = (JSONObject) aJsonArray_Pertanyaan;
                         _data.set_intQuestionId(String.valueOf(innerObj_Pertanyaan.get("IntQuestionId")));
                         _data.set_intSoalId(String.valueOf(innerObj_Pertanyaan.get("IntSoalId")));
                         _data.set_intCategoryId(String.valueOf(innerObj_Pertanyaan.get("IntCategoryId")));
@@ -3422,16 +3348,15 @@ public class FragmentDownloadData extends Fragment {
                         _data.set_intTypeQuestionId(String.valueOf(innerObj_Pertanyaan.get("IntTypeQuestionId")));
                         _data.set_decBobot(String.valueOf(innerObj_Pertanyaan.get("DecBobot")));
                         _data.set_bolHaveAnswerList(String.valueOf(innerObj_Pertanyaan.get("BolHaveAnswerList")));
-                        _data .set_inttGroupQuestionMapping(String.valueOf(innerObj_Pertanyaan.get("InttGroupQuestionMapping")));
+                        _data.set_inttGroupQuestionMapping(String.valueOf(innerObj_Pertanyaan.get("InttGroupQuestionMapping")));
                         new mPertanyaanBL().SaveData(_data);
                     }
 
 
                     JSONArray jsonArray_listJawaban = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListmListJawaban_mobile")));
-                    Iterator n = jsonArray_listJawaban.iterator();
-                    while (n.hasNext()) {
+                    for (Object aJsonArray_listJawaban : jsonArray_listJawaban) {
                         mListJawabanData _data = new mListJawabanData();
-                        JSONObject innerObj_listJawaban = (JSONObject) n.next();
+                        JSONObject innerObj_listJawaban = (JSONObject) aJsonArray_listJawaban;
                         _data.set_intListAnswerId(String.valueOf(innerObj_listJawaban.get("IntListAnswerId")));
                         _data.set_intQuestionId(String.valueOf(innerObj_listJawaban.get("IntQuestionId")));
                         _data.set_intTypeQuestionId(String.valueOf(innerObj_listJawaban.get("IntTypeQuestionId")));
@@ -3443,10 +3368,9 @@ public class FragmentDownloadData extends Fragment {
 
                     JSONArray jsonArray_typePertanyaan = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListDatamTypePertanyaan_mobile")));
 
-                    Iterator m = jsonArray_typePertanyaan.iterator();
-                    while (m.hasNext()) {
+                    for (Object aJsonArray_typePertanyaan : jsonArray_typePertanyaan) {
                         mTypePertanyaanData _data = new mTypePertanyaanData();
-                        JSONObject innerObj_TypePertanyaan = (JSONObject) m.next();
+                        JSONObject innerObj_TypePertanyaan = (JSONObject) aJsonArray_typePertanyaan;
                         _data.set_intTypeQuestionId(String.valueOf(innerObj_TypePertanyaan.get("IntTypeQuestionId")));
                         _data.set_txtTypeQuestion(String.valueOf(innerObj_TypePertanyaan.get("TxtTypeQuestion")));
                         new mTypePertanyaanBL().SaveData(_data);
@@ -3463,23 +3387,17 @@ public class FragmentDownloadData extends Fragment {
     }
 
 
-    private List<String> SaveDatatPurchaseOrderData(JSONArray jsonArray){
+    private List<String> SaveDatatPurchaseOrderData(JSONArray jsonArray) {
         List<String> _array;
-        APIData dtAPIDATA = new APIData();
         _array = new ArrayList<>();
-        Iterator i = jsonArray.iterator();
-        Boolean flag = true;
-        String ErrorMess = "";
-        List<tPurchaseOrderHeaderData> listDataHeader = new ArrayList<>();
-        while (i.hasNext()){
-            JSONObject innerObj = (JSONObject) i.next();
+        for (Object aJsonArray : jsonArray) {
+            JSONObject innerObj = (JSONObject) aJsonArray;
             try {
                 JSONArray jsonArray_header = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListDatatPurchaseOrderHeader_mobile")));
-                if (jsonArray_header != null){
-                    Iterator j = jsonArray_header.iterator();
-                    while (j.hasNext()){
+                if (jsonArray_header != null) {
+                    for (Object aJsonArray_header : jsonArray_header) {
                         tPurchaseOrderHeaderData _data = new tPurchaseOrderHeaderData();
-                        JSONObject innerObj_header = (JSONObject) j.next();
+                        JSONObject innerObj_header = (JSONObject) aJsonArray_header;
                         _data.set_intId(String.valueOf(innerObj_header.get("TxtDataId")));
                         _data.set_txtKeterangan(String.valueOf(innerObj_header.get("TxtKeterangan")));
                         _data.set_dtDate(String.valueOf(innerObj_header.get("DtDate")));
@@ -3521,30 +3439,24 @@ public class FragmentDownloadData extends Fragment {
                 } else {
                     new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
                 }
-            }catch (ParseException e){
+            } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
         return _array;
     }
 
-    private List<String> SaveDatatSalesProductQuantityData(JSONArray jsonArray){
+    private List<String> SaveDatatSalesProductQuantityData(JSONArray jsonArray) {
         List<String> _array;
-        APIData dtAPIDATA = new APIData();
         _array = new ArrayList<>();
-        Iterator i = jsonArray.iterator();
-        Boolean flag = true;
-        String ErrorMess = "";
-        List<tSalesProductQuantityHeaderData> listDataHeader = new ArrayList<>();
-        while (i.hasNext()){
-            JSONObject innerObj = (JSONObject) i.next();
+        for (Object aJsonArray : jsonArray) {
+            JSONObject innerObj = (JSONObject) aJsonArray;
             try {
                 JSONArray jsonArray_header = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListtSalesProductQuantityHeader_mobile")));
                 if (jsonArray_header != null) {
-                    Iterator j = jsonArray_header.iterator();
-                    while (j.hasNext()){
+                    for (Object aJsonArray_header : jsonArray_header) {
                         tSalesProductQuantityHeaderData _data = new tSalesProductQuantityHeaderData();
-                        JSONObject innerObj_header = (JSONObject) j.next();
+                        JSONObject innerObj_header = (JSONObject) aJsonArray_header;
                         _data.set_intId(String.valueOf(innerObj_header.get("txtDataId")));
                         _data.set_txtQuantityStock(String.valueOf(innerObj_header.get("TxtNoQuantityStock")));
                         _data.set_dtDate(String.valueOf(innerObj_header.get("DtDate")));
@@ -3611,30 +3523,24 @@ public class FragmentDownloadData extends Fragment {
 //                    new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
                     _array.add("Data Quantity Stock Not Found");
                 }
-            } catch (ParseException e){
+            } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
         return _array;
     }
 
-    private List<String> SaveDataTrackingLocationData(JSONArray jsonArray){
+    private List<String> SaveDataTrackingLocationData(JSONArray jsonArray) {
         List<String> _array;
-        APIData dtAPIDATA = new APIData();
         _array = new ArrayList<>();
-        Iterator i = jsonArray.iterator();
-        Boolean flag = true;
-        String ErrorMess = "";
-        List<trackingLocationData> listData = new ArrayList<>();
-        while (i.hasNext()){
-            JSONObject innerObj = (JSONObject) i.next();
+        for (Object aJsonArray : jsonArray) {
+            JSONObject innerObj = (JSONObject) aJsonArray;
             try {
                 JSONArray jsonArray_header = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListTrackingLocation_mobile")));
                 if (jsonArray_header != null) {
-                    Iterator j = jsonArray_header.iterator();
-                    while (j.hasNext()){
+                    for (Object aJsonArray_header : jsonArray_header) {
                         trackingLocationData _data = new trackingLocationData();
-                        JSONObject innerObj_header = (JSONObject) j.next();
+                        JSONObject innerObj_header = (JSONObject) aJsonArray_header;
                         _data.set_intId(String.valueOf(innerObj_header.get("IntId")));
                         _data.set_txtLongitude(String.valueOf(innerObj_header.get("TxtLongitude")));
                         _data.set_txtLatitude(String.valueOf(innerObj_header.get("TxtLatitude")));
@@ -3660,23 +3566,17 @@ public class FragmentDownloadData extends Fragment {
         return _array;
     }
 
-    private List<String> SaveDataKoordinasiOutletData(JSONArray jsonArray){
+    private List<String> SaveDataKoordinasiOutletData(JSONArray jsonArray) {
         List<String> _array;
-        APIData dtAPIDATA = new APIData();
         _array = new ArrayList<>();
-        Iterator i = jsonArray.iterator();
-        Boolean flag = true;
-        String ErrorMess = "";
-        List<KoordinasiOutletData> listDataHeader = new ArrayList<>();
-        while (i.hasNext()){
-            JSONObject innerObj = (JSONObject) i.next();
+        for (Object aJsonArray : jsonArray) {
+            JSONObject innerObj = (JSONObject) aJsonArray;
             try {
                 JSONArray jsonArray_header = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListKoordinasiOutlet_mobile")));
                 if (jsonArray_header != null) {
-                    Iterator j = jsonArray_header.iterator();
-                    while (j.hasNext()){
+                    for (Object aJsonArray_header : jsonArray_header) {
                         KoordinasiOutletData _data = new KoordinasiOutletData();
-                        JSONObject innerObj_header = (JSONObject) j.next();
+                        JSONObject innerObj_header = (JSONObject) aJsonArray_header;
                         _data.set_intId(String.valueOf(innerObj_header.get("IntId")));
                         _data.set_dtDate(String.valueOf(innerObj_header.get("DtDate")));
                         _data.set_txtKeterangan(String.valueOf(innerObj_header.get("TxtKeterangan")));
@@ -3718,7 +3618,7 @@ public class FragmentDownloadData extends Fragment {
 //                    new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
                     _array.add("Data Koordinasi Outlet not Found");
                 }
-            } catch (ParseException e){
+            } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
