@@ -286,7 +286,9 @@ public class FragmentVisitPlan extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         v = inflater.inflate(R.layout.fragment_visit_plan, container, false);
+
         dataHeader = getArguments();
         idRealisasiHeader = dataHeader.getString(ID_REALISASI);
         dataDetail = new tVisitPlanRealisasiBL().getDataByHeaderId(idRealisasiHeader);
@@ -660,14 +662,7 @@ public class FragmentVisitPlan extends Fragment {
                 LayoutInflater layoutInflater = LayoutInflater.from(getContext());
                 final View promptView = layoutInflater.inflate(R.layout.confirm_data, null);
 
-                final TextView _tvConfirm = (TextView) promptView.findViewById(R.id.tvTitle);
-                final TextView _tvDesc = (TextView) promptView.findViewById(R.id.tvDesc);
-                _tvDesc.setVisibility(View.INVISIBLE);
-                _tvConfirm.setText("Check In Data ?");
-                _tvConfirm.setTextSize(18);
-
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-                alertDialogBuilder.setView(promptView);
                 alertDialogBuilder
                         .setCancelable(false)
                         .setPositiveButton("OK",
@@ -684,7 +679,7 @@ public class FragmentVisitPlan extends Fragment {
                                         if (pRes) {
                                             double latitude = Double.parseDouble(String.valueOf(lblLang.getText()));
                                             double longitude = Double.parseDouble(String.valueOf(lblLong.getText()));
-                                            if(dataDetail.get_txtLatSource().toString().equals("")||dataDetail.get_txtLatSource().toString().equals("null")){
+                                            if (dataDetail.get_txtLatSource().toString().equals("") || dataDetail.get_txtLatSource().toString().equals("null")) {
                                                 latitudeOutlet = 0.0;
                                                 longitudeOutlet = 0.0;
                                             } else {
@@ -753,11 +748,11 @@ public class FragmentVisitPlan extends Fragment {
                                                 for (tVisitPlanRealisasiData dt : data) {
                                                     if (dt.get_intSubmit().toString().equals("1")) {
                                                         statusHeader = true;
-                                                    }else{
+                                                    } else {
                                                         statusHeader = false;
                                                     }
                                                 }
-                                                if (statusHeader){
+                                                if (statusHeader) {
                                                     tVisitPlanHeader_MobileData dt = new tVisitPlanHeader_MobileData();
                                                     dt.set_intSubmit("1");
                                                     dt.set_intHeaderId(dataDetail.get_intHeaderID());
@@ -791,6 +786,8 @@ public class FragmentVisitPlan extends Fragment {
                                     }
                                 });
                 final AlertDialog alertD = alertDialogBuilder.create();
+                alertD.setTitle("Confirmation");
+                alertD.setMessage("Are you sure want to checkin?");
                 alertD.show();
             }
 //					else{
@@ -813,7 +810,7 @@ public class FragmentVisitPlan extends Fragment {
     private void getDistance() {
         latitude = Double.parseDouble(String.valueOf(lblLang.getText()));
         longitude = Double.parseDouble(String.valueOf(lblLong.getText()));
-        if(dataDetail.get_txtLatSource().toString().equals("")||dataDetail.get_txtLatSource().toString().equals("null")){
+        if (dataDetail.get_txtLatSource().toString().equals("") || dataDetail.get_txtLatSource().toString().equals("null")) {
             latitudeOutlet = 0.0;
             longitudeOutlet = 0.0;
         } else {

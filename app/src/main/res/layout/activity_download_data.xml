@@ -8,49 +8,48 @@
     android:focusableInTouchMode="true"
     android:gravity="center_vertical|top"
     android:orientation="vertical"
-    android:paddingBottom="5dp"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp"
-    android:paddingTop="5dp"
     tools:context="com.kalbenutritionals.app.kalbespgmobile.FragmentDownloadData">
 
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_margin="5dp">
 
             <!--layout master data-->
 
             <LinearLayout
                 android:id="@+id/ll_masterData"
-                android:orientation="vertical"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:background="@drawable/bg_layout_white">
+                android:background="@drawable/bg_layout_white"
+                android:orientation="vertical"
+                android:padding="5dp">
 
                 <TextView
                     android:id="@+id/tv_dataMaster"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:text="MASTER DATA"
-                    android:textSize="@dimen/text_size_medium"
-                    android:textStyle="bold"
                     android:layout_gravity="center_horizontal"
-                    android:textColor="#000" />
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="MASTER DATA"
+                    android:textColor="#000"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:id="@+id/ll_branch"
-                    android:orientation="vertical"
-                    android:visibility="gone"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
                     <TextView
                         android:id="@+id/txtBranch"
                         android:layout_width="wrap_content"
@@ -89,10 +88,10 @@
 
                 <LinearLayout
                     android:id="@+id/ll_outlet"
-                    android:orientation="vertical"
-                    android:visibility="gone"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/txtOutlet"
@@ -134,10 +133,10 @@
 
                 <LinearLayout
                     android:id="@+id/ll_brand"
-                    android:orientation="vertical"
-                    android:visibility="gone"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/textView7"
@@ -179,10 +178,10 @@
 
                 <LinearLayout
                     android:id="@+id/ll_product"
-                    android:orientation="vertical"
-                    android:visibility="gone"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/txtProduct"
@@ -224,10 +223,10 @@
 
                 <LinearLayout
                     android:id="@+id/ll_product_spg"
-                    android:orientation="vertical"
-                    android:visibility="gone"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/txtVwProductSPGCusBase"
@@ -269,10 +268,10 @@
 
                 <LinearLayout
                     android:id="@+id/ll_product_pic"
-                    android:orientation="vertical"
-                    android:visibility="gone"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/txtVwProductPICCusBase"
@@ -314,10 +313,10 @@
 
                 <LinearLayout
                     android:id="@+id/ll_product_competitor"
-                    android:orientation="vertical"
-                    android:visibility="gone"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/txtVwProductComp"
@@ -359,10 +358,10 @@
 
                 <LinearLayout
                     android:id="@+id/ll_type_submission"
-                    android:orientation="vertical"
-                    android:visibility="gone"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/txtVwTypeSubm"
@@ -405,10 +404,10 @@
 
                 <LinearLayout
                     android:id="@+id/ll_type_leave"
-                    android:orientation="vertical"
-                    android:visibility="gone"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/txtVwLeave"
@@ -434,10 +433,10 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/spnLeave"
                         android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="10dp"
                         android:layout_marginTop="5dp"
                         android:background="@drawable/btn_on_click"
-                        android:text="Download Type Leave"
-                        android:layout_marginBottom="10dp"/>
+                        android:text="Download Type Leave" />
 
                     <View
                         android:id="@+id/view10"
@@ -449,10 +448,10 @@
 
                     <LinearLayout
                         android:id="@+id/ll_kategoriVisitPlan"
-                        android:orientation="vertical"
-                        android:visibility="gone"
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <TextView
                             android:id="@+id/txtVwVisitPlan"
@@ -493,10 +492,10 @@
 
                     <LinearLayout
                         android:id="@+id/ll_subtypeactivity"
-                        android:orientation="vertical"
-                        android:visibility="gone"
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <TextView
                             android:id="@+id/txtsubTypeActivity"
@@ -538,10 +537,10 @@
 
                     <LinearLayout
                         android:id="@+id/ll_dataQuesioner"
-                        android:orientation="vertical"
-                        android:visibility="gone"
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <TextView
                             android:id="@+id/tv_quis"
@@ -587,29 +586,29 @@
                 android:id="@+id/ll_dataTransaksi"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_marginTop="10dp"
-                android:padding="5dp"
-                android:background="@drawable/bg_layout_white">
+                android:background="@drawable/bg_layout_white"
+                android:orientation="vertical"
+                android:padding="5dp">
 
                 <TextView
                     android:id="@+id/tv_dataTransaksi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:text="TRANSACTIONS"
-                    android:textSize="@dimen/text_size_medium"
-                    android:textStyle="bold"
                     android:layout_gravity="center_horizontal"
-                    android:textColor="#000" />
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="TRANSACTIONS"
+                    android:textColor="#000"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:id="@+id/ll_dataVisitPlan"
-                    android:orientation="vertical"
-                    android:visibility="gone"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/txtTrVisitPlan"
@@ -648,10 +647,10 @@
 
                 <LinearLayout
                     android:id="@+id/ll_absen"
-                    android:orientation="vertical"
-                    android:visibility="gone"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/txtVwAbsen"
@@ -689,10 +688,10 @@
 
                 <LinearLayout
                     android:id="@+id/ll_data_leave"
-                    android:orientation="vertical"
-                    android:visibility="gone"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/txtVwDataLeave"
@@ -730,10 +729,10 @@
 
                 <LinearLayout
                     android:id="@+id/ll_reso"
-                    android:orientation="vertical"
-                    android:visibility="gone"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/txtVwReso"
@@ -772,10 +771,10 @@
 
                 <LinearLayout
                     android:id="@+id/ll_data_activity"
-                    android:orientation="vertical"
-                    android:visibility="gone"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/txtVwActivity"
@@ -813,10 +812,10 @@
 
                 <LinearLayout
                     android:id="@+id/ll_data_activityV2"
-                    android:orientation="vertical"
-                    android:visibility="gone"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/txtVwActivityV2"
@@ -854,10 +853,10 @@
 
                 <LinearLayout
                     android:id="@+id/ll_data_customerbased"
-                    android:orientation="vertical"
-                    android:visibility="gone"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/txtVwCustomerBase"
@@ -895,10 +894,10 @@
 
                 <LinearLayout
                     android:id="@+id/ll_purchase_order"
-                    android:orientation="vertical"
-                    android:visibility="gone"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/txtTrPO"
@@ -936,10 +935,10 @@
 
                 <LinearLayout
                     android:id="@+id/ll_dataQuantityStock"
-                    android:orientation="vertical"
-                    android:visibility="gone"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/txtTrQuantityStock"
@@ -977,10 +976,10 @@
 
                 <LinearLayout
                     android:id="@+id/ll_dataKordinasiOutlet"
-                    android:orientation="vertical"
-                    android:visibility="gone"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/txtVwKordinasiOutlet"
@@ -1023,11 +1022,11 @@
             </LinearLayout>
 
             <!--<View-->
-                <!--android:id="@+id/viewQuiz"-->
-                <!--android:layout_width="fill_parent"-->
-                <!--android:layout_height="1dp"-->
-                <!--android:layout_marginTop="10dp"-->
-                <!--android:background="#bfbfbf" />-->
+            <!--android:id="@+id/viewQuiz"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:background="#bfbfbf" />-->
 
             <Button
                 android:id="@+id/btnAllDownload"
