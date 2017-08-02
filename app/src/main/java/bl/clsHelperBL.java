@@ -778,7 +778,7 @@ public class clsHelperBL extends clsMainBL {
                 dt.set_intIdSyn("1");
                 _tActivityDA.SaveDatatActivityData(db, dt);
             }
-        }    
+        }
 
         if (validPush && dtJson.getListOftActivityMobileData() != null) {
             for (tActivityMobileData dt : dtJson.getListOftActivityMobileData()) {
