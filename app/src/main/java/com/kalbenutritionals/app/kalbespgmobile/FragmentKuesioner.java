@@ -8,6 +8,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -83,12 +84,13 @@ public class FragmentKuesioner extends Fragment {
     private Spinner spinner;
     private EditText etTestGet;
     private ListView listView;
-    private TextView textView;
     private LinearLayout linearLayout, layoutDate;
     private RadioGroup rgTestGet;
     private EditText dateView;
     clsMainActivity _clsMainActivity;
     private int value, intGroupId;
+    private TextView textView, tvQuiz;
+
 
 
     @Nullable
@@ -101,6 +103,9 @@ public class FragmentKuesioner extends Fragment {
         final FloatingActionButton fbPrev = (FloatingActionButton) v.findViewById(R.id.fabkiri);
         final FloatingActionButton fbSubmit = (FloatingActionButton) v.findViewById(R.id.fabSubmit);
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        tvQuiz = (TextView) v.findViewById(R.id.appBarQuiz);
+//        appBarLayout = (AppBarLayout) v.findViewById(R.id.appBarQuiz);
+
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
@@ -128,39 +133,34 @@ public class FragmentKuesioner extends Fragment {
 //            value = bundle.getInt("key_view");
 //        }
         setupViewPager(viewPager);
-
        // viewPager.setCurrentItem(value);
 
-        tabLayout = (TabLayout) v.findViewById(R.id.tabs);
+//        tabLayout = (TabLayout) v.findViewById(R.id.tabs);
         final FrameLayout frameLayout = (FrameLayout) v.findViewById(R.id.fbSubmit);
-        tabLayout.setupWithViewPager(viewPager);
+//        tabLayout.setupWithViewPager(viewPager);
 
-        if(currentFragment.equals("com.kalbenutritionals.app.kalbespgmobile.FragmentKuesioner")){
-            toolbar.setSubtitle(HMKategori.get(HMPertanyaan2.get(HMPertanyaan.get(dataPertanyaan.get(tabLayout.getSelectedTabPosition())))));
-        }else {
-            toolbar.setSubtitle(null);
-        }
         int a = toolbar.getMeasuredWidth();
         int display = getResources().getDisplayMetrics().widthPixels;
 //        int width = getWindowManager().getDefaultDisplay().getWidth();
-      final   LinearLayout tabStrip = ((LinearLayout)tabLayout.getChildAt(0));
-        for(int i = 0; i < tabStrip.getChildCount(); i++) {
-//            tabStrip.getChildAt(i).setKeepScreenOn(true);
-
-            tabStrip.getChildAt(i).setMinimumWidth(display);
-//            tabStrip.getChildAt(i).setVisibility(View.GONE);
-            tabStrip.getChildAt(i).setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    return true;
-                }
-            });
-        }
-        final int iterator = tabLayout.getSelectedTabPosition();
-
+//      final   LinearLayout tabStrip = ((LinearLayout)tabLayout.getChildAt(0));
+//        for(int i = 0; i < tabStrip.getChildCount(); i++) {
+////            tabStrip.getChildAt(i).setKeepScreenOn(true);
+//
+//            tabStrip.getChildAt(i).setMinimumWidth(display);
+////            tabStrip.getChildAt(i).setVisibility(View.GONE);
+//            tabStrip.getChildAt(i).setOnTouchListener(new View.OnTouchListener() {
+//                @Override
+//                public boolean onTouch(View v, MotionEvent event) {
+//                    return true;
+//                }
+//            });
+//        }
+        final int iterator = viewPager.getCurrentItem();
+        tvQuiz.setText("Soal" + HMPertanyaan3.get(HMPertanyaan3.get(dataPertanyaan3.get(iterator))));
+        toolbar.setSubtitle(HMKategori.get(HMPertanyaan2.get(HMPertanyaan.get(dataPertanyaan.get(iterator)))));
         _clsMainActivity = new clsMainActivity();
-//        if (tabLayout.getSelectedTabPosition() == 0){
-//            fbPrev.setVisibility(View.INVISIBLE);}
+        if ( iterator == 0){
+            fbPrev.setVisibility(View.INVISIBLE);}
 
         if(iterator >= listDataPertanyaan.size()-1){
             fbNext.setVisibility(View.INVISIBLE);
@@ -172,17 +172,11 @@ public class FragmentKuesioner extends Fragment {
         } else if (iterator == 0){
             fbPrev.setVisibility(View.INVISIBLE);
             frameLayout.setVisibility(View.INVISIBLE);
-//            tabStrip.getChildAt(iterator).setVisibility(View.VISIBLE);
         }
         fbNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //ini buat nyimpen widget di dalam list array di View
-                if(currentFragment.equals("com.kalbenutritionals.app.kalbespgmobile.FragmentKuesioner")){
-                    toolbar.setSubtitle(HMKategori.get(HMPertanyaan2.get(HMPertanyaan.get(dataPertanyaan.get(tabLayout.getSelectedTabPosition() + 1)))));
-                }else {
-                    toolbar.setSubtitle(null);
-                }
                 for (int i = 0; i < listDataPertanyaan.size(); i++) {
                     if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("5")) {
 //                        linearLayout = (LinearLayout) v.findViewById(Integer.parseInt(HMPertanyaan.get(dataPertanyaan.get(i))));
@@ -234,9 +228,11 @@ public class FragmentKuesioner extends Fragment {
                     }
                 }
 //                tabLayout.getTabAt(tabLayout.getSelectedTabPosition()).setCustomView(null);
-                int iterator = tabLayout.getSelectedTabPosition() + 1;
-                if (validasi(tabLayout.getSelectedTabPosition())){
+                int iterator = viewPager.getCurrentItem() + 1;
+//                if (validasi(viewPager.getCurrentItem())){
                     viewPager.setCurrentItem(iterator);
+                    tvQuiz.setText("Soal" + HMPertanyaan3.get(HMPertanyaan3.get(dataPertanyaan3.get(iterator))));
+                    toolbar.setSubtitle(HMKategori.get(HMPertanyaan2.get(HMPertanyaan.get(dataPertanyaan.get(iterator)))));
 //                    tabStrip.getChildAt(tabLayout.getSelectedTabPosition()).setVisibility(View.GONE);
 //                    tabStrip.getChildAt(iterator).setVisibility(View.VISIBLE);
                     if(iterator >= listDataPertanyaan.size()-1){
@@ -250,9 +246,9 @@ public class FragmentKuesioner extends Fragment {
                         fbPrev.setVisibility(View.INVISIBLE);
                         frameLayout.setVisibility(View.INVISIBLE);
                     }
-                } else {
-                    _clsMainActivity.showCustomToast(getActivity(), "Please fill empty Field...", false);
-                }
+//                } else {
+//                    _clsMainActivity.showCustomToast(getActivity(), "Please fill empty Field...", false);
+//                }
 //                iterator += 1 ;
 
             }
@@ -260,11 +256,6 @@ public class FragmentKuesioner extends Fragment {
         fbPrev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(currentFragment.equals("com.kalbenutritionals.app.kalbespgmobile.FragmentKuesioner")){
-                    toolbar.setSubtitle(HMKategori.get(HMPertanyaan2.get(HMPertanyaan.get(dataPertanyaan.get(tabLayout.getSelectedTabPosition() - 1)))));
-                }else {
-                    toolbar.setSubtitle(null);
-                }
                 //ini buat nyimpen widget di dalam list array di View
                 for (int i = 0; i < listDataPertanyaan.size(); i++) {
                     if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("5")) {
@@ -317,11 +308,14 @@ public class FragmentKuesioner extends Fragment {
                     }
                 }
 //                tabLayout.getTabAt(tabLayout.getSelectedTabPosition()).setCustomView(null);
-                int iterator = tabLayout.getSelectedTabPosition() - 1;
-                if (validasi(tabLayout.getSelectedTabPosition())){
+                int iterator = viewPager.getCurrentItem() - 1;
+                viewPager.setCurrentItem(iterator);
+//                if (validasi(viewPager.getCurrentItem())){
                     viewPager.setCurrentItem(iterator);
-//                    tabStrip.getChildAt(iterator).setVisibility(View.VISIBLE);
-//                    tabStrip.getChildAt(tabLayout.getSelectedTabPosition()).setVisibility(View.GONE);
+                        tvQuiz.setText("Soal" + HMPertanyaan3.get(HMPertanyaan3.get(dataPertanyaan3.get(iterator))));
+                        toolbar.setSubtitle(HMKategori.get(HMPertanyaan2.get(HMPertanyaan.get(dataPertanyaan.get(iterator)))));
+////                    tabStrip.getChildAt(iterator).setVisibility(View.VISIBLE);
+////                    tabStrip.getChildAt(tabLayout.getSelectedTabPosition()).setVisibility(View.GONE);
                     if(iterator >= listDataPertanyaan.size()-1){
                         fbNext.setVisibility(View.INVISIBLE);
                         frameLayout.setVisibility(View.VISIBLE);
@@ -333,9 +327,9 @@ public class FragmentKuesioner extends Fragment {
                         fbPrev.setVisibility(View.INVISIBLE);
                         frameLayout.setVisibility(View.INVISIBLE);
                     }
-                } else {
-                    _clsMainActivity.showCustomToast(getActivity(), "Please fill empty Field...", false);
-                }
+//                } else {
+//                    _clsMainActivity.showCustomToast(getActivity(), "Please fill empty Field...", false);
+//                }
             }
         });
 
@@ -526,7 +520,18 @@ public class FragmentKuesioner extends Fragment {
 //                    }
 //                }
 //                if (validate) { //kalau jawaban sudah di isi jalankan ini
-                if (validasi(tabLayout.getSelectedTabPosition())){
+                boolean validate = true;
+                List<Integer> kc = new ArrayList<Integer>();
+                for (int i = 0; i <listDataPertanyaan.size(); i++){
+                    if (!validasi(i)){
+                        validate = false;
+                        kc.add(i);
+                    }
+                    else {
+                        validate = true;
+                    }
+                }
+                if (validate){
                     final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
                     alertDialog.setTitle("Confirm");
                     alertDialog.setMessage("Are you sure?");
@@ -555,6 +560,21 @@ public class FragmentKuesioner extends Fragment {
                     alertDialog.show();
                 } else {
                     _clsMainActivity.showCustomToast(getActivity(), "Please fill empty Field...", false);
+                    int d = kc.get(0);
+                    viewPager.setCurrentItem(d);
+                    if(d >= listDataPertanyaan.size()-1){
+                        fbNext.setVisibility(View.INVISIBLE);
+                        fbPrev.setVisibility(View.VISIBLE);   
+                        frameLayout.setVisibility(View.VISIBLE);
+                    } else if (d > 0 && d < listDataPertanyaan.size() -1){
+                        fbPrev.setVisibility(View.VISIBLE);
+                        fbNext.setVisibility(View.VISIBLE);
+                        frameLayout.setVisibility(View.INVISIBLE);
+                    } else if (d == 0){
+                        fbPrev.setVisibility(View.INVISIBLE);
+                        frameLayout.setVisibility(View.INVISIBLE);
+                        fbNext.setVisibility(View.VISIBLE);
+                    }
                 }
 
 
@@ -566,24 +586,24 @@ public class FragmentKuesioner extends Fragment {
 
     private boolean validasi(int i){
         boolean validate = true;
-            //ini buat custom tab
-            View tab = LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
-            tab.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            tab.setBackgroundResource(R.drawable.bg_tablayout2);
-            tab.setPadding(3, 0, 15, 0);
-            TextView tv = (TextView) tab.findViewById(R.id.custom_text);
-            Drawable img = getContext().getResources().getDrawable(
-                    R.drawable.ic_error);
-            Bitmap bitmap = ((BitmapDrawable) img).getBitmap();
-// Scale it to 50 x 50
-            Drawable d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 30, 30, true));
-            tv.setText(mFragmentTitleList.get(i));
-            tv.setCompoundDrawablesWithIntrinsicBounds(d, null, null, null);
+//            //ini buat custom tab
+//            View tab = LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
+//            tab.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+//            tab.setBackgroundResource(R.drawable.bg_tablayout2);
+//            tab.setPadding(3, 0, 15, 0);
+//            TextView tv = (TextView) tab.findViewById(R.id.custom_text);
+//            Drawable img = getContext().getResources().getDrawable(
+//                    R.drawable.ic_error);
+//            Bitmap bitmap = ((BitmapDrawable) img).getBitmap();
+//// Scale it to 50 x 50
+//            Drawable d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 30, 30, true));
+//            tv.setText(mFragmentTitleList.get(i));
+//            tv.setCompoundDrawablesWithIntrinsicBounds(d, null, null, null);
 
             //ini buat ngatur validasinya
             final View jawaban = listAnswer.get(i);
             if (jawaban instanceof LinearLayout) {
-                tabLayout.getTabAt(i).setCustomView(null);
+//                tabLayout.getTabAt(i).setCustomView(null);
                 LinearLayout layout = (LinearLayout) jawaban;
                 if (layout == linearLayout) {
                     for (int x = 0; x < linearLayout.getChildCount(); x++) {
@@ -591,10 +611,10 @@ public class FragmentKuesioner extends Fragment {
                         if (nextChild instanceof TextView) {
                             textView = (TextView) nextChild;
                             if (textView.getText().toString().equals("Sliding of the blue pointer")) {
-                                tabLayout.getTabAt(i).setCustomView(tab);
+//                                tabLayout.getTabAt(i).setCustomView(tab);
                                 validate = false;
                             } else {
-                                tabLayout.getTabAt(i).setCustomView(null);
+//                                tabLayout.getTabAt(i).setCustomView(null);
                             }
                         }
                     }
@@ -605,26 +625,26 @@ public class FragmentKuesioner extends Fragment {
                             //ini masih ada bug
                             dateView = (EditText) nextChild;
                             if (dateView.getText().toString().equals("")) {
-                                tabLayout.getTabAt(i).setCustomView(tab);
+//                                tabLayout.getTabAt(i).setCustomView(tab);
                                 validate = false;
                             } else {
-                                tabLayout.getTabAt(i).setCustomView(null);
+//                                tabLayout.getTabAt(i).setCustomView(null);
                             }
                         }
                     }
                 }
             }
             if (jawaban instanceof Spinner) {
-                tabLayout.getTabAt(i).setCustomView(null);
+//                tabLayout.getTabAt(i).setCustomView(null);
                 if ((spinner = (Spinner) jawaban).getSelectedItem().toString().equals("Select One")) {
-                    tabLayout.getTabAt(i).setCustomView(tab);
+//                    tabLayout.getTabAt(i).setCustomView(tab);
                     validate = false;
                 } else {
-                    tabLayout.getTabAt(i).setCustomView(null);
+//                    tabLayout.getTabAt(i).setCustomView(null);
                 }
             }
             if (jawaban instanceof EditText) {
-                tabLayout.getTabAt(i).setCustomView(null);
+//                tabLayout.getTabAt(i).setCustomView(null);
                 InputFilter filter = new InputFilter() {
                     boolean canEnterSpace = false;
 
@@ -657,24 +677,24 @@ public class FragmentKuesioner extends Fragment {
                 (etTestGet = (EditText) jawaban).setFilters(new InputFilter[]{filter});
 
                 if ((etTestGet = (EditText) jawaban).getText().toString().equals("") || (etTestGet = (EditText) jawaban).getText().toString().endsWith(" ")) {
-                    tabLayout.getTabAt(i).setCustomView(tab);
+//                    tabLayout.getTabAt(i).setCustomView(tab);
                     validate = false;
                 } else {
-                    tabLayout.getTabAt(i).setCustomView(null);
+//                    tabLayout.getTabAt(i).setCustomView(null);
                 }
             }
             if (jawaban instanceof RadioGroup) {
-                tabLayout.getTabAt(i).setCustomView(null);
+//                tabLayout.getTabAt(i).setCustomView(null);
                 if ((rgTestGet = (RadioGroup) jawaban).getCheckedRadioButtonId() == -1) {
-                    tabLayout.getTabAt(i).setCustomView(tab);
+//                    tabLayout.getTabAt(i).setCustomView(tab);
                     validate = false;
                 } else {
-                    tabLayout.getTabAt(i).setCustomView(null);
+//                    tabLayout.getTabAt(i).setCustomView(null);
                 }
             }
 
             if (jawaban instanceof ListView) {
-                tabLayout.getTabAt(i).setCustomView(null);
+//                tabLayout.getTabAt(i).setCustomView(null);
                 ListView listView = (ListView) listAnswer.get(i);
                 int count = 0;
                 for (int x = 0; x < listView.getChildCount(); x++) {
@@ -687,10 +707,10 @@ public class FragmentKuesioner extends Fragment {
                     }
                 }
                 if (count == 0) {
-                    tabLayout.getTabAt(i).setCustomView(tab);
+//                    tabLayout.getTabAt(i).setCustomView(tab);
                     validate = false;
                 } else {
-                    tabLayout.getTabAt(i).setCustomView(null);
+//                    tabLayout.getTabAt(i).setCustomView(null);
                 }
             }
         return validate;
