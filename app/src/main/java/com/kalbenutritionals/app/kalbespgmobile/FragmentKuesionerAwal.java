@@ -1,5 +1,6 @@
 package com.kalbenutritionals.app.kalbespgmobile;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -60,6 +61,7 @@ public class FragmentKuesionerAwal extends Fragment {
                 public void onClick(View view) {
                     Bundle bundle = new Bundle();
 //                        bundle.putInt("key_view", h);
+                    getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                         bundle.putInt("Key_GroupId", id_);
                         FragmentKuesioner fragmentKuesioner = new FragmentKuesioner();
                         fragmentKuesioner.setArguments(bundle);

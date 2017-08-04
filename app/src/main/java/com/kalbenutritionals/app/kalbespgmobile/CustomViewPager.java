@@ -22,7 +22,7 @@ public class CustomViewPager extends ViewPager {
         if (this.enabled) {
             return super.onTouchEvent(event);
         }
-   
+
         return false;
     }
 

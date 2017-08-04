@@ -20,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.util.AttributeSet;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -133,13 +134,21 @@ public class FragmentKuesioner extends Fragment {
         tabLayout = (TabLayout) v.findViewById(R.id.tabs);
         final FrameLayout frameLayout = (FrameLayout) v.findViewById(R.id.fbSubmit);
         tabLayout.setupWithViewPager(viewPager);
+
         if(currentFragment.equals("com.kalbenutritionals.app.kalbespgmobile.FragmentKuesioner")){
             toolbar.setSubtitle(HMKategori.get(HMPertanyaan2.get(HMPertanyaan.get(dataPertanyaan.get(tabLayout.getSelectedTabPosition())))));
         }else {
             toolbar.setSubtitle(null);
         }
-        LinearLayout tabStrip = ((LinearLayout)tabLayout.getChildAt(0));
+        int a = toolbar.getMeasuredWidth();
+        int display = getResources().getDisplayMetrics().widthPixels;
+//        int width = getWindowManager().getDefaultDisplay().getWidth();
+      final   LinearLayout tabStrip = ((LinearLayout)tabLayout.getChildAt(0));
         for(int i = 0; i < tabStrip.getChildCount(); i++) {
+//            tabStrip.getChildAt(i).setKeepScreenOn(true);
+
+            tabStrip.getChildAt(i).setMinimumWidth(display);
+//            tabStrip.getChildAt(i).setVisibility(View.GONE);
             tabStrip.getChildAt(i).setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -149,13 +158,6 @@ public class FragmentKuesioner extends Fragment {
         }
         final int iterator = tabLayout.getSelectedTabPosition();
 
-//        viewPager .setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                viewPager.setEnabled(false);
-//                return true;
-//            }
-//        });
         _clsMainActivity = new clsMainActivity();
 //        if (tabLayout.getSelectedTabPosition() == 0){
 //            fbPrev.setVisibility(View.INVISIBLE);}
@@ -170,6 +172,7 @@ public class FragmentKuesioner extends Fragment {
         } else if (iterator == 0){
             fbPrev.setVisibility(View.INVISIBLE);
             frameLayout.setVisibility(View.INVISIBLE);
+//            tabStrip.getChildAt(iterator).setVisibility(View.VISIBLE);
         }
         fbNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -234,6 +237,8 @@ public class FragmentKuesioner extends Fragment {
                 int iterator = tabLayout.getSelectedTabPosition() + 1;
                 if (validasi(tabLayout.getSelectedTabPosition())){
                     viewPager.setCurrentItem(iterator);
+//                    tabStrip.getChildAt(tabLayout.getSelectedTabPosition()).setVisibility(View.GONE);
+//                    tabStrip.getChildAt(iterator).setVisibility(View.VISIBLE);
                     if(iterator >= listDataPertanyaan.size()-1){
                         fbNext.setVisibility(View.INVISIBLE);
                         frameLayout.setVisibility(View.VISIBLE);
@@ -315,6 +320,8 @@ public class FragmentKuesioner extends Fragment {
                 int iterator = tabLayout.getSelectedTabPosition() - 1;
                 if (validasi(tabLayout.getSelectedTabPosition())){
                     viewPager.setCurrentItem(iterator);
+//                    tabStrip.getChildAt(iterator).setVisibility(View.VISIBLE);
+//                    tabStrip.getChildAt(tabLayout.getSelectedTabPosition()).setVisibility(View.GONE);
                     if(iterator >= listDataPertanyaan.size()-1){
                         fbNext.setVisibility(View.INVISIBLE);
                         frameLayout.setVisibility(View.VISIBLE);
@@ -889,7 +896,7 @@ public class FragmentKuesioner extends Fragment {
                     modelJawaban.add(dt);
                 }
             }
-            adapter.addFrag(new FragmentKuesionerPart(HMKategori.get(HMPertanyaan2.get(HMPertanyaan.get(dataPertanyaan.get(i)))), i + 1, dataPertanyaan.get(i), Integer.parseInt( HMPertanyaan.get(HMPertanyaan.get(dataPertanyaan.get(i)))), modelJawaban), "SOAL " + HMPertanyaan3.get(HMPertanyaan3.get(dataPertanyaan3.get(i))));
+            adapter.addFrag(new FragmentKuesionerPart( i + 1, dataPertanyaan.get(i), Integer.parseInt( HMPertanyaan.get(HMPertanyaan.get(dataPertanyaan.get(i)))), modelJawaban), "SOAL " + HMPertanyaan3.get(HMPertanyaan3.get(dataPertanyaan3.get(i))));
         }
         viewPager.setAdapter(adapter);
     }
