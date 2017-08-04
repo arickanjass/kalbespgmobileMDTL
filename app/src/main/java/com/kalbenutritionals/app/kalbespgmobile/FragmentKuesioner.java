@@ -101,7 +101,7 @@ public class FragmentKuesioner extends Fragment {
         final FloatingActionButton fbSubmit = (FloatingActionButton) v.findViewById(R.id.fabSubmit);
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
 
-        Bundle bundle = this.getArguments();    
+        Bundle bundle = this.getArguments();
         if (bundle != null) {
             intGroupId = bundle.getInt("Key_GroupId");
         }
