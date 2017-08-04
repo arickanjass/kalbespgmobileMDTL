@@ -1,5 +1,7 @@
 package library.spgmobile.common;
 
+import library.spgmobile.dal.clsHardCode;
+
 /**
  * Created by Dewi Oktaviani on 04/07/2017.
  */
@@ -10,7 +12,7 @@ public class tGroupQuestionMappingData {
     private String _intRoleId;
     private String _dtStart;
     private String _dtEnd;
-
+    public static final String TABLE_Question = new clsHardCode().txtTable_tGroupQuestionMapping;
     public String get_intRoleId() {
         return _intRoleId;
     }
@@ -57,5 +59,7 @@ public class tGroupQuestionMappingData {
     public String Property_dtEnd = "dtEnd";
     public String Property_ListOftGroupQuestionMappingData = "ListOftGroupQuestionMappingData";
     public String Property_All = Property_intId + "," + Property_txtGroupQuestion + "," + Property_intRoleId + "," + Property_dtStart + "," + Property_dtEnd;
+    public String Property_AllS = TABLE_Question+ "."+ Property_intId + "," + TABLE_Question+ "." + Property_txtGroupQuestion + ","
+            +  TABLE_Question+ "." + Property_intRoleId + "," + TABLE_Question+ "." + Property_dtStart + "," + TABLE_Question+ "." +  Property_dtEnd;
     public tGroupQuestionMappingData(){super();}
 }

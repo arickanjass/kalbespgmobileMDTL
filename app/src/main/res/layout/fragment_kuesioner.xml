@@ -33,11 +33,15 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.view.ViewPager
+    <!--<android.support.v4.view.ViewPager-->
+        <!--android:id="@+id/viewpager"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior" />-->
+    <com.kalbenutritionals.app.kalbespgmobile.CustomViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:layout_height="match_parent" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -48,4 +52,53 @@
         android:src="@android:drawable/ic_menu_send"
         android:scaleType="centerCrop"
         app:fabSize="normal" />
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabkiri"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:layout_margin="20dp"
+        android:src="@android:drawable/ic_menu_send"
+        android:scaleType="centerCrop"
+        android:rotation="180"
+        app:fabSize="normal" />
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:id="@+id/fbSubmit"
+        android:layout_gravity="bottom|right">
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fabSubmit"
+            android:scaleType="centerCrop"
+            app:fabSize="normal"
+            android:layout_margin="20dp"
+            android:layout_gravity="bottom|right"
+            android:src="@android:color/transparent" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            android:elevation="16dp"
+            android:layout_marginBottom="40dp"
+            android:layout_marginRight="25dp"
+            android:layout_gravity="bottom|right|center"
+            android:textColor="@android:color/white"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </FrameLayout>
+    <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:id="@+id/fabSubmit"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="bottom|start"-->
+        <!--android:layout_margin="20dp"-->
+        <!--android:src="@android:drawable/ic_menu_send"-->
+        <!--android:scaleType="centerCrop"-->
+        <!--android:rotation="180"-->
+        <!--app:fabSize="normal" />-->
 </android.support.design.widget.CoordinatorLayout>

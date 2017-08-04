@@ -6,7 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import library.spgmobile.common.mPertanyaanData;
 import library.spgmobile.common.tGroupQuestionMappingData;
+import library.spgmobile.common.tJawabanUserData;
 
 /**
  * Created by Dewi Oktaviani on 04/07/2017.
@@ -14,6 +16,8 @@ import library.spgmobile.common.tGroupQuestionMappingData;
 
 public class tGroupQuestionMappingDA {
     private static final String TABLE_CONTACTS = new clsHardCode().txtTable_tGroupQuestionMapping;
+    private static final String TABLE_PERTANYAAN = new clsHardCode().txtTable_mPertanyaan;
+    private static final String TEBLE_JAWABANSPG = new clsHardCode().txtTable_tJawabanUser;
     //create table
     public tGroupQuestionMappingDA(SQLiteDatabase db){
         tGroupQuestionMappingData dt = new tGroupQuestionMappingData();
@@ -67,6 +71,31 @@ public class tGroupQuestionMappingDA {
         List<tGroupQuestionMappingData> contactList = new ArrayList<tGroupQuestionMappingData>();
         tGroupQuestionMappingData dt = new tGroupQuestionMappingData();
         String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intId + "='" + intId + "' ORDER BY intId ASC";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()){
+            do {
+                tGroupQuestionMappingData contact = new tGroupQuestionMappingData();
+                contact.set_intId(cursor.getString(0));
+                contact.set_txtGroupQuestion(cursor.getString(1));
+                contact.set_intRoleId(cursor.getString(2));
+                contact.set_dtStart(cursor.getString(3));
+                contact.set_dtEnd(cursor.getString(4));
+                contactList.add(contact);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return contactList;
+    }
+    public List<tGroupQuestionMappingData> GetDataByIdActive(SQLiteDatabase db){
+        List<tGroupQuestionMappingData> contactList = new ArrayList<tGroupQuestionMappingData>();
+        tGroupQuestionMappingData dt = new tGroupQuestionMappingData();
+        mPertanyaanData dtQuestion = new mPertanyaanData();
+        tJawabanUserData dtJawaban = new tJawabanUserData();
+        String selectQuery = "Select " + dt.Property_AllS + " FROM " + TABLE_CONTACTS + " lEFT OUTER JOIN " + TABLE_PERTANYAAN +
+                " ON " + TABLE_CONTACTS + "." + dt.Property_intId + "=" + TABLE_PERTANYAAN + "." + dtQuestion.Property_inttGroupQuestionMapping +
+                " LEFT OUTER JOIN " + TEBLE_JAWABANSPG + " ON " + TABLE_PERTANYAAN + "." + dtQuestion.Property_intQuestionId + "="
+                + TEBLE_JAWABANSPG + "." + dtJawaban.Property_intQuestionId + " WHERE " + TEBLE_JAWABANSPG + "." + dtJawaban.Property_intQuestionId +
+                " IS NULL " + " GROUP BY " + dt.Property_AllS  + " ORDER BY intId ASC";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()){
             do {

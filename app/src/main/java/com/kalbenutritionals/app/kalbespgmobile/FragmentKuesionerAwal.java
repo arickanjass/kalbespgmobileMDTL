@@ -26,6 +26,7 @@ public class FragmentKuesionerAwal extends Fragment {
     View v;
     Button btn1, btn2;
     List<tGroupQuestionMappingData> groupQuestionMappingDataList = new ArrayList<>();
+    List<mPertanyaanData> mPertanyaanDataList = new ArrayList<>();
     List<mPertanyaanData> listPertanyaanbyQId = new ArrayList<>();
     private LinearLayout lnBtn;
     List<Button> listButton = new ArrayList<Button>();
@@ -34,7 +35,8 @@ public class FragmentKuesionerAwal extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_awal, container, false);
         lnBtn = (LinearLayout) v.findViewById(R.id.ln_quis_btn);
-        groupQuestionMappingDataList = new tGroupQuestionMappingBL().GetAllData();
+        groupQuestionMappingDataList = new tGroupQuestionMappingBL().GetDataByIdActive();
+        String currentFragment = this.getClass().getName();
         int iterator = 0;
         for (int i = 0; i < groupQuestionMappingDataList.size(); i++) {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -50,6 +52,10 @@ public class FragmentKuesionerAwal extends Fragment {
             listButton.add(btn2);
            listPertanyaanbyQId = new mPertanyaanBL().GetDataByGroupQuestion(id_);
             final int h = iterator ;
+//            mPertanyaanDataList = new mPertanyaanBL().GetDataBYGroupQuestionCheck(Integer.parseInt(groupQuestionMappingDataList.get(i).get_intId()));
+//            if (mPertanyaanDataList.size() == 0){
+//                listButton.get(i).setVisibility(View.INVISIBLE);
+//            }
             listButton.get(i).setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
                     Bundle bundle = new Bundle();
