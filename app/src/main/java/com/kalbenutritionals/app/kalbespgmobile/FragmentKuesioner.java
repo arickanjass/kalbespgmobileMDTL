@@ -749,7 +749,6 @@ public class FragmentKuesioner extends Fragment {
                     View nextChild = linearLayout.getChildAt(x);
                     if (nextChild instanceof SeekBar) {
                         seekbar = (SeekBar) nextChild;
-                        tabLayout.getTabAt(i).setIcon(null);
                         dt.set_intUserAnswer(new clsMainActivity().GenerateGuid());
                         dt.set_intUserId(dataUserActive.get_txtUserId());
                         dt.set_intNik(dataUserActive.get_TxtEmpId());
