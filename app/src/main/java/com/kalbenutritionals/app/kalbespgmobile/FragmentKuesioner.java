@@ -752,6 +752,7 @@ public class FragmentKuesioner extends Fragment {
                         tabLayout.getTabAt(i).setIcon(null);
                         dt.set_intUserAnswer(new clsMainActivity().GenerateGuid());
                         dt.set_intUserId(dataUserActive.get_txtUserId());
+                        dt.set_intNik(dataUserActive.get_TxtEmpId());
                         dt.set_intRoleId(dataUserActive.get_txtRoleId());
                         dt.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
                         dt.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
@@ -766,9 +767,9 @@ public class FragmentKuesioner extends Fragment {
                 }
             } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("1")) {
                 Spinner spinner = (Spinner) listAnswer.get(i);
-                tabLayout.getTabAt(i).setIcon(null);
                 dt.set_intUserAnswer(new clsMainActivity().GenerateGuid());
                 dt.set_intUserId(dataUserActive.get_txtUserId());
+                dt.set_intNik(dataUserActive.get_TxtEmpId());
                 dt.set_intRoleId(dataUserActive.get_txtRoleId());
                 dt.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
                 dt.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
@@ -781,9 +782,9 @@ public class FragmentKuesioner extends Fragment {
                 new tJawabanUserBL().SaveDatatJawabanUser(dt);
             } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("3")) {
                 EditText editText = (EditText) listAnswer.get(i);
-                tabLayout.getTabAt(i).setIcon(null);
                 dt.set_intUserAnswer(new clsMainActivity().GenerateGuid());
                 dt.set_intUserId(dataUserActive.get_txtUserId());
+                dt.set_intNik(dataUserActive.get_TxtEmpId());
                 dt.set_intRoleId(dataUserActive.get_txtRoleId());
                 dt.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
                 dt.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
@@ -801,9 +802,9 @@ public class FragmentKuesioner extends Fragment {
                     if (nextChild instanceof CheckBox) {
                         cbTestGet = (CheckBox) nextChild;
                         if (cbTestGet.isChecked()) {
-                            tabLayout.getTabAt(i).setIcon(null);
                             dt.set_intUserAnswer(new clsMainActivity().GenerateGuid());
                             dt.set_intUserId(dataUserActive.get_txtUserId());
+                            dt.set_intNik(dataUserActive.get_TxtEmpId());
                             dt.set_intRoleId(dataUserActive.get_txtRoleId());
                             dt.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
                             dt.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
@@ -823,11 +824,11 @@ public class FragmentKuesioner extends Fragment {
                 if (!radioGroup.onCheckIsTextEditor()) {
                     int selectedId = radioGroup.getCheckedRadioButtonId();
                     if (selectedId > -1) {
-                        tabLayout.getTabAt(i).setIcon(null);
                         RadioButton radioButton = (RadioButton) v.findViewById(selectedId);
                         if (radioButton.isChecked()) {
                             dt.set_intUserAnswer(new clsMainActivity().GenerateGuid());
                             dt.set_intUserId(dataUserActive.get_txtUserId());
+                            dt.set_intNik(dataUserActive.get_TxtEmpId());
                             dt.set_intRoleId(dataUserActive.get_txtRoleId());
                             dt.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
                             dt.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
@@ -847,9 +848,9 @@ public class FragmentKuesioner extends Fragment {
                     View nextChild = linearLayout.getChildAt(x);
                     if (nextChild instanceof EditText) {
                         dateView = (EditText) nextChild;
-                        tabLayout.getTabAt(i).setIcon(null);
                         dt.set_intUserAnswer(new clsMainActivity().GenerateGuid());
                         dt.set_intUserId(dataUserActive.get_txtUserId());
+                        dt.set_intNik(dataUserActive.get_TxtEmpId());
                         dt.set_intRoleId(dataUserActive.get_txtRoleId());
                         dt.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
                         dt.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
@@ -871,6 +872,7 @@ public class FragmentKuesioner extends Fragment {
         dataPertanyaan = new ArrayList<>();
         dataPertanyaan2 = new ArrayList<>();
         dataPertanyaan3 = new ArrayList<>();
+
         dataKategori = new ArrayList<>();
         Bundle bundle = this.getArguments();
         if (bundle != null) {

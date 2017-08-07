@@ -16,6 +16,15 @@ public class tJawabanUserData {
     private String _decBobot;
     private String _intSubmit;
     private String _intSync;
+    private String _intNik;
+
+    public String get_intNik() {
+        return _intNik;
+    }
+
+    public void set_intNik(String _intNik) {
+        this._intNik = _intNik;
+    }
 
     public String get_intSubmit() {
         return _intSubmit;
@@ -116,8 +125,9 @@ public class tJawabanUserData {
     public String Property_decBobot = "decBobot";
     public String Property_intSubmit = "intSubmit";
     public String Property_intSync = "intSync";
+    public String Property_intNik = "intNik";
     public String Property_ListOftJawabanUserData = "ListOftJawabanUserData";
-    public String Property_All = Property_intUserAnswer + "," + Property_intUserId + "," + Property_intRoleId + "," + Property_intQuestionId + "," + Property_intTypeQuestionId + "," + Property_bolHaveAnswerList
+    public String Property_All = Property_intUserAnswer + "," + Property_intUserId + "," + Property_intNik + "," + Property_intRoleId + "," + Property_intQuestionId + "," + Property_intTypeQuestionId + "," + Property_bolHaveAnswerList
             + "," + Property_intAnswerId + "," + Property_txtValue + "," + Property_decBobot + "," + Property_intSubmit + "," + Property_intSync;
     public tJawabanUserData(){
         super();

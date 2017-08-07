@@ -536,6 +536,7 @@ public class dataJson {
                     JSONObject item = new JSONObject();
                     item.put(dtJawabanUserData.Property_intUserAnswer, String.valueOf(data.get_intUserAnswer()));
                     item.put(dtJawabanUserData.Property_intUserId, String.valueOf(data.get_intUserId()));
+                    item.put(dtJawabanUserData.Property_intNik, String.valueOf(data.get_intNik()));
                     item.put(dtJawabanUserData.Property_intRoleId, String.valueOf(data.get_intRoleId()));
                     item.put(dtJawabanUserData.Property_intQuestionId, String.valueOf(data.get_intQuestionId()));
                     item.put(dtJawabanUserData.Property_intTypeQuestionId, String.valueOf(data.get_intTypeQuestionId()));
