@@ -156,7 +156,7 @@ public class FragmentKuesioner extends Fragment {
 //            });
 //        }
         final int iterator = viewPager.getCurrentItem();
-        tvQuiz.setText("Soal" + HMPertanyaan3.get(HMPertanyaan3.get(dataPertanyaan3.get(iterator))));
+        tvQuiz.setText("Soal " + HMPertanyaan3.get(HMPertanyaan3.get(dataPertanyaan3.get(iterator))));
         toolbar.setSubtitle(HMKategori.get(HMPertanyaan2.get(HMPertanyaan.get(dataPertanyaan.get(iterator)))));
         _clsMainActivity = new clsMainActivity();
         if ( iterator == 0){
@@ -231,7 +231,7 @@ public class FragmentKuesioner extends Fragment {
                 int iterator = viewPager.getCurrentItem() + 1;
 //                if (validasi(viewPager.getCurrentItem())){
                     viewPager.setCurrentItem(iterator);
-                    tvQuiz.setText("Soal" + HMPertanyaan3.get(HMPertanyaan3.get(dataPertanyaan3.get(iterator))));
+                    tvQuiz.setText("Soal " + HMPertanyaan3.get(HMPertanyaan3.get(dataPertanyaan3.get(iterator))));
                     toolbar.setSubtitle(HMKategori.get(HMPertanyaan2.get(HMPertanyaan.get(dataPertanyaan.get(iterator)))));
 //                    tabStrip.getChildAt(tabLayout.getSelectedTabPosition()).setVisibility(View.GONE);
 //                    tabStrip.getChildAt(iterator).setVisibility(View.VISIBLE);
@@ -312,7 +312,7 @@ public class FragmentKuesioner extends Fragment {
                 viewPager.setCurrentItem(iterator);
 //                if (validasi(viewPager.getCurrentItem())){
                     viewPager.setCurrentItem(iterator);
-                        tvQuiz.setText("Soal" + HMPertanyaan3.get(HMPertanyaan3.get(dataPertanyaan3.get(iterator))));
+                        tvQuiz.setText("Soal " + HMPertanyaan3.get(HMPertanyaan3.get(dataPertanyaan3.get(iterator))));
                         toolbar.setSubtitle(HMKategori.get(HMPertanyaan2.get(HMPertanyaan.get(dataPertanyaan.get(iterator)))));
 ////                    tabStrip.getChildAt(iterator).setVisibility(View.VISIBLE);
 ////                    tabStrip.getChildAt(tabLayout.getSelectedTabPosition()).setVisibility(View.GONE);
@@ -559,25 +559,34 @@ public class FragmentKuesioner extends Fragment {
 
                     alertDialog.show();
                 } else {
-                    _clsMainActivity.showCustomToast(getActivity(), "Please fill empty Field...", false);
-                    int d = kc.get(0);
-                    viewPager.setCurrentItem(d);
-                    if(d >= listDataPertanyaan.size()-1){
-                        fbNext.setVisibility(View.INVISIBLE);
-                        fbPrev.setVisibility(View.VISIBLE);   
-                        frameLayout.setVisibility(View.VISIBLE);
-                    } else if (d > 0 && d < listDataPertanyaan.size() -1){
-                        fbPrev.setVisibility(View.VISIBLE);
-                        fbNext.setVisibility(View.VISIBLE);
-                        frameLayout.setVisibility(View.INVISIBLE);
-                    } else if (d == 0){
-                        fbPrev.setVisibility(View.INVISIBLE);
-                        frameLayout.setVisibility(View.INVISIBLE);
-                        fbNext.setVisibility(View.VISIBLE);
-                    }
+                   final int d = kc.get(0);
+//                    _clsMainActivity.showCustomToast(getActivity(), "Please fill empty Field At Question " +  HMPertanyaan3.get(HMPertanyaan3.get(dataPertanyaan3.get(d))), false);
+                    final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+//                    alertDialog.setTitle("Confirm");
+                    alertDialog.setMessage("Please fill empty Field At Category " + HMKategori.get(HMPertanyaan2.get(HMPertanyaan.get(dataPertanyaan.get(d)))) + " Question No. " + HMPertanyaan3.get(HMPertanyaan3.get(dataPertanyaan3.get(d))));
+                    alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            tvQuiz.setText("Soal " + HMPertanyaan3.get(HMPertanyaan3.get(dataPertanyaan3.get(d))));
+                            toolbar.setSubtitle(HMKategori.get(HMPertanyaan2.get(HMPertanyaan.get(dataPertanyaan.get(d)))));
+                            viewPager.setCurrentItem(d);
+                            if(d >= listDataPertanyaan.size()-1){
+                                fbNext.setVisibility(View.INVISIBLE);
+                                fbPrev.setVisibility(View.VISIBLE);
+                                frameLayout.setVisibility(View.VISIBLE);
+                            } else if (d > 0 && d < listDataPertanyaan.size() -1){
+                                fbPrev.setVisibility(View.VISIBLE);
+                                fbNext.setVisibility(View.VISIBLE);
+                                frameLayout.setVisibility(View.INVISIBLE);
+                            } else if (d == 0){
+                                fbPrev.setVisibility(View.INVISIBLE);
+                                frameLayout.setVisibility(View.INVISIBLE);
+                                fbNext.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    });
+                    alertDialog.show();
                 }
-
-
             }
         });
 
