@@ -29,6 +29,7 @@ import bl.mCountConsumerMTDBL;
 import bl.mDownloadMasterData_mobileBL;
 import bl.tAbsenUserBL;
 import bl.tActivityBL;
+import bl.tActivityMobileBL;
 import bl.tCustomerBasedMobileHeaderBL;
 import bl.tDisplayPictureBL;
 import bl.tLeaveMobileBL;
@@ -161,6 +162,15 @@ public class FragmentInformation extends Fragment implements View.OnClickListene
         int dt_cb_save;
         int dt_cb_unpush;
         int dt_cb_push;
+        int dt_actV2_save;
+        int dt_actV2_unpush;
+        int dt_actV2_push;
+        int dt_po_save;
+        int dt_po_unpush;
+        int dt_po_push;
+        int dt_qStock_save;
+        int dt_qStock_unpush;
+        int dt_qStock_push;
 
         tvUsername.setText(dt.get_txtUserName().toUpperCase());
 
@@ -205,6 +215,15 @@ public class FragmentInformation extends Fragment implements View.OnClickListene
             dt_cb_unpush = new tCustomerBasedMobileHeaderBL().getCountAllCustomerBasedAbsenUnpush(dtAbsen.get_txtOutletCode());
             dt_cb_push = new tCustomerBasedMobileHeaderBL().countCustomerBaseHomeAbsenPush(dtAbsen.get_txtOutletCode());
             dt_cb_save = new tCustomerBasedMobileHeaderBL().getCountAllCustomerBasedAbsenByStatusSave(dtAbsen.get_txtOutletCode());
+            dt_actV2_save = 0;
+            dt_actV2_unpush = new tActivityMobileBL().getCountAllActivityV2ByStatusSubmit(dtAbsen.get_txtOutletCode());
+            dt_actV2_push = new tActivityMobileBL().countAcivityV2HomeAbsenPush(dtAbsen.get_txtOutletCode());
+            dt_po_save = 0;
+            dt_po_unpush = new tPurchaseOrderHeaderBL().getCountPOStatusSubmit(dtAbsen.get_txtOutletCode());
+            dt_po_push = new tPurchaseOrderHeaderBL().countPoPush(dtAbsen.get_txtOutletCode());
+            dt_qStock_save = 0;
+            dt_qStock_unpush = new tSalesProductQuantityHeaderBL().getCountQStockStatusSubmit(dtAbsen.get_txtOutletCode());
+            dt_qStock_push = new tSalesProductQuantityHeaderBL().countQStockPush(dtAbsen.get_txtOutletCode());
 
             tvTotalReso.setText(dtReso != null ? String.valueOf(dtReso.size()) : "0");
             tvTotalActivity.setText(dtActivity != null ? String.valueOf(dtActivity.size()) : "0");
@@ -227,6 +246,15 @@ public class FragmentInformation extends Fragment implements View.OnClickListene
             }
             tv_cb1.setText(String.valueOf(dt_cb_unpush));
             tv_cb2.setText(String.valueOf(dt_cb_push));
+            tv_actV20.setText(String.valueOf(dt_actV2_save));
+            tv_actV21.setText(String.valueOf(dt_actV2_unpush));
+            tv_actV22.setText(String.valueOf(dt_actV2_push));
+            tv_po0.setText(String.valueOf(dt_po_save));
+            tv_po1.setText(String.valueOf(dt_po_unpush));
+            tv_po2.setText(String.valueOf(dt_po_push));
+            tv_qs0.setText(String.valueOf(dt_qStock_save));
+            tv_qs1.setText(String.valueOf(dt_qStock_unpush));
+            tv_qs2.setText(String.valueOf(dt_qStock_push));
 
             tv_reso0.setText("0");
             tv_act0.setText("0");

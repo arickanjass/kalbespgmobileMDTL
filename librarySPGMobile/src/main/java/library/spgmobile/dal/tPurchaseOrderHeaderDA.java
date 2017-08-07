@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import library.spgmobile.common.tActivityMobileData;
 import library.spgmobile.common.tPurchaseOrderHeaderData;
 
 /**
@@ -372,6 +373,45 @@ public class tPurchaseOrderHeaderDA {
         }
         cursor.close();
         return contactList;
+    }
+
+    //getting count data push
+    public int countPoPush(SQLiteDatabase db,  String code) {
+        String selectQuery = "select coalesce(sum(1),0) from [tPurchaseOrderHeader] where OutletCode='" + code + "' and intSubmit=1 and [intSync]=1";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        int count = 0;
+
+        if (cursor.moveToFirst()) {
+            do {
+                count=Integer.valueOf(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        // return contact list
+        return count;
+    }
+
+    //getting data status submit
+    public int countPOStatusSubmit(SQLiteDatabase db, String code) {
+
+        String selectQuery = "select coalesce(sum(1),0) from [tPurchaseOrderHeader] where OutletCode='" + code + "' and intSubmit=1 and [intSync]=0";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        int count = 0;
+
+        if (cursor.moveToFirst()) {
+            do {
+                count=Integer.valueOf(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        // return contact list
+        return count;
     }
 
     public List<tPurchaseOrderHeaderData> getAllDataByIntSyncAndOutlet(SQLiteDatabase db, String int_sync, String outlet){

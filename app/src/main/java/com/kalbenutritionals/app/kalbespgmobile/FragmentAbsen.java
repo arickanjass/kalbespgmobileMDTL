@@ -106,54 +106,9 @@ public class FragmentAbsen extends Fragment implements ConnectionCallbacks, OnCo
     private TextView tvLongOutlet;
     private TextView tvLatOutlet;
 
-
     clsMainActivity _clsMainActivity = new clsMainActivity();
 
     View v;
-
-    private class MyAdapter extends ArrayAdapter<String> {
-        private List<String> arrayDataAdapyter;
-
-        List<String> getArrayDataAdapyter() {
-            return arrayDataAdapyter;
-        }
-
-        void setArrayDataAdapyter(List<String> arrayDataAdapyter) {
-            this.arrayDataAdapyter = arrayDataAdapyter;
-        }
-
-        MyAdapter(Context context, int textViewResourceId, List<String> objects) {
-            super(context, textViewResourceId, objects);
-            setArrayDataAdapyter(objects);
-        }
-
-        @Override
-        public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
-            return getCustomView(position, parent);
-        }
-
-        @NonNull
-        @Override
-        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-            return getCustomView(position, parent);
-        }
-
-        View getCustomView(int position, ViewGroup parent) {
-            LayoutInflater inflater = getActivity().getLayoutInflater();
-            View row = inflater.inflate(R.layout.custom_spinner, parent, false);
-            if (arrData.size() > 0) {
-                TextView label = (TextView) row.findViewById(R.id.tvTitle);
-                label.setText(getArrayDataAdapyter().get(position));
-                TextView sub = (TextView) row.findViewById(R.id.tvDesc);
-                sub.setVisibility(View.GONE);
-                sub.setVisibility(View.GONE);
-                label.setTextColor(Color.parseColor("#000000"));
-                row.setBackgroundColor(Color.parseColor("#FFFFFF"));
-            }
-            return row;
-        }
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -171,6 +126,9 @@ public class FragmentAbsen extends Fragment implements ConnectionCallbacks, OnCo
         lblLang = (TextView) v.findViewById(R.id.tvLat);
         lblAcc = (TextView) v.findViewById(R.id.tvAcc);
         lblDistance = (TextView) v.findViewById(R.id.tvDis);
+        tvLongOutlet = (TextView) v.findViewById(R.id.tvLongOutlet);
+        tvLatOutlet = (TextView) v.findViewById(R.id.tvLatOutlet);
+
         options = new Options();
         options.inSampleSize = 2;
         tAbsenUserBL _tAbsenUserBL = new tAbsenUserBL();
@@ -180,6 +138,18 @@ public class FragmentAbsen extends Fragment implements ConnectionCallbacks, OnCo
         lblAcc.setText("");
         lblDistance.setText("");
 
+        //get location koordinate
+        getLocation();
+
+        if (mLastLocation != null) {
+            displayLocation(mLastLocation);
+        }
+
+        if (checkPlayServices()) {
+            buildGoogleApiClient();
+        }
+
+        // button refresh map
         btnRefreshMaps.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -191,12 +161,7 @@ public class FragmentAbsen extends Fragment implements ConnectionCallbacks, OnCo
             }
         });
 
-        getLocation();
-
-        if (mLastLocation != null) {
-            displayLocation(mLastLocation);
-        }
-
+        //button show popup map view
         btnPopupMap.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -255,6 +220,7 @@ public class FragmentAbsen extends Fragment implements ConnectionCallbacks, OnCo
                     mMap.clear();
                     mMap.addMarker(marker);
                     mMap.addMarker(markerOutlet);
+
                     final GoogleMap finalMMap = mMap;
                     mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
 
@@ -302,12 +268,6 @@ public class FragmentAbsen extends Fragment implements ConnectionCallbacks, OnCo
             }
         });
 
-        List<mEmployeeBranchData> listDataBranch = new mEmployeeBranchBL().GetAllData();
-        final List<mEmployeeAreaData> listDataArea = new mEmployeeAreaBL().GetAllData();
-        if (checkPlayServices()) {
-            buildGoogleApiClient();
-        }
-
         // First we need to check availability of play services
         imgPrevNoImg1.setOnClickListener(new OnClickListener() {
             @Override
@@ -330,6 +290,11 @@ public class FragmentAbsen extends Fragment implements ConnectionCallbacks, OnCo
             }
         });
 
+        //get data branch and area
+        List<mEmployeeBranchData> listDataBranch = new mEmployeeBranchBL().GetAllData();
+        final List<mEmployeeAreaData> listDataArea = new mEmployeeAreaBL().GetAllData();
+
+        //load spinner brand and area
         arrData = new ArrayList<>();
         if (listDataBranch.size() > 0) {
             for (mEmployeeBranchData dt : listDataBranch) {
@@ -352,6 +317,7 @@ public class FragmentAbsen extends Fragment implements ConnectionCallbacks, OnCo
             spnOutlet.setAdapter(dataAdapterOutlet);
         }
 
+        //get data checkin/absen
         dttAbsenUserData = _tAbsenUserBL.getDataCheckInActive();
 
         btnCheckIn.setOnClickListener(new OnClickListener() {
@@ -507,9 +473,6 @@ public class FragmentAbsen extends Fragment implements ConnectionCallbacks, OnCo
 
         });
 
-        tvLongOutlet = (TextView) v.findViewById(R.id.tvLongOutlet);
-        tvLatOutlet = (TextView) v.findViewById(R.id.tvLatOutlet);
-
         spnOutlet.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -534,6 +497,7 @@ public class FragmentAbsen extends Fragment implements ConnectionCallbacks, OnCo
         return v;
     }
 
+    // get location GPS
     public Location getLocation() {
         try {
             LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
@@ -543,7 +507,7 @@ public class FragmentAbsen extends Fragment implements ConnectionCallbacks, OnCo
 
             if (!isGPSEnabled && !isNetworkEnabled) {
                 // no network provider is enabled
-                new clsMainActivity().showCustomToast(getContext(), "Please turn on GPS and check your internet connection", false);
+                new clsMainActivity().showCustomToast(getContext(), "Please turn on GPS or check your internet connection", false);
             } else {
                 if (isNetworkEnabled) {
                     if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -567,11 +531,11 @@ public class FragmentAbsen extends Fragment implements ConnectionCallbacks, OnCo
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return mLastLocation;
     }
 
     @SuppressWarnings("deprecation")
+    //set text view long lat
     private void displayLocation(Location mLastLocation) {
 
         if (mLastLocation != null) {
@@ -597,6 +561,7 @@ public class FragmentAbsen extends Fragment implements ConnectionCallbacks, OnCo
 
     }
 
+    // count distance
     private float countDistance(double latitude, double longitude) {
         float distance;
 
@@ -829,6 +794,50 @@ public class FragmentAbsen extends Fragment implements ConnectionCallbacks, OnCo
 
     @Override
     public void onProviderDisabled(String provider) {
+
+    }
+
+    private class MyAdapter extends ArrayAdapter<String> {
+        private List<String> arrayDataAdapyter;
+
+        List<String> getArrayDataAdapyter() {
+            return arrayDataAdapyter;
+        }
+
+        void setArrayDataAdapyter(List<String> arrayDataAdapyter) {
+            this.arrayDataAdapyter = arrayDataAdapyter;
+        }
+
+        MyAdapter(Context context, int textViewResourceId, List<String> objects) {
+            super(context, textViewResourceId, objects);
+            setArrayDataAdapyter(objects);
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
+            return getCustomView(position, parent);
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+            return getCustomView(position, parent);
+        }
+
+        View getCustomView(int position, ViewGroup parent) {
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            View row = inflater.inflate(R.layout.custom_spinner, parent, false);
+            if (arrData.size() > 0) {
+                TextView label = (TextView) row.findViewById(R.id.tvTitle);
+                label.setText(getArrayDataAdapyter().get(position));
+                TextView sub = (TextView) row.findViewById(R.id.tvDesc);
+                sub.setVisibility(View.GONE);
+                sub.setVisibility(View.GONE);
+                label.setTextColor(Color.parseColor("#000000"));
+                row.setBackgroundColor(Color.parseColor("#FFFFFF"));
+            }
+            return row;
+        }
 
     }
 }

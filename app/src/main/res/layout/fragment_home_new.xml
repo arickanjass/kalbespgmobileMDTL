@@ -412,6 +412,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:gravity="center"
                                 android:text="Save"
                                 android:textColor="@color/white" />
 
@@ -419,6 +420,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:gravity="center"
                                 android:text="Unpushed"
                                 android:textColor="@color/white" />
 
@@ -426,6 +428,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:gravity="center"
                                 android:text="Pushed"
                                 android:textColor="@color/white" />
                         </TableRow>
@@ -448,8 +451,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:gravity="right"
-                                android:paddingRight="5dp"
+                                android:gravity="center"
                                 android:text="" />
 
                             <TextView
@@ -457,8 +459,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:gravity="right"
-                                android:paddingRight="5dp"
+                                android:gravity="center"
                                 android:text="" />
 
                             <TextView
@@ -466,8 +467,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:gravity="right"
-                                android:paddingRight="5dp"
+                                android:gravity="center"
                                 android:text="" />
                         </TableRow>
                         <!--table activity-->
@@ -489,8 +489,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:gravity="right"
-                                android:paddingRight="5dp"
+                                android:gravity="center"
                                 android:text="" />
 
                             <TextView
@@ -498,8 +497,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:gravity="right"
-                                android:paddingRight="5dp"
+                                android:gravity="center"
                                 android:text="" />
 
                             <TextView
@@ -507,8 +505,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:gravity="right"
-                                android:paddingRight="5dp"
+                                android:gravity="center"
                                 android:text="" />
                         </TableRow>
                         <!--table activityV2-->
@@ -530,8 +527,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:gravity="right"
-                                android:paddingRight="5dp"
+                                android:gravity="center"
                                 android:text="" />
 
                             <TextView
@@ -539,8 +535,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:gravity="right"
-                                android:paddingRight="5dp"
+                                android:gravity="center"
                                 android:text="" />
 
                             <TextView
@@ -548,8 +543,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:gravity="right"
-                                android:paddingRight="5dp"
+                                android:gravity="center"
                                 android:text="" />
                         </TableRow>
                         <!--table cunsomer-->
@@ -572,8 +566,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:gravity="right"
-                                android:paddingRight="5dp"
+                                android:gravity="center"
                                 android:text="" />
 
                             <TextView
@@ -581,8 +574,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:gravity="right"
-                                android:paddingRight="5dp"
+                                android:gravity="center"
                                 android:text="" />
 
                             <TextView
@@ -590,8 +582,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:gravity="right"
-                                android:paddingRight="5dp"
+                                android:gravity="center"
                                 android:text="" />
                         </TableRow>
                         <!--table po-->
@@ -614,8 +605,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:gravity="right"
-                                android:paddingRight="5dp"
+                                android:gravity="center"
                                 android:text="" />
 
                             <TextView
@@ -623,8 +613,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:gravity="right"
-                                android:paddingRight="5dp"
+                                android:gravity="center"
                                 android:text="" />
 
                             <TextView
@@ -632,8 +621,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:gravity="right"
-                                android:paddingRight="5dp"
+                                android:gravity="center"
                                 android:text="" />
                         </TableRow>
                         <!--table qStock-->
@@ -656,8 +644,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:gravity="right"
-                                android:paddingRight="5dp"
+                                android:gravity="center"
                                 android:text="" />
 
                             <TextView
@@ -665,8 +652,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:gravity="right"
-                                android:paddingRight="5dp"
+                                android:gravity="center"
                                 android:text="" />
 
                             <TextView
@@ -674,8 +660,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:gravity="right"
-                                android:paddingRight="5dp"
+                                android:gravity="center"
                                 android:text="" />
                         </TableRow>
                     </TableLayout>

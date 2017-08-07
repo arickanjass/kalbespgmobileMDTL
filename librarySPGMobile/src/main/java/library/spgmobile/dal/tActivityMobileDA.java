@@ -9,6 +9,7 @@ import java.util.List;
 
 import library.spgmobile.common.tActivityData;
 import library.spgmobile.common.tActivityMobileData;
+import library.spgmobile.common.tCustomerBasedMobileHeaderData;
 
 /**
  * Created by rhezaTesar on 7/19/2017.
@@ -233,6 +234,43 @@ public class tActivityMobileDA {
         // return contact
         cursor.close();
         return contactList;
+    }
+    //getting count data push
+    public int countActivityHomeAbsenPush(SQLiteDatabase db,  String code) {
+        String selectQuery = "select coalesce(sum(1),0) from [tActivityMobile] where txtOutletCode='" + code + "' and intSubmit=1 and [intIdSyn]=1";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        int count = 0;
+
+        if (cursor.moveToFirst()) {
+            do {
+                count=Integer.valueOf(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        // return contact list
+        return count;
+    }
+    //getting data status submit
+    public int countActivityV2HomeAbsenByStatusSubmit(SQLiteDatabase db, String code) {
+
+        String selectQuery = "select coalesce(sum(1),0) from [tActivityMobile] where txtOutletCode='" + code + "' and intSubmit=1 and [intIdSyn]=0";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        int count = 0;
+
+        if (cursor.moveToFirst()) {
+            do {
+                count=Integer.valueOf(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        // return contact list
+        return count;
     }
     // Getting All Contacts
     public List<tActivityMobileData> getAllData(SQLiteDatabase db) {

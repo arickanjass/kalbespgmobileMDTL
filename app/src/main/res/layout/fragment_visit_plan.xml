@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="top"
@@ -95,7 +96,7 @@
                 android:layout_below="@id/view2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Description"
+                android:text="Description :"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="10dp"
                 android:textColor="#000"/>
@@ -104,6 +105,7 @@
                 android:layout_below="@id/txtKet_visitPlan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:text="Description :"
                 android:textColor="#000"
                 android:background="@drawable/bg_edtext"/>
@@ -148,153 +150,220 @@
                 android:layout_below="@+id/input_layout_description_visit_plan"
                 android:layout_marginTop="10dp"
                 android:background="#bfbfbf" />
-            <TableLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/tlAbesen"
-                android:layout_marginTop="10dp"
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/tlAbesen2"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/view"
-                android:background="@drawable/bg_rounded_normal">
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                app:cardCornerRadius="10dp">
+                <TableLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/tlAbesen"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <TableRow
-                    android:background="#4CAF50"
-                    android:padding="5dp"
-                    android:gravity="center_horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Your Position"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Outlet Position"
-                        />
-                </TableRow>
+                    <TableRow
+                        android:background="#4CAF50"
+                        android:padding="5dp"
+                        android:gravity="center_horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Your Position"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Outlet Position"
+                            />
+                    </TableRow>
 
-                <TableRow
-                    android:background="#ffffff"
-                    android:padding="5dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Long" />
-                    <TextView
-                        android:id="@+id/tvLong"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="" />
-                    <TextView
-                        android:id="@+id/tvLongOutlet"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="" />
-                </TableRow>
-                <TableRow
-                    android:background="#ffffff"
-                    android:padding="5dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Lat" />
-                    <TextView
-                        android:id="@+id/tvLat"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="" />
-                    <TextView
-                        android:id="@+id/tvlatOutlet"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="" />
-                </TableRow>
-                <TableRow
-                    android:background="#ffffff"
-                    android:padding="5dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Acc" />
-                    <TextView
-                        android:id="@+id/tvAcc"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="" />
-                </TableRow>
-                <TableRow
-                    android:background="#ffffff"
-                    android:padding="5dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Distance"
-                        android:layout_weight="1"
-                        />
-                    <TextView
-                        android:id="@+id/tvDistance"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="234"
-                        android:layout_weight="1"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:layout_weight="1"
-                        />
-                </TableRow>
-            </TableLayout>
+                    <TableRow
+                        android:background="#ffffff"
+                        android:padding="5dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Long" />
+                        <TextView
+                            android:id="@+id/tvLong"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="" />
+                        <TextView
+                            android:id="@+id/tvLongOutlet"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="" />
+                    </TableRow>
+                    <TableRow
+                        android:background="#ffffff"
+                        android:padding="5dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Lat" />
+                        <TextView
+                            android:id="@+id/tvLat"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="" />
+                        <TextView
+                            android:id="@+id/tvlatOutlet"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="" />
+                    </TableRow>
+                    <TableRow
+                        android:background="#ffffff"
+                        android:padding="5dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Acc" />
+                        <TextView
+                            android:id="@+id/tvAcc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="" />
+                    </TableRow>
+                    <TableRow
+                        android:background="#ffffff"
+                        android:padding="5dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Distance"
+                            android:layout_weight="1"
+                            />
+                        <TextView
+                            android:id="@+id/tvDistance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:layout_weight="1"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:layout_weight="1"
+                            />
+                    </TableRow>
+                </TableLayout>
+            </android.support.v7.widget.CardView>
 
             <View
                 android:id="@+id/view3"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@+id/tlAbesen"
+                android:layout_below="@+id/tlAbesen2"
                 android:layout_marginTop="10dp"
                 android:background="#bfbfbf" />
 
-            <LinearLayout android:background="@drawable/bg_rounded_normal" android:layout_marginTop="10dp" android:gravity="center" android:id="@+id/llimgview" android:layout_below="@+id/view3" android:weightSum="3" android:layout_height="wrap_content" android:layout_width="wrap_content" android:orientation="horizontal">
-                <TextView
+            <android.support.v7.widget.CardView
+                android:id="@+id/llimgview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view3"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                app:cardCornerRadius="10dp">
+
+                <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/tlAbesen3"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_weight="1"
-                    android:text="Image"/>
-                <ImageView
-                    android:id="@+id/imageViewCamera1"
-                    android:layout_marginLeft="5dp"
-                    android:background="@mipmap/ic_maps_local_see"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-                <ImageView
-                    android:id="@+id/imageViewCamera2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:background="@mipmap/ic_maps_local_see"
-                    android:layout_weight="1" />
-            </LinearLayout>
+                    android:layout_height="match_parent">
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#4CAF50"
+                        android:gravity="center_horizontal"
+                        android:padding="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Images"
+                            android:textAlignment="center" />
+                    </TableRow>
+
+
+                    <TableRow
+                        android:background="#ffffff"
+                        android:padding="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:text="Image 1"
+                            android:textAlignment="center" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:text="Image 2"
+                            android:textAlignment="center" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:background="#ffffff"
+                        android:paddingBottom="10dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:id="@+id/imageViewCamera1"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:background="@mipmap/ic_maps_local_see" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:id="@+id/imageViewCamera2"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:background="@mipmap/ic_maps_local_see" />
+                        </LinearLayout>
+
+                    </TableRow>
+                </TableLayout>
+            </android.support.v7.widget.CardView>
 
             <View
                 android:id="@+id/view4"

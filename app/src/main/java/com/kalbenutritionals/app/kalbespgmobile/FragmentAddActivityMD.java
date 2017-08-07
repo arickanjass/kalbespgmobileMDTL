@@ -1,9 +1,11 @@
 package com.kalbenutritionals.app.kalbespgmobile;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -27,6 +29,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TableRow;
+import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -201,9 +204,10 @@ public class FragmentAddActivityMD extends Fragment implements View.OnClickListe
             HMsubType.put(dt.get_txtName(), dt.get_intSubTypeActivity());
         }
 
-        ArrayAdapter<String> adapterspnTypeActivity = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_spinner_item, arrTypeActivity);
-        spnTypeActivity.setAdapter(adapterspnTypeActivity);
+//        ArrayAdapter<String> adapterspnTypeActivity = new ArrayAdapter<String>(getActivity(),
+//                android.R.layout.simple_spinner_item, arrTypeActivity);
+//        spnTypeActivity.setAdapter(adapterspnTypeActivity);
+        spnTypeActivity.setAdapter(new MyAdapter(getActivity(), R.layout.custom_spinner, arrTypeActivity));
 
         spnTypeActivity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -496,5 +500,40 @@ public class FragmentAddActivityMD extends Fragment implements View.OnClickListe
         Intent intentCamera2 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intentCamera2.putExtra(MediaStore.EXTRA_OUTPUT, uriImage);
         startActivityForResult(intentCamera2, CAMERA_CAPTURE_IMAGE2_ACTIVITY_REQUEST_CODE);
+    }
+
+    public class MyAdapter extends ArrayAdapter<String> {
+
+        List<String> arrObject;
+        Context context;
+
+        public MyAdapter(Context context, int textViewResourceId, List<String> objects) {
+            super(context, textViewResourceId, objects);
+            arrObject = new ArrayList<>();
+            arrObject = objects;
+            this.context = context;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            return getCustomView(position, convertView, parent);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            return getCustomView(position, convertView, parent);
+        }
+
+        public View getCustomView(int position, View convertView, ViewGroup parent) {
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            View row = inflater.inflate(R.layout.custom_spinner, parent, false);
+            TextView label = (TextView) row.findViewById(R.id.tvTitle);
+            label.setText(arrObject.get(position));
+            TextView sub = (TextView) row.findViewById(R.id.tvDesc);
+            sub.setVisibility(View.INVISIBLE);
+            sub.setVisibility(View.GONE);
+            row.setBackgroundColor(new Color().TRANSPARENT);
+            return row;
+        }
     }
 }

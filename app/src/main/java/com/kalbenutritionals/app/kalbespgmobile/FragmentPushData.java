@@ -186,66 +186,67 @@ public class FragmentPushData extends Fragment {
         if(dtclsPushData!=null){
             dataJson dtJson =dtclsPushData.getDtdataJson();
 
-            if(dtJson.getListOftSalesProductHeaderData()!=null){
-                initSOHeader(getContext(),dtJson.getListOftSalesProductHeaderData());
-            } else {
-                initSOHeader(getContext(),null);
-            }
+            if(dtJson!=null){
+                if(dtJson.getListOftSalesProductHeaderData()!=null){
+                    initSOHeader(getContext(),dtJson.getListOftSalesProductHeaderData());
+                } else {
+                    initSOHeader(getContext(),null);
+                }
 
-            if(dtJson.getListOftPurchaseOrderHeaderData() !=null){
-                initPOHeader(getContext(),dtJson.getListOftPurchaseOrderHeaderData());
-            } else {
-                initPOHeader(getContext(),null);
-            }
+                if(dtJson.getListOftPurchaseOrderHeaderData() !=null){
+                    initPOHeader(getContext(),dtJson.getListOftPurchaseOrderHeaderData());
+                } else {
+                    initPOHeader(getContext(),null);
+                }
 
-            if (dtJson.getListOftJawabanUserData() != null){
-                initQuis(getContext(), dtJson.getListOftJawabanUserData());
-            }
-            else {
-                initQuis(getContext(), null);
-            }
-            if (dtJson.getListOftVisitPlanRealisasiData() != null) {
-                initVisitPlanRealisasiData(getContext(), dtJson.getListOftVisitPlanRealisasiData());
-            } else {
-                initVisitPlanRealisasiData(getContext(), null);
-            }
+                if (dtJson.getListOftJawabanUserData() != null){
+                    initQuis(getContext(), dtJson.getListOftJawabanUserData());
+                }
+                else {
+                    initQuis(getContext(), null);
+                }
+                if (dtJson.getListOftVisitPlanRealisasiData() != null) {
+                    initVisitPlanRealisasiData(getContext(), dtJson.getListOftVisitPlanRealisasiData());
+                } else {
+                    initVisitPlanRealisasiData(getContext(), null);
+                }
 
-            if (dtJson.getListOftSalesProductQuantityHeaderData() != null){
-                initQuantityStockHeader(getContext(),dtJson.getListOftSalesProductQuantityHeaderData());
-            } else {
-                initQuantityStockHeader(getContext(), null);
-            }
+                if (dtJson.getListOftSalesProductQuantityHeaderData() != null){
+                    initQuantityStockHeader(getContext(),dtJson.getListOftSalesProductQuantityHeaderData());
+                } else {
+                    initQuantityStockHeader(getContext(), null);
+                }
 
-            if (dtJson.getListOfKoordinasiOutletImageData() != null){
-                initKoordinasiOutlet(getContext(),dtJson.getListOfKoordinasiOutletData());
-            } else {
-                initKoordinasiOutlet(getContext(), null);
-            }
+                if (dtJson.getListOfKoordinasiOutletImageData() != null){
+                    initKoordinasiOutlet(getContext(),dtJson.getListOfKoordinasiOutletData());
+                } else {
+                    initKoordinasiOutlet(getContext(), null);
+                }
 
-            if(dtJson.getListOftActivityData()!=null){
-                initActivity(getContext(),dtJson.getListOftActivityData());
-            } else {
-                initActivity(getContext(),null);
-            }
+                if(dtJson.getListOftActivityData()!=null){
+                    initActivity(getContext(),dtJson.getListOftActivityData());
+                } else {
+                    initActivity(getContext(),null);
+                }
 
-            if(dtJson.get_ListOftCustomerBasedMobileHeaderData()!=null){
-                initCustomerBase(getContext(),dtJson.get_ListOftCustomerBasedMobileHeaderData());
-            } else {
-                initCustomerBase(getContext(),null);
-            }
+                if(dtJson.get_ListOftCustomerBasedMobileHeaderData()!=null){
+                    initCustomerBase(getContext(),dtJson.get_ListOftCustomerBasedMobileHeaderData());
+                } else {
+                    initCustomerBase(getContext(),null);
+                }
 
-            if(dtJson.getListOftAbsenUserData()!=null){
-                inittAbsen(getContext(),dtJson.getListOftAbsenUserData());
-            } else {
-                inittAbsen(getContext(),null);
-            }
+                if(dtJson.getListOftAbsenUserData()!=null){
+                    inittAbsen(getContext(),dtJson.getListOftAbsenUserData());
+                } else {
+                    inittAbsen(getContext(),null);
+                }
 
-            if(dtJson.getListOftLeaveMobileData()!=null){
-                inittLeave(getContext(),dtJson.getListOftLeaveMobileData());
-            } else {
-                inittLeave(getContext(),null);
+                if(dtJson.getListOftLeaveMobileData()!=null){
+                    inittLeave(getContext(),dtJson.getListOftLeaveMobileData());
+                } else {
+                    inittLeave(getContext(),null);
+                }
             }
-
         }
     }
 

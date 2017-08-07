@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
@@ -33,6 +34,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.location.LocationListener;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -49,11 +51,14 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -82,7 +87,7 @@ import static android.content.Context.LOCATION_SERVICE;
  * Created by Robert on 27/04/2017.
  */
 
-public class FragmentVisitPlan extends Fragment {
+public class FragmentVisitPlan extends Fragment implements ConnectionCallbacks, OnConnectionFailedListener, LocationListener{
     private GoogleMap mMap;
     private Location mLastLocation;
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 1000;
@@ -104,6 +109,8 @@ public class FragmentVisitPlan extends Fragment {
     float distance;
     private String Acc;
     double latitudeOutlet;
+    private double mlongitude = 0;
+    private double mlatitude = 0;
     private static final int CAMERA_CAPTURE_IMAGE1_REQUEST_CODE = 100;
     private static final int CAMERA_CAPTURE_IMAGE2_REQUEST_CODE = 130;
     private ImageView imgPrevNoImg1;
@@ -168,120 +175,8 @@ public class FragmentVisitPlan extends Fragment {
     clsMainActivity _clsMainActivity = new clsMainActivity();
 
     View v;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
+
     private GoogleApiClient client;
-
-    public static Bitmap resizeBitMapImage1(String filePath, int targetWidth, int targetHeight) {
-        Bitmap bitMapImage = null;
-        try {
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inJustDecodeBounds = true;
-            BitmapFactory.decodeFile(filePath, options);
-            double sampleSize = 0;
-            Boolean scaleByHeight = Math.abs(options.outHeight - targetHeight) >= Math.abs(options.outWidth
-                    - targetWidth);
-            if (options.outHeight * options.outWidth * 2 >= 1638) {
-                sampleSize = scaleByHeight ? options.outHeight / targetHeight : options.outWidth / targetWidth;
-                sampleSize = (int) Math.pow(2d, Math.floor(Math.log(sampleSize) / Math.log(2d)));
-            }
-            options.inJustDecodeBounds = false;
-            options.inTempStorage = new byte[128];
-            while (true) {
-                try {
-                    options.inSampleSize = (int) sampleSize;
-                    bitMapImage = BitmapFactory.decodeFile(filePath, options);
-                    break;
-                } catch (Exception ex) {
-                    try {
-                        sampleSize = sampleSize * 2;
-                    } catch (Exception ex1) {
-
-                    }
-                }
-            }
-        } catch (Exception ex) {
-
-        }
-        return bitMapImage;
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Absen Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://com.kalbenutritionals.app.kalbespgmobile/http/host/path")
-        );
-        AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();
-    }
-
-    public class MyAdapter extends ArrayAdapter<String> {
-        private List<String> arrayDataAdapyter;
-        private Context Ctx;
-
-        public List<String> getArrayDataAdapyter() {
-            return arrayDataAdapyter;
-        }
-
-        public void setArrayDataAdapyter(List<String> arrayDataAdapyter) {
-            this.arrayDataAdapyter = arrayDataAdapyter;
-        }
-
-        public Context getCtx() {
-            return Ctx;
-        }
-
-        public void setCtx(Context ctx) {
-            Ctx = ctx;
-        }
-
-        public MyAdapter(Context context, int textViewResourceId, List<String> objects) {
-            super(context, textViewResourceId, objects);
-            setCtx(context);
-            setArrayDataAdapyter(objects);
-            // TODO Auto-generated constructor stub
-        }
-
-        @Override
-        public View getDropDownView(int position, View convertView, ViewGroup parent) {
-            return getCustomView(position, convertView, parent);
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            return getCustomView(position, convertView, parent);
-        }
-
-        public View getCustomView(int position, View convertView, ViewGroup parent) {
-            LayoutInflater inflater = getActivity().getLayoutInflater();
-            View row = inflater.inflate(R.layout.custom_spinner, parent, false);
-            if (arrData.size() > 0) {
-                TextView label = (TextView) row.findViewById(R.id.tvTitle);
-                //label.setText(arrData.get(position));
-                label.setText(getArrayDataAdapyter().get(position));
-                TextView sub = (TextView) row.findViewById(R.id.tvDesc);
-                sub.setVisibility(View.GONE);
-                sub.setVisibility(View.GONE);
-                label.setTextColor(new Color().parseColor("#000000"));
-                row.setBackgroundColor(new Color().parseColor("#FFFFFF"));
-            }
-            return row;
-        }
-
-    }
 
     @Nullable
     @Override
@@ -307,8 +202,6 @@ public class FragmentVisitPlan extends Fragment {
         btnRefreshMaps = (Button) v.findViewById(R.id.btnRefreshMaps);
         btnCheckIn = (Button) v.findViewById(R.id.buttonCheckIn);
         btnPopupMap = (Button) v.findViewById(R.id.viewMap);
-//        spnOutlet = (Spinner) v.findViewById(R.id.spnOutlet);
-//        spnBranch = (Spinner) v.findViewById(R.id.spnType);
         imgPrevNoImg1 = (ImageView) v.findViewById(R.id.imageViewCamera1);
         imgPrevNoImg2 = (ImageView) v.findViewById(R.id.imageViewCamera2);
         lblLong = (TextView) v.findViewById(R.id.tvLong);
@@ -318,212 +211,151 @@ public class FragmentVisitPlan extends Fragment {
         lblLatOutlet = (TextView) v.findViewById(R.id.tvlatOutlet);
         lblLongOutlet.setText(dataDetail.get_txtLongSource());
         lblLatOutlet.setText(dataDetail.get_txtLatSource());
-
         lblDistance = (TextView) v.findViewById(R.id.tvDistance);
+
         options = new BitmapFactory.Options();
         options.inSampleSize = 2;
         textInputLayoutDescriptionVisiPlan = (TextInputLayout) v.findViewById(R.id.input_layout_description_visit_plan);
         etDescReply = (EditText) v.findViewById(R.id.et_desc_reply);
 
-        pht1 = null;
-        pht2 = null;
-
-
-        /*spnOutlet.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                getDistance();
-                tVisitPlanRealisasiData data = new tVisitPlanRealisasiBL().getDataByIdOutlet(HMoutletCode.get(spnOutlet.getSelectedItem().toString()));
-                lblLongOutlet.setText(data.get_txtLongSource());
-                lblLatOutlet.setText(data.get_txtLatSource());
-                lblDistance.setText(Float.toString(distance));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });*/
-
-        etDescReply.setFilters(new InputFilter[]{
-                new InputFilter() {
-                    @Override
-                    public CharSequence filter(CharSequence cs, int start,
-                                               int end, Spanned spanned, int dStart, int dEnd) {
-                        // TODO Auto-generated method stub
-                        if (cs.equals("")) { // for backspace
-                            return cs;
-                        }
-                        if (cs.toString().matches("[a-zA-Z0-9.\\- ]+")) {
-                            return cs;
-                        }
-                        return "";
-                    }
-                }
-        });
-
-//        _tAbsenUserBL = new tAbsenUserBL();
-//        dttAbsenUserData = _tAbsenUserBL.getDataCheckInActive();
         lblLong.setText("");
         lblLang.setText("");
         lblAcc.setText("");
-        MenuID = "mnAbsenKBN";
-
-        final mMenuData dtmenuData = new mMenuBL().getMenuDataByMenuName(MenuID);
-        btnRefreshMaps.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                displayLocation(mLastLocation);
-                getLocation();
-                if (mLastLocation != null) {
-                    getDistance();
-                    displayLocation(mLastLocation);
-                    lblDistance.setText(Float.toString(distance));
-                }
-                new clsMainActivity().showCustomToast(getContext(), "Location Updated", true);
-            }
-        });
+        lblDistance.setText("");
 
         getLocation();
 
         if (mLastLocation != null) {
             displayLocation(mLastLocation);
         }
-        getDistance();
-        lblDistance.setText(Float.toString(distance));
+
+        if (checkPlayServices()) {
+            buildGoogleApiClient();
+        }
+
+        btnRefreshMaps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getLocation();
+                if (mLastLocation == null) {
+                    displayLocation(mLastLocation);
+                }
+            }
+        });
+
+        pht1 = null;
+        pht2 = null;
+
         btnPopupMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LayoutInflater layoutInflater = LayoutInflater.from(getContext());
-                final View promptView = layoutInflater.inflate(R.layout.popup_map_absen, null);
-                btnPopupMap.setEnabled(false);
-                GoogleMap mMap = null;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+
+                Boolean valid = true;
+
+                double latitude = 0;
+                double longitude = 0;
+                double latitudeOutlet = 0;
+                double longitudeOutlet = 0;
+
+                //Check longlat my location
+                try {
+                    latitude = Double.parseDouble(String.valueOf(lblLang.getText()));
+                    longitude = Double.parseDouble(String.valueOf(lblLong.getText()));
+                } catch (Exception ex) {
+                    valid = false;
+                    new clsMainActivity().showCustomToast(getContext(), "Your location not found", false);
+                }
+
+                //Check longlat outlet location
+                if (valid) {
+                    try {
+                        latitudeOutlet = Double.parseDouble(dataDetail.get_txtLatSource().toString());
+                        longitudeOutlet = Double.parseDouble(dataDetail.get_txtLongSource().toString());
+                    } catch (Exception ex) {
+                        valid = false;
+
+                        new clsMainActivity().showCustomToast(getContext(), "Outlet location not found", false);
+                    }
+                }
+
+                if(valid){
+                    LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+
+                    final View promptView = layoutInflater.inflate(R.layout.popup_map_absen, null);
+
+                    GoogleMap mMap;
                     mMap = ((MapFragment) (getActivity()).getFragmentManager().findFragmentById(R.id.map)).getMap();
 
                     if (mMap == null) {
                         mMap = ((MapFragment) (getActivity()).getFragmentManager().findFragmentById(R.id.map)).getMap();
                     }
 
-                    double latitude = Double.parseDouble(String.valueOf(lblLang.getText()));
-                    double longitude = Double.parseDouble(String.valueOf(lblLong.getText()));
-                    double accurate = Double.parseDouble(String.valueOf(lblAcc.getText()));
+                        MarkerOptions marker = new MarkerOptions().position(new LatLng(latitude, longitude)).title("Your Location");
 
-                    double latitudeOutlet = Double.parseDouble(dataDetail.get_txtLatSource());
-                    double longitudeOutlet = Double.parseDouble(dataDetail.get_txtLongSource());
+                        MarkerOptions markerOutlet = new MarkerOptions().position(new LatLng(latitudeOutlet, longitudeOutlet)).title("Outlet Location");
 
-                    MarkerOptions marker = new MarkerOptions().position(new LatLng(latitude, longitude)).title("Your Location");
+                        marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
 
-                    MarkerOptions markerOutlet = new MarkerOptions().position(new LatLng(latitudeOutlet, longitudeOutlet)).title("Outlet Location");
+                        final LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                        builder.include(marker.getPosition());
+                        builder.include(markerOutlet.getPosition());
 
-                    marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                        mMap.clear();
+                        mMap.addMarker(marker);
+                        mMap.addMarker(markerOutlet);
 
-                    final LatLngBounds.Builder builder = new LatLngBounds.Builder();
-                    builder.include(marker.getPosition());
-                    builder.include(markerOutlet.getPosition());
-                    LatLngBounds bounds = builder.build();
+                        final GoogleMap finalMMap = mMap;
+                        mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
 
-                    mMap.clear();
-                    mMap.addMarker(marker);
-                    mMap.addMarker(markerOutlet);
-                    //CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(latitude, longitude)).zoom(19).build();
-
-                    final GoogleMap finalMMap = mMap;
-                    mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
-
-                        @Override
-                        public void onCameraChange(CameraPosition arg0) {
-                            // Move camera.
-                            finalMMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 60));
-                            // Remove listener to prevent position reset on camera move.
-                            finalMMap.setOnCameraChangeListener(null);
-                        }
-                    });
+                            @Override
+                            public void onCameraChange(CameraPosition arg0) {
+                                // Move camera.
+                                finalMMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 60));
+                                // Remove listener to prevent position reset on camera move.
+                                finalMMap.setOnCameraChangeListener(null);
+                            }
+                        });
 
 
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-                    alertDialogBuilder.setView(promptView);
-                    alertDialogBuilder
-                            .setCancelable(false)
-                            .setPositiveButton("OK",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            btnPopupMap.setEnabled(true);
-                                            MapFragment f = null;
-                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                                                f = (MapFragment) (getActivity()).getFragmentManager().findFragmentById(R.id.map);
-                                            }
-                                            if (f != null) {
-                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+                        alertDialogBuilder.setView(promptView);
+                        alertDialogBuilder
+                                .setCancelable(false)
+                                .setPositiveButton("OK",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                MapFragment f = (MapFragment) (getActivity()).getFragmentManager().findFragmentById(R.id.map);
+                                                if (f != null) {
                                                     (getActivity()).getFragmentManager().beginTransaction().remove(f).commit();
                                                 }
+
+                                                dialog.dismiss();
                                             }
+                                        });
+                        final AlertDialog alertD = alertDialogBuilder.create();
 
-                                            dialog.dismiss();
-                                        }
-                                    });
-                    final AlertDialog alertD = alertDialogBuilder.create();
+                        Location locationA = new Location("point A");
 
-                    Location locationA = new Location("point A");
+                        locationA.setLatitude(latitude);
+                        locationA.setLongitude(longitude);
 
-                    locationA.setLatitude(latitude);
-                    locationA.setLongitude(longitude);
+                        Location locationB = new Location("point B");
 
-                    Location locationB = new Location("point B");
+                        locationB.setLatitude(latitudeOutlet);
+                        locationB.setLongitude(longitudeOutlet);
 
-                    locationB.setLatitude(latitudeOutlet);
-                    locationB.setLongitude(longitudeOutlet);
+                        distance = locationA.distanceTo(locationB);
 
-                    distance = locationA.distanceTo(locationB);
-
-                    alertD.setTitle(String.valueOf((int) Math.ceil(distance)) + " meters");
-                    alertD.show();
+                        alertD.setTitle(String.valueOf((int) Math.ceil(distance)) + " meters");
+                        alertD.show();
                 }
-
             }
         });
-
-        List<tVisitPlanRealisasiData> listDataBranch = new tVisitPlanRealisasiBL().GetAllData();
-        List<tVisitPlanRealisasiData> listDataArea = new tVisitPlanRealisasiBL().GetAllData();
-        if (checkPlayServices()) {
-            buildGoogleApiClient();
-        }
 
         // First we need to check availability of play services
         imgPrevNoImg1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                String nameBranch = spnBranch.getSelectedItem().toString();
-//                String nameOutlet = spnOutlet.getSelectedItem().toString();
-//                String branchCode = HMbranch.get(nameBranch);
-//                String outletCode = HMoutlet.get(nameOutlet);
-                tUserLoginData dataUserActive = new tAbsenUserBL().getUserActive();
-                String idUserActive = String.valueOf(dataUserActive.get_txtUserId());
-                String idRoleActive = String.valueOf(dataUserActive.get_txtRoleId());
-                List<tDeviceInfoUserData> dataDeviceInfoUser = new tDeviceInfoUserBL().getData(1);
-                String deviceInfo = String.valueOf(dataDeviceInfoUser.get(0).get_txtDeviceId());
-                /*List<tAbsenUserData> absenUserDatas = new ArrayList<tAbsenUserData>();
-                if (dttAbsenUserData == null) {
-                    dttAbsenUserData = new tAbsenUserData();
-                }
-                dttAbsenUserData.set_intId(txtHDId.getText().toString());
-                dttAbsenUserData.set_intSubmit("0");
-                dttAbsenUserData.set_intSync("0");
-                dttAbsenUserData.set_txtAbsen("0");
-                dttAbsenUserData.set_dtDateCheckOut("-");
-                dttAbsenUserData.set_txtAccuracy(lblAcc.getText().toString());
-                dttAbsenUserData.set_txtBranchCode(branchCode);
-                dttAbsenUserData.set_txtBranchName(nameBranch);
-                dttAbsenUserData.set_txtLatitude(lblLang.getText().toString());
-                dttAbsenUserData.set_txtLongitude(lblLong.getText().toString());
-                dttAbsenUserData.set_txtOutletCode(outletCode);
-                dttAbsenUserData.set_txtOutletName(nameOutlet);
-                dttAbsenUserData.set_txtDeviceId(deviceInfo);
-                dttAbsenUserData.set_txtUserId(idUserActive);
-                dttAbsenUserData.set_txtRoleId(idRoleActive);
-                absenUserDatas.add(dttAbsenUserData);
-                new tAbsenUserBL().saveData(absenUserDatas);
-                */
                 captureImage1();
             }
         });
@@ -532,135 +364,15 @@ public class FragmentVisitPlan extends Fragment {
 
             @Override
             public void onClick(View v) {
-//                String nameBranch = spnBranch.getSelectedItem().toString();
-//                String nameOutlet = spnOutlet.getSelectedItem().toString();
-//                String branchCode = HMbranch.get(nameBranch);
-//                String outletCode = HMoutlet.get(nameOutlet);
-                /*if (dttAbsenUserData == null) {
-                    dttAbsenUserData = new tAbsenUserData();
-                }
-                tUserLoginData dataUserActive = new tAbsenUserBL().getUserActive();
-                String idUserActive = String.valueOf(dataUserActive.get_txtUserId());
-                String idRoleActive = String.valueOf(dataUserActive.get_txtRoleId());
-                List<tDeviceInfoUserData> dataDeviceInfoUser = new tDeviceInfoUserBL().getData(1);
-                String deviceInfo = String.valueOf(dataDeviceInfoUser.get(0).get_txtDeviceId());
-                List<tAbsenUserData> absenUserDatas = new ArrayList<tAbsenUserData>();
-                dttAbsenUserData.set_intId(txtHDId.getText().toString());
-                dttAbsenUserData.set_intSubmit("0");
-                dttAbsenUserData.set_intSync("0");
-                dttAbsenUserData.set_txtAbsen("0");//
-                dttAbsenUserData.set_txtAccuracy(lblAcc.getText().toString());
-                dttAbsenUserData.set_txtBranchCode(branchCode);
-                dttAbsenUserData.set_txtBranchName(nameBranch);
-                dttAbsenUserData.set_txtLatitude(lblLang.getText().toString());
-                dttAbsenUserData.set_txtLongitude(lblLong.getText().toString());
-                dttAbsenUserData.set_txtOutletCode(outletCode);
-                dttAbsenUserData.set_txtOutletName(nameOutlet);
-                dttAbsenUserData.set_txtDeviceId(deviceInfo);
-                dttAbsenUserData.set_txtUserId(idUserActive);
-                dttAbsenUserData.set_txtRoleId(idRoleActive);
-                absenUserDatas.add(dttAbsenUserData);
-                new tAbsenUserBL().saveData(absenUserDatas);*/
                 captureImage2();
             }
         });
-       /* arrData = new ArrayList<String>();
-        if (listDataBranch.size() > 0) {
-            for (tVisitPlanRealisasiData dt : listDataBranch) {
-                arrData.add(dt.get_txtBranchCode());
-//                HMbranch.put(dt.get_txtBranchName(), dt.get_txtBranchCode());
-            }
-            dataAdapterBranch = new MyAdapter(getContext(), R.layout.custom_spinner, arrData);
-            spnBranch.setAdapter(dataAdapterBranch);
-        }
-        arrData = new ArrayList<String>();
-        if (listDataArea.size() > 0) {
-            for (tVisitPlanRealisasiData dt : listDataArea) {
-                arrData.add(dt.get_txtOutletName());
-                HMoutlet.put(dt.get_txtOutletName(), dt.get_txtOutletCode());
-                HMoutletLang.put(dt.get_txtOutletName(), dt.get_txtLongSource());
-                HMoutletLat.put(dt.get_txtOutletName(), dt.get_txtLatSource()); //Hashmapnya
-                HMoutletCode.put(dt.get_txtOutletName(), dt.get_txtOutletCode());
-                HMIdRealisasi.put(dt.get_txtOutletName(), dt.get_txtDataIDRealisasi());
-            }
-            dataAdapterOutlet = new MyAdapter(getContext(), R.layout.custom_spinner, arrData);
-            spnOutlet.setAdapter(dataAdapterOutlet);
-        }*/
 
-        /*if (dttAbsenUserData != null) {
-            if (dttAbsenUserData.get_intSubmit().equals("1")) {
-                spnBranch.setEnabled(false);
-                spnOutlet.setEnabled(false);
-                imgPrevNoImg1.setClickable(false);
-                imgPrevNoImg2.setClickable(false);
-            }
-
-
-            txtHDId.setText(dttAbsenUserData.get_intId());
-            int intPosition = new clsMainActivity().getSpinnerPositionByValue(HMbranch, dttAbsenUserData.get_txtBranchCode(), spnBranch);
-            spnBranch.setSelection(intPosition);
-            intPosition = new clsMainActivity().getSpinnerPositionByValue(HMoutlet, dttAbsenUserData.get_txtOutletCode(), spnOutlet);
-            spnOutlet.setSelection(intPosition);
-            lblAcc.setText(dttAbsenUserData.get_txtAccuracy());
-            lblLang.setText(dttAbsenUserData.get_txtLatitude());
-            lblLong.setText(dttAbsenUserData.get_txtLongitude());*/
-
-        double latitude = Double.valueOf(lblLang.getText().toString());
-        double longitude = Double.valueOf(lblLong.getText().toString());
-        MarkerOptions marker = new MarkerOptions().position(new LatLng(latitude, longitude)).title("Updating Location!");
-//            marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
-        try {
-            initilizeMap();
-            // Changing map type
-            mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-//            mMap.clear();
-//            mMap.addMarker(marker);
-            /*if (dttAbsenUserData.get_intSubmit().equals("1")) {
-
-            }
-        } else {
-            int IdAbsen = _tAbsenUserBL.getContactsCount() + 1;
-            txtHDId.setText(String.valueOf(IdAbsen));
-//            displayLocation();
-        }*/
-
-
-        // Checking camera availability
-        /*if (!isDeviceSupportCamera()) {
-        }*/
-
-       /* dttAbsenUserData = _tAbsenUserBL.getDataCheckInActive();
-        if (dttAbsenUserData != null) {
-            if (dttAbsenUserData.get_intSubmit().equals("1")) {
-            } else {
-                // Kalau ga ada harus check in dulu
-            }
-        } else {
-            // Kalau ga ada harus check in dulu
-        }*/
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(getContext()).addApi(AppIndex.API).build();
         btnCheckIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                myClass = "com.kalbenutritionals.app.kalbespgmobile.MainMenu";
-                ;
-                MenuID = "mnCheckinKBN";
-                clazz = null;
-
-                myClass = "com.kalbenutritionals.app.kalbespgmobile.MainMenu";
-                MenuID = "mnCheckinKBN";
                 nameOutlet = dataDetail.get_txtOutletName();
                 outletCode = dataDetail.get_txtOutletCode();
-                LayoutInflater layoutInflater = LayoutInflater.from(getContext());
-                final View promptView = layoutInflater.inflate(R.layout.confirm_data, null);
 
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
                 alertDialogBuilder
@@ -710,8 +422,6 @@ public class FragmentVisitPlan extends Fragment {
                                                 outletCode = dataDetail.get_txtOutletCode();
                                                 idRealisasi = dataDetail.get_txtDataIDRealisasi();
 
-
-//                                                _tVisitPlanRealisasiData = new tVisitPlanRealisasiData();
                                                 tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
                                                 String idRoleActive = String.valueOf(dataUserActive.get_txtRoleId());
 
@@ -721,7 +431,6 @@ public class FragmentVisitPlan extends Fragment {
                                                 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                                 Calendar cal = Calendar.getInstance();
                                                 String descReply = etDescReply.getText().toString();
-                                                List<tVisitPlanRealisasiData> checkInUserDatas = new ArrayList<tVisitPlanRealisasiData>();
                                                 _tVisitPlanRealisasiData.set_txtDataIDRealisasi(idRealisasi);
                                                 _tVisitPlanRealisasiData.set_dtDateRealisasi(dataTanggalLogin);
                                                 _tVisitPlanRealisasiData.set_dtDateRealisasiDevice(dateFormat.format(cal.getTime()));
@@ -735,8 +444,6 @@ public class FragmentVisitPlan extends Fragment {
                                                 List<tDeviceInfoUserData> dataDeviceInfoUser = new tDeviceInfoUserBL().getData(0);
                                                 String deviceInfo = String.valueOf(dataDeviceInfoUser.get(0).get_txtDeviceId());
                                                 _tVisitPlanRealisasiData.set_deviceId(deviceInfo);
-//                                                _tVisitPlanRealisasiData.set_intPush("0");
-//                                                checkInUserDatas.add(_tVisitPlanRealisasiData);
                                                 new tVisitPlanRealisasiBL().UpdateData(_tVisitPlanRealisasiData);
                                                 imgPrevNoImg1.setClickable(false);
                                                 imgPrevNoImg2.setClickable(false);
@@ -760,22 +467,13 @@ public class FragmentVisitPlan extends Fragment {
                                                 }
 
                                                 _clsMainActivity.showCustomToast(getContext(), "Saved", true);
-                                                try {
-                                                    clazz = Class.forName(myClass);
-                                                    Intent myIntent = new Intent(getContext(), MainMenu.class);
-                                                    myIntent.putExtra(clsParameterPutExtra.MenuID, MenuID);
-                                                    myIntent.putExtra(clsParameterPutExtra.BranchCode, branchCode);
-                                                    myIntent.putExtra(clsParameterPutExtra.OutletCode, outletCode);
-                                                    getActivity().finish();
-                                                    startActivity(myIntent);
-                                                } catch (ClassNotFoundException e) {
-                                                    // TODO Auto-generated catch block
-                                                    e.printStackTrace();
-                                                }
+                                                Intent myIntent = new Intent(getContext(), MainMenu.class);
+                                                getActivity().finish();
+                                                startActivity(myIntent);
                                             }
 
                                         } else {
-                                            _clsMainActivity.showCustomToast(getContext(), "Please Photo at least 1 photo..", false);
+//                                            _clsMainActivity.showCustomToast(getContext(), "Please Photo at least 1 photo..", false);
                                         }
                                     }
                                 })
@@ -790,116 +488,82 @@ public class FragmentVisitPlan extends Fragment {
                 alertD.setMessage("Are you sure want to checkin?");
                 alertD.show();
             }
-//					else{
-//						clazz = Class.forName(myClass);
-//						Intent myIntent = new Intent(getApplicationContext(), clazz);
-//						myIntent.putExtra(clsParameterPutExtra.MenuID, MenuID);
-//						myIntent.putExtra(clsParameterPutExtra.BranchCode, branchCode);
-//						myIntent.putExtra(clsParameterPutExtra.OutletCode, outletCode);
-//						finish();
-//						startActivity(myIntent);
-//					}
-
         });
 
-//        displayLocation();
+//        set output text as ALL CAPS and filter
+        etDescReply.setFilters(new InputFilter[]{
+                new InputFilter() {
+                    @Override
+                    public CharSequence filter(CharSequence cs, int start,
+                                               int end, Spanned spanned, int dStart, int dEnd) {
+                        if (cs.equals("")) { // for backspace
+                            return cs;
+                        }
+                        if (cs.toString().matches("[a-zA-Z0-9,.\\- ]+")) {
+                            return cs;
+                        }
+                        return "";
+                    }
+                }, new InputFilter.AllCaps()
+        });
 
         return v;
     }
 
-    private void getDistance() {
-        latitude = Double.parseDouble(String.valueOf(lblLang.getText()));
-        longitude = Double.parseDouble(String.valueOf(lblLong.getText()));
-        if (dataDetail.get_txtLatSource().toString().equals("") || dataDetail.get_txtLatSource().toString().equals("null")) {
-            latitudeOutlet = 0.0;
-            longitudeOutlet = 0.0;
-        } else {
-            latitudeOutlet = Double.parseDouble(dataDetail.get_txtLatSource().toString());
-            longitudeOutlet = Double.parseDouble(dataDetail.get_txtLongSource().toString());
-        }
+//    private void getDistance() {
+//        latitude = Double.parseDouble(String.valueOf(lblLang.getText()));
+//        longitude = Double.parseDouble(String.valueOf(lblLong.getText()));
+//        if (dataDetail.get_txtLatSource().toString().equals("") || dataDetail.get_txtLatSource().toString().equals("null")) {
+//            latitudeOutlet = 0.0;
+//            longitudeOutlet = 0.0;
+//        } else {
+//            latitudeOutlet = Double.parseDouble(dataDetail.get_txtLatSource().toString());
+//            longitudeOutlet = Double.parseDouble(dataDetail.get_txtLongSource().toString());
+//        }
+//
+//        Location locationA = new Location("point A");
+//
+//        locationA.setLatitude(latitude);
+//        locationA.setLongitude(longitude);
+//
+//        Location locationB = new Location("point B");
+//
+//        locationB.setLatitude(latitudeOutlet);
+//        locationB.setLongitude(longitudeOutlet);
+//
+//        distance = locationA.distanceTo(locationB);
+//    }
 
-        Location locationA = new Location("point A");
-
-        locationA.setLatitude(latitude);
-        locationA.setLongitude(longitude);
-
-        Location locationB = new Location("point B");
-
-        locationB.setLatitude(latitudeOutlet);
-        locationB.setLongitude(longitudeOutlet);
-
-        distance = locationA.distanceTo(locationB);
-    }
-
-    private void gettingLocation() {
-        LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
-        Criteria criteria = new Criteria();
-        String provider = locationManager.getBestProvider(criteria, true);
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-        }
-        Location location = locationManager.getLastKnownLocation(provider);
-
-        if (location != null) {
-//            onLocationChanged(location);
-        }
-
-//        locationManager.requestLocationUpdates(provider, 1000, 0, (LocationListener) this);
-    }
-
+    // get location GPS
+    private boolean earlyState = true;
     public Location getLocation() {
         try {
-            LocationManager locationManager = (LocationManager) getActivity()
-                    .getSystemService(LOCATION_SERVICE);
+            LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
 
-            // getting GPS status
-            boolean isGPSEnabled = locationManager
-                    .isProviderEnabled(LocationManager.GPS_PROVIDER);
-
-            // getting network status
-            boolean isNetworkEnabled = locationManager
-                    .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-            boolean canGetLocation = false;
-            Location location = null;
+            boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            boolean isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
             if (!isGPSEnabled && !isNetworkEnabled) {
                 // no network provider is enabled
-                new clsMainActivity().showCustomToast(getContext(), "no network provider is enabled", false);
+                mLastLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                new clsMainActivity().showCustomToast(getContext(), "Please turn on GPS or check your internet connection", false);
             } else {
-                canGetLocation = true;
                 if (isNetworkEnabled) {
                     if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        _clsMainActivity.showCustomToast(getContext(), "Please check application permissions", false);
+                    } else {
+                        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, this);
+                        mLastLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                     }
-                   /* locationManager.requestLocationUpdates(
-                            LocationManager.NETWORK_PROVIDER,
-                            1000,
-                            0, this);*/
-                    Log.d("Network", "Network Enabled");
-                    if (locationManager != null) {
-                        mLastLocation = locationManager
-                                .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                        if (location != null) {
-                            double latitude = location.getLatitude();
-                            double longitude = location.getLongitude();
-                        }
-                    }
+                } else {
+                    _clsMainActivity.showCustomToast(getContext(), "Please check your connection", false);
                 }
-                // if GPS Enabled get lat/long using GPS Services
-                if (isGPSEnabled) {
-                    if (mLastLocation == null) {
-                       /* locationManager.requestLocationUpdates(
-                                LocationManager.GPS_PROVIDER,
-                                1000,
-                                0, this);
-                        Log.d("GPS", "GPS Enabled");*/
-                        if (locationManager != null) {
-                            location = locationManager
-                                    .getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                            if (location != null) {
-                                double latitude = location.getLatitude();
-                                double longitude = location.getLongitude();
-                            }
-                        }
-                    }
+
+                if (isGPSEnabled && mLastLocation==null) {
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, this);
+                    mLastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                } else if(!isGPSEnabled){
+                    _clsMainActivity.showCustomToast(getContext(), "Please turn on GPS", false);
                 }
             }
 
@@ -907,25 +571,89 @@ public class FragmentVisitPlan extends Fragment {
             e.printStackTrace();
         }
 
+        if(mLastLocation!=null&&!earlyState){
+            new clsMainActivity().showCustomToast(getContext(), "Location Updated", true);
+        }
+        earlyState = false;
         return mLastLocation;
     }
 
     @SuppressWarnings("deprecation")
+    //set text view long lat
     private void displayLocation(Location mLastLocation) {
 
         if (mLastLocation != null) {
             double latitude = mLastLocation.getLatitude();
             double longitude = mLastLocation.getLongitude();
             double accurate = mLastLocation.getAccuracy();
-            lblLong.setText(longitude + "");
-            lblLang.setText(latitude + "");
-            lblAcc.setText(accurate + "");
 
-            Long = String.valueOf(longitude);
-            Lat = String.valueOf(latitude);
-            Acc = String.valueOf(accurate);
+            lblLong.setText(String.format("%s", longitude));
+            lblLang.setText(String.format("%s", latitude));
+            lblAcc.setText(String.format("%s", accurate));
+
+            try {
+                float distance = countDistance(latitude, longitude);
+                lblDistance.setText(String.format("%s meters", String.valueOf((int) Math.ceil(distance))));
+            } catch (Exception ignored) {
+                String e = ignored.toString();
+            }
+
+            mlongitude = longitude;
+            mlatitude = latitude;
+
+        } else {
+            lblLong.setText("");
+            lblLang.setText("");
+            lblAcc.setText("");
+            lblDistance.setText("");
         }
 
+    }
+
+    // count distance
+    private float countDistance(double latitude, double longitude) {
+        float distance = 0;
+
+        try {
+            if (dataDetail.get_txtLatSource().toString().equals("") || dataDetail.get_txtLatSource().toString().equals("null")) {
+                latitudeOutlet = 0.0;
+                longitudeOutlet = 0.0;
+            } else {
+                latitudeOutlet = Double.parseDouble(dataDetail.get_txtLatSource().toString());
+                longitudeOutlet = Double.parseDouble(dataDetail.get_txtLongSource().toString());
+            }
+
+            Location locationA = new Location("point user");
+
+            locationA.setLatitude(latitude);
+            locationA.setLongitude(longitude);
+
+            Location locationB = new Location("point outlet");
+
+            locationB.setLatitude(latitudeOutlet);
+            locationB.setLongitude(longitudeOutlet);
+
+            distance = locationA.distanceTo(locationB);
+        } catch (Exception ignored) {
+            String e = ignored.toString();
+        }
+
+        lblDistance.setText(String.format("%s meters", String.valueOf((int) Math.ceil(distance))));
+
+        return distance;
+    }
+
+    @SuppressWarnings("deprecation")
+    private boolean checkPlayServices() {
+        // TODO Auto-generated method stub
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getContext());
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                GooglePlayServicesUtil.getErrorDialog(resultCode, getActivity(), PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            }
+            return false;
+        }
+        return true;
     }
 
     private void buildGoogleApiClient() {
@@ -937,64 +665,10 @@ public class FragmentVisitPlan extends Fragment {
 
     }
 
-    @SuppressWarnings("deprecation")
-    private boolean checkPlayServices() {
-        // TODO Auto-generated method stub
-        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getContext());
-        if (resultCode != ConnectionResult.SUCCESS) {
-            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-                GooglePlayServicesUtil.getErrorDialog(resultCode, getActivity(), PLAY_SERVICES_RESOLUTION_REQUEST).show();
-            } else {
-            }
-            return false;
-        }
-        return true;
-    }
-
-    @SuppressLint("NewApi")
-    @SuppressWarnings("deprecation")
-    private void initilizeMap() {
-        // TODO Auto-generated method stub
-        if (mMap == null) {
-
-            // check if map is created successfully or not
-            if (mMap == null) {
-
-            }
-        }
-
-    }
-
-    @Override
-    public void onStart() {
-        // TODO Auto-generated method stub
-        super.onStart();
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        if (mGoogleApiClient != null) {
-            mGoogleApiClient.connect();
-        }
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Absen Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://com.kalbenutritionals.app.kalbespgmobile/http/host/path")
-        );
-        AppIndex.AppIndexApi.start(client, viewAction);
-    }
-
     @Override
     public void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
-        initilizeMap();
         checkPlayServices();
     }
 
@@ -1150,4 +824,39 @@ public class FragmentVisitPlan extends Fragment {
         }
     }
 
+    @Override
+    public void onLocationChanged(Location location) {
+        mLastLocation = location;
+        displayLocation(mLastLocation);
+    }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
+
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
 }

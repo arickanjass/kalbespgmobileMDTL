@@ -10,16 +10,24 @@ import java.util.Date;
 import library.spgmobile.common.tUserLoginData;
 
 public class clsHardCode  {
+	/* path visible */
 	public String txtPathApp= Environment.getExternalStorageDirectory()+File.separator+"data"+File.separator+"data"+File.separator+"Kalbespgmobile"+File.separator+"app_database"+File.separator;
 	public String txtPathTempData = Environment.getExternalStorageDirectory() + File.separator + "data" + File.separator + "data" + File.separator + "Kalbespgmobile" + File.separator + "tempdata" + File.separator;
-	//public String txtPathApp= "data"+File.separator+"data"+File.separator+"com.example.kalbespgmobile"+File.separator+"databases"+File.separator;
-	//public String txtPathApp= "data"+File.separator+"data"+File.separator+"com.example.kalbespgmobile"+File.separator+"databases"+File.separator;
 	public String txtPathUserData= Environment.getExternalStorageDirectory()+File.separator+"data"+File.separator+"data"+File.separator+"Kalbespgmobile"+File.separator+"user_data"+File.separator;
+
+	/* path root */ //"data/data/com.kalbenutritionals.app.kalbespgmobile/databases/";
+//	public String txtPathApp= "data"+File.separator+"data"+File.separator+"com.kalbenutritionals.app.kalbespgmobile"+File.separator+"databases"+File.separator;
+//	public String txtPathTempData = "data" + File.separator + "data" + File.separator + "com.kalbenutritionals.app.kalbespgmobile" + File.separator + "tempdata" + File.separator;
+//	public String txtPathUserData= "data"+File.separator+"data"+File.separator+"com.kalbenutritionals.app.kalbespgmobile"+File.separator+"user_data"+File.separator;
+
 	public String txtFolderNotification=txtPathUserData+"Notification"+File.separator;
 	public String txtFolderBrosur=txtPathUserData+"Brosur"+File.separator;
 	public String txtFolderAbsen=txtPathUserData+"Absen"+File.separator;
 	public String txtFolderActivity=txtPathUserData+"Activity"+File.separator;
-	public String txtDatabaseName=txtPathApp+"spgmobile2";
+
+	//namedb
+	public String txtDatabaseName=txtPathApp+"fprsV3";
+
 	public String txtVersion="1";
 	public String txtTable_mConfig = "mconfig";
 	public String txtTable_tNotification = "tNotification";

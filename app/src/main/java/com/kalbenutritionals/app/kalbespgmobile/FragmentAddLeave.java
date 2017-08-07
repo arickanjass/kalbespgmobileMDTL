@@ -35,6 +35,8 @@ import library.spgmobile.common.mTypeLeaveMobileData;
 import library.spgmobile.common.tDeviceInfoUserData;
 import library.spgmobile.common.tLeaveMobileData;
 import library.spgmobile.common.tUserLoginData;
+import service.MyServiceNative;
+import service.MyTrackingLocationService;
 
 /**
  * Created by ASUS ZE on 08/08/2016.
@@ -88,33 +90,20 @@ public class FragmentAddLeave extends Fragment implements View.OnClickListener {
 
         btnSaveleave.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 if(edReason.getText().toString().equals("")){
                     Toast.makeText(getContext(), "please fill reason!!!", Toast.LENGTH_SHORT).show();
                 } else {
-
-                    LayoutInflater layoutInflater = LayoutInflater.from(getContext());
-                    final View promptView = layoutInflater.inflate(R.layout.confirm_data, null);
-
-                    final TextView _tvConfirm = (TextView) promptView.findViewById(R.id.tvTitle);
-                    final TextView _tvDesc = (TextView) promptView.findViewById(R.id.tvDesc);
-                    _tvDesc.setVisibility(View.INVISIBLE);
-                    _tvConfirm.setText("Are you sure to Leave ?");
-
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-                    alertDialogBuilder.setView(promptView);
+                    android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(getActivity());
                     alertDialogBuilder
                             .setCancelable(false)
-                            .setPositiveButton("OK",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
                                                 String idname = spLeave.getSelectedItem().toString();
-                                                //String nameid = spLeave.getSelectedItem().toString();
                                                 String idleave = HMLeave1.get(idname);
                                                 String nameleave = HMLeave2.get(idname);
-                                                //String nameLeave = HMLeave1.get(String.valueOf(value));
                                                 tLeaveMobileData dataTypeLeaveMobileData = new tLeaveMobileData();
-                                                List<tLeaveMobileData> leaveUserdatas = new ArrayList<tLeaveMobileData>();
+                                                List<tLeaveMobileData> leaveUserdatas = new ArrayList<>();
                                                 List<tDeviceInfoUserData> dataDeviceInfoUser = new tDeviceInfoUserBL().getData(1);
                                                 String deviceInfo = String.valueOf(dataDeviceInfoUser.get(0).get_txtDeviceId());
                                                 tUserLoginData dataUserActive = new tAbsenUserBL().getUserActive();
@@ -137,20 +126,86 @@ public class FragmentAddLeave extends Fragment implements View.OnClickListener {
                                                 new tLeaveMobileBL().saveData(leaveUserdatas);
                                                 Intent nextScreen = new Intent(getContext(), MainMenu.class);
                                                 startActivity(nextScreen);
-
-                                        }
-                                    })
-                            .setNegativeButton("Cancel",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    final AlertDialog alertD = alertDialogBuilder.create();
+                                }
+                            })
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+                    final android.support.v7.app.AlertDialog alertD = alertDialogBuilder.create();
+                    alertD.setTitle("Confirm");
+                    alertD.setMessage("Are you sure to Leave ?");
                     alertD.show();
                 }
             }
         });
+
+//        btnSaveleave.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(edReason.getText().toString().equals("")){
+//                    Toast.makeText(getContext(), "please fill reason!!!", Toast.LENGTH_SHORT).show();
+//                } else {
+//
+//                    LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+//                    final View promptView = layoutInflater.inflate(R.layout.confirm_data, null);
+//
+//                    final TextView _tvConfirm = (TextView) promptView.findViewById(R.id.tvTitle);
+//                    final TextView _tvDesc = (TextView) promptView.findViewById(R.id.tvDesc);
+//                    _tvDesc.setVisibility(View.INVISIBLE);
+//                    _tvConfirm.setText("Are you sure to Leave ?");
+//
+//                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+//                    alertDialogBuilder.setView(promptView);
+//                    alertDialogBuilder
+//                            .setCancelable(false)
+//                            .setPositiveButton("OK",
+//                                    new DialogInterface.OnClickListener() {
+//                                        public void onClick(DialogInterface dialog, int id) {
+//                                                String idname = spLeave.getSelectedItem().toString();
+//                                                //String nameid = spLeave.getSelectedItem().toString();
+//                                                String idleave = HMLeave1.get(idname);
+//                                                String nameleave = HMLeave2.get(idname);
+//                                                //String nameLeave = HMLeave1.get(String.valueOf(value));
+//                                                tLeaveMobileData dataTypeLeaveMobileData = new tLeaveMobileData();
+//                                                List<tLeaveMobileData> leaveUserdatas = new ArrayList<tLeaveMobileData>();
+//                                                List<tDeviceInfoUserData> dataDeviceInfoUser = new tDeviceInfoUserBL().getData(1);
+//                                                String deviceInfo = String.valueOf(dataDeviceInfoUser.get(0).get_txtDeviceId());
+//                                                tUserLoginData dataUserActive = new tAbsenUserBL().getUserActive();
+//                                                String idUserActive = String.valueOf(dataUserActive.get_TxtEmpId());
+//                                                String idRoleActive = String.valueOf(dataUserActive.get_txtRoleId());
+//                                                int index = new tLeaveMobileBL().getContactsCount() + 1;
+//                                                dataTypeLeaveMobileData.set_intLeaveId(String.valueOf(index));
+//                                                dataTypeLeaveMobileData.set_intLeaveIdSync("0");
+//                                                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+//                                                Calendar cal = Calendar.getInstance();
+//                                                dataTypeLeaveMobileData.set_dtLeave(dateFormat.format(cal.getTime()));
+//                                                dataTypeLeaveMobileData.set_intSubmit("1");
+//                                                dataTypeLeaveMobileData.set_txtAlasan(String.valueOf(edReason.getText()));
+//                                                dataTypeLeaveMobileData.set_txtDeviceId(deviceInfo);
+//                                                dataTypeLeaveMobileData.set_txtTypeAlasan(idleave);
+//                                                dataTypeLeaveMobileData.set_txtTypeAlasanName(nameleave);
+//                                                dataTypeLeaveMobileData.set_txtUserId(idUserActive);
+//                                                dataTypeLeaveMobileData.set_txtRoleId(idRoleActive);
+//                                                leaveUserdatas.add(dataTypeLeaveMobileData);
+//                                                new tLeaveMobileBL().saveData(leaveUserdatas);
+//                                                Intent nextScreen = new Intent(getContext(), MainMenu.class);
+//                                                startActivity(nextScreen);
+//
+//                                        }
+//                                    })
+//                            .setNegativeButton("Cancel",
+//                                    new DialogInterface.OnClickListener() {
+//                                        public void onClick(DialogInterface dialog, int id) {
+//                                            dialog.cancel();
+//                                        }
+//                                    });
+//                    final AlertDialog alertD = alertDialogBuilder.create();
+//                    alertD.show();
+//                }
+//            }
+//        });
 
         tLeaveMobileBL _tLeaveMobileBL=new tLeaveMobileBL();
         List<tLeaveMobileData> listData=_tLeaveMobileBL.GetAllData();

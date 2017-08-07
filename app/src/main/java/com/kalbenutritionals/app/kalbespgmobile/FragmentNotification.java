@@ -1,6 +1,7 @@
 package com.kalbenutritionals.app.kalbespgmobile;
 
 import android.app.AlertDialog;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -23,6 +24,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -122,6 +125,9 @@ public class FragmentNotification extends Fragment implements IXListViewListener
             }
         }
 
+        NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancelAll();
+
         push.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -162,10 +168,10 @@ public class FragmentNotification extends Fragment implements IXListViewListener
     private void viewList(Context applicationContext, int position) {
         LayoutInflater layoutInflater = LayoutInflater.from(this.getContext());
         final View promptView = layoutInflater.inflate(R.layout.fragment_notification_popup, null);
-
-        final TextView txtTitle = (TextView) promptView.findViewById(R.id.tv_detail_title);
+        final TextView txtTitleTop = (TextView) promptView.findViewById(R.id.tv_headerNotif);
+//        final TextView txtTitle = (TextView) promptView.findViewById(R.id.tv_detail_title);
         final TextView txtDesc = (TextView) promptView.findViewById(R.id.tv_detail_desc);
-        final ImageView txtImg = (ImageView) promptView.findViewById(R.id.imageViewDetailN);
+//        final ImageView txtImg = (ImageView) promptView.findViewById(R.id.imageViewDetailN);
         listPopup = (ListView) promptView.findViewById(R.id.listViewFIle);
         mListViewPopup = (PullToRefreshSwipeMenuListView) promptView.findViewById(R.id.listViewPopup);
 
@@ -203,6 +209,7 @@ public class FragmentNotification extends Fragment implements IXListViewListener
         mListViewPopup.setPullRefreshEnable(false);
         mListViewPopup.setPullLoadEnable(true);
         mListViewPopup.setXListViewListener(this);
+        mListViewPopup.setEmptyView( v.findViewById(R.id.LayoutEmpty));
         mHandler = new Handler();
         HashMap<String, String> mapView = new HashMap<String, String>();
 
@@ -230,9 +237,16 @@ public class FragmentNotification extends Fragment implements IXListViewListener
                         File file = new File(txtPath + "/" + data.get_txtNameFileEncrypt());
                         if(file.exists()){
 //                            Toast.makeText(getActivity(), "file exist", Toast.LENGTH_SHORT).show();
+
                             callShowFile(data);
+                            rowItems.get(position).set_imageId(String.valueOf(images2));
+                            mmAdapter = setListA(getActivity(), rowItems);
+                            mListViewPopup.setAdapter(mmAdapter);
                         } else {
                             callDownloadData(data);
+                            rowItems.get(position).set_imageId(String.valueOf(images2));
+                            mmAdapter = setListA(getActivity(), rowItems);
+                            mListViewPopup.setAdapter(mmAdapter);
                         }
                 }
             }
@@ -244,18 +258,19 @@ public class FragmentNotification extends Fragment implements IXListViewListener
 
                 tNotificationData dataStatus = new tNotificationData();
 
-                String img = String.valueOf(dt.get(position).get_txtImage());
-                txtTitle.setText(dt.get(position).get_txtTitle());
-                txtTitle.setTextColor(Color.BLACK);
+//                String img = String.valueOf(dt.get(position).get_txtImage());
+                txtTitleTop.setText(dt.get(position).get_txtTitle());
+//                txtTitle.setText(dt.get(position).get_txtTitle());
+//                txtTitle.setTextColor(Color.BLACK);
                 txtDesc.setText(dt.get(position).get_txtDescription());
                 txtDesc.setTextColor(Color.BLACK);
 
-                if (img !=""){
-                    txtImg.setVisibility(View.GONE);
-                    txtImg.getLayoutParams().height = 0;
-                } else {
-                    txtImg.setImageURI(Uri.parse(img));
-                }
+//                if (img !=""){
+//                    txtImg.setVisibility(View.GONE);
+//                    txtImg.getLayoutParams().height = 0;
+//                } else {
+//                    txtImg.setImageURI(Uri.parse(img));
+//                }
 
                 tNotifId.add(dataStatus);
                 new tNotificationBL().SaveDataUpdate(tNotifId);
@@ -428,6 +443,7 @@ public class FragmentNotification extends Fragment implements IXListViewListener
         mListView.setPullRefreshEnable(false);
         mListView.setPullLoadEnable(true);
         mListView.setXListViewListener(this);
+        mListView.setEmptyView( v.findViewById(R.id.LayoutEmpty));
         mHandler = new Handler();
         HashMap<String, String> mapView = new HashMap<String, String>();
 

@@ -19,6 +19,7 @@ import library.spgmobile.dal.enumConfigData;
 import library.spgmobile.dal.mconfigDA;
 import library.spgmobile.dal.tActivityDA;
 import library.spgmobile.dal.tActivityMobileDA;
+import library.spgmobile.dal.tCustomerBasedMobileHeaderDA;
 import library.spgmobile.dal.tUserLoginDA;
 
 /**
@@ -113,6 +114,18 @@ public class tActivityMobileBL extends clsMainBL{
             dt = new ArrayList<>(0);
         }
         return dt;
+    }
+
+    public int countAcivityV2HomeAbsenPush( String code) {
+        SQLiteDatabase _db = getDb();
+        int count = new tActivityMobileDA(_db).countActivityHomeAbsenPush(_db, code);
+        return count;
+    }
+
+    public int getCountAllActivityV2ByStatusSubmit(String code) {
+        SQLiteDatabase _db = getDb();
+        int count = new tActivityMobileDA(_db).countActivityV2HomeAbsenByStatusSubmit(_db, code);
+        return count;
     }
 
     public List<tActivityMobileData> getAllDataByIntSyc(String val){

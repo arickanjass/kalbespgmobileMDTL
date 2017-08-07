@@ -27,6 +27,7 @@ import library.spgmobile.dal.enumCounterData;
 import library.spgmobile.dal.mCounterNumberDA;
 import library.spgmobile.dal.mconfigDA;
 import library.spgmobile.dal.tDeviceInfoUserDA;
+import library.spgmobile.dal.tPurchaseOrderHeaderDA;
 import library.spgmobile.dal.tSalesProductQuantityHeaderDA;
 import library.spgmobile.dal.tUserLoginDA;
 
@@ -51,6 +52,18 @@ public class tSalesProductQuantityHeaderBL extends clsMainBL {
             _tSalesQuantityDA.SaveDataSalesProductQuantityData(_db, data);
         }
         _db.close();
+    }
+
+    public int getCountQStockStatusSubmit(String code) {
+        SQLiteDatabase _db = getDb();
+        int count = new tSalesProductQuantityHeaderDA(_db).countQStockStatusSubmit(_db, code);
+        return count;
+    }
+
+    public int countQStockPush( String code) {
+        SQLiteDatabase _db = getDb();
+        int count = new tSalesProductQuantityHeaderDA(_db).countQStockPush(_db, code);
+        return count;
     }
 
     public List<tSalesProductQuantityHeaderData> getAllData2(){

@@ -78,7 +78,7 @@ public class AppAdapterNotif extends BaseAdapter {
 //            holder.imageView.setImageResource(Integer.parseInt(rowItem.get_imageId()));
 //        }
             holder.txtTitle.setText(rowItem.get_title());
-            holder.txtDesc.setText(rowItem.get_desc());
+            holder.txtDesc.setText(rowItem.get_txtDateTime());
         holder.txtDt.setText(rowItem.get_txtDateTime());
             holder.imageView.setImageResource(Integer.parseInt(rowItem.get_imageId()));
 

@@ -47,6 +47,13 @@ public class CropDisplayPicture extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        finish();
+        Intent intent = new Intent(CropDisplayPicture.this, MainMenu.class);
+        startActivity(intent);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

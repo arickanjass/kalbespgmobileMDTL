@@ -824,6 +824,8 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                                 System.gc();
                             }
                         }
+                        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                        notificationManager.cancelAll();
                         new clsHelperBL().DeleteAllDB();
                         finish();
                         Intent nextScreen = new Intent(MainMenu.this, Splash.class);

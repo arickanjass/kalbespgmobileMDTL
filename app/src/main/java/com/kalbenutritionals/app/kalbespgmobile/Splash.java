@@ -31,7 +31,6 @@ import service.MyServiceNative;
 public class Splash extends AppCompatActivity {
     long delay = 5000;
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
-    private static int result = 0;
 
     private TextView version;
     @Override
@@ -49,17 +48,9 @@ public class Splash extends AppCompatActivity {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-
-//        GifView gifView = (GifView) findViewById(R.id.imageView) ;
-//        gifView.loadGIFResource(this, R.drawable.loading);
-
-//        final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
-//        progressBar.getProgressDrawable().setColorFilter(c_green, PorterDuff.Mode.SRC_IN);
-
-//        StartAnimations();
-
     }
 
+    // menjalankan Animasi Logo kalbe
     private void StartAnimations() {
 
         Animation anim = AnimationUtils.loadAnimation(this, R.anim.alpha);
@@ -79,6 +70,7 @@ public class Splash extends AppCompatActivity {
         iv2.startAnimation(anim);
     }
 
+    //Memunculkan pop up accept permission untuk API > 23
     private boolean checkPermission() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(Splash.this);
@@ -125,8 +117,8 @@ public class Splash extends AppCompatActivity {
             return true;
     }
 
+    // mapping menu
     private void checkStatusMenu() {
-
         Timer runProgress = new Timer();
         TimerTask viewTask = new TimerTask() {
 
@@ -135,7 +127,6 @@ public class Splash extends AppCompatActivity {
                 clsHelper _clsHelper = new clsHelper();
                 _clsHelper.createFolderApp();
                 new clsHelperBL().InsertDefaultMconfig();
-                //_clsHelper.createFolderUserData();
                 try {
                     clsStatusMenuStart _clsStatusMenuStart = new clsMainBL().checkUserActive();
                     if (_clsStatusMenuStart.get_intStatus() == enumStatusMenuStart.FormLogin) {
@@ -143,11 +134,8 @@ public class Splash extends AppCompatActivity {
                     } else if (_clsStatusMenuStart.get_intStatus() == enumStatusMenuStart.PushDataSPGMobile) {
                         myIntent = new Intent(Splash.this, PushData.class);
                     } else if (_clsStatusMenuStart.get_intStatus() == enumStatusMenuStart.UserActiveLogin) {
-//                        myIntent = new Intent(ProgressBarActivity.this, Home.class);
                         myIntent = new Intent(Splash.this, MainMenu.class);
-                        //myIntent.putExtra("key_view", "main_menu");
                         startService(new Intent(getApplicationContext(), MyServiceNative.class));
-//                        startService(new Intent(getApplicationContext(), MyTrackingLocationService.class));
                     }
                 } catch (ParseException e) {
                     e.printStackTrace();
@@ -159,6 +147,7 @@ public class Splash extends AppCompatActivity {
         runProgress.schedule(viewTask, delay);
     }
 
+    //saat on resume mapping version API
     @Override
     protected void onResume() {
         super.onResume();
@@ -176,15 +165,15 @@ public class Splash extends AppCompatActivity {
 
         if (Build.VERSION.SDK_INT >= 23){
             if (hasWriteExternalStoragePermission != PackageManager.PERMISSION_GRANTED) {
-                boolean checkPermission = checkPermission();
+                checkPermission();
             } else if (hasReadExternalStoragePermission != PackageManager.PERMISSION_GRANTED){
-                boolean checkPermission = checkPermission();
+                checkPermission();
             } else if (hasAccessFineLocationPermission != PackageManager.PERMISSION_GRANTED){
-                boolean checkPermission = checkPermission();
+                checkPermission();
             } else if (hasCameraPermission != PackageManager.PERMISSION_GRANTED){
-                boolean checkPermission = checkPermission();
+                checkPermission();
             } else if (hasPhonePermission != PackageManager.PERMISSION_GRANTED){
-                boolean checkPermission = checkPermission();
+                checkPermission();
             }  else {
                 StartAnimations();
                 checkStatusMenu();

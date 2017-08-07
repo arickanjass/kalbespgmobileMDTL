@@ -256,8 +256,61 @@ public class FragmentDownloadData extends Fragment {
 
         Resources res = getResources();
 
-        for (mDownloadMasterData_mobileData data : mDownloadMasterData_mobileDataList) {
-            String txt_id = data.get_txtMasterData().replaceAll(" ", "");
+//        for (mDownloadMasterData_mobileData data : mDownloadMasterData_mobileDataList) {
+//            String txt_id = data.get_txtMasterData().replaceAll(" ", "");
+//
+//            //show master data
+//            if (txt_id.equals(res.getResourceEntryName(ll_branch.getId()))) {
+//                ll_branch.setVisibility(View.VISIBLE);
+//            } else if (txt_id.equals(res.getResourceEntryName(ll_outlet.getId()))) {
+//                ll_outlet.setVisibility(View.VISIBLE);
+//            } else if (txt_id.equals(res.getResourceEntryName(ll_product.getId()))) {
+//                ll_product.setVisibility(View.VISIBLE);
+//            } else if (txt_id.equals(res.getResourceEntryName(ll_brand.getId()))) {
+//                ll_brand.setVisibility(View.VISIBLE);
+//            } else if (txt_id.equals(res.getResourceEntryName(ll_type_leave.getId()))) {
+//                ll_type_leave.setVisibility(View.VISIBLE);
+//            } else if (txt_id.equals(res.getResourceEntryName(ll_product_spg.getId()))) {
+//                ll_product_spg.setVisibility(View.VISIBLE);
+//            } else if (txt_id.equals(res.getResourceEntryName(ll_product_pic.getId()))) {
+//                ll_product_pic.setVisibility(View.VISIBLE);
+//            } else if (txt_id.equals(res.getResourceEntryName(ll_product_competitor.getId()))) {
+//                ll_product_competitor.setVisibility(View.VISIBLE);
+//            } else if (txt_id.equals(res.getResourceEntryName(ll_type_submission.getId()))) {
+//                ll_type_submission.setVisibility(View.VISIBLE);
+//            } else if (txt_id.equals(res.getResourceEntryName(ll_kategoriVisitPlan.getId()))) {
+//                ll_kategoriVisitPlan.setVisibility(View.VISIBLE);
+//            } else if (txt_id.equals(res.getResourceEntryName(ll_dataQuesioner.getId()))) {
+//                ll_dataQuesioner.setVisibility(View.VISIBLE);
+//            } else if (txt_id.equals(res.getResourceEntryName(ll_subtypeactivity.getId()))) {
+//                ll_subtypeactivity.setVisibility(View.VISIBLE);
+//            }
+//            // show data transaksi
+//            else if (txt_id.equals(res.getResourceEntryName(ll_dataVisitPlan.getId()))) {
+//                ll_dataVisitPlan.setVisibility(View.VISIBLE);
+//            } else if (txt_id.equals(res.getResourceEntryName(ll_dataQuantityStock.getId()))) {
+//                ll_dataQuantityStock.setVisibility(View.VISIBLE);
+//            } else if (txt_id.equals(res.getResourceEntryName(ll_dataKordinasiOutlet.getId()))) {
+//                ll_dataKordinasiOutlet.setVisibility(View.VISIBLE);
+//            } else if (txt_id.equals(res.getResourceEntryName(ll_reso.getId()))) {
+//                ll_reso.setVisibility(View.VISIBLE);
+//            } else if (txt_id.equals(res.getResourceEntryName(ll_data_activity.getId()))) {
+//                ll_data_activity.setVisibility(View.VISIBLE);
+//            } else if (txt_id.equals(res.getResourceEntryName(ll_data_activityV2.getId()))) {
+//                ll_data_activityV2.setVisibility(View.VISIBLE);
+//            } else if (txt_id.equals(res.getResourceEntryName(ll_data_customerbased.getId()))) {
+//                ll_data_customerbased.setVisibility(View.VISIBLE);
+//            } else if (txt_id.equals(res.getResourceEntryName(ll_absen.getId()))) {
+//                ll_absen.setVisibility(View.VISIBLE);
+//            } else if (txt_id.equals(res.getResourceEntryName(ll_purchase_order.getId()))) {
+//                ll_purchase_order.setVisibility(View.VISIBLE);
+//            } else if (txt_id.equals(res.getResourceEntryName(ll_data_leave.getId()))) {
+//                ll_data_leave.setVisibility(View.VISIBLE);
+//            }
+//        }
+
+        for(int i = 0; i < mDownloadMasterData_mobileDataList.size(); i++){
+            String txt_id = mDownloadMasterData_mobileDataList.get(i).get_txtMasterData().replaceAll(" ", "");
 
             //show master data
             if (txt_id.equals(res.getResourceEntryName(ll_branch.getId()))) {
@@ -307,7 +360,6 @@ public class FragmentDownloadData extends Fragment {
             } else if (txt_id.equals(res.getResourceEntryName(ll_data_leave.getId()))) {
                 ll_data_leave.setVisibility(View.VISIBLE);
             }
-
         }
 
         loadData();

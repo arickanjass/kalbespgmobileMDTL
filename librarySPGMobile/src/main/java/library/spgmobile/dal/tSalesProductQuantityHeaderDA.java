@@ -167,6 +167,45 @@ public class tSalesProductQuantityHeaderDA {
         return result;
     }
 
+    //getting data status submit
+    public int countQStockStatusSubmit(SQLiteDatabase db, String code) {
+
+        String selectQuery = "select coalesce(sum(1),0) from [tSalesProductQuantityHeader] where OutletCode='" + code + "' and intSubmit=1 and [intSync]=0";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        int count = 0;
+
+        if (cursor.moveToFirst()) {
+            do {
+                count=Integer.valueOf(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        // return contact list
+        return count;
+    }
+
+    //getting count data push
+    public int countQStockPush(SQLiteDatabase db,  String code) {
+        String selectQuery = "select coalesce(sum(1),0) from [tSalesProductQuantityHeader] where OutletCode='" + code + "' and intSubmit=1 and [intSync]=1";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        int count = 0;
+
+        if (cursor.moveToFirst()) {
+            do {
+                count=Integer.valueOf(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        // return contact list
+        return count;
+    }
+
     // Getting All Contacts
     public List<tSalesProductQuantityHeaderData> getAllDataToPushData(SQLiteDatabase db){
         List<tSalesProductQuantityHeaderData> contactList = null;

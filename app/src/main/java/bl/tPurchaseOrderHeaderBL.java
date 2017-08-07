@@ -27,6 +27,7 @@ import library.spgmobile.dal.enumConfigData;
 import library.spgmobile.dal.enumCounterData;
 import library.spgmobile.dal.mCounterNumberDA;
 import library.spgmobile.dal.mconfigDA;
+import library.spgmobile.dal.tActivityMobileDA;
 import library.spgmobile.dal.tDeviceInfoUserDA;
 import library.spgmobile.dal.tPurchaseOrderHeaderDA;
 import library.spgmobile.dal.tUserLoginDA;
@@ -83,6 +84,18 @@ public class tPurchaseOrderHeaderBL extends clsMainBL {
             dt = new ArrayList<>(0);
         }
         return dt;
+    }
+
+    public int getCountPOStatusSubmit(String code) {
+        SQLiteDatabase _db = getDb();
+        int count = new tPurchaseOrderHeaderDA(_db).countPOStatusSubmit(_db, code);
+        return count;
+    }
+
+    public int countPoPush( String code) {
+        SQLiteDatabase _db = getDb();
+        int count = new tPurchaseOrderHeaderDA(_db).countPoPush(_db, code);
+        return count;
     }
 
     public List<tPurchaseOrderHeaderData> getAllPurchaseOrderHeaderByOutletCode(String code) {
