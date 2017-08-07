@@ -19,8 +19,8 @@ public class tJawabanUserDA {
         tJawabanUserData dt = new tJawabanUserData();
         String CREATE_CONTACTS_TABLE = "CREATE TABLE IF NOT EXISTS "
                 + TABLE_CONTACTS + "( " + dt.Property_intUserAnswer + " TEXT PRIMARY KEY,"
-                + dt.Property_intUserId + " TEXT NULL," + dt.Property_intRoleId + " TEXT NULL,"
-                + dt.Property_intQuestionId + " TEXT NULL," + dt.Property_intTypeQuestionId + " TEXT NULL,"
+                + dt.Property_intUserId + " TEXT NULL,"  + dt.Property_intNik + " TEXT NULL,"
+                + dt.Property_intRoleId + " TEXT NULL," + dt.Property_intQuestionId + " TEXT NULL," + dt.Property_intTypeQuestionId + " TEXT NULL,"
                 + dt.Property_bolHaveAnswerList + " TEXT NULL," + dt.Property_intAnswerId + " TEXT NULL,"
                 + dt.Property_txtValue + " TEXT NULL," + dt.Property_decBobot + " TEXT NULL,"
                 + dt.Property_intSubmit + " TEXT NULL," + dt.Property_intSync + " TEXT NULL)";
@@ -34,6 +34,7 @@ public class tJawabanUserDA {
         db.execSQL("INSERT OR REPLACE into " + TABLE_CONTACTS + " ("
                 + dt.Property_intUserAnswer + ","
                 + dt.Property_intUserId + ","
+                + dt.Property_intNik + ","
                 + dt.Property_intRoleId + ","
                 + dt.Property_intQuestionId + ","
                 + dt.Property_intTypeQuestionId + ","
@@ -45,6 +46,7 @@ public class tJawabanUserDA {
                 + dt.Property_intSync  + ") " + "values('"
                 + String.valueOf(data.get_intUserAnswer()) + "','"
                 + String.valueOf(data.get_intUserId()) + "','"
+                + String.valueOf(data.get_intNik()) + "','"
                 + String.valueOf(data.get_intRoleId()) + "','"
                 + String.valueOf(data.get_intQuestionId()) + "','"
                 + String.valueOf(data.get_intTypeQuestionId()) + "','"
@@ -68,15 +70,16 @@ public class tJawabanUserDA {
                 tJawabanUserData contact = new tJawabanUserData();
                 contact.set_intUserAnswer(cursor.getString(0));
                 contact.set_intUserId(cursor.getString(1));
-                contact.set_intRoleId(cursor.getString(2));
-                contact.set_intQuestionId(cursor.getString(3));
-                contact.set_intTypeQuestionId(cursor.getString(4));
-                contact.set_bolHaveAnswerList(cursor.getString(5));
-                contact.set_intAnswerId(cursor.getString(6));
-                contact.set_txtValue(cursor.getString(7));
-                contact.set_decBobot(cursor.getString(8));
-                contact.set_intSubmit(cursor.getString(9));
-                contact.set_intSync(cursor.getString(10));
+                contact.set_intNik(cursor.getString(2));
+                contact.set_intRoleId(cursor.getString(3));
+                contact.set_intQuestionId(cursor.getString(4));
+                contact.set_intTypeQuestionId(cursor.getString(5));
+                contact.set_bolHaveAnswerList(cursor.getString(6));
+                contact.set_intAnswerId(cursor.getString(7));
+                contact.set_txtValue(cursor.getString(8));
+                contact.set_decBobot(cursor.getString(9));
+                contact.set_intSubmit(cursor.getString(10));
+                contact.set_intSync(cursor.getString(11));
                 contactList.add(contact);
             }while (cursor.moveToNext());
         }
@@ -93,15 +96,16 @@ public class tJawabanUserDA {
                 tJawabanUserData contact = new tJawabanUserData();
                 contact.set_intUserAnswer(cursor.getString(0));
                 contact.set_intUserId(cursor.getString(1));
-                contact.set_intRoleId(cursor.getString(2));
-                contact.set_intQuestionId(cursor.getString(3));
-                contact.set_intTypeQuestionId(cursor.getString(4));
-                contact.set_bolHaveAnswerList(cursor.getString(5));
-                contact.set_intAnswerId(cursor.getString(6));
-                contact.set_txtValue(cursor.getString(7));
-                contact.set_decBobot(cursor.getString(8));
-                contact.set_intSubmit(cursor.getString(9));
-                contact.set_intSync(cursor.getString(10));
+                contact.set_intNik(cursor.getString(2));
+                contact.set_intRoleId(cursor.getString(3));
+                contact.set_intQuestionId(cursor.getString(4));
+                contact.set_intTypeQuestionId(cursor.getString(5));
+                contact.set_bolHaveAnswerList(cursor.getString(6));
+                contact.set_intAnswerId(cursor.getString(7));
+                contact.set_txtValue(cursor.getString(8));
+                contact.set_decBobot(cursor.getString(9));
+                contact.set_intSubmit(cursor.getString(10));
+                contact.set_intSync(cursor.getString(11));
                 contactList.add(contact);
             }while (cursor.moveToNext());
         }

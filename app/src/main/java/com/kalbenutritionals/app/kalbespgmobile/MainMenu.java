@@ -149,6 +149,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Home");
+        toolbar.setSubtitle(null);
         setSupportActionBar(toolbar);
 
         FragmentInformation homeFragment = new FragmentInformation();
@@ -346,6 +347,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
                     case R.id.reporting:
                         toolbar.setTitle("Reporting");
+                        toolbar.setSubtitle(null);
 
                         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
 
@@ -359,6 +361,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
                     case R.id.home:
                         toolbar.setTitle("Home");
+                        toolbar.setSubtitle(null);
 
                         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -372,6 +375,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
                     case R.id.quantityStock:
                         toolbar.setTitle("View Quantity Stock");
+                        toolbar.setSubtitle(null);
 
                         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -399,6 +403,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
                     case R.id.historyAbsen:
                         toolbar.setTitle("Attendance History");
+                        toolbar.setSubtitle(null);
 
                         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -412,6 +417,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
                     case R.id.settings:
                         toolbar.setTitle("Settings");
+                        toolbar.setSubtitle(null);
 
                         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
 
@@ -463,7 +469,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                         return true;*/
                     case R.id.information:
                         toolbar.setTitle("Information");
-
+                        toolbar.setSubtitle(null);
                         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
                         FragmentNotification fragmentNotification = new FragmentNotification();
@@ -575,8 +581,10 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                             try {
                                 if (dtAbsensVisitplan != null) {
                                     toolbar.setTitle("View " + menuItem.getTitle().toString());
+                                    toolbar.setSubtitle(null);
                                 } else {
                                     toolbar.setTitle(menuItem.getTitle().toString());
+                                    toolbar.setSubtitle(null);
                                 }
 
                                 fragment = (Fragment) fragmentClass.newInstance();
@@ -879,6 +887,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                 e.printStackTrace();
             }
             toolbar.setTitle("Information");
+            toolbar.setSubtitle(null);
             Fragment fragment = null;
             try {
                 fragment = (Fragment) (fragmentClass != null ? fragmentClass.newInstance() : null);
@@ -907,6 +916,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                         }
                     }
                     toolbar.setTitle(i_view);
+                    toolbar.setSubtitle(null);
                     Fragment fragment = (Fragment) fragmentClass.newInstance();
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.frame, fragment);
@@ -942,6 +952,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                         e.printStackTrace();
                     }
                     toolbar.setTitle("Information");
+                    toolbar.setSubtitle(null);
                     Fragment fragment = null;
                     try {
                         if (fragmentClass != null) {

@@ -47,7 +47,7 @@ public class FragmentKuesionerPart extends Fragment {
     EditText dateView;
     private int year,month, day;
     DatePickerDialog dialog;
-    public FragmentKuesionerPart(String kategori, int noSoal, String soal, int typeJawaban, List<jawabanModel> _jawabanModel) {
+    public FragmentKuesionerPart(int noSoal, String soal, int typeJawaban, List<jawabanModel> _jawabanModel) {
         this.noSoal = noSoal;
         this.soal = soal;
         this.typeJawaban = typeJawaban;
@@ -65,8 +65,8 @@ public class FragmentKuesionerPart extends Fragment {
         View v = inflater.inflate(R.layout.fragment_kuesioner_part, container, false);
 
         LinearLayout llMain = (LinearLayout) v.findViewById(R.id.llMain);
-        textView = (TextView) v.findViewById(R.id.tv_quizzz);
-        textView.setText(kategori);
+//        textView = (TextView) v.findViewById(R.id.tv_quizzz);
+//        textView.setText(kategori);
         TextView txtSoal = (TextView) v.findViewById(R.id.txtSoal);
         txtSoal.setText(soal);
 

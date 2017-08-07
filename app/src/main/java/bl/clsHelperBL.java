@@ -812,6 +812,14 @@ public class clsHelperBL extends clsMainBL {
             }
         }
 
+        if (validPush && dtJson.getListOftJawabanUserData() != null){
+            for (tJawabanUserData dt : dtJson.getListOftJawabanUserData()){
+                tJawabanUserDA _tJawabanUserDA = new tJawabanUserDA(db);
+                dt.set_intSync("1");
+                _tJawabanUserDA.SaveDatatJawabanUser(db,dt);
+            }
+        }
+
         if (validPush && dtJson.getListOftSalesProductQuantityHeaderData() != null){
             for (tSalesProductQuantityHeaderData dt : dtJson.getListOftSalesProductQuantityHeaderData()){
                 tSalesProductQuantityHeaderDA _tSalesProductQuantityDA = new tSalesProductQuantityHeaderDA(db);
