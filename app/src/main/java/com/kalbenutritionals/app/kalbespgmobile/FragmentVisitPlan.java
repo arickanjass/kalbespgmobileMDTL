@@ -581,6 +581,7 @@ public class FragmentVisitPlan extends Fragment implements ConnectionCallbacks, 
     @SuppressWarnings("deprecation")
     //set text view long lat
     private void displayLocation(Location mLastLocation) {
+        DecimalFormat df = new DecimalFormat("#.##");
 
         if (mLastLocation != null) {
             double latitude = mLastLocation.getLatitude();
@@ -589,7 +590,7 @@ public class FragmentVisitPlan extends Fragment implements ConnectionCallbacks, 
 
             lblLong.setText(String.format("%s", longitude));
             lblLang.setText(String.format("%s", latitude));
-            lblAcc.setText(String.format("%s", accurate));
+            lblAcc.setText(String.format("%s", df.format(accurate)));
 
             try {
                 float distance = countDistance(latitude, longitude);

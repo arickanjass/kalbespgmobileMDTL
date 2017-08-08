@@ -51,6 +51,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -154,9 +155,8 @@ public class FragmentAbsen extends Fragment implements ConnectionCallbacks, OnCo
             @Override
             public void onClick(View v) {
                 getLocation();
-                if (mLastLocation != null) {
+                if (mLastLocation == null) {
                     displayLocation(mLastLocation);
-                    new clsMainActivity().showCustomToast(getContext(), "Location Updated", true);
                 }
             }
         });
@@ -498,6 +498,7 @@ public class FragmentAbsen extends Fragment implements ConnectionCallbacks, OnCo
     }
 
     // get location GPS
+    private boolean earlyState = true;
     public Location getLocation() {
         try {
             LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
@@ -507,6 +508,7 @@ public class FragmentAbsen extends Fragment implements ConnectionCallbacks, OnCo
 
             if (!isGPSEnabled && !isNetworkEnabled) {
                 // no network provider is enabled
+                mLastLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                 new clsMainActivity().showCustomToast(getContext(), "Please turn on GPS or check your internet connection", false);
             } else {
                 if (isNetworkEnabled) {
@@ -520,10 +522,10 @@ public class FragmentAbsen extends Fragment implements ConnectionCallbacks, OnCo
                     _clsMainActivity.showCustomToast(getContext(), "Please check your connection", false);
                 }
 
-                if (isGPSEnabled) {
+                if (isGPSEnabled && mLastLocation==null) {
                     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, this);
                     mLastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                } else {
+                } else if(!isGPSEnabled){
                     _clsMainActivity.showCustomToast(getContext(), "Please turn on GPS", false);
                 }
             }
@@ -531,12 +533,18 @@ public class FragmentAbsen extends Fragment implements ConnectionCallbacks, OnCo
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        if(mLastLocation!=null&&!earlyState){
+            new clsMainActivity().showCustomToast(getContext(), "Location Updated", true);
+        }
+        earlyState = false;
         return mLastLocation;
     }
 
     @SuppressWarnings("deprecation")
     //set text view long lat
     private void displayLocation(Location mLastLocation) {
+        DecimalFormat df = new DecimalFormat("#.##");
 
         if (mLastLocation != null) {
             double latitude = mLastLocation.getLatitude();
@@ -545,10 +553,10 @@ public class FragmentAbsen extends Fragment implements ConnectionCallbacks, OnCo
 
             lblLong.setText(String.format("%s", longitude));
             lblLang.setText(String.format("%s", latitude));
-            lblAcc.setText(String.format("%s", accurate));
+            lblAcc.setText(String.format("%s", df.format(accurate)));
 
             try {
-                float distance = countDistance(mlatitude, mlongitude);
+                float distance = countDistance(latitude, longitude);
                 lblDistance.setText(String.format("%s meters", String.valueOf((int) Math.ceil(distance))));
             } catch (Exception ignored) {
 
@@ -557,6 +565,11 @@ public class FragmentAbsen extends Fragment implements ConnectionCallbacks, OnCo
             mlongitude = longitude;
             mlatitude = latitude;
 
+        } else {
+            lblLong.setText("");
+            lblLang.setText("");
+            lblAcc.setText("");
+            lblDistance.setText("");
         }
 
     }
