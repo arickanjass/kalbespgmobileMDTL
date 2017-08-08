@@ -19,7 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TableRow;
@@ -36,10 +36,8 @@ import java.util.List;
 import java.util.Locale;
 
 import bl.clsHelperBL;
-import bl.tAbsenUserBL;
 import bl.tActivityBL;
 import bl.tUserLoginBL;
-import library.spgmobile.common.tAbsenUserData;
 import library.spgmobile.common.tActivityData;
 import library.spgmobile.common.tUserLoginData;
 import library.spgmobile.common.visitplanAbsenData;
@@ -47,7 +45,7 @@ import library.spgmobile.dal.clsHardCode;
 
 public class FragmentAddActvitySPG extends Fragment implements View.OnClickListener {
     View v;
-    ImageButton imgActivity1, imgActivity2;
+    ImageView imgActivity1, imgActivity2;
     EditText etDescription;
     RadioGroup rdFlag;
     TextInputLayout textInputLayoutDescription;
@@ -69,10 +67,10 @@ public class FragmentAddActvitySPG extends Fragment implements View.OnClickListe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_activity_add, container, false);
-        imgActivity1 = (ImageButton) v.findViewById(R.id.imageButton);
+        imgActivity1 = (ImageView) v.findViewById(R.id.imageButton);
         imgActivity1.setOnClickListener(this);
 
-        imgActivity2 = (ImageButton) v.findViewById(R.id.imageButton2);
+        imgActivity2 = (ImageView) v.findViewById(R.id.imageButton2);
         imgActivity2.setOnClickListener(this);
 
         textInputLayoutDescription = (TextInputLayout) v.findViewById(R.id.input_layout_description);

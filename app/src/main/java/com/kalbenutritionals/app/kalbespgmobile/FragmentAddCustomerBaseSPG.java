@@ -172,8 +172,8 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
         dpHeader = (DatePicker) v.findViewById(R.id.dp_tgl_lahir_header);
         etTglLhr = (EditText) v.findViewById(R.id.etTanggalLahir);
 
-        etNama.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
-        etNama.setSingleLine(false);
+        etNama.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
+        etNama.setSingleLine(true);
 
         InputFilter filter2 = new InputFilter() {
             boolean canEnterSpace = false;

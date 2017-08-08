@@ -3,17 +3,13 @@ package com.kalbenutritionals.app.kalbespgmobile;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,14 +22,12 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,7 +38,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import addons.adapter.AdapterListProductQuantityDetail;
 import bl.clsHelperBL;
 import bl.clsMainBL;
 import bl.mCounterNumberBL;
@@ -59,12 +52,11 @@ import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.bean.SwipeMenu;
 import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.OnMenuItemClickListener;
 import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.SwipeMenuCreator;
 import library.spgmobile.common.AppAdapter;
-import library.spgmobile.common.ModelListview;
 import library.spgmobile.common.clsHelper;
 import library.spgmobile.common.clsSwipeList;
 import library.spgmobile.common.mEmployeeSalesProductData;
-import library.spgmobile.common.tSalesProductQuantityHeaderData;
 import library.spgmobile.common.tSalesProductQuantityDetailData;
+import library.spgmobile.common.tSalesProductQuantityHeaderData;
 import library.spgmobile.common.tSalesProductQuantityImageData;
 import library.spgmobile.common.tUserLoginData;
 import library.spgmobile.common.visitplanAbsenData;
@@ -75,39 +67,33 @@ import library.spgmobile.dal.enumCounterData;
  * Created by Rian Andrivani on 16/03/2017.
  */
 
-public class FragmentAddQuantityStock extends Fragment implements IXListViewListener{
+public class FragmentAddQuantityStock extends Fragment implements IXListViewListener {
     View v;
 
-    private ArrayList<ModelListview> modelItems;
-    private ArrayList<ModelListview> arrdataPriv;
-    ListView listView;
-    int selectedId;
-    public static ArrayList<ModelListview> arr = new ArrayList<ModelListview>();
+//    private ArrayList<ModelListview> modelItems;
+//    public static ArrayList<ModelListview> arr = new ArrayList<ModelListview>();
+//    private ArrayList<ModelListview> arrdataPriv;
+//    ListView listView;
+//    int selectedId;
     static List<tSalesProductQuantityHeaderData> dt;
     static List<tSalesProductQuantityHeaderData> data;
-    private FloatingActionButton fab;
-    private List<String> arrData;
-    private EditText edKeterangan, editTextQty;
-    private Button preview;
-    private String noQuantityStock;
+//    private FloatingActionButton fab;
+//    private List<String> arrData;
+    private EditText edKeterangan;
     private ImageView after1, after2;
     private ImageView before1, before2;
-    private Spinner product;
+//    private Spinner product;
     private Uri uriImage;
     TextView tv_date, txtHDId;
     TextView tv_noQuantityStock;
-    List<tSalesProductQuantityHeaderData> dtListDetailProduct;
+//    List<tSalesProductQuantityHeaderData> dtListDetailProduct;
     List<tSalesProductQuantityDetailData> dtListProduct;
-    AdapterListProductQuantityDetail AdapterProduct;
+//    AdapterListProductQuantityDetail AdapterProduct;
 
-    private List<clsSwipeList> swipeList = new ArrayList<clsSwipeList>();
-    private ArrayList<clsSwipeList> swipeListProduct = new ArrayList<clsSwipeList>();
+    private List<clsSwipeList> swipeList = new ArrayList<>();
+//    private ArrayList<clsSwipeList> swipeListProduct = new ArrayList<clsSwipeList>();
 
-    private AppAdapter mAdapter;
-    private PullToRefreshSwipeMenuListView mListView;
-    private Handler mHandler;
-    private Map<String, HashMap> mapMenu;
-    private HashMap<String, String> HMSubmision = new HashMap<String, String>();
+//    private HashMap<String, String> HMSubmision = new HashMap<String, String>();
 
     private static final int CAMERA_REQUEST = 1888;
     private static final int CAMERA_REQUEST2 = 1889;
@@ -133,17 +119,17 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         v = inflater.inflate(R.layout.fragment_add_quantity_stock, container, false);
 
         txtHDId = (TextView) v.findViewById(R.id.txtHDId);
-        fab = (FloatingActionButton) v.findViewById(R.id.fabQuntity);
-        product = (Spinner) v.findViewById(R.id.txtProduct_quantity);
+//        fab = (FloatingActionButton) v.findViewById(R.id.fabQuntity);
+//        product = (Spinner) v.findViewById(R.id.txtProduct_quantity);
         edKeterangan = (EditText) v.findViewById(R.id.etKeterangan_quantity);
-        preview = (Button) v.findViewById(R.id.btnPreviewQuantity);
+        Button preview = (Button) v.findViewById(R.id.btnPreviewQuantity);
         tv_date = (TextView) v.findViewById(R.id.txtviewDateQuantity);
         tv_noQuantityStock = (TextView) v.findViewById(R.id.txtNoQuantity);
         after1 = (ImageView) v.findViewById(R.id.imageAfter1);
         after2 = (ImageView) v.findViewById(R.id.imageAfter2);
         before1 = (ImageView) v.findViewById(R.id.imageBefore1);
         before2 = (ImageView) v.findViewById(R.id.imageBefore2);
-        editTextQty = (EditText) v.findViewById(R.id.editTextQty);
+//        editTextQty = (EditText) v.findViewById(R.id.editTextQty);
 
         _clsMainActivity = new clsMainActivity();
         dtQuantityData = new tSalesProductQuantityHeaderData();
@@ -155,6 +141,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
 
         // add no Quantity Stock in Textview txtNoQuantity
         List<tSalesProductQuantityHeaderData> dtLast = new tSalesProductQuantityHeaderBL().getLastData();
+        String noQuantityStock;
         if (dtLast == null || dtLast.size() == 0) {
             noQuantityStock = new mCounterNumberBL().getData(enumCounterData.NoQuantityStock);
 
@@ -181,7 +168,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         phtBefore1 = null;
         phtBefore2 = null;
 
-        if (dtQuantityData.get_intId() != null){
+        if (dtQuantityData.get_intId() != null) {
             byte[] imgAfter1File = dtQuantityData.get_txtAfterImg1();
             if (imgAfter1File != null) {
                 Bitmap myBitmap = BitmapFactory.decodeByteArray(imgAfter1File, 0, imgAfter1File.length);
@@ -207,25 +194,25 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
             }
         }
 
-        if (photoAfter1 != null){
+        if (photoAfter1 != null) {
             after1.setImageBitmap(photoAfter1);
             photoAfter1.compress(Bitmap.CompressFormat.PNG, 100, output);
             phtAfter1 = output.toByteArray();
         }
 
-        if (photoAfter2 != null){
+        if (photoAfter2 != null) {
             after2.setImageBitmap(photoAfter2);
             photoAfter2.compress(Bitmap.CompressFormat.PNG, 100, output);
             phtAfter2 = output.toByteArray();
         }
 
-        if (photoBefore1 != null){
+        if (photoBefore1 != null) {
             before1.setImageBitmap(photoBefore1);
             photoBefore1.compress(Bitmap.CompressFormat.PNG, 100, output);
             phtBefore1 = output.toByteArray();
         }
 
-        if (photoBefore2 != null){
+        if (photoBefore2 != null) {
             before2.setImageBitmap(photoBefore2);
             photoBefore2.compress(Bitmap.CompressFormat.PNG, 100, output);
             phtBefore2 = output.toByteArray();
@@ -278,11 +265,11 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
             public void onClick(View view) {
                 if (edKeterangan.getText().toString().equals("")) {
                     _clsMainActivity.showCustomToast(getActivity(), "Please fill Description...", false);
-                } else if (phtAfter1 == null && phtAfter2 == null){
+                } else if (phtAfter1 == null && phtAfter2 == null) {
                     _clsMainActivity.showCustomToast(getContext(), "Please take at least 1 photo for after", false);
-                } else if (phtBefore1 == null && phtBefore2 == null){
+                } else if (phtBefore1 == null && phtBefore2 == null) {
                     _clsMainActivity.showCustomToast(getContext(), "Please take at least 1 photo for before", false);
-                } else if (dtListProduct.size()==0){
+                } else if (dtListProduct.size() == 0) {
                     _clsMainActivity.showCustomToast(getContext(), "Please Add least 1 Product...", false);
                 } else {
                     final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
@@ -325,11 +312,11 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         final DatePicker dp = (DatePicker) promptView.findViewById(R.id.dp_expire_date);
         final EditText editTextKeterangan = (EditText) promptView.findViewById(R.id.editTextKeterangan);
 
-        List<tSalesProductQuantityDetailData> dataProduct = null;
+//        List<tSalesProductQuantityDetailData> dataProduct = null;
 
         List<String> dataProductKalbe = new ArrayList<>();
         List<mEmployeeSalesProductData> listDataProductKalbe = new mEmployeeSalesProductBL().GetAllData();
-        modelItems = new ArrayList<>();
+//        modelItems = new ArrayList<>();
 
 //        editTextQty.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 //            @Override
@@ -356,12 +343,12 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         if (dataDetail.getIntId() != null) {
 
             String item = dataDetail.getTxtProduct();
-            for (int i = 0 ; i < spnKalbeProduct.getAdapter().getCount()-1 ; i++){
-                if(spnKalbeProduct.getItemAtPosition(i).equals(item)){
+            for (int i = 0; i < spnKalbeProduct.getAdapter().getCount() - 1; i++) {
+                if (spnKalbeProduct.getItemAtPosition(i).equals(item)) {
                     index = i;
                 }
             }
-                spnKalbeProduct.setSelection(index);
+            spnKalbeProduct.setSelection(index);
             int year = 0;
             int month = 0;
             int day = 0;
@@ -372,7 +359,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                 month = Integer.parseInt(parts[1]);
                 day = Integer.parseInt(parts[2]);
             }
-            dp.updateDate(year,month - 1,day);
+            dp.updateDate(year, month - 1, day);
             editTextQty.setText(dataDetail.getTxtQuantity());
             editTextKeterangan.setText(dataDetail.get_txtKeterangan());
         }
@@ -395,7 +382,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         clsMainBL _clsMainBL = new clsMainBL();
-                                        SQLiteDatabase _db=_clsMainBL.getDb();
+//                                        SQLiteDatabase _db = _clsMainBL.getDb();
 
                                         String selectedOneKNProduct = spnKalbeProduct.getSelectedItem().toString();
                                         tUserLoginData dtUser = new tUserLoginBL().getUserActive();
@@ -412,17 +399,17 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                                         qtyProduct = editTextQty.getText().toString();
                                         keterangan = editTextKeterangan.getText().toString();
 
-                                        if (qtyProduct.length() == 0){
+                                        if (qtyProduct.length() == 0) {
                                             qtyProduct = "0";
                                         }
-                                        if (keterangan.length()==0){
+                                        if (keterangan.length() == 0) {
                                             keterangan = "";
                                         }
 
                                         tSalesProductQuantityDetailData data = new tSalesProductQuantityDetailData();
                                         if (dataDetail.getIntId() != null) {
                                             data.setIntId(dataDetail.getIntId());
-                                        }else{
+                                        } else {
                                             data.setIntId(_clsMainActivity.GenerateGuid());
                                         }
 
@@ -438,7 +425,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                                         double prc = Double.valueOf(HMProduct.get(HMProduct.get(selectedOneKNProduct)));
                                         double itm = Double.valueOf(qtyProduct);
 
-                                        data.set_intTotal(_clsMainActivity.convertNumberDec2(prc*itm));
+                                        data.set_intTotal(_clsMainActivity.convertNumberDec2(prc * itm));
                                         data.set_txtNIK(dtUser.get_txtUserId());
 
                                         new tSalesProductQuantityDetailBL().saveData(data);
@@ -478,7 +465,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                 try {
                     Bitmap bitmap;
                     BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-                    String uri = uriImage.getPath().toString();
+                    String uri = uriImage.getPath();
 
                     bitmap = BitmapFactory.decodeFile(uri, bitmapOptions);
 
@@ -486,15 +473,11 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
-
-            else if (resultCode == 0) {
+            } else if (resultCode == 0) {
                 new clsMainActivity().showCustomToast(getContext(), "User canceled to capture image", false);
-            }  else {
+            } else {
                 try {
                     photoAfter1 = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), data.getData());
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -510,7 +493,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                 try {
                     Bitmap bitmap;
                     BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-                    String uri = uriImage.getPath().toString();
+                    String uri = uriImage.getPath();
 
                     bitmap = BitmapFactory.decodeFile(uri, bitmapOptions);
 
@@ -518,15 +501,11 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
-
-            else if (resultCode == 0) {
+            } else if (resultCode == 0) {
                 new clsMainActivity().showCustomToast(getContext(), "User canceled to capture image", false);
-            }  else {
+            } else {
                 try {
                     photoAfter2 = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), data.getData());
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -536,7 +515,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                 try {
                     Bitmap bitmap;
                     BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-                    String uri = uriImage.getPath().toString();
+                    String uri = uriImage.getPath();
 
                     bitmap = BitmapFactory.decodeFile(uri, bitmapOptions);
 
@@ -544,15 +523,11 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
-
-            else if (resultCode == 0) {
+            } else if (resultCode == 0) {
                 new clsMainActivity().showCustomToast(getContext(), "User canceled to capture image", false);
-            }  else {
+            } else {
                 try {
                     photoBefore1 = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), data.getData());
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -562,7 +537,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                 try {
                     Bitmap bitmap;
                     BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-                    String uri = uriImage.getPath().toString();
+                    String uri = uriImage.getPath();
 
                     bitmap = BitmapFactory.decodeFile(uri, bitmapOptions);
 
@@ -570,15 +545,11 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
-
-            else if (resultCode == 0) {
+            } else if (resultCode == 0) {
                 new clsMainActivity().showCustomToast(getContext(), "User canceled to capture image", false);
-            }  else {
+            } else {
                 try {
                     photoBefore2 = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), data.getData());
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -588,7 +559,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
     }
 
     // preview image After 1
-    private void previewCaptureAfterImage1(Bitmap photo){
+    private void previewCaptureAfterImage1(Bitmap photo) {
         try {
             Bitmap bitmap = new clsMainActivity().resizeImageForBlob(photo);
             after1.setVisibility(View.VISIBLE);
@@ -600,7 +571,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                 e.printStackTrace();
             } finally {
                 try {
-                    if (output != null){
+                    if (output != null) {
                         output.close();
                     }
                 } catch (IOException e) {
@@ -611,7 +582,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
             phtAfter1 = output.toByteArray();
             after1.setImageBitmap(photo_view);
 
-            if (dtQuantityData == null){
+            if (dtQuantityData == null) {
                 dtQuantityData.set_txtAfterImg1(phtAfter1);
             } else {
                 dtQuantityData.set_txtAfterImg1(phtAfter1);
@@ -624,7 +595,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
     }
 
     // preview image after 2
-    private void previewCaptureAfterImage2(Bitmap photo){
+    private void previewCaptureAfterImage2(Bitmap photo) {
         try {
             Bitmap bitmap = new clsMainActivity().resizeImageForBlob(photo);
             after2.setVisibility(View.VISIBLE);
@@ -636,7 +607,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                 e.printStackTrace();
             } finally {
                 try {
-                    if (output != null){
+                    if (output != null) {
                         output.close();
                     }
                 } catch (IOException e) {
@@ -647,7 +618,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
             phtAfter2 = output.toByteArray();
             after2.setImageBitmap(photo_view);
 
-            if (dtQuantityData == null){
+            if (dtQuantityData == null) {
                 dtQuantityData.set_txtAfterImg2(phtAfter2);
             } else {
                 dtQuantityData.set_txtAfterImg2(phtAfter2);
@@ -660,7 +631,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
     }
 
     // preview image before 1
-    private void previewCaptureBeforeImage1(Bitmap photo){
+    private void previewCaptureBeforeImage1(Bitmap photo) {
         try {
             Bitmap bitmap = new clsMainActivity().resizeImageForBlob(photo);
             before1.setVisibility(View.VISIBLE);
@@ -672,7 +643,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                 e.printStackTrace();
             } finally {
                 try {
-                    if (output != null){
+                    if (output != null) {
                         output.close();
                     }
                 } catch (IOException e) {
@@ -683,7 +654,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
             phtBefore1 = output.toByteArray();
             before1.setImageBitmap(photo_view);
 
-            if (dtQuantityData == null){
+            if (dtQuantityData == null) {
                 dtQuantityData.set_txtBeforeImg1(phtBefore1);
             } else {
                 dtQuantityData.set_txtBeforeImg1(phtBefore1);
@@ -696,7 +667,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
     }
 
     // preview image before 2
-    private void previewCaptureBeforeImage2(Bitmap photo){
+    private void previewCaptureBeforeImage2(Bitmap photo) {
         try {
             Bitmap bitmap = new clsMainActivity().resizeImageForBlob(photo);
             before2.setVisibility(View.VISIBLE);
@@ -708,7 +679,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                 e.printStackTrace();
             } finally {
                 try {
-                    if (output != null){
+                    if (output != null) {
                         output.close();
                     }
                 } catch (IOException e) {
@@ -719,7 +690,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
             phtBefore2 = output.toByteArray();
             before2.setImageBitmap(photo_view);
 
-            if (dtQuantityData == null){
+            if (dtQuantityData == null) {
                 dtQuantityData.set_txtBeforeImg2(phtBefore2);
             } else {
                 dtQuantityData.set_txtBeforeImg2(phtBefore2);
@@ -749,7 +720,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         // Create a media file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
         File mediaFile;
-        mediaFile = new File(mediaStorageDir.getPath() + File.separator + "tmp_act"  + ".png");
+        mediaFile = new File(mediaStorageDir.getPath() + File.separator + "tmp_act" + ".png");
         return mediaFile;
     }
 
@@ -798,20 +769,20 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
 
             swplist = new clsSwipeList();
 
-            swplist.set_txtTitle("Product : " +data.getTxtProduct());
+            swplist.set_txtTitle("Product : " + data.getTxtProduct());
             swplist.set_txtDescription("Total Product : " + data.getTxtQuantity());
             swipeList.add(swplist);
         }
 
         clsMainActivity clsMain = new clsMainActivity();
 
-        mListView = (PullToRefreshSwipeMenuListView) v.findViewById(R.id.listViewQuantity);
-        mAdapter = clsMain.setList(getActivity().getApplicationContext(), swipeList);
+        PullToRefreshSwipeMenuListView mListView = (PullToRefreshSwipeMenuListView) v.findViewById(R.id.listViewQuantity);
+        AppAdapter mAdapter = clsMainActivity.setList(getActivity().getApplicationContext(), swipeList);
         mListView.setAdapter(mAdapter);
         mListView.setPullRefreshEnable(false);
         mListView.setPullLoadEnable(true);
         mListView.setXListViewListener(this);
-        mHandler = new Handler();
+//        mHandler = new Handler();
 
         HashMap<String, String> mapEdit = new HashMap<String, String>();
         HashMap<String, String> mapDelete = new HashMap<String, String>();
@@ -822,7 +793,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         mapDelete.put("name", "Delete");
         mapDelete.put("bgColor", "#FF0000");
 
-        mapMenu = new HashMap<String, HashMap>();
+        Map<String, HashMap> mapMenu = new HashMap<String, HashMap>();
         mapMenu.put("0", mapEdit);
         mapMenu.put("1", mapDelete);
 
@@ -860,12 +831,12 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
 //        tAbsenUserData absenUserData = new tAbsenUserBL().getDataCheckInActive();
         tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
         visitplanAbsenData absenUserData = new clsHelperBL().getDataCheckInActive();
-        modelItems = new ArrayList<ModelListview>();
+//        modelItems = new ArrayList<ModelListview>();
         String noQtyStock = tv_noQuantityStock.getText().toString();
         List<tSalesProductQuantityDetailData> productDetail = new tSalesProductQuantityDetailBL().GetDataByNoQuantityStock(noQtyStock);
 
-        arrdataPriv = new ArrayList<ModelListview>();
-        double qntySum=0;
+//        arrdataPriv = new ArrayList<ModelListview>();
+        double qntySum = 0;
         double qntyNum;
         double value;
         double price;
@@ -875,7 +846,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         for (int i = 0; i < productDetail.size(); i++) {
             price = Double.parseDouble(String.valueOf(productDetail.get(i).get_intPrice()));
             value = Double.parseDouble(String.valueOf(productDetail.get(i).getTxtQuantity()));
-            qntyNum =  price * value;
+            qntyNum = price * value;
             qntySum += qntyNum;
             result = new clsMainActivity().convertNumberDec2(qntySum);
         }
@@ -914,7 +885,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         tSalesProductQuantityImageData dataImage = new tSalesProductQuantityImageData();
         String headerId = tv_noQuantityStock.getText().toString();
 
-        if (phtAfter1 != null){
+        if (phtAfter1 != null) {
             dataImage.set_txtId(_clsMainActivity.GenerateGuid());
             dataImage.set_txtHeaderId(tv_noQuantityStock.getText().toString());
             dataImage.set_txtImage(phtAfter1);
@@ -931,7 +902,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         tSalesProductQuantityImageData dataImage = new tSalesProductQuantityImageData();
         String headerId = tv_noQuantityStock.getText().toString();
 
-        if (phtAfter2 != null){
+        if (phtAfter2 != null) {
             dataImage.set_txtId(_clsMainActivity.GenerateGuid());
             dataImage.set_txtHeaderId(tv_noQuantityStock.getText().toString());
             dataImage.set_txtImage(phtAfter2);
@@ -978,7 +949,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
         }
     }
 
-    public void viewQuantityFragment(){
+    public void viewQuantityFragment() {
 //        Bundle bundle = new Bundle();
 //        bundle.putString("key_view", "View_QuantityStock");
 //        FragmentAddQuantityStock fragmentAddQuantityStock = new FragmentAddQuantityStock();
@@ -987,7 +958,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
 //        fragmentManager.beginTransaction().replace(R.id.frame, new FragmentViewQuantityStock()).commit();
 
         Intent myIntent = new Intent(getContext(), MainMenu.class);
-        myIntent.putExtra("key_view","View Quantity Stock");
+        myIntent.putExtra("key_view", "View Quantity Stock");
         getActivity().finish();
         startActivity(myIntent);
 //        return;

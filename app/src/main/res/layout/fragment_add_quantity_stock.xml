@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/scroll_quantityStock"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
         android:id="@+id/lnQuantity"
-        android:padding="15dp"
-        android:orientation="vertical">
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp">
 
         <TextView
             android:id="@+id/txtHDId"
@@ -17,50 +18,50 @@
             android:layout_height="wrap_content"
             android:text="txthdId"
             android:visibility="gone" />
+
         <TextView
             android:id="@+id/txtQuantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="No Quantity Stock"
-            android:layout_marginTop="15dp"
             android:layout_marginLeft="10dp"
-            android:textColor="#000"/>
+            android:layout_marginTop="15dp"
+            android:text="No Quantity Stock"
+            android:textColor="#000" />
+
         <TextView
             android:id="@+id/txtNoQuantity"
-            android:layout_below="@+id/txtQuantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="No SO"
             android:layout_marginLeft="10dp"
-            android:textColor="#000"/>
+            android:text="No SO"
+            android:textColor="#000" />
+
         <View
             android:id="@+id/view1"
-            android:layout_marginTop="10dp"
-            android:layout_below="@+id/txtNoQuantity"
             android:layout_width="fill_parent"
             android:layout_height="1dp"
+            android:layout_marginTop="10dp"
             android:background="#bfbfbf" />
 
         <TextView
             android:id="@+id/txtDateQuantity"
-            android:layout_below="@id/view1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Date"
-            android:layout_marginTop="5dp"
             android:layout_marginLeft="10dp"
-            android:textColor="#000"/>
+            android:layout_marginTop="5dp"
+            android:text="Date"
+            android:textColor="#000" />
+
         <TextView
             android:id="@+id/txtviewDateQuantity"
-            android:layout_below="@+id/txtDateQuantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tanggal"
             android:layout_marginLeft="10dp"
-            android:textColor="#000"/>
+            android:text="Tanggal"
+            android:textColor="#000" />
+
         <View
             android:id="@+id/view2"
-            android:layout_below="@+id/txtviewDateQuantity"
             android:layout_width="fill_parent"
             android:layout_height="1dp"
             android:layout_marginTop="10dp"
@@ -68,99 +69,218 @@
 
         <TextView
             android:id="@+id/txtKet_quantity"
-            android:layout_below="@id/view2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Description"
-            android:layout_marginTop="5dp"
             android:layout_marginLeft="10dp"
-            android:textColor="#000"/>
+            android:layout_marginTop="5dp"
+            android:text="Description"
+            android:textColor="#000" />
+
         <EditText
             android:id="@+id/etKeterangan_quantity"
-            android:layout_below="@+id/txtKet_quantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textMultiLine"
             android:background="@drawable/bg_edtext"
-            android:drawableRight="@mipmap/ic_action_assignment">
+            android:drawableRight="@mipmap/ic_action_assignment"
+            android:ems="10"
+            android:inputType="textMultiLine">
 
             <requestFocus />
         </EditText>
 
         <View
             android:id="@+id/view3"
-            android:layout_below="@+id/etKeterangan_quantity"
             android:layout_width="fill_parent"
             android:layout_height="1dp"
             android:layout_marginTop="10dp"
             android:background="#bfbfbf" />
 
-        <LinearLayout
-            android:background="@drawable/bg_rounded_normal"
-            android:layout_width="wrap_content"
+        <android.support.v7.widget.CardView
+            android:id="@+id/llimgview"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="1"
-                android:text="After"/>
-            <ImageView
-                android:id="@+id/imageAfter1"
-                android:layout_marginLeft="5dp"
-                android:background="@mipmap/ic_maps_local_see"
-                android:layout_width="65dp"
-                android:layout_height="65dp"
-                android:layout_weight="1"/>
-            <ImageView
-                android:id="@+id/imageAfter2"
-                android:layout_marginLeft="5dp"
-                android:background="@mipmap/ic_maps_local_see"
-                android:layout_width="65dp"
-                android:layout_height="65dp"
-                android:layout_weight="1"/>
+            android:layout_marginTop="10dp"
+            android:padding="5dp"
+            app:cardCornerRadius="10dp">
 
-        </LinearLayout>
+            <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/tlAbesen3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#4CAF50"
+                    android:gravity="center_horizontal"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Before"
+                        android:textAlignment="center" />
+                </TableRow>
+
+                <TableRow android:background="#ffffff">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/imageBefore1"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="@mipmap/ic_maps_local_see" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/imageBefore2"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="@mipmap/ic_maps_local_see" />
+                    </LinearLayout>
+
+                </TableRow>
+            </TableLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="5dp"
+            app:cardCornerRadius="10dp">
+
+            <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#4CAF50"
+                    android:gravity="center_horizontal"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="After"
+                        android:textAlignment="center" />
+                </TableRow>
+
+                <TableRow android:background="#ffffff">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/imageAfter1"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="@mipmap/ic_maps_local_see" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/imageAfter2"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="@mipmap/ic_maps_local_see" />
+                    </LinearLayout>
+
+                </TableRow>
+            </TableLayout>
+        </android.support.v7.widget.CardView>
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@drawable/bg_rounded_normal"-->
+        <!--android:gravity="center"-->
+        <!--android:orientation="horizontal">-->
+
+        <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="5dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:text="After" />-->
+
+        <!--<ImageView-->
+        <!--android:id="@+id/imageAfter1"-->
+        <!--android:layout_width="65dp"-->
+        <!--android:layout_height="65dp"-->
+        <!--android:layout_marginLeft="5dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@mipmap/ic_maps_local_see" />-->
+
+        <!--<ImageView-->
+        <!--android:id="@+id/imageAfter2"-->
+        <!--android:layout_width="65dp"-->
+        <!--android:layout_height="65dp"-->
+        <!--android:layout_marginLeft="5dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@mipmap/ic_maps_local_see" />-->
+
+        <!--</LinearLayout>-->
+
         <View
             android:id="@+id/view4"
-            android:layout_below="@+id/etKeterangan_quantity"
             android:layout_width="fill_parent"
             android:layout_height="1dp"
             android:layout_marginTop="10dp"
             android:background="#bfbfbf" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_rounded_normal"
-            android:gravity="center"
-            android:orientation="horizontal">
+        <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@drawable/bg_rounded_normal"-->
+        <!--android:gravity="center"-->
+        <!--android:orientation="horizontal">-->
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="1"
-                android:text="Before"/>
-            <ImageView
-                android:id="@+id/imageBefore1"
-                android:layout_marginLeft="5dp"
-                android:background="@mipmap/ic_maps_local_see"
-                android:layout_width="65dp"
-                android:layout_height="65dp"
-                android:layout_weight="1"/>
-            <ImageView
-                android:id="@+id/imageBefore2"
-                android:layout_marginLeft="5dp"
-                android:background="@mipmap/ic_maps_local_see"
-                android:layout_width="65dp"
-                android:layout_height="65dp"
-                android:layout_weight="1"/>
+        <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="5dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:text="Before" />-->
 
-        </LinearLayout>
+        <!--<ImageView-->
+        <!--android:id="@+id/imageBefore1"-->
+        <!--android:layout_width="65dp"-->
+        <!--android:layout_height="65dp"-->
+        <!--android:layout_marginLeft="5dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@mipmap/ic_maps_local_see" />-->
+
+        <!--<ImageView-->
+        <!--android:id="@+id/imageBefore2"-->
+        <!--android:layout_width="65dp"-->
+        <!--android:layout_height="65dp"-->
+        <!--android:layout_marginLeft="5dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@mipmap/ic_maps_local_see" />-->
+
+        <!--</LinearLayout>-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -170,35 +290,32 @@
 
             <Button
                 android:id="@+id/btnAddQuantity"
-                android:layout_below="@+id/view3"
                 android:layout_width="170dp"
                 android:layout_height="40dp"
-                android:layout_marginTop="3dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="2dp"
                 android:layout_marginRight="5dp"
-                android:textColor="@color/white"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/btn_download_all"
                 android:text="Add Product"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/btn_download_all"/>
+                android:textColor="@color/white" />
 
             <Button
                 android:id="@+id/btnPreviewQuantity"
-                android:layout_below="@+id/view4"
                 android:layout_width="150dp"
                 android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="2dp"
                 android:layout_marginRight="5dp"
+                android:background="@drawable/btn_download_all"
                 android:gravity="center"
-                android:textColor="@color/white"
                 android:text="Save"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/btn_download_all"/>
+                android:textColor="@color/white" />
 
         </LinearLayout>
 
         <View
             android:id="@+id/view5"
-            android:layout_below="@+id/btnPreviewQuantity"
             android:layout_width="fill_parent"
             android:layout_height="1dp"
             android:layout_marginTop="10dp"

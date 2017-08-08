@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,244 +9,274 @@
     android:orientation="vertical"
     tools:context="com.kalbenutritionals.app.kalbespgmobile.FragmentAbsen">
 
-
-    <ScrollView
-        android:id="@+id/scrollViewABsen"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:scrollbars="none">
+        android:orientation="vertical"
+        android:padding="5dp">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="2dp"
+            app:cardUseCompatPadding="true">
 
-            <TextView
-                android:id="@+id/tvBranch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:text="Branch :"
-                android:textColor="#000" />
-
-            <TextView
-                android:id="@+id/txtHDId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="txthdId"
-                android:visibility="gone" />
-
-            <Spinner
-                android:id="@+id/spnType"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvBranch"
-                android:layout_marginTop="2dp"
-                android:background="@drawable/bg_edtext" />
+                android:orientation="vertical"
+                android:padding="5dp">
 
-            <View
-                android:id="@+id/view1"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/spnType"
-                android:layout_marginTop="10dp"
-                android:background="#bfbfbf" />
+                <TextView
+                    android:id="@+id/tvBranch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Branch :"
+                    android:textColor="#000"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tvOutlet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/view1"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:text="Outlet :"
-                android:textColor="#000" />
+                <TextView
+                    android:id="@+id/txtHDId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="txthdId"
+                    android:visibility="gone" />
 
-            <Spinner
-                android:id="@+id/spnOutlet"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tvOutlet"
-                android:layout_marginTop="2dp"
-                android:background="@drawable/bg_edtext" />
-
-            <View
-                android:id="@+id/view2"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/spnOutlet"
-                android:layout_marginTop="10dp"
-                android:background="#bfbfbf" />
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/tlAbesen"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/view2"
-                android:layout_marginTop="10dp"
-                android:padding="5dp"
-                app:cardCornerRadius="10dp">
-
-                <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:id="@+id/tlAbesen2"
+                <Spinner
+                    android:id="@+id/spnType"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvBranch"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/bg_edtext" />
 
-                    <TableRow
-                        android:background="#4CAF50"
-                        android:gravity="center_horizontal"
-                        android:padding="5dp">
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/spnType"
+                    android:layout_marginTop="10dp"
+                    android:background="#bfbfbf" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Position" />
-                    </TableRow>
+                <TextView
+                    android:id="@+id/tvOutlet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/view1"
+                    android:layout_marginTop="10dp"
+                    android:text="Outlet :"
+                    android:textColor="#000"
+                    android:textStyle="bold" />
 
-                    <TableRow
-                        android:background="#ffffff"
-                        android:padding="5dp">
+                <Spinner
+                    android:id="@+id/spnOutlet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvOutlet"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/bg_edtext" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
-                            android:text="" />
+        <!--<View-->
+        <!--android:id="@+id/view2"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:layout_below="@+id/spnOutlet"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:background="#bfbfbf" />-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="My Location" />
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="2dp"
+            app:cardUseCompatPadding="true">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Outlet Location" />
-                    </TableRow>
-
-                    <TableRow
-                        android:background="#ffffff"
-                        android:padding="5dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
-                            android:text="Long" />
-
-                        <TextView
-                            android:id="@+id/tvLong"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="" />
-
-                        <TextView
-                            android:id="@+id/tvLongOutlet"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="" />
-                    </TableRow>
-
-                    <TableRow
-                        android:background="#ffffff"
-                        android:padding="5dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
-                            android:text="Lat" />
-
-                        <TextView
-                            android:id="@+id/tvLat"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="" />
-
-                        <TextView
-                            android:id="@+id/tvLatOutlet"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="" />
-                    </TableRow>
-
-                    <TableRow
-                        android:background="#ffffff"
-                        android:padding="5dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
-                            android:text="Acc" />
-
-                        <TextView
-                            android:id="@+id/tvAcc"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="" />
-
-                        <TextView
-                            android:id="@+id/tvAccOutlet"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="" />
-                    </TableRow>
-
-                    <TableRow
-                        android:background="#ffffff"
-                        android:padding="5dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
-                            android:text="Distance" />
-
-                        <TextView
-                            android:id="@+id/tvDis"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="" />
-
-                        <TextView
-                            android:id="@+id/tvDistance"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="" />
-                    </TableRow>
-                </TableLayout>
-            </android.support.v7.widget.CardView>
-
-            <View
-                android:id="@+id/view3"
+            <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/tlAbesen2"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/tlAbesen"
-                android:layout_marginTop="10dp"
-                android:background="#bfbfbf" />
+                android:layout_height="match_parent">
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/llimgview"
+                <TableRow
+                    android:background="#4CAF50"
+                    android:gravity="center_horizontal"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Location"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+                </TableRow>
+
+                <TableRow
+                    android:background="#ffffff"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="My Location"
+                        android:textColor="#000"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Outlet Location"
+                        android:textColor="#000"
+                        android:textStyle="bold" />
+                </TableRow>
+
+                <TableRow
+                    android:background="#ffffff"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="Long"
+                        android:textColor="#000"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvLong"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/tvLongOutlet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:textColor="@color/black" />
+                </TableRow>
+
+                <TableRow
+                    android:background="#ffffff"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="Lat"
+                        android:textColor="#000"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvLat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/tvLatOutlet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:textColor="@color/black" />
+                </TableRow>
+
+                <TableRow
+                    android:background="#ffffff"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="Acc"
+                        android:textColor="#000"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvAcc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/tvAccOutlet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:textColor="@color/black" />
+                </TableRow>
+
+                <TableRow
+                    android:background="#ffffff"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="Distance"
+                        android:textColor="#000"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvDis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/tvDistance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="" />
+                </TableRow>
+            </TableLayout>
+        </android.support.v7.widget.CardView>
+
+        <!--<View-->
+        <!--android:id="@+id/view3"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:layout_below="@+id/tlAbesen"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:background="#bfbfbf" />-->
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/itemCardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="2dp"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/view3"
-                android:layout_marginTop="10dp"
-                android:padding="5dp"
-                app:cardCornerRadius="10dp">
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true"
+                android:background="@color/red"
+                android:orientation="horizontal">
 
-                <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                <TableLayout
                     android:id="@+id/tlAbesen3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -262,27 +292,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Images"
-                            android:textAlignment="center" />
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
                     </TableRow>
 
 
                     <TableRow
                         android:background="#ffffff"
                         android:padding="5dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
-                            android:text="Image 1"
-                            android:textAlignment="center" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
-                            android:text="Image 2"
-                            android:textAlignment="center" />
 
                     </TableRow>
 
@@ -318,71 +336,55 @@
 
                     </TableRow>
                 </TableLayout>
-            </android.support.v7.widget.CardView>
 
-            <!--<LinearLayout-->
-            <!--android:id="@+id/llimgview"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_below="@+id/view3"-->
-            <!--android:layout_marginTop="10dp"-->
-            <!--android:background="@drawable/bg_rounded_normal"-->
-            <!--android:gravity="center"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:weightSum="3">-->
+            </LinearLayout>
 
-            <!--<TextView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="5dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:text="Image" />-->
+        </android.support.v7.widget.CardView>
 
-            <!--<ImageView-->
-            <!--android:id="@+id/imageViewCamera1"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="5dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="@mipmap/ic_maps_local_see" />-->
+        <!--<LinearLayout-->
+        <!--android:id="@+id/llimgview"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/view3"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:background="@drawable/bg_rounded_normal"-->
+        <!--android:gravity="center"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:weightSum="3">-->
 
-            <!--<ImageView-->
-            <!--android:id="@+id/imageViewCamera2"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="5dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="@mipmap/ic_maps_local_see" />-->
-            <!--</LinearLayout>-->
+        <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="5dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:text="Image" />-->
 
-            <View
-                android:id="@+id/view4"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/btnRefreshMaps"
-                android:layout_marginBottom="10dp"
-                android:background="#bfbfbf" />
+        <!--<ImageView-->
+        <!--android:id="@+id/imageViewCamera1"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="5dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@mipmap/ic_maps_local_see" />-->
 
-            <Button
-                android:id="@+id/buttonCheckIn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/view4"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/btn_download_all"
-                android:text="Check In"
-                android:textColor="@color/white"
-                android:layout_marginBottom="15dp"/>
+        <!--<ImageView-->
+        <!--android:id="@+id/imageViewCamera2"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="5dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@mipmap/ic_maps_local_see" />-->
+        <!--</LinearLayout>-->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btnRefreshMaps"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/llimgview"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/btn_download_all"
@@ -393,12 +395,27 @@
                 android:id="@+id/viewMap"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
+                android:layout_alignBaseline="@+id/btnRefreshMaps"
+                android:layout_alignBottom="@+id/btnRefreshMaps"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignTop="@+id/btnRefreshMaps"
                 android:background="@drawable/btn_download_all"
+                android:gravity="right"
                 android:text="View location on Map"
                 android:textColor="#FFF" />
         </RelativeLayout>
-    </ScrollView>
-</RelativeLayout>
+
+        <Button
+            android:id="@+id/buttonCheckIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/view4"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/btn_download_all"
+            android:text="Check In"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</ScrollView>
