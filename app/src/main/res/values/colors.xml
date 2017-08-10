@@ -30,4 +30,6 @@
     <color name="back_splash">#171b21</color>
 
     <color name="translucte">#8Bbfbfbf</color>
+
+    <color name="background_card_view">#e5e5e5</color>
 </resources>
