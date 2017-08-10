@@ -87,7 +87,7 @@ public class MyServiceNative extends Service{
 			timer.cancel();
 		}
 		timer = new Timer();
-		timer.scheduleAtFixedRate(
+			timer.scheduleAtFixedRate(
 				new TimerTask() {
 					public void run() {
 						try {

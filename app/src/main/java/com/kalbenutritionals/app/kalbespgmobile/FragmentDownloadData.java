@@ -944,7 +944,7 @@ public class FragmentDownloadData extends Fragment {
             List<dataJson> listDataJson = new ArrayList<>();
             dataJson dtdataJson = new dataJson();
             try {
-                new mPriceInOutletBL().DownloadmPriceInOutlet(pInfo.versionName);
+//                new mPriceInOutletBL().DownloadmPriceInOutlet(pInfo.versionName);
 
                 if (ll_subtypeactivity != null && checkVisibility(ll_subtypeactivity)) {
                     Json = new tSubTypeActivityBL().DownloadtSubTypeActivity(pInfo.versionName);
@@ -1066,6 +1066,72 @@ public class FragmentDownloadData extends Fragment {
                     Json = new mTypeSubmissionMobileBL().DownloadTypeSubmission(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
                     SaveDatamTypeSubmissionMobile(Json);
                 }
+
+                dtdataJson.setIntResult("1");
+            } catch (Exception e) {
+                dtdataJson.setIntResult("0");
+                //dtdataJson.setTxtMessage(e.getMessage().toString());
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            listDataJson.add(dtdataJson);
+            return listDataJson;
+        }
+
+        @Override
+        protected void onCancelled() {
+            Dialog.dismiss();
+            new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessCancelRequest, false);
+        }
+
+        private ProgressDialog Dialog = new ProgressDialog(getContext());
+
+        @Override
+        protected void onPostExecute(List<dataJson> listdataJson) {
+            if (listdataJson.get(0).getIntResult().equals("0")) {
+                new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessUnableToConnect, false);
+                Dialog.dismiss();
+
+            } else {
+                loadData();
+                new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
+                Dialog.dismiss();
+                checkingDataTable();
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+            // Make ProgressBar invisible
+            // pg.setVisibility(View.VISIBLE);
+            Dialog.setMessage(new clsHardCode().txtMessGetAllData);
+            Dialog.setCancelable(false);
+//            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    intProcesscancel = 1;
+//                }
+//            });
+            Dialog.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            Dialog.dismiss();
+        }
+
+    }
+
+
+    private class AsyncCallDownloadAllBundleData extends AsyncTask<JSONArray, Void, List<dataJson>> {
+        @Override
+        protected List<dataJson> doInBackground(JSONArray... params) {
+            //android.os.Debug.waitForDebugger();
+            JSONArray Json;
+            List<dataJson> listDataJson = new ArrayList<>();
+            dataJson dtdataJson = new dataJson();
+            try {
+                new mDownloadMasterData_mobileBL().GetBundleMasterAndTransactionAll(pInfo.versionName);
 
                 dtdataJson.setIntResult("1");
             } catch (Exception e) {

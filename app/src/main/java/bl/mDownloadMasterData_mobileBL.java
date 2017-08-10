@@ -6,17 +6,24 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
+import java.util.Iterator;
 import java.util.List;
 
 import library.spgmobile.common.APIData;
 import library.spgmobile.common.clsHelper;
 import library.spgmobile.common.linkAPI;
 import library.spgmobile.common.mDownloadMasterData_mobileData;
+import library.spgmobile.common.mPriceInOutletData;
+import library.spgmobile.common.mconfigData;
 import library.spgmobile.common.tDeviceInfoUserData;
+import library.spgmobile.common.tUserLoginData;
 import library.spgmobile.dal.clsHardCode;
+import library.spgmobile.dal.enumConfigData;
 import library.spgmobile.dal.mDownloadMasterData_mobileDA;
+import library.spgmobile.dal.mPriceInOutletDA;
 import library.spgmobile.dal.mconfigDA;
 import library.spgmobile.dal.tDeviceInfoUserDA;
+import library.spgmobile.dal.tUserLoginDA;
 
 /**
  * Created by ASUS ZE on 02/05/2017.
@@ -77,5 +84,33 @@ public class mDownloadMasterData_mobileBL extends clsMainBL {
         res= _clsHelper.ResultJsonArray(JsonData);
         //String txtParam=
         return res;
+    }
+
+    public void GetBundleMasterAndTransactionAll(String versionName) throws Exception{
+        //ambil linkapi Database sqllite
+        SQLiteDatabase _db=getDb();
+        tUserLoginDA _tUserLoginDA=new tUserLoginDA(_db);
+        mconfigDA _mconfigDA =new mconfigDA(_db);
+        tUserLoginData dttUserLoginData=new tUserLoginBL().getUserActive();
+        String strVal2="";
+        mconfigData dataAPI = _mconfigDA.getData(_db, enumConfigData.ApiKalbe.getidConfigData());
+        strVal2 = dataAPI.get_txtValue();
+        if (dataAPI.get_txtValue() == "") {
+            strVal2 = dataAPI.get_txtDefaultValue();
+        }
+        //ambil version dari webservices
+        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
+        clsHelper _help =new clsHelper();
+        linkAPI dtlinkAPI=new linkAPI();
+        String txtMethod="GetBundleMasterAndTransactionAll";
+        JSONObject resJson = new JSONObject();
+        resJson.put("txtNIK", dttUserLoginData.get_TxtEmpId());
+        dtlinkAPI.set_txtMethod(txtMethod);
+        dtlinkAPI.set_txtParam(_dataUserLogin.get_TxtEmpId()+"|||");
+        dtlinkAPI.set_txtToken(new clsHardCode().txtTokenAPI);
+        dtlinkAPI.set_txtVesion(versionName);
+        String strLinkAPI= dtlinkAPI.QueryString(strVal2);
+        String JsonData= _help.pushtData(strLinkAPI,String.valueOf(resJson), Integer.valueOf(getBackGroundServiceOnline()));
+        org.json.simple.JSONArray JsonArray= _help.ResultJsonArray(JsonData);
     }
 }

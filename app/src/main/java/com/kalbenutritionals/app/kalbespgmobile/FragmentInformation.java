@@ -1,10 +1,14 @@
 package com.kalbenutritionals.app.kalbespgmobile;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -55,6 +59,7 @@ public class FragmentInformation extends Fragment implements View.OnClickListene
     TextView tvUsername, tvBranchOutlet, tvEmail, tv_reso0, tv_reso1, tv_reso2, tv_act0, tv_act1, tv_act2, tv_cb0, tv_cb1, tv_cb2,tv_actV20, tv_actV21, tv_actV22,tv_po0,tv_po1, tv_po2,tv_qs0,tv_qs1, tv_qs2;
     private LinearLayout ll_reso, ll_data_activity, ll_data_activityV2 , ll_data_customerbased, ll_data_customerbasedMTD, ll_purchase_order, ll_dataQuantityStock;
     private TableRow tr_reso, tr_activity, tr_activityV2, tr_cunsomer, tr_po, tr_qStock;
+    LocationManager locationManager;
 
     @Nullable
     @Override
@@ -396,6 +401,22 @@ public class FragmentInformation extends Fragment implements View.OnClickListene
         ivProfile.setOnClickListener(this);
 
         return v;
+    }
+
+    private boolean isGPSEnabled() {
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        // getting GPS status
+        boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        return isGPSEnabled;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(!isGPSEnabled()){
+            final Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivity(intent);
+        }
     }
 
     @Override
