@@ -26,9 +26,11 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -37,6 +39,8 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -84,14 +88,13 @@ public class FragmentKuesioner extends Fragment {
     private Spinner spinner;
     private EditText etTestGet;
     private ListView listView;
-    private LinearLayout linearLayout, layoutDate;
+    private LinearLayout linearLayout, layoutDate, layoutFileQuiz;
+    private ImageView imageView;
     private RadioGroup rgTestGet;
     private EditText dateView;
     clsMainActivity _clsMainActivity;
     private int value, intGroupId;
-    private TextView textView, tvQuiz;
-
-
+    private TextView textView, tvQuiz, tvFileQuiz;
 
     @Nullable
     @Override
@@ -220,6 +223,20 @@ public class FragmentKuesioner extends Fragment {
                             }
                         }
                         listAnswer.add(layoutDate);
+                    }else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("7")){
+                        imageView = (ImageView) v.findViewById(i+1);
+                        listAnswer.add(imageView);
+                    }else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("8")) {
+                        layoutFileQuiz = (LinearLayout) v.findViewById(i+1);
+                        for (int x = 0; x < layoutFileQuiz.getChildCount(); x++) {
+                            View nextChild = layoutFileQuiz.getChildAt(x);
+                            if (nextChild instanceof TextView) {
+                                TextView textView = (TextView) nextChild;
+                                //dateView = (EditText) v.findViewById(linearLayout.getId() * 145);
+                                tvFileQuiz = (TextView) v.findViewById(textView.getId());
+                            }
+                        }
+                        listAnswer.add(layoutFileQuiz);
                     }
                 }
 //                tabLayout.getTabAt(tabLayout.getSelectedTabPosition()).setCustomView(null);
@@ -298,11 +315,25 @@ public class FragmentKuesioner extends Fragment {
                             }
                         }
                         listAnswer.add(layoutDate);
+                    } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("7")){
+                        imageView = (ImageView) v.findViewById(i+1);
+                        listAnswer.add(imageView);
+                    }else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("8")) {
+                        layoutFileQuiz = (LinearLayout) v.findViewById(i+1);
+                        for (int x = 0; x < layoutFileQuiz.getChildCount(); x++) {
+                            View nextChild = layoutFileQuiz.getChildAt(x);
+                            if (nextChild instanceof TextView) {
+                                TextView textView = (TextView) nextChild;
+                                //dateView = (EditText) v.findViewById(linearLayout.getId() * 145);
+                                tvFileQuiz = (TextView) v.findViewById(textView.getId());
+                            }
+                        }
+                        listAnswer.add(layoutFileQuiz);
                     }
                 }
 //                tabLayout.getTabAt(tabLayout.getSelectedTabPosition()).setCustomView(null);
                 int iterator = viewPager.getCurrentItem() - 1;
-//                viewPager.setCurrentItem(iterator);  
+//                viewPager.setCurrentItem(iterator);
                 if (validasi(viewPager.getCurrentItem())){
                     viewPager.setCurrentItem(iterator);
                         tvQuiz.setText("Soal " + HMPertanyaan3.get(HMPertanyaan3.get(dataPertanyaan3.get(iterator))));
@@ -378,6 +409,20 @@ public class FragmentKuesioner extends Fragment {
                             }
                         }
                         listAnswer.add(layoutDate);
+                    }else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("7")){
+                        imageView = (ImageView) v.findViewById(i+1);
+                        listAnswer.add(imageView);
+                    }else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("8")) {
+                        layoutFileQuiz = (LinearLayout) v.findViewById(i+1);
+                        for (int x = 0; x < layoutFileQuiz.getChildCount(); x++) {
+                            View nextChild = layoutFileQuiz.getChildAt(x);
+                            if (nextChild instanceof TextView) {
+                                TextView textView = (TextView) nextChild;
+                                //dateView = (EditText) v.findViewById(linearLayout.getId() * 145);
+                                tvFileQuiz = (TextView) v.findViewById(textView.getId());
+                            }
+                        }
+                        listAnswer.add(layoutFileQuiz);
                     }
                 }
 
@@ -538,9 +583,6 @@ public class FragmentKuesioner extends Fragment {
                             FragmentTransaction fragmentTransactionkuesionerAwal = getFragmentManager().beginTransaction();
                             fragmentTransactionkuesionerAwal.replace(R.id.frame, fragmentKuesionerAwal);
                             fragmentTransactionkuesionerAwal.commit();
-//                            Intent myIntent = new Intent(getContext(), MainMenu.class);
-//                            getActivity().finish();
-//                            startActivity(myIntent);
                         }
                     });
                     alertDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -635,6 +677,20 @@ public class FragmentKuesioner extends Fragment {
                             }
                         }
                     }
+                }else if (layout == layoutFileQuiz) {
+                    for (int z = 0; z < layoutFileQuiz.getChildCount(); z++) {
+                        View nextChild = layoutFileQuiz.getChildAt(z);
+                        if (nextChild instanceof TextView) {
+                            //ini masih ada bug
+                            tvFileQuiz = (TextView) nextChild;
+                            if (tvFileQuiz.getText().toString().equals("no file choosen")) {
+//                                tabLayout.getTabAt(i).setCustomView(tab);
+                                validate = false;
+                            } else {
+//                                tabLayout.getTabAt(i).setCustomView(null);
+                            }
+                        }
+                    }
                 }
             }
             if (jawaban instanceof Spinner) {
@@ -716,9 +772,16 @@ public class FragmentKuesioner extends Fragment {
 //                    tabLayout.getTabAt(i).setCustomView(null);
                 }
             }
+        if (jawaban instanceof ImageView){
+            if ((imageView = (ImageView) jawaban).getBackground() != null){
+                validate = false;
+            }
+        }
         return validate;
     }
     private void SaveQuiz() {
+        int iterrator = 0;
+        int iteratorFile = 0;
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             intGroupId = bundle.getInt("Key_GroupId");
@@ -752,6 +815,8 @@ public class FragmentKuesioner extends Fragment {
                         dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
                         dt.set_intAnswerId(HMJawaban.get(seekbar.getProgress()));
                         dt.set_txtValue(String.valueOf(seekbar.getProgress()));
+                        dt.set_ptQuiz(null);
+                        dt.set_txtFileQuiz(null);
                         dt.set_decBobot("");
                         dt.set_intSubmit("1");
                         dt.set_intSync("0");
@@ -769,6 +834,8 @@ public class FragmentKuesioner extends Fragment {
                 dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
                 dt.set_intAnswerId(HMJawaban.get(spinner.getSelectedItem().toString()));
                 dt.set_txtValue(HMJawaban.get(HMJawaban.get(spinner.getSelectedItem().toString())));
+                dt.set_ptQuiz(null);
+                dt.set_txtFileQuiz(null);
                 dt.set_decBobot("");
                 dt.set_intSubmit("1");
                 dt.set_intSync("0");
@@ -784,6 +851,8 @@ public class FragmentKuesioner extends Fragment {
                 dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
                 dt.set_intAnswerId(HMJawaban.get(editText.getText().toString()));
                 dt.set_txtValue(editText.getText().toString());
+                dt.set_ptQuiz(null);
+                dt.set_txtFileQuiz(null);
                 dt.set_decBobot("");
                 dt.set_intSubmit("1");
                 dt.set_intSync("0");
@@ -804,6 +873,8 @@ public class FragmentKuesioner extends Fragment {
                             dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
                             dt.set_intAnswerId(HMJawaban.get(cbTestGet.getText().toString()));
                             dt.set_txtValue(HMJawaban.get(HMJawaban.get(cbTestGet.getText().toString())));
+                            dt.set_ptQuiz(null);
+                            dt.set_txtFileQuiz(null);
                             dt.set_decBobot("");
                             dt.set_intSubmit("1");
                             dt.set_intSync("0");
@@ -828,6 +899,8 @@ public class FragmentKuesioner extends Fragment {
                             dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
                             dt.set_intAnswerId(HMJawaban.get(radioButton.getText().toString()));
                             dt.set_txtValue(HMJawaban.get(HMJawaban.get(radioButton.getText().toString())));
+                            dt.set_ptQuiz(null);
+                            dt.set_txtFileQuiz(null);
                             dt.set_decBobot("");
                             dt.set_intSubmit("1");
                             dt.set_intSync("0");
@@ -850,12 +923,65 @@ public class FragmentKuesioner extends Fragment {
                         dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
                         dt.set_intAnswerId(HMJawaban.get(dateView.getText().toString()));
                         dt.set_txtValue(dateView.getText().toString());
+                        dt.set_ptQuiz(null);
+                        dt.set_txtFileQuiz(null);
                         dt.set_decBobot("");
                         dt.set_intSubmit("1");
                         dt.set_intSync("0");
                         new tJawabanUserBL().SaveDatatJawabanUser(dt);
                     }
                 }
+            } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("7")) {
+                ImageView imageView = (ImageView) listAnswer.get(i);
+                tJawabanUserData dt7 = new tJawabanUserData();
+//                Bitmap bm=((BitmapDrawable)imageView.getDrawable()).getBitmap();
+//                FragmentKuesionerPart quiz = (FragmentKuesionerPart)
+//                        getActivity().getSupportFragmentManager().findFragmentByTag(FragmentKuesionerPart.class.getName());
+                List<byte[]> photoQuiz = ImagePick.byteQuesioner();
+                        dt7.set_intUserAnswer(new clsMainActivity().GenerateGuid());
+                        dt7.set_intUserId(dataUserActive.get_txtUserId());
+                        dt7.set_intNik(dataUserActive.get_TxtEmpId());
+                        dt7.set_intRoleId(dataUserActive.get_txtRoleId());
+                        dt7.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
+                        dt7.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
+                        dt7.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
+                        dt7.set_intAnswerId(null);
+                        dt7.set_txtValue(ImagePick.getImageName());
+                        dt7.set_ptQuiz(photoQuiz.get(iterrator));
+                        dt7.set_txtFileQuiz(null);
+                        dt7.set_decBobot("");
+                        dt7.set_intSubmit("1");
+                        dt7.set_intSync("0");
+                        new tJawabanUserBL().SaveDatatJawabanUser(dt7);
+                iterrator +=1;
+            }else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("8")) {
+                LinearLayout linearLayout = (LinearLayout) listAnswer.get(i);
+                for (int z = 0; z < linearLayout.getChildCount(); z++) {
+                    View nextChild = linearLayout.getChildAt(z);
+                    if (nextChild instanceof Button) {
+
+                    } else {
+                        tvFileQuiz = (TextView) nextChild;
+                        tJawabanUserData dt7 = new tJawabanUserData();
+                        List<byte[]> fileQuiz = ImagePick.byteQusionerFile();
+                        dt7.set_intUserAnswer(new clsMainActivity().GenerateGuid());
+                        dt7.set_intUserId(dataUserActive.get_txtUserId());
+                        dt7.set_intNik(dataUserActive.get_TxtEmpId());
+                        dt7.set_intRoleId(dataUserActive.get_txtRoleId());
+                        dt7.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
+                        dt7.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
+                        dt7.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
+                        dt7.set_intAnswerId(HMJawaban.get(textView.getText().toString()));
+                        dt7.set_txtValue(tvFileQuiz.getText().toString());
+                        dt7.set_ptQuiz(null);
+                        dt7.set_txtFileQuiz(fileQuiz.get(iteratorFile));
+                        dt7.set_decBobot("");
+                        dt7.set_intSubmit("1");
+                        dt7.set_intSync("0");
+                        new tJawabanUserBL().SaveDatatJawabanUser(dt7);
+                    }
+                }
+                iteratorFile += 1;
             }
         }
     }

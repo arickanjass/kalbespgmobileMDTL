@@ -1,5 +1,6 @@
 package library.spgmobile.dal;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -20,9 +21,10 @@ public class tJawabanUserDA {
         String CREATE_CONTACTS_TABLE = "CREATE TABLE IF NOT EXISTS "
                 + TABLE_CONTACTS + "( " + dt.Property_intUserAnswer + " TEXT PRIMARY KEY,"
                 + dt.Property_intUserId + " TEXT NULL,"  + dt.Property_intNik + " TEXT NULL,"
-                + dt.Property_intRoleId + " TEXT NULL," + dt.Property_intQuestionId + " TEXT NULL," + dt.Property_intTypeQuestionId + " TEXT NULL,"
-                + dt.Property_bolHaveAnswerList + " TEXT NULL," + dt.Property_intAnswerId + " TEXT NULL,"
-                + dt.Property_txtValue + " TEXT NULL," + dt.Property_decBobot + " TEXT NULL,"
+                + dt.Property_intRoleId + " TEXT NULL," + dt.Property_intQuestionId + " TEXT NULL,"
+                + dt.Property_intTypeQuestionId + " TEXT NULL,"+ dt.Property_bolHaveAnswerList + " TEXT NULL,"
+                + dt.Property_intAnswerId + " TEXT NULL," + dt.Property_txtValue + " TEXT NULL,"
+                + dt.Property_ptQuiz + " TEXT NULL,"  + dt.Property_txtFileQuiz + " TEXT NULL," + dt.Property_decBobot + " TEXT NULL,"
                 + dt.Property_intSubmit + " TEXT NULL," + dt.Property_intSync + " TEXT NULL)";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
@@ -31,31 +33,54 @@ public class tJawabanUserDA {
     }
     public void SaveDatatJawabanUser(SQLiteDatabase db, tJawabanUserData data){
         tJawabanUserData dt = new tJawabanUserData();
-        db.execSQL("INSERT OR REPLACE into " + TABLE_CONTACTS + " ("
-                + dt.Property_intUserAnswer + ","
-                + dt.Property_intUserId + ","
-                + dt.Property_intNik + ","
-                + dt.Property_intRoleId + ","
-                + dt.Property_intQuestionId + ","
-                + dt.Property_intTypeQuestionId + ","
-                + dt.Property_bolHaveAnswerList + ","
-                + dt.Property_intAnswerId + ","
-                + dt.Property_txtValue + ","
-                + dt.Property_decBobot + ","
-                + dt.Property_intSubmit  + ","
-                + dt.Property_intSync  + ") " + "values('"
-                + String.valueOf(data.get_intUserAnswer()) + "','"
-                + String.valueOf(data.get_intUserId()) + "','"
-                + String.valueOf(data.get_intNik()) + "','"
-                + String.valueOf(data.get_intRoleId()) + "','"
-                + String.valueOf(data.get_intQuestionId()) + "','"
-                + String.valueOf(data.get_intTypeQuestionId()) + "','"
-                + String.valueOf(data.get_bolHaveAnswerList()) + "','"
-                + String.valueOf(data.get_intAnswerId()) + "','"
-                + String.valueOf(data.get_txtValue()) + "','"
-                + String.valueOf(data.get_decBobot()) + "','"
-                + String.valueOf(data.get_intSubmit()) + "','"
-                + String.valueOf(data.get_intSync()) +"')");
+        ContentValues cv = new ContentValues();
+        cv.put(dt.Property_intUserAnswer, String.valueOf(data.get_intUserAnswer()));
+        cv.put(dt.Property_intUserId, String.valueOf(data.get_intUserId()));
+        cv.put(dt.Property_intNik, String.valueOf(data.get_intNik()));
+        cv.put(dt.Property_intRoleId, String.valueOf(data.get_intRoleId()));
+        cv.put(dt.Property_intQuestionId, String.valueOf(data.get_intQuestionId()));
+        cv.put(dt.Property_intTypeQuestionId, String.valueOf(data.get_intTypeQuestionId()));
+        cv.put(dt.Property_bolHaveAnswerList, String.valueOf(data.get_bolHaveAnswerList()));
+        cv.put(dt.Property_intAnswerId, String.valueOf(data.get_intAnswerId()));
+        cv.put(dt.Property_txtValue, String.valueOf(data.get_txtValue()));
+        cv.put(dt.Property_ptQuiz, data.get_ptQuiz());
+        cv.put(dt.Property_txtFileQuiz, data.get_txtFileQuiz());
+        cv.put(dt.Property_decBobot, String.valueOf(data.get_decBobot()));
+        cv.put(dt.Property_intSubmit, String.valueOf(data.get_intSubmit()));
+        cv.put(dt.Property_intSync, String.valueOf(data.get_intSync()));
+        if (data.get_intAnswerId() == null){
+            db.insert(TABLE_CONTACTS, null, cv);
+        } else {
+            cv.put(dt.Property_intAnswerId, String.valueOf(data.get_intAnswerId()));
+            db.replace(TABLE_CONTACTS, null, cv);
+        }
+//        db.execSQL("INSERT OR REPLACE into " + TABLE_CONTACTS + " ("
+//                + dt.Property_intUserAnswer + ","
+//                + dt.Property_intUserId + ","
+//                + dt.Property_intNik + ","
+//                + dt.Property_intRoleId + ","
+//                + dt.Property_intQuestionId + ","
+//                + dt.Property_intTypeQuestionId + ","
+//                + dt.Property_bolHaveAnswerList + ","
+//                + dt.Property_intAnswerId + ","
+//                + dt.Property_txtValue + ","
+//                + dt.Property_ptQuiz + ","
+//                + dt.Property_decBobot + ","
+//                + dt.Property_intSubmit  + ","
+//                + dt.Property_intSync  + ") " + "values('"
+//                + String.valueOf(data.get_intUserAnswer()) + "','"
+//                + String.valueOf(data.get_intUserId()) + "','"
+//                + String.valueOf(data.get_intNik()) + "','"
+//                + String.valueOf(data.get_intRoleId()) + "','"
+//                + String.valueOf(data.get_intQuestionId()) + "','"
+//                + String.valueOf(data.get_intTypeQuestionId()) + "','"
+//                + String.valueOf(data.get_bolHaveAnswerList()) + "','"
+//                + String.valueOf(data.get_intAnswerId()) + "','"
+//                + String.valueOf(data.get_txtValue()) + "','"
+//                + data.get_ptQuiz() + "','"
+//                + String.valueOf(data.get_decBobot()) + "','"
+//                + String.valueOf(data.get_intSubmit()) + "','"
+//                + String.valueOf(data.get_intSync()) +"')");
     }
     public void DeleteAllDatatJawabanUser(SQLiteDatabase db){
         db.execSQL("DELETE FROM " + TABLE_CONTACTS);
@@ -77,9 +102,13 @@ public class tJawabanUserDA {
                 contact.set_bolHaveAnswerList(cursor.getString(6));
                 contact.set_intAnswerId(cursor.getString(7));
                 contact.set_txtValue(cursor.getString(8));
-                contact.set_decBobot(cursor.getString(9));
-                contact.set_intSubmit(cursor.getString(10));
-                contact.set_intSync(cursor.getString(11));
+                byte[] blob = cursor.getBlob(9);
+                contact.set_ptQuiz(blob);
+                byte[] blobFile = cursor.getBlob(10);
+                contact.set_txtFileQuiz(blobFile);
+                contact.set_decBobot(cursor.getString(11));
+                contact.set_intSubmit(cursor.getString(12));
+                contact.set_intSync(cursor.getString(13));
                 contactList.add(contact);
             }while (cursor.moveToNext());
         }
@@ -103,9 +132,13 @@ public class tJawabanUserDA {
                 contact.set_bolHaveAnswerList(cursor.getString(6));
                 contact.set_intAnswerId(cursor.getString(7));
                 contact.set_txtValue(cursor.getString(8));
-                contact.set_decBobot(cursor.getString(9));
-                contact.set_intSubmit(cursor.getString(10));
-                contact.set_intSync(cursor.getString(11));
+                byte[] blob = cursor.getBlob(9);
+                contact.set_ptQuiz(blob);
+                byte[] blobFile = cursor.getBlob(10);
+                contact.set_txtFileQuiz(blobFile);
+                contact.set_decBobot(cursor.getString(11));
+                contact.set_intSubmit(cursor.getString(12));
+                contact.set_intSync(cursor.getString(13));
                 contactList.add(contact);
             }while (cursor.moveToNext());
         }

@@ -12,6 +12,7 @@ public class tGroupQuestionMappingData {
     private String _intRoleId;
     private String _dtStart;
     private String _dtEnd;
+    private String _txtRepeatQuestion;
     public static final String TABLE_Question = new clsHardCode().txtTable_tGroupQuestionMapping;
     public String get_intRoleId() {
         return _intRoleId;
@@ -52,14 +53,24 @@ public class tGroupQuestionMappingData {
     public void set_txtGroupQuestion(String _txtGroupQuestion) {
         this._txtGroupQuestion = _txtGroupQuestion;
     }
+    public String get_txtRepeatQuestion() {
+        return _txtRepeatQuestion;
+    }
+
+    public void set_txtRepeatQuestion(String _txtRepeatQuestion) {
+        this._txtRepeatQuestion = _txtRepeatQuestion;
+    }
+
     public String Property_intId = "intId";
     public String Property_txtGroupQuestion = "txtGroupQuestion";
     public String Property_intRoleId = "intRoleId";
     public String Property_dtStart = "dtStart";
+    public String Property_txtRepeatQuestion = "txtRepeatQuestion";
     public String Property_dtEnd = "dtEnd";
     public String Property_ListOftGroupQuestionMappingData = "ListOftGroupQuestionMappingData";
-    public String Property_All = Property_intId + "," + Property_txtGroupQuestion + "," + Property_intRoleId + "," + Property_dtStart + "," + Property_dtEnd;
+    public String Property_All = Property_intId + "," + Property_txtGroupQuestion + "," + Property_intRoleId + "," + Property_txtRepeatQuestion  + "," + Property_dtStart + "," + Property_dtEnd;
     public String Property_AllS = TABLE_Question+ "."+ Property_intId + "," + TABLE_Question+ "." + Property_txtGroupQuestion + ","
-            +  TABLE_Question+ "." + Property_intRoleId + "," + TABLE_Question+ "." + Property_dtStart + "," + TABLE_Question+ "." +  Property_dtEnd;
+            +  TABLE_Question+ "." + Property_intRoleId + "," +  TABLE_Question+ "." + Property_txtRepeatQuestion + ","
+            + TABLE_Question+ "." + Property_dtStart + "," + TABLE_Question+ "." +  Property_dtEnd;
     public tGroupQuestionMappingData(){super();}
 }

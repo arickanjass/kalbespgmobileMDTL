@@ -543,6 +543,8 @@ public class dataJson {
                     item.put(dtJawabanUserData.Property_bolHaveAnswerList, String.valueOf(data.get_bolHaveAnswerList()));
                     item.put(dtJawabanUserData.Property_intAnswerId, String.valueOf(data.get_intAnswerId()));
                     item.put(dtJawabanUserData.Property_txtValue, String.valueOf(data.get_txtValue()));
+                    item.put(dtJawabanUserData.Property_ptQuiz, String.valueOf(data.get_ptQuiz()));
+                    item.put(dtJawabanUserData.Property_txtFileQuiz, String.valueOf(data.get_txtFileQuiz()));
                     item.put(dtJawabanUserData.Property_decBobot, String.valueOf(data.get_decBobot()));
                     itemsListJquey.add(item);
                 }

@@ -659,8 +659,17 @@ public class clsHelperBL extends clsMainBL {
             }
 
             if (ListOfJawabanUser != null){
+                for (tJawabanUserData dttJawabanUserData : ListOfJawabanUser) {
+                    if (dttJawabanUserData.get_ptQuiz() != null) {
+                        FileUpload.put("FUQuizMobileNew" + dttJawabanUserData.get_intUserAnswer() + "-1", dttJawabanUserData.get_ptQuiz());
+                    }
+                    if (dttJawabanUserData.get_txtFileQuiz() != null) {
+                        FileUpload.put("FUQuizFileMobileNew" + dttJawabanUserData.get_intUserAnswer() + "-1", dttJawabanUserData.get_txtFileQuiz());
+                    }
+                }
                 dtPush.setListOftJawabanUserData(ListOfJawabanUser);
             }
+
             if (ListOfPurchaseOrderDetail != null){
                 dtPush.setListOftPurchaseOrderDetailData(ListOfPurchaseOrderDetail);
             }

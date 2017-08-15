@@ -23,6 +23,7 @@ public class clsHardCode  {
 	public String txtFolderNotification=txtPathUserData+"Notification"+File.separator;
 	public String txtFolderBrosur=txtPathUserData+"Brosur"+File.separator;
 	public String txtFolderAbsen=txtPathUserData+"Absen"+File.separator;
+	public String txtFolderQuiz=txtPathUserData+"Quiz"+File.separator;
 	public String txtFolderActivity=txtPathUserData+"Activity"+File.separator;
 
 	//namedb

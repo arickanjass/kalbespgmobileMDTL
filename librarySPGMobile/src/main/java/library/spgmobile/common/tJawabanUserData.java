@@ -17,6 +17,24 @@ public class tJawabanUserData {
     private String _intSubmit;
     private String _intSync;
     private String _intNik;
+    private byte[] _ptQuiz;
+    private byte[] _txtFileQuiz;
+
+    public byte[] get_txtFileQuiz() {
+        return _txtFileQuiz;
+    }
+
+    public void set_txtFileQuiz(byte[] _txtFileQuiz) {
+        this._txtFileQuiz = _txtFileQuiz;
+    }
+
+    public byte[] get_ptQuiz() {
+        return _ptQuiz;
+    }
+
+    public void set_ptQuiz(byte[] _ptQuiz) {
+        this._ptQuiz = _ptQuiz;
+    }
 
     public String get_intNik() {
         return _intNik;
@@ -126,9 +144,11 @@ public class tJawabanUserData {
     public String Property_intSubmit = "intSubmit";
     public String Property_intSync = "intSync";
     public String Property_intNik = "intNik";
+    public String Property_ptQuiz = "ptQuiz";
+    public String Property_txtFileQuiz = "txtFileQuiz";
     public String Property_ListOftJawabanUserData = "ListOftJawabanUserData";
     public String Property_All = Property_intUserAnswer + "," + Property_intUserId + "," + Property_intNik + "," + Property_intRoleId + "," + Property_intQuestionId + "," + Property_intTypeQuestionId + "," + Property_bolHaveAnswerList
-            + "," + Property_intAnswerId + "," + Property_txtValue + "," + Property_decBobot + "," + Property_intSubmit + "," + Property_intSync;
+            + "," + Property_intAnswerId + "," + Property_txtValue + "," + Property_ptQuiz + "," + Property_txtFileQuiz + "," + Property_decBobot + "," + Property_intSubmit + "," + Property_intSync;
     public tJawabanUserData(){
         super();
     }

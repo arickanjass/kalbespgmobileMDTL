@@ -2,16 +2,26 @@ package com.kalbenutritionals.app.kalbespgmobile;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.app.VoiceInteractor;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.support.v4.app.Fragment;
+import android.util.AndroidException;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -25,13 +35,23 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 import library.spgmobile.common.jawabanModel;
+import library.spgmobile.dal.clsHardCode;
 
 
 @SuppressLint("ValidFragment")
@@ -42,22 +62,24 @@ public class FragmentKuesionerPart extends Fragment {
     int typeJawaban;
     List<jawabanModel> _jawabanModel;
     ListAdapter myAdapter;
-    TextView textView;
+    TextView textView, tvFile;
     Calendar calendar;
     EditText dateView;
     private int year,month, day;
     DatePickerDialog dialog;
+    private static final int PICK_IMAGE_ID = 1993;
+    private static final int PICK_FILE_ID = 98;
+    ImageView imageView;
+    private Uri uriImage;
+    private static byte[] phtQuiz;
+    clsMainActivity _clsMainActivity = new clsMainActivity();
+    private static final String IMAGE_DIRECTORY_NAME = "Image Quiz";
     public FragmentKuesionerPart(int noSoal, String soal, int typeJawaban, List<jawabanModel> _jawabanModel) {
         this.noSoal = noSoal;
         this.soal = soal;
         this.typeJawaban = typeJawaban;
         this._jawabanModel = _jawabanModel;
         this.kategori = kategori;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -125,7 +147,30 @@ public class FragmentKuesionerPart extends Fragment {
                 rg.addView(rb[i]);
             }
             llMain.addView(rg);
-        } else if(typeJawaban == 5){
+        } else if (typeJawaban == 7){
+           imageView = new ImageView(getContext());
+            imageView.setId(noSoal);
+            imageView.setBackgroundResource(R.drawable.profile);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(200,200);
+            layoutParams.gravity = Gravity.CENTER;
+            layoutParams.topMargin = 20;
+            imageView.setLayoutParams(layoutParams);
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent imagePick = ImagePick.getPickImageIntent(getContext());
+//                    uriImage = getOutputMediaFileUri();
+//                    imagePick.putExtra(MediaStore.EXTRA_OUTPUT, uriImage);
+//                    uriImage = getOutputMediaFileUri();
+//                    Intent intentCamera1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                    intentCamera1.putExtra(MediaStore.EXTRA_OUTPUT, uriImage);
+                    startActivityForResult(imagePick, PICK_IMAGE_ID);
+//                    startActivityForResult(imagePick, PICK_IMAGE_ID);
+                }
+            });
+            llMain.addView(imageView);
+
+        }else if(typeJawaban == 5){
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             LinearLayout linearLayout= new LinearLayout(getContext());
             linearLayout.setId(noSoal);
@@ -162,7 +207,44 @@ public class FragmentKuesionerPart extends Fragment {
 
                 }
             });
-        } else if (typeJawaban == 4){
+        }else if(typeJawaban == 8){
+            LinearLayout linearLayout = new LinearLayout(getContext());
+            linearLayout.setOrientation(LinearLayout.VERTICAL);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            layoutParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL;
+            linearLayout.setLayoutParams(layoutParams);
+            linearLayout.setId(noSoal);
+            tvFile = new TextView(getContext());
+            tvFile.setId(linearLayout.getId()*37);
+            tvFile.setTop(100);
+            tvFile.setBottom(30);
+            tvFile.setText("no file choosen");
+            tvFile.setLayoutParams(layoutParams);
+            Button button = new Button(getContext());
+            button.setId(linearLayout.getId()*88);
+            button.setText("Choose File");
+            button.setLayoutParams(layoutParams);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    Intent pickIntent = new Intent(Intent.ACTION_VIEW,
+//                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//        Intent pickIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                    Intent pickIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                    pickIntent.addCategory(Intent.CATEGORY_OPENABLE);
+//                    pickIntent.setType("application/pdf" + "," + "application/msword");
+//                    pickIntent.setType("application/msword");
+//                    pickIntent.setType("application/vnd.ms-excel");
+//                    pickIntent.setType("application/x-compressed-zip");
+                    pickIntent.setType("application/*");
+                    startActivityForResult(pickIntent, PICK_FILE_ID);
+                }
+            });
+            linearLayout.addView(tvFile);
+            linearLayout.addView(button);
+            llMain.addView(linearLayout);
+        }
+        else if (typeJawaban == 4){
             LinearLayout linearLayout = new LinearLayout(getContext());
             linearLayout.setOrientation(LinearLayout.HORIZONTAL);
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -304,4 +386,73 @@ public class FragmentKuesionerPart extends Fragment {
             holder.checkBox.setTag(state);
             return convertView;
         }}
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case PICK_IMAGE_ID:
+                if (resultCode == -1) {
+                        try {
+                            Bitmap bitmap = ImagePick.getImageFromResult(getContext(), resultCode, data);
+                            byte [] imgQuiz = ImagePick.byteQuiz(bitmap);
+                            ImagePick.byteQuesioner();
+                            previewCapturedImage1(bitmap);
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else if (resultCode == 0) {
+                        _clsMainActivity.showCustomToast(getContext(), "User canceled photo", false);
+                    } else {
+                        _clsMainActivity.showCustomToast(getContext(), "Something error", false);
+                    }
+                break;
+            case PICK_FILE_ID:
+                if (resultCode == -1) {
+                    try {
+                        String fileName = ImagePick.getFileName(getContext(), resultCode, data);
+                        tvFile.setText(fileName);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }else if (resultCode == 0) {
+                    _clsMainActivity.showCustomToast(getContext(), "User canceled take file", false);
+                } else {
+                    _clsMainActivity.showCustomToast(getContext(), "Something error", false);
+                }
+                break;
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+    private void previewCapturedImage1(Bitmap photo) {
+        try {
+            Bitmap bitmap = new clsMainActivity().resizeImageForBlob(photo);
+            imageView.setImageBitmap(bitmap);
+            imageView.setBackgroundResource(0);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(300,300);
+            layoutParams.gravity = Gravity.CENTER;
+            layoutParams.topMargin = 20;
+            imageView.setLayoutParams(layoutParams);
+            ByteArrayOutputStream output = null;
+            try {
+                output = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 0, output); // bmp is your Bitmap instance
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (output != null) {
+                        output.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            phtQuiz = output.toByteArray();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
