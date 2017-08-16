@@ -326,6 +326,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                                 .setCancelable(false)
                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
+                                        ImagePick.deleteMediaStorageDirQuiz();
                                         stopService(new Intent(getApplicationContext(), MyServiceNative.class));
                                         stopService(new Intent(getApplicationContext(), MyTrackingLocationService.class));
                                         MyTrackingLocationService service = new MyTrackingLocationService();

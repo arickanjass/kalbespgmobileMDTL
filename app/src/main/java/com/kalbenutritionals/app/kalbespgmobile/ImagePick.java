@@ -48,16 +48,18 @@ public class ImagePick {
     private static final String TAG = "ImagePicker";
     private static final String TEMP_IMAGE_NAME = "tempImage";
     private static Uri uriImage;
+    private static Uri  path, pathFile;
     private static final String IMAGE_DIRECTORY_NAME = "Image Quiz";
     public static int minWidthQuality = DEFAULT_MIN_WIDTH_QUALITY;
     private static byte[] phtQuiz;
     private static byte[] txtFileQuiz;
-//    static List<byte[]> qzByte = new ArrayList<>();
+    private static String fileName;
+    static List<byte[]> qzByte = new ArrayList<>();
     public static Intent getPickImageIntent(Context context) {
         Intent chooserIntent = null;
 
         List<Intent> intentList = new ArrayList<>();
-        uriImage = getOutputMediaFileUri();
+        uriImage = path;
         Intent pickIntent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 //        Intent pickIntent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -91,7 +93,31 @@ public class ImagePick {
         }
         return list;
     }
-
+    public static Uri getPathForPickImage(String uri){
+        if (uri.length() > 0){
+            path = Uri.parse(uri);
+        }else {
+            path = getOutputMediaFileUri();
+        }
+        return path;
+    }
+    public static Uri getPathForPickFile(String uri){
+        if (uri.length() > 0){
+            pathFile = Uri.parse(uri);
+        }else {
+            pathFile = getOutputMediaFileUpload(fileName);
+        }
+        return pathFile;
+    }
+    public static String showPathFile(){
+        String path = null;
+        if (pathFile != null){
+            path = pathFile.getPath().toString();
+        } else {
+            path = "";
+        }
+        return path;
+    }
     private static Uri getOutputMediaFileUri() {
         return Uri.fromFile(getOutputMediaFile());
     }
@@ -123,7 +149,18 @@ public class ImagePick {
         cursor.moveToFirst();
         return cursor.getString(column_index);
     }
-    private static Uri getOutputMediaFileUpload(String fileName ) {
+    public static void deleteMediaStorageDirQuiz (){
+        File mediaStorageDir = new File(new clsHardCode().txtFolderQuiz + File.separator);
+        if (mediaStorageDir.exists()){
+            if (mediaStorageDir.isDirectory()){
+                for (File currentFile : mediaStorageDir.listFiles()){
+                    currentFile.delete();
+                }
+            }
+            mediaStorageDir.delete();
+        }
+    }
+    public static Uri getOutputMediaFileUpload(String fileName) {
         // External sdcard location
 
         File mediaStorageDir = new File(new clsHardCode().txtFolderQuiz + File.separator);
@@ -134,9 +171,12 @@ public class ImagePick {
                 return null;
             }
         }
-        // Create a media file name
+        // Create a media file name   
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String fileExtension = fileName.substring(fileName.lastIndexOf("."));
+        String fileNameWithoutExtension = fileName.substring(0, fileName.lastIndexOf('.'));
         File mediaFile;
-        mediaFile = new File(mediaStorageDir.getPath() + File.separator + fileName);
+        mediaFile = new File(mediaStorageDir.getPath() + File.separator + fileNameWithoutExtension + timeStamp + fileExtension);
         return  Uri.fromFile(mediaFile);
     }
     public static byte[] byteQuiz(Bitmap photo){
@@ -163,11 +203,6 @@ public class ImagePick {
             e.printStackTrace();
         }return phtQuiz;
     }
-    public static List<byte[]> byteQuesioner(){
-        List<byte[]> qzByte = new ArrayList<>();
-        qzByte.add(phtQuiz);
-        return qzByte;
-    }
     public static byte[] getFile(Uri path, Context mContext) throws FileNotFoundException
     {
         byte[] data = null;
@@ -192,8 +227,6 @@ public class ImagePick {
 
     }
     public static String getFileName(Context context, int resultCode, Intent fileReturnedIntent) throws FileNotFoundException {
-        InputStream in = null;
-        OutputStream out = null;
         Uri uri = fileReturnedIntent.getData();
         String mimeType = context.getContentResolver().getType(uri);
         Cursor returnCursor = context.getContentResolver().query(uri,null, null, null, null);
@@ -201,18 +234,24 @@ public class ImagePick {
         int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
         int sizeIndex = returnCursor.getColumnIndex(OpenableColumns.SIZE);
         returnCursor.moveToFirst();
-        String fileName = null;
         if (resultCode == Activity.RESULT_OK){
             byte[] byteFile = getFile(uri, context);
             if (byteFile.length > 0){
                 fileName = returnCursor.getString(nameIndex);
             }else {
                 fileName = null;
-            }
-            try {
-
+            }}
+//       String lastFile = getOutputMediaFileUpload().getPath().toString() + fileName;
+        //        String fileName = name.substring(name.lastIndexOf('/')+1, name.length());
+        return fileName;
+    }
+    public static void byteQusionerFile(Context context, Intent fileReturnedIntent){
+        InputStream in = null;
+        OutputStream out = null;
+        Uri uri = fileReturnedIntent.getData();
+        try {
                 in = context.getContentResolver().openInputStream(uri);
-                out = new FileOutputStream(getOutputMediaFileUpload(fileName).getPath().toString());
+                out = new FileOutputStream(pathFile.getPath().toString());
 
                 // Transfer bytes from in to out
                 byte[] buf = new byte[1024];
@@ -227,18 +266,7 @@ public class ImagePick {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
 
-//       String lastFile = getOutputMediaFileUpload().getPath().toString() + fileName;
-//        String fileNameWithoutExtension = fileName.substring(0, fileName.lastIndexOf('.'));
-        //        String fileName = name.substring(name.lastIndexOf('/')+1, name.length());
-//        String fileExtension = urlStr.substring(urlStr.lastIndexOf("."));
-        return fileName;
-    }
-    public static List<byte[]> byteQusionerFile(){
-        List<byte[]> qzByte = new ArrayList<>();
-        qzByte.add(txtFileQuiz);
-        return qzByte;
     }
     public static Bitmap getImageFromResult(Context context, int resultCode, Intent imageReturnedIntent) {
         Log.d(TAG, "getImageFromResult, resultCode: " + resultCode);
@@ -285,6 +313,10 @@ public class ImagePick {
 //            bm = rotate(bm, rotation);
               bm = BitmapFactory.decodeFile(selectedImage, bitmapOptions);}
         return bm;
+    }
+    public static String getImagePath(){
+        String path = uriImage.getPath().toString();
+        return path;
     }
     public static String getImageName (){
         String path = uriImage.getPath().toString();

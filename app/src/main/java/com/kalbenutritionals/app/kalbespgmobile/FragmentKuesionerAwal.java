@@ -62,6 +62,7 @@ public class FragmentKuesionerAwal extends Fragment {
 
             listButton.get(i).setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
+                    ImagePick.deleteMediaStorageDirQuiz();
                     Bundle bundle = new Bundle();
 //                        bundle.putInt("key_view", h);
                     getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
