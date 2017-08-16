@@ -170,8 +170,8 @@ public class ImagePick {
                 Log.d(IMAGE_DIRECTORY_NAME, "Failed create " + IMAGE_DIRECTORY_NAME + " directory");
                 return null;
             }
-        }
-        // Create a media file name   
+        }     
+        // Create a media file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
         String fileExtension = fileName.substring(fileName.lastIndexOf("."));
         String fileNameWithoutExtension = fileName.substring(0, fileName.lastIndexOf('.'));
