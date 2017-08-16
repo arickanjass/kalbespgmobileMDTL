@@ -47,11 +47,11 @@ public class tJawabanUserDA {
         cv.put(dt.Property_txtFileQuiz, data.get_txtFileQuiz());
         cv.put(dt.Property_decBobot, String.valueOf(data.get_decBobot()));
         cv.put(dt.Property_intSubmit, String.valueOf(data.get_intSubmit()));
-        cv.put(dt.Property_intSync, String.valueOf(data.get_intSync()));
         if (data.get_intAnswerId() == null){
+            cv.put(dt.Property_intSync, String.valueOf(data.get_intSync()));
             db.insert(TABLE_CONTACTS, null, cv);
         } else {
-            cv.put(dt.Property_intAnswerId, String.valueOf(data.get_intAnswerId()));
+            cv.put(dt.Property_intSync, String.valueOf(data.get_intSync()));
             db.replace(TABLE_CONTACTS, null, cv);
         }
 //        db.execSQL("INSERT OR REPLACE into " + TABLE_CONTACTS + " ("
@@ -104,11 +104,9 @@ public class tJawabanUserDA {
                 contact.set_txtValue(cursor.getString(8));
                 byte[] blob = cursor.getBlob(9);
                 contact.set_ptQuiz(blob);
-                byte[] blobFile = cursor.getBlob(10);
-                contact.set_txtFileQuiz(blobFile);
-                contact.set_decBobot(cursor.getString(11));
-                contact.set_intSubmit(cursor.getString(12));
-                contact.set_intSync(cursor.getString(13));
+                contact.set_decBobot(cursor.getString(10));
+                contact.set_intSubmit(cursor.getString(11));
+                contact.set_intSync(cursor.getString(12));
                 contactList.add(contact);
             }while (cursor.moveToNext());
         }

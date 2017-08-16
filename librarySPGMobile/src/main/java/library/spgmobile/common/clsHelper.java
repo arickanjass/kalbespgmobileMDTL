@@ -154,7 +154,7 @@ public class clsHelper {
 //		}
 		return _clsClsHelper.ResultJsonData(Result);
 	}
-	public String PushDataWithFile(String urlToRead,String DataJson,Integer intTimeOut,HashMap<String,byte[]> ListOfDataFile){
+	public String PushDataWithFile(String urlToRead,String DataJson,Integer intTimeOut,HashMap<clsMappingPushFile,byte[]> ListOfDataFile){
 		String charset = "UTF-8";
 
 		String requestURL = urlToRead;
@@ -173,17 +173,19 @@ public class clsHelper {
 			multipart.addFormField("dataField",DataJson);
 			//multipart.addFormField("keywords", "Java,upload,Spring");
 
-			for(Entry<String, byte[]> entry : ListOfDataFile.entrySet()) {
-				String key = entry.getKey();
+			for(Entry<clsMappingPushFile, byte[]> entry : ListOfDataFile.entrySet()) {
+				clsMappingPushFile key = entry.getKey();
+				String id = key.getKey();
+				String ekstension = key.getEkstension();
 //                String value = entry.getValue();
 
 				byte [] array = entry.getValue();
-				File file = File.createTempFile("image-", ".jpg", new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata"));
+				File file = File.createTempFile("image-", ekstension, new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata"));
 				FileOutputStream out = new FileOutputStream( file );
 				out.write( array );
 				out.close();
 
-				multipart.addFilePart(key, new File(file.getAbsolutePath()));
+				multipart.addFilePart(id, new File(file.getAbsolutePath()));
 			}
 			List<String> response = multipart.finish();
 			//System.out.println("SERVER REPLIED:");

@@ -109,7 +109,7 @@ public class tGroupQuestionMappingDA {
                 contact.set_intRoleId(cursor.getString(2));
                 contact.set_txtRepeatQuestion(cursor.getString(3));
                 contact.set_dtStart(cursor.getString(4));
-                contact.set_dtEnd(cursor.getString(5));  
+                contact.set_dtEnd(cursor.getString(5));
                 contactList.add(contact);
             }while (cursor.moveToNext());
         }
