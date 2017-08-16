@@ -253,6 +253,8 @@ public class FragmentKuesionerPart extends Fragment {
 //                    pickIntent.setType("application/vnd.ms-excel");
 //                    pickIntent.setType("application/x-compressed-zip");
                     pickIntent.setType("application/*");
+                    String[] mimetypes = {"application/pdf" , "application/msword" , "application/vnd.ms-excel"};
+                    pickIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
                     startActivityForResult(pickIntent, PICK_FILE_ID);
                 }
             });
