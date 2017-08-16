@@ -21,6 +21,7 @@ import library.spgmobile.common.clsFileAttach_mobile;
 import library.spgmobile.common.clsHelper;
 import library.spgmobile.common.clsLogReceiverDetail_mobile;
 import library.spgmobile.common.clsLogReceiverHeader_mobile;
+import library.spgmobile.common.clsMappingPushFile;
 import library.spgmobile.common.clsPushData;
 import library.spgmobile.common.dataJson;
 import library.spgmobile.common.linkAPI;
@@ -355,7 +356,7 @@ public class clsHelperBL extends clsMainBL {
     }
 
 
-    public org.json.simple.JSONArray callPushDataReturnJson(String versionName, String strJson, HashMap<String, byte[]> ListOfDataFile) throws Exception {
+    public org.json.simple.JSONArray callPushDataReturnJson(String versionName, String strJson, HashMap<clsMappingPushFile, byte[]> ListOfDataFile) throws Exception {
         SQLiteDatabase _db = getDb();
         Boolean flag = true;
         String ErrorMess = "";
@@ -495,7 +496,7 @@ public class clsHelperBL extends clsMainBL {
         dataJson dtPush = new dataJson();
         SQLiteDatabase db = getDb();
         tUserLoginDA _tUserLoginDA = new tUserLoginDA(db);
-        HashMap<String, byte[]> FileUpload = null;
+        HashMap<clsMappingPushFile, byte[]> FileUpload = null;
         if (_tUserLoginDA.getContactsCount(db) > 0) {
             tUserLoginData _tUserLoginData = _tUserLoginDA.getData(db, 1);
             dtPush.set_txtVersionApp(versionName);
@@ -566,55 +567,79 @@ public class clsHelperBL extends clsMainBL {
             List<clsLogReceiverHeader_mobile> ListOfLogReceiverHeader_mobile = _clsLogReceiverHeader_mobileDA.getAllDataToPushData(db);
             List<clsLogReceiverDetail_mobile> ListOfLogReceiverDetail_mobile = _clsLogReceiverDetail_mobileDA.getAllDataToPushData(db);
 
-            FileUpload = new HashMap<String, byte[]>();
+            FileUpload = new HashMap<clsMappingPushFile, byte[]>();
             if (ListOftAbsenUserData != null) {
                 dtPush.setListOftAbsenUserData(ListOftAbsenUserData);
                 for (tAbsenUserData dttAbsenUserData : ListOftAbsenUserData) {
+                    clsMappingPushFile mappingPushFile = new clsMappingPushFile();
                     if (dttAbsenUserData.get_txtImg1() != null) {
-                        FileUpload.put("FUAbsen" + dttAbsenUserData.get_intId() + "-1", dttAbsenUserData.get_txtImg1());
+                        mappingPushFile.setKey("FUAbsen" + dttAbsenUserData.get_intId() + "-1");
+                        mappingPushFile.setEkstension(".jpg");
+                        FileUpload.put(mappingPushFile, dttAbsenUserData.get_txtImg1());
                     }
                     if (dttAbsenUserData.get_txtImg2() != null) {
-                        FileUpload.put("FUAbsen" + dttAbsenUserData.get_intId() + "-2", dttAbsenUserData.get_txtImg2());
+                        mappingPushFile.setKey("FUAbsen" + dttAbsenUserData.get_intId() + "-2");
+                        mappingPushFile.setEkstension(".jpg");
+                        FileUpload.put(mappingPushFile, dttAbsenUserData.get_txtImg2());
                     }
                 }
             }
             if (ListOftActivityData != null) {
                 dtPush.setListOftActivityData(ListOftActivityData);
                 for (tActivityData dttActivityData : ListOftActivityData) {
+                    clsMappingPushFile mappingPushFile = new clsMappingPushFile();
                     if (dttActivityData.get_txtImg1() != null) {
-                        FileUpload.put("FUActivity" + dttActivityData.get_intId() + "-1", dttActivityData.get_txtImg1());
+                        mappingPushFile.setKey("FUActivity" + dttActivityData.get_intId() + "-1");
+                        mappingPushFile.setEkstension(".jpg");
+                        FileUpload.put(mappingPushFile, dttActivityData.get_txtImg1());
                     }
                     if (dttActivityData.get_txtImg2() != null) {
-                        FileUpload.put("FUActivity" + dttActivityData.get_intId() + "-2", dttActivityData.get_txtImg2());
+                        mappingPushFile.setKey("FUActivity" + dttActivityData.get_intId() + "-2");
+                        mappingPushFile.setEkstension(".jpg");
+                        FileUpload.put(mappingPushFile, dttActivityData.get_txtImg2());
                     }
                 }
             }
             if (ListOftActivityMobileData != null) {
                 dtPush.setListOftActivityMobileData(ListOftActivityMobileData);
                 for (tActivityMobileData dttActivityMobileData : ListOftActivityMobileData) {
+                    clsMappingPushFile mappingPushFile = new clsMappingPushFile();
                     if (dttActivityMobileData.get_txtImg1() != null) {
-                        FileUpload.put("FUActivityMobileNew" + dttActivityMobileData.get_intId() + "-1", dttActivityMobileData.get_txtImg1());
+                        mappingPushFile.setKey("FUActivityMobileNew" + dttActivityMobileData.get_intId() + "-1");
+                        mappingPushFile.setEkstension(".jpg");
+                        FileUpload.put(mappingPushFile, dttActivityMobileData.get_txtImg1());
                     }
                     if (dttActivityMobileData.get_txtImg2() != null) {
-                        FileUpload.put("FUActivityMobileNew" + dttActivityMobileData.get_intId() + "-2", dttActivityMobileData.get_txtImg2());
+                        mappingPushFile.setKey("FUActivityMobileNew" + dttActivityMobileData.get_intId() + "-2");
+                        mappingPushFile.setEkstension(".jpg");
+                        FileUpload.put(mappingPushFile, dttActivityMobileData.get_txtImg2());
                     }
                 }
             }
             if (ListOfSalesProductQuantityImage != null){
                 dtPush.setListOftSalesProductQuantityImageData(ListOfSalesProductQuantityImage);
                 for (tSalesProductQuantityImageData dttQuantityImageData : ListOfSalesProductQuantityImage) {
+                    clsMappingPushFile mappingPushFile = new clsMappingPushFile();
                     if (dttQuantityImageData.get_txtImage() != null) {
                         if (dttQuantityImageData.get_txtType().equals("After") &&  dttQuantityImageData.get_intPosition().equals("1")) {
-                            FileUpload.put("FUQTS" + dttQuantityImageData.get_txtId(), dttQuantityImageData.get_txtImage());
+                            mappingPushFile.setKey("FUQTS" + dttQuantityImageData.get_txtId());
+                            mappingPushFile.setEkstension(".jpg");
+                            FileUpload.put(mappingPushFile, dttQuantityImageData.get_txtImage());
                         }
                         if (dttQuantityImageData.get_txtType().equals("After") &&  dttQuantityImageData.get_intPosition().equals("2")) {
-                            FileUpload.put("FUQTS" + dttQuantityImageData.get_txtId(), dttQuantityImageData.get_txtImage());
+                            mappingPushFile.setKey("FUQTS" + dttQuantityImageData.get_txtId());
+                            mappingPushFile.setEkstension(".jpg");
+                            FileUpload.put(mappingPushFile, dttQuantityImageData.get_txtImage());
                         }
                         if (dttQuantityImageData.get_txtType().equals("Before") &&  dttQuantityImageData.get_intPosition().equals("1")) {
-                            FileUpload.put("FUQTS" + dttQuantityImageData.get_txtId(), dttQuantityImageData.get_txtImage());
+                            mappingPushFile.setKey("FUQTS" + dttQuantityImageData.get_txtId());
+                            mappingPushFile.setEkstension(".jpg");
+                            FileUpload.put(mappingPushFile, dttQuantityImageData.get_txtImage());
                         }
                         if (dttQuantityImageData.get_txtType().equals("Before") &&  dttQuantityImageData.get_intPosition().equals("2")) {
-                            FileUpload.put("FUQTS" + dttQuantityImageData.get_txtId(), dttQuantityImageData.get_txtImage());
+                            mappingPushFile.setKey("FUQTS" + dttQuantityImageData.get_txtId());
+                            mappingPushFile.setEkstension(".jpg");
+                            FileUpload.put(mappingPushFile, dttQuantityImageData.get_txtImage());
                         }
                     }
                 }
@@ -622,23 +647,33 @@ public class clsHelperBL extends clsMainBL {
             if (ListOfKoordinasiOutletImage != null){
                 dtPush.setListOfKoordinasiOutletImageData(ListOfKoordinasiOutletImage);
                 for (KoordinasiOutletImageData dttKoordinasiOutletImageData : ListOfKoordinasiOutletImage) {
+                    clsMappingPushFile mappingPushFile = new clsMappingPushFile();
                     if (dttKoordinasiOutletImageData.get_txtImage() != null) {
                         if (dttKoordinasiOutletImageData.get_intPosition().equals("1")) {
-                            FileUpload.put("FUKDO" + dttKoordinasiOutletImageData.get_txtId(), dttKoordinasiOutletImageData.get_txtImage());
+                            mappingPushFile.setKey("FUKDO" + dttKoordinasiOutletImageData.get_txtId());
+                            mappingPushFile.setEkstension(".jpg");
+                            FileUpload.put(mappingPushFile, dttKoordinasiOutletImageData.get_txtImage());
                         }
                         if (dttKoordinasiOutletImageData.get_intPosition().equals("2")) {
-                            FileUpload.put("FUKDO" + dttKoordinasiOutletImageData.get_txtId(), dttKoordinasiOutletImageData.get_txtImage());
+                            mappingPushFile.setKey("FUKDO" + dttKoordinasiOutletImageData.get_txtId());
+                            mappingPushFile.setEkstension(".jpg");
+                            FileUpload.put(mappingPushFile, dttKoordinasiOutletImageData.get_txtImage());
                         }
                     }
                 }
             }
             if (ListOftVisitPlanRealisasiDataDetail != null){
                 for (tVisitPlanRealisasiData dttVisitPlanRealisasiData : ListOftVisitPlanRealisasiDataDetail) {
+                    clsMappingPushFile mappingPushFile = new clsMappingPushFile();
                     if (dttVisitPlanRealisasiData.get_dtPhoto1() != null) {
-                        FileUpload.put("VisitPlan" + dttVisitPlanRealisasiData.get_txtDataIDRealisasi() + "-1", dttVisitPlanRealisasiData.get_dtPhoto1());
+                        mappingPushFile.setKey("VisitPlan" + dttVisitPlanRealisasiData.get_txtDataIDRealisasi() + "-1");
+                        mappingPushFile.setEkstension(".jpg");
+                        FileUpload.put(mappingPushFile, dttVisitPlanRealisasiData.get_dtPhoto1());
                     }
                     if (dttVisitPlanRealisasiData.get_dtPhoto2() != null) {
-                        FileUpload.put("VisitPlan" + dttVisitPlanRealisasiData.get_txtDataIDRealisasi() + "-2", dttVisitPlanRealisasiData.get_dtPhoto2());
+                        mappingPushFile.setKey("VisitPlan" + dttVisitPlanRealisasiData.get_txtDataIDRealisasi() + "-2");
+                        mappingPushFile.setEkstension(".jpg");
+                        FileUpload.put(mappingPushFile, dttVisitPlanRealisasiData.get_dtPhoto2());
                     }
                 }
                 dtPush.setListOftVisitPlanRealisasiData(ListOftVisitPlanRealisasiDataDetail);
@@ -660,11 +695,16 @@ public class clsHelperBL extends clsMainBL {
 
             if (ListOfJawabanUser != null){
                 for (tJawabanUserData dttJawabanUserData : ListOfJawabanUser) {
+                    clsMappingPushFile mappingPushFile = new clsMappingPushFile();
                     if (dttJawabanUserData.get_ptQuiz() != null) {
-                        FileUpload.put("FUQuizMobileNew" + dttJawabanUserData.get_intUserAnswer() + "-1", dttJawabanUserData.get_ptQuiz());
+                        mappingPushFile.setKey("FUQuizMobileNew" + dttJawabanUserData.get_intUserAnswer() + "-1");
+                        mappingPushFile.setEkstension(".jpg");
+                        FileUpload.put(mappingPushFile, dttJawabanUserData.get_ptQuiz());
                     }
                     if (dttJawabanUserData.get_txtFileQuiz() != null) {
-                        FileUpload.put("FUQuizFileMobileNew" + dttJawabanUserData.get_intUserAnswer() + "-1", dttJawabanUserData.get_txtFileQuiz());
+                        mappingPushFile.setKey("FUQuizFileMobileNew" + dttJawabanUserData.get_intUserAnswer() + "-1");
+                        mappingPushFile.setEkstension(".xls");
+                        FileUpload.put(mappingPushFile, dttJawabanUserData.get_txtFileQuiz());
                     }
                 }
                 dtPush.setListOftJawabanUserData(ListOfJawabanUser);
