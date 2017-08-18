@@ -851,6 +851,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                                 System.gc();
                             }
                         }
+                        ImagePick.deleteMediaStorageDirQuiz();;
                         stopService(new Intent(getApplicationContext(), MyServiceNative.class));
                         stopService(new Intent(getApplicationContext(), MyTrackingLocationService.class));
                         MyTrackingLocationService service = new MyTrackingLocationService();
