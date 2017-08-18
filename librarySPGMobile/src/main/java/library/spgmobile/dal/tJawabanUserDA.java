@@ -52,35 +52,11 @@ public class tJawabanUserDA {
             db.insert(TABLE_CONTACTS, null, cv);
         } else {
             cv.put(dt.Property_intSync, String.valueOf(data.get_intSync()));
+            cv.put(dt.Property_intUserId, String.valueOf(data.get_intUserId()));
+            cv.put(dt.Property_intRoleId, String.valueOf(data.get_intRoleId()));
+            cv.put(dt.Property_intQuestionId, String.valueOf(data.get_intQuestionId()));
             db.replace(TABLE_CONTACTS, null, cv);
         }
-//        db.execSQL("INSERT OR REPLACE into " + TABLE_CONTACTS + " ("
-//                + dt.Property_intUserAnswer + ","
-//                + dt.Property_intUserId + ","
-//                + dt.Property_intNik + ","
-//                + dt.Property_intRoleId + ","
-//                + dt.Property_intQuestionId + ","
-//                + dt.Property_intTypeQuestionId + ","
-//                + dt.Property_bolHaveAnswerList + ","
-//                + dt.Property_intAnswerId + ","
-//                + dt.Property_txtValue + ","
-//                + dt.Property_ptQuiz + ","
-//                + dt.Property_decBobot + ","
-//                + dt.Property_intSubmit  + ","
-//                + dt.Property_intSync  + ") " + "values('"
-//                + String.valueOf(data.get_intUserAnswer()) + "','"
-//                + String.valueOf(data.get_intUserId()) + "','"
-//                + String.valueOf(data.get_intNik()) + "','"
-//                + String.valueOf(data.get_intRoleId()) + "','"
-//                + String.valueOf(data.get_intQuestionId()) + "','"
-//                + String.valueOf(data.get_intTypeQuestionId()) + "','"
-//                + String.valueOf(data.get_bolHaveAnswerList()) + "','"
-//                + String.valueOf(data.get_intAnswerId()) + "','"
-//                + String.valueOf(data.get_txtValue()) + "','"
-//                + data.get_ptQuiz() + "','"
-//                + String.valueOf(data.get_decBobot()) + "','"
-//                + String.valueOf(data.get_intSubmit()) + "','"
-//                + String.valueOf(data.get_intSync()) +"')");
     }
     public void DeleteAllDatatJawabanUser(SQLiteDatabase db){
         db.execSQL("DELETE FROM " + TABLE_CONTACTS);

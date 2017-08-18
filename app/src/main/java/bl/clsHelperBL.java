@@ -733,13 +733,17 @@ public class clsHelperBL extends clsMainBL {
                 for (tJawabanUserData dttJawabanUserData : ListOfJawabanUser) {
                     clsMappingPushFile mappingPushFile = new clsMappingPushFile();
                     if (dttJawabanUserData.get_ptQuiz() != null) {
+                        String fileName = dttJawabanUserData.get_txtValue();
+                        String fileExtension = fileName.substring(fileName.lastIndexOf("."));
                         mappingPushFile.setKey("FUQuizMobileNew" + dttJawabanUserData.get_intUserAnswer() + "-1");
-                        mappingPushFile.setEkstension(".jpg");
+                        mappingPushFile.setEkstension(fileExtension);
                         FileUpload.put(mappingPushFile, dttJawabanUserData.get_ptQuiz());
                     }
                     if (dttJawabanUserData.get_txtFileQuiz() != null) {
-                        mappingPushFile.setKey("FUQuizFileMobileNew" + dttJawabanUserData.get_intUserAnswer() + "-1");
-                        mappingPushFile.setEkstension(".xls");
+                        String fileName = dttJawabanUserData.get_txtValue();
+                        String fileExtension = fileName.substring(fileName.lastIndexOf("."));
+                        mappingPushFile.setKey("FUQuizFileMobileNew" + dttJawabanUserData.get_intUserAnswer() + "-2");
+                        mappingPushFile.setEkstension(fileExtension);
                         FileUpload.put(mappingPushFile, dttJawabanUserData.get_txtFileQuiz());
                     }
                 }

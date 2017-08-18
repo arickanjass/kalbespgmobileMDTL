@@ -65,6 +65,7 @@ import bl.tCustomerBasedMobileDetailBL;
 import bl.tCustomerBasedMobileDetailProductBL;
 import bl.tCustomerBasedMobileHeaderBL;
 import bl.tGroupQuestionMappingBL;
+import bl.tJawabanUserBL;
 import bl.tLeaveMobileBL;
 import bl.tPlanogramMobileBL;
 import bl.tPurchaseOrderHeaderBL;
@@ -104,6 +105,7 @@ import library.spgmobile.common.tCustomerBasedMobileDetailData;
 import library.spgmobile.common.tCustomerBasedMobileDetailProductData;
 import library.spgmobile.common.tCustomerBasedMobileHeaderData;
 import library.spgmobile.common.tGroupQuestionMappingData;
+import library.spgmobile.common.tJawabanUserData;
 import library.spgmobile.common.tLeaveMobileData;
 import library.spgmobile.common.tPlanogramImageData;
 import library.spgmobile.common.tPlanogramMobileData;
@@ -3580,6 +3582,16 @@ public class FragmentDownloadData extends Fragment {
                         new mTypePertanyaanBL().SaveData(_data);
                     }
 
+                    JSONArray jsonArray_jawabanSPG = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListDataJawabanSPG_mobile")));
+                    for (Object aJsonArray_jawabanSPG : jsonArray_jawabanSPG ){
+                        tJawabanUserData _data = new tJawabanUserData();
+                        JSONObject innerObj_JawabanSPG = (JSONObject) aJsonArray_jawabanSPG ;
+                        _data .set_intUserAnswer(String.valueOf(innerObj_JawabanSPG.get("IntJawabanSPG")));
+                        _data .set_intQuestionId(String.valueOf(innerObj_JawabanSPG.get("IntQuestionId"))) ;
+                        _data .set_intRoleId(String.valueOf(innerObj_JawabanSPG.get("IntRoleId"))) ;
+                        _data .set_intUserId(String.valueOf(innerObj_JawabanSPG.get("IntUserId"))) ;
+                        new tJawabanUserBL().SaveDatatJawabanUser(_data);
+                    }
                 } else {
                     new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
                 }

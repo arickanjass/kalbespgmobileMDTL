@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -48,7 +47,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
 
 import bl.clsHelperBL;
@@ -61,7 +59,6 @@ import bl.tUserLoginBL;
 import bl.tVisitPlanRealisasiBL;
 import come.example.viewbadger.ShortcutBadger;
 import de.hdodenhof.circleimageview.CircleImageView;
-import library.spgmobile.common.APIData;
 import library.spgmobile.common.clsPushData;
 import library.spgmobile.common.mMenuData;
 import library.spgmobile.common.tAbsenUserData;
@@ -329,6 +326,10 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                                 .setCancelable(false)
                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
+                                        stopService(new Intent(getApplicationContext(), MyServiceNative.class));
+                                        stopService(new Intent(getApplicationContext(), MyTrackingLocationService.class));
+                                        MyTrackingLocationService service = new MyTrackingLocationService();
+                                        service.shutdownService();
                                         AsyncCallLogOut task = new AsyncCallLogOut();
                                         task.execute();
                                     }
@@ -750,7 +751,6 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
             JSONArray Json = null;
 
             try {
-                boolean validPush = false;
                 List<tAbsenUserData> listAbsenData = new ArrayList<>();
                 tAbsenUserData dtTabsenData = new tAbsenUserBL().getDataCheckInActive();
                 if (dtTabsenData != null) {
@@ -768,9 +768,9 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                     e2.printStackTrace();
                 }
                 clsPushData dtJson = new clsHelperBL().pushData(versionName);
-                JSONArray Jresult = null;
                 if (dtJson != null) {
                     try {
+                        JSONArray Jresult = null;
                         if (dtJson.getDtdataJson().getListOftAbsenUserData() != null) {
                             List<tAbsenUserData> listAbsen = dtJson.getDtdataJson().getListOftAbsenUserData();
                             if (listAbsen.get(0).get_txtAbsen().equals("0")) {
@@ -785,20 +785,6 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                         e.printStackTrace();
                     }
 
-                    if(Jresult!=null){
-                        APIData dtAPIDATA = new APIData();
-                        Iterator i = Jresult.iterator();
-                        while (i.hasNext()) {
-                            org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
-                            int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
-                            if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
-                                validPush = true;
-                            } else {
-                                validPush = false;
-                                break;
-                            }
-                        }
-                    }
                 }
 
                 try {
@@ -808,13 +794,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                     e2.printStackTrace();
                 }
 
-                if(validPush){
-                    Json = new tUserLoginBL().Logout(pInfo.versionName);
-                } else if (Jresult==null){
-                    Json = new tUserLoginBL().Logout(pInfo.versionName);
-                } else {
-                    Json = Jresult;
-                }
+                Json = new tUserLoginBL().Logout(pInfo.versionName);
             } catch (ParseException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -852,10 +832,6 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                                 System.gc();
                             }
                         }
-                        stopService(new Intent(getApplicationContext(), MyServiceNative.class));
-                        stopService(new Intent(getApplicationContext(), MyTrackingLocationService.class));
-                        MyTrackingLocationService service = new MyTrackingLocationService();
-                        service.shutdownService();
                         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                         notificationManager.cancelAll();
                         new clsHelperBL().DeleteAllDB();
@@ -863,11 +839,10 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                         Intent nextScreen = new Intent(MainMenu.this, Splash.class);
                         startActivity(nextScreen);
                     } else {
-                        _clsMainActivity.showCustomToast(getApplicationContext(), PstrMessage, false);
-//                        Toast toast = Toast.makeText(MainMenu.this,
-//                                PstrMessage, Toast.LENGTH_LONG);
-//                        toast.setGravity(Gravity.TOP, 25, 400);
-//                        toast.show();
+                        Toast toast = Toast.makeText(MainMenu.this,
+                                PstrMessage, Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.TOP, 25, 400);
+                        toast.show();
                     }
                 }
 

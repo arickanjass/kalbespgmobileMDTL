@@ -62,7 +62,7 @@ public class FragmentKuesionerPart extends Fragment {
     int typeJawaban;
     List<jawabanModel> _jawabanModel;
     ListAdapter myAdapter;
-    TextView textView, tvFile;
+    TextView textView, tvFile, tvImg, tvPathFile;
     Calendar calendar;
     EditText dateView;
     private int year,month, day;
@@ -148,16 +148,29 @@ public class FragmentKuesionerPart extends Fragment {
             }
             llMain.addView(rg);
         } else if (typeJawaban == 7){
-           imageView = new ImageView(getContext());
-            imageView.setId(noSoal);
+            LinearLayout linearLayout = new LinearLayout(getContext());
+            linearLayout.setOrientation(LinearLayout.VERTICAL);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            layoutParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL;
+            linearLayout.setLayoutParams(layoutParams);
+            linearLayout.setId(noSoal);
+            imageView = new ImageView(getContext());
+            imageView.setId(linearLayout.getId()*77);
             imageView.setBackgroundResource(R.drawable.profile);
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(200,200);
+            LinearLayout.LayoutParams layoutParamImg = new LinearLayout.LayoutParams(200,200);
             layoutParams.gravity = Gravity.CENTER;
             layoutParams.topMargin = 20;
-            imageView.setLayoutParams(layoutParams);
+            imageView.setLayoutParams(layoutParamImg);
+            tvImg  = new TextView(getContext());
+            tvImg.setId(linearLayout.getId()*37);
+            tvImg.setTop(100);
+            tvImg.setBottom(30);
+            tvImg.setLayoutParams(layoutParams);
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    String path = tvImg.getText().toString();
+                    ImagePick.getPathForPickImage(path);
                     Intent imagePick = ImagePick.getPickImageIntent(getContext());
 //                    uriImage = getOutputMediaFileUri();
 //                    imagePick.putExtra(MediaStore.EXTRA_OUTPUT, uriImage);
@@ -168,7 +181,9 @@ public class FragmentKuesionerPart extends Fragment {
 //                    startActivityForResult(imagePick, PICK_IMAGE_ID);
                 }
             });
-            llMain.addView(imageView);
+            linearLayout.addView(imageView);
+            linearLayout.addView(tvImg);
+            llMain.addView(linearLayout);
 
         }else if(typeJawaban == 5){
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -216,14 +231,15 @@ public class FragmentKuesionerPart extends Fragment {
             linearLayout.setId(noSoal);
             tvFile = new TextView(getContext());
             tvFile.setId(linearLayout.getId()*37);
-            tvFile.setTop(100);
-            tvFile.setBottom(30);
             tvFile.setText("no file choosen");
             tvFile.setLayoutParams(layoutParams);
             Button button = new Button(getContext());
             button.setId(linearLayout.getId()*88);
             button.setText("Choose File");
             button.setLayoutParams(layoutParams);
+            tvPathFile = new TextView(getContext());
+            tvPathFile.setId(linearLayout.getId()*63);
+            tvPathFile.setLayoutParams(layoutParams);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -237,11 +253,14 @@ public class FragmentKuesionerPart extends Fragment {
 //                    pickIntent.setType("application/vnd.ms-excel");
 //                    pickIntent.setType("application/x-compressed-zip");
                     pickIntent.setType("application/*");
+                    String[] mimetypes = {"application/pdf" , "application/msword" , "application/vnd.ms-excel"};
+                    pickIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
                     startActivityForResult(pickIntent, PICK_FILE_ID);
                 }
             });
             linearLayout.addView(tvFile);
             linearLayout.addView(button);
+            linearLayout.addView(tvPathFile);
             llMain.addView(linearLayout);
         }
         else if (typeJawaban == 4){
@@ -393,8 +412,8 @@ public class FragmentKuesionerPart extends Fragment {
                 if (resultCode == -1) {
                         try {
                             Bitmap bitmap = ImagePick.getImageFromResult(getContext(), resultCode, data);
-                            byte [] imgQuiz = ImagePick.byteQuiz(bitmap);
-                            ImagePick.byteQuesioner();
+                            tvImg.setText(ImagePick.getImagePath());
+                            tvImg.setVisibility(View.INVISIBLE);
                             previewCapturedImage1(bitmap);
 
                         } catch (Exception e) {
@@ -410,7 +429,11 @@ public class FragmentKuesionerPart extends Fragment {
                 if (resultCode == -1) {
                     try {
                         String fileName = ImagePick.getFileName(getContext(), resultCode, data);
+                        ImagePick.getPathForPickFile(tvPathFile.getText().toString());
+                        ImagePick.byteQusionerFile(getContext(), data);
                         tvFile.setText(fileName);
+                        tvPathFile.setText(ImagePick.showPathFile());
+                        tvPathFile.setVisibility(View.INVISIBLE);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
