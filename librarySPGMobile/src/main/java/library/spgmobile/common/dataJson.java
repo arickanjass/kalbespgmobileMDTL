@@ -904,6 +904,42 @@ public class dataJson {
                 resJson.put(dttActivityMobileData.Property_ListOfTActivityMobile, new JSONArray(itemsListJquey));
             }
 
+            if (this.getListOftPlanogramMobileData() != null) {
+                tPlanogramMobileData dttPlanogramMobileData = new tPlanogramMobileData();
+                itemsListJquey = new ArrayList<JSONObject>();
+                for (tPlanogramMobileData data : this.getListOftPlanogramMobileData()) {
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dttPlanogramMobileData.Property_txtIdPlanogram, String.valueOf(data.get_txtIdPlanogram()));
+                    item1.put(dttPlanogramMobileData.Property_txtNIK, String.valueOf(data.get_txtNIK()));
+                    item1.put(dttPlanogramMobileData.Property_intId, String.valueOf(data.get_intId()));
+                    item1.put(dttPlanogramMobileData.Property_txtKeterangan, String.valueOf(data.get_txtKeterangan()));
+                    item1.put(dttPlanogramMobileData.Property_txtDate, String.valueOf(data.get_dtDate()));
+                    item1.put(dttPlanogramMobileData.Property_OutletCode, String.valueOf(data.get_OutletCode()));
+                    item1.put(dttPlanogramMobileData.Property_OutletName, String.valueOf(data.get_OutletName()));
+                    item1.put(dttPlanogramMobileData.Property_txtBranchCode, String.valueOf(data.get_txtBranchCode()));
+                    item1.put(dttPlanogramMobileData.Property_txtBranchName, String.valueOf(data.get_txtBranchName()));
+                    item1.put(dttPlanogramMobileData.Property_UserId, String.valueOf(data.get_UserId()));
+                    item1.put(dttPlanogramMobileData.Property_txtRoleId, String.valueOf(data.get_txtRoleId()));
+                    itemsListJquey.add(item1);
+                }
+                resJson.put(dttPlanogramMobileData.Property_ListOftPlanogramMobileData, new JSONArray(itemsListJquey));
+            }
+
+            if (this.getListOftPlanogramImageData() != null) {
+                tPlanogramImageData dttPlanogramImageData = new tPlanogramImageData();
+                itemsListJquey = new ArrayList<JSONObject>();
+                for (tPlanogramImageData data : this.getListOftPlanogramImageData()) {
+                    JSONObject item = new JSONObject();
+                    item.put(dttPlanogramImageData.Property_txtId, String.valueOf(data.get_txtId()));
+                    item.put(dttPlanogramImageData.Property_txtHeaderId, String.valueOf(data.get_txtHeaderId()));
+                    item.put(dttPlanogramImageData.Property_txtImage, String.valueOf(data.get_txtImage()));
+                    item.put(dttPlanogramImageData.Property_intPosition, String.valueOf(data.get_intPosition()));
+                    item.put(dttPlanogramImageData.Property_txtType, String.valueOf(data.get_txtType()));
+                    itemsListJquey.add(item);
+                }
+                resJson.put(dttPlanogramImageData.Property_ListOftPlanogramImageData, new JSONArray(itemsListJquey));
+            }
+
             if (this.getListOfmProductBrandHeaderData() != null) {
                 mProductBrandHeaderData dtmProductBrandHeaderData = new mProductBrandHeaderData();
                 itemsListJquey = new ArrayList<JSONObject>();
@@ -1119,9 +1155,11 @@ public class dataJson {
     private List<tPurchaseOrderDetailData> ListOftPurchaseOrderDetailData;
     private List<tSalesProductQuantityDetailData> ListOftSalesProductQuantityDetailData;
     private List<tSalesProductQuantityImageData> ListOftSalesProductQuantityImageData;
+    private List<tPlanogramImageData> ListOftPlanogramImageData;
     private List<tPurchaseOrderHeaderData> ListOftPurchaseOrderHeaderData;
     private List<tJawabanUserData> ListOftJawabanUserData;
     private List<tSalesProductQuantityHeaderData> ListOftSalesProductQuantityData;
+    private List<tPlanogramMobileData> ListOftPlanogramMobileData;
     private List<tCustomerBasedMobileHeaderData> ListOftCustomerBasedMobileHeaderData;
     private List<tCustomerBasedMobileDetailData> ListOftCustomerBasedMobileDetailData;
     private List<tCustomerBasedMobileDetailProductData> ListOftCustomerBasedMobileDetailProductData;
@@ -1130,6 +1168,25 @@ public class dataJson {
     private List<trackingLocationData> ListOfTrackingLocationData;
     private List<KoordinasiOutletData> ListOfKoordinasiOutletData;
     private List<KoordinasiOutletImageData> ListOfKoordinasiOutletImageData;
+
+
+
+    public List<tPlanogramMobileData> getListOftPlanogramMobileData() {
+        return ListOftPlanogramMobileData;
+    }
+
+    public void setListOftPlanogramMobileData(List<tPlanogramMobileData> listOftPlanogramMobileData) {
+        ListOftPlanogramMobileData = listOftPlanogramMobileData;
+    }
+
+
+    public List<tPlanogramImageData> getListOftPlanogramImageData() {
+        return ListOftPlanogramImageData;
+    }
+
+    public void setListOftPlanogramImageData(List<tPlanogramImageData> listOftPlanogramImageData) {
+        ListOftPlanogramImageData = listOftPlanogramImageData;
+    }
 
     public List<clsLogReceiverHeader_mobile> getListOfLogReceiverHeader_mobile() {
         return ListOfLogReceiverHeader_mobile;

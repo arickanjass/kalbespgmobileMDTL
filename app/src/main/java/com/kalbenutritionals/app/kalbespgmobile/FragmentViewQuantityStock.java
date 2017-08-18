@@ -418,7 +418,7 @@ public class FragmentViewQuantityStock extends Fragment implements IXListViewLis
             if (imgFile4 != null) {
                 if (imgDt.get_txtType().equals("Before") && imgDt.get_intPosition().equals("2")) {
                     mybitmap4 = BitmapFactory.decodeByteArray(imgFile4, 0, imgFile4.length);
-                    Bitmap bitmap = Bitmap.createScaledBitmap(mybitmap1, 150, 150, true);
+                    Bitmap bitmap = Bitmap.createScaledBitmap(mybitmap4, 150, 150, true);
                     img4.setImageBitmap(bitmap);
 
                     File file = null;

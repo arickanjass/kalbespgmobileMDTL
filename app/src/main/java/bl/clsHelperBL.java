@@ -37,6 +37,8 @@ import library.spgmobile.common.tJawabanUserData;
 import library.spgmobile.common.tLeaveMobileData;
 import library.spgmobile.common.tLogErrorData;
 import library.spgmobile.common.tNotificationData;
+import library.spgmobile.common.tPlanogramImageData;
+import library.spgmobile.common.tPlanogramMobileData;
 import library.spgmobile.common.tPurchaseOrderDetailData;
 import library.spgmobile.common.tPurchaseOrderHeaderData;
 import library.spgmobile.common.tSalesProductDetailData;
@@ -67,6 +69,8 @@ import library.spgmobile.dal.tCustomerBasedMobileHeaderDA;
 import library.spgmobile.dal.tJawabanUserDA;
 import library.spgmobile.dal.tLeaveMobileDA;
 import library.spgmobile.dal.tLogErrorDA;
+import library.spgmobile.dal.tPlanogramImageDA;
+import library.spgmobile.dal.tPlanogramMobileDA;
 import library.spgmobile.dal.tPurchaseOrderDetailDA;
 import library.spgmobile.dal.tPurchaseOrderHeaderDA;
 import library.spgmobile.dal.tSalesProductDetailDA;
@@ -523,6 +527,8 @@ public class clsHelperBL extends clsMainBL {
             tAbsenUserDA _tAbsenUserDA = new tAbsenUserDA(db);
             tActivityDA _tActivityDA = new tActivityDA(db);
             tActivityMobileDA _tActivityMobileDA = new tActivityMobileDA(db);
+            tPlanogramMobileDA _tPlanogramMobileDA = new tPlanogramMobileDA(db);
+            tPlanogramImageDA _tPlanogramImageDA = new tPlanogramImageDA(db);
             tLeaveMobileDA _tLeaveMobileDA =new tLeaveMobileDA(db);
             tSalesProductHeaderDA _tSalesProductHeaderDA = new tSalesProductHeaderDA(db);
             tSalesProductDetailDA _tSalesProductDetailDA = new tSalesProductDetailDA(db);
@@ -563,6 +569,8 @@ public class clsHelperBL extends clsMainBL {
             List<tAbsenUserData> ListOftAbsenUserData = _tAbsenUserDA.getAllDataToPushData(db);
             List<tActivityData> ListOftActivityData = _tActivityDA.getAllDataToPushData(db);
             List<tActivityMobileData> ListOftActivityMobileData = _tActivityMobileDA.getAllDataToPushData(db);
+            List<tPlanogramMobileData> ListOftPlanogramMobileData = _tPlanogramMobileDA.getAllDataToPushData(db);
+            List<tPlanogramImageData> ListOftPlanogramImageData = _tPlanogramImageDA.getAllDataToPushData(db, ListOftPlanogramMobileData);
 
             List<clsLogReceiverHeader_mobile> ListOfLogReceiverHeader_mobile = _clsLogReceiverHeader_mobileDA.getAllDataToPushData(db);
             List<clsLogReceiverDetail_mobile> ListOfLogReceiverDetail_mobile = _clsLogReceiverDetail_mobileDA.getAllDataToPushData(db);
@@ -644,6 +652,34 @@ public class clsHelperBL extends clsMainBL {
                     }
                 }
             }
+            if (ListOftPlanogramImageData != null){
+                dtPush.setListOftPlanogramImageData(ListOftPlanogramImageData);
+                for (tPlanogramImageData dttPlanogramImageData : ListOftPlanogramImageData) {
+                    clsMappingPushFile mappingPushFile = new clsMappingPushFile();
+                    if (dttPlanogramImageData.get_txtImage() != null) {
+                        if (dttPlanogramImageData.get_txtType().equals("AFTER") &&  dttPlanogramImageData.get_intPosition().equals("1")) {
+                            mappingPushFile.setKey("FUPlanogram" + dttPlanogramImageData.get_txtId());
+                            mappingPushFile.setEkstension(".jpg");
+                            FileUpload.put(mappingPushFile, dttPlanogramImageData.get_txtImage());
+                        }
+                        if (dttPlanogramImageData.get_txtType().equals("AFTER") &&  dttPlanogramImageData.get_intPosition().equals("2")) {
+                            mappingPushFile.setKey("FUPlanogram" + dttPlanogramImageData.get_txtId());
+                            mappingPushFile.setEkstension(".jpg");
+                            FileUpload.put(mappingPushFile, dttPlanogramImageData.get_txtImage());
+                        }
+                        if (dttPlanogramImageData.get_txtType().equals("BEFORE") &&  dttPlanogramImageData.get_intPosition().equals("1")) {
+                            mappingPushFile.setKey("FUPlanogram" + dttPlanogramImageData.get_txtId());
+                            mappingPushFile.setEkstension(".jpg");
+                            FileUpload.put(mappingPushFile, dttPlanogramImageData.get_txtImage());
+                        }
+                        if (dttPlanogramImageData.get_txtType().equals("BEFORE") &&  dttPlanogramImageData.get_intPosition().equals("2")) {
+                            mappingPushFile.setKey("FUPlanogram" + dttPlanogramImageData.get_txtId());
+                            mappingPushFile.setEkstension(".jpg");
+                            FileUpload.put(mappingPushFile, dttPlanogramImageData.get_txtImage());
+                        }
+                    }
+                }
+            }
             if (ListOfKoordinasiOutletImage != null){
                 dtPush.setListOfKoordinasiOutletImageData(ListOfKoordinasiOutletImage);
                 for (KoordinasiOutletImageData dttKoordinasiOutletImageData : ListOfKoordinasiOutletImage) {
@@ -720,11 +756,12 @@ public class clsHelperBL extends clsMainBL {
             if (ListOfSalesProductQuantityDetail != null){
                 dtPush.setListOftSalesProductQuantityDetailData(ListOfSalesProductQuantityDetail);
             }
-//            if (ListOfSalesProductQuantityImage != null){
-//                dtPush.setListOftSalesProductQuantityImageData(ListOfSalesProductQuantityImage);
-//            }
             if (ListOfSalesProductQuantityHeader != null){
                 dtPush.setListOftSalesProductQuantityData(ListOfSalesProductQuantityHeader);
+            }
+
+            if (ListOftPlanogramMobileData != null){
+                dtPush.setListOftPlanogramMobileData(ListOftPlanogramMobileData);
             }
 
             if (ListOfTrackingLocation != null){
@@ -874,6 +911,14 @@ public class clsHelperBL extends clsMainBL {
                 tSalesProductQuantityHeaderDA _tSalesProductQuantityDA = new tSalesProductQuantityHeaderDA(db);
                 dt.set_intSync("1");
                 _tSalesProductQuantityDA.SaveDataSalesProductQuantityData(db, dt);
+            }
+        }
+
+        if (validPush && dtJson.getListOftPlanogramMobileData() != null){
+            for (tPlanogramMobileData dt : dtJson.getListOftPlanogramMobileData()){
+                tPlanogramMobileDA _tPlanogramMobileDA = new tPlanogramMobileDA(db);
+                dt.set_intSync("1");
+                _tPlanogramMobileDA.saveDataPush(db, dt.get_txtIdPlanogram());
             }
         }
 

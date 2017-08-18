@@ -401,8 +401,16 @@ public class FragmentVisitPlan extends Fragment implements ConnectionCallbacks, 
                                             float distance = locationA.distanceTo(locationB);
 
                                             tUserLoginData checkLocation = new tUserLoginBL().getUserLogin();
-
-                                            if ((int) Math.ceil(distance) > 100 && checkLocation.get_txtCheckLocation().equals("1")) {
+                                            boolean dValidDistance = false;
+                                            if (checkLocation.get_txtCheckLocation().equals("0")) {
+                                                dValidDistance = true;
+                                            } else if ((int) Math.ceil(distance) <= Integer.valueOf(checkLocation.get_txtCheckLocation())) {
+                                                dValidDistance = true;
+                                            }
+//                                            if ((int) Math.ceil(distance) > 100 && checkLocation.get_txtCheckLocation().equals("1")) {
+//                                                _clsMainActivity.showCustomToast(getContext(), "Failed checkin: Your location too far from outlet", false);
+//                                            }
+                                            if (!dValidDistance) {
                                                 _clsMainActivity.showCustomToast(getContext(), "Failed checkin: Your location too far from outlet", false);
                                             } else {
                                                 nameBranch = dataDetail.get_txtBranchCode();

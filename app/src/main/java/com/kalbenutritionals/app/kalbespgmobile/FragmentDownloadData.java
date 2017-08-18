@@ -66,6 +66,7 @@ import bl.tCustomerBasedMobileDetailProductBL;
 import bl.tCustomerBasedMobileHeaderBL;
 import bl.tGroupQuestionMappingBL;
 import bl.tLeaveMobileBL;
+import bl.tPlanogramMobileBL;
 import bl.tPurchaseOrderHeaderBL;
 import bl.tSalesProductHeaderBL;
 import bl.tSalesProductQuantityHeaderBL;
@@ -104,6 +105,8 @@ import library.spgmobile.common.tCustomerBasedMobileDetailProductData;
 import library.spgmobile.common.tCustomerBasedMobileHeaderData;
 import library.spgmobile.common.tGroupQuestionMappingData;
 import library.spgmobile.common.tLeaveMobileData;
+import library.spgmobile.common.tPlanogramImageData;
+import library.spgmobile.common.tPlanogramMobileData;
 import library.spgmobile.common.tPurchaseOrderDetailData;
 import library.spgmobile.common.tPurchaseOrderHeaderData;
 import library.spgmobile.common.tSalesProductDetailData;
@@ -118,6 +121,7 @@ import library.spgmobile.common.tVisitPlanRealisasiData;
 import library.spgmobile.common.trackingLocationData;
 import library.spgmobile.dal.KoordinasiOutletImageDA;
 import library.spgmobile.dal.clsHardCode;
+import library.spgmobile.dal.tPlanogramImageDA;
 import library.spgmobile.dal.tPurchaseOrderDetailDA;
 import library.spgmobile.dal.tSalesProductDetailDA;
 import library.spgmobile.dal.tSalesProductQuantityDetailDA;
@@ -136,7 +140,7 @@ public class FragmentDownloadData extends Fragment {
     private Spinner spnActivity, spnActivityV2;
     private Spinner spnCustomerBase;
     private Spinner spnAbsen, spnQuiz;
-    private Spinner spnDataLeave, spnSubTypeActivity, spnDataPO, spnDataQuantityStock, spnProductComp, spnTypeSubmission, spnProdSPGCusBased, spnProdPICCusBased;
+    private Spinner spnDataPlanogram, spnDataLeave, spnSubTypeActivity, spnDataPO, spnDataQuantityStock, spnProductComp, spnTypeSubmission, spnProdSPGCusBased, spnProdPICCusBased;
     private LinearLayout ll_subtypeactivity;
     private LinearLayout ll_branch;
     private LinearLayout ll_product;
@@ -157,7 +161,7 @@ public class FragmentDownloadData extends Fragment {
     private LinearLayout ll_dataVisitPlan;
     private LinearLayout ll_dataQuantityStock;
     private LinearLayout ll_dataKordinasiOutlet;
-    private LinearLayout ll_dataQuesioner;
+    private LinearLayout ll_dataQuesioner,ll_data_planogram;
 
     private PackageInfo pInfo = null;
     private List<String> arrData;
@@ -216,6 +220,8 @@ public class FragmentDownloadData extends Fragment {
         Button btnProdPICCusBased = (Button) v.findViewById(R.id.btnProdPICCusBase);
         spnSubTypeActivity = (Spinner) v.findViewById(R.id.spnSubTypeActivity);
         Button btnSubTypeActivity = (Button) v.findViewById(R.id.btnSubTypeActivity);
+        spnDataPlanogram = (Spinner) v.findViewById(R.id.spnDataPlanogram);
+        Button btnDlDataPlanogram = (Button) v.findViewById(R.id.btnDlDataPlanogram);
 
         ll_branch = (LinearLayout) v.findViewById(R.id.ll_branch);
         LinearLayout ll_outlet = (LinearLayout) v.findViewById(R.id.ll_outlet);
@@ -239,6 +245,7 @@ public class FragmentDownloadData extends Fragment {
         ll_dataKordinasiOutlet = (LinearLayout) v.findViewById(R.id.ll_dataKordinasiOutlet);
         ll_dataQuesioner = (LinearLayout) v.findViewById(R.id.ll_dataQuesioner);
         ll_subtypeactivity = (LinearLayout) v.findViewById(R.id.ll_subtypeactivity);
+        ll_data_planogram = (LinearLayout) v.findViewById(R.id.ll_data_planogram);
 
         spnVisitPlan = (Spinner) v.findViewById(R.id.spnVisitPlan);
         spnTrVisitPlan = (Spinner) v.findViewById(R.id.spnTrVisitPlan);
@@ -359,10 +366,21 @@ public class FragmentDownloadData extends Fragment {
                 ll_purchase_order.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_data_leave.getId()))) {
                 ll_data_leave.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_data_planogram.getId()))) {
+                ll_data_planogram.setVisibility(View.VISIBLE);
             }
         }
 
         loadData();
+
+        btnDlDataPlanogram.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                intProcesscancel = 0;
+                AsyncCallDataPlanogram task = new AsyncCallDataPlanogram();
+                task.execute();
+            }
+        });
 
         btnKordinasiOutlet.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -582,6 +600,21 @@ public class FragmentDownloadData extends Fragment {
         List<mProductSPGData> mProductSPGDataList = new mProductSPGBL().GetAllData();
         List<mProductPICData> mProductPICDataList = new mProductPICBL().GetAllData();
         List<tSubTypeActivityData> tSubTypeActivityDataList = new tSubTypeActivityBL().getAllData();
+        List<tPlanogramMobileData> tPlanogramMobileDataList = new tPlanogramMobileBL().getAllData();
+
+        arrData = new ArrayList<>();
+        if (tPlanogramMobileDataList.size() > 0) {
+            for (tPlanogramMobileData dt : tPlanogramMobileDataList) {
+                arrData.add(dt.get_OutletName());
+            }
+            spnDataPlanogram.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
+            spnDataPlanogram.setEnabled(true);
+        } else if (tPlanogramMobileDataList.size() == 0) {
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<>(getContext(),
+                    android.R.layout.simple_spinner_item, strip);
+            spnDataPlanogram.setAdapter(adapterspn);
+            spnDataPlanogram.setEnabled(false);
+        }
 
         arrData = new ArrayList<>();
         if (tSubTypeActivityDataList.size() > 0) {
@@ -2393,6 +2426,58 @@ public class FragmentDownloadData extends Fragment {
         }
     }
 
+    private class AsyncCallDataPlanogram extends AsyncTask<JSONArray, Void, JSONArray> {
+        @Override
+        protected JSONArray doInBackground(JSONArray... params) {
+            JSONArray Json = null;
+            try {
+                Json = new tPlanogramMobileBL().DownloadTransactionPlanogram(pInfo.versionName);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return Json;
+        }
+
+        private ProgressDialog dialog = new ProgressDialog(getContext());
+
+        @Override
+        protected void onCancelled() {
+            dialog.dismiss();
+            new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessCancelRequest, false);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog.setMessage("Getting Data Planogram");
+            dialog.setCancelable(false);
+            dialog.show();
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray jsonArray) {
+            if (jsonArray != null && jsonArray.size() > 0) {
+                arrData = SaveDatatPlamogramData(jsonArray);
+                loadData();
+                new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
+            } else {
+                if (intProcesscancel == 1) {
+                    onCancelled();
+                } else {
+                    new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
+                }
+            }
+            checkingDataTable();
+            dialog.dismiss();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+            dialog.dismiss();
+        }
+    }
+
     private class AsyncCallDataTrackingLocation extends AsyncTask<JSONArray, Void, JSONArray> {
         @Override
         protected JSONArray doInBackground(JSONArray... params) {
@@ -3641,6 +3726,65 @@ public class FragmentDownloadData extends Fragment {
                 } else {
 //                    new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
                     _array.add("Data Quantity Stock Not Found");
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return _array;
+    }
+
+    private List<String> SaveDatatPlamogramData(JSONArray jsonArray) {
+        List<String> _array;
+        _array = new ArrayList<>();
+        for (Object aJsonArray : jsonArray) {
+            JSONObject innerObj = (JSONObject) aJsonArray;
+            try {
+                JSONArray jsonArray_header = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListtPlanogram_mobile")));
+                if (jsonArray_header != null) {
+                    for (Object aJsonArray_header : jsonArray_header) {
+                        tPlanogramMobileData _data = new tPlanogramMobileData();
+                        JSONObject innerObj_header = (JSONObject) aJsonArray_header;
+                        _data.set_txtIdPlanogram(String.valueOf(innerObj_header.get("TxtIdPlanogram")));
+                        _data.set_txtNIK(String.valueOf(innerObj_header.get("TxtNIK")));
+                        _data.set_txtKeterangan(String.valueOf(innerObj_header.get("TxtDesc")));
+                        _data.set_dtDate(String.valueOf(innerObj_header.get("DtActivity")));
+                        _data.set_OutletCode(String.valueOf(innerObj_header.get("TxtOutletCode")));
+                        _data.set_OutletName(String.valueOf(innerObj_header.get("TxtOutletName")));
+                        _data.set_UserId(String.valueOf(innerObj_header.get("TxtUserId")));
+                        _data.set_intSubmit("1");
+                        _data.set_intSync("1");
+                        _data.set_bitActive("0");
+                        _data.set_txtBranchCode(String.valueOf(innerObj_header.get("TxtBranchCode")));
+                        _data.set_txtBranchName(String.valueOf(innerObj_header.get("TxtBranchName")));
+                        _data.set_txtRoleId(String.valueOf(innerObj_header.get("TxtRoleId")));
+                        new tPlanogramMobileBL().saveData(_data);
+                    }
+                    JSONArray jsonArray_Image = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListtPlanogramImage_mobile")));
+                    Iterator l = jsonArray_Image.iterator();
+                    clsMainBL _clsMainBL_image = new clsMainBL();
+                    SQLiteDatabase _db_image = _clsMainBL_image.getDb();
+                    while (l.hasNext()) {
+                        tPlanogramImageData _data = new tPlanogramImageData();
+                        JSONObject innerObj_image = (JSONObject) l.next();
+                        _data.set_txtId(String.valueOf(innerObj_image.get("TxtTrPlanogramImage")));
+                        _data.set_txtHeaderId(String.valueOf(innerObj_image.get("TxtHeaderId")));
+                        _data.set_intPosition(String.valueOf(innerObj_image.get("IntPosition")));
+                        _data.set_txtType(String.valueOf(innerObj_image.get("TxtType")));
+
+                        String url = String.valueOf(innerObj_image.get("TxtImage"));
+
+                        byte[] logoImage = getLogoImage(url);
+
+                        if (logoImage != null) {
+                            _data.set_txtImage(logoImage);
+                        }
+
+                        new tPlanogramImageDA(_db_image).SaveDataImage(_db_image, _data);
+                    }
+                } else {
+//                    new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
+                    _array.add("Data Planogram Not Found");
                 }
             } catch (ParseException e) {
                 e.printStackTrace();

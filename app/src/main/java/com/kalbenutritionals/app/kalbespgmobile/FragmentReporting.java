@@ -37,6 +37,7 @@ import bl.tActivityMobileBL;
 import bl.tCustomerBasedMobileDetailBL;
 import bl.tCustomerBasedMobileDetailProductBL;
 import bl.tCustomerBasedMobileHeaderBL;
+import bl.tPlanogramMobileBL;
 import bl.tPurchaseOrderDetailBL;
 import bl.tPurchaseOrderHeaderBL;
 import bl.tSalesProductDetailBL;
@@ -54,6 +55,7 @@ import library.spgmobile.common.tActivityMobileData;
 import library.spgmobile.common.tCustomerBasedMobileDetailData;
 import library.spgmobile.common.tCustomerBasedMobileDetailProductData;
 import library.spgmobile.common.tCustomerBasedMobileHeaderData;
+import library.spgmobile.common.tPlanogramMobileData;
 import library.spgmobile.common.tPurchaseOrderDetailData;
 import library.spgmobile.common.tPurchaseOrderHeaderData;
 import library.spgmobile.common.tSalesProductDetailData;
@@ -515,6 +517,48 @@ public class FragmentReporting extends Fragment {
             } else {
                 new clsMainActivity().showCustomToast(getContext(), "No Data to Show", false);
             }
+
+            ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
+        } else if (spinnerSelected.contains("Planogram")){
+//            Toast.makeText(getContext(), "Actvity", Toast.LENGTH_SHORT).show();
+            header = new String[6];
+            header[1] = "Outlet";
+            header[2] = "Desc.";
+
+            ReportTableView.setColumnCount(header.length);
+
+            simpleTableHeaderAdapter = new SimpleTableHeaderAdapter(getContext(), header);
+            simpleTableHeaderAdapter.setTextColor(ContextCompat.getColor(getContext(), R.color.table_header_text));
+            simpleTableHeaderAdapter.setTextSize(14);
+            simpleTableHeaderAdapter.setPaddingBottom(20);
+            simpleTableHeaderAdapter.setPaddingTop(20);
+
+            ReportTableView.setColumnComparator(1, ReportComparators.getOutletActivityComparator());
+            ReportTableView.setColumnComparator(2, ReportComparators.getDescActivityComparator());
+
+            ReportTableView.setColumnWeight(1, 2);
+            ReportTableView.setColumnWeight(2, 2);
+
+            ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
+
+            List<tPlanogramMobileData> dt_planogram = new tPlanogramMobileBL().getAllPlanogramByOutletCode(outletcode);
+            reportList = new ArrayList<>();
+
+            if(dt_planogram != null&&dt_planogram.size()>0){
+                for(tPlanogramMobileData datas : dt_planogram ){
+                    ReportTable rt = new ReportTable();
+
+                    rt.set_report_type("Planogram");
+                    rt.set_txtDesc(datas.get_txtKeterangan());
+                    rt.set_txtOutletName(datas.get_OutletName());
+
+                    reportList.add(rt);
+                }
+            } else {
+                new clsMainActivity().showCustomToast(getContext(), "No Data to Show", false);
+            }
+
+            ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
 
             ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
         } else {

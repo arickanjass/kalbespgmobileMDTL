@@ -110,9 +110,9 @@ public class tSubTypeActivityDA {
             do {
                 tSubTypeActivityData contact = new tSubTypeActivityData();
                 contact.set_intSubTypeActivity(String.valueOf(cursor.getString(0)));
-                contact.set_txtName(cursor.getString(1));
-                contact.set_txtType(cursor.getString(2));
-                contact.set_bitActive(cursor.getString(3));
+                contact.set_bitActive(cursor.getString(1));
+                contact.set_txtName(cursor.getString(2));
+                contact.set_txtType(cursor.getString(3));
                 contactList.add(contact);
             } while (cursor.moveToNext());
         }
