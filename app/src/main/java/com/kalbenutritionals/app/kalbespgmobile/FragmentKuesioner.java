@@ -823,7 +823,7 @@ public class FragmentKuesioner extends Fragment {
         }
         return validate;
     }
-    private void SaveQuiz() {  
+    private void SaveQuiz() {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             intGroupId = bundle.getInt("Key_GroupId");

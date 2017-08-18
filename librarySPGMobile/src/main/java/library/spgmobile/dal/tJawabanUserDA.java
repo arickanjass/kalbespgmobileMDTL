@@ -52,9 +52,6 @@ public class tJawabanUserDA {
             db.insert(TABLE_CONTACTS, null, cv);
         } else {
             cv.put(dt.Property_intSync, String.valueOf(data.get_intSync()));
-            cv.put(dt.Property_intUserId, String.valueOf(data.get_intUserId()));
-            cv.put(dt.Property_intRoleId, String.valueOf(data.get_intRoleId()));
-            cv.put(dt.Property_intQuestionId, String.valueOf(data.get_intQuestionId()));
             db.replace(TABLE_CONTACTS, null, cv);
         }
     }
