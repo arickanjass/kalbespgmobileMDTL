@@ -3581,7 +3581,6 @@ public class FragmentDownloadData extends Fragment {
                         _data.set_txtTypeQuestion(String.valueOf(innerObj_TypePertanyaan.get("TxtTypeQuestion")));
                         new mTypePertanyaanBL().SaveData(_data);
                     }
-                    
                 } else {
                     new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
                 }
