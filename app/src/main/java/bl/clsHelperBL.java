@@ -579,13 +579,14 @@ public class clsHelperBL extends clsMainBL {
             if (ListOftAbsenUserData != null) {
                 dtPush.setListOftAbsenUserData(ListOftAbsenUserData);
                 for (tAbsenUserData dttAbsenUserData : ListOftAbsenUserData) {
-                    clsMappingPushFile mappingPushFile = new clsMappingPushFile();
                     if (dttAbsenUserData.get_txtImg1() != null) {
+                        clsMappingPushFile mappingPushFile = new clsMappingPushFile();
                         mappingPushFile.setKey("FUAbsen" + dttAbsenUserData.get_intId() + "-1");
                         mappingPushFile.setEkstension(".jpg");
                         FileUpload.put(mappingPushFile, dttAbsenUserData.get_txtImg1());
                     }
                     if (dttAbsenUserData.get_txtImg2() != null) {
+                        clsMappingPushFile mappingPushFile = new clsMappingPushFile();
                         mappingPushFile.setKey("FUAbsen" + dttAbsenUserData.get_intId() + "-2");
                         mappingPushFile.setEkstension(".jpg");
                         FileUpload.put(mappingPushFile, dttAbsenUserData.get_txtImg2());
@@ -595,15 +596,16 @@ public class clsHelperBL extends clsMainBL {
             if (ListOftActivityData != null) {
                 dtPush.setListOftActivityData(ListOftActivityData);
                 for (tActivityData dttActivityData : ListOftActivityData) {
-                    clsMappingPushFile mappingPushFile = new clsMappingPushFile();
                     if (dttActivityData.get_txtImg1() != null) {
+                        clsMappingPushFile mappingPushFile = new clsMappingPushFile();
                         mappingPushFile.setKey("FUActivity" + dttActivityData.get_intId() + "-1");
                         mappingPushFile.setEkstension(".jpg");
                         FileUpload.put(mappingPushFile, dttActivityData.get_txtImg1());
                     }
                     if (dttActivityData.get_txtImg2() != null) {
+                        clsMappingPushFile mappingPushFile = new clsMappingPushFile();
                         mappingPushFile.setKey("FUActivity" + dttActivityData.get_intId() + "-2");
-                        mappingPushFile.setEkstension(".jpg");
+                        mappingPushFile.setEkstension(".jpg");    
                         FileUpload.put(mappingPushFile, dttActivityData.get_txtImg2());
                     }
                 }
@@ -611,13 +613,15 @@ public class clsHelperBL extends clsMainBL {
             if (ListOftActivityMobileData != null) {
                 dtPush.setListOftActivityMobileData(ListOftActivityMobileData);
                 for (tActivityMobileData dttActivityMobileData : ListOftActivityMobileData) {
-                    clsMappingPushFile mappingPushFile = new clsMappingPushFile();
+
                     if (dttActivityMobileData.get_txtImg1() != null) {
+                        clsMappingPushFile mappingPushFile = new clsMappingPushFile();
                         mappingPushFile.setKey("FUActivityMobileNew" + dttActivityMobileData.get_intId() + "-1");
                         mappingPushFile.setEkstension(".jpg");
                         FileUpload.put(mappingPushFile, dttActivityMobileData.get_txtImg1());
                     }
                     if (dttActivityMobileData.get_txtImg2() != null) {
+                        clsMappingPushFile mappingPushFile = new clsMappingPushFile();
                         mappingPushFile.setKey("FUActivityMobileNew" + dttActivityMobileData.get_intId() + "-2");
                         mappingPushFile.setEkstension(".jpg");
                         FileUpload.put(mappingPushFile, dttActivityMobileData.get_txtImg2());
