@@ -52,11 +52,17 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import bl.clsHelperBL;
+import bl.tAbsenUserBL;
+import bl.tAttendanceUserBL;
+import bl.tDeviceInfoUserBL;
 import bl.tPlanogramMobileBL;
 import bl.tUserLoginBL;
+import library.spgmobile.common.tAttendanceUserData;
+import library.spgmobile.common.tDeviceInfoUserData;
 import library.spgmobile.common.tUserLoginData;
 import library.spgmobile.common.visitplanAbsenData;
 import library.spgmobile.dal.clsHardCode;
@@ -287,12 +293,14 @@ public class FragmentAttendance extends Fragment implements GoogleApiClient.Conn
             case R.id.buttonCheckIn:
                 new clsMainActivity().removeErrorMessage(input_layout_et_outlet);
                 if (etOutlet.getText().toString().equals("") && etOutlet.getText().toString().length() == 0) {
-                    new clsMainActivity().setErrorMessage(getContext(), input_layout_et_outlet, etOutlet, "Please give Name Of Outlet");
+                    new clsMainActivity().setErrorMessage(getContext(), input_layout_et_outlet, etOutlet, "Please give Description");
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                         etOutlet.setBackground(null);
                     }
                 } else if(tvLong.getText().toString()==""&&tvAcc.getText().toString()==""){
                     new clsMainActivity().showCustomToast(getContext(), "Failed checkin: Location not found, please check your GPS", false);
+                } else if (imgPhoto1==null&&imgPhoto2==null){
+                    new clsMainActivity().showCustomToast(getContext(), "Please Photo at least 1 photo", false);
                 } else {
 
                     final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
@@ -301,7 +309,44 @@ public class FragmentAttendance extends Fragment implements GoogleApiClient.Conn
                     alertDialog.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            new clsMainActivity().showCustomToast(getContext(), "Success", true);
+                            tAttendanceUserData _tAttendanceUserData = new tAttendanceUserData();
+                            int IdAbsen = new tAttendanceUserBL().getContactsCount() + 1;
+                            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            Calendar cal = Calendar.getInstance();
+                            visitplanAbsenData dtAbsen = new clsHelperBL().getDataCheckInActive();
+                            List<tDeviceInfoUserData> dataDeviceInfoUser = new tDeviceInfoUserBL().getData(0);
+                            String deviceInfo="";
+                            if(dataDeviceInfoUser!=null){
+                                deviceInfo = String.valueOf(dataDeviceInfoUser.get(0).get_txtDeviceId());
+                            }
+                            tUserLoginData dtLogin = new tUserLoginBL().getUserLogin();
+
+                            _tAttendanceUserData.set_intId(String.valueOf(IdAbsen));
+                            _tAttendanceUserData.set_dtDateCheckIn(dateFormat.format(cal.getTime()));
+                            _tAttendanceUserData.set_intSubmit("0");
+                            _tAttendanceUserData.set_intSync("0");
+                            _tAttendanceUserData.set_txtAbsen("0");
+                            _tAttendanceUserData.set_txtAccuracy(tvAcc.getText().toString());
+                            _tAttendanceUserData.set_txtLatitude(tvLat.getText().toString());
+                            _tAttendanceUserData.set_txtLongitude(tvLong.getText().toString());
+                            _tAttendanceUserData.set_txtBranchCode(dtLogin.get_txtBranchCode());
+                            _tAttendanceUserData.set_txtBranchName(dtLogin.get_txtCab());
+                            _tAttendanceUserData.set_txtOutletCode(dtLogin.get_txtOutletCode());
+                            _tAttendanceUserData.set_txtOutletName(dtLogin.get_txtOutletName());
+                            _tAttendanceUserData.set_txtDesc(etOutlet.getText().toString());
+                            _tAttendanceUserData.set_txtDeviceId(deviceInfo);
+                            _tAttendanceUserData.set_txtImg1(imgPhoto1);
+                            _tAttendanceUserData.set_txtImg2(imgPhoto2);
+                            _tAttendanceUserData.set_txtRoleId(dtLogin.get_txtRoleId());
+                            _tAttendanceUserData.set_txtUserId(dtLogin.get_txtUserId());
+
+                            new tAttendanceUserBL().saveData(_tAttendanceUserData);
+
+                            new clsMainActivity().showCustomToast(getContext(), "Submit", true);
+
+                            Intent myIntent = new Intent(getContext(), MainMenu.class);
+                            getActivity().finish();
+                            startActivity(myIntent);
                         }
                     });
                     alertDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -466,7 +511,8 @@ public class FragmentAttendance extends Fragment implements GoogleApiClient.Conn
 
     //Preview image from camera capture
     private ByteArrayOutputStream output = new ByteArrayOutputStream();
-    private byte[] imgPhoto = null;
+    private byte[] imgPhoto1 = null;
+    private byte[] imgPhoto2 = null;
     private void previewImageViewCamera1(Bitmap photo) {
         Bitmap bitmap = new clsMainActivity().resizeImageForBlob(photo);
 
@@ -489,7 +535,7 @@ public class FragmentAttendance extends Fragment implements GoogleApiClient.Conn
 
             Bitmap photo_view = Bitmap.createScaledBitmap(bitmap, 150, 150, true);
 
-            imgPhoto = output.toByteArray();
+            imgPhoto1 = output.toByteArray();
 
             imageViewCamera1.setImageBitmap(photo_view);
 
@@ -519,7 +565,7 @@ public class FragmentAttendance extends Fragment implements GoogleApiClient.Conn
 
             Bitmap photo_view = Bitmap.createScaledBitmap(bitmap, 150, 150, true);
 
-            imgPhoto = output.toByteArray();
+            imgPhoto2 = output.toByteArray();
 
             imageViewCamera2.setImageBitmap(photo_view);
 

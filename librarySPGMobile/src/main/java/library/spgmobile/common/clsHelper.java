@@ -62,6 +62,7 @@ import library.spgmobile.dal.mconfigDA;
 import library.spgmobile.dal.tAbsenUserDA;
 import library.spgmobile.dal.tActivityDA;
 import library.spgmobile.dal.tActivityMobileDA;
+import library.spgmobile.dal.tAttendanceUserDA;
 import library.spgmobile.dal.tCustomerBasedMobileDetailDA;
 import library.spgmobile.dal.tCustomerBasedMobileDetailProductDA;
 import library.spgmobile.dal.tCustomerBasedMobileHeaderDA;
@@ -320,6 +321,7 @@ public class clsHelper {
 		tActivityDA _tActivityDA=new tActivityDA(db);
 		tActivityMobileDA _tActivityMobileDA=new tActivityMobileDA(db);
 		tAbsenUserDA _tAbsenUserDA=new tAbsenUserDA(db);
+		tAttendanceUserDA _tAttendanceUserDA = new tAttendanceUserDA(db);
 		tLeaveMobileDA _tLeaveMobileDA=new tLeaveMobileDA(db);
 		mMenuDA _mMenuDA=new mMenuDA(db);
 		mTypeLeaveMobileDA _mTypeLeaveMobileDA=new mTypeLeaveMobileDA(db);
@@ -398,6 +400,7 @@ public class clsHelper {
 		_mMenuDA.DropTable(db);
 		_mCounterNumberDA.DropTable(db);
 		_tAbsenUserDA.DropTable(db);
+		_tAttendanceUserDA.DropTable(db);
 		_mTypeLeaveMobileDA.DropTable(db);
 		_mParentDA.DropTable(db);
 		_mKategoriDA.DropTable(db);
@@ -439,6 +442,7 @@ public class clsHelper {
 		new tSubTypeActivityDA(db);
 		new tPlanogramMobileDA(db);
 		new tPlanogramImageDA(db);
+		new tAttendanceUserDA(db);
 
 		_mPriceInOutletDA=new mPriceInOutletDA(db);
 		_mUserRoleDA=new mUserRoleDA(db);

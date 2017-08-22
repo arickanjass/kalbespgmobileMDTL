@@ -41,7 +41,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="top|left"
                         android:maxLines="2"
-                        android:hint="Outlet"/>
+                        android:hint="Description"/>
 
                 </android.support.design.widget.TextInputLayout>
 

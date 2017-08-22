@@ -69,6 +69,7 @@ public class clsHardCode  {
 	public String txtTable_tCustomerBase = "tCustomerBase";
 	public String txtTable_tCustomerBaseDetail = "tCustomerBaseDetail";
 	public String txtTable_tAbsenUser = "tAbsenUser";
+	public String txtTable_tAttendanceUser = "tAttendanceUser";
 	public String txtTable_tActivity = "tActivity";
 	public String txtTable_tActivityMobile = "tActivityMobile";
 	public String txtTable_tCheckinOutletMD = "tCheckinOutletMD";

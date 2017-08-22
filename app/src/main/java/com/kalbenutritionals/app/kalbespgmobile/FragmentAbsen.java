@@ -409,6 +409,9 @@ public class FragmentAbsen extends Fragment implements ConnectionCallbacks, OnCo
                                                     if (dttAbsenUserData == null) {
                                                         dttAbsenUserData = new tAbsenUserData();
                                                     }
+
+                                                    int IdAbsen = new tAbsenUserBL().getContactsCount() + 1;
+
                                                     tAbsenUserData datatAbsenUserData = dttAbsenUserData;
                                                     tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
                                                     String idUserActive = String.valueOf(dataUserActive.get_txtUserId());
@@ -421,7 +424,7 @@ public class FragmentAbsen extends Fragment implements ConnectionCallbacks, OnCo
                                                     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                                     Calendar cal = Calendar.getInstance();
                                                     datatAbsenUserData.set_dtDateCheckIn(dateFormat.format(cal.getTime()));
-                                                    datatAbsenUserData.set_intId(txtHDId.getText().toString());
+                                                    datatAbsenUserData.set_intId(String.valueOf(IdAbsen));
                                                     datatAbsenUserData.set_intSubmit("0");
                                                     datatAbsenUserData.set_intSync("0");
                                                     datatAbsenUserData.set_txtAbsen("0");
@@ -444,7 +447,7 @@ public class FragmentAbsen extends Fragment implements ConnectionCallbacks, OnCo
                                                     btnRefreshMaps.setClickable(false);
                                                     btnRefreshMaps.setVisibility(View.GONE);
 
-                                                    _clsMainActivity.showCustomToast(getContext(), "Saved", true);
+                                                    _clsMainActivity.showCustomToast(getContext(), "Submit", true);
                                                     Intent myIntent = new Intent(getContext(), MainMenu.class);
                                                     getActivity().finish();
                                                     startActivity(myIntent);

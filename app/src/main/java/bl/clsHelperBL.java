@@ -30,6 +30,7 @@ import library.spgmobile.common.mconfigData;
 import library.spgmobile.common.tAbsenUserData;
 import library.spgmobile.common.tActivityData;
 import library.spgmobile.common.tActivityMobileData;
+import library.spgmobile.common.tAttendanceUserData;
 import library.spgmobile.common.tCustomerBasedMobileDetailData;
 import library.spgmobile.common.tCustomerBasedMobileDetailProductData;
 import library.spgmobile.common.tCustomerBasedMobileHeaderData;
@@ -63,6 +64,7 @@ import library.spgmobile.dal.mconfigDA;
 import library.spgmobile.dal.tAbsenUserDA;
 import library.spgmobile.dal.tActivityDA;
 import library.spgmobile.dal.tActivityMobileDA;
+import library.spgmobile.dal.tAttendanceUserDA;
 import library.spgmobile.dal.tCustomerBasedMobileDetailDA;
 import library.spgmobile.dal.tCustomerBasedMobileDetailProductDA;
 import library.spgmobile.dal.tCustomerBasedMobileHeaderDA;
@@ -102,13 +104,16 @@ public class clsHelperBL extends clsMainBL {
     public visitplanAbsenData getDataCheckInActive(){
         SQLiteDatabase db=getDb();
         tAbsenUserDA _tAbsenUserDA=new tAbsenUserDA(db);
-        tAbsenUserData dataAbsen=new tAbsenUserData();
+        tAbsenUserData dataAbsen;
         dataAbsen=_tAbsenUserDA.getDataCheckInActive(db);
         tVisitPlanRealisasiDA  _tTVisitPlanRealisasiDA = new tVisitPlanRealisasiDA(db);
-        tVisitPlanRealisasiData dataVisit = new tVisitPlanRealisasiData();
+        tVisitPlanRealisasiData dataVisit;
         dataVisit = _tTVisitPlanRealisasiDA.getDataCheckInActive(db);
+        tAttendanceUserDA _tAttendanceUserDA = new tAttendanceUserDA(db);
+        tAttendanceUserData dataAbsenFPE;
+        dataAbsenFPE = _tAttendanceUserDA.getDataCheckInActive(db);
         visitplanAbsenData dataReturn = new visitplanAbsenData();
-        if (dataAbsen == null && dataVisit.get_txtDataIDRealisasi() != null){
+        if (dataAbsen == null && dataVisit.get_txtDataIDRealisasi() != null && dataAbsenFPE==null){
             dataReturn.set_txtId(dataVisit.get_txtDataIDRealisasi().toString());
             dataReturn.set_txtOutletCode(dataVisit.get_txtOutletCode().toString());
             dataReturn.set_txtOutletName(dataVisit.get_txtOutletName().toString());
@@ -124,17 +129,15 @@ public class clsHelperBL extends clsMainBL {
             dataReturn.set_txtLatitude(dataVisit.get_txtLat());
             dataReturn.set_txtLongitude(dataVisit.get_txtLong());
             byte[] blob1 = dataVisit.get_dtPhoto1();
-//				Bitmap bmp1 = BitmapFactory.decodeByteArray(blob1, 0, blob1.length);
             dataReturn.set_txtImg1(blob1);
             byte[] blob2 = dataVisit.get_dtPhoto2();
             dataReturn.set_txtUserId(dataVisit.get_intUserID());
             dataReturn.set_txtRoleId(dataVisit.get_txtRoleId());
-//				Bitmap bmp2 = BitmapFactory.decodeByteArray(blob2, 0, blob2.length);
             dataReturn.set_txtImg2(blob2);
 
 
             dataReturn.setType("visitPlan");
-        }else if (dataAbsen != null && dataVisit.get_txtDataIDRealisasi() == null){
+        } else if (dataAbsen != null && dataVisit.get_txtDataIDRealisasi() == null && dataAbsenFPE==null){
             dataReturn.set_txtId(dataAbsen.get_intId().toString());
             dataReturn.set_txtOutletCode(dataAbsen.get_txtOutletCode().toString());
             dataReturn.set_txtOutletName(dataAbsen.get_txtOutletName().toString());
@@ -154,17 +157,44 @@ public class clsHelperBL extends clsMainBL {
                 byte[] blob1 = dataAbsen.get_txtImg1();
                 dataReturn.set_txtImg1(blob1);
             }
-//				Bitmap bmp1 = BitmapFactory.decodeByteArray(blob1, 0, blob1.length);
             if (dataAbsen.get_txtImg2() != null){
                 byte[] blob2 = dataAbsen.get_txtImg2();
                 dataReturn.set_txtImg2(blob2);
             }
             dataReturn.set_txtUserId(dataAbsen.get_txtUserId());
             dataReturn.set_txtRoleId(dataAbsen.get_txtRoleId());
-//				Bitmap bmp2 = BitmapFactory.decodeByteArray(blob2, 0, blob2.length);
 
             dataReturn.setType("absen");
-        }else{
+        } else if (dataAbsen == null && dataVisit.get_txtDataIDRealisasi() == null && dataAbsenFPE!=null){
+            dataReturn.set_txtId(dataAbsenFPE.get_intId().toString());
+            dataReturn.set_txtOutletCode(dataAbsenFPE.get_txtOutletCode().toString());
+            dataReturn.set_txtOutletName(dataAbsenFPE.get_txtOutletName().toString());
+            dataReturn.set_txtBranchCode(dataAbsenFPE.get_txtBranchCode().toString());
+            dataReturn.set_txtBranchName(dataAbsenFPE.get_txtBranchName().toString());
+            dataReturn.set_txtDeviceId(dataAbsenFPE.get_txtDeviceId());
+
+            dataReturn.set_dtDateCheckIn(dataAbsenFPE.get_dtDateCheckIn().toString());
+            dataReturn.set_dtDateCheckOut(dataAbsenFPE.get_dtDateCheckOut().toString());
+            dataReturn.set_intSubmit(dataAbsenFPE.get_intSubmit());
+            dataReturn.set_intSync(dataAbsenFPE.get_intSync());
+            dataReturn.set_txtAbsen(dataAbsenFPE.get_txtAbsen());
+            dataReturn.set_txtAccuracy(dataAbsenFPE.get_txtAccuracy());
+            dataReturn.set_txtLatitude(dataAbsenFPE.get_txtLatitude());
+            dataReturn.set_txtLongitude(dataAbsenFPE.get_txtLongitude());
+            if (dataAbsenFPE.get_txtImg1() != null){
+                byte[] blob1 = dataAbsenFPE.get_txtImg1();
+                dataReturn.set_txtImg1(blob1);
+            }
+            if (dataAbsenFPE.get_txtImg2() != null){
+                byte[] blob2 = dataAbsenFPE.get_txtImg2();
+                dataReturn.set_txtImg2(blob2);
+            }
+            dataReturn.set_txtUserId(dataAbsenFPE.get_txtUserId());
+            dataReturn.set_txtRoleId(dataAbsenFPE.get_txtRoleId());
+            dataReturn.set_txtDesc(dataAbsenFPE.get_txtDesc());
+
+            dataReturn.setType("absenFPE");
+        } else{
             dataReturn = null;
         }
         return dataReturn;

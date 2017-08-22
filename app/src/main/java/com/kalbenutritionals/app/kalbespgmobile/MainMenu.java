@@ -54,6 +54,7 @@ import bl.clsHelperBL;
 import bl.clsMainBL;
 import bl.mMenuBL;
 import bl.tAbsenUserBL;
+import bl.tAttendanceUserBL;
 import bl.tDisplayPictureBL;
 import bl.tNotificationBL;
 import bl.tUserLoginBL;
@@ -64,6 +65,7 @@ import library.spgmobile.common.APIData;
 import library.spgmobile.common.clsPushData;
 import library.spgmobile.common.mMenuData;
 import library.spgmobile.common.tAbsenUserData;
+import library.spgmobile.common.tAttendanceUserData;
 import library.spgmobile.common.tNotificationData;
 import library.spgmobile.common.tUserLoginData;
 import library.spgmobile.common.tVisitPlanRealisasiData;
@@ -200,6 +202,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
         if (dtAbsensVisitplan != null && dtAbsensVisitplan.getType().equals("visitPlan")) {
             header.removeItem(R.id.logout);
             header.removeItem(R.id.checkout);
+            header.removeItem(R.id.checkoutAbsenFPE);
             menuActive = R.id.groupListMenu1;
 
             statusAbsen = new mMenuBL().getIntParentID();
@@ -221,6 +224,28 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
             header.removeItem(R.id.logout);
             header.removeItem(R.id.checkoutVisitplan);
+            header.removeItem(R.id.checkoutAbsenFPE);
+            menuActive = R.id.groupListMenu1;
+
+            statusAbsen = new mMenuBL().getIntParentID();
+
+            if(statusAbsen!=null){
+                List<mMenuData> menu = new mMenuBL().getDatabyParentId(statusAbsen);
+                listMenu = new String[menu.size()];
+
+                for (int i = 0; i < menu.size(); i++) {
+                    listMenu[i] = menu.get(i).get_TxtMenuName();
+                }
+            }
+
+            if (i_view != null) {
+                intent_activity();
+            }
+        } else if (dtAbsensVisitplan != null && dtAbsensVisitplan.getType().equals("absenFPE")) {
+
+            header.removeItem(R.id.logout);
+            header.removeItem(R.id.checkoutVisitplan);
+            header.removeItem(R.id.checkout);
             menuActive = R.id.groupListMenu1;
 
             statusAbsen = new mMenuBL().getIntParentID();
@@ -240,6 +265,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
         } else {
             menuActive = R.id.groupListMenu;
             header.removeItem(R.id.checkout);
+            header.removeItem(R.id.checkoutAbsenFPE);
         }
 
         List<mMenuData> menu;
@@ -570,6 +596,43 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                         _alertD.setTitle("Confirm");
                         _alertD.setMessage("Checkout Data?");
                         _alertD.show();
+
+                        return true;
+                    case R.id.checkoutAbsenFPE:
+                        AlertDialog.Builder _alertDialogBuilder3 = new AlertDialog.Builder(MainMenu.this);
+                        _alertDialogBuilder3
+                                .setCancelable(false)
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        tAttendanceUserBL _tAttendanceUserBL = new tAttendanceUserBL();
+                                        tAttendanceUserData _tAttendanceUserData = new tAttendanceUserData();
+
+                                        _tAttendanceUserData = _tAttendanceUserBL.getDataCheckInActive();
+
+                                        if (_tAttendanceUserData != null) {
+                                            _tAttendanceUserData.set_dtDateCheckOut(_clsMainActivity.FormatDateDB());
+                                            _tAttendanceUserData.set_intSubmit("1");
+                                            _tAttendanceUserData.set_intSync("0");
+                                            _tAttendanceUserData.set_txtAbsen("0");
+                                            new tAttendanceUserBL().saveData(_tAttendanceUserData);
+
+                                            finish();
+                                            Intent nextScreen = new Intent(getApplicationContext(), MainMenu.class);
+                                            nextScreen.putExtra("keyMainMenu", "main_menu");
+                                            finish();
+                                            startActivity(nextScreen);
+                                        }
+                                    }
+                                })
+                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+                        final AlertDialog _alertD3 = _alertDialogBuilder3.create();
+                        _alertD3.setTitle("Confirm");
+                        _alertD3.setMessage("Checkout Data?");
+                        _alertD3.show();
 
                         return true;
                     default:

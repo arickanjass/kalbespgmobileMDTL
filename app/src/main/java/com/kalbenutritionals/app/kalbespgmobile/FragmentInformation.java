@@ -206,7 +206,8 @@ public class FragmentInformation extends Fragment implements View.OnClickListene
             tv_qs1.setText("0");
             tv_qs2.setText("0");
         } else if (dtAbsen != null) {
-            tvBranchOutlet.setText(dtAbsen.get_txtBranchCode() + " - " + dtAbsen.get_txtOutletName());
+            String txtBranchOutlet = dtAbsen.get_txtBranchCode() + " - " + dtAbsen.get_txtOutletName();
+            tvBranchOutlet.setText(dtAbsen.get_txtOutletName().toString().equals("null") ? "-" : txtBranchOutlet);
             dtReso = new tSalesProductHeaderBL().getAllSalesProductHeaderByOutletCode(dtAbsen.get_txtOutletCode());
             dtPo = new tPurchaseOrderHeaderBL().getAllPurchaseOrderHeaderByOutletCode(dtAbsen.get_txtOutletCode());
             dtQStock = new tSalesProductQuantityHeaderBL().getAllSalesProductHeaderByOutletCode(dtAbsen.get_txtOutletCode());
