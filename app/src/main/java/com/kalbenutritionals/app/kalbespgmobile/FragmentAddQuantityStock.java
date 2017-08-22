@@ -22,6 +22,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -70,23 +72,23 @@ import library.spgmobile.dal.enumCounterData;
 public class FragmentAddQuantityStock extends Fragment implements IXListViewListener {
     View v;
 
-//    private ArrayList<ModelListview> modelItems;
+    //    private ArrayList<ModelListview> modelItems;
 //    public static ArrayList<ModelListview> arr = new ArrayList<ModelListview>();
 //    private ArrayList<ModelListview> arrdataPriv;
 //    ListView listView;
 //    int selectedId;
     static List<tSalesProductQuantityHeaderData> dt;
     static List<tSalesProductQuantityHeaderData> data;
-//    private FloatingActionButton fab;
+    //    private FloatingActionButton fab;
 //    private List<String> arrData;
     private EditText edKeterangan;
     private ImageView after1, after2;
     private ImageView before1, before2;
-//    private Spinner product;
+    //    private Spinner product;
     private Uri uriImage;
     TextView tv_date, txtHDId;
     TextView tv_noQuantityStock;
-//    List<tSalesProductQuantityHeaderData> dtListDetailProduct;
+    //    List<tSalesProductQuantityHeaderData> dtListDetailProduct;
     List<tSalesProductQuantityDetailData> dtListProduct;
 //    AdapterListProductQuantityDetail AdapterProduct;
 
@@ -111,11 +113,10 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
     private static byte[] phtBefore2;
 
     clsMainActivity _clsMainActivity;
-
+    PullToRefreshSwipeMenuListView mListView;
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_add_quantity_stock, container, false);
 
         txtHDId = (TextView) v.findViewById(R.id.txtHDId);
@@ -776,7 +777,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
 
         clsMainActivity clsMain = new clsMainActivity();
 
-        PullToRefreshSwipeMenuListView mListView = (PullToRefreshSwipeMenuListView) v.findViewById(R.id.listViewQuantity);
+        mListView = (PullToRefreshSwipeMenuListView) v.findViewById(R.id.listViewQuantity);
         AppAdapter mAdapter = clsMainActivity.setList(getActivity().getApplicationContext(), swipeList);
         mListView.setAdapter(mAdapter);
         mListView.setPullRefreshEnable(false);
@@ -812,6 +813,8 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
                 }
             }
         });
+
+        setListViewHeightBasedOnItems(mListView);
     }
 
     private void editList(Context ctx, int position) {
@@ -971,6 +974,39 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
 
     @Override
     public void onLoadMore() {
+
+    }
+
+    public static boolean setListViewHeightBasedOnItems(ListView listView) {
+
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter != null) {
+
+            int numberOfItems = listAdapter.getCount();
+
+            // Get total height of all items.
+            int totalItemsHeight = 0;
+            for (int itemPos = 0; itemPos < numberOfItems; itemPos++) {
+                View item = listAdapter.getView(itemPos, null, listView);
+                item.measure(0, 0);
+                totalItemsHeight += item.getMeasuredHeight();
+            }
+
+            // Get total height of all item dividers.
+            int totalDividersHeight = listView.getDividerHeight() *
+                    (numberOfItems - 1);
+
+            // Set list height.
+            ViewGroup.LayoutParams params = listView.getLayoutParams();
+            params.height = totalItemsHeight + totalDividersHeight;
+            listView.setLayoutParams(params);
+            listView.requestLayout();
+
+            return true;
+
+        } else {
+            return false;
+        }
 
     }
 }
