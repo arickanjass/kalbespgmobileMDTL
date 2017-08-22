@@ -4,122 +4,121 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="15dp">
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/txtProduct_quantity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Product"
+        android:textColor="#000" />
+
+    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+        android:id="@+id/spnProductQuantity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!--<Spinner-->
+    <!--android:id="@+id/spnProductQuantity"-->
+    <!--android:layout_below="@+id/txtProduct_quantity"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="2dp"-->
+    <!--android:hint="Product Name"-->
+    <!--android:background="@drawable/bg_edtext"/>-->
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="#bfbfbf" />
+
+    <TextView
+        android:id="@+id/txtDateExpire"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Expire Date"
+        android:textColor="#000" />
+
+    <DatePicker
+        android:id="@+id/dp_expire_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"
+        android:visibility="visible" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="#bfbfbf" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/txtProduct_quantity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Product"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="10dp"
-            android:textColor="#000"/>
-        <Spinner
-            android:id="@+id/spnProductQuantity"
-            android:layout_below="@+id/txtProduct_quantity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:hint="Product Name"
-            android:background="@drawable/bg_edtext"/>
-        <View
-            android:id="@+id/view1"
-            android:layout_marginTop="10dp"
-            android:layout_below="@+id/txtProduct_quantity"
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="#bfbfbf" />
-
-        <TextView
-            android:id="@+id/txtDateExpire"
-            android:layout_below="@id/view1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Expire Date"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="10dp"
-            android:textColor="#000"/>
-        <DatePicker
-            android:id="@+id/dp_expire_date"
+            android:id="@+id/txtQuantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtDateExpire"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:calendarViewShown="false"
-            android:datePickerMode="spinner"
-            android:visibility="visible" />
-        <View
-            android:id="@+id/view2"
-            android:layout_below="@+id/dp_expire_date"
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:background="#bfbfbf" />
+            android:text="Quantity"
+            android:textColor="#000" />
 
-        <LinearLayout
-            android:layout_width="fill_parent"
+        <EditText
+            android:id="@+id/editTextQty"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/txtQuantity"
-                android:layout_below="@+id/txtDateExpire"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Quantity"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="10dp"
-                android:textColor="#000"/>
-            <EditText
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:id="@+id/editTextQty"
-                android:hint="0"
-                android:inputType="number"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="100dp"
-                android:background="@drawable/bg_edtext" />
-
-            <ListView
-                android:id="@+id/listViewQuantityAdd"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
-
-        </LinearLayout>
-        <View
-            android:id="@+id/view3"
-            android:layout_below="@+id/txtviewDateExpire"
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
+            android:layout_marginLeft="100dp"
             android:layout_marginTop="10dp"
-            android:background="#bfbfbf" />
+            android:background="@drawable/bg_edtext"
+            android:hint="0"
+            android:inputType="number" />
+
+        <ListView
+            android:id="@+id/listViewQuantityAdd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/txtviewDateExpire"
+        android:layout_marginTop="10dp"
+        android:background="#bfbfbf" />
 
     <TextView
         android:id="@+id/txtKeterangan_popup"
-        android:layout_below="@+id/editTextQty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Description"
+        android:layout_below="@+id/editTextQty"
         android:layout_marginTop="5dp"
-        android:layout_marginLeft="10dp"
-        android:textColor="#000"/>
+        android:text="Description"
+        android:textColor="#000" />
 
     <EditText
+        android:id="@+id/editTextKeterangan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editTextKeterangan"
-        android:hint="* optional"
-        android:inputType="text"
         android:layout_marginTop="5dp"
-        android:background="@drawable/bg_edtext" />
+        android:background="@drawable/bg_edtext"
+        android:hint="* optional"
+        android:inputType="text" />
 
     <View
         android:id="@+id/view4"
-        android:layout_below="@+id/editTextKeterangan"
         android:layout_width="fill_parent"
         android:layout_height="1dp"
+        android:layout_below="@+id/editTextKeterangan"
         android:layout_marginTop="10dp"
         android:background="#bfbfbf" />
 
