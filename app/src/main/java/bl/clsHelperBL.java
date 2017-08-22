@@ -605,7 +605,7 @@ public class clsHelperBL extends clsMainBL {
                     if (dttActivityData.get_txtImg2() != null) {
                         clsMappingPushFile mappingPushFile = new clsMappingPushFile();
                         mappingPushFile.setKey("FUActivity" + dttActivityData.get_intId() + "-2");
-                        mappingPushFile.setEkstension(".jpg");    
+                        mappingPushFile.setEkstension(".jpg");
                         FileUpload.put(mappingPushFile, dttActivityData.get_txtImg2());
                     }
                 }

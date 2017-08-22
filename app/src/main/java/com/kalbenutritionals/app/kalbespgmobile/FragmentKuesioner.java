@@ -1,16 +1,15 @@
 package com.kalbenutritionals.app.kalbespgmobile;
 
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -22,10 +21,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.InputFilter;
 import android.text.Spanned;
-import android.util.AttributeSet;
-import android.view.Display;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -40,10 +36,9 @@ import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -618,14 +613,55 @@ public class FragmentKuesioner extends Fragment {
                     alertDialog.setTitle("Confirm");
                     alertDialog.setMessage("Are you sure?");
                     alertDialog.setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
+                        ProgressDialog progressDialog = new ProgressDialog(getContext());
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                        public void onClick(final DialogInterface dialog, int which) {
+                            Thread thread = new Thread(){
+                                @Override
+                                public void run() {
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            progressDialog.setMessage("Saving your answer...");
+                                            progressDialog.show();
+                                        }
+                                    });
+//                                    getActivity().runOnUiThread(new Runnable() {
+//                                        @Override
+//                                        public void run() {
+//                                            SaveQuiz();
+//                                        }
+//                                    });
+//
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            progressDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                                @Override
+                                                public void onDismiss(DialogInterface dialog) {
+                                                    AsyncSaveQuiz task = new AsyncSaveQuiz();
+                                                    task.execute();
+                                                }
+                                            });
+                                            progressDialog.dismiss();
+                                            FragmentKuesionerAwal fragmentKuesionerAwal = new FragmentKuesionerAwal();
+                                            FragmentTransaction fragmentTransactionkuesionerAwal = getFragmentManager().beginTransaction();
+                                            fragmentTransactionkuesionerAwal.replace(R.id.frame, fragmentKuesionerAwal);
+                                            fragmentTransactionkuesionerAwal.commit();
+                                            _clsMainActivity.showCustomToast(getContext(),"Saved", true);
+                                        }
+                                    });
+                                }
+                            };
+//                            thread.start();
+
                             SaveQuiz();
-                            _clsMainActivity.showCustomToast(getActivity(), "Saved", true);
                             FragmentKuesionerAwal fragmentKuesionerAwal = new FragmentKuesionerAwal();
                             FragmentTransaction fragmentTransactionkuesionerAwal = getFragmentManager().beginTransaction();
                             fragmentTransactionkuesionerAwal.replace(R.id.frame, fragmentKuesionerAwal);
                             fragmentTransactionkuesionerAwal.commit();
+                            _clsMainActivity.showCustomToast(getContext(),"Saved", true);
+
                         }
                     });
                     alertDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -822,6 +858,47 @@ public class FragmentKuesioner extends Fragment {
             }
         }
         return validate;
+    }
+
+    private class AsyncSaveQuiz extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+//            SaveQuiz();
+//            getActivity().runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    try {
+//                                SaveQuiz();
+//                            } catch (Exception e){
+//                                e.printStackTrace();
+//                            }
+//                }
+//            });
+            return null;
+        }
+
+        private ProgressDialog Dialog = new ProgressDialog(getActivity());
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            SaveQuiz();
+                new clsMainActivity().showCustomToast(getContext(), "Saved", true);
+            FragmentKuesionerAwal fragmentKuesionerAwal = new FragmentKuesionerAwal();
+            FragmentTransaction fragmentTransactionkuesionerAwal = getFragmentManager().beginTransaction();
+            fragmentTransactionkuesionerAwal.replace(R.id.frame, fragmentKuesionerAwal);
+            fragmentTransactionkuesionerAwal.commit();
+            Dialog.dismiss();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            // Make ProgressBar invisible
+            // pg.setVisibility(View.VISIBLE);
+            Dialog.setMessage("Saving your answer...");
+            Dialog.setCancelable(false);
+            Dialog.show();
+        }
     }
     private void SaveQuiz() {
         Bundle bundle = this.getArguments();

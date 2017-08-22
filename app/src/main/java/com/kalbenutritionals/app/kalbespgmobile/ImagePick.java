@@ -13,6 +13,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
@@ -61,7 +63,7 @@ public class ImagePick {
         List<Intent> intentList = new ArrayList<>();
         uriImage = path;
         Intent pickIntent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 //        Intent pickIntent = new Intent(Intent.ACTION_GET_CONTENT);
         Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         takePhotoIntent.putExtra("return-data", true);
@@ -141,13 +143,13 @@ public class ImagePick {
     }
     private static String getRealPathFromURI(Uri contentUri, Context mContext) {
 
-        String[] proj = { MediaStore.Video.Media.DATA };
+        String[] proj = { MediaStore.Images.Media.DATA };
 //        Cursor cursor = managedQuery(contentUri, proj, null, null, null);
-        CursorLoader loader = new CursorLoader(mContext, contentUri, proj, null, null, null);
-        Cursor cursor = loader.loadInBackground();
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        return cursor.getString(column_index);
+//        CursorLoader loader = new CursorLoader(mContext, contentUri, proj, null, null, null);
+        Cursor returnCursor = mContext.getContentResolver().query(contentUri,null, null, null, null);
+        int column_index = returnCursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        returnCursor.moveToFirst();
+        return returnCursor.getString(column_index);
     }
     public static void deleteMediaStorageDirQuiz (){
         File mediaStorageDir = new File(new clsHardCode().txtFolderQuiz + File.separator);
@@ -228,18 +230,38 @@ public class ImagePick {
     }
     public static String getFileName(Context context, int resultCode, Intent fileReturnedIntent) throws FileNotFoundException {
         Uri uri = fileReturnedIntent.getData();
-        String mimeType = context.getContentResolver().getType(uri);
-        Cursor returnCursor = context.getContentResolver().query(uri,null, null, null, null);
-
-        int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-        int sizeIndex = returnCursor.getColumnIndex(OpenableColumns.SIZE);
-        returnCursor.moveToFirst();
+        String path = fileReturnedIntent.getData().getPath().toString();
+        String manufacture = Build.MANUFACTURER;
         if (resultCode == Activity.RESULT_OK){
-            byte[] byteFile = getFile(uri, context);
-            if (byteFile.length > 0){
-                fileName = returnCursor.getString(nameIndex);
+            byte[] byteFile = null;
+            try {
+                InputStream is = context.getContentResolver().openInputStream(fileReturnedIntent.getData()); // use recorded file instead of getting file from assets folder.
+                int length = is.available();
+                byteFile = new byte[length];
+                int bytesRead;
+                ByteArrayOutputStream output = new ByteArrayOutputStream();
+                while ((bytesRead = is.read(byteFile)) != -1) {
+                    output.write(byteFile, 0, bytesRead);
+                }
+                txtFileQuiz = output.toByteArray();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            if (txtFileQuiz != null){
+                if (Build.MANUFACTURER.equals("Xiaomi")){
+                    fileName = path.substring(path.lastIndexOf('/')+1, path.length());
+                }else {
+                    Cursor returnCursor = context.getContentResolver().query(uri,null, null, null, null);
+
+                    int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                    int sizeIndex = returnCursor.getColumnIndex(OpenableColumns.SIZE);
+                    returnCursor.moveToFirst();
+                    fileName = returnCursor.getString(nameIndex);
+                }
+
             }else {
-                fileName = null;
+                fileName = "";
             }}
 //       String lastFile = getOutputMediaFileUpload().getPath().toString() + fileName;
         //        String fileName = name.substring(name.lastIndexOf('/')+1, name.length());
@@ -275,6 +297,10 @@ public class ImagePick {
 //        String uri = uriImage.getPath().toString();
 
 //        bm = BitmapFactory.decodeFile(uri, bitmapOptions);
+        //get the returned data
+//        Bundle extras = imageReturnedIntent.getExtras();
+//        //get the cropped bitmap
+//        Bitmap thePic = extras.getParcelable("data");
         File imageFile = getOutputMediaFile();
         if (resultCode == Activity.RESULT_OK) {
             String selectedImage;
@@ -287,7 +313,7 @@ public class ImagePick {
                 InputStream in = null;
                 OutputStream out = null;
                 try {
-                    in = new FileInputStream(getRealPathFromURI(imageReturnedIntent.getData(), context));
+                    in = context.getContentResolver().openInputStream(imageReturnedIntent.getData());
                     out = new FileOutputStream(uriImage.getPath().toString());
 
                     // Transfer bytes from in to out

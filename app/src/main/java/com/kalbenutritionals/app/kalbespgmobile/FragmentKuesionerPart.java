@@ -34,6 +34,7 @@ import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -426,14 +427,18 @@ public class FragmentKuesionerPart extends Fragment {
                     }
                 break;
             case PICK_FILE_ID:
-                if (resultCode == -1) {
+                if (resultCode == -1) {    
                     try {
                         String fileName = ImagePick.getFileName(getContext(), resultCode, data);
-                        ImagePick.getPathForPickFile(tvPathFile.getText().toString());
-                        ImagePick.byteQusionerFile(getContext(), data);
-                        tvFile.setText(fileName);
-                        tvPathFile.setText(ImagePick.showPathFile());
-                        tvPathFile.setVisibility(View.INVISIBLE);
+                        if (fileName.length() > 0){
+                            ImagePick.getPathForPickFile(tvPathFile.getText().toString());
+                            ImagePick.byteQusionerFile(getContext(), data);
+                            tvFile.setText(fileName);
+                            tvPathFile.setText(ImagePick.showPathFile());
+                            tvPathFile.setVisibility(View.INVISIBLE);
+                        } else {
+                            Toast.makeText(getContext(), "Invalid File...", Toast.LENGTH_SHORT).show();
+                        }
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
