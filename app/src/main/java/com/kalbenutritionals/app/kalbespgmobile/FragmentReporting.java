@@ -264,6 +264,67 @@ public class FragmentReporting extends Fragment {
                 }
 
                 ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
+        } else if(spinnerSelected.contains("Stock In Hand")){
+            header = new String[6];
+            header[1] = "SO";
+            header[2] = "Tot. Prd";
+            header[3] = "Tot. Qty";
+            header[4] = "Tot. Price";
+            header[5] = "Outlet";
+
+            ReportTableView.setColumnCount(header.length);
+
+            simpleTableHeaderAdapter = new SimpleTableHeaderAdapter(getContext(), header);
+            simpleTableHeaderAdapter.setTextColor(ContextCompat.getColor(getContext(), R.color.table_header_text));
+            simpleTableHeaderAdapter.setTextSize(14);
+            simpleTableHeaderAdapter.setPaddingBottom(20);
+            simpleTableHeaderAdapter.setPaddingTop(20);
+
+            ReportTableView.setColumnComparator(1, ReportComparators.getNoSoComparator());
+            ReportTableView.setColumnComparator(2, ReportComparators.getTotalProductComparator());
+            ReportTableView.setColumnComparator(3, ReportComparators.getTotalItemComparator());
+            ReportTableView.setColumnComparator(4, ReportComparators.getTotalPriceComparator());
+            ReportTableView.setColumnComparator(5, ReportComparators.getStatusComparator());
+
+            ReportTableView.setColumnWeight(1, 2);
+            ReportTableView.setColumnWeight(2, 1);
+            ReportTableView.setColumnWeight(3, 1);
+            ReportTableView.setColumnWeight(4, 2);
+            ReportTableView.setColumnWeight(5, 1);
+
+            ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
+
+            List<tSalesProductHeaderData> dt_so = new tSalesProductHeaderBL().getAllSalesProductHeaderByOutletCode(outletcode);
+            reportList = new ArrayList<>();
+
+            if(dt_so != null&&dt_so.size()>0){
+                for(tSalesProductHeaderData datas : dt_so ){
+                    ReportTable rt = new ReportTable();
+
+                    rt.set_report_type("Stock In Hand");
+                    rt.set_no_so(datas.get_txtNoSo());
+                    rt.set_total_product(datas.get_intSumItem());
+                    rt.set_total_price(new clsMainActivity().convertNumberDec(Double.valueOf(datas.get_intSumAmount())));
+                    rt.set_status(datas.get_OutletName());
+
+                    List<tSalesProductDetailData> dt_detail = new tSalesProductDetailBL().GetDataByNoSO(datas.get_txtNoSo());
+
+                    int total_item = 0;
+
+                    for(i = 0; i < dt_detail.size(); i++){
+                        total_item = total_item + Integer.parseInt(dt_detail.get(i).get_intQty());
+                    }
+
+                    rt.set_total_item(String.valueOf(total_item));
+                    rt.set_total_product(String.valueOf(dt_detail.size()));
+
+                    reportList.add(rt);
+                }
+            } else {
+                new clsMainActivity().showCustomToast(getContext(), "No Data to Show", false);
+            }
+
+            ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
         } else if (spinnerSelected.contains("Customer Base")){
                 header = new String[7];
                 header[1] = "Type";

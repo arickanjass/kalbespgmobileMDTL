@@ -120,6 +120,16 @@ public class tActivityMobileData {
     private String _txtRoleId;
     private String _intSubTypeActivity;
     private String _txtTypeActivity;
+    private String _intIsValid;
+
+    public String get_intIsValid() {
+        return _intIsValid;
+    }
+
+    public void set_intIsValid(String _intIsValid) {
+        this._intIsValid = _intIsValid;
+    }
+
 
     public String get_intSubTypeActivity() {
         return _intSubTypeActivity;
@@ -154,9 +164,10 @@ public class tActivityMobileData {
     public String Property_txtRoleId="txtRoleId";
     public String Property_intSubTypeActivity = "intSubTypeActivity";
     public String Property_txtTypeActivity="txtTypeActivity";
+    public String Property__intIsValid="intIsValid";
     public String Property_ListOfTActivityMobile="ListOfTActivityMobile";
 
     public String Property_All=Property_dtActivity+","+Property_intActive+","+Property_intId+","+Property_intIdSyn+","+Property_intSubmit+","+Property_txtDesc+","+
             Property_txtDeviceId+","+Property_txtImg1+","+Property_txtImg2+","+Property_txtOutletCode+","+Property_txtOutletName+","+
-            Property_txtUserId+","+Property_intFlag+","+Property_txtBranch+","+Property_txtRoleId+","+Property_txtTypeActivity+","+Property_intSubTypeActivity;
+            Property_txtUserId+","+Property_intFlag+","+Property_txtBranch+","+Property_txtRoleId+","+Property_txtTypeActivity+","+Property_intSubTypeActivity+","+Property__intIsValid;
 }

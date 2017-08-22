@@ -190,7 +190,10 @@ public class mMenuBL extends clsMainBL {
                     }
                 }
             }
-
+            //Jika Absen FPE
+            else if (data.get_TxtDescription().contains("mnAbsenFPE")) {
+                tmpData.add(data);
+            }
             //Jika menu leave
             else if (data.get_TxtDescription().contains("mnLeave")) {
                 mTypeLeaveMobileDA _mTypeLeaveMobileDA = new mTypeLeaveMobileDA(db);

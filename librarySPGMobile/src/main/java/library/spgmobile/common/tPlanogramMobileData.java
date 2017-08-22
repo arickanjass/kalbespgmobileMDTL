@@ -156,6 +156,14 @@ public class tPlanogramMobileData {
         this._bitActive = _bitActive;
     }
 
+    public String get_txtDeviceId() {
+        return _txtDeviceId;
+    }
+
+    public void set_txtDeviceId(String _txtDeviceId) {
+        this._txtDeviceId = _txtDeviceId;
+    }
+
     private String _intId;
     private String _txtIdPlanogram;
     private String _txtNIK;
@@ -175,6 +183,7 @@ public class tPlanogramMobileData {
     private byte[] _txtAfterImg2;
     private byte[] _txtBeforeImg1;
     private byte[] _txtBeforeImg2;
+    private String _txtDeviceId;
 
     public String Property_intId = "intId";
     public String Property_txtIdPlanogram = "txtIdPlanogram";
@@ -195,6 +204,7 @@ public class tPlanogramMobileData {
     public String Property_txtAfterImg2="txtAfterImg2";
     public String Property_txtBeforeImg1="txtBeforeImg1";
     public String Property_txtBeforeImg2="txtBeforeImg2";
+    public String Property_txtDeviceId="txtDeviceId";
     public String Property_ListOftPlanogramMobileData = "ListOftPlanogramMobileData";
 
     public tPlanogramMobileData() {
@@ -220,5 +230,6 @@ public class tPlanogramMobileData {
                     Property_txtBeforeImg1 + "," +
                     Property_txtBeforeImg2 + "," +
                     Property_txtAfterImg1 + "," +
-                    Property_txtAfterImg2;
+                    Property_txtAfterImg2 + "," +
+                    Property_txtDeviceId;
 }

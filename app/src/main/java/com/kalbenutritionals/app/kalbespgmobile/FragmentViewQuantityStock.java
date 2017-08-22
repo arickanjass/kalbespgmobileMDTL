@@ -100,7 +100,7 @@ public class FragmentViewQuantityStock extends Fragment implements IXListViewLis
             @Override
             public void onClick(View view) {
                 Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-                toolbar.setTitle("Add Quantity Stock");
+                toolbar.setTitle("Add Stock Near ED");
 
                 FragmentAddQuantityStock fragmentAddQuantityStock = new FragmentAddQuantityStock();
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();

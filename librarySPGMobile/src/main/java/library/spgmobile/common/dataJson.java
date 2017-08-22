@@ -899,6 +899,7 @@ public class dataJson {
                     item1.put(dttActivityMobileData.Property_txtRoleId, String.valueOf(data.get_txtRoleId()));
                     item1.put(dttActivityMobileData.Property_intSubTypeActivity, String.valueOf(data.get_intSubTypeActivity()));
                     item1.put(dttActivityMobileData.Property_txtTypeActivity, String.valueOf(data.get_txtTypeActivity()));
+                    item1.put(dttActivityMobileData.Property__intIsValid, String.valueOf(data.get_intIsValid()));
                     itemsListJquey.add(item1);
                 }
                 resJson.put(dttActivityMobileData.Property_ListOfTActivityMobile, new JSONArray(itemsListJquey));
@@ -920,6 +921,7 @@ public class dataJson {
                     item1.put(dttPlanogramMobileData.Property_txtBranchName, String.valueOf(data.get_txtBranchName()));
                     item1.put(dttPlanogramMobileData.Property_UserId, String.valueOf(data.get_UserId()));
                     item1.put(dttPlanogramMobileData.Property_txtRoleId, String.valueOf(data.get_txtRoleId()));
+                    item1.put(dttPlanogramMobileData.Property_txtDeviceId, String.valueOf(data.get_txtDeviceId()));
                     itemsListJquey.add(item1);
                 }
                 resJson.put(dttPlanogramMobileData.Property_ListOftPlanogramMobileData, new JSONArray(itemsListJquey));

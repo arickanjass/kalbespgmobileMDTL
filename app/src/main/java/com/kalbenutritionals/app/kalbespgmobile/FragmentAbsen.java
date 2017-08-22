@@ -412,8 +412,11 @@ public class FragmentAbsen extends Fragment implements ConnectionCallbacks, OnCo
                                                     tAbsenUserData datatAbsenUserData = dttAbsenUserData;
                                                     tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
                                                     String idUserActive = String.valueOf(dataUserActive.get_txtUserId());
-                                                    List<tDeviceInfoUserData> dataDeviceInfoUser = new tDeviceInfoUserBL().getData(1);
-                                                    String deviceInfo = String.valueOf(dataDeviceInfoUser.get(0).get_txtDeviceId());
+                                                    List<tDeviceInfoUserData> dataDeviceInfoUser = new tDeviceInfoUserBL().getData(0);
+                                                    String deviceInfo="";
+                                                    if(dataDeviceInfoUser!=null){
+                                                        deviceInfo = String.valueOf(dataDeviceInfoUser.get(0).get_txtDeviceId());
+                                                    }
                                                     List<tAbsenUserData> absenUserDatas = new ArrayList<>();
                                                     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                                     Calendar cal = Calendar.getInstance();

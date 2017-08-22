@@ -1065,6 +1065,14 @@ public class FragmentDownloadData extends Fragment {
                     if (boolValid_koordinasiOutlet == 1) SaveDataKoordinasiOutletData(Json);
                 }
 
+                if (ll_data_planogram != null && checkVisibility(ll_data_planogram)) {
+                    Json = new tPlanogramMobileBL().DownloadTransactionPlanogram(pInfo.versionName);
+                    Iterator m = Json.iterator();
+                    org.json.simple.JSONObject innerObj_koordinasiOutlet = (org.json.simple.JSONObject) m.next();
+                    int boolValid_Planogram = Integer.valueOf(String.valueOf(innerObj_koordinasiOutlet.get("_pboolValid")));
+                    if (boolValid_Planogram == 1) SaveDatatPlamogramData(Json);
+                }
+
                 if (ll_data_activity != null && checkVisibility(ll_data_activity)) {
                     Json = new tActivityBL().DownloadActivity(pInfo.versionName);
                     SaveDatatActivityData(Json);
@@ -1519,6 +1527,7 @@ public class FragmentDownloadData extends Fragment {
             _data.set_intActive(String.valueOf(innerObj.get("IntActive")));
             _data.set_intSubTypeActivity(String.valueOf(innerObj.get("TxtSubTypeId")));
             _data.set_txtTypeActivity(String.valueOf(innerObj.get("TxtSubTypeName")));
+            _data.set_intIsValid(String.valueOf(innerObj.get("IntIsValid")));
 
             String url1 = String.valueOf(innerObj.get("TxtLinkImg1"));
             String url2 = String.valueOf(innerObj.get("TxtLinkImg2"));

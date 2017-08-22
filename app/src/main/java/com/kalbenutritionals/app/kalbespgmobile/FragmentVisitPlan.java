@@ -439,7 +439,10 @@ public class FragmentVisitPlan extends Fragment implements ConnectionCallbacks, 
                                                 _tVisitPlanRealisasiData.set_intSubmit("1");
                                                 _tVisitPlanRealisasiData.set_txtAcc(lblAcc.getText().toString());
                                                 List<tDeviceInfoUserData> dataDeviceInfoUser = new tDeviceInfoUserBL().getData(0);
-                                                String deviceInfo = String.valueOf(dataDeviceInfoUser.get(0).get_txtDeviceId());
+                                                String deviceInfo="";
+                                                if(dataDeviceInfoUser!=null){
+                                                    deviceInfo = String.valueOf(dataDeviceInfoUser.get(0).get_txtDeviceId());
+                                                }
                                                 _tVisitPlanRealisasiData.set_deviceId(deviceInfo);
                                                 new tVisitPlanRealisasiBL().UpdateData(_tVisitPlanRealisasiData);
                                                 imgPrevNoImg1.setClickable(false);

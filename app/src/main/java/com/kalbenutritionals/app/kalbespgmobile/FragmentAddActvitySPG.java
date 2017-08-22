@@ -209,6 +209,9 @@ public class FragmentAddActvitySPG extends Fragment implements View.OnClickListe
                             dtActivityData.set_intSubmit("1");
                             dtActivityData.set_txtOutletCode(dtAbsen.get_txtOutletCode());
                             dtActivityData.set_txtOutletName(dtAbsen.get_txtOutletName());
+                            if (dtAbsen.get_txtDeviceId() != null){
+                                dtActivityData.set_txtDeviceId(dtAbsen.get_txtDeviceId());
+                            }
                             dtActivityData.set_txtDeviceId(dtAbsen.get_txtDeviceId());
                             dtActivityData.set_txtBranch(dtAbsen.get_txtBranchCode());
                             dtActivityData.set_txtUserId(dtLogin.get_TxtEmpId());

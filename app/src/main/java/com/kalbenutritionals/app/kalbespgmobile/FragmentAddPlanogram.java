@@ -218,6 +218,7 @@ public class FragmentAddPlanogram extends Fragment implements View.OnClickListen
                             _tPlanogramMobileData.set_UserId(dtLogin.get_txtUserId());
                             _tPlanogramMobileData.set_txtRoleId(dtLogin.get_txtRoleId());
                             _tPlanogramMobileData.set_intIdAbsenUser(dtLogin.get_txtDataId());
+                            _tPlanogramMobileData.set_txtDeviceId(String.valueOf(dtAbsen.get_txtDeviceId()));
 
                             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                             Calendar cal = Calendar.getInstance();
