@@ -1,14 +1,15 @@
 package com.kalbenutritionals.app.kalbespgmobile;
 
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -20,15 +21,14 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.InputFilter;
 import android.text.Spanned;
-import android.util.AttributeSet;
-import android.view.Display;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -36,7 +36,9 @@ import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -84,14 +86,13 @@ public class FragmentKuesioner extends Fragment {
     private Spinner spinner;
     private EditText etTestGet;
     private ListView listView;
-    private LinearLayout linearLayout, layoutDate;
+    private LinearLayout linearLayout, layoutDate, layoutFileQuiz, layoutImgQuiz;
+    private ImageView imageView;
     private RadioGroup rgTestGet;
     private EditText dateView;
     clsMainActivity _clsMainActivity;
     private int value, intGroupId;
-    private TextView textView, tvQuiz;
-
-
+    private TextView textView, tvQuiz, tvFileQuiz, tvFilePathQuiz, tvImgQuiz;
 
     @Nullable
     @Override
@@ -220,6 +221,33 @@ public class FragmentKuesioner extends Fragment {
                             }
                         }
                         listAnswer.add(layoutDate);
+                    }else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("7")){
+                        layoutImgQuiz = (LinearLayout) v.findViewById(i+1);
+                        for (int x = 0; x < layoutImgQuiz.getChildCount(); x++) {
+                            View nextChild = layoutImgQuiz.getChildAt(x);
+                            if (nextChild instanceof ImageView) {
+                                ImageView img = (ImageView) nextChild;
+                                imageView = (ImageView) v.findViewById(img.getId());
+                            }else if (nextChild instanceof TextView) {
+                                TextView textView = (TextView) nextChild;
+                                tvImgQuiz = (TextView) v.findViewById(textView.getId());
+                            }
+                        }
+                        listAnswer.add(layoutImgQuiz);
+                    }else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("8")) {
+                        layoutFileQuiz = (LinearLayout) v.findViewById(i+1);
+                        for (int x = 0; x < layoutFileQuiz.getChildCount(); x++) {
+                            View nextChild = layoutFileQuiz.getChildAt(x);
+                            if (nextChild instanceof TextView) {
+                                TextView textView = (TextView) nextChild;
+                                if (textView.getId() == layoutFileQuiz.getId() * 37){
+                                    tvFileQuiz = (TextView) v.findViewById(textView.getId());
+                                }else if (textView.getId() == layoutFileQuiz.getId() * 63){
+                                    tvFilePathQuiz = (TextView) v.findViewById(textView.getId());
+                                }
+                            }
+                        }
+                        listAnswer.add(layoutFileQuiz);
                     }
                 }
 //                tabLayout.getTabAt(tabLayout.getSelectedTabPosition()).setCustomView(null);
@@ -298,11 +326,39 @@ public class FragmentKuesioner extends Fragment {
                             }
                         }
                         listAnswer.add(layoutDate);
+                    } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("7")){
+                        layoutImgQuiz = (LinearLayout) v.findViewById(i+1);
+                        for (int x = 0; x < layoutImgQuiz.getChildCount(); x++) {
+                            View nextChild = layoutImgQuiz.getChildAt(x);
+                            if (nextChild instanceof ImageView) {
+                                ImageView img = (ImageView) nextChild;
+                                imageView = (ImageView) v.findViewById(img.getId());
+                            }else if (nextChild instanceof TextView) {
+                                TextView textView = (TextView) nextChild;
+                                //dateView = (EditText) v.findViewById(linearLayout.getId() * 145);
+                                tvImgQuiz = (TextView) v.findViewById(textView.getId());
+                            }
+                        }
+                        listAnswer.add(layoutImgQuiz);
+                    }else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("8")) {
+                        layoutFileQuiz = (LinearLayout) v.findViewById(i+1);
+                        for (int x = 0; x < layoutFileQuiz.getChildCount(); x++) {
+                            View nextChild = layoutFileQuiz.getChildAt(x);
+                            if (nextChild instanceof TextView) {
+                                TextView textView = (TextView) nextChild;
+                                if (textView.getId() == layoutFileQuiz.getId() * 37){
+                                    tvFileQuiz = (TextView) v.findViewById(textView.getId());
+                                }else if (textView.getId() == layoutFileQuiz.getId() * 63){
+                                    tvFilePathQuiz = (TextView) v.findViewById(textView.getId());
+                                }
+                            }
+                        }
+                        listAnswer.add(layoutFileQuiz);
                     }
                 }
 //                tabLayout.getTabAt(tabLayout.getSelectedTabPosition()).setCustomView(null);
                 int iterator = viewPager.getCurrentItem() - 1;
-//                viewPager.setCurrentItem(iterator);  
+//                viewPager.setCurrentItem(iterator);
                 if (validasi(viewPager.getCurrentItem())){
                     viewPager.setCurrentItem(iterator);
                         tvQuiz.setText("Soal " + HMPertanyaan3.get(HMPertanyaan3.get(dataPertanyaan3.get(iterator))));
@@ -378,6 +434,33 @@ public class FragmentKuesioner extends Fragment {
                             }
                         }
                         listAnswer.add(layoutDate);
+                    }else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("7")){
+                        layoutImgQuiz = (LinearLayout) v.findViewById(i+1);
+                        for (int x = 0; x < layoutImgQuiz.getChildCount(); x++) {
+                            View nextChild = layoutImgQuiz.getChildAt(x);
+                            if (nextChild instanceof ImageView) {
+                                ImageView img = (ImageView) nextChild;
+                                imageView = (ImageView) v.findViewById(img.getId());
+                            }else if (nextChild instanceof TextView) {
+                                TextView textView = (TextView) nextChild;
+                                tvImgQuiz = (TextView) v.findViewById(textView.getId());
+                            }
+                        }
+                        listAnswer.add(layoutImgQuiz);
+                    }else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("8")) {
+                        layoutFileQuiz = (LinearLayout) v.findViewById(i+1);
+                        for (int x = 0; x < layoutFileQuiz.getChildCount(); x++) {
+                            View nextChild = layoutFileQuiz.getChildAt(x);
+                            if (nextChild instanceof TextView) {
+                                TextView textView = (TextView) nextChild;
+                                if (textView.getId() == layoutFileQuiz.getId() * 37){
+                                    tvFileQuiz = (TextView) v.findViewById(textView.getId());
+                                }else if (textView.getId() == layoutFileQuiz.getId() * 63){
+                                    tvFilePathQuiz = (TextView) v.findViewById(textView.getId());
+                                }
+                            }
+                        }
+                        listAnswer.add(layoutFileQuiz);
                     }
                 }
 
@@ -530,17 +613,55 @@ public class FragmentKuesioner extends Fragment {
                     alertDialog.setTitle("Confirm");
                     alertDialog.setMessage("Are you sure?");
                     alertDialog.setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
+                        ProgressDialog progressDialog = new ProgressDialog(getContext());
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                        public void onClick(final DialogInterface dialog, int which) {
+                            Thread thread = new Thread(){
+                                @Override
+                                public void run() {
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            progressDialog.setMessage("Saving your answer...");
+                                            progressDialog.show();
+                                        }
+                                    });
+//                                    getActivity().runOnUiThread(new Runnable() {
+//                                        @Override
+//                                        public void run() {
+//                                            SaveQuiz();
+//                                        }
+//                                    });
+//
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            progressDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                                @Override
+                                                public void onDismiss(DialogInterface dialog) {
+                                                    AsyncSaveQuiz task = new AsyncSaveQuiz();
+                                                    task.execute();
+                                                }
+                                            });
+                                            progressDialog.dismiss();
+                                            FragmentKuesionerAwal fragmentKuesionerAwal = new FragmentKuesionerAwal();
+                                            FragmentTransaction fragmentTransactionkuesionerAwal = getFragmentManager().beginTransaction();
+                                            fragmentTransactionkuesionerAwal.replace(R.id.frame, fragmentKuesionerAwal);
+                                            fragmentTransactionkuesionerAwal.commit();
+                                            _clsMainActivity.showCustomToast(getContext(),"Saved", true);
+                                        }
+                                    });
+                                }
+                            };
+//                            thread.start();
+
                             SaveQuiz();
-                            _clsMainActivity.showCustomToast(getActivity(), "Saved", true);
                             FragmentKuesionerAwal fragmentKuesionerAwal = new FragmentKuesionerAwal();
                             FragmentTransaction fragmentTransactionkuesionerAwal = getFragmentManager().beginTransaction();
                             fragmentTransactionkuesionerAwal.replace(R.id.frame, fragmentKuesionerAwal);
                             fragmentTransactionkuesionerAwal.commit();
-//                            Intent myIntent = new Intent(getContext(), MainMenu.class);
-//                            getActivity().finish();
-//                            startActivity(myIntent);
+                            _clsMainActivity.showCustomToast(getContext(),"Saved", true);
+
                         }
                     });
                     alertDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -635,6 +756,21 @@ public class FragmentKuesioner extends Fragment {
                             }
                         }
                     }
+                }else if (layout == layoutFileQuiz) {
+                    for (int z = 0; z < layoutFileQuiz.getChildCount(); z++) {
+                        View nextChild = layoutFileQuiz.getChildAt(z);
+                        if (nextChild instanceof TextView) {
+                            if (nextChild.getId() == layoutFileQuiz.getId() * 37) {
+                                tvFileQuiz = (TextView) nextChild;
+                                if (tvFileQuiz.getText().toString().equals("no file choosen")) {
+//                                tabLayout.getTabAt(i).setCustomView(tab);
+                                    validate = false;
+                                } else {
+//                                tabLayout.getTabAt(i).setCustomView(null);
+                                }
+                            }
+                        }
+                    }
                 }
             }
             if (jawaban instanceof Spinner) {
@@ -716,7 +852,53 @@ public class FragmentKuesioner extends Fragment {
 //                    tabLayout.getTabAt(i).setCustomView(null);
                 }
             }
+        if (jawaban instanceof ImageView){
+            if ((imageView = (ImageView) jawaban).getBackground() != null){
+                validate = false;
+            }
+        }
         return validate;
+    }
+
+    private class AsyncSaveQuiz extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+//            SaveQuiz();
+//            getActivity().runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    try {
+//                                SaveQuiz();
+//                            } catch (Exception e){
+//                                e.printStackTrace();
+//                            }
+//                }
+//            });
+            return null;
+        }
+
+        private ProgressDialog Dialog = new ProgressDialog(getActivity());
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            SaveQuiz();
+                new clsMainActivity().showCustomToast(getContext(), "Saved", true);
+            FragmentKuesionerAwal fragmentKuesionerAwal = new FragmentKuesionerAwal();
+            FragmentTransaction fragmentTransactionkuesionerAwal = getFragmentManager().beginTransaction();
+            fragmentTransactionkuesionerAwal.replace(R.id.frame, fragmentKuesionerAwal);
+            fragmentTransactionkuesionerAwal.commit();
+            Dialog.dismiss();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            // Make ProgressBar invisible
+            // pg.setVisibility(View.VISIBLE);
+            Dialog.setMessage("Saving your answer...");
+            Dialog.setCancelable(false);
+            Dialog.show();
+        }
     }
     private void SaveQuiz() {
         Bundle bundle = this.getArguments();
@@ -752,6 +934,8 @@ public class FragmentKuesioner extends Fragment {
                         dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
                         dt.set_intAnswerId(HMJawaban.get(seekbar.getProgress()));
                         dt.set_txtValue(String.valueOf(seekbar.getProgress()));
+                        dt.set_ptQuiz(null);
+                        dt.set_txtFileQuiz(null);
                         dt.set_decBobot("");
                         dt.set_intSubmit("1");
                         dt.set_intSync("0");
@@ -769,6 +953,8 @@ public class FragmentKuesioner extends Fragment {
                 dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
                 dt.set_intAnswerId(HMJawaban.get(spinner.getSelectedItem().toString()));
                 dt.set_txtValue(HMJawaban.get(HMJawaban.get(spinner.getSelectedItem().toString())));
+                dt.set_ptQuiz(null);
+                dt.set_txtFileQuiz(null);
                 dt.set_decBobot("");
                 dt.set_intSubmit("1");
                 dt.set_intSync("0");
@@ -784,6 +970,8 @@ public class FragmentKuesioner extends Fragment {
                 dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
                 dt.set_intAnswerId(HMJawaban.get(editText.getText().toString()));
                 dt.set_txtValue(editText.getText().toString());
+                dt.set_ptQuiz(null);
+                dt.set_txtFileQuiz(null);
                 dt.set_decBobot("");
                 dt.set_intSubmit("1");
                 dt.set_intSync("0");
@@ -804,6 +992,8 @@ public class FragmentKuesioner extends Fragment {
                             dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
                             dt.set_intAnswerId(HMJawaban.get(cbTestGet.getText().toString()));
                             dt.set_txtValue(HMJawaban.get(HMJawaban.get(cbTestGet.getText().toString())));
+                            dt.set_ptQuiz(null);
+                            dt.set_txtFileQuiz(null);
                             dt.set_decBobot("");
                             dt.set_intSubmit("1");
                             dt.set_intSync("0");
@@ -828,6 +1018,8 @@ public class FragmentKuesioner extends Fragment {
                             dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
                             dt.set_intAnswerId(HMJawaban.get(radioButton.getText().toString()));
                             dt.set_txtValue(HMJawaban.get(HMJawaban.get(radioButton.getText().toString())));
+                            dt.set_ptQuiz(null);
+                            dt.set_txtFileQuiz(null);
                             dt.set_decBobot("");
                             dt.set_intSubmit("1");
                             dt.set_intSync("0");
@@ -850,10 +1042,78 @@ public class FragmentKuesioner extends Fragment {
                         dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
                         dt.set_intAnswerId(HMJawaban.get(dateView.getText().toString()));
                         dt.set_txtValue(dateView.getText().toString());
+                        dt.set_ptQuiz(null);
+                        dt.set_txtFileQuiz(null);
                         dt.set_decBobot("");
                         dt.set_intSubmit("1");
                         dt.set_intSync("0");
                         new tJawabanUserBL().SaveDatatJawabanUser(dt);
+                    }
+                }
+            } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("7")) {
+                LinearLayout linearLayout = (LinearLayout) listAnswer.get(i);
+                tJawabanUserData dt7 = new tJawabanUserData();
+                BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+                for (int z = 0; z < linearLayout.getChildCount(); z++) {
+                    View nextChild = linearLayout.getChildAt(z);
+                    if (nextChild instanceof TextView) {
+                        tvImgQuiz = (TextView) nextChild;
+                        String selectedImage = tvImgQuiz.getText().toString();
+                        Bitmap bm = BitmapFactory.decodeFile(selectedImage, bitmapOptions);
+                        byte[] byteQuiz = ImagePick.byteQuiz(bm);
+                        dt7.set_intUserAnswer(new clsMainActivity().GenerateGuid());
+                        dt7.set_intUserId(dataUserActive.get_txtUserId());
+                        dt7.set_intNik(dataUserActive.get_TxtEmpId());
+                        dt7.set_intRoleId(dataUserActive.get_txtRoleId());
+                        dt7.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
+                        dt7.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
+                        dt7.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
+                        dt7.set_intAnswerId(null);
+                        dt7.set_txtValue(ImagePick.getImageName());
+                        dt7.set_ptQuiz(byteQuiz);
+                        dt7.set_txtFileQuiz(null);
+                        dt7.set_decBobot("");
+                        dt7.set_intSubmit("1");
+                        dt7.set_intSync("0");
+                        new tJawabanUserBL().SaveDatatJawabanUser(dt7);
+                    }
+                }
+            }else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("8")) {
+                LinearLayout linearLayout = (LinearLayout) listAnswer.get(i);
+                for (int z = 0; z < linearLayout.getChildCount(); z++) {
+                    View nextChild = linearLayout.getChildAt(z);
+                    if (nextChild instanceof Button) {
+
+                    } else {
+                        TextView textView = (TextView) nextChild;
+                        if (textView.getId() == layoutFileQuiz.getId() * 37){
+                            tvFileQuiz = (TextView) nextChild;
+                            tJawabanUserData dt7 = new tJawabanUserData();
+                            String uri = tvFilePathQuiz.getText().toString();
+                            byte[] byteFile = null;
+                            try {
+                                byteFile = ImagePick.getFile(Uri.parse(uri), getContext());
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
+                            dt7.set_intUserAnswer(new clsMainActivity().GenerateGuid());
+                            dt7.set_intUserId(dataUserActive.get_txtUserId());
+                            dt7.set_intNik(dataUserActive.get_TxtEmpId());
+                            dt7.set_intRoleId(dataUserActive.get_txtRoleId());
+                            dt7.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
+                            dt7.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
+                            dt7.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
+                            dt7.set_intAnswerId(HMJawaban.get(textView.getText().toString()));
+                            dt7.set_txtValue(tvFileQuiz.getText().toString());
+                            dt7.set_ptQuiz(null);
+                            dt7.set_txtFileQuiz(byteFile);
+                            dt7.set_decBobot("");
+                            dt7.set_intSubmit("1");
+                            dt7.set_intSync("0");
+                            new tJawabanUserBL().SaveDatatJawabanUser(dt7);
+                        }else if (textView.getId() == layoutFileQuiz.getId() * 63){
+                            tvFilePathQuiz = (TextView) nextChild;
+                        }
                     }
                 }
             }

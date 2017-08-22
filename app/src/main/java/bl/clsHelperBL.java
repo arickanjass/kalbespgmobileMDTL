@@ -21,6 +21,7 @@ import library.spgmobile.common.clsFileAttach_mobile;
 import library.spgmobile.common.clsHelper;
 import library.spgmobile.common.clsLogReceiverDetail_mobile;
 import library.spgmobile.common.clsLogReceiverHeader_mobile;
+import library.spgmobile.common.clsMappingPushFile;
 import library.spgmobile.common.clsPushData;
 import library.spgmobile.common.dataJson;
 import library.spgmobile.common.linkAPI;
@@ -29,6 +30,7 @@ import library.spgmobile.common.mconfigData;
 import library.spgmobile.common.tAbsenUserData;
 import library.spgmobile.common.tActivityData;
 import library.spgmobile.common.tActivityMobileData;
+import library.spgmobile.common.tAttendanceUserData;
 import library.spgmobile.common.tCustomerBasedMobileDetailData;
 import library.spgmobile.common.tCustomerBasedMobileDetailProductData;
 import library.spgmobile.common.tCustomerBasedMobileHeaderData;
@@ -36,6 +38,8 @@ import library.spgmobile.common.tJawabanUserData;
 import library.spgmobile.common.tLeaveMobileData;
 import library.spgmobile.common.tLogErrorData;
 import library.spgmobile.common.tNotificationData;
+import library.spgmobile.common.tPlanogramImageData;
+import library.spgmobile.common.tPlanogramMobileData;
 import library.spgmobile.common.tPurchaseOrderDetailData;
 import library.spgmobile.common.tPurchaseOrderHeaderData;
 import library.spgmobile.common.tSalesProductDetailData;
@@ -60,12 +64,15 @@ import library.spgmobile.dal.mconfigDA;
 import library.spgmobile.dal.tAbsenUserDA;
 import library.spgmobile.dal.tActivityDA;
 import library.spgmobile.dal.tActivityMobileDA;
+import library.spgmobile.dal.tAttendanceUserDA;
 import library.spgmobile.dal.tCustomerBasedMobileDetailDA;
 import library.spgmobile.dal.tCustomerBasedMobileDetailProductDA;
 import library.spgmobile.dal.tCustomerBasedMobileHeaderDA;
 import library.spgmobile.dal.tJawabanUserDA;
 import library.spgmobile.dal.tLeaveMobileDA;
 import library.spgmobile.dal.tLogErrorDA;
+import library.spgmobile.dal.tPlanogramImageDA;
+import library.spgmobile.dal.tPlanogramMobileDA;
 import library.spgmobile.dal.tPurchaseOrderDetailDA;
 import library.spgmobile.dal.tPurchaseOrderHeaderDA;
 import library.spgmobile.dal.tSalesProductDetailDA;
@@ -97,13 +104,16 @@ public class clsHelperBL extends clsMainBL {
     public visitplanAbsenData getDataCheckInActive(){
         SQLiteDatabase db=getDb();
         tAbsenUserDA _tAbsenUserDA=new tAbsenUserDA(db);
-        tAbsenUserData dataAbsen=new tAbsenUserData();
+        tAbsenUserData dataAbsen;
         dataAbsen=_tAbsenUserDA.getDataCheckInActive(db);
         tVisitPlanRealisasiDA  _tTVisitPlanRealisasiDA = new tVisitPlanRealisasiDA(db);
-        tVisitPlanRealisasiData dataVisit = new tVisitPlanRealisasiData();
+        tVisitPlanRealisasiData dataVisit;
         dataVisit = _tTVisitPlanRealisasiDA.getDataCheckInActive(db);
+        tAttendanceUserDA _tAttendanceUserDA = new tAttendanceUserDA(db);
+        tAttendanceUserData dataAbsenFPE;
+        dataAbsenFPE = _tAttendanceUserDA.getDataCheckInActive(db);
         visitplanAbsenData dataReturn = new visitplanAbsenData();
-        if (dataAbsen == null && dataVisit.get_txtDataIDRealisasi() != null){
+        if (dataAbsen == null && dataVisit.get_txtDataIDRealisasi() != null && dataAbsenFPE==null){
             dataReturn.set_txtId(dataVisit.get_txtDataIDRealisasi().toString());
             dataReturn.set_txtOutletCode(dataVisit.get_txtOutletCode().toString());
             dataReturn.set_txtOutletName(dataVisit.get_txtOutletName().toString());
@@ -119,17 +129,15 @@ public class clsHelperBL extends clsMainBL {
             dataReturn.set_txtLatitude(dataVisit.get_txtLat());
             dataReturn.set_txtLongitude(dataVisit.get_txtLong());
             byte[] blob1 = dataVisit.get_dtPhoto1();
-//				Bitmap bmp1 = BitmapFactory.decodeByteArray(blob1, 0, blob1.length);
             dataReturn.set_txtImg1(blob1);
             byte[] blob2 = dataVisit.get_dtPhoto2();
             dataReturn.set_txtUserId(dataVisit.get_intUserID());
             dataReturn.set_txtRoleId(dataVisit.get_txtRoleId());
-//				Bitmap bmp2 = BitmapFactory.decodeByteArray(blob2, 0, blob2.length);
             dataReturn.set_txtImg2(blob2);
 
 
             dataReturn.setType("visitPlan");
-        }else if (dataAbsen != null && dataVisit.get_txtDataIDRealisasi() == null){
+        } else if (dataAbsen != null && dataVisit.get_txtDataIDRealisasi() == null && dataAbsenFPE==null){
             dataReturn.set_txtId(dataAbsen.get_intId().toString());
             dataReturn.set_txtOutletCode(dataAbsen.get_txtOutletCode().toString());
             dataReturn.set_txtOutletName(dataAbsen.get_txtOutletName().toString());
@@ -149,17 +157,44 @@ public class clsHelperBL extends clsMainBL {
                 byte[] blob1 = dataAbsen.get_txtImg1();
                 dataReturn.set_txtImg1(blob1);
             }
-//				Bitmap bmp1 = BitmapFactory.decodeByteArray(blob1, 0, blob1.length);
             if (dataAbsen.get_txtImg2() != null){
                 byte[] blob2 = dataAbsen.get_txtImg2();
                 dataReturn.set_txtImg2(blob2);
             }
             dataReturn.set_txtUserId(dataAbsen.get_txtUserId());
             dataReturn.set_txtRoleId(dataAbsen.get_txtRoleId());
-//				Bitmap bmp2 = BitmapFactory.decodeByteArray(blob2, 0, blob2.length);
 
             dataReturn.setType("absen");
-        }else{
+        } else if (dataAbsen == null && dataVisit.get_txtDataIDRealisasi() == null && dataAbsenFPE!=null){
+            dataReturn.set_txtId(dataAbsenFPE.get_intId().toString());
+            dataReturn.set_txtOutletCode(dataAbsenFPE.get_txtOutletCode().toString());
+            dataReturn.set_txtOutletName(dataAbsenFPE.get_txtOutletName().toString());
+            dataReturn.set_txtBranchCode(dataAbsenFPE.get_txtBranchCode().toString());
+            dataReturn.set_txtBranchName(dataAbsenFPE.get_txtBranchName().toString());
+            dataReturn.set_txtDeviceId(dataAbsenFPE.get_txtDeviceId());
+
+            dataReturn.set_dtDateCheckIn(dataAbsenFPE.get_dtDateCheckIn().toString());
+            dataReturn.set_dtDateCheckOut(dataAbsenFPE.get_dtDateCheckOut().toString());
+            dataReturn.set_intSubmit(dataAbsenFPE.get_intSubmit());
+            dataReturn.set_intSync(dataAbsenFPE.get_intSync());
+            dataReturn.set_txtAbsen(dataAbsenFPE.get_txtAbsen());
+            dataReturn.set_txtAccuracy(dataAbsenFPE.get_txtAccuracy());
+            dataReturn.set_txtLatitude(dataAbsenFPE.get_txtLatitude());
+            dataReturn.set_txtLongitude(dataAbsenFPE.get_txtLongitude());
+            if (dataAbsenFPE.get_txtImg1() != null){
+                byte[] blob1 = dataAbsenFPE.get_txtImg1();
+                dataReturn.set_txtImg1(blob1);
+            }
+            if (dataAbsenFPE.get_txtImg2() != null){
+                byte[] blob2 = dataAbsenFPE.get_txtImg2();
+                dataReturn.set_txtImg2(blob2);
+            }
+            dataReturn.set_txtUserId(dataAbsenFPE.get_txtUserId());
+            dataReturn.set_txtRoleId(dataAbsenFPE.get_txtRoleId());
+            dataReturn.set_txtDesc(dataAbsenFPE.get_txtDesc());
+
+            dataReturn.setType("absenFPE");
+        } else{
             dataReturn = null;
         }
         return dataReturn;
@@ -355,7 +390,7 @@ public class clsHelperBL extends clsMainBL {
     }
 
 
-    public org.json.simple.JSONArray callPushDataReturnJson(String versionName, String strJson, HashMap<String, byte[]> ListOfDataFile) throws Exception {
+    public org.json.simple.JSONArray callPushDataReturnJson(String versionName, String strJson, HashMap<clsMappingPushFile, byte[]> ListOfDataFile) throws Exception {
         SQLiteDatabase _db = getDb();
         Boolean flag = true;
         String ErrorMess = "";
@@ -495,7 +530,7 @@ public class clsHelperBL extends clsMainBL {
         dataJson dtPush = new dataJson();
         SQLiteDatabase db = getDb();
         tUserLoginDA _tUserLoginDA = new tUserLoginDA(db);
-        HashMap<String, byte[]> FileUpload = null;
+        HashMap<clsMappingPushFile, byte[]> FileUpload = null;
         if (_tUserLoginDA.getContactsCount(db) > 0) {
             tUserLoginData _tUserLoginData = _tUserLoginDA.getData(db, 1);
             dtPush.set_txtVersionApp(versionName);
@@ -522,6 +557,8 @@ public class clsHelperBL extends clsMainBL {
             tAbsenUserDA _tAbsenUserDA = new tAbsenUserDA(db);
             tActivityDA _tActivityDA = new tActivityDA(db);
             tActivityMobileDA _tActivityMobileDA = new tActivityMobileDA(db);
+            tPlanogramMobileDA _tPlanogramMobileDA = new tPlanogramMobileDA(db);
+            tPlanogramImageDA _tPlanogramImageDA = new tPlanogramImageDA(db);
             tLeaveMobileDA _tLeaveMobileDA =new tLeaveMobileDA(db);
             tSalesProductHeaderDA _tSalesProductHeaderDA = new tSalesProductHeaderDA(db);
             tSalesProductDetailDA _tSalesProductDetailDA = new tSalesProductDetailDA(db);
@@ -562,19 +599,27 @@ public class clsHelperBL extends clsMainBL {
             List<tAbsenUserData> ListOftAbsenUserData = _tAbsenUserDA.getAllDataToPushData(db);
             List<tActivityData> ListOftActivityData = _tActivityDA.getAllDataToPushData(db);
             List<tActivityMobileData> ListOftActivityMobileData = _tActivityMobileDA.getAllDataToPushData(db);
+            List<tPlanogramMobileData> ListOftPlanogramMobileData = _tPlanogramMobileDA.getAllDataToPushData(db);
+            List<tPlanogramImageData> ListOftPlanogramImageData = _tPlanogramImageDA.getAllDataToPushData(db, ListOftPlanogramMobileData);
 
             List<clsLogReceiverHeader_mobile> ListOfLogReceiverHeader_mobile = _clsLogReceiverHeader_mobileDA.getAllDataToPushData(db);
             List<clsLogReceiverDetail_mobile> ListOfLogReceiverDetail_mobile = _clsLogReceiverDetail_mobileDA.getAllDataToPushData(db);
 
-            FileUpload = new HashMap<String, byte[]>();
+            FileUpload = new HashMap<clsMappingPushFile, byte[]>();
             if (ListOftAbsenUserData != null) {
                 dtPush.setListOftAbsenUserData(ListOftAbsenUserData);
                 for (tAbsenUserData dttAbsenUserData : ListOftAbsenUserData) {
                     if (dttAbsenUserData.get_txtImg1() != null) {
-                        FileUpload.put("FUAbsen" + dttAbsenUserData.get_intId() + "-1", dttAbsenUserData.get_txtImg1());
+                        clsMappingPushFile mappingPushFile = new clsMappingPushFile();
+                        mappingPushFile.setKey("FUAbsen" + dttAbsenUserData.get_intId() + "-1");
+                        mappingPushFile.setEkstension(".jpg");
+                        FileUpload.put(mappingPushFile, dttAbsenUserData.get_txtImg1());
                     }
                     if (dttAbsenUserData.get_txtImg2() != null) {
-                        FileUpload.put("FUAbsen" + dttAbsenUserData.get_intId() + "-2", dttAbsenUserData.get_txtImg2());
+                        clsMappingPushFile mappingPushFile = new clsMappingPushFile();
+                        mappingPushFile.setKey("FUAbsen" + dttAbsenUserData.get_intId() + "-2");
+                        mappingPushFile.setEkstension(".jpg");
+                        FileUpload.put(mappingPushFile, dttAbsenUserData.get_txtImg2());
                     }
                 }
             }
@@ -582,39 +627,89 @@ public class clsHelperBL extends clsMainBL {
                 dtPush.setListOftActivityData(ListOftActivityData);
                 for (tActivityData dttActivityData : ListOftActivityData) {
                     if (dttActivityData.get_txtImg1() != null) {
-                        FileUpload.put("FUActivity" + dttActivityData.get_intId() + "-1", dttActivityData.get_txtImg1());
+                        clsMappingPushFile mappingPushFile = new clsMappingPushFile();
+                        mappingPushFile.setKey("FUActivity" + dttActivityData.get_intId() + "-1");
+                        mappingPushFile.setEkstension(".jpg");
+                        FileUpload.put(mappingPushFile, dttActivityData.get_txtImg1());
                     }
                     if (dttActivityData.get_txtImg2() != null) {
-                        FileUpload.put("FUActivity" + dttActivityData.get_intId() + "-2", dttActivityData.get_txtImg2());
+                        clsMappingPushFile mappingPushFile = new clsMappingPushFile();
+                        mappingPushFile.setKey("FUActivity" + dttActivityData.get_intId() + "-2");
+                        mappingPushFile.setEkstension(".jpg");
+                        FileUpload.put(mappingPushFile, dttActivityData.get_txtImg2());
                     }
                 }
             }
             if (ListOftActivityMobileData != null) {
                 dtPush.setListOftActivityMobileData(ListOftActivityMobileData);
                 for (tActivityMobileData dttActivityMobileData : ListOftActivityMobileData) {
+
                     if (dttActivityMobileData.get_txtImg1() != null) {
-                        FileUpload.put("FUActivityMobileNew" + dttActivityMobileData.get_intId() + "-1", dttActivityMobileData.get_txtImg1());
+                        clsMappingPushFile mappingPushFile = new clsMappingPushFile();
+                        mappingPushFile.setKey("FUActivityMobileNew" + dttActivityMobileData.get_intId() + "-1");
+                        mappingPushFile.setEkstension(".jpg");
+                        FileUpload.put(mappingPushFile, dttActivityMobileData.get_txtImg1());
                     }
                     if (dttActivityMobileData.get_txtImg2() != null) {
-                        FileUpload.put("FUActivityMobileNew" + dttActivityMobileData.get_intId() + "-2", dttActivityMobileData.get_txtImg2());
+                        clsMappingPushFile mappingPushFile = new clsMappingPushFile();
+                        mappingPushFile.setKey("FUActivityMobileNew" + dttActivityMobileData.get_intId() + "-2");
+                        mappingPushFile.setEkstension(".jpg");
+                        FileUpload.put(mappingPushFile, dttActivityMobileData.get_txtImg2());
                     }
                 }
             }
             if (ListOfSalesProductQuantityImage != null){
                 dtPush.setListOftSalesProductQuantityImageData(ListOfSalesProductQuantityImage);
                 for (tSalesProductQuantityImageData dttQuantityImageData : ListOfSalesProductQuantityImage) {
+                    clsMappingPushFile mappingPushFile = new clsMappingPushFile();
                     if (dttQuantityImageData.get_txtImage() != null) {
                         if (dttQuantityImageData.get_txtType().equals("After") &&  dttQuantityImageData.get_intPosition().equals("1")) {
-                            FileUpload.put("FUQTS" + dttQuantityImageData.get_txtId(), dttQuantityImageData.get_txtImage());
+                            mappingPushFile.setKey("FUQTS" + dttQuantityImageData.get_txtId());
+                            mappingPushFile.setEkstension(".jpg");
+                            FileUpload.put(mappingPushFile, dttQuantityImageData.get_txtImage());
                         }
                         if (dttQuantityImageData.get_txtType().equals("After") &&  dttQuantityImageData.get_intPosition().equals("2")) {
-                            FileUpload.put("FUQTS" + dttQuantityImageData.get_txtId(), dttQuantityImageData.get_txtImage());
+                            mappingPushFile.setKey("FUQTS" + dttQuantityImageData.get_txtId());
+                            mappingPushFile.setEkstension(".jpg");
+                            FileUpload.put(mappingPushFile, dttQuantityImageData.get_txtImage());
                         }
                         if (dttQuantityImageData.get_txtType().equals("Before") &&  dttQuantityImageData.get_intPosition().equals("1")) {
-                            FileUpload.put("FUQTS" + dttQuantityImageData.get_txtId(), dttQuantityImageData.get_txtImage());
+                            mappingPushFile.setKey("FUQTS" + dttQuantityImageData.get_txtId());
+                            mappingPushFile.setEkstension(".jpg");
+                            FileUpload.put(mappingPushFile, dttQuantityImageData.get_txtImage());
                         }
                         if (dttQuantityImageData.get_txtType().equals("Before") &&  dttQuantityImageData.get_intPosition().equals("2")) {
-                            FileUpload.put("FUQTS" + dttQuantityImageData.get_txtId(), dttQuantityImageData.get_txtImage());
+                            mappingPushFile.setKey("FUQTS" + dttQuantityImageData.get_txtId());
+                            mappingPushFile.setEkstension(".jpg");
+                            FileUpload.put(mappingPushFile, dttQuantityImageData.get_txtImage());
+                        }
+                    }
+                }
+            }
+            if (ListOftPlanogramImageData != null){
+                dtPush.setListOftPlanogramImageData(ListOftPlanogramImageData);
+                for (tPlanogramImageData dttPlanogramImageData : ListOftPlanogramImageData) {
+                    clsMappingPushFile mappingPushFile = new clsMappingPushFile();
+                    if (dttPlanogramImageData.get_txtImage() != null) {
+                        if (dttPlanogramImageData.get_txtType().equals("AFTER") &&  dttPlanogramImageData.get_intPosition().equals("1")) {
+                            mappingPushFile.setKey("FUPlanogram" + dttPlanogramImageData.get_txtId());
+                            mappingPushFile.setEkstension(".jpg");
+                            FileUpload.put(mappingPushFile, dttPlanogramImageData.get_txtImage());
+                        }
+                        if (dttPlanogramImageData.get_txtType().equals("AFTER") &&  dttPlanogramImageData.get_intPosition().equals("2")) {
+                            mappingPushFile.setKey("FUPlanogram" + dttPlanogramImageData.get_txtId());
+                            mappingPushFile.setEkstension(".jpg");
+                            FileUpload.put(mappingPushFile, dttPlanogramImageData.get_txtImage());
+                        }
+                        if (dttPlanogramImageData.get_txtType().equals("BEFORE") &&  dttPlanogramImageData.get_intPosition().equals("1")) {
+                            mappingPushFile.setKey("FUPlanogram" + dttPlanogramImageData.get_txtId());
+                            mappingPushFile.setEkstension(".jpg");
+                            FileUpload.put(mappingPushFile, dttPlanogramImageData.get_txtImage());
+                        }
+                        if (dttPlanogramImageData.get_txtType().equals("BEFORE") &&  dttPlanogramImageData.get_intPosition().equals("2")) {
+                            mappingPushFile.setKey("FUPlanogram" + dttPlanogramImageData.get_txtId());
+                            mappingPushFile.setEkstension(".jpg");
+                            FileUpload.put(mappingPushFile, dttPlanogramImageData.get_txtImage());
                         }
                     }
                 }
@@ -622,23 +717,33 @@ public class clsHelperBL extends clsMainBL {
             if (ListOfKoordinasiOutletImage != null){
                 dtPush.setListOfKoordinasiOutletImageData(ListOfKoordinasiOutletImage);
                 for (KoordinasiOutletImageData dttKoordinasiOutletImageData : ListOfKoordinasiOutletImage) {
+                    clsMappingPushFile mappingPushFile = new clsMappingPushFile();
                     if (dttKoordinasiOutletImageData.get_txtImage() != null) {
                         if (dttKoordinasiOutletImageData.get_intPosition().equals("1")) {
-                            FileUpload.put("FUKDO" + dttKoordinasiOutletImageData.get_txtId(), dttKoordinasiOutletImageData.get_txtImage());
+                            mappingPushFile.setKey("FUKDO" + dttKoordinasiOutletImageData.get_txtId());
+                            mappingPushFile.setEkstension(".jpg");
+                            FileUpload.put(mappingPushFile, dttKoordinasiOutletImageData.get_txtImage());
                         }
                         if (dttKoordinasiOutletImageData.get_intPosition().equals("2")) {
-                            FileUpload.put("FUKDO" + dttKoordinasiOutletImageData.get_txtId(), dttKoordinasiOutletImageData.get_txtImage());
+                            mappingPushFile.setKey("FUKDO" + dttKoordinasiOutletImageData.get_txtId());
+                            mappingPushFile.setEkstension(".jpg");
+                            FileUpload.put(mappingPushFile, dttKoordinasiOutletImageData.get_txtImage());
                         }
                     }
                 }
             }
             if (ListOftVisitPlanRealisasiDataDetail != null){
                 for (tVisitPlanRealisasiData dttVisitPlanRealisasiData : ListOftVisitPlanRealisasiDataDetail) {
+                    clsMappingPushFile mappingPushFile = new clsMappingPushFile();
                     if (dttVisitPlanRealisasiData.get_dtPhoto1() != null) {
-                        FileUpload.put("VisitPlan" + dttVisitPlanRealisasiData.get_txtDataIDRealisasi() + "-1", dttVisitPlanRealisasiData.get_dtPhoto1());
+                        mappingPushFile.setKey("VisitPlan" + dttVisitPlanRealisasiData.get_txtDataIDRealisasi() + "-1");
+                        mappingPushFile.setEkstension(".jpg");
+                        FileUpload.put(mappingPushFile, dttVisitPlanRealisasiData.get_dtPhoto1());
                     }
                     if (dttVisitPlanRealisasiData.get_dtPhoto2() != null) {
-                        FileUpload.put("VisitPlan" + dttVisitPlanRealisasiData.get_txtDataIDRealisasi() + "-2", dttVisitPlanRealisasiData.get_dtPhoto2());
+                        mappingPushFile.setKey("VisitPlan" + dttVisitPlanRealisasiData.get_txtDataIDRealisasi() + "-2");
+                        mappingPushFile.setEkstension(".jpg");
+                        FileUpload.put(mappingPushFile, dttVisitPlanRealisasiData.get_dtPhoto2());
                     }
                 }
                 dtPush.setListOftVisitPlanRealisasiData(ListOftVisitPlanRealisasiDataDetail);
@@ -659,8 +764,26 @@ public class clsHelperBL extends clsMainBL {
             }
 
             if (ListOfJawabanUser != null){
+                for (tJawabanUserData dttJawabanUserData : ListOfJawabanUser) {
+                    clsMappingPushFile mappingPushFile = new clsMappingPushFile();
+                    if (dttJawabanUserData.get_ptQuiz() != null) {
+                        String fileName = dttJawabanUserData.get_txtValue();
+                        String fileExtension = fileName.substring(fileName.lastIndexOf("."));
+                        mappingPushFile.setKey("FUQuizMobileNew" + dttJawabanUserData.get_intUserAnswer() + "-1");
+                        mappingPushFile.setEkstension(fileExtension);
+                        FileUpload.put(mappingPushFile, dttJawabanUserData.get_ptQuiz());
+                    }
+                    if (dttJawabanUserData.get_txtFileQuiz() != null) {
+                        String fileName = dttJawabanUserData.get_txtValue();
+                        String fileExtension = fileName.substring(fileName.lastIndexOf("."));
+                        mappingPushFile.setKey("FUQuizFileMobileNew" + dttJawabanUserData.get_intUserAnswer() + "-2");
+                        mappingPushFile.setEkstension(fileExtension);
+                        FileUpload.put(mappingPushFile, dttJawabanUserData.get_txtFileQuiz());
+                    }
+                }
                 dtPush.setListOftJawabanUserData(ListOfJawabanUser);
             }
+
             if (ListOfPurchaseOrderDetail != null){
                 dtPush.setListOftPurchaseOrderDetailData(ListOfPurchaseOrderDetail);
             }
@@ -671,11 +794,12 @@ public class clsHelperBL extends clsMainBL {
             if (ListOfSalesProductQuantityDetail != null){
                 dtPush.setListOftSalesProductQuantityDetailData(ListOfSalesProductQuantityDetail);
             }
-//            if (ListOfSalesProductQuantityImage != null){
-//                dtPush.setListOftSalesProductQuantityImageData(ListOfSalesProductQuantityImage);
-//            }
             if (ListOfSalesProductQuantityHeader != null){
                 dtPush.setListOftSalesProductQuantityData(ListOfSalesProductQuantityHeader);
+            }
+
+            if (ListOftPlanogramMobileData != null){
+                dtPush.setListOftPlanogramMobileData(ListOftPlanogramMobileData);
             }
 
             if (ListOfTrackingLocation != null){
@@ -825,6 +949,14 @@ public class clsHelperBL extends clsMainBL {
                 tSalesProductQuantityHeaderDA _tSalesProductQuantityDA = new tSalesProductQuantityHeaderDA(db);
                 dt.set_intSync("1");
                 _tSalesProductQuantityDA.SaveDataSalesProductQuantityData(db, dt);
+            }
+        }
+
+        if (validPush && dtJson.getListOftPlanogramMobileData() != null){
+            for (tPlanogramMobileData dt : dtJson.getListOftPlanogramMobileData()){
+                tPlanogramMobileDA _tPlanogramMobileDA = new tPlanogramMobileDA(db);
+                dt.set_intSync("1");
+                _tPlanogramMobileDA.saveDataPush(db, dt.get_txtIdPlanogram());
             }
         }
 

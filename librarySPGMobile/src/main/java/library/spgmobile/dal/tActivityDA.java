@@ -90,6 +90,7 @@ public class tActivityDA {
 				cv.put(dt.Property_intFlag, data.get_intFlag());
 				cv.put(dt.Property_txtRoleId, String.valueOf(data.get_txtRoleId()));
 				cv.put(dt.Property_txtBranch, data.get_txtBranch());
+				cv.put(dt.Property_txtDeviceId, data.get_txtDeviceId());
 				if(data.get_intId() == null){
 					db.insert(TABLE_CONTACTS, null, cv);
 				} else {

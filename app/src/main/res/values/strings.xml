@@ -40,6 +40,7 @@
     <string name="add_reso">Add Reso</string>
     <string name="add_costumerbase">Add Customer Base</string>
     <string name="add_activity">Add Activity</string>
+    <string name="pick_image_intent_text">Select Option</string>
 
     <string name="main_drawer_open">Open navigation drawer</string>
     <string name="main_drawer_close">Close navigation drawer</string>

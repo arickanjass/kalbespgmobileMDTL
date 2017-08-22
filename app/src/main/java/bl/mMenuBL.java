@@ -157,10 +157,9 @@ public class mMenuBL extends clsMainBL {
                         }
                     }
                     if (validate == 1) {
-//                        tmpData.add(data);
+                        tmpData.add(data);
                     }
                 }
-                tmpData.add(data);
             }
 
             //Untuk absen SPG Mobile harus pengecekan master data: Branch, Outlet, Product, Brand, Product SPG Customerbased, Product PIC Customerbased, Product Competitor, Type Submission, Type Leave
@@ -168,7 +167,6 @@ public class mMenuBL extends clsMainBL {
                 mEmployeeBranchDA _mEmployeeBranchDA = new mEmployeeBranchDA(db);
                 mEmployeeAreaDA _mEmployeeAreaDA = new mEmployeeAreaDA(db);
                 mEmployeeSalesProductDA _mEmployeeSalesProductDA = new mEmployeeSalesProductDA(db);
-                mProductBrandHeaderDA _mProductBrandHeaderDA = new mProductBrandHeaderDA(db);
                 mProductSPGDA _mProductSPGDA = new mProductSPGDA(db);
                 mProductPICDA _mProductPICDA = new mProductPICDA(db);
                 mProductCompetitorDA _mProductCompetitorDA = new mProductCompetitorDA(db);
@@ -178,7 +176,6 @@ public class mMenuBL extends clsMainBL {
                 if (_mEmployeeAreaDA.getContactsCount(db) > 0 &&
                         _mEmployeeBranchDA.getContactsCount(db) > 0 &&
                         _mEmployeeSalesProductDA.getContactsCount(db) > 0 &&
-//                        _mProductBrandHeaderDA.getContactsCount(db) > 0 &&
                         _mProductSPGDA.getContactsCount(db) > 0 &&
                         _mProductPICDA.getContactsCount(db) > 0 &&
                         _mProductCompetitorDA.getContactsCount(db) > 0 &&
@@ -190,7 +187,27 @@ public class mMenuBL extends clsMainBL {
                     }
                 }
             }
+            //Jika Absen FPE
+            else if (data.get_TxtDescription().contains("mnAbsenFPE")) {
+                mEmployeeAreaDA _mEmployeeAreaDA = new mEmployeeAreaDA(db);
+                mEmployeeBranchDA _mEmployeeBranchDA = new mEmployeeBranchDA(db);
+                if (_mEmployeeAreaDA.getContactsCount(db) > 0 && _mEmployeeBranchDA.getContactsCount(db) > 0) {
+                    int validate = 0;
+                    if (listDataLeave.size() == 0) {
+                        validate = 1;
+                        List<mEmployeeAreaData> datamEmployeeArea = new mEmployeeAreaBL().GetAllData();
 
+                        for (mEmployeeAreaData dt : datamEmployeeArea) {
+                            if (dt.get_txtLatitude().equals("") || dt.get_txtLatitude() == null || dt.get_txtLatitude().equals("") && dt.get_txtLongitude().equals("") || dt.get_txtLongitude() == null || dt.get_txtLongitude().equals("")) {
+                                validate = 0;
+                            }
+                        }
+                    }
+                    if (validate == 1) {
+                        tmpData.add(data);
+                    }
+                }
+            }
             //Jika menu leave
             else if (data.get_TxtDescription().contains("mnLeave")) {
                 mTypeLeaveMobileDA _mTypeLeaveMobileDA = new mTypeLeaveMobileDA(db);

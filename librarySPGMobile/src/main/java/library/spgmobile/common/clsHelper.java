@@ -62,6 +62,7 @@ import library.spgmobile.dal.mconfigDA;
 import library.spgmobile.dal.tAbsenUserDA;
 import library.spgmobile.dal.tActivityDA;
 import library.spgmobile.dal.tActivityMobileDA;
+import library.spgmobile.dal.tAttendanceUserDA;
 import library.spgmobile.dal.tCustomerBasedMobileDetailDA;
 import library.spgmobile.dal.tCustomerBasedMobileDetailProductDA;
 import library.spgmobile.dal.tCustomerBasedMobileHeaderDA;
@@ -70,6 +71,8 @@ import library.spgmobile.dal.tDisplayPictureDA;
 import library.spgmobile.dal.tJawabanUserDA;
 import library.spgmobile.dal.tLeaveMobileDA;
 import library.spgmobile.dal.tNotificationDA;
+import library.spgmobile.dal.tPlanogramImageDA;
+import library.spgmobile.dal.tPlanogramMobileDA;
 import library.spgmobile.dal.tPurchaseOrderDetailDA;
 import library.spgmobile.dal.tPurchaseOrderHeaderDA;
 import library.spgmobile.dal.tSalesProductDetailDA;
@@ -154,7 +157,7 @@ public class clsHelper {
 //		}
 		return _clsClsHelper.ResultJsonData(Result);
 	}
-	public String PushDataWithFile(String urlToRead,String DataJson,Integer intTimeOut,HashMap<String,byte[]> ListOfDataFile){
+	public String PushDataWithFile(String urlToRead,String DataJson,Integer intTimeOut,HashMap<clsMappingPushFile,byte[]> ListOfDataFile){
 		String charset = "UTF-8";
 
 		String requestURL = urlToRead;
@@ -173,17 +176,19 @@ public class clsHelper {
 			multipart.addFormField("dataField",DataJson);
 			//multipart.addFormField("keywords", "Java,upload,Spring");
 
-			for(Entry<String, byte[]> entry : ListOfDataFile.entrySet()) {
-				String key = entry.getKey();
+			for(Entry<clsMappingPushFile, byte[]> entry : ListOfDataFile.entrySet()) {
+				clsMappingPushFile key = entry.getKey();
+				String id = key.getKey();
+				String ekstension = key.getEkstension();
 //                String value = entry.getValue();
 
 				byte [] array = entry.getValue();
-				File file = File.createTempFile("image-", ".jpg", new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata"));
+				File file = File.createTempFile("file-", ekstension, new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata"));
 				FileOutputStream out = new FileOutputStream( file );
 				out.write( array );
 				out.close();
 
-				multipart.addFilePart(key, new File(file.getAbsolutePath()));
+				multipart.addFilePart(id, new File(file.getAbsolutePath()));
 			}
 			List<String> response = multipart.finish();
 			//System.out.println("SERVER REPLIED:");
@@ -316,6 +321,7 @@ public class clsHelper {
 		tActivityDA _tActivityDA=new tActivityDA(db);
 		tActivityMobileDA _tActivityMobileDA=new tActivityMobileDA(db);
 		tAbsenUserDA _tAbsenUserDA=new tAbsenUserDA(db);
+		tAttendanceUserDA _tAttendanceUserDA = new tAttendanceUserDA(db);
 		tLeaveMobileDA _tLeaveMobileDA=new tLeaveMobileDA(db);
 		mMenuDA _mMenuDA=new mMenuDA(db);
 		mTypeLeaveMobileDA _mTypeLeaveMobileDA=new mTypeLeaveMobileDA(db);
@@ -350,6 +356,8 @@ public class clsHelper {
 		_tDisplayPictureDA = new tDisplayPictureDA(db);
 		mCountConsumerMTDDA _mCountConsumerMTDDA = new mCountConsumerMTDDA(db);
 		tSubTypeActivityDA _tSubTypeActivityDA = new tSubTypeActivityDA(db);
+		tPlanogramMobileDA _tPlanogramMobileDA = new tPlanogramMobileDA(db);
+		tPlanogramImageDA _tPlanogramImageDA = new tPlanogramImageDA(db);
 
 		_tSubTypeActivityDA.Droptable(db);
 		_mMCategoryVisitPlanDA.DropTable(db);
@@ -392,6 +400,7 @@ public class clsHelper {
 		_mMenuDA.DropTable(db);
 		_mCounterNumberDA.DropTable(db);
 		_tAbsenUserDA.DropTable(db);
+		_tAttendanceUserDA.DropTable(db);
 		_mTypeLeaveMobileDA.DropTable(db);
 		_mParentDA.DropTable(db);
 		_mKategoriDA.DropTable(db);
@@ -402,6 +411,8 @@ public class clsHelper {
 		_trackingLocationDA.DropTable(db);
 		_KoordinasiOutletDA.DropTable(db);
 		_KoordinasiOutletImageDA.Droptable(db);
+		_tPlanogramMobileDA.Droptable(db);
+		_tPlanogramImageDA.Droptable(db);
 
 		_mMCategoryVisitPlanDA = new mCategoryVisitPlanDA(db);
 		_tVisitPlanRealisasiDA = new tVisitPlanRealisasiDA(db);
@@ -429,6 +440,9 @@ public class clsHelper {
 		new mProductPICDA(db);
 		new mCountConsumerMTDDA(db);
 		new tSubTypeActivityDA(db);
+		new tPlanogramMobileDA(db);
+		new tPlanogramImageDA(db);
+		new tAttendanceUserDA(db);
 
 		_mPriceInOutletDA=new mPriceInOutletDA(db);
 		_mUserRoleDA=new mUserRoleDA(db);

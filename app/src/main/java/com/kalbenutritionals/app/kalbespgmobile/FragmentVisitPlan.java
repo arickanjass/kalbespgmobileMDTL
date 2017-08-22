@@ -401,8 +401,16 @@ public class FragmentVisitPlan extends Fragment implements ConnectionCallbacks, 
                                             float distance = locationA.distanceTo(locationB);
 
                                             tUserLoginData checkLocation = new tUserLoginBL().getUserLogin();
-
-                                            if ((int) Math.ceil(distance) > 100 && checkLocation.get_txtCheckLocation().equals("1")) {
+                                            boolean dValidDistance = false;
+                                            if (checkLocation.get_txtCheckLocation().equals("0")) {
+                                                dValidDistance = true;
+                                            } else if ((int) Math.ceil(distance) <= Integer.valueOf(checkLocation.get_txtCheckLocation())) {
+                                                dValidDistance = true;
+                                            }
+//                                            if ((int) Math.ceil(distance) > 100 && checkLocation.get_txtCheckLocation().equals("1")) {
+//                                                _clsMainActivity.showCustomToast(getContext(), "Failed checkin: Your location too far from outlet", false);
+//                                            }
+                                            if (!dValidDistance) {
                                                 _clsMainActivity.showCustomToast(getContext(), "Failed checkin: Your location too far from outlet", false);
                                             } else {
                                                 nameBranch = dataDetail.get_txtBranchCode();
@@ -431,7 +439,10 @@ public class FragmentVisitPlan extends Fragment implements ConnectionCallbacks, 
                                                 _tVisitPlanRealisasiData.set_intSubmit("1");
                                                 _tVisitPlanRealisasiData.set_txtAcc(lblAcc.getText().toString());
                                                 List<tDeviceInfoUserData> dataDeviceInfoUser = new tDeviceInfoUserBL().getData(0);
-                                                String deviceInfo = String.valueOf(dataDeviceInfoUser.get(0).get_txtDeviceId());
+                                                String deviceInfo="";
+                                                if(dataDeviceInfoUser!=null){
+                                                    deviceInfo = String.valueOf(dataDeviceInfoUser.get(0).get_txtDeviceId());
+                                                }
                                                 _tVisitPlanRealisasiData.set_deviceId(deviceInfo);
                                                 new tVisitPlanRealisasiBL().UpdateData(_tVisitPlanRealisasiData);
                                                 imgPrevNoImg1.setClickable(false);

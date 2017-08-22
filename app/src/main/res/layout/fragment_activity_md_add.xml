@@ -68,13 +68,52 @@
             android:layout_height="match_parent">
         </Spinner>
 
+    <LinearLayout
+
+        android:id="@+id/lnlayoutIsValidPattern"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tvIsValidPattern"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:text="Is Valid Pattern?" />
+
+        <RadioGroup
+            android:id="@+id/rg_isValidPattern"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_yes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Yes" />
+
+            <RadioButton
+                android:id="@+id/rb_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="No" />
+        </RadioGroup>
+
+    </LinearLayout>
+
         <TextView
             android:id="@+id/tvDesc"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginTop="10dp"
             android:layout_weight="1"
-            android:text="Descrpition" />
+            android:text="Description" />
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/input_layout_description"

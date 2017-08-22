@@ -23,7 +23,9 @@ public class clsHardCode  {
 	public String txtFolderNotification=txtPathUserData+"Notification"+File.separator;
 	public String txtFolderBrosur=txtPathUserData+"Brosur"+File.separator;
 	public String txtFolderAbsen=txtPathUserData+"Absen"+File.separator;
+	public String txtFolderQuiz=txtPathUserData+"Quiz"+File.separator;
 	public String txtFolderActivity=txtPathUserData+"Activity"+File.separator;
+	public String txtFolderPlanogram=txtPathUserData+"Planogram"+File.separator;
 
 	//namedb
 	public String txtDatabaseName=txtPathApp+"fprsV3";
@@ -67,6 +69,7 @@ public class clsHardCode  {
 	public String txtTable_tCustomerBase = "tCustomerBase";
 	public String txtTable_tCustomerBaseDetail = "tCustomerBaseDetail";
 	public String txtTable_tAbsenUser = "tAbsenUser";
+	public String txtTable_tAttendanceUser = "tAttendanceUser";
 	public String txtTable_tActivity = "tActivity";
 	public String txtTable_tActivityMobile = "tActivityMobile";
 	public String txtTable_tCheckinOutletMD = "tCheckinOutletMD";
@@ -226,8 +229,10 @@ public class clsHardCode  {
 	public String txtTable_mTypeSubmissionMobile="mTypeSubmissionMobile";
 	public String txtTable_mProductCompetitorData="mProductCompetitorData";
 	public String txtTable_tSalesQuantityStock="tSalesProductQuantityHeader";
+	public String txtTable_tPlanogramMobile="tPlanogramMobile";
 	public String txtTable_tSalesProductQuantityDetail="tSalesProductQuantityDetail";
 	public String txtTable_tSalesProductQuantityImage="tSalesProductQuantityImage";
+	public String txtTable_tPlanogramImage="tPlanogramImage";
 	public String txtTable_trackingLocation="trackingLocation";
 	public String txtTable_KoordinasiOutlet="KoordinasiOutlet";
 	public String txtTable_KoordinasiOutletImage="KoordinasiOutletImage";

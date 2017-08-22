@@ -88,6 +88,19 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
             }
         }
 
+        if(data.get_report_type() == "Planogram"){
+            switch (columnIndex) {
+                case 1:
+                    renderedView = renderString(data.get_txtOutletName(), "left");
+                    break;
+                case 2:
+                    renderedView = renderString(data.get_txtDesc(), "left");
+                    break;
+                default:
+                    break;
+            }
+        }
+
         if(data.get_report_type() == "Po"){
             switch (columnIndex) {
                 case 1:

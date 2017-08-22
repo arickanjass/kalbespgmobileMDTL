@@ -100,7 +100,7 @@ public class FragmentViewQuantityStock extends Fragment implements IXListViewLis
             @Override
             public void onClick(View view) {
                 Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-                toolbar.setTitle("Add Quantity Stock");
+                toolbar.setTitle("Add Stock Near ED");
 
                 FragmentAddQuantityStock fragmentAddQuantityStock = new FragmentAddQuantityStock();
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
@@ -418,7 +418,7 @@ public class FragmentViewQuantityStock extends Fragment implements IXListViewLis
             if (imgFile4 != null) {
                 if (imgDt.get_txtType().equals("Before") && imgDt.get_intPosition().equals("2")) {
                     mybitmap4 = BitmapFactory.decodeByteArray(imgFile4, 0, imgFile4.length);
-                    Bitmap bitmap = Bitmap.createScaledBitmap(mybitmap1, 150, 150, true);
+                    Bitmap bitmap = Bitmap.createScaledBitmap(mybitmap4, 150, 150, true);
                     img4.setImageBitmap(bitmap);
 
                     File file = null;

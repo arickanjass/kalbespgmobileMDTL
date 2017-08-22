@@ -25,6 +25,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -58,7 +59,7 @@ public class FragmentAddActivityMD extends Fragment implements View.OnClickListe
     View v;
     ImageButton imgActivity1, imgActivity2;
     EditText etDescription;
-    RadioGroup rdFlag;
+    RadioGroup rdFlag, rg_isValidPattern;
     RadioButton rbKalbe, rbComp;
     Spinner spnTypeActivity;
     TextInputLayout textInputLayoutDescription;
@@ -82,6 +83,7 @@ public class FragmentAddActivityMD extends Fragment implements View.OnClickListe
     private String selectedTypeActivity;
     private String selectedRbName;
     private HashMap<String, String> HMsubType = new HashMap<>();
+    private LinearLayout lnlayoutIsValidPattern;
 
     @Nullable
     @Override
@@ -89,6 +91,12 @@ public class FragmentAddActivityMD extends Fragment implements View.OnClickListe
         v = inflater.inflate(R.layout.fragment_activity_md_add,container,false);
         imgActivity1 = (ImageButton) v.findViewById(R.id.imageButton);
         imgActivity1.setOnClickListener(this);
+
+        lnlayoutIsValidPattern = (LinearLayout) v.findViewById(R.id.lnlayoutIsValidPattern);
+        lnlayoutIsValidPattern.setVisibility(View.GONE);
+
+        rg_isValidPattern = (RadioGroup) v.findViewById(R.id.rg_isValidPattern);
+        rg_isValidPattern.clearCheck();
 
         imgActivity2 = (ImageButton) v.findViewById(R.id.imageButton2);
         imgActivity2.setOnClickListener(this);
@@ -108,7 +116,6 @@ public class FragmentAddActivityMD extends Fragment implements View.OnClickListe
         TableRow tableRow = (TableRow) v.findViewById(R.id.tr_header_act);
         tableRow.setVisibility(View.GONE);
 
-//        countActivity = new tActivityBL().getCountActivity();
         dtActivityMobileData = new tActivityMobileBL().getDataByBitActive();
 
         _tActivityBL = new tActivityMobileBL();
@@ -127,25 +134,33 @@ public class FragmentAddActivityMD extends Fragment implements View.OnClickListe
                 if(i == R.id.rbKalbe){
                     arrTypeActivity.clear();
                     arrTypeActivity.add("Select Type Kalbe");
-//                    ArrayAdapter<String> adapterspnTypeActivity = new ArrayAdapter<String>(getActivity(),
-//                            android.R.layout.simple_spinner_item, arrTypeActivity);
-//                    spnTypeActivity.setAdapter(adapterspnTypeActivity);
                     selectedRbName = rbKalbe.getText().toString();
                     m_fillSpinner();
-//                    Toast.makeText(getActivity(), "kalbe", Toast.LENGTH_SHORT).show();
                 } else if (i == R.id.rbCompetitor){
                     arrTypeActivity.clear();
                     arrTypeActivity.add("Select Type Competitor");
-//                    ArrayAdapter<String> adapterspnTypeActivity = new ArrayAdapter<String>(getActivity(),
-//                            android.R.layout.simple_spinner_item, arrTypeActivity);
-//                    spnTypeActivity.setAdapter(adapterspnTypeActivity);
                     selectedRbName = rbComp.getText().toString();
                     m_fillSpinner();
-//                    Toast.makeText(getActivity(), "competitor", Toast.LENGTH_SHORT).show();
+                    lnlayoutIsValidPattern.setVisibility(View.GONE);
                 }
             }
         });
 
+        spnTypeActivity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(spnTypeActivity.getSelectedItem().toString().equals("Pattern Display")){
+                    lnlayoutIsValidPattern.setVisibility(View.VISIBLE);
+                } else if(!spnTypeActivity.getSelectedItem().toString().equals("Pattern Display"))  {
+                    lnlayoutIsValidPattern.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         if(dtActivityMobileData.get_intId() != null){
             byte[] imgFile = dtActivityMobileData.get_txtImg1();
@@ -194,8 +209,6 @@ public class FragmentAddActivityMD extends Fragment implements View.OnClickListe
     }
 
     private void m_fillSpinner() {
-//        arrTypeActivity.clear();
-//        arrTypeActivity.add("Select Type Kalbe");
 
         List<tSubTypeActivityData> _tSubTypeActivityData = new tSubTypeActivityBL().getAllDataByTxtType(selectedRbName);
 
@@ -203,49 +216,29 @@ public class FragmentAddActivityMD extends Fragment implements View.OnClickListe
             arrTypeActivity.add(dt.get_txtName());
             HMsubType.put(dt.get_txtName(), dt.get_intSubTypeActivity());
         }
-
-//        ArrayAdapter<String> adapterspnTypeActivity = new ArrayAdapter<String>(getActivity(),
-//                android.R.layout.simple_spinner_item, arrTypeActivity);
-//        spnTypeActivity.setAdapter(adapterspnTypeActivity);
         spnTypeActivity.setAdapter(new MyAdapter(getActivity(), R.layout.custom_spinner, arrTypeActivity));
-
-        spnTypeActivity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedTypeActivity = spnTypeActivity.getSelectedItem().toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
     }
 
     @Override
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.imageButton:
-
                 captureImage1();
-
                 break;
             case R.id.imageButton2:
-//                Intent intentCamera2 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                startActivityForResult(intentCamera2, CAMERA_CAPTURE_IMAGE2_REQUEST_CODE);
                 captureImage2();
-
                 break;
             case R.id.btnSave:
                 new clsMainActivity().removeErrorMessage(textInputLayoutDescription);
 
-                if(etDescription.getText().toString().equals("")&&etDescription.getText().toString().length()==0){
-                    new clsMainActivity().setErrorMessage(getContext(), textInputLayoutDescription, etDescription, "Please give Description");
+                if(spnTypeActivity.getSelectedItem().toString().equals("Select Type Kalbe")||spnTypeActivity.getSelectedItem().toString().equals("Select Type Competitor")){
+                    new clsMainActivity().showCustomToast(getContext(), "Please " + spnTypeActivity.getSelectedItem().toString() , false);
+                } else if(lnlayoutIsValidPattern.getVisibility()==View.VISIBLE&&rg_isValidPattern.getCheckedRadioButtonId()==-1){
+                        new clsMainActivity().showCustomToast(getContext(), "Please Check Is Valid Pattern are not" , false);
+                } else if(etDescription.getText().toString().equals("")&&etDescription.getText().toString().length()==0){
+                new clsMainActivity().setErrorMessage(getContext(), textInputLayoutDescription, etDescription, "Please give Description");
                 } else if(pht1 == null && pht2 == null) {
-                    new clsMainActivity().removeErrorMessage(textInputLayoutDescription);
                     new clsMainActivity().showCustomToast(getContext(), "Please take at least 1 photo", false);
-                } else if(selectedTypeActivity.equals("Select Type Kalbe")||selectedTypeActivity.equals("Select Type Competitor")){
-                    new clsMainActivity().showCustomToast(getContext(), "Please " + selectedTypeActivity , false);
                 } else {
 
                     final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
@@ -257,10 +250,24 @@ public class FragmentAddActivityMD extends Fragment implements View.OnClickListe
 
                             int selectedId = rdFlag.getCheckedRadioButtonId();
                             RadioButton radioFlag = (RadioButton) v.findViewById(selectedId);
+
+                            int selecterIdValidPattern = rg_isValidPattern.getCheckedRadioButtonId();
+                            RadioButton rb_validPattern = (RadioButton) v.findViewById(selecterIdValidPattern);
+
+                            String selectionRbValidPattern = null;
+
+                            try{
+                                selectionRbValidPattern = String.valueOf(rb_validPattern.getText());
+                                selectionRbValidPattern = selectionRbValidPattern.equals("Yes") ? "1" : "0";
+                            }catch (Exception e){
+                                String a = e.toString();
+                                selectionRbValidPattern = "";
+                            }
+
 //                            tAbsenUserData dtAbsen = new tAbsenUserBL().getDataCheckInActive();
                             visitplanAbsenData dtAbsen = new clsHelperBL().getDataCheckInActive();
                             tUserLoginData dtLogin = new tUserLoginBL().getUserLogin();
-
+                            dtActivityMobileData.set_intIsValid(String.valueOf(selectionRbValidPattern));
                             dtActivityMobileData.set_intActive("0");
                             dtActivityMobileData.set_intIdSyn("0");
                             dtActivityMobileData.set_txtDesc(String.valueOf(etDescription.getText()));

@@ -63,9 +63,9 @@
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
-
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyAil1Hru11V9TQ3jN8craSVQK5vgBYil8c" />
@@ -133,7 +133,6 @@
                 <action android:name="service.MyTrackingLocationService" />
             </intent-filter>
         </service>
-
         <activity
             android:name=".ActivityPushError"
             android:configChanges="orientation|screenSize"

@@ -961,7 +961,7 @@ public class FragmentAddQuantityStock extends Fragment implements IXListViewList
 //        fragmentManager.beginTransaction().replace(R.id.frame, new FragmentViewQuantityStock()).commit();
 
         Intent myIntent = new Intent(getContext(), MainMenu.class);
-        myIntent.putExtra("key_view", "View Quantity Stock");
+        myIntent.putExtra("key_view", "View Near ED");
         getActivity().finish();
         startActivity(myIntent);
 //        return;
