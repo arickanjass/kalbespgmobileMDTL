@@ -555,6 +555,7 @@ public class clsHelperBL extends clsMainBL {
             tVisitPlanRealisasiDA _tVisitPlanRealisasiDA = new tVisitPlanRealisasiDA(db);
             tVisitPlanHeader_MobileDA _tVisitPlanHeader_MobileDA = new tVisitPlanHeader_MobileDA(db);
             tAbsenUserDA _tAbsenUserDA = new tAbsenUserDA(db);
+            tAttendanceUserDA _tAttendanceUserDA = new tAttendanceUserDA(db);
             tActivityDA _tActivityDA = new tActivityDA(db);
             tActivityMobileDA _tActivityMobileDA = new tActivityMobileDA(db);
             tPlanogramMobileDA _tPlanogramMobileDA = new tPlanogramMobileDA(db);
@@ -597,6 +598,7 @@ public class clsHelperBL extends clsMainBL {
             List<KoordinasiOutletImageData> ListOfKoordinasiOutletImage = _KoordinasiOutletImageDA.getAllDataToPushData(db, ListOfKoordinasiOutlet);
             List<tLeaveMobileData> ListOftLeaveData=_tLeaveMobileDA.getAllDataPushData(db);
             List<tAbsenUserData> ListOftAbsenUserData = _tAbsenUserDA.getAllDataToPushData(db);
+            List<tAttendanceUserData> ListOftAttendanceUserData = _tAttendanceUserDA.getAllDataToPushData(db);
             List<tActivityData> ListOftActivityData = _tActivityDA.getAllDataToPushData(db);
             List<tActivityMobileData> ListOftActivityMobileData = _tActivityMobileDA.getAllDataToPushData(db);
             List<tPlanogramMobileData> ListOftPlanogramMobileData = _tPlanogramMobileDA.getAllDataToPushData(db);
@@ -620,6 +622,23 @@ public class clsHelperBL extends clsMainBL {
                         mappingPushFile.setKey("FUAbsen" + dttAbsenUserData.get_intId() + "-2");
                         mappingPushFile.setEkstension(".jpg");
                         FileUpload.put(mappingPushFile, dttAbsenUserData.get_txtImg2());
+                    }
+                }
+            }
+            if (ListOftAttendanceUserData != null) {
+                dtPush.setListOftAttendanceUserData(ListOftAttendanceUserData);
+                for (tAttendanceUserData dttAttendanceUserData : ListOftAttendanceUserData) {
+                    if (dttAttendanceUserData.get_txtImg1() != null) {
+                        clsMappingPushFile mappingPushFile = new clsMappingPushFile();
+                        mappingPushFile.setKey("FUAttendanceFPE" + dttAttendanceUserData.get_intId() + "-1");
+                        mappingPushFile.setEkstension(".jpg");
+                        FileUpload.put(mappingPushFile, dttAttendanceUserData.get_txtImg1());
+                    }
+                    if (dttAttendanceUserData.get_txtImg2() != null) {
+                        clsMappingPushFile mappingPushFile = new clsMappingPushFile();
+                        mappingPushFile.setKey("FUAttendanceFPE" + dttAttendanceUserData.get_intId() + "-2");
+                        mappingPushFile.setEkstension(".jpg");
+                        FileUpload.put(mappingPushFile, dttAttendanceUserData.get_txtImg2());
                     }
                 }
             }

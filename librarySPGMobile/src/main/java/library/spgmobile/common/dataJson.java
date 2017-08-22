@@ -835,6 +835,34 @@ public class dataJson {
                 resJson.put(dttAbsenUserData.Property_ListOftAbsenUser, new JSONArray(itemsListJquey));
             }
 
+            if (this.getListOftAttendanceUserData() != null) {
+                tAttendanceUserData dttAttendanceUserData = new tAttendanceUserData();
+                itemsListJquey = new ArrayList<JSONObject>();
+                for (tAttendanceUserData data : this.getListOftAttendanceUserData()) {
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dttAttendanceUserData.Property_dtDateCheckIn, String.valueOf(data.get_dtDateCheckIn()));
+                    item1.put(dttAttendanceUserData.Property_dtDateCheckOut, String.valueOf(data.get_dtDateCheckOut()));
+                    item1.put(dttAttendanceUserData.Property_intId, String.valueOf(data.get_intId()));
+                    item1.put(dttAttendanceUserData.Property_intSubmit, String.valueOf(data.get_intSubmit()));
+                    item1.put(dttAttendanceUserData.Property_intSync, String.valueOf(data.get_intSync()));
+                    item1.put(dttAttendanceUserData.Property_txtAbsen, String.valueOf(data.get_txtAbsen()));
+                    item1.put(dttAttendanceUserData.Property_txtAccuracy, String.valueOf(data.get_txtAccuracy()));
+                    item1.put(dttAttendanceUserData.Property_txtBranchCode, String.valueOf(data.get_txtBranchCode()));
+                    item1.put(dttAttendanceUserData.Property_txtBranchName, String.valueOf(data.get_txtBranchName()));
+                    item1.put(dttAttendanceUserData.Property_txtLatitude, String.valueOf(data.get_txtLatitude()));
+                    item1.put(dttAttendanceUserData.Property_txtLongitude, String.valueOf(data.get_txtLongitude()));
+                    item1.put(dttAttendanceUserData.Property_txtOutletCode, String.valueOf(data.get_txtOutletCode()));
+                    item1.put(dttAttendanceUserData.Property_txtOutletName, String.valueOf(data.get_txtOutletName()));
+                    item1.put(dttAttendanceUserData.Property_txtUserId, String.valueOf(data.get_txtUserId()));
+                    item1.put(dttAttendanceUserData.Property_txtDeviceId, String.valueOf(data.get_txtDeviceId()));
+                    item1.put(dttAttendanceUserData.Property_txtRoleId, String.valueOf(data.get_txtRoleId()));
+                    item1.put(dttAttendanceUserData.Property_txtImg1, String.valueOf(data.get_txtImg1()));
+                    item1.put(dttAttendanceUserData.Property_txtImg2, String.valueOf(data.get_txtImg2()));
+                    item1.put(dttAttendanceUserData.Property_txtDesc, String.valueOf(data.get_txtDesc()));
+                    itemsListJquey.add(item1);
+                }
+                resJson.put(dttAttendanceUserData.Property_ListOftAttendanceUser, new JSONArray(itemsListJquey));
+            }
 
             if (this.getListOfmGeolocationOutletSPGData() != null) {
                 mGeolocationOutletSPGData dtmGeolocationOutletSPGData = new mGeolocationOutletSPGData();
@@ -1223,6 +1251,16 @@ public class dataJson {
     private List<mNotificationData> ListOfmNotificationData;
     private List<tLogErrorData> ListOftErrorLogData;
     private List<tAbsenUserData> ListOftAbsenUserData;
+
+    public List<tAttendanceUserData> getListOftAttendanceUserData() {
+        return ListOftAttendanceUserData;
+    }
+
+    public void setListOftAttendanceUserData(List<tAttendanceUserData> listOftAttendanceUserData) {
+        ListOftAttendanceUserData = listOftAttendanceUserData;
+    }
+
+    private List<tAttendanceUserData> ListOftAttendanceUserData;
     private List<mGeolocationOutletSPGData> ListOfmGeolocationOutletSPGData;
     private List<tActivityData> ListOftActivityData;
     private List<tActivityMobileData> ListOftActivityMobileData;

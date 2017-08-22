@@ -61,6 +61,7 @@ import bl.mTypeSubmissionMobileBL;
 import bl.tAbsenUserBL;
 import bl.tActivityBL;
 import bl.tActivityMobileBL;
+import bl.tAttendanceUserBL;
 import bl.tCustomerBasedMobileDetailBL;
 import bl.tCustomerBasedMobileDetailProductBL;
 import bl.tCustomerBasedMobileHeaderBL;
@@ -101,6 +102,7 @@ import library.spgmobile.common.mTypeSubmissionMobile;
 import library.spgmobile.common.tAbsenUserData;
 import library.spgmobile.common.tActivityData;
 import library.spgmobile.common.tActivityMobileData;
+import library.spgmobile.common.tAttendanceUserData;
 import library.spgmobile.common.tCustomerBasedMobileDetailData;
 import library.spgmobile.common.tCustomerBasedMobileDetailProductData;
 import library.spgmobile.common.tCustomerBasedMobileHeaderData;
@@ -142,7 +144,7 @@ public class FragmentDownloadData extends Fragment {
     private Spinner spnActivity, spnActivityV2;
     private Spinner spnCustomerBase;
     private Spinner spnAbsen, spnQuiz;
-    private Spinner spnDataPlanogram, spnDataLeave, spnSubTypeActivity, spnDataPO, spnDataQuantityStock, spnProductComp, spnTypeSubmission, spnProdSPGCusBased, spnProdPICCusBased;
+    private Spinner spnAttendanceFpe, spnDataPlanogram, spnDataLeave, spnSubTypeActivity, spnDataPO, spnDataQuantityStock, spnProductComp, spnTypeSubmission, spnProdSPGCusBased, spnProdPICCusBased;
     private LinearLayout ll_subtypeactivity;
     private LinearLayout ll_branch;
     private LinearLayout ll_product;
@@ -152,7 +154,7 @@ public class FragmentDownloadData extends Fragment {
     private LinearLayout ll_data_activity;
     private LinearLayout ll_data_activityV2;
     private LinearLayout ll_data_customerbased;
-    private LinearLayout ll_absen;
+    private LinearLayout ll_absen, ll_data_attendance;
     private LinearLayout ll_purchase_order;
     private LinearLayout ll_data_leave;
     private LinearLayout ll_product_spg;
@@ -224,6 +226,8 @@ public class FragmentDownloadData extends Fragment {
         Button btnSubTypeActivity = (Button) v.findViewById(R.id.btnSubTypeActivity);
         spnDataPlanogram = (Spinner) v.findViewById(R.id.spnDataPlanogram);
         Button btnDlDataPlanogram = (Button) v.findViewById(R.id.btnDlDataPlanogram);
+        spnAttendanceFpe = (Spinner) v.findViewById(R.id.spnAttendanceFpe);
+        Button btnDlAttendanceFpe = (Button) v.findViewById(R.id.btnDlAttendanceFpe);
 
         ll_branch = (LinearLayout) v.findViewById(R.id.ll_branch);
         LinearLayout ll_outlet = (LinearLayout) v.findViewById(R.id.ll_outlet);
@@ -248,6 +252,7 @@ public class FragmentDownloadData extends Fragment {
         ll_dataQuesioner = (LinearLayout) v.findViewById(R.id.ll_dataQuesioner);
         ll_subtypeactivity = (LinearLayout) v.findViewById(R.id.ll_subtypeactivity);
         ll_data_planogram = (LinearLayout) v.findViewById(R.id.ll_data_planogram);
+        ll_data_attendance = (LinearLayout) v.findViewById(R.id.ll_data_attendance);
 
         spnVisitPlan = (Spinner) v.findViewById(R.id.spnVisitPlan);
         spnTrVisitPlan = (Spinner) v.findViewById(R.id.spnTrVisitPlan);
@@ -370,6 +375,8 @@ public class FragmentDownloadData extends Fragment {
                 ll_data_leave.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_data_planogram.getId()))) {
                 ll_data_planogram.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_data_attendance.getId()))) {
+                ll_data_attendance.setVisibility(View.VISIBLE);
             }
         }
 
@@ -501,6 +508,13 @@ public class FragmentDownloadData extends Fragment {
 //                _clsMainActivity.startService(new Intent(getContext(), MyTrackingLocationService.class));
             }
         });
+        btnDlAttendanceFpe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AsyncCallAttendanceFpe task = new AsyncCallAttendanceFpe();
+                task.execute();
+            }
+        });
         btnDataLeave.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 intProcesscancel = 0;
@@ -586,6 +600,7 @@ public class FragmentDownloadData extends Fragment {
         List<tActivityData> listtActivityData = new tActivityBL().getAllData();
         List<tActivityMobileData> listtActivityMobileData = new tActivityMobileBL().getAllData();
         List<tAbsenUserData> listtAbsenUserData = new tAbsenUserBL().getAllDataActive();
+        List<tAttendanceUserData> listtAttendanceUserData = new tAttendanceUserBL().getAllDataActive();
         List<tLeaveMobileData> listtLeaveData = new tLeaveMobileBL().getData("");
         List<mParentData> parentDataList = new mParentBL().GetAllData();
         List<mPertanyaanData> pertanyaanDataList = new mPertanyaanBL().GetAllData();
@@ -853,6 +868,19 @@ public class FragmentDownloadData extends Fragment {
                     android.R.layout.simple_spinner_item, strip);
             spnAbsen.setAdapter(adapterspn);
             spnAbsen.setEnabled(false);
+        }
+        arrData = new ArrayList<>();
+        if (listtAttendanceUserData != null) {
+            for (tAttendanceUserData dt : listtAttendanceUserData) {
+                arrData.add(dt.get_dtDateCheckIn() + " - " + dt.get_dtDateCheckOut());
+            }
+            spnAttendanceFpe.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
+            spnAttendanceFpe.setEnabled(true);
+        } else {
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<>(getContext(),
+                    android.R.layout.simple_spinner_item, strip);
+            spnAttendanceFpe.setAdapter(adapterspn);
+            spnAttendanceFpe.setEnabled(false);
         }
         arrData = new ArrayList<>();
         if (listPurchaseOrderHeaderData != null) {
@@ -1633,6 +1661,58 @@ public class FragmentDownloadData extends Fragment {
         return _array;
     }
 
+    private List<String> SaveDatatAttendanceUserData(JSONArray JData) {
+        List<String> _array;
+        APIData dtAPIDATA = new APIData();
+        _array = new ArrayList<>();
+        Iterator i = JData.iterator();
+        List<tAttendanceUserData> ListtAttendance = new ArrayList<>();
+        while (i.hasNext()) {
+            org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
+
+            int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
+            if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
+                tAttendanceUserData _data = new tAttendanceUserData();
+                _data.set_dtDateCheckIn(String.valueOf(innerObj.get("DtCheckIn")));
+                _data.set_dtDateCheckOut(String.valueOf(innerObj.get("DtCheckOut")));
+                _data.set_intSubmit("1");
+                _data.set_intSync("1");
+                _data.set_txtAccuracy(String.valueOf(innerObj.get("TxtAccuracy")));
+                _data.set_txtBranchCode(String.valueOf(innerObj.get("TxtBranchCode")));
+                _data.set_txtBranchName(String.valueOf(innerObj.get("TxtBranchName")));
+                _data.set_txtDeviceId(String.valueOf(innerObj.get("TxtDeviceId")));
+                _data.set_txtOutletCode(String.valueOf(innerObj.get("TxtOutletCode")));
+                _data.set_txtOutletName(String.valueOf(innerObj.get("TxtOutletName")));
+                _data.set_txtUserId(String.valueOf(innerObj.get("TxtUserId")));
+                _data.set_intId(String.valueOf(innerObj.get("TxtDataId")));
+                _data.set_txtLatitude(String.valueOf(innerObj.get("TxtLatitude")));
+                _data.set_txtLongitude(String.valueOf(innerObj.get("TxtLongitude")));
+                _data.set_txtUserId(String.valueOf(innerObj.get("TxtUserId")));
+                _data.set_txtDesc(String.valueOf(innerObj.get("TxtDesc")));
+
+                String url1 = String.valueOf(innerObj.get("TxtLinkImg1"));
+                String url2 = String.valueOf(innerObj.get("TxtLinkImg2"));
+
+                byte[] logoImage1 = getLogoImage(url1);
+                byte[] logoImage2 = getLogoImage(url2);
+
+                if (logoImage1 != null) {
+                    _data.set_txtImg1(logoImage1);
+                }
+
+                if (logoImage2 != null) {
+                    _data.set_txtImg2(logoImage2);
+                }
+
+                new tAttendanceUserBL().saveData(_data);
+
+            } else {
+                continue;
+            }
+        }
+        return _array;
+    }
+
     private List<String> SaveDatatLeaveData(JSONArray JData) {
         List<String> _array;
         APIData dtAPIDATA = new APIData();
@@ -2308,6 +2388,59 @@ public class FragmentDownloadData extends Fragment {
 //                    intProcesscancel = 1;
 //                }
 //            });
+            Dialog.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            Dialog.dismiss();
+        }
+    }
+
+    private class AsyncCallAttendanceFpe extends AsyncTask<JSONArray, Void, JSONArray> {
+        @Override
+        protected JSONArray doInBackground(JSONArray... params) {
+//            android.os.Debug.waitForDebugger();
+            JSONArray Json = null;
+            try {
+                Json = new tAttendanceUserBL().DownloadAttendance(pInfo.versionName);
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return Json;
+        }
+
+        private ProgressDialog Dialog = new ProgressDialog(getContext());
+
+        @Override
+        protected void onCancelled() {
+            Dialog.dismiss();
+            new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessCancelRequest, false);
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray roledata) {
+            if (roledata != null && roledata.size() > 0) {
+                arrData = SaveDatatAttendanceUserData(roledata);
+                loadData();
+                new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
+            } else {
+                if (intProcesscancel == 1) {
+                    onCancelled();
+                } else {
+                    new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
+                }
+
+            }
+            checkingDataTable();
+            Dialog.dismiss();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            Dialog.setMessage("Getting Attendance FPE");
+            Dialog.setCancelable(false);
             Dialog.show();
         }
 
