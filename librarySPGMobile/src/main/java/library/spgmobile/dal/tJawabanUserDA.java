@@ -87,11 +87,12 @@ public class tJawabanUserDA {
         return contactList;
     }
     public List<tJawabanUserData> GetDataToPushAnswer(SQLiteDatabase db){
-        List<tJawabanUserData> contactList = new ArrayList<tJawabanUserData>();
+        List<tJawabanUserData> contactList = null;
         tJawabanUserData dt = new tJawabanUserData();
         String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intSubmit + "=1 AND " + dt.Property_intSync + " =0";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()){
+            contactList = new ArrayList<tJawabanUserData>();
             do {
                 tJawabanUserData contact = new tJawabanUserData();
                 contact.set_intUserAnswer(cursor.getString(0));

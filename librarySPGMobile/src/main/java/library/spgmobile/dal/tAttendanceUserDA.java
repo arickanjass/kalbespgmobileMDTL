@@ -89,7 +89,12 @@ public class tAttendanceUserDA {
     public void SaveDataSubmit(SQLiteDatabase db,String IdData){
         tAbsenUserData dt=new tAbsenUserData();
         db.execSQL("UPDATE "+TABLE_CONTACTS+" SET "+dt.Property_intSubmit+"=1 WHERE "+dt.Property_intId+"="+IdData);
+    } 
+    public void SaveDataSync(SQLiteDatabase db,String IdData){
+        tAbsenUserData dt=new tAbsenUserData();
+        db.execSQL("UPDATE "+TABLE_CONTACTS+" SET "+dt.Property_intSync+"=1 WHERE "+dt.Property_intId+"="+IdData);
     }
+
     // Getting single contact
     public tAbsenUserData getData(SQLiteDatabase db,int id) {
         tAbsenUserData dt=new tAbsenUserData();

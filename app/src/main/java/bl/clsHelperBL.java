@@ -979,6 +979,13 @@ public class clsHelperBL extends clsMainBL {
             }
         }
 
+        if (validPush && dtJson .getListOftAttendanceUserData() != null){
+            for (tAttendanceUserData dt : dtJson.getListOftAttendanceUserData()){
+                tAttendanceUserDA _tAttendanceUserDA = new tAttendanceUserDA(db);
+                dt.set_intSync("1");
+                _tAttendanceUserDA.SaveDataSync(db, dt.get_intId());
+            }
+        }
         if (validPush && dtJson.getListOfTrackingLocationData() != null){
             for (trackingLocationData dt : dtJson.getListOfTrackingLocationData()){
                 trackingLocationDA _trackingLocationDA = new trackingLocationDA(db);
