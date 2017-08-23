@@ -65,7 +65,7 @@ public class tAttendanceUserBL extends clsMainBL {
         tUserLoginData _dataUserLogin = _tUserLoginDA.getData(db, 1);
         clsHelper _help = new clsHelper();
         linkAPI dtlinkAPI = new linkAPI();
-        String txtMethod = "GetDatatAbsenUser_mobile";
+        String txtMethod = "GetDataAttendanceFPE_mobile";
         JSONObject resJson = new JSONObject();
         dtlinkAPI.set_txtMethod(txtMethod);
         dtlinkAPI.set_txtParam(_dataUserLogin.get_txtUserId());

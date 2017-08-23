@@ -511,9 +511,10 @@ public class FragmentDownloadData extends Fragment {
         btnDlAttendanceFpe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                intProcesscancel = 0;
                 AsyncCallAttendanceFpe task = new AsyncCallAttendanceFpe();
                 task.execute();
-            }
+            } 
         });
         btnDataLeave.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
@@ -526,8 +527,8 @@ public class FragmentDownloadData extends Fragment {
             @Override
             public void onClick(View v) {
                 intProcesscancel = 0;
-                AsyncCallQuis task = new AsyncCallQuis();
-                task.execute();
+                AsyncCallQuis taska = new AsyncCallQuis();
+                taska.execute();
             }
         });
         btnDataPO.setOnClickListener(new View.OnClickListener() {
@@ -1041,7 +1042,10 @@ public class FragmentDownloadData extends Fragment {
                     SaveDatatTransaksiVisitPlanHeaderData(Json);
                     SaveDatatTransaksiVisitPlanData(Json);
                 }
-
+                if (ll_data_attendance != null && checkVisibility(ll_data_attendance )){
+                    Json = new tAttendanceUserBL() .DownloadAttendance(pInfo.versionName);
+                    SaveDatatAttendanceUserData(Json);
+                }
                 Json = new mEmployeeAreaBL().DownloadEmployeeArea2(pInfo.versionName);
                 SaveDatamEmployeeAreaData(Json);
 
