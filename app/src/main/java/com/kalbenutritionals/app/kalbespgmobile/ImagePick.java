@@ -183,10 +183,39 @@ public class ImagePick {
         }
         return  Uri.fromFile(mediaFile);
     }
+
+    private static Bitmap resizeImageForBlob(Bitmap photo){
+        int width = photo.getWidth();
+        int height = photo.getHeight();
+
+        int maxHeight = 800;
+        int maxWidth = 800;
+
+        Bitmap bitmap;
+
+        if(height > width){
+            float ratio = (float) height / maxHeight;
+            height = maxHeight;
+            width = (int)(width / ratio);
+        }
+        else if(height < width){
+            float ratio = (float) width / maxWidth;
+            width = maxWidth;
+            height = (int)(height / ratio);
+        }
+        else{
+            width = maxWidth;
+            height = maxHeight;
+        }
+
+        bitmap = Bitmap.createScaledBitmap(photo, width, height, true);
+
+        return bitmap;
+    }
     public static byte[] byteQuiz(Bitmap photo){
 
         try {
-            Bitmap bitmap = new clsMainActivity().resizeImageForBlob(photo);
+            Bitmap bitmap = resizeImageForBlob(photo);
             ByteArrayOutputStream output = null;
             try {
                 output = new ByteArrayOutputStream();
