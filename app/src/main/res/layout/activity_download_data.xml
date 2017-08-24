@@ -905,7 +905,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
-                        android:text="Activity MD"
+                        android:text="Activity MDTL"
                         android:textColor="#000" />
 
                     <Spinner
@@ -922,7 +922,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="5dp"
                         android:background="@drawable/btn_on_click"
-                        android:text="Download Activity MD" />
+                        android:text="Download Activity MDTL" />
 
                     <View
                         android:id="@+id/view11V2"

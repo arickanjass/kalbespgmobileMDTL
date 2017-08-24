@@ -271,7 +271,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
         List<mMenuData> menu;
 
         if (dtAbsensVisitplan == null) {
-            menu = new mMenuBL().getDatabyParentIdNew("0");
+            menu = new mMenuBL().getDatabyParentId("0");
         } else {
             menu = new mMenuBL().getDatabyParentId(statusAbsen);
         }
