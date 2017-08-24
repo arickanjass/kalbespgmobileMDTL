@@ -80,6 +80,8 @@ import library.spgmobile.dal.tSalesProductHeaderDA;
 import library.spgmobile.dal.tSalesProductQuantityDetailDA;
 import library.spgmobile.dal.tSalesProductQuantityHeaderDA;
 import library.spgmobile.dal.tSalesProductQuantityImageDA;
+import library.spgmobile.dal.tStockInHandDetailDA;
+import library.spgmobile.dal.tStockInHandHeaderDA;
 import library.spgmobile.dal.tSubTypeActivityDA;
 import library.spgmobile.dal.tUserLoginDA;
 import library.spgmobile.dal.tVisitPlanHeader_MobileDA;
@@ -305,6 +307,8 @@ public class clsHelper {
 		tUserLoginDA _tUserLoginDA=new tUserLoginDA(db);
 		tSalesProductHeaderDA _tSalesProductHeaderDA=new tSalesProductHeaderDA(db);
 		tSalesProductDetailDA _tSalesProductDetailDA=new tSalesProductDetailDA(db);
+		tStockInHandHeaderDA _tStockInHandHeaderDA=new tStockInHandHeaderDA(db);
+		tStockInHandDetailDA _tStockInHandDetailDA=new tStockInHandDetailDA(db);
 		tPurchaseOrderDetailDA _tPurchaseOrderDetailDA = new tPurchaseOrderDetailDA(db);
 		tPurchaseOrderHeaderDA _tPurchaseOrderHeaderDA = new tPurchaseOrderHeaderDA(db);
 		tDeviceInfoUserDA _tDeviceInfoUserDA=new tDeviceInfoUserDA(db);
@@ -394,6 +398,8 @@ public class clsHelper {
 		_tUserLoginDA.DropTable(db);
 		_tSalesProductHeaderDA.DropTable(db);
 		_tSalesProductDetailDA.DropTable(db);
+		_tStockInHandHeaderDA.DropTable(db);
+		_tStockInHandDetailDA.DropTable(db);
 		_tPurchaseOrderHeaderDA.DropTable(db);
 		_tPurchaseOrderDetailDA.DropTable(db);
 		_tDeviceInfoUserDA.DropTable(db);
@@ -443,6 +449,8 @@ public class clsHelper {
 		new tPlanogramMobileDA(db);
 		new tPlanogramImageDA(db);
 		new tAttendanceUserDA(db);
+		new tStockInHandHeaderDA(db);
+		new tStockInHandDetailDA(db);
 
 		_mPriceInOutletDA=new mPriceInOutletDA(db);
 		_mUserRoleDA=new mUserRoleDA(db);

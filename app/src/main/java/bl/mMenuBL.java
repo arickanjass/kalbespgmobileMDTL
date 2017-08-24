@@ -217,6 +217,10 @@ public class mMenuBL extends clsMainBL {
                 }
             }
 
+            else if (data.get_TxtDescription().contains("mnKoordinasiOutlet")) {
+                    tmpData.add(data);
+            }
+
             else {
                 tmpData.add(data);
             }

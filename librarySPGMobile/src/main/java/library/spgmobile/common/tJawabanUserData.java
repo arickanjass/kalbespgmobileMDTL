@@ -17,9 +17,17 @@ public class tJawabanUserData {
     private String _intSubmit;
     private String _intSync;
     private String _intNik;
+    private String _txtPath;
     private byte[] _ptQuiz;
     private byte[] _txtFileQuiz;
 
+    public String get_txtPath() {
+        return _txtPath;
+    }
+
+    public void set_txtPath(String _txtPath) {
+        this._txtPath = _txtPath;
+    }
     public byte[] get_txtFileQuiz() {
         return _txtFileQuiz;
     }

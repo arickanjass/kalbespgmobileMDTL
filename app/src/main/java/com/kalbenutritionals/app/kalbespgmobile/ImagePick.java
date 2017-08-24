@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 import library.spgmobile.dal.clsHardCode;
 
@@ -64,7 +65,6 @@ public class ImagePick {
         uriImage = path;
         Intent pickIntent = new Intent(Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//        Intent pickIntent = new Intent(Intent.ACTION_GET_CONTENT);
         Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         takePhotoIntent.putExtra("return-data", true);
         takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriImage);
@@ -175,16 +175,48 @@ public class ImagePick {
         }
         // Create a media file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-        String fileExtension = fileName.substring(fileName.lastIndexOf("."));
-        String fileNameWithoutExtension = fileName.substring(0, fileName.lastIndexOf('.'));
-        File mediaFile;
-        mediaFile = new File(mediaStorageDir.getPath() + File.separator + fileNameWithoutExtension + timeStamp + fileExtension);
+        File mediaFile = null;
+        if (fileName.length() >0){
+            String fileExtension = fileName.substring(fileName.lastIndexOf("."));
+            String fileNameWithoutExtension = fileName.substring(0, fileName.lastIndexOf('.'));
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator + fileNameWithoutExtension + timeStamp + fileExtension);
+
+        }
         return  Uri.fromFile(mediaFile);
+    }
+
+    private static Bitmap resizeImageForBlob(Bitmap photo){
+        int width = photo.getWidth();
+        int height = photo.getHeight();
+
+        int maxHeight = 800;
+        int maxWidth = 800;
+
+        Bitmap bitmap;
+
+        if(height > width){
+            float ratio = (float) height / maxHeight;
+            height = maxHeight;
+            width = (int)(width / ratio);
+        }
+        else if(height < width){
+            float ratio = (float) width / maxWidth;
+            width = maxWidth;
+            height = (int)(height / ratio);
+        }
+        else{
+            width = maxWidth;
+            height = maxHeight;
+        }
+
+        bitmap = Bitmap.createScaledBitmap(photo, width, height, true);
+
+        return bitmap;
     }
     public static byte[] byteQuiz(Bitmap photo){
 
         try {
-            Bitmap bitmap = new clsMainActivity().resizeImageForBlob(photo);
+            Bitmap bitmap = resizeImageForBlob(photo);
             ByteArrayOutputStream output = null;
             try {
                 output = new ByteArrayOutputStream();
@@ -205,12 +237,15 @@ public class ImagePick {
             e.printStackTrace();
         }return phtQuiz;
     }
+    public static String GenerateGuid() {
+        UUID uuid = UUID.randomUUID();
+        String randomUUIDString = uuid.toString();
+        return randomUUIDString;
+    }
     public static byte[] getFile(Uri path, Context mContext) throws FileNotFoundException
     {
         byte[] data = null;
-//        byte[] inarry = null;
-        String paths = path.toString();
-//        AssetManager am = getAssets();
+
         try {
             InputStream is = mContext.getContentResolver().openInputStream(path); // use recorded file instead of getting file from assets folder.
             int length = is.available();
@@ -231,7 +266,6 @@ public class ImagePick {
     public static String getFileName(Context context, int resultCode, Intent fileReturnedIntent) throws FileNotFoundException {
         Uri uri = fileReturnedIntent.getData();
         String path = fileReturnedIntent.getData().getPath().toString();
-        String manufacture = Build.MANUFACTURER;
         if (resultCode == Activity.RESULT_OK){
             byte[] byteFile = null;
             try {
@@ -246,7 +280,7 @@ public class ImagePick {
                 txtFileQuiz = output.toByteArray();
             } catch (IOException e) {
                 // TODO Auto-generated catch block
-                e.printStackTrace();
+               e.printStackTrace();
             }
             if (txtFileQuiz != null){
                 if (Build.MANUFACTURER.equals("Xiaomi")){
@@ -263,8 +297,6 @@ public class ImagePick {
             }else {
                 fileName = "";
             }}
-//       String lastFile = getOutputMediaFileUpload().getPath().toString() + fileName;
-        //        String fileName = name.substring(name.lastIndexOf('/')+1, name.length());
         return fileName;
     }
     public static void byteQusionerFile(Context context, Intent fileReturnedIntent){
@@ -294,13 +326,6 @@ public class ImagePick {
         Log.d(TAG, "getImageFromResult, resultCode: " + resultCode);
         Bitmap bm = null;
         BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-//        String uri = uriImage.getPath().toString();
-
-//        bm = BitmapFactory.decodeFile(uri, bitmapOptions);
-        //get the returned data
-//        Bundle extras = imageReturnedIntent.getExtras();
-//        //get the cropped bitmap
-//        Bitmap thePic = extras.getParcelable("data");
         File imageFile = getOutputMediaFile();
         if (resultCode == Activity.RESULT_OK) {
             String selectedImage;
