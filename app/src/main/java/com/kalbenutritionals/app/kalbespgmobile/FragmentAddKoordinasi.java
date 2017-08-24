@@ -36,6 +36,7 @@ import java.util.Locale;
 
 import bl.KoordinasiOutletBL;
 import bl.KoordinasiOutletImageBL;
+import bl.clsHelperBL;
 import bl.tAbsenUserBL;
 import bl.tUserLoginBL;
 import edu.swu.pulltorefreshswipemenulistview.library.pulltorefresh.interfaces.IXListViewListener;
@@ -43,6 +44,7 @@ import library.spgmobile.common.KoordinasiOutletData;
 import library.spgmobile.common.KoordinasiOutletImageData;
 import library.spgmobile.common.tAbsenUserData;
 import library.spgmobile.common.tUserLoginData;
+import library.spgmobile.common.visitplanAbsenData;
 import library.spgmobile.dal.clsHardCode;
 
 /**
@@ -91,7 +93,7 @@ public class FragmentAddKoordinasi extends Fragment implements View.OnClickListe
         image1 = (ImageView) view.findViewById(R.id.image1);
         image2 = (ImageView) view.findViewById(R.id.image2);
 
-        final tAbsenUserData absenUserData = new tAbsenUserBL().getDataCheckInActive();
+//        final tAbsenUserData absenUserData = new tAbsenUserBL().getDataCheckInActive();
         final tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
         final int index = new KoordinasiOutletBL().getContactCount() + 1;
 //        txtHDId.setText(String.valueOf(index));
@@ -99,15 +101,17 @@ public class FragmentAddKoordinasi extends Fragment implements View.OnClickListe
 
         dtKoordinasi = new KoordinasiOutletData();
         dtKoordinasiImage = new KoordinasiOutletImageData();
-        tAbsenUserData dtActive = new tAbsenUserBL().getDataCheckInActive();
-        dt = new KoordinasiOutletBL().getAllDataByOutletCode(dtActive.get_txtOutletCode());
+//        tAbsenUserData dtActive = new tAbsenUserBL().getDataCheckInActive();
+        final visitplanAbsenData absenUserData = new clsHelperBL().getDataCheckInActive();
+        dt = new KoordinasiOutletBL().getAllDataByOutletCode(absenUserData.get_txtOutletCode());
 
         // set date
         String timeStamp = new SimpleDateFormat("dd/MM/yyyy",
                 Locale.getDefault()).format(new Date());
         date.setText("Date " + timeStamp);
 
-        tvOutlet.setText("Outlet Name : " + absenUserData.get_txtOutletName());
+        String txtOutletName = "Outlet Name : " + String.valueOf(absenUserData.get_txtOutletName());
+        tvOutlet.setText(txtOutletName);
 
         tvStatus.setText("Status : Open");
 

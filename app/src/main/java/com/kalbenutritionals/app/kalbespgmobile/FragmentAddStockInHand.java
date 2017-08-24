@@ -260,7 +260,7 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
+        switch ( v.getId()) {
             case R.id.btnPreviewReso:
                 arrdataPriv = new ArrayList<>();
                 for (int i = 0; i < modelItems.size(); i++) {
@@ -274,12 +274,13 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
                     }
                 }
                 if (edketerangan.getText().toString().equals("")) {
-                    _clsMainActivity.showCustomToast(getActivity(), "Please fill Description", false);
+                    _clsMainActivity.showCustomToast(getActivity(), "Please fill Description...", false);
 
-                } else if (arrdataPriv.size() == 0) {
-                    _clsMainActivity.showCustomToast(getActivity(), "Please fill Quantity Product", false);
+                } else
+                if (arrdataPriv.size()==0){
+                    _clsMainActivity.showCustomToast(getActivity(), "Please fill Quantity Product...", false);
 
-                } else if (arrdataPriv.size() > 0) {
+                } else if (arrdataPriv.size()>0){
                     LayoutInflater layoutInflater = LayoutInflater.from(getContext());
                     final View promptView = layoutInflater.inflate(R.layout.activity_preview_so, null);
 
@@ -292,28 +293,31 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
                     arr = modelItems;
 
                     TableLayout tlb = (TableLayout) promptView.findViewById(R.id.tlProduct);
+                    tlb.removeAllViews();
 
-//                    TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
-//                    params.setMargins(1, 1, 1, 1);
+                    TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
+                    params.setMargins(1, 1, 1, 1);
 
                     TableRow tr = new TableRow(getContext());
 
+                    TableLayout tl = new TableLayout(getContext());
 
                     String[] colTextHeader = {"Name", "Qty", "Price", "Amount"};
 
                     for (String text : colTextHeader) {
-                        TableRow.LayoutParams params = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
                         TextView tv = new TextView(getContext());
+                        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 1));
+
                         tv.setTextSize(14);
                         tv.setPadding(10, 10, 10, 10);
                         tv.setText(text);
                         tv.setGravity(Gravity.CENTER);
                         tv.setBackgroundColor(Color.parseColor("#4CAF50"));
+
                         tv.setTextColor(Color.WHITE);
-                        tv.setLayoutParams(params);
-                        tr.addView(tv);
+                        tr.addView(tv,params);
                     }
-                    tlb.addView(tr);
+                    tl.addView(tr);
 
                     double qtySum = 0;
                     double qtyNum;
@@ -322,13 +326,17 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
                         tr = new TableRow(getContext());
 
                         tr.setGravity(Gravity.CENTER_HORIZONTAL);
+                        TableLayout.LayoutParams tableRowParams =
+                                new TableLayout.LayoutParams
+                                        (TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT);
 
                         int leftMargin = 0;
                         int topMargin = 0;
                         int rightMargin = 0;
                         int bottomMargin = 0;
+                        tableRowParams.setMargins(leftMargin, topMargin, rightMargin, bottomMargin);
 
-                        TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.MATCH_PARENT, 1f);
+                        tr.setLayoutParams(tableRowParams);
 
                         TextView product = new TextView(getContext());
                         product.setTextSize(12);
@@ -337,8 +345,7 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
                         product.setBackgroundColor(Color.parseColor("#f0f0f0"));
                         product.setTextColor(Color.BLACK);
                         product.setText(dt.get_name());
-                        product.setLayoutParams(params);
-                        tr.addView(product);
+                        tr.addView(product,params);
 
                         TextView qty = new TextView(getContext());
                         qty.setTextSize(12);
@@ -347,8 +354,7 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
                         qty.setTextColor(Color.BLACK);
                         qty.setGravity(Gravity.RIGHT);
                         qty.setText(String.valueOf(dt.get_value()));
-                        qty.setLayoutParams(params);
-                        tr.addView(qty);
+                        tr.addView(qty,params);
 
                         TextView price = new TextView(getContext());
                         price.setTextSize(12);
@@ -357,8 +363,7 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
                         price.setTextColor(Color.BLACK);
                         price.setGravity(Gravity.RIGHT);
                         price.setText(new clsMainActivity().convertNumberDec(Double.valueOf(dt.get_price())));
-                        price.setLayoutParams(params);
-                        tr.addView(price);
+                        tr.addView(price,params);
 
                         TextView amount = new TextView(getContext());
                         amount.setTextSize(12);
@@ -372,11 +377,11 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
                         qtyNum = prc * itm;
                         qtySum += qtyNum;
                         amount.setText(new clsMainActivity().convertNumberDec(qtyNum));
-                        amount.setLayoutParams(params);
-                        tr.addView(amount);
+                        tr.addView(amount,params);
 
-                        tlb.addView(tr);
+                        tl.addView(tr, tableRowParams);
                     }
+                    tlb.addView(tl);
 
                     final TextView tv_item = (TextView) promptView.findViewById(R.id.tvItemtbl);
                     tv_item.setTypeface(null, Typeface.BOLD);
@@ -385,6 +390,8 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
 
                     final TextView tv_amount = (TextView) promptView.findViewById(R.id.tvSumAmount);
                     tv_amount.setTypeface(null, Typeface.BOLD);
+                    String nilai = new clsMainActivity().convertNumberDec(qtySum);
+                    tv_amount.setText(String.format(": %s", String.valueOf(nilai)));
 
                     final TextView tv_status = (TextView) promptView.findViewById(R.id.tvStatus);
                     tv_status.setTypeface(null, Typeface.BOLD);
@@ -421,7 +428,7 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
                             .setNegativeButton("Close",
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
-                                            if (searchProduct.getText().length() > 0) {
+                                            if (searchProduct.getText().length()>0){
                                                 Collections.sort(modelItems, ModelListview.StuRollno);
                                             } else {
                                                 Collections.sort(modelItems, ModelListview.StuRollno);

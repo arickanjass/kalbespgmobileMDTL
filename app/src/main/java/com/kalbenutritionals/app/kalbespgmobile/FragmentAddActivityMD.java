@@ -188,22 +188,22 @@ public class FragmentAddActivityMD extends Fragment implements View.OnClickListe
             pht2 = output.toByteArray();
         }
 
-        etDescription.setFilters(new InputFilter[] {
+        etDescription.setFilters(new InputFilter[]{
                 new InputFilter() {
                     @Override
                     public CharSequence filter(CharSequence cs, int start,
                                                int end, Spanned spanned, int dStart, int dEnd) {
-                        // TODO Auto-generated method stub
-                        if(cs.equals("")){ // for backspace
+                        if (cs.equals("")) { // for backspace
                             return cs;
                         }
-                        if(cs.toString().matches("[a-zA-Z0-9.\\- ]+")){
+                        if (cs.toString().matches("[a-zA-Z0-9.\\- ]+")) {
                             return cs;
                         }
                         return "";
                     }
-                }
+                }, new InputFilter.AllCaps()
         });
+
 
         return v;
     }

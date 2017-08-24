@@ -75,6 +75,8 @@ public class clsHardCode  {
 	public String txtTable_tCheckinOutletMD = "tCheckinOutletMD";
 	public String txtTable_tSalesProductDetail = "tSalesProductDetail";
 	public String txtTable_tSalesProductHeader = "tSalesProductHeader";
+	public String txtTable_tStockInHandHeader = "tStockInHandHeader";
+	public String txtTable_tStockInHandDetail = "tStockInHandDetail";
 	public String txtTable_tPurchaseOrderDetail = "tPurchaseOrderDetail";
 	public String txtTable_tPurchaseOrderHeader = "tPurchaseOrderHeader";
 	public String txtTable_mParent = "mParent";

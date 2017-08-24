@@ -810,6 +810,48 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_data_stockIH"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/txtVwstockIH"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/viewKordinasiOutlet"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Stock In Hand"
+                        android:textColor="#000" />
+
+                    <Spinner
+                        android:id="@+id/spnStockIH"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/bg_edtext" />
+
+                    <Button
+                        android:id="@+id/btnDlStockIH"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/btn_on_click"
+                        android:text="Download Stock In Hand" />
+
+                    <View
+                        android:id="@+id/view1212"
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="10dp"
+                        android:background="#bfbfbf" />
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/ll_data_activity"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -863,7 +905,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
-                        android:text="ActivityV2"
+                        android:text="Activity MD"
                         android:textColor="#000" />
 
                     <Spinner
@@ -880,7 +922,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="5dp"
                         android:background="@drawable/btn_on_click"
-                        android:text="Download ActivityV2" />
+                        android:text="Download Activity MD" />
 
                     <View
                         android:id="@+id/view11V2"
@@ -986,7 +1028,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
-                        android:text="Quantity Stock"
+                        android:text="Near ED"
                         android:textColor="#000" />
 
                     <Spinner
@@ -1003,7 +1045,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="5dp"
                         android:background="@drawable/btn_on_click"
-                        android:text="Download Quantity Stock" />
+                        android:text="Download Product Near ED" />
 
                     <View
                         android:id="@+id/view16"
