@@ -1,5 +1,5 @@
 include ':library_PullToRefreshSwipeMenuListView'
-include ':salesForceLibrary'
+include ':librarySPGMobile'
 include ':badgeall'
 include ':tableview_lib'
 include ':app', ':cropper'

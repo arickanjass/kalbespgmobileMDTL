@@ -149,7 +149,7 @@ public class mconfigDA {
 		//https://appgw01.kalbenutritionals.com/kndashboard
 		txtQuery = "insert or replace into mconfig(intId,txtName,txtValue,txtDefaultValue,intEditAdmin )"
 				//+ "select  2,'API','http://xt34m.kalbenutritionals.co.id/WebDashboard/api/api.aspx?callback=?','https://appgw01.kalbenutritionals.com/kndashboard/api/default.aspx?callback=?',1;";
-				+ "select  2,'API','http://10.171.10.15/webdashboard/api/api.aspx?callback=?','https://appgw01.kalbenutritionals.com/kndashboard/api/default.aspx?callback=?',1;";
+				+ "select  2,'API','http://10.171.10.17:8001/api/api.aspx?callback=?','https://appgw01.kalbenutritionals.com/kndashboard/api/default.aspx?callback=?',1;";
 //				+ "select  2,'API','http://10.171.11.87/webdashboard/api/APIRoberto.aspx?callback=?','https://appgw01.kalbenutritionals.com/kndashboard/api/default.aspx?callback=?',1;";
 		db.execSQL(txtQuery);
 		txtQuery = "insert or replace into mconfig(intId,txtName,txtValue,txtDefaultValue,intEditAdmin )"
