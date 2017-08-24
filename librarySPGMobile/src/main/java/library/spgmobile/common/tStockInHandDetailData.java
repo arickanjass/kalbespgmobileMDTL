@@ -117,7 +117,7 @@ public class tStockInHandDetailData {
     public String Property_txtNoSo = "txtNoSo";
     public String Property_intPrice = "intPrice";
     public String Property_intActive = "intActive";
-    public String Property_ListOftSalesProductDetailData = "ListOftSalesProductDetailData";
+    public String Property_ListOftSalesProductDetailData = "ListOftStockInHandDetailData";
 
     public String Property_All = Property_intId + "," +
             Property_dtDate + "," +

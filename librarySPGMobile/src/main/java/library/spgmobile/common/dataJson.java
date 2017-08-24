@@ -337,7 +337,50 @@ public class dataJson {
                 }
                 resJson.put(dtmMenuData.Property_ListOfMMenuData, new JSONArray(itemsListJquey));
             }
-
+            if (this.getListOftStockInHandHeaderData() != null) {
+                tStockInHandHeaderData dttStockInHandHeaderData = new tStockInHandHeaderData();
+                itemsListJquey = new ArrayList<JSONObject>();
+                for (tStockInHandHeaderData data : this.getListOftStockInHandHeaderData()) {
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dttStockInHandHeaderData.Property_intId, String.valueOf(data.get_intId()));
+                    item1.put(dttStockInHandHeaderData.Property_txtNoSo, String.valueOf(data.get_txtNoSo()));
+                    item1.put(dttStockInHandHeaderData.Property_OutletCode, String.valueOf(data.get_OutletCode()));
+                    item1.put(dttStockInHandHeaderData.Property_OutletName, String.valueOf(data.get_OutletName()));
+                    item1.put(dttStockInHandHeaderData.Property_txtDate, String.valueOf(data.get_dtDate()));
+                    item1.put(dttStockInHandHeaderData.Property_intIdAbsenUser, String.valueOf(data.get_intIdAbsenUser()));
+                    item1.put(dttStockInHandHeaderData.Property_intSubmit, String.valueOf(data.get_intSubmit()));
+                    item1.put(dttStockInHandHeaderData.Property_intSumAmount, String.valueOf(data.get_intSumAmount()));
+                    item1.put(dttStockInHandHeaderData.Property_intSumItem, String.valueOf(data.get_intSumItem()));
+                    item1.put(dttStockInHandHeaderData.Property_intSync, String.valueOf(data.get_intSync()));
+                    item1.put(dttStockInHandHeaderData.Property_txtBranchCode, String.valueOf(data.get_txtBranchCode()));
+                    item1.put(dttStockInHandHeaderData.Property_txtBranchName, String.valueOf(data.get_txtBranchName()));
+                    item1.put(dttStockInHandHeaderData.Property_UserId, String.valueOf(data.get_UserId()));
+                    item1.put(dttStockInHandHeaderData.Property_txtKeterangan, String.valueOf(data.get_txtKeterangan()));
+                    item1.put(dttStockInHandHeaderData.Property_txtNIK, String.valueOf(data.get_txtNIK()));
+//                    item1.put(dttSalesProductHeaderData.Property_txtRoleId, String.valueOf(data.get_txtRoleId()));
+                    itemsListJquey.add(item1);
+                }
+                resJson.put(dttStockInHandHeaderData.Property_ListOftSalesProductHeaderData, new JSONArray(itemsListJquey));
+            }
+            if (this.getListOftStockInHandDetailData() != null) {
+                tStockInHandDetailData dttStockInHandDetailData = new tStockInHandDetailData();
+                itemsListJquey = new ArrayList<JSONObject>();
+                for (tStockInHandDetailData data : this.getListOftStockInHandDetailData()) {
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dttStockInHandDetailData.Property_intId, String.valueOf(data.get_intId()));
+                    item1.put(dttStockInHandDetailData.Property_dtDate, String.valueOf(data.get_dtDate()));
+                    item1.put(dttStockInHandDetailData.Property_intPrice, String.valueOf(data.get_intPrice()));
+                    item1.put(dttStockInHandDetailData.Property_intQty, String.valueOf(data.get_intQty()));
+                    item1.put(dttStockInHandDetailData.Property_txtCodeProduct, String.valueOf(data.get_txtCodeProduct()));
+                    item1.put(dttStockInHandDetailData.Property_txtKeterangan, String.valueOf(data.get_txtKeterangan()));
+                    item1.put(dttStockInHandDetailData.Property_txtNameProduct, String.valueOf(data.get_txtNameProduct()));
+                    item1.put(dttStockInHandDetailData.Property_txtNIK, String.valueOf(data.get_txtNIK()));
+                    item1.put(dttStockInHandDetailData.Property_intTotal, String.valueOf(data.get_intTotal()));
+                    item1.put(dttStockInHandDetailData.Property_txtNoSo, String.valueOf(data.get_txtNoSo()));
+                    itemsListJquey.add(item1);
+                }
+                resJson.put(dttStockInHandDetailData.Property_ListOftSalesProductDetailData, new JSONArray(itemsListJquey));
+            }
 
             if (this.getListOftSalesProductDetailData() != null) {
                 tSalesProductDetailData dttSalesProductDetailData = new tSalesProductDetailData();
@@ -1199,7 +1242,24 @@ public class dataJson {
     private List<KoordinasiOutletData> ListOfKoordinasiOutletData;
     private List<KoordinasiOutletImageData> ListOfKoordinasiOutletImageData;
 
+    public List<tStockInHandHeaderData> getListOftStockInHandHeaderData() {
+        return ListOftStockInHandHeaderData;
+    }
 
+    public void setListOftStockInHandHeaderData(List<tStockInHandHeaderData> listOftStockInHandHeaderData) {
+        ListOftStockInHandHeaderData = listOftStockInHandHeaderData;
+    }
+
+    public List<tStockInHandDetailData> getListOftStockInHandDetailData() {
+        return ListOftStockInHandDetailData;
+    }
+
+    public void setListOftStockInHandDetailData(List<tStockInHandDetailData> listOftStockInHandDetailData) {
+        ListOftStockInHandDetailData = listOftStockInHandDetailData;
+    }
+
+    private List<tStockInHandDetailData> ListOftStockInHandDetailData;
+    private List<tStockInHandHeaderData> ListOftStockInHandHeaderData;
 
     public List<tPlanogramMobileData> getListOftPlanogramMobileData() {
         return ListOftPlanogramMobileData;

@@ -47,6 +47,8 @@ import library.spgmobile.common.tSalesProductHeaderData;
 import library.spgmobile.common.tSalesProductQuantityDetailData;
 import library.spgmobile.common.tSalesProductQuantityHeaderData;
 import library.spgmobile.common.tSalesProductQuantityImageData;
+import library.spgmobile.common.tStockInHandDetailData;
+import library.spgmobile.common.tStockInHandHeaderData;
 import library.spgmobile.common.tUserLoginData;
 import library.spgmobile.common.tVisitPlanHeader_MobileData;
 import library.spgmobile.common.tVisitPlanRealisasiData;
@@ -80,6 +82,8 @@ import library.spgmobile.dal.tSalesProductHeaderDA;
 import library.spgmobile.dal.tSalesProductQuantityDetailDA;
 import library.spgmobile.dal.tSalesProductQuantityHeaderDA;
 import library.spgmobile.dal.tSalesProductQuantityImageDA;
+import library.spgmobile.dal.tStockInHandDetailDA;
+import library.spgmobile.dal.tStockInHandHeaderDA;
 import library.spgmobile.dal.tUserLoginDA;
 import library.spgmobile.dal.tVisitPlanHeader_MobileDA;
 import library.spgmobile.dal.tVisitPlanRealisasiDA;
@@ -575,6 +579,8 @@ public class clsHelperBL extends clsMainBL {
             trackingLocationDA _trackingLocationDA = new trackingLocationDA(db);
             KoordinasiOutletDA _KoordinasiOutletDA = new KoordinasiOutletDA(db);
             KoordinasiOutletImageDA _KoordinasiOutletImageDA = new KoordinasiOutletImageDA(db);
+            tStockInHandDetailDA _tStockInHandDetailDA = new tStockInHandDetailDA(db);
+            tStockInHandHeaderDA _tStockInHandHeaderDA = new tStockInHandHeaderDA(db);
 
             clsLogReceiverHeader_mobileDA _clsLogReceiverHeader_mobileDA = new clsLogReceiverHeader_mobileDA(db);
             clsLogReceiverDetail_mobileDA _clsLogReceiverDetail_mobileDA = new clsLogReceiverDetail_mobileDA(db);
@@ -587,6 +593,8 @@ public class clsHelperBL extends clsMainBL {
 
             List<tSalesProductHeaderData> ListOfSalesProductHeader = _tSalesProductHeaderDA.getAllDataToPushData(db);
             List<tSalesProductDetailData> ListOfSalesProductDetail = _tSalesProductDetailDA.getAllDataToPushData(db, ListOfSalesProductHeader);
+            List<tStockInHandHeaderData> ListOftStockInHandHeaderData = _tStockInHandHeaderDA.getAllDataToPushData(db);
+            List<tStockInHandDetailData> ListOftStockInHandDetailData = _tStockInHandDetailDA.getAllDataToPushData(db, ListOftStockInHandHeaderData);
             List<tPurchaseOrderHeaderData> ListOfPurchaseOrderHeader = _tPurchaseOrderHeaderDA.getAllDataToPushData(db);
             List<tPurchaseOrderDetailData> ListOfPurchaseOrderDetail = _tPurchaseOrderDetailDA.getAllDataToPushDataPO(db, ListOfPurchaseOrderHeader);
             List<tSalesProductQuantityHeaderData> ListOfSalesProductQuantityHeader = _tSalesProductQuantityDA.getAllDataToPushData(db);

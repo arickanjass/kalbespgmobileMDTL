@@ -9,6 +9,7 @@ import java.util.List;
 import library.spgmobile.common.tSalesProductDetailData;
 import library.spgmobile.common.tSalesProductHeaderData;
 import library.spgmobile.common.tStockInHandDetailData;
+import library.spgmobile.common.tStockInHandHeaderData;
 
 /**
  * Created by aan.junianto on 23/08/2017.
@@ -233,7 +234,7 @@ public class tStockInHandDetailDA {
         return intres;
     }
 
-    public List<tStockInHandDetailData> getAllDataToPushData(SQLiteDatabase db, List<tSalesProductHeaderData> ListOfSalesProductHeader) {
+    public List<tStockInHandDetailData> getAllDataToPushData(SQLiteDatabase db, List<tStockInHandHeaderData> ListOfSalesProductHeader) {
         List<tStockInHandDetailData> contactList = null;
         // Select All Query
         tStockInHandDetailData dt=new tStockInHandDetailData();

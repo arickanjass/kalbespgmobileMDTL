@@ -148,7 +148,7 @@ public class tStockInHandHeaderData {
     public String Property_txtBranchCode = "txtBranchCode";
     public String Property_txtBranchName = "txtBranchName";
     public String Property_intIdAbsenUser = "intIdAbsenUser";
-    public String Property_ListOftSalesProductHeaderData = "ListOftSalesProductHeaderData";
+    public String Property_ListOftSalesProductHeaderData = "ListOftStockInHandHeaderData";
 
     public tStockInHandHeaderData() {
         super();
