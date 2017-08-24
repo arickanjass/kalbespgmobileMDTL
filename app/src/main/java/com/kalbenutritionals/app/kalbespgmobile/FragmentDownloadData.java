@@ -1099,11 +1099,11 @@ public class FragmentDownloadData extends Fragment {
 
                 if (ll_data_stockIH != null && checkVisibility(ll_data_stockIH)) {
                     new tStockInHandHeaderBL().DownloadNOSIH(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
-                    Json = new tStockInHandHeaderBL().DownloadSIH(pInfo.versionName);
-                    Iterator j = Json.iterator();
-                    org.json.simple.JSONObject innerObj_po = (org.json.simple.JSONObject) j.next();
-                    int boolValid_po = Integer.valueOf(String.valueOf(innerObj_po.get("_pboolValid")));
-                    if (boolValid_po == 1) SaveDatatStockInHandData(Json);
+//                    Json = new tStockInHandHeaderBL().DownloadSIH(pInfo.versionName);
+//                    Iterator j = Json.iterator();
+//                    org.json.simple.JSONObject innerObj_po = (org.json.simple.JSONObject) j.next();
+//                    int boolValid_po = Integer.valueOf(String.valueOf(innerObj_po.get("_pboolValid")));
+//                    if (boolValid_po == 1) SaveDatatStockInHandData(Json);
                 }
 
                 if (ll_dataQuesioner != null && checkVisibility(ll_dataQuesioner)) {

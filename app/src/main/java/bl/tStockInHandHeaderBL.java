@@ -233,7 +233,7 @@ public class tStockInHandHeaderBL extends clsMainBL{
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("txtUserId", txtUserId);
         linkAPI dtlinkAPI = new linkAPI();
-        dtlinkAPI.set_txtMethod("GetDataNoStockInHandMDTL");
+        dtlinkAPI.set_txtMethod("GetDataNoStockInHand");
         dtlinkAPI.set_txtParam("");
         dtlinkAPI.set_txtToken(new clsHardCode().txtTokenAPI);
         dtlinkAPI.set_txtVesion(versionName);
