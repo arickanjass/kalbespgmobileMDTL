@@ -53,14 +53,16 @@ import bl.clsMainBL;
 import bl.mCounterNumberBL;
 import bl.mEmployeeSalesProductBL;
 import bl.tSalesProductHeaderBL;
+import bl.tStockInHandHeaderBL;
 import library.spgmobile.common.ModelListview;
 import library.spgmobile.common.clsHelper;
 import library.spgmobile.common.mEmployeeSalesProductData;
-import library.spgmobile.common.tSalesProductDetailData;
-import library.spgmobile.common.tSalesProductHeaderData;
+import library.spgmobile.common.tStockInHandDetailData;
+import library.spgmobile.common.tStockInHandHeaderData;
 import library.spgmobile.common.visitplanAbsenData;
 import library.spgmobile.dal.enumCounterData;
 import library.spgmobile.dal.tSalesProductDetailDA;
+import library.spgmobile.dal.tStockInHandDetailDA;
 
 /**
  * Created by aan.junianto on 18/08/2017.
@@ -126,19 +128,19 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
 
         edketerangan.setFilters(new InputFilter[]{inputFilter_edketerangan1, inputFilter_edketerangan2});
 
-        List<tSalesProductHeaderData> dtLast = new tSalesProductHeaderBL().getLastData();
+        List<tStockInHandHeaderData> dtLast = new tStockInHandHeaderBL().getLastData();
         if (dtLast == null || dtLast.size() == 0) {
-            noso = new mCounterNumberBL().getData(enumCounterData.NoDataSO);
+            noso = new mCounterNumberBL().getData(enumCounterData.NoSIH);
 
         } else {
-            noso = new mCounterNumberBL().getData(enumCounterData.NoDataSO);
-            List<tSalesProductHeaderData> dataFirstIsExist = new tSalesProductHeaderBL().getDataByNoSO(noso);
+            noso = new mCounterNumberBL().getData(enumCounterData.NoSIH);
+            List<tStockInHandHeaderData> dataFirstIsExist = new tStockInHandHeaderBL().getDataByNoSO(noso);
             if (dataFirstIsExist.size() == 1) {
                 clsHelper _clsHelper = new clsHelper();
                 String oldVersion = dtLast.get(0).get_txtNoSo();
                 noso = _clsHelper.generateNewId(oldVersion, "-", "5");
             } else {
-                noso = new mCounterNumberBL().getData(enumCounterData.NoDataSO);
+                noso = new mCounterNumberBL().getData(enumCounterData.NoSIH);
             }
         }
         tv_noso.setText(noso);
@@ -470,7 +472,7 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
             }
         }
 
-        tSalesProductHeaderData dt = new tSalesProductHeaderData();
+        tStockInHandHeaderData dt = new tStockInHandHeaderData();
 
         java.text.DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Calendar cal = Calendar.getInstance();
@@ -496,7 +498,7 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
         dt.set_intIdAbsenUser(_viAbsenData.get_intId());
         dt.set_txtNIK(nik);
 
-        new tSalesProductHeaderBL().SaveData(dt);
+        new tStockInHandHeaderBL().SaveData(dt);
 
         clsMainBL _clsMainBL = new clsMainBL();
 
@@ -505,7 +507,7 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
             if (modelItems.get(i).get_value() > 0) {
                 double prc = Double.valueOf(modelItems.get(i).get_price());
                 double itm = (double) modelItems.get(i).get_value();
-                tSalesProductDetailData dtDetail = new tSalesProductDetailData();
+                tStockInHandDetailData dtDetail = new tStockInHandDetailData();
                 dtDetail.set_intId(_clsMainActivity.GenerateGuid());
                 dtDetail.set_dtDate(dateFormat.format(cal.getTime()));
                 dtDetail.set_intPrice(modelItems.get(i).get_price());
@@ -517,7 +519,7 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
                 dtDetail.set_txtNoSo(tv_noso.getText().toString());
                 dtDetail.set_intActive("1");
                 dtDetail.set_txtNIK(modelItems.get(i).get_NIK());
-                new tSalesProductDetailDA(_db).SaveDatatSalesProductDetailData(_db, dtDetail);
+                new tStockInHandDetailDA(_db).SaveDatatStockInHandDetailData(_db, dtDetail);
             }
 
         }

@@ -31,16 +31,16 @@ import java.util.Map;
 
 import adapter.AppAdapterViewCusBase;
 import bl.clsHelperBL;
-import bl.tSalesProductDetailBL;
-import bl.tSalesProductHeaderBL;
+import bl.tStockInHandDetailBL;
+import bl.tStockInHandHeaderBL;
 import edu.swu.pulltorefreshswipemenulistview.library.PullToRefreshSwipeMenuListView;
 import edu.swu.pulltorefreshswipemenulistview.library.pulltorefresh.interfaces.IXListViewListener;
 import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.OnMenuItemClickListener;
 import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.SwipeMenuCreator;
 import edu.swu.pulltorefreshswipemenulistview.library.util.RefreshTime;
 import library.spgmobile.common.clsSwipeList;
-import library.spgmobile.common.tSalesProductDetailData;
-import library.spgmobile.common.tSalesProductHeaderData;
+import library.spgmobile.common.tStockInHandDetailData;
+import library.spgmobile.common.tStockInHandHeaderData;
 import library.spgmobile.common.visitplanAbsenData;
 
 /**
@@ -55,8 +55,8 @@ public class FragmentViewStockInHand extends Fragment implements IXListViewListe
 
     private Handler mHandler;
     private Map<String, HashMap> mapMenu;
-    private List<tSalesProductHeaderData> dt;
-    private List<tSalesProductDetailData> data;
+    private List<tStockInHandHeaderData> dt;
+    private List<tStockInHandDetailData> data;
     private FloatingActionButton fab;
 
     View v;
@@ -157,11 +157,11 @@ public class FragmentViewStockInHand extends Fragment implements IXListViewListe
         }
         tl.addView(tr);
 
-        data = new tSalesProductDetailBL().GetDataByNoSO(dt.get(position).get_txtNoSo());
+        data = new tStockInHandDetailBL().GetDataByNoSO(dt.get(position).get_txtNoSo());
 
         double qtySum=0;
         double qtyNum;
-        for(tSalesProductDetailData dat : data){
+        for(tStockInHandDetailData dat : data){
             tr = new TableRow(getContext());
             TableLayout.LayoutParams tableRowParams=
                     new TableLayout.LayoutParams
@@ -241,7 +241,7 @@ public class FragmentViewStockInHand extends Fragment implements IXListViewListe
         _viAbsenData = new clsHelperBL().getDataCheckInActive();
 
         clsSwipeList swplist;
-        dt = new tSalesProductHeaderBL().getAllSalesProductHeaderByOutletCode(_viAbsenData.get_txtOutletCode());
+        dt = new tStockInHandHeaderBL().getAllSalesProductHeaderByOutletCode(_viAbsenData.get_txtOutletCode());
 
         swipeList.clear();
 

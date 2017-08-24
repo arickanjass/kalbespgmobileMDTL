@@ -658,7 +658,7 @@ public class Login extends clsMainActivity {
 
                             org.json.simple.JSONArray JsonArray_outlet = _clsHelper.ResultJsonArray(String.valueOf(innerObj.get("Listvw_SalesInsentive_EmployeeAreaData")));
                             if(JsonArray_outlet!=null){
-                                
+
                                 for (Object aJsonArray_outlet : JsonArray_outlet) {
                                     JSONObject innerObj_detail = (JSONObject) aJsonArray_outlet;
                                     mEmployeeAreaData _data = new mEmployeeAreaData();
