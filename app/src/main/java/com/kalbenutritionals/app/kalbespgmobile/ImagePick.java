@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 import library.spgmobile.dal.clsHardCode;
 
@@ -235,6 +236,11 @@ public class ImagePick {
         } catch (NullPointerException e) {
             e.printStackTrace();
         }return phtQuiz;
+    }
+    public static String GenerateGuid() {
+        UUID uuid = UUID.randomUUID();
+        String randomUUIDString = uuid.toString();
+        return randomUUIDString;
     }
     public static byte[] getFile(Uri path, Context mContext) throws FileNotFoundException
     {

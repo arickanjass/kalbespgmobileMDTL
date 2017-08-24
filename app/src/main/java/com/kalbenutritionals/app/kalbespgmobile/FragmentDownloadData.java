@@ -3892,12 +3892,13 @@ public class FragmentDownloadData extends Fragment {
 
                     JSONArray jsonArray_jawabanSPG = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListtJAwabanSPG_mobile")));
                     for (Object aJsonArray_jawabanSPG : jsonArray_jawabanSPG ){
-                        tJawabanUserData _data = new tJawabanUserData();
+                        tJawabanUserData _data = new tJawabanUserData(); 
                         JSONObject innerObj_JawabanSPG = (JSONObject) aJsonArray_jawabanSPG ;
-                        _data .set_intUserAnswer(String.valueOf(innerObj_JawabanSPG.get("IntJawabanSPG")));
+                        _data .set_intUserAnswer(String.valueOf(innerObj_JawabanSPG.get("IntListAnswerId")));
                         _data .set_intQuestionId(String.valueOf(innerObj_JawabanSPG.get("IntQuestionId"))) ;
                         _data .set_intRoleId(String.valueOf(innerObj_JawabanSPG.get("IntRoleId"))) ;
                         _data .set_intUserId(String.valueOf(innerObj_JawabanSPG.get("IntUserId"))) ;
+                        new tJawabanUserBL().SaveDatatJawabanUser(_data);
                     }
                 } else {
                     new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
