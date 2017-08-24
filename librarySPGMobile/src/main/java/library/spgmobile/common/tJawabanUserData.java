@@ -20,6 +20,7 @@ public class tJawabanUserData {
     private byte[] _ptQuiz;
     private byte[] _txtFileQuiz;
 
+
     public byte[] get_txtFileQuiz() {
         return _txtFileQuiz;
     }

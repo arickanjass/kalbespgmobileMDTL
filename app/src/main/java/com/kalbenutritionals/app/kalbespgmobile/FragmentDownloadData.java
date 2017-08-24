@@ -514,7 +514,7 @@ public class FragmentDownloadData extends Fragment {
                 intProcesscancel = 0;
                 AsyncCallAttendanceFpe task = new AsyncCallAttendanceFpe();
                 task.execute();
-            } 
+            }
         });
         btnDataLeave.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
@@ -3726,6 +3726,16 @@ public class FragmentDownloadData extends Fragment {
                         _data.set_intTypeQuestionId(String.valueOf(innerObj_TypePertanyaan.get("IntTypeQuestionId")));
                         _data.set_txtTypeQuestion(String.valueOf(innerObj_TypePertanyaan.get("TxtTypeQuestion")));
                         new mTypePertanyaanBL().SaveData(_data);
+                    }
+
+                    JSONArray jsonArray_jawabanSPG = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListtJAwabanSPG_mobile")));
+                    for (Object aJsonArray_jawabanSPG : jsonArray_jawabanSPG ){
+                        tJawabanUserData _data = new tJawabanUserData();
+                        JSONObject innerObj_JawabanSPG = (JSONObject) aJsonArray_jawabanSPG ;
+                        _data .set_intUserAnswer(String.valueOf(innerObj_JawabanSPG.get("IntJawabanSPG")));
+                        _data .set_intQuestionId(String.valueOf(innerObj_JawabanSPG.get("IntQuestionId"))) ;
+                        _data .set_intRoleId(String.valueOf(innerObj_JawabanSPG.get("IntRoleId"))) ;
+                        _data .set_intUserId(String.valueOf(innerObj_JawabanSPG.get("IntUserId"))) ;
                     }
                 } else {
                     new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);

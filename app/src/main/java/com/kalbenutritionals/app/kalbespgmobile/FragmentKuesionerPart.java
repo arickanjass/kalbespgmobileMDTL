@@ -413,9 +413,13 @@ public class FragmentKuesionerPart extends Fragment {
                 if (resultCode == -1) {
                         try {
                             Bitmap bitmap = ImagePick.getImageFromResult(getContext(), resultCode, data);
-                            tvImg.setText(ImagePick.getImagePath());
-                            tvImg.setVisibility(View.INVISIBLE);
-                            previewCapturedImage1(bitmap);
+                            if (bitmap != null){
+                                tvImg.setText(ImagePick.getImagePath());
+                                tvImg.setVisibility(View.INVISIBLE);
+                                previewCapturedImage1(bitmap);
+                            } else {
+                                _clsMainActivity.showCustomToast(getContext(), "Something error", false);
+                            }
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -427,7 +431,7 @@ public class FragmentKuesionerPart extends Fragment {
                     }
                 break;
             case PICK_FILE_ID:
-                if (resultCode == -1) {    
+                if (resultCode == -1) {
                     try {
                         String fileName = ImagePick.getFileName(getContext(), resultCode, data);
                         if (fileName.length() > 0){
@@ -453,7 +457,6 @@ public class FragmentKuesionerPart extends Fragment {
         }
     }
     private void previewCapturedImage1(Bitmap photo) {
-        try {
             Bitmap bitmap = new clsMainActivity().resizeImageForBlob(photo);
             imageView.setImageBitmap(bitmap);
             imageView.setBackgroundResource(0);
@@ -461,25 +464,6 @@ public class FragmentKuesionerPart extends Fragment {
             layoutParams.gravity = Gravity.CENTER;
             layoutParams.topMargin = 20;
             imageView.setLayoutParams(layoutParams);
-            ByteArrayOutputStream output = null;
-            try {
-                output = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 0, output); // bmp is your Bitmap instance
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    if (output != null) {
-                        output.close();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            phtQuiz = output.toByteArray();
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
     }
 
 

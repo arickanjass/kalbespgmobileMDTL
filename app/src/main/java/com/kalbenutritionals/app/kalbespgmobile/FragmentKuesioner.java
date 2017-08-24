@@ -80,6 +80,7 @@ public class FragmentKuesioner extends Fragment {
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
 //    final List<mPertanyaanData> listDataPertanyaan = new mPertanyaanBL().GetAllData();
+    List<tJawabanUserData> dataList;
     List<View> listAnswer = new ArrayList<View>();
     private SeekBar seekbar;
     private CheckBox cbTestGet;
@@ -616,51 +617,15 @@ public class FragmentKuesioner extends Fragment {
                         ProgressDialog progressDialog = new ProgressDialog(getContext());
                         @Override
                         public void onClick(final DialogInterface dialog, int which) {
-                            Thread thread = new Thread(){
-                                @Override
-                                public void run() {
-                                    getActivity().runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            progressDialog.setMessage("Saving your answer...");
-                                            progressDialog.show();
-                                        }
-                                    });
-//                                    getActivity().runOnUiThread(new Runnable() {
-//                                        @Override
-//                                        public void run() {
-//                                            SaveQuiz();
-//                                        }
-//                                    });
-//
-                                    getActivity().runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            progressDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                                @Override
-                                                public void onDismiss(DialogInterface dialog) {
-                                                    AsyncSaveQuiz task = new AsyncSaveQuiz();
-                                                    task.execute();
-                                                }
-                                            });
-                                            progressDialog.dismiss();
-                                            FragmentKuesionerAwal fragmentKuesionerAwal = new FragmentKuesionerAwal();
-                                            FragmentTransaction fragmentTransactionkuesionerAwal = getFragmentManager().beginTransaction();
-                                            fragmentTransactionkuesionerAwal.replace(R.id.frame, fragmentKuesionerAwal);
-                                            fragmentTransactionkuesionerAwal.commit();
-                                            _clsMainActivity.showCustomToast(getContext(),"Saved", true);
-                                        }
-                                    });
-                                }
-                            };
-//                            thread.start();
-
-                            SaveQuiz();
-                            FragmentKuesionerAwal fragmentKuesionerAwal = new FragmentKuesionerAwal();
-                            FragmentTransaction fragmentTransactionkuesionerAwal = getFragmentManager().beginTransaction();
-                            fragmentTransactionkuesionerAwal.replace(R.id.frame, fragmentKuesionerAwal);
-                            fragmentTransactionkuesionerAwal.commit();
-                            _clsMainActivity.showCustomToast(getContext(),"Saved", true);
+                            dataList = getValueQuiz();
+                            AsyncSaveQuiz task = new AsyncSaveQuiz();
+                            task.execute();
+//                            SaveQuiz();
+//                            FragmentKuesionerAwal fragmentKuesionerAwal = new FragmentKuesionerAwal();
+//                            FragmentTransaction fragmentTransactionkuesionerAwal = getFragmentManager().beginTransaction();
+//                            fragmentTransactionkuesionerAwal.replace(R.id.frame, fragmentKuesionerAwal);
+//                            fragmentTransactionkuesionerAwal.commit();
+//                            _clsMainActivity.showCustomToast(getContext(),"Saved", true);
 
                         }
                     });
@@ -864,17 +829,11 @@ public class FragmentKuesioner extends Fragment {
 
         @Override
         protected Void doInBackground(Void... params) {
-//            SaveQuiz();
-//            getActivity().runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    try {
-//                                SaveQuiz();
-//                            } catch (Exception e){
-//                                e.printStackTrace();
-//                            }
-//                }
-//            });
+            try {
+                SaveQuiz();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
             return null;
         }
 
@@ -882,8 +841,7 @@ public class FragmentKuesioner extends Fragment {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            SaveQuiz();
-                new clsMainActivity().showCustomToast(getContext(), "Saved", true);
+            new clsMainActivity().showCustomToast(getContext(), "Saved", true);
             FragmentKuesionerAwal fragmentKuesionerAwal = new FragmentKuesionerAwal();
             FragmentTransaction fragmentTransactionkuesionerAwal = getFragmentManager().beginTransaction();
             fragmentTransactionkuesionerAwal.replace(R.id.frame, fragmentKuesionerAwal);
@@ -893,8 +851,6 @@ public class FragmentKuesioner extends Fragment {
 
         @Override
         protected void onPreExecute() {
-            // Make ProgressBar invisible
-            // pg.setVisibility(View.VISIBLE);
             Dialog.setMessage("Saving your answer...");
             Dialog.setCancelable(false);
             Dialog.show();
@@ -941,7 +897,6 @@ public class FragmentKuesioner extends Fragment {
                         dt.set_intSubmit("1");
                         dt.set_intSync("0");
                         listData.add(dt);
-//                        new tJawabanUserBL().SaveDatatJawabanUser(dt);
                     }
                 }
             } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("1")) {
@@ -962,7 +917,6 @@ public class FragmentKuesioner extends Fragment {
                 dt.set_intSubmit("1");
                 dt.set_intSync("0");
                 listData.add(dt);
-//                new tJawabanUserBL().SaveDatatJawabanUser(dt);
             } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("3")) {
                 EditText editText = (EditText) listAnswer.get(i);
                 tJawabanUserData dt = new tJawabanUserData();
@@ -981,7 +935,6 @@ public class FragmentKuesioner extends Fragment {
                 dt.set_intSubmit("1");
                 dt.set_intSync("0");
                 listData.add(dt);
-//                new tJawabanUserBL().SaveDatatJawabanUser(dt);
             } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("2")) {
                 ListView listView = (ListView) listAnswer.get(i);
                 for (int x = 0; x < listView.getChildCount(); x++) {
@@ -1005,7 +958,6 @@ public class FragmentKuesioner extends Fragment {
                             dt.set_intSubmit("1");
                             dt.set_intSync("0");
                             listData.add(dt);
-//                            new tJawabanUserBL().SaveDatatJawabanUser(dt);
                         }
                     }
                 }
@@ -1033,7 +985,6 @@ public class FragmentKuesioner extends Fragment {
                             dt.set_intSubmit("1");
                             dt.set_intSync("0");
                             listData.add(dt);
-//                            new tJawabanUserBL().SaveDatatJawabanUser(dt);
                         }
                     }
                 }
@@ -1059,7 +1010,6 @@ public class FragmentKuesioner extends Fragment {
                         dt.set_intSubmit("1");
                         dt.set_intSync("0");
                         listData.add(dt);
-//                        new tJawabanUserBL().SaveDatatJawabanUser(dt);
                     }
                 }
             } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("7")) {
@@ -1083,239 +1033,12 @@ public class FragmentKuesioner extends Fragment {
                         dt7.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
                         dt7.set_intAnswerId(null);
                         dt7.set_txtValue(ImagePick.getImageName());
-                        dt7.set_ptQuiz(null);
-                        dt7.set_txtFileQuiz(null);
-                        dt7.set_decBobot("");
-                        dt7.set_intSubmit("1");
-                        dt7.set_intSync("0");
-                        listData.add(dt7);
-//                        new tJawabanUserBL().SaveDatatJawabanUser(dt7);
-                    }
-                }
-            }else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("8")) {
-                LinearLayout linearLayout = (LinearLayout) listAnswer.get(i);
-                for (int z = 0; z < linearLayout.getChildCount(); z++) {
-                    View nextChild = linearLayout.getChildAt(z);
-                    if (nextChild instanceof Button) {
-
-                    } else {
-                        TextView textView = (TextView) nextChild;
-                        if (textView.getId() == layoutFileQuiz.getId() * 37){
-                            tvFileQuiz = (TextView) nextChild;
-                            tJawabanUserData dt7 = new tJawabanUserData();
-                            String uri = tvFilePathQuiz.getText().toString();
-                            byte[] byteFile = null;
-                            try {
-                                byteFile = ImagePick.getFile(Uri.parse(uri), getContext());
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
-                            }
-                            dt7.set_intUserAnswer(new clsMainActivity().GenerateGuid());
-                            dt7.set_intUserId(dataUserActive.get_txtUserId());
-                            dt7.set_intNik(dataUserActive.get_TxtEmpId());
-                            dt7.set_intRoleId(dataUserActive.get_txtRoleId());
-                            dt7.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
-                            dt7.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
-                            dt7.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
-                            dt7.set_intAnswerId(HMJawaban.get(textView.getText().toString()));
-                            dt7.set_txtValue(tvFileQuiz.getText().toString());
-                            dt7.set_ptQuiz(null);
-                            dt7.set_txtFileQuiz(null);
-                            dt7.set_decBobot("");
-                            dt7.set_intSubmit("1");
-                            dt7.set_intSync("0");
-                            listData.add(dt7);
-//                            new tJawabanUserBL().SaveDatatJawabanUser(dt7);
-                        }else if (textView.getId() == layoutFileQuiz.getId() * 63){
-                            tvFilePathQuiz = (TextView) nextChild;
-                        }
-                    }
-                }
-            }
-        }
-        return listData;
-    }  
-
-    private List<tJawabanUserData> getValueForSave(){
-        List<tJawabanUserData> dataList = getValueQuiz();
-        return dataList;
-    }
-    private void SaveQuiz() {
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            intGroupId = bundle.getInt("Key_GroupId");
-        }
-        final  List<mPertanyaanData> listDataPertanyaan = new mPertanyaanBL().GetDataByGroupQuestion(intGroupId);
-        for (int i = 0; i < listDataPertanyaan.size(); i++) {
-            tJawabanUserData dt = new tJawabanUserData();
-            tUserLoginData dataUserActive = new tAbsenUserBL().getUserActive();
-            List<mListJawabanData> mListJawabanDatas = new mListJawabanBL().GetDataByTypeQuestion(HMPertanyaan.get(HMPertanyaan.get(dataPertanyaan.get(i))), HMPertanyaan.get(dataPertanyaan.get(i)));
-            dataJawaban = new ArrayList<>();
-            if (mListJawabanDatas.size() > 0) {
-                for (mListJawabanData jd : mListJawabanDatas) {
-                    dataJawaban.add(jd.get_txtKey());
-                    HMJawaban.put(jd.get_txtKey(), jd.get_intListAnswerId());
-                    HMJawaban.put(jd.get_intListAnswerId(), jd.get_txtValue());
-                }
-            }
-            View answer = listAnswer.get(i);
-            if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("5")) {
-                LinearLayout linearLayout = (LinearLayout) listAnswer.get(i);
-                for (int x = 0; x < linearLayout.getChildCount(); x++) {
-                    View nextChild = linearLayout.getChildAt(x);
-                    if (nextChild instanceof SeekBar) {
-                        seekbar = (SeekBar) nextChild;
-                        dt.set_intUserAnswer(new clsMainActivity().GenerateGuid());
-                        dt.set_intUserId(dataUserActive.get_txtUserId());
-                        dt.set_intNik(dataUserActive.get_TxtEmpId());
-                        dt.set_intRoleId(dataUserActive.get_txtRoleId());
-                        dt.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
-                        dt.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
-                        dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
-                        dt.set_intAnswerId(HMJawaban.get(seekbar.getProgress()));
-                        dt.set_txtValue(String.valueOf(seekbar.getProgress()));
-                        dt.set_ptQuiz(null);
-                        dt.set_txtFileQuiz(null);
-                        dt.set_decBobot("");
-                        dt.set_intSubmit("1");
-                        dt.set_intSync("0");
-                        new tJawabanUserBL().SaveDatatJawabanUser(dt);
-                    }
-                }
-            } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("1")) {
-                Spinner spinner = (Spinner) listAnswer.get(i);
-                dt.set_intUserAnswer(new clsMainActivity().GenerateGuid());
-                dt.set_intUserId(dataUserActive.get_txtUserId());
-                dt.set_intNik(dataUserActive.get_TxtEmpId());
-                dt.set_intRoleId(dataUserActive.get_txtRoleId());
-                dt.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
-                dt.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
-                dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
-                dt.set_intAnswerId(HMJawaban.get(spinner.getSelectedItem().toString()));
-                dt.set_txtValue(HMJawaban.get(HMJawaban.get(spinner.getSelectedItem().toString())));
-                dt.set_ptQuiz(null);
-                dt.set_txtFileQuiz(null);
-                dt.set_decBobot("");
-                dt.set_intSubmit("1");
-                dt.set_intSync("0");
-                new tJawabanUserBL().SaveDatatJawabanUser(dt);
-            } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("3")) {
-                EditText editText = (EditText) listAnswer.get(i);
-                dt.set_intUserAnswer(new clsMainActivity().GenerateGuid());
-                dt.set_intUserId(dataUserActive.get_txtUserId());
-                dt.set_intNik(dataUserActive.get_TxtEmpId());
-                dt.set_intRoleId(dataUserActive.get_txtRoleId());
-                dt.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
-                dt.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
-                dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
-                dt.set_intAnswerId(HMJawaban.get(editText.getText().toString()));
-                dt.set_txtValue(editText.getText().toString());
-                dt.set_ptQuiz(null);
-                dt.set_txtFileQuiz(null);
-                dt.set_decBobot("");
-                dt.set_intSubmit("1");
-                dt.set_intSync("0");
-                new tJawabanUserBL().SaveDatatJawabanUser(dt);
-            } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("2")) {
-                ListView listView = (ListView) listAnswer.get(i);
-                for (int x = 0; x < listView.getChildCount(); x++) {
-                    View nextChild = listView.getChildAt(x);
-                    if (nextChild instanceof CheckBox) {
-                        cbTestGet = (CheckBox) nextChild;
-                        if (cbTestGet.isChecked()) {
-                            dt.set_intUserAnswer(new clsMainActivity().GenerateGuid());
-                            dt.set_intUserId(dataUserActive.get_txtUserId());
-                            dt.set_intNik(dataUserActive.get_TxtEmpId());
-                            dt.set_intRoleId(dataUserActive.get_txtRoleId());
-                            dt.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
-                            dt.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
-                            dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
-                            dt.set_intAnswerId(HMJawaban.get(cbTestGet.getText().toString()));
-                            dt.set_txtValue(HMJawaban.get(HMJawaban.get(cbTestGet.getText().toString())));
-                            dt.set_ptQuiz(null);
-                            dt.set_txtFileQuiz(null);
-                            dt.set_decBobot("");
-                            dt.set_intSubmit("1");
-                            dt.set_intSync("0");
-                            new tJawabanUserBL().SaveDatatJawabanUser(dt);
-                        }
-                    }
-                }
-            } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("6")) {
-                RadioGroup radioGroup = (RadioGroup) listAnswer.get(i);
-
-                if (!radioGroup.onCheckIsTextEditor()) {
-                    int selectedId = radioGroup.getCheckedRadioButtonId();
-                    if (selectedId > -1) {
-                        RadioButton radioButton = (RadioButton) v.findViewById(selectedId);
-                        if (radioButton.isChecked()) {
-                            dt.set_intUserAnswer(new clsMainActivity().GenerateGuid());
-                            dt.set_intUserId(dataUserActive.get_txtUserId());
-                            dt.set_intNik(dataUserActive.get_TxtEmpId());
-                            dt.set_intRoleId(dataUserActive.get_txtRoleId());
-                            dt.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
-                            dt.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
-                            dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
-                            dt.set_intAnswerId(HMJawaban.get(radioButton.getText().toString()));
-                            dt.set_txtValue(HMJawaban.get(HMJawaban.get(radioButton.getText().toString())));
-                            dt.set_ptQuiz(null);
-                            dt.set_txtFileQuiz(null);
-                            dt.set_decBobot("");
-                            dt.set_intSubmit("1");
-                            dt.set_intSync("0");
-                            new tJawabanUserBL().SaveDatatJawabanUser(dt);
-                        }
-                    }
-                }
-            } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("4")) {
-                LinearLayout linearLayout = (LinearLayout) listAnswer.get(i);
-                for (int x = 0; x < linearLayout.getChildCount(); x++) {
-                    View nextChild = linearLayout.getChildAt(x);
-                    if (nextChild instanceof EditText) {
-                        dateView = (EditText) nextChild;
-                        dt.set_intUserAnswer(new clsMainActivity().GenerateGuid());
-                        dt.set_intUserId(dataUserActive.get_txtUserId());
-                        dt.set_intNik(dataUserActive.get_TxtEmpId());
-                        dt.set_intRoleId(dataUserActive.get_txtRoleId());
-                        dt.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
-                        dt.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
-                        dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
-                        dt.set_intAnswerId(HMJawaban.get(dateView.getText().toString()));
-                        dt.set_txtValue(dateView.getText().toString());
-                        dt.set_ptQuiz(null);
-                        dt.set_txtFileQuiz(null);
-                        dt.set_decBobot("");
-                        dt.set_intSubmit("1");
-                        dt.set_intSync("0");
-                        new tJawabanUserBL().SaveDatatJawabanUser(dt);
-                    }
-                }
-            } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("7")) {
-                LinearLayout linearLayout = (LinearLayout) listAnswer.get(i);
-                tJawabanUserData dt7 = new tJawabanUserData();
-                BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-                for (int z = 0; z < linearLayout.getChildCount(); z++) {
-                    View nextChild = linearLayout.getChildAt(z);
-                    if (nextChild instanceof TextView) {
-                        tvImgQuiz = (TextView) nextChild;
-                        String selectedImage = tvImgQuiz.getText().toString();
-                        Bitmap bm = BitmapFactory.decodeFile(selectedImage, bitmapOptions);
-                        byte[] byteQuiz = ImagePick.byteQuiz(bm);
-                        dt7.set_intUserAnswer(new clsMainActivity().GenerateGuid());
-                        dt7.set_intUserId(dataUserActive.get_txtUserId());
-                        dt7.set_intNik(dataUserActive.get_TxtEmpId());
-                        dt7.set_intRoleId(dataUserActive.get_txtRoleId());
-                        dt7.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
-                        dt7.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
-                        dt7.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
-                        dt7.set_intAnswerId(null);
-                        dt7.set_txtValue(ImagePick.getImageName());
                         dt7.set_ptQuiz(byteQuiz);
                         dt7.set_txtFileQuiz(null);
                         dt7.set_decBobot("");
                         dt7.set_intSubmit("1");
                         dt7.set_intSync("0");
-                        new tJawabanUserBL().SaveDatatJawabanUser(dt7);
+                        listData.add(dt7);
                     }
                 }
             }else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("8")) {
@@ -1350,12 +1073,37 @@ public class FragmentKuesioner extends Fragment {
                             dt7.set_decBobot("");
                             dt7.set_intSubmit("1");
                             dt7.set_intSync("0");
-                            new tJawabanUserBL().SaveDatatJawabanUser(dt7);
+                            listData.add(dt7);
                         }else if (textView.getId() == layoutFileQuiz.getId() * 63){
                             tvFilePathQuiz = (TextView) nextChild;
                         }
                     }
                 }
+            }
+        }
+        return listData;
+    }
+
+    private void SaveQuiz() {
+        List<tJawabanUserData> getlist = dataList;
+        if (getlist.size() > 0){
+            for (tJawabanUserData dt : getlist){
+                tJawabanUserData data = new tJawabanUserData();
+                data.set_intUserAnswer(dt.get_intUserAnswer());
+                data.set_intUserId(dt.get_intUserId());
+                data.set_intNik(dt.get_intNik());
+                data.set_intRoleId(dt.get_intRoleId());
+                data.set_intQuestionId(dt.get_intQuestionId());
+                data.set_intTypeQuestionId(dt.get_intTypeQuestionId());
+                data.set_bolHaveAnswerList(dt.get_bolHaveAnswerList());
+                data.set_intAnswerId(dt.get_intAnswerId());
+                data.set_txtValue(dt.get_txtValue());
+                data.set_ptQuiz(dt.get_ptQuiz());
+                data.set_txtFileQuiz(dt.get_txtFileQuiz());
+                data.set_decBobot(dt.get_decBobot());
+                data.set_intSubmit(dt.get_intSubmit());
+                data.set_intSync(dt.get_intSync());
+               new tJawabanUserBL().SaveDatatJawabanUser(data);
             }
         }
     }
