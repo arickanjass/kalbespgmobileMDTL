@@ -71,7 +71,7 @@ public class MyServiceNative extends Service{
 	//private static long UPDATE_INTERVAL = 1*36*1000;  //default
 	private static long UPDATE_INTERVAL = 1*360*1000;  //default
 	//private static long UPDATE_INTERVAL_DELAY = 180000;  //default
-	private static long UPDATE_INTERVAL_TESTING = 1*360*1000;  //default
+	private static long UPDATE_INTERVAL_TESTING = 3000;  //default
 	private static Timer timer = new Timer();
 	private void _startService()
 	{

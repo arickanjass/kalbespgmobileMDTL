@@ -305,7 +305,7 @@
                                 android:textSize="11sp" />
                         </LinearLayout>
 
-                        <!--Quantity Stock-->
+                        <!--Near Ed-->
 
                         <LinearLayout
                             android:id="@+id/ll_dataQuantityStock"
@@ -337,7 +337,151 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:text="Q.STOCK"
+                                android:text="NEAR ED"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                        <!--Quesioner-->
+
+                        <LinearLayout
+                            android:id="@+id/ll_dataKuesioner"
+                            android:visibility="gone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <com.owater.library.CircleTextView
+                                android:id="@+id/tvTotalKuesioner"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_weight="0.25"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="25dp"
+                                app:ct_backgroundColor="#FFFFFF"
+                                app:ct_border_alpha="0.5"
+                                app:ct_border_color="@color/colorAccent"
+                                app:ct_border_width="10dp"
+                                app:ct_type="shadow_alpha" />
+
+                            <TextView
+                                android:id="@+id/textView1234"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Quesioner"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                        <!--Koordinasi outlet-->
+
+                        <LinearLayout
+                            android:id="@+id/ll_dataKoordinasi"
+                            android:visibility="gone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <com.owater.library.CircleTextView
+                                android:id="@+id/tvTotalKoordinasi"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_weight="0.25"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="25dp"
+                                app:ct_backgroundColor="#FFFFFF"
+                                app:ct_border_alpha="0.5"
+                                app:ct_border_color="@color/colorAccent"
+                                app:ct_border_width="10dp"
+                                app:ct_type="shadow_alpha" />
+
+                            <TextView
+                                android:id="@+id/textView12345"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Sync Outlet"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                        <!--Planogram-->
+
+                        <LinearLayout
+                            android:id="@+id/ll_data_planogram"
+                            android:visibility="gone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <com.owater.library.CircleTextView
+                                android:id="@+id/tvTotalPlanogram"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_weight="0.25"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="25dp"
+                                app:ct_backgroundColor="#FFFFFF"
+                                app:ct_border_alpha="0.5"
+                                app:ct_border_color="@color/colorAccent"
+                                app:ct_border_width="10dp"
+                                app:ct_type="shadow_alpha" />
+
+                            <TextView
+                                android:id="@+id/textView123456"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="PLANOGRAM"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                        <!--Stock IN hand-->
+
+                        <LinearLayout
+                            android:id="@+id/ll_data_stockIH"
+                            android:visibility="gone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <com.owater.library.CircleTextView
+                                android:id="@+id/tvTotalStockIH"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_weight="0.25"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="25dp"
+                                app:ct_backgroundColor="#FFFFFF"
+                                app:ct_border_alpha="0.5"
+                                app:ct_border_color="@color/colorAccent"
+                                app:ct_border_width="10dp"
+                                app:ct_type="shadow_alpha" />
+
+                            <TextView
+                                android:id="@+id/textView1234567"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="S. IN HAND"
                                 android:textSize="11sp" />
                         </LinearLayout>
 
@@ -520,7 +664,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="ActivityV2" />
+                                android:text="Activity MDTL" />
 
                             <TextView
                                 android:id="@+id/tv_actV20"
@@ -624,7 +768,7 @@
                                 android:gravity="center"
                                 android:text="" />
                         </TableRow>
-                        <!--table qStock-->
+                        <!--table near ed-->
                         <TableRow
                             android:id="@+id/tr_qStock"
                             android:background="#f0f0f0"
@@ -637,7 +781,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:paddingRight="5dp"
-                                android:text="Q. Stock" />
+                                android:text="Near ED" />
 
                             <TextView
                                 android:id="@+id/tv_qs0"
@@ -657,6 +801,166 @@
 
                             <TextView
                                 android:id="@+id/tv_qs2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+                        </TableRow>
+
+                        <!--table Quesioner-->
+                        <TableRow
+                            android:id="@+id/tr_quesioner"
+                            android:background="#f0f0f0"
+                            android:visibility="gone"
+                            android:gravity="center_horizontal"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:paddingRight="5dp"
+                                android:text="Quesioner" />
+
+                            <TextView
+                                android:id="@+id/tv_quesioner0"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tv_quesioner1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tv_quesioner2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+                        </TableRow>
+
+                        <!--table koordinasi-->
+                        <TableRow
+                            android:id="@+id/tr_koordinasi"
+                            android:background="#f0f0f0"
+                            android:visibility="gone"
+                            android:gravity="center_horizontal"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:paddingRight="5dp"
+                                android:text="Koordinasi" />
+
+                            <TextView
+                                android:id="@+id/tv_koordinasi0"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tv_koordinasi1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tv_koordinasi2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+                        </TableRow>
+
+                        <!--table planogram-->
+                        <TableRow
+                            android:id="@+id/tr_planogram"
+                            android:background="#f0f0f0"
+                            android:visibility="gone"
+                            android:gravity="center_horizontal"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:paddingRight="5dp"
+                                android:text="Planogram" />
+
+                            <TextView
+                                android:id="@+id/tv_planogram0"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tv_planogram1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tv_planogram2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+                        </TableRow>
+
+                        <!--table Stock IN hand-->
+                        <TableRow
+                            android:id="@+id/tr_StockINhand"
+                            android:background="#f0f0f0"
+                            android:visibility="gone"
+                            android:gravity="center_horizontal"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:paddingRight="5dp"
+                                android:text="S. In Hand" />
+
+                            <TextView
+                                android:id="@+id/tv_StockINhand0"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tv_StockINhand1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tv_StockINhand2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"

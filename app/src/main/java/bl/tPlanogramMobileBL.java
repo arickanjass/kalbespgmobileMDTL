@@ -22,6 +22,7 @@ import library.spgmobile.dal.clsHardCode;
 import library.spgmobile.dal.enumConfigData;
 import library.spgmobile.dal.mconfigDA;
 import library.spgmobile.dal.tActivityDA;
+import library.spgmobile.dal.tActivityMobileDA;
 import library.spgmobile.dal.tPlanogramMobileDA;
 import library.spgmobile.dal.tSalesProductQuantityHeaderDA;
 import library.spgmobile.dal.tSubTypeActivityDA;
@@ -100,5 +101,16 @@ public class tPlanogramMobileBL extends clsMainBL{
         _db.close();
         return jsonArray;
 
+    }
+    public int countPlanogramHomeAbsenPush( String code) {
+        SQLiteDatabase _db = getDb();
+        int count = new tPlanogramMobileDA(_db).countPlanogramHomeAbsenPush(_db, code);
+        return count;
+    }
+
+    public int getCountAllPlanogramByStatusSubmit(String code) {
+        SQLiteDatabase _db = getDb();
+        int count = new tPlanogramMobileDA(_db).countPlanogramHomeAbsenByStatusSubmit(_db, code);
+        return count;
     }
 }

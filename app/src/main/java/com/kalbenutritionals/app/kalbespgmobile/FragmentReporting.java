@@ -44,6 +44,8 @@ import bl.tSalesProductDetailBL;
 import bl.tSalesProductHeaderBL;
 import bl.tSalesProductQuantityDetailBL;
 import bl.tSalesProductQuantityHeaderBL;
+import bl.tStockInHandDetailBL;
+import bl.tStockInHandHeaderBL;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 import library.spgmobile.common.ReportTable;
 import library.spgmobile.common.mDownloadMasterData_mobileData;
@@ -62,6 +64,8 @@ import library.spgmobile.common.tSalesProductDetailData;
 import library.spgmobile.common.tSalesProductHeaderData;
 import library.spgmobile.common.tSalesProductQuantityDetailData;
 import library.spgmobile.common.tSalesProductQuantityHeaderData;
+import library.spgmobile.common.tStockInHandDetailData;
+import library.spgmobile.common.tStockInHandHeaderData;
 
 public class FragmentReporting extends Fragment {
 
@@ -266,7 +270,7 @@ public class FragmentReporting extends Fragment {
                 ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
         } else if(spinnerSelected.contains("Stock In Hand")){
             header = new String[6];
-            header[1] = "SO";
+            header[1] = "NO";
             header[2] = "Tot. Prd";
             header[3] = "Tot. Qty";
             header[4] = "Tot. Price";
@@ -294,11 +298,11 @@ public class FragmentReporting extends Fragment {
 
             ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
 
-            List<tSalesProductHeaderData> dt_so = new tSalesProductHeaderBL().getAllSalesProductHeaderByOutletCode(outletcode);
+            List<tStockInHandHeaderData> dt_so = new tStockInHandHeaderBL().getAllSalesProductHeaderByOutletCode(outletcode);
             reportList = new ArrayList<>();
 
             if(dt_so != null&&dt_so.size()>0){
-                for(tSalesProductHeaderData datas : dt_so ){
+                for(tStockInHandHeaderData datas : dt_so ){
                     ReportTable rt = new ReportTable();
 
                     rt.set_report_type("Stock In Hand");
@@ -307,7 +311,7 @@ public class FragmentReporting extends Fragment {
                     rt.set_total_price(new clsMainActivity().convertNumberDec(Double.valueOf(datas.get_intSumAmount())));
                     rt.set_status(datas.get_OutletName());
 
-                    List<tSalesProductDetailData> dt_detail = new tSalesProductDetailBL().GetDataByNoSO(datas.get_txtNoSo());
+                    List<tStockInHandDetailData> dt_detail = new tStockInHandDetailBL().GetDataByNoSO(datas.get_txtNoSo());
 
                     int total_item = 0;
 
@@ -518,7 +522,7 @@ public class FragmentReporting extends Fragment {
 
             ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
 
-        } else if (spinnerSelected.contains("Quantity Stock")){
+        } else if (spinnerSelected.contains("Near ED")){
 //            Toast.makeText(getContext(), "Quantity Stock", Toast.LENGTH_SHORT).show();
             header = new String[6];
             header[1] = "NO";

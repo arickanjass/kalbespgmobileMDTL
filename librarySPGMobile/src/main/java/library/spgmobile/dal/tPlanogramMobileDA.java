@@ -843,4 +843,41 @@ public class tPlanogramMobileDA {
 
         db.delete(TABLE_CONTACTS, whereClause, whereArgs);
     }
+    //getting count data push
+    public int countPlanogramHomeAbsenPush(SQLiteDatabase db,  String code) {
+        String selectQuery = "select coalesce(sum(1),0) from [tPlanogramMobile] where OutletCode='" + code + "' and intSubmit=1 and [intSync]=1";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        int count = 0;
+
+        if (cursor.moveToFirst()) {
+            do {
+                count=Integer.valueOf(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        // return contact list
+        return count;
+    }
+    //getting data status submit
+    public int countPlanogramHomeAbsenByStatusSubmit(SQLiteDatabase db, String code) {
+
+        String selectQuery = "select coalesce(sum(1),0) from [tPlanogramMobile] where OutletCode='" + code + "' and intSubmit=1 and [intSync]=0";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        int count = 0;
+
+        if (cursor.moveToFirst()) {
+            do {
+                count=Integer.valueOf(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        // return contact list
+        return count;
+    }
 }

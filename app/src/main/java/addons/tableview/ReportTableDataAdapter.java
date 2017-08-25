@@ -50,6 +50,28 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
             }
         }
 
+        if(data.get_report_type() == "Stock In Hand"){
+            switch (columnIndex) {
+                case 1:
+                    renderedView = renderString(data.get_no_so(), "left");
+                    break;
+                case 2:
+                    renderedView = renderString(data.get_total_product(), "right");
+                    break;
+                case 3:
+                    renderedView = renderString(data.get_total_item(), "right");
+                    break;
+                case 4:
+                    renderedView = renderString(data.get_total_price(), "right");
+                    break;
+                case 5:
+                    renderedView = renderString(data.get_status(), "left");
+                    break;
+                default:
+                    break;
+            }
+        }
+
         if(data.get_report_type() == "Customer Base"){
 	        switch (columnIndex) {
 	            case 1:
