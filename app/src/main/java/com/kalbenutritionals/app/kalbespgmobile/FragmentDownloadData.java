@@ -1099,11 +1099,11 @@ public class FragmentDownloadData extends Fragment {
 
                 if (ll_data_stockIH != null && checkVisibility(ll_data_stockIH)) {
                     new tStockInHandHeaderBL().DownloadNOSIH(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
-//                    Json = new tStockInHandHeaderBL().DownloadSIH(pInfo.versionName);
-//                    Iterator j = Json.iterator();
-//                    org.json.simple.JSONObject innerObj_po = (org.json.simple.JSONObject) j.next();
-//                    int boolValid_po = Integer.valueOf(String.valueOf(innerObj_po.get("_pboolValid")));
-//                    if (boolValid_po == 1) SaveDatatStockInHandData(Json);
+                    Json = new tStockInHandHeaderBL().DownloadSIH(pInfo.versionName);
+                    Iterator j = Json.iterator();
+                    org.json.simple.JSONObject innerObj_po = (org.json.simple.JSONObject) j.next();
+                    int boolValid_po = Integer.valueOf(String.valueOf(innerObj_po.get("_pboolValid")));
+                    if (boolValid_po == 1) SaveDatatStockInHandData(Json);
                 }
 
                 if (ll_dataQuesioner != null && checkVisibility(ll_dataQuesioner)) {
@@ -1541,7 +1541,7 @@ public class FragmentDownloadData extends Fragment {
                     for (Object aJsonArray_header : JsonArray_header) {
                         tStockInHandHeaderData _data = new tStockInHandHeaderData();
                         JSONObject innerObj_detail = (JSONObject) aJsonArray_header;
-                        _data.set_txtNoSo(String.valueOf(innerObj_detail.get("TxtNoSO")));
+                        _data.set_txtNoSo(String.valueOf(innerObj_detail.get("TxtNoSIH")));
                         _data.set_txtBranchCode(String.valueOf(innerObj_detail.get("TxtBranchCode")));
                         _data.set_intSubmit("1");
                         _data.set_intSync("1");
@@ -1567,9 +1567,9 @@ public class FragmentDownloadData extends Fragment {
                     while (k.hasNext()) {
                         tStockInHandDetailData _data = new tStockInHandDetailData();
                         JSONObject innerObj_detail = (JSONObject) k.next();
-                        _data.set_txtNoSo(String.valueOf(innerObj_detail.get("TxtNoSO")));
+                        _data.set_txtNoSo(String.valueOf(innerObj_detail.get("TxtNoSIH")));
                         _data.set_txtNameProduct(String.valueOf(innerObj_detail.get("TxtNameProduct")));
-                        _data.set_txtNoSo(String.valueOf(innerObj_detail.get("TxtNoSO")));
+                        _data.set_txtNoSo(String.valueOf(innerObj_detail.get("TxtNoSIH")));
                         _data.set_txtCodeProduct(String.valueOf(innerObj_detail.get("TxtCodeProduct")));
                         _data.set_intTotal(String.valueOf(innerObj_detail.get("IntTotal")));
                         _data.set_intPrice(String.valueOf(innerObj_detail.get("IntPrice")));

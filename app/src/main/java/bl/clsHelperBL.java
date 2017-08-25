@@ -789,7 +789,13 @@ public class clsHelperBL extends clsMainBL {
             if (ListOfSalesProductDetail != null) {
                 dtPush.setListOftSalesProductDetailData(ListOfSalesProductDetail);
             }
+            if (ListOftStockInHandHeaderData != null) {
+                dtPush.setListOftStockInHandHeaderData(ListOftStockInHandHeaderData);
+            }
 
+            if (ListOftStockInHandDetailData != null) {
+                dtPush.setListOftStockInHandDetailData(ListOftStockInHandDetailData);
+            }
             if (ListOfJawabanUser != null){
                 for (tJawabanUserData dttJawabanUserData : ListOfJawabanUser) {
                     clsMappingPushFile mappingPushFile = new clsMappingPushFile();
@@ -921,6 +927,13 @@ public class clsHelperBL extends clsMainBL {
                 tVisitPlanRealisasiDA _tVisitPlanRealisasiDA = new tVisitPlanRealisasiDA(db);
                 dt.set_intPush("1");
                 _tVisitPlanRealisasiDA.UpdatePushVisitPlan_MobileData(db, dt);
+            }
+        }
+        if (validPush && dtJson.getListOftStockInHandHeaderData() != null) {
+            for (tStockInHandHeaderData dt : dtJson.getListOftStockInHandHeaderData()) {
+                tStockInHandHeaderDA _tStockInHandHeaderDA = new tStockInHandHeaderDA(db);
+                dt.set_intSync("1");
+                _tStockInHandHeaderDA.SaveDatatStockInHandHeaderData(db, dt);
             }
         }
         if (validPush && dtJson.getListOftActivityData() != null) {

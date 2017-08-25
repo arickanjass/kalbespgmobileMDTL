@@ -204,7 +204,7 @@ public class tStockInHandHeaderBL extends clsMainBL{
         tUserLoginData _dataUserLogin = _tUserLoginDA.getData(db, 1);
         clsHelper _help =new clsHelper();
         linkAPI dtlinkAPI=new linkAPI();
-        String txtMethod="GetDataNoStockInHand";
+        String txtMethod="GetDataTransactionStockInHand";
         JSONObject resJson = new JSONObject();
         dtlinkAPI.set_txtMethod(txtMethod);
         dtlinkAPI.set_txtParam("|" + _dataUserLogin.get_TxtEmpId() + "|" + datenow);
