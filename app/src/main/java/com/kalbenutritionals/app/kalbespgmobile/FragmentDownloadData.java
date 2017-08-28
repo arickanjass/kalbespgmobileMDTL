@@ -733,8 +733,8 @@ public class FragmentDownloadData extends Fragment {
         }
 
         arrData = new ArrayList<>();
-        if (parentDataList.size() > 0 && kategoriDataList.size() > 0 && jawabanDataList.size() > 0 && typePertanyaanDataList.size() > 0 && pertanyaanDataList.size() > 0 && tGroupQuestionMappingDataList.size() > 0) {
-            arrData.add("Quesioner  Ready");
+        if (parentDataList.size() > 0 && kategoriDataList.size() > 0 && typePertanyaanDataList.size() > 0 && pertanyaanDataList.size() > 0 && tGroupQuestionMappingDataList.size() > 0) {
+            arrData.add("Quesioner  Ready"); 
             spnQuiz.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
             spnQuiz.setEnabled(true);
         } else {
