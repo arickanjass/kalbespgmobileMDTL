@@ -56,11 +56,13 @@ import java.util.List;
 import java.util.Locale;
 
 import bl.clsHelperBL;
+import bl.mEmployeeBranchBL;
 import bl.tAbsenUserBL;
 import bl.tAttendanceUserBL;
 import bl.tDeviceInfoUserBL;
 import bl.tPlanogramMobileBL;
 import bl.tUserLoginBL;
+import library.spgmobile.common.mEmployeeBranchData;
 import library.spgmobile.common.tAttendanceUserData;
 import library.spgmobile.common.tDeviceInfoUserData;
 import library.spgmobile.common.tUserLoginData;
@@ -321,6 +323,8 @@ public class FragmentAttendance extends Fragment implements GoogleApiClient.Conn
                             }
                             tUserLoginData dtLogin = new tUserLoginBL().getUserLogin();
 
+                            List<mEmployeeBranchData> _mEmployeeBranchData = new mEmployeeBranchBL().GetAllData();
+
                             _tAttendanceUserData.set_intId(String.valueOf(IdAbsen));
                             _tAttendanceUserData.set_dtDateCheckIn(dateFormat.format(cal.getTime()));
                             _tAttendanceUserData.set_intSubmit("0");
@@ -329,8 +333,10 @@ public class FragmentAttendance extends Fragment implements GoogleApiClient.Conn
                             _tAttendanceUserData.set_txtAccuracy(tvAcc.getText().toString());
                             _tAttendanceUserData.set_txtLatitude(tvLat.getText().toString());
                             _tAttendanceUserData.set_txtLongitude(tvLong.getText().toString());
-                            _tAttendanceUserData.set_txtBranchCode(dtLogin.get_txtBranchCode());
-                            _tAttendanceUserData.set_txtBranchName(dtLogin.get_txtCab());
+                            if(_mEmployeeBranchData!=null){
+                                _tAttendanceUserData.set_txtBranchCode(_mEmployeeBranchData.get(0).get_txtBranchCode());
+                                _tAttendanceUserData.set_txtBranchName(_mEmployeeBranchData.get(0).get_txtBranchName());
+                            }
                             _tAttendanceUserData.set_txtOutletCode(dtLogin.get_txtOutletCode());
                             _tAttendanceUserData.set_txtOutletName(dtLogin.get_txtOutletName());
                             _tAttendanceUserData.set_txtDesc(etOutlet.getText().toString());
