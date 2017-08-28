@@ -19,6 +19,15 @@ public class tVisitPlanHeader_MobileData {
     private String _intRealisasi;
     private String _intSubmit;
     private String _intPush;
+    private String _txtRoleId;
+    public String get_txtRoleId() {
+        return _txtRoleId;
+    }
+
+    public void set_txtRoleId(String _txtRoleId) {
+        this._txtRoleId = _txtRoleId;
+    }
+
 
     public synchronized String get_intSubmit() {
         return _intSubmit;
@@ -135,6 +144,7 @@ public class tVisitPlanHeader_MobileData {
     public String Property_intRealisasi = "intRealisasi";
     public String Property_intSubmit = "intSubmit";
     public String Property_intPush = "intPush";
+    public String Property_txtRoleId = "txtRoleId";
     public String Property_ListOftVisitPlanHeader_MobileData = "ListOftVisitplanHeaderData";
     public String Property_All =
             Property_intHeaderId + "," +

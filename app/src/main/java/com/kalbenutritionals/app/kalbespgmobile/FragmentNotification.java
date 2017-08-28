@@ -351,6 +351,7 @@ public class FragmentNotification extends Fragment implements IXListViewListener
             data.setTxtIdLogReceiver(new clsMainActivity().GenerateGuid());
             data.setTxtStatus("READ");
             data.setTxtNIK(dtLogin.get_TxtEmpId().toString());
+            data.setTxtRoleId(dtLogin.get_txtRoleId().toString());
             data.setTxtUSerName(dtLogin.get_txtUserId().toString());
             data.setDtInserted(String.valueOf(dateFormat.format(cal.getTime())));
             data.setIntActive("1");

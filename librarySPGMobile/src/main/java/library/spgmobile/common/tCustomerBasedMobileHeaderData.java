@@ -26,6 +26,7 @@ public class tCustomerBasedMobileHeaderData {
 	private String _txtTglLahir;
 	private String _intAge;
 	private String _intAgeTypeFlag;
+	private String _txtRoleId;
 
 	public String Property_intTrCustomerId = "intTrCustomerId";
 	public String Property_txtSubmissionId = "txtSubmissionId";
@@ -41,6 +42,7 @@ public class tCustomerBasedMobileHeaderData {
 	public String Property_txtPINBBM = "txtPINBBM";
 	public String Property_txtALamat = "txtALamat";
 	public String Property_txtUserId = "txtUserId";
+	public String Property_txtRoleId = "txtRoleId";
 	public String Property_intPIC = "intPIC";
 	public String Property_txtDeviceId = "txtDeviceId";
 	public String Property_dtDate = "dtDate";
@@ -69,6 +71,7 @@ public class tCustomerBasedMobileHeaderData {
 			Property_txtPINBBM + "," +
 			Property_txtALamat + "," +
 			Property_txtUserId + "," +
+			Property_txtRoleId + "," +
 			Property_intPIC + "," +
 			Property_txtDeviceId + "," +
 			Property_bitActive + "," +
@@ -84,6 +87,13 @@ public class tCustomerBasedMobileHeaderData {
 
 	}
 
+	public String get_txtRoleId() {
+		return _txtRoleId;
+	}
+
+	public void set_txtRoleId(String _txtRoleId) {
+		this._txtRoleId = _txtRoleId;
+	}
 	public String get_intTrCustomerId() {
 		return _intTrCustomerId;
 	}

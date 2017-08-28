@@ -488,6 +488,7 @@ public class FragmentAddResoFPE extends Fragment implements View.OnClickListener
         dt.set_intSumItem(String.valueOf(arrdataPriv.size()));
         dt.set_intSumAmount(String.valueOf(result));
         dt.set_UserId(_viAbsenData.get_txtUserId());
+        dt.set_txtRoleId(_viAbsenData.get_txtRoleId());
         dt.set_intSubmit("1");
         dt.set_intSync("0");
         dt.set_txtBranchCode(_viAbsenData.get_txtBranchCode());

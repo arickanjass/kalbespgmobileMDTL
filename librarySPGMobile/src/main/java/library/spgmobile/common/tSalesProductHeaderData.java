@@ -113,6 +113,15 @@ public class tSalesProductHeaderData {
         this._OutletName = _OutletName;
     }
 
+    public synchronized String get_txtRoleId() {
+        return _txtRoleId;
+    }
+
+    public synchronized void set_txtRoleId(String _txtRoleId) {
+        this._txtRoleId = _txtRoleId;
+    }
+
+
     private String _intId;
     private String _txtNoSo;
     private String _txtNIK;
@@ -128,7 +137,9 @@ public class tSalesProductHeaderData {
     private String _txtBranchCode;
     private String _txtBranchName;
     private String _intIdAbsenUser;
+    private String _txtRoleId;
 
+    public String Property_txtRoleId = "txtRoleId";
     public String Property_UserId = "UserId";
     public String Property_txtNoSo = "txtNoSo";
     public String Property_intSumItem = "intSumItem";
@@ -166,7 +177,8 @@ public class tSalesProductHeaderData {
                     Property_txtBranchCode + "," +
                     Property_txtBranchName + "," +
                     Property_intIdAbsenUser + "," +
-                    Property_txtNIK;
+                    Property_txtNIK + "," +
+                    Property_txtRoleId;
 
     public String get_txtNoSo() {
         return _txtNoSo;

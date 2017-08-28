@@ -35,6 +35,7 @@ public class tCustomerBasedMobileHeaderDA {
                 + dt.Property_txtPINBBM + " TEXT NULL,"
                 + dt.Property_txtALamat + " TEXT NULL,"
                 + dt.Property_txtUserId + " TEXT NULL,"
+                + dt.Property_txtRoleId + " TEXT NULL,"
                 + dt.Property_intPIC + " TEXT NULL,"
                 + dt.Property_txtDeviceId + " TEXT NULL,"
                 + dt.Property_bitActive + " TEXT NULL,"
@@ -78,6 +79,7 @@ public class tCustomerBasedMobileHeaderDA {
                 + String.valueOf(data.get_txtPINBBM()) + "','"
                 + String.valueOf(data.get_txtALamat()) + "','"
                 + String.valueOf(data.get_txtUserId()) + "','"
+                + String.valueOf(data.get_txtRoleId()) + "','"
                 + String.valueOf(data.get_intPIC()) + "','"
                 + String.valueOf(data.get_txtDeviceId()) + "','"
                 + String.valueOf(data.get_bitActive()) + "','"
@@ -197,16 +199,17 @@ public class tCustomerBasedMobileHeaderDA {
                 contact.set_txtPINBBM(cursor.getString(12));
                 contact.set_txtALamat(cursor.getString(13));
                 contact.set_txtUserId(cursor.getString(14));
-                contact.set_intPIC(cursor.getString(15));
-                contact.set_txtDeviceId(cursor.getString(16));
-                contact.set_bitActive(cursor.getString(17));
-                contact.set_txtLOB(cursor.getString(18));
-                contact.set_dtDate(cursor.getString(19));
-                contact.set_intSubmit(cursor.getString(20));
-                contact.set_intSync(cursor.getString(21));
-                contact.set_txtTglLahir(cursor.getString(22));
-                contact.set_intAge(cursor.getString(23));
-                contact.set_intAgeTypeFlag(cursor.getString(24));
+                contact.set_txtRoleId(cursor.getString(15));
+                contact.set_intPIC(cursor.getString(16));
+                contact.set_txtDeviceId(cursor.getString(17));
+                contact.set_bitActive(cursor.getString(18));
+                contact.set_txtLOB(cursor.getString(19));
+                contact.set_dtDate(cursor.getString(20));
+                contact.set_intSubmit(cursor.getString(21));
+                contact.set_intSync(cursor.getString(22));
+                contact.set_txtTglLahir(cursor.getString(23));
+                contact.set_intAge(cursor.getString(24));
+                contact.set_intAgeTypeFlag(cursor.getString(25));
                 contactList.add(contact);
             } while (cursor.moveToNext());
         }
@@ -242,16 +245,17 @@ public class tCustomerBasedMobileHeaderDA {
                 contact.set_txtPINBBM(cursor.getString(12));
                 contact.set_txtALamat(cursor.getString(13));
                 contact.set_txtUserId(cursor.getString(14));
-                contact.set_intPIC(cursor.getString(15));
-                contact.set_txtDeviceId(cursor.getString(16));
-                contact.set_bitActive(cursor.getString(17));
-                contact.set_txtLOB(cursor.getString(18));
-                contact.set_dtDate(cursor.getString(19));
-                contact.set_intSubmit(cursor.getString(20));
-                contact.set_intSync(cursor.getString(21));
-                contact.set_txtTglLahir(cursor.getString(22));
-                contact.set_intAge(cursor.getString(23));
-                contact.set_intAgeTypeFlag(cursor.getString(24));
+                contact.set_txtRoleId(cursor.getString(15));
+                contact.set_intPIC(cursor.getString(16));
+                contact.set_txtDeviceId(cursor.getString(17));
+                contact.set_bitActive(cursor.getString(18));
+                contact.set_txtLOB(cursor.getString(19));
+                contact.set_dtDate(cursor.getString(20));
+                contact.set_intSubmit(cursor.getString(21));
+                contact.set_intSync(cursor.getString(22));
+                contact.set_txtTglLahir(cursor.getString(23));
+                contact.set_intAge(cursor.getString(24));
+                contact.set_intAgeTypeFlag(cursor.getString(25));
                 contactList.add(contact);
             } while (cursor.moveToNext());
         }
@@ -287,16 +291,17 @@ public class tCustomerBasedMobileHeaderDA {
                 contact.set_txtPINBBM(cursor.getString(12));
                 contact.set_txtALamat(cursor.getString(13));
                 contact.set_txtUserId(cursor.getString(14));
-                contact.set_intPIC(cursor.getString(15));
-                contact.set_txtDeviceId(cursor.getString(16));
-                contact.set_bitActive(cursor.getString(17));
-                contact.set_txtLOB(cursor.getString(18));
-                contact.set_dtDate(cursor.getString(19));
-                contact.set_intSubmit(cursor.getString(20));
-                contact.set_intSync(cursor.getString(21));
-                contact.set_txtTglLahir(cursor.getString(22));
-                contact.set_intAge(cursor.getString(23));
-                contact.set_intAgeTypeFlag(cursor.getString(24));
+                contact.set_txtRoleId(cursor.getString(15));
+                contact.set_intPIC(cursor.getString(16));
+                contact.set_txtDeviceId(cursor.getString(17));
+                contact.set_bitActive(cursor.getString(18));
+                contact.set_txtLOB(cursor.getString(19));
+                contact.set_dtDate(cursor.getString(20));
+                contact.set_intSubmit(cursor.getString(21));
+                contact.set_intSync(cursor.getString(22));
+                contact.set_txtTglLahir(cursor.getString(23));
+                contact.set_intAge(cursor.getString(24));
+                contact.set_intAgeTypeFlag(cursor.getString(25));
                 contactList.add(contact);
             } while (cursor.moveToNext());
         }
@@ -589,16 +594,17 @@ public class tCustomerBasedMobileHeaderDA {
                 contact.set_txtPINBBM(cursor.getString(12));
                 contact.set_txtALamat(cursor.getString(13));
                 contact.set_txtUserId(cursor.getString(14));
-                contact.set_intPIC(cursor.getString(15));
-                contact.set_txtDeviceId(cursor.getString(16));
-                contact.set_bitActive(cursor.getString(17));
-                contact.set_txtLOB(cursor.getString(18));
-                contact.set_dtDate(cursor.getString(19));
-                contact.set_intSubmit(cursor.getString(20));
-                contact.set_intSync(cursor.getString(21));
-                contact.set_txtTglLahir(cursor.getString(22));
-                contact.set_intAge(cursor.getString(23));
-                contact.set_intAgeTypeFlag(cursor.getString(24));
+                contact.set_txtRoleId(cursor.getString(15));
+                contact.set_intPIC(cursor.getString(16));
+                contact.set_txtDeviceId(cursor.getString(17));
+                contact.set_bitActive(cursor.getString(18));
+                contact.set_txtLOB(cursor.getString(19));
+                contact.set_dtDate(cursor.getString(20));
+                contact.set_intSubmit(cursor.getString(21));
+                contact.set_intSync(cursor.getString(22));
+                contact.set_txtTglLahir(cursor.getString(23));
+                contact.set_intAge(cursor.getString(24));
+                contact.set_intAgeTypeFlag(cursor.getString(25));
                 contactList.add(contact);
             } while (cursor.moveToNext());
         }
@@ -634,16 +640,17 @@ public class tCustomerBasedMobileHeaderDA {
                 contact.set_txtPINBBM(cursor.getString(12));
                 contact.set_txtALamat(cursor.getString(13));
                 contact.set_txtUserId(cursor.getString(14));
-                contact.set_intPIC(cursor.getString(15));
-                contact.set_txtDeviceId(cursor.getString(16));
-                contact.set_bitActive(cursor.getString(17));
-                contact.set_txtLOB(cursor.getString(18));
-                contact.set_dtDate(cursor.getString(19));
-                contact.set_intSubmit(cursor.getString(20));
-                contact.set_intSync(cursor.getString(21));
-                contact.set_txtTglLahir(cursor.getString(22));
-                contact.set_intAge(cursor.getString(23));
-                contact.set_intAgeTypeFlag(cursor.getString(24));
+                contact.set_txtRoleId(cursor.getString(15));
+                contact.set_intPIC(cursor.getString(16));
+                contact.set_txtDeviceId(cursor.getString(17));
+                contact.set_bitActive(cursor.getString(18));
+                contact.set_txtLOB(cursor.getString(19));
+                contact.set_dtDate(cursor.getString(20));
+                contact.set_intSubmit(cursor.getString(21));
+                contact.set_intSync(cursor.getString(22));
+                contact.set_txtTglLahir(cursor.getString(23));
+                contact.set_intAge(cursor.getString(24));
+                contact.set_intAgeTypeFlag(cursor.getString(25));
                 contactList.add(contact);
             } while (cursor.moveToNext());
         }
@@ -679,16 +686,17 @@ public class tCustomerBasedMobileHeaderDA {
                 contact.set_txtPINBBM(cursor.getString(12));
                 contact.set_txtALamat(cursor.getString(13));
                 contact.set_txtUserId(cursor.getString(14));
-                contact.set_intPIC(cursor.getString(15));
-                contact.set_txtDeviceId(cursor.getString(16));
-                contact.set_bitActive(cursor.getString(17));
-                contact.set_txtLOB(cursor.getString(18));
-                contact.set_dtDate(cursor.getString(19));
-                contact.set_intSubmit(cursor.getString(20));
-                contact.set_intSync(cursor.getString(21));
-                contact.set_txtTglLahir(cursor.getString(22));
-                contact.set_intAge(cursor.getString(23));
-                contact.set_intAgeTypeFlag(cursor.getString(24));
+                contact.set_txtRoleId(cursor.getString(15));
+                contact.set_intPIC(cursor.getString(16));
+                contact.set_txtDeviceId(cursor.getString(17));
+                contact.set_bitActive(cursor.getString(18));
+                contact.set_txtLOB(cursor.getString(19));
+                contact.set_dtDate(cursor.getString(20));
+                contact.set_intSubmit(cursor.getString(21));
+                contact.set_intSync(cursor.getString(22));
+                contact.set_txtTglLahir(cursor.getString(23));
+                contact.set_intAge(cursor.getString(24));
+                contact.set_intAgeTypeFlag(cursor.getString(25));
                 contactList.add(contact);
             } while (cursor.moveToNext());
         }
@@ -750,16 +758,17 @@ public class tCustomerBasedMobileHeaderDA {
                 contact.set_txtPINBBM(cursor.getString(12));
                 contact.set_txtALamat(cursor.getString(13));
                 contact.set_txtUserId(cursor.getString(14));
-                contact.set_intPIC(cursor.getString(15));
-                contact.set_txtDeviceId(cursor.getString(16));
-                contact.set_bitActive(cursor.getString(17));
-                contact.set_txtLOB(cursor.getString(18));
-                contact.set_dtDate(cursor.getString(19));
-                contact.set_intSubmit(cursor.getString(20));
-                contact.set_intSync(cursor.getString(21));
-                contact.set_txtTglLahir(cursor.getString(22));
-                contact.set_intAge(cursor.getString(23));
-                contact.set_intAgeTypeFlag(cursor.getString(24));
+                contact.set_txtRoleId(cursor.getString(15));
+                contact.set_intPIC(cursor.getString(16));
+                contact.set_txtDeviceId(cursor.getString(17));
+                contact.set_bitActive(cursor.getString(18));
+                contact.set_txtLOB(cursor.getString(19));
+                contact.set_dtDate(cursor.getString(20));
+                contact.set_intSubmit(cursor.getString(21));
+                contact.set_intSync(cursor.getString(22));
+                contact.set_txtTglLahir(cursor.getString(23));
+                contact.set_intAge(cursor.getString(24));
+                contact.set_intAgeTypeFlag(cursor.getString(25));
                 contactList.add(contact);
             } while (cursor.moveToNext());
         }
@@ -795,16 +804,17 @@ public class tCustomerBasedMobileHeaderDA {
                 contact.set_txtPINBBM(cursor.getString(12));
                 contact.set_txtALamat(cursor.getString(13));
                 contact.set_txtUserId(cursor.getString(14));
-                contact.set_intPIC(cursor.getString(15));
-                contact.set_txtDeviceId(cursor.getString(16));
-                contact.set_bitActive(cursor.getString(17));
-                contact.set_txtLOB(cursor.getString(18));
-                contact.set_dtDate(cursor.getString(19));
-                contact.set_intSubmit(cursor.getString(20));
-                contact.set_intSync(cursor.getString(21));
-                contact.set_txtTglLahir(cursor.getString(22));
-                contact.set_intAge(cursor.getString(23));
-                contact.set_intAgeTypeFlag(cursor.getString(24));
+                contact.set_txtRoleId(cursor.getString(15));
+                contact.set_intPIC(cursor.getString(16));
+                contact.set_txtDeviceId(cursor.getString(17));
+                contact.set_bitActive(cursor.getString(18));
+                contact.set_txtLOB(cursor.getString(19));
+                contact.set_dtDate(cursor.getString(20));
+                contact.set_intSubmit(cursor.getString(21));
+                contact.set_intSync(cursor.getString(22));
+                contact.set_txtTglLahir(cursor.getString(23));
+                contact.set_intAge(cursor.getString(24));
+                contact.set_intAgeTypeFlag(cursor.getString(25));
                 contactList.add(contact);
             } while (cursor.moveToNext());
         }
@@ -839,16 +849,17 @@ public class tCustomerBasedMobileHeaderDA {
                 contact.set_txtPINBBM(cursor.getString(12));
                 contact.set_txtALamat(cursor.getString(13));
                 contact.set_txtUserId(cursor.getString(14));
-                contact.set_intPIC(cursor.getString(15));
-                contact.set_txtDeviceId(cursor.getString(16));
-                contact.set_bitActive(cursor.getString(17));
-                contact.set_txtLOB(cursor.getString(18));
-                contact.set_dtDate(cursor.getString(19));
-                contact.set_intSubmit(cursor.getString(20));
-                contact.set_intSync(cursor.getString(21));
-                contact.set_txtTglLahir(cursor.getString(22));
-                contact.set_intAge(cursor.getString(23));
-                contact.set_intAgeTypeFlag(cursor.getString(24));
+                contact.set_txtRoleId(cursor.getString(15));
+                contact.set_intPIC(cursor.getString(16));
+                contact.set_txtDeviceId(cursor.getString(17));
+                contact.set_bitActive(cursor.getString(18));
+                contact.set_txtLOB(cursor.getString(19));
+                contact.set_dtDate(cursor.getString(20));
+                contact.set_intSubmit(cursor.getString(21));
+                contact.set_intSync(cursor.getString(22));
+                contact.set_txtTglLahir(cursor.getString(23));
+                contact.set_intAge(cursor.getString(24));
+                contact.set_intAgeTypeFlag(cursor.getString(25));
                 contactList.add(contact);
             } while (cursor.moveToNext());
         }
@@ -909,16 +920,17 @@ public class tCustomerBasedMobileHeaderDA {
             contact.set_txtPINBBM(cursor.getString(12));
             contact.set_txtALamat(cursor.getString(13));
             contact.set_txtUserId(cursor.getString(14));
-            contact.set_intPIC(cursor.getString(15));
-            contact.set_txtDeviceId(cursor.getString(16));
-            contact.set_bitActive(cursor.getString(17));
-            contact.set_txtLOB(cursor.getString(18));
-            contact.set_dtDate(cursor.getString(19));
-            contact.set_intSubmit(cursor.getString(20));
-            contact.set_intSync(cursor.getString(21));
-            contact.set_txtTglLahir(cursor.getString(22));
-            contact.set_intAge(cursor.getString(23));
-            contact.set_intAgeTypeFlag(cursor.getString(24));
+            contact.set_txtRoleId(cursor.getString(15));
+            contact.set_intPIC(cursor.getString(16));
+            contact.set_txtDeviceId(cursor.getString(17));
+            contact.set_bitActive(cursor.getString(18));
+            contact.set_txtLOB(cursor.getString(19));
+            contact.set_dtDate(cursor.getString(20));
+            contact.set_intSubmit(cursor.getString(21));
+            contact.set_intSync(cursor.getString(22));
+            contact.set_txtTglLahir(cursor.getString(23));
+            contact.set_intAge(cursor.getString(24));
+            contact.set_intAgeTypeFlag(cursor.getString(25));
         }
         cursor.close();
         return contact;
@@ -952,16 +964,17 @@ public class tCustomerBasedMobileHeaderDA {
                 contact.set_txtPINBBM(cursor.getString(12));
                 contact.set_txtALamat(cursor.getString(13));
                 contact.set_txtUserId(cursor.getString(14));
-                contact.set_intPIC(cursor.getString(15));
-                contact.set_txtDeviceId(cursor.getString(16));
-                contact.set_bitActive(cursor.getString(17));
-                contact.set_txtLOB(cursor.getString(18));
-                contact.set_dtDate(cursor.getString(19));
-                contact.set_intSubmit(cursor.getString(20));
-                contact.set_intSync(cursor.getString(21));
-                contact.set_txtTglLahir(cursor.getString(22));
-                contact.set_intAge(cursor.getString(23));
-                contact.set_intAgeTypeFlag(cursor.getString(24));
+                contact.set_txtRoleId(cursor.getString(15));
+                contact.set_intPIC(cursor.getString(16));
+                contact.set_txtDeviceId(cursor.getString(17));
+                contact.set_bitActive(cursor.getString(18));
+                contact.set_txtLOB(cursor.getString(19));
+                contact.set_dtDate(cursor.getString(20));
+                contact.set_intSubmit(cursor.getString(21));
+                contact.set_intSync(cursor.getString(22));
+                contact.set_txtTglLahir(cursor.getString(23));
+                contact.set_intAge(cursor.getString(24));
+                contact.set_intAgeTypeFlag(cursor.getString(25));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -999,16 +1012,17 @@ public class tCustomerBasedMobileHeaderDA {
                 contact.set_txtPINBBM(cursor.getString(12));
                 contact.set_txtALamat(cursor.getString(13));
                 contact.set_txtUserId(cursor.getString(14));
-                contact.set_intPIC(cursor.getString(15));
-                contact.set_txtDeviceId(cursor.getString(16));
-                contact.set_bitActive(cursor.getString(17));
-                contact.set_txtLOB(cursor.getString(18));
-                contact.set_dtDate(cursor.getString(19));
-                contact.set_intSubmit(cursor.getString(20));
-                contact.set_intSync(cursor.getString(21));
-                contact.set_txtTglLahir(cursor.getString(22));
-                contact.set_intAge(cursor.getString(23));
-                contact.set_intAgeTypeFlag(cursor.getString(24));
+                contact.set_txtRoleId(cursor.getString(15));
+                contact.set_intPIC(cursor.getString(16));
+                contact.set_txtDeviceId(cursor.getString(17));
+                contact.set_bitActive(cursor.getString(18));
+                contact.set_txtLOB(cursor.getString(19));
+                contact.set_dtDate(cursor.getString(20));
+                contact.set_intSubmit(cursor.getString(21));
+                contact.set_intSync(cursor.getString(22));
+                contact.set_txtTglLahir(cursor.getString(23));
+                contact.set_intAge(cursor.getString(24));
+                contact.set_intAgeTypeFlag(cursor.getString(25));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -1046,16 +1060,17 @@ public class tCustomerBasedMobileHeaderDA {
                 contact.set_txtPINBBM(cursor.getString(12));
                 contact.set_txtALamat(cursor.getString(13));
                 contact.set_txtUserId(cursor.getString(14));
-                contact.set_intPIC(cursor.getString(15));
-                contact.set_txtDeviceId(cursor.getString(16));
-                contact.set_bitActive(cursor.getString(17));
-                contact.set_txtLOB(cursor.getString(18));
-                contact.set_dtDate(cursor.getString(19));
-                contact.set_intSubmit(cursor.getString(20));
-                contact.set_intSync(cursor.getString(21));
-                contact.set_txtTglLahir(cursor.getString(22));
-                contact.set_intAge(cursor.getString(23));
-                contact.set_intAgeTypeFlag(cursor.getString(24));
+                contact.set_txtRoleId(cursor.getString(15));
+                contact.set_intPIC(cursor.getString(16));
+                contact.set_txtDeviceId(cursor.getString(17));
+                contact.set_bitActive(cursor.getString(18));
+                contact.set_txtLOB(cursor.getString(19));
+                contact.set_dtDate(cursor.getString(20));
+                contact.set_intSubmit(cursor.getString(21));
+                contact.set_intSync(cursor.getString(22));
+                contact.set_txtTglLahir(cursor.getString(23));
+                contact.set_intAge(cursor.getString(24));
+                contact.set_intAgeTypeFlag(cursor.getString(25));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());

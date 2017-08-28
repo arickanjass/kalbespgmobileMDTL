@@ -415,6 +415,7 @@ public class FragmentAbsen extends Fragment implements ConnectionCallbacks, OnCo
                                                     tAbsenUserData datatAbsenUserData = dttAbsenUserData;
                                                     tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
                                                     String idUserActive = String.valueOf(dataUserActive.get_txtUserId());
+                                                    String idRoleActive = String.valueOf(dataUserActive.get_txtRoleId());
                                                     List<tDeviceInfoUserData> dataDeviceInfoUser = new tDeviceInfoUserBL().getData(0);
                                                     String deviceInfo="";
                                                     if(dataDeviceInfoUser!=null){
@@ -437,6 +438,7 @@ public class FragmentAbsen extends Fragment implements ConnectionCallbacks, OnCo
                                                     datatAbsenUserData.set_txtOutletName(nameOutlet);
                                                     datatAbsenUserData.set_txtDeviceId(deviceInfo);
                                                     datatAbsenUserData.set_txtUserId(idUserActive);
+                                                    datatAbsenUserData.set_txtRoleId(idRoleActive);
                                                     datatAbsenUserData.set_dtDateCheckOut(null);
                                                     absenUserDatas.add(datatAbsenUserData);
                                                     new tAbsenUserBL().saveData(absenUserDatas);

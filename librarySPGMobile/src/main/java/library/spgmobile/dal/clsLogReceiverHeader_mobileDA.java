@@ -27,7 +27,8 @@ public class clsLogReceiverHeader_mobileDA {
                 + dt.Property_intSync + " TEXT NULL,"
                 + dt.Property_txtIdReceiver + " TEXT NULL,"
                 + dt.Property_txtGuidLogin + " TEXT NULL,"
-                + dt.Property_txtIdHeaderNotif + " TEXT NULL)";
+                + dt.Property_txtIdHeaderNotif + " TEXT NULL,"
+                + dt.Property_txtRoleId + " TEXT NULL)";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
 
@@ -59,7 +60,8 @@ public class clsLogReceiverHeader_mobileDA {
                 + String.valueOf(data.getIntSync()) + "','"
                 + String.valueOf(data.getTxtIdReceiver()) + "','"
                 + String.valueOf(data.getTxtGuidLogin()) + "','"
-                + String.valueOf(data.getTxtIdHeaderNotif()) + "')");
+                + String.valueOf(data.getTxtIdHeaderNotif()) + "','"
+                + String.valueOf(data.getTxtRoleId()) + "')");
 //			db.close();
     }
     public void DeleteAllData(SQLiteDatabase db) {
@@ -87,6 +89,7 @@ public class clsLogReceiverHeader_mobileDA {
             contact.setTxtIdReceiver(cursor.getString(9));
             contact.setTxtGuidLogin(cursor.getString(10));
             contact.setTxtIdHeaderNotif(cursor.getString(11));
+            contact.setTxtRoleId(cursor.getString(12));
             // return contact
         } else {
             contact = null;
@@ -117,6 +120,7 @@ public class clsLogReceiverHeader_mobileDA {
                 contact.setTxtIdReceiver(cursor.getString(9));
                 contact.setTxtGuidLogin(cursor.getString(10));
                 contact.setTxtIdHeaderNotif(cursor.getString(11));
+                contact.setTxtRoleId(cursor.getString(12));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -149,6 +153,7 @@ public class clsLogReceiverHeader_mobileDA {
                 contact.setTxtIdReceiver(cursor.getString(9));
                 contact.setTxtGuidLogin(cursor.getString(10));
                 contact.setTxtIdHeaderNotif(cursor.getString(11));
+                contact.setTxtRoleId(cursor.getString(12));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -182,6 +187,7 @@ public class clsLogReceiverHeader_mobileDA {
                 contact.setTxtIdReceiver(cursor.getString(9));
                 contact.setTxtGuidLogin(cursor.getString(10));
                 contact.setTxtIdHeaderNotif(cursor.getString(11));
+                contact.setTxtRoleId(cursor.getString(12));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -217,6 +223,7 @@ public class clsLogReceiverHeader_mobileDA {
                 contact.setTxtIdReceiver(cursor.getString(9));
                 contact.setTxtGuidLogin(cursor.getString(10));
                 contact.setTxtIdHeaderNotif(cursor.getString(11));
+                contact.setTxtRoleId(cursor.getString(12));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());

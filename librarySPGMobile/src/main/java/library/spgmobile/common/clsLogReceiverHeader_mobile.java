@@ -101,6 +101,13 @@ public class clsLogReceiverHeader_mobile {
     public synchronized void setTxtIdHeaderNotif(String txtIdHeaderNotif) {
         this.txtIdHeaderNotif = txtIdHeaderNotif;
     }
+    public String getTxtRoleId() {
+        return txtRoleId;
+    }
+
+    public void setTxtRoleId(String txtRoleId) {
+        this.txtRoleId = txtRoleId;
+    }
 
     private String txtIdLogReceiver;
     private String txtStatus;
@@ -114,12 +121,13 @@ public class clsLogReceiverHeader_mobile {
     private String txtIdReceiver;
     private String txtGuidLogin;
     private String txtIdHeaderNotif;
+    private String txtRoleId;
 
 
     public String Property_txtIdLogReceiver = "txtIdLogReceiver";
     public String Property_txtStatus = "txtStatus";
     public String Property_txtNIK = "txtNIK";
-    public String Property_txtUSerName = "txtUSerName";
+    public String Property_txtUSerName = "txtUSerName"; 
     public String Property_dtInserted = "dtInserted";
     public String Property_dtUpdated = "dtUpdated";
     public String Property_intActive = "intActive";
@@ -128,10 +136,12 @@ public class clsLogReceiverHeader_mobile {
     public String Property_txtIdReceiver = "txtIdReceiver";
     public String Property_txtGuidLogin = "txtGuidLogin";
     public String Property_txtIdHeaderNotif = "txtIdHeaderNotif";
+    public String Property_txtRoleId = "txtRoleId";
 
     public String Property_ListOfclsLogReceiverHeader_mobile ="ListOfclsLogReceiverHeader_mobile";
 
     public String PropertyAll=Property_txtIdLogReceiver+","+Property_txtStatus+","+Property_txtNIK+","+Property_txtUSerName+","+Property_dtInserted+","+
-            Property_dtUpdated+","+Property_intActive+","+Property_intSubmit+","+Property_intSync+","+Property_txtIdReceiver+","+Property_txtGuidLogin+","+Property_txtIdHeaderNotif;
+            Property_dtUpdated+","+Property_intActive+","+Property_intSubmit+","+Property_intSync+","+Property_txtIdReceiver+","+Property_txtGuidLogin+","+
+            Property_txtIdHeaderNotif+","+Property_txtRoleId;
 
 }

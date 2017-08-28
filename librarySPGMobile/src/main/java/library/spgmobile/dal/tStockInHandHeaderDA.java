@@ -38,7 +38,8 @@ public class tStockInHandHeaderDA {
                 + dt.Property_txtBranchCode + " TEXT NULL,"
                 + dt.Property_txtBranchName + " TEXT NULL,"
                 + dt.Property_intIdAbsenUser + " TEXT NULL,"
-                + dt.Property_txtNIK + " TEXT NULL" + ")";
+                + dt.Property_txtNIK + " TEXT NULL,"
+                + dt.Property_txtRoleId + " TEXT NULL" + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
 
@@ -70,7 +71,8 @@ public class tStockInHandHeaderDA {
                 + dt.Property_txtBranchCode + ","
                 + dt.Property_txtBranchName + ","
                 + dt.Property_intIdAbsenUser + ","
-                + dt.Property_txtNIK + ") " +
+                + dt.Property_txtNIK + ","
+                + dt.Property_txtRoleId + ") " +
                 "values('" + String.valueOf(data.get_intId()) + "','"
                 + String.valueOf(data.get_txtNoSo()) + "','"
                 + String.valueOf(data.get_OutletCode()) + "','"
@@ -85,7 +87,8 @@ public class tStockInHandHeaderDA {
                 + String.valueOf(data.get_txtBranchCode()) + "','"
                 + String.valueOf(data.get_txtBranchName()) + "','"
                 + String.valueOf(data.get_intIdAbsenUser()) + "','"
-                + String.valueOf(data.get_txtNIK()) + "')");
+                + String.valueOf(data.get_txtNIK())  + "','"
+                + String.valueOf(data.get_txtRoleId())+ "')");
     }
 
     public void UpdateDataItem(SQLiteDatabase db, tStockInHandHeaderData data) {
@@ -194,6 +197,7 @@ public class tStockInHandHeaderDA {
                 contact.set_txtBranchName(cursor.getString(12));
                 contact.set_intIdAbsenUser(cursor.getString(13));
                 contact.set_txtNIK(cursor.getString(14));
+                contact.set_txtRoleId(cursor.getString(15));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -231,6 +235,7 @@ public class tStockInHandHeaderDA {
                 contact.set_txtBranchName(cursor.getString(12));
                 contact.set_intIdAbsenUser(cursor.getString(13));
                 contact.set_txtNIK(cursor.getString(14));
+                contact.set_txtRoleId(cursor.getString(15));
 
                 // Adding contact to list
                 contactList.add(contact);
@@ -488,6 +493,7 @@ public class tStockInHandHeaderDA {
                 contact.set_txtBranchName(cursor.getString(12));
                 contact.set_intIdAbsenUser(cursor.getString(13));
                 contact.set_txtNIK(cursor.getString(14));
+                contact.set_txtRoleId(cursor.getString(15));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -526,6 +532,7 @@ public class tStockInHandHeaderDA {
                 contact.set_txtBranchName(cursor.getString(12));
                 contact.set_intIdAbsenUser(cursor.getString(13));
                 contact.set_txtNIK(cursor.getString(14));
+                contact.set_txtRoleId(cursor.getString(15));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -564,6 +571,7 @@ public class tStockInHandHeaderDA {
                 contact.set_txtBranchName(cursor.getString(12));
                 contact.set_intIdAbsenUser(cursor.getString(13));
                 contact.set_txtNIK(cursor.getString(14));
+                contact.set_txtRoleId(cursor.getString(15));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -623,6 +631,7 @@ public class tStockInHandHeaderDA {
                 contact.set_txtBranchName(cursor.getString(12));
                 contact.set_intIdAbsenUser(cursor.getString(13));
                 contact.set_txtNIK(cursor.getString(14));
+                contact.set_txtRoleId(cursor.getString(15));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());

@@ -292,6 +292,7 @@ public class MyServiceNative extends Service{
 				data.setTxtIdLogReceiver(randomUUIDString);
 				data.setTxtStatus("RECEIVED");
 				data.setTxtNIK(dtLogin.get_TxtEmpId().toString());
+				data.setTxtRoleId(dtLogin.get_txtRoleId().toString());
 				data.setTxtUSerName(dtLogin.get_txtUserId().toString());
 				data.setDtInserted(String.valueOf(dateFormat.format(cal.getTime())));
 				data.setIntActive("1");
