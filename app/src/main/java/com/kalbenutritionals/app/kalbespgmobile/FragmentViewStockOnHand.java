@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -47,7 +48,7 @@ import library.spgmobile.common.visitplanAbsenData;
  * Created by aan.junianto on 18/08/2017.
  */
 
-public class FragmentViewStockInHand extends Fragment implements IXListViewListener {
+public class FragmentViewStockOnHand extends Fragment implements IXListViewListener {
     private static List<clsSwipeList> swipeList = new ArrayList<clsSwipeList>();
     private AppAdapterViewCusBase mAdapter;
 
@@ -72,7 +73,7 @@ public class FragmentViewStockInHand extends Fragment implements IXListViewListe
             @Override
             public void onClick(View v) {
                 Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-                toolbar.setTitle("Add Stock In Hand");
+                toolbar.setTitle("Add Stock On Hand");
 
                 FragmentAddStockInHand fragmentAddResoSPG = new FragmentAddStockInHand();
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
@@ -125,6 +126,9 @@ public class FragmentViewStockInHand extends Fragment implements IXListViewListe
         final  TextView tv_status = (TextView) promptView.findViewById(R.id.tvStatus);
         tv_status.setTypeface(null, Typeface.BOLD);
 
+        final TableRow tr_amount = (TableRow) promptView.findViewById(R.id.tr_amount);
+        tr_amount.setVisibility(View.GONE);
+
         if (dt.get(position).get_intSubmit().equals("1")&&dt.get(position).get_intSync().equals("0")){
             tv_status.setText(": Submit");
         } else if (dt.get(position).get_intSubmit().equals("1")&&dt.get(position).get_intSync().equals("1")){
@@ -141,7 +145,7 @@ public class FragmentViewStockInHand extends Fragment implements IXListViewListe
 
         TableLayout tl = new TableLayout(getContext());
 
-        String[] colTextHeader = {"Nama", "Qty", "Price", "Amount"};
+        String[] colTextHeader = {"Name", "Qty"};
 
         for (String text : colTextHeader) {
             TextView tv = new TextView(getContext());
@@ -177,7 +181,7 @@ public class FragmentViewStockInHand extends Fragment implements IXListViewListe
 
             TextView product = new TextView(getContext());
             product.setTextSize(12);
-            product.setWidth(200);
+            product.setWidth(400);
             product.setPadding(10, 10, 10, 10);
             product.setBackgroundColor(Color.parseColor("#f0f0f0"));
             product.setTextColor(Color.BLACK);
@@ -193,28 +197,28 @@ public class FragmentViewStockInHand extends Fragment implements IXListViewListe
             qty.setText(dat.get_intQty());
             tr.addView(qty,params);
 
-            TextView price = new TextView(getContext());
-            price.setTextSize(12);
-            price.setPadding(10, 10, 10, 10);
-            price.setBackgroundColor(Color.parseColor("#f0f0f0"));
-            price.setTextColor(Color.BLACK);
-            price.setGravity(Gravity.RIGHT);
-            price.setText(new clsMainActivity().convertNumberDec(Double.valueOf(dat.get_intPrice())));
-            tr.addView(price,params);
-
-            TextView amount = new TextView(getContext());
-            amount.setTextSize(12);
-            amount.setWidth(200);
-            amount.setPadding(10, 10, 10, 10);
-            amount.setBackgroundColor(Color.parseColor("#f0f0f0"));
-            amount.setTextColor(Color.BLACK);
-            amount.setGravity(Gravity.RIGHT);
-            double prc = Double.valueOf(dat.get_intPrice());
-            double itm = Double.valueOf(dat.get_intQty());
-            qtyNum = prc * itm;
-            qtySum += qtyNum;
-            amount.setText(new clsMainActivity().convertNumberDec(qtyNum));
-            tr.addView(amount,params);
+//            TextView price = new TextView(getContext());
+//            price.setTextSize(12);
+//            price.setPadding(10, 10, 10, 10);
+//            price.setBackgroundColor(Color.parseColor("#f0f0f0"));
+//            price.setTextColor(Color.BLACK);
+//            price.setGravity(Gravity.RIGHT);
+//            price.setText(new clsMainActivity().convertNumberDec(Double.valueOf(dat.get_intPrice())));
+//            tr.addView(price,params);
+//
+//            TextView amount = new TextView(getContext());
+//            amount.setTextSize(12);
+//            amount.setWidth(200);
+//            amount.setPadding(10, 10, 10, 10);
+//            amount.setBackgroundColor(Color.parseColor("#f0f0f0"));
+//            amount.setTextColor(Color.BLACK);
+//            amount.setGravity(Gravity.RIGHT);
+//            double prc = Double.valueOf(dat.get_intPrice());
+//            double itm = Double.valueOf(dat.get_intQty());
+//            qtyNum = prc * itm;
+//            qtySum += qtyNum;
+//            amount.setText(new clsMainActivity().convertNumberDec(qtyNum));
+//            tr.addView(amount,params);
 
             tl.addView(tr, tableRowParams);
         }
@@ -248,7 +252,7 @@ public class FragmentViewStockInHand extends Fragment implements IXListViewListe
         if(dt!=null) {
             for (int i = 0; i < dt.size(); i++) {
                 swplist = new clsSwipeList();
-                swplist.set_txtTitle("No So : " + dt.get(i).get_txtNoSo());
+                swplist.set_txtTitle("No : " + dt.get(i).get_txtNoSo());
                 swplist.set_txtDescription("Description : " + dt.get(i).get_txtKeterangan());
                 if (dt.get(i).get_intSubmit().equals("1")&&dt.get(i).get_intSync().equals("0")){
                     swplist.set_txtDescription2("Submit");

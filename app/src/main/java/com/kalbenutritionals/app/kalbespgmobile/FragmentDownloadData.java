@@ -67,6 +67,7 @@ import bl.tCustomerBasedMobileDetailProductBL;
 import bl.tCustomerBasedMobileHeaderBL;
 import bl.tGroupQuestionMappingBL;
 import bl.tJawabanUserBL;
+import bl.tKategoryPlanogramMobileBL;
 import bl.tLeaveMobileBL;
 import bl.tPlanogramMobileBL;
 import bl.tPurchaseOrderHeaderBL;
@@ -109,6 +110,7 @@ import library.spgmobile.common.tCustomerBasedMobileDetailProductData;
 import library.spgmobile.common.tCustomerBasedMobileHeaderData;
 import library.spgmobile.common.tGroupQuestionMappingData;
 import library.spgmobile.common.tJawabanUserData;
+import library.spgmobile.common.tKategoryPlanogramMobileData;
 import library.spgmobile.common.tLeaveMobileData;
 import library.spgmobile.common.tPlanogramImageData;
 import library.spgmobile.common.tPlanogramMobileData;
@@ -148,7 +150,7 @@ public class FragmentDownloadData extends Fragment {
     private Spinner spnActivity, spnActivityV2, spnStockIH;
     private Spinner spnCustomerBase;
     private Spinner spnAbsen, spnQuiz;
-    private Spinner spnAttendanceFpe, spnDataPlanogram, spnDataLeave, spnSubTypeActivity, spnDataPO, spnDataQuantityStock, spnProductComp, spnTypeSubmission, spnProdSPGCusBased, spnProdPICCusBased;
+    private Spinner spnkategoryPlanogram,spnAttendanceFpe, spnDataPlanogram, spnDataLeave, spnSubTypeActivity, spnDataPO, spnDataQuantityStock, spnProductComp, spnTypeSubmission, spnProdSPGCusBased, spnProdPICCusBased;
     private LinearLayout ll_subtypeactivity;
     private LinearLayout ll_branch;
     private LinearLayout ll_product;
@@ -169,9 +171,10 @@ public class FragmentDownloadData extends Fragment {
     private LinearLayout ll_dataVisitPlan;
     private LinearLayout ll_dataQuantityStock;
     private LinearLayout ll_dataKordinasiOutlet;
-    private LinearLayout ll_dataQuesioner,ll_data_planogram, ll_data_stockIH;
+    private LinearLayout ll_dataQuesioner,ll_data_planogram, ll_kategoryPlanogram, ll_data_stockIH, ll_outlet;
 
     private PackageInfo pInfo = null;
+    private String intRoleId = "";
     private List<String> arrData;
     private String[] strip = new String[]{"-"};
     int intProcesscancel = 0;
@@ -228,6 +231,8 @@ public class FragmentDownloadData extends Fragment {
         Button btnProdPICCusBased = (Button) v.findViewById(R.id.btnProdPICCusBase);
         spnSubTypeActivity = (Spinner) v.findViewById(R.id.spnSubTypeActivity);
         Button btnSubTypeActivity = (Button) v.findViewById(R.id.btnSubTypeActivity);
+        spnkategoryPlanogram = (Spinner) v.findViewById(R.id.spnkategoryPlanogram);
+        Button btnkategoryPlanogram = (Button) v.findViewById(R.id.btnkategoryPlanogram);
         spnDataPlanogram = (Spinner) v.findViewById(R.id.spnDataPlanogram);
         Button btnDlDataPlanogram = (Button) v.findViewById(R.id.btnDlDataPlanogram);
         spnAttendanceFpe = (Spinner) v.findViewById(R.id.spnAttendanceFpe);
@@ -236,7 +241,7 @@ public class FragmentDownloadData extends Fragment {
         Button btnDlStockIH = (Button) v.findViewById(R.id.btnDlStockIH);
 
         ll_branch = (LinearLayout) v.findViewById(R.id.ll_branch);
-        LinearLayout ll_outlet = (LinearLayout) v.findViewById(R.id.ll_outlet);
+        ll_outlet = (LinearLayout) v.findViewById(R.id.ll_outlet);
         ll_product = (LinearLayout) v.findViewById(R.id.ll_product);
         ll_brand = (LinearLayout) v.findViewById(R.id.ll_brand);
         ll_type_leave = (LinearLayout) v.findViewById(R.id.ll_type_leave);
@@ -257,6 +262,7 @@ public class FragmentDownloadData extends Fragment {
         ll_dataKordinasiOutlet = (LinearLayout) v.findViewById(R.id.ll_dataKordinasiOutlet);
         ll_dataQuesioner = (LinearLayout) v.findViewById(R.id.ll_dataQuesioner);
         ll_subtypeactivity = (LinearLayout) v.findViewById(R.id.ll_subtypeactivity);
+        ll_kategoryPlanogram = (LinearLayout) v.findViewById(R.id.ll_kategoryPlanogram);
         ll_data_planogram = (LinearLayout) v.findViewById(R.id.ll_data_planogram);
         ll_data_attendance = (LinearLayout) v.findViewById(R.id.ll_data_attendance);
         ll_data_stockIH = (LinearLayout) v.findViewById(R.id.ll_data_stockIH);
@@ -386,6 +392,8 @@ public class FragmentDownloadData extends Fragment {
                 ll_data_attendance.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_data_stockIH.getId()))) {
                 ll_data_stockIH.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_kategoryPlanogram.getId()))) {
+                ll_kategoryPlanogram.setVisibility(View.VISIBLE);
             }
         }
 
@@ -431,6 +439,14 @@ public class FragmentDownloadData extends Fragment {
             public void onClick(View v) {
                 intProcesscancel = 0;
                 AsyncCallSubTypeActivity task = new AsyncCallSubTypeActivity();
+                task.execute();
+            }
+        });
+        btnkategoryPlanogram.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intProcesscancel = 0;
+                AsyncCallKategoryPlanogram task = new AsyncCallKategoryPlanogram();
                 task.execute();
             }
         });
@@ -635,6 +651,7 @@ public class FragmentDownloadData extends Fragment {
         List<mProductPICData> mProductPICDataList = new mProductPICBL().GetAllData();
         List<tSubTypeActivityData> tSubTypeActivityDataList = new tSubTypeActivityBL().getAllData();
         List<tPlanogramMobileData> tPlanogramMobileDataList = new tPlanogramMobileBL().getAllData();
+        List<tKategoryPlanogramMobileData> tKategoryPlanogramDataList = new tKategoryPlanogramMobileBL().getAllData();
 
         arrData = new ArrayList<>();
         if (tPlanogramMobileDataList.size() > 0) {
@@ -662,6 +679,20 @@ public class FragmentDownloadData extends Fragment {
                     android.R.layout.simple_spinner_item, strip);
             spnSubTypeActivity.setAdapter(adapterspn);
             spnSubTypeActivity.setEnabled(false);
+        }
+
+        arrData = new ArrayList<>();
+        if (tKategoryPlanogramDataList.size() > 0) {
+            for (tKategoryPlanogramMobileData dt : tKategoryPlanogramDataList) {
+                arrData.add(dt.get_txtName());
+            }
+            spnkategoryPlanogram.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
+            spnkategoryPlanogram.setEnabled(true);
+        } else if (tKategoryPlanogramDataList.size() == 0) {
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<>(getContext(),
+                    android.R.layout.simple_spinner_item, strip);
+            spnkategoryPlanogram.setAdapter(adapterspn);
+            spnkategoryPlanogram.setEnabled(false);
         }
 
         arrData = new ArrayList<>();
@@ -954,7 +985,7 @@ public class FragmentDownloadData extends Fragment {
         }
 
         arrData = new ArrayList<>();
-        if (listtAbsenUserData != null) {
+        if (listtLeaveData != null) {
             for (tLeaveMobileData dt : listtLeaveData) {
                 arrData.add(dt.get_txtTypeAlasanName());
             }
@@ -1040,8 +1071,13 @@ public class FragmentDownloadData extends Fragment {
 //                new mPriceInOutletBL().DownloadmPriceInOutlet(pInfo.versionName);
 
                 if (ll_subtypeactivity != null && checkVisibility(ll_subtypeactivity)) {
-                    Json = new tSubTypeActivityBL().DownloadtSubTypeActivity(pInfo.versionName);
+                    Json = new tSubTypeActivityBL().DownloadtSubTypeActivity(pInfo.versionName, loginData.get_txtRoleId());
                     SaveDatatSubTypeActivityData(Json);
+                }
+
+                if (ll_kategoryPlanogram != null && checkVisibility(ll_kategoryPlanogram)) {
+                    Json = new tKategoryPlanogramMobileBL().DownloadKategoryPlanogram(pInfo.versionName, loginData.get_txtRoleId());
+                    SaveDataKategoryPlanogram(Json);
                 }
 
                 if (ll_branch != null && checkVisibility(ll_branch)) {
@@ -1077,8 +1113,10 @@ public class FragmentDownloadData extends Fragment {
                     SaveDatatAttendanceUserData(Json);
                 }
 
-                Json = new mEmployeeAreaBL().DownloadEmployeeArea2(pInfo.versionName);
-                SaveDatamEmployeeAreaData(Json);
+                if (ll_outlet != null && checkVisibility(ll_outlet )){
+                    Json = new mEmployeeAreaBL().DownloadEmployeeArea2(pInfo.versionName);
+                    SaveDatamEmployeeAreaData(Json);
+                }
 
                 if (ll_reso != null && checkVisibility(ll_reso)) {
                     Json = new tSalesProductHeaderBL().DownloadReso(pInfo.versionName);
@@ -1211,7 +1249,7 @@ public class FragmentDownloadData extends Fragment {
                 loadData();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
                 Dialog.dismiss();
-                checkingDataTable();
+                checkingDataTable("ALL");
             }
         }
 
@@ -1277,7 +1315,7 @@ public class FragmentDownloadData extends Fragment {
                 loadData();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
                 Dialog.dismiss();
-                checkingDataTable();
+                checkingDataTable("");
             }
         }
 
@@ -1702,13 +1740,41 @@ public class FragmentDownloadData extends Fragment {
                 _data.set_intSubTypeActivity(String.valueOf(innerObj.get("IntSubTypeActivity")));
                 ListDatatSubTypeActivityData.add(_data);
             } else {
-                new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessCancelRequest, false);
+//                new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessCancelRequest, false);
                 break;
             }
 
         }
         if (ListDatatSubTypeActivityData.size() > 0) {
             new tSubTypeActivityBL().saveData(ListDatatSubTypeActivityData);
+        }
+        return _array;
+    }
+
+    private List<String> SaveDataKategoryPlanogram(JSONArray JData) {
+        List<String> _array;
+        List<tKategoryPlanogramMobileData> ListDatatKategoryPlanogramData;
+        _array = new ArrayList<>();
+        Iterator i = JData.iterator();
+        ListDatatKategoryPlanogramData = new ArrayList<>();
+        while (i.hasNext()) {
+            org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
+            tKategoryPlanogramMobileData _data = new tKategoryPlanogramMobileData();
+            String txtValid = String.valueOf(innerObj.get("_pboolValid"));
+            if (txtValid.equals("1")) {
+                _data.set_bitActive(String.valueOf(innerObj.get("BitActive")));
+                _data.set_txtName(String.valueOf(innerObj.get("TxtName")));
+                _data.set_intKategoryPlanogram(String.valueOf(innerObj.get("IntKategoryPlanogram")));
+                _data.set_intIsCheckValid(String.valueOf(innerObj.get("IntIsCheckValid")));
+                ListDatatKategoryPlanogramData.add(_data);
+            } else {
+                new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessCancelRequest, false);
+                break;
+            }
+
+        }
+        if (ListDatatKategoryPlanogramData.size() > 0) {
+            new tKategoryPlanogramMobileBL().saveData(ListDatatKategoryPlanogramData);
         }
         return _array;
     }
@@ -2051,7 +2117,7 @@ public class FragmentDownloadData extends Fragment {
                     new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
                 }
             }
-            checkingDataTable();
+            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -2109,7 +2175,7 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable();
+            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -2168,7 +2234,7 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable();
+            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -2229,7 +2295,7 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable();
+            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -2291,7 +2357,7 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable();
+            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -2299,7 +2365,7 @@ public class FragmentDownloadData extends Fragment {
         protected void onPreExecute() {
             // Make ProgressBar invisible
             // pg.setVisibility(View.VISIBLE);
-            Dialog.setMessage("Getting Reso");
+            Dialog.setMessage("Getting Stock On Hand");
             Dialog.setCancelable(false);
 //            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
 //                @Override
@@ -2353,7 +2419,7 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable();
+            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -2415,7 +2481,7 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable();
+            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -2476,7 +2542,7 @@ public class FragmentDownloadData extends Fragment {
                     new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
                 }
             }
-            checkingDataTable();
+            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -2538,7 +2604,7 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable();
+            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -2599,7 +2665,7 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable();
+            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -2665,7 +2731,7 @@ public class FragmentDownloadData extends Fragment {
                     new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
                 }
             }
-            checkingDataTable();
+            checkingDataTable("");
             dialog.dismiss();
         }
 
@@ -2725,7 +2791,7 @@ public class FragmentDownloadData extends Fragment {
                     new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
                 }
             }
-            checkingDataTable();
+            checkingDataTable("");
             dialog.dismiss();
         }
 
@@ -2777,7 +2843,7 @@ public class FragmentDownloadData extends Fragment {
                     new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
                 }
             }
-            checkingDataTable();
+            checkingDataTable("");
             dialog.dismiss();
         }
 
@@ -2821,7 +2887,7 @@ public class FragmentDownloadData extends Fragment {
                     new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
                 }
             }
-            checkingDataTable();
+            checkingDataTable("");
             dialog.dismiss();
         }
 
@@ -2879,7 +2945,7 @@ public class FragmentDownloadData extends Fragment {
                     new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
                 }
             }
-            checkingDataTable();
+            checkingDataTable("");
             dialog.dismiss();
         }
 
@@ -2926,7 +2992,7 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable();
+            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -3049,7 +3115,7 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable();
+            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -3113,7 +3179,7 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable();
+            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -3178,7 +3244,7 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable();
+            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -3209,7 +3275,7 @@ public class FragmentDownloadData extends Fragment {
         protected JSONArray doInBackground(JSONArray... params) {
             JSONArray Json = null;
             try {
-                Json = new tSubTypeActivityBL().DownloadtSubTypeActivity(pInfo.versionName);
+                Json = new tSubTypeActivityBL().DownloadtSubTypeActivity(pInfo.versionName, loginData.get_txtRoleId());
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -3240,7 +3306,7 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable();
+            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -3249,6 +3315,67 @@ public class FragmentDownloadData extends Fragment {
             // Make ProgressBar invisible
             // pg.setVisibility(View.VISIBLE);
             Dialog.setMessage("Getting Sub Type Activity");
+            Dialog.setCancelable(false);
+//            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    intProcesscancel = 1;
+//                }
+//            });
+            Dialog.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            Dialog.dismiss();
+        }
+    }
+
+    private class AsyncCallKategoryPlanogram extends AsyncTask<JSONArray, Void, JSONArray> {
+        @Override
+        protected JSONArray doInBackground(JSONArray... params) {
+            JSONArray Json = null;
+            try {
+                Json = new tKategoryPlanogramMobileBL().DownloadKategoryPlanogram(pInfo.versionName, loginData.get_txtRoleId());
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return Json;
+        }
+
+        private ProgressDialog Dialog = new ProgressDialog(getContext());
+
+        @Override
+        protected void onCancelled() {
+            Dialog.dismiss();
+            new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessCancelRequest, false);
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray roledata) {
+            if (roledata != null && roledata.size() > 0) {
+                arrData = SaveDataKategoryPlanogram(roledata);
+                //spnBranch.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
+                loadData();
+                new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
+            } else {
+                if (intProcesscancel == 1) {
+                    onCancelled();
+                } else {
+                    new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
+                }
+
+            }
+            checkingDataTable("");
+            Dialog.dismiss();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            // Make ProgressBar invisible
+            // pg.setVisibility(View.VISIBLE);
+            Dialog.setMessage("Getting Kategory Planogram");
             Dialog.setCancelable(false);
 //            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
 //                @Override
@@ -3304,7 +3431,7 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable();
+            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -3330,13 +3457,18 @@ public class FragmentDownloadData extends Fragment {
 
     }
 
-    private void checkingDataTable() {
+    private void checkingDataTable(String flag) {
         List<mEmployeeBranchData> mEmployeeBranchDataList;
         List<mEmployeeSalesProductData> employeeSalesProductDataList;
         List<mEmployeeAreaData> mEmployeeAreaDataList;
         List<mProductBrandHeaderData> mProductBrandHeaderDataList;
         List<mTypeLeaveMobileData> mTypeLeaveMobileDataList;
-//        List<mCategoryVisitPlanData> mCategoryVisitPlanList = new ArrayList<>();
+        List<mProductSPGData> mProductSPGDataList = new ArrayList<>();
+        List<mProductPICData> mProductPICDataList = new ArrayList<>();
+        List<mProductCompetitorData> mProductCompetitorDataList = new ArrayList<>();
+        List<mTypeSubmissionMobile> mTypeSubmissionMobileList = new ArrayList<>();
+        List<tSubTypeActivityData> tSubTypeActivityDataList = new ArrayList<>();
+        List<tKategoryPlanogramMobileData> tKategoryPlanogramMobileDataList = new ArrayList<>();
 
         mCategoryVisitPlanBL _mCategoryVisitPlanBL = new mCategoryVisitPlanBL();
 
@@ -3354,34 +3486,110 @@ public class FragmentDownloadData extends Fragment {
         mEmployeeAreaDataList = _mEmployeeAreaBL.GetAllData();
         mProductBrandHeaderDataList = _mProductBrandHeaderBL.GetAllData();
         mTypeLeaveMobileDataList = _mTypeLeaveBL.GetAllData();
+        mProductSPGDataList = new mProductSPGBL().GetAllData();
+        mProductPICDataList = new mProductPICBL().GetAllData();
+        mProductCompetitorDataList = new mProductCompetitorBL().GetAllData();
+        mTypeSubmissionMobileList = new mTypeSubmissionMobileBL().GetAllData();
+        tSubTypeActivityDataList = new tSubTypeActivityBL().getAllData();
+        tKategoryPlanogramMobileDataList = new tKategoryPlanogramMobileBL().getAllData();
 
 //        List<mEmployeeAreaData> data = _mEmployeeAreaBL.GetAllData();
 
 //        int validate = 0;
 
-        if (mEmployeeBranchDataList.size() > 0
-                && employeeSalesProductDataList.size() > 0
-                && mEmployeeAreaDataList.size() > 0
-                && mProductBrandHeaderDataList.size() > 0
-                && mTypeLeaveMobileDataList.size() > 0
-//                && mCategoryVisitPlanList.size()>0
-                ) {
-
-//            goToMainMenu();
-            //validate = 1;
-
-//            for(mEmployeeAreaData dt : data){
-//                if(dt.get_txtLatitude()==""||dt.get_txtLatitude()==null&&dt.get_txtLongitude()==""||dt.get_txtLongitude()==null){
-//                    validate = 0;
-//                }
-//            }
-        }
-        goToMainMenu();
+//        if (mEmployeeBranchDataList.size() > 0
+//                && employeeSalesProductDataList.size() > 0
+//                && mEmployeeAreaDataList.size() > 0
+//                && mProductBrandHeaderDataList.size() > 0
+//                && mTypeLeaveMobileDataList.size() > 0
+////                && mCategoryVisitPlanList.size()>0
+//                ) {
+//
+////            goToMainMenu();
+//            //validate = 1;
+//
+////            for(mEmployeeAreaData dt : data){
+////                if(dt.get_txtLatitude()==""||dt.get_txtLatitude()==null&&dt.get_txtLongitude()==""||dt.get_txtLongitude()==null){
+////                    validate = 0;
+////                }
+////            }
+//        }
+//        goToMainMenu();
 
 //        if(validate==1){
 //            goToMainMenu();
 //        }
+        if(flag.equals("ALL")){
+            boolean validToMainMenu=true;
 
+            if(ll_branch.getVisibility()==View.VISIBLE){
+                if(mEmployeeBranchDataList.size() == 0){
+                    validToMainMenu=false;
+                }
+            }
+            if(ll_outlet.getVisibility()==View.VISIBLE){
+                if(mEmployeeAreaDataList.size() == 0){
+                    validToMainMenu=false;
+                }
+            }
+            if(ll_product.getVisibility()==View.VISIBLE){
+                if(employeeSalesProductDataList.size() == 0){
+                    validToMainMenu=false;
+                }
+            }
+            if(ll_brand.getVisibility()==View.VISIBLE){
+                if(mProductBrandHeaderDataList.size() == 0){
+                    validToMainMenu=false;
+                }
+            }
+            if(ll_type_leave.getVisibility()==View.VISIBLE){
+                if(mTypeLeaveMobileDataList.size() == 0){
+                    validToMainMenu=false;
+                }
+            }
+            if(ll_product_spg.getVisibility()==View.VISIBLE){
+                if(mProductSPGDataList.size() == 0){
+                    validToMainMenu=false;
+                }
+            }
+            if(ll_product_pic.getVisibility()==View.VISIBLE){
+                if(mProductPICDataList.size() == 0){
+                    validToMainMenu=false;
+                }
+            }
+            if(ll_product_competitor.getVisibility()==View.VISIBLE){
+                if(mProductCompetitorDataList.size() == 0){
+                    validToMainMenu=false;
+                }
+            }
+            if(ll_type_submission.getVisibility()==View.VISIBLE){
+                if(mTypeSubmissionMobileList.size() == 0){
+                    validToMainMenu=false;
+                }
+            }
+            if(ll_subtypeactivity.getVisibility()==View.VISIBLE){
+                if(tSubTypeActivityDataList.size() == 0){
+                    validToMainMenu=false;
+                }
+            }
+            if(ll_kategoryPlanogram.getVisibility()==View.VISIBLE){
+                if(tKategoryPlanogramMobileDataList.size() == 0){
+                    validToMainMenu=false;
+                }
+            }
+            if(ll_reso.getVisibility()==View.VISIBLE){
+
+            }
+            if(ll_dataQuantityStock.getVisibility()==View.VISIBLE){
+
+            }
+            if(ll_data_stockIH.getVisibility()==View.VISIBLE){
+
+            }
+            if(validToMainMenu){
+                goToMainMenu();
+            }
+        }
     }
 
     private void goToMainMenu() {
@@ -3449,7 +3657,7 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable();
+            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -3509,7 +3717,7 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable();
+            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -3591,7 +3799,7 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable();
+            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -3679,7 +3887,7 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable();
+            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -3763,7 +3971,7 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable();
+            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -4078,6 +4286,9 @@ public class FragmentDownloadData extends Fragment {
                         _data.set_txtBranchCode(String.valueOf(innerObj_header.get("TxtBranchCode")));
                         _data.set_txtBranchName(String.valueOf(innerObj_header.get("TxtBranchName")));
                         _data.set_txtRoleId(String.valueOf(innerObj_header.get("TxtRoleId")));
+                        _data.set_txtIdCategory(String.valueOf(innerObj_header.get("IntKategoryPlanogram")));
+                        _data.set_txtCategoryName(String.valueOf(innerObj_header.get("TxtCategoryName")));
+                        _data.set_intIsValid(String.valueOf(innerObj_header.get("IntIsValid")));
                         new tPlanogramMobileBL().saveData(_data);
                     }
                     JSONArray jsonArray_Image = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListtPlanogramImage_mobile")));

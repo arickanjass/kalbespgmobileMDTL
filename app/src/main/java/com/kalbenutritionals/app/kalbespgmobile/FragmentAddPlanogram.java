@@ -1,9 +1,11 @@
 package com.kalbenutritionals.app.kalbespgmobile;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,11 +21,16 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -33,19 +40,24 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
 import bl.clsHelperBL;
 import bl.tActivityBL;
+import bl.tKategoryPlanogramMobileBL;
 import bl.tPlanogramImageBL;
 import bl.tPlanogramMobileBL;
 import bl.tSalesProductQuantityImageBL;
+import bl.tSubTypeActivityBL;
 import bl.tUserLoginBL;
 import library.spgmobile.common.tActivityData;
+import library.spgmobile.common.tKategoryPlanogramMobileData;
 import library.spgmobile.common.tPlanogramImageData;
 import library.spgmobile.common.tPlanogramMobileData;
 import library.spgmobile.common.tSalesProductQuantityImageData;
+import library.spgmobile.common.tSubTypeActivityData;
 import library.spgmobile.common.tUserLoginData;
 import library.spgmobile.common.visitplanAbsenData;
 import library.spgmobile.dal.clsHardCode;
@@ -61,6 +73,11 @@ public class FragmentAddPlanogram extends Fragment implements View.OnClickListen
     ImageView imageButtonBefore1, imageButtonBefore2, imageButtonAfter1, imageButtonAfter2;
     EditText etDescription;
     TextInputLayout textInputLayoutDescription;
+    Spinner spn_category;
+    private LinearLayout lnlayoutIsValidPattern;
+    private RadioGroup rg_isValidPattern;
+    private ArrayList<String> arrCategory = new ArrayList<>();
+    private HashMap<String, String> HMcategory = new HashMap<>();
 
     private Uri uriImage;
     private static final String IMAGE_DIRECTORY_NAME = "Image Planogram";
@@ -91,6 +108,14 @@ public class FragmentAddPlanogram extends Fragment implements View.OnClickListen
         textInputLayoutDescription = (TextInputLayout) v.findViewById(R.id.input_layout_description);
         etDescription = (EditText) v.findViewById(R.id.etDescription);
 
+        rg_isValidPattern = (RadioGroup) v.findViewById(R.id.rg_isValidPattern);
+        rg_isValidPattern.clearCheck();
+
+        lnlayoutIsValidPattern = (LinearLayout) v.findViewById(R.id.lnlayoutIsValidPattern);
+        lnlayoutIsValidPattern.setVisibility(View.GONE);
+
+        spn_category = (Spinner) v.findViewById(R.id.spn_category);
+
         Button btnSave = (Button) v.findViewById(R.id.btnSave);
         btnSave.setOnClickListener(this);
 
@@ -102,7 +127,7 @@ public class FragmentAddPlanogram extends Fragment implements View.OnClickListen
                         if (cs.equals("")) { // for backspace
                             return cs;
                         }
-                        if (cs.toString().matches("[a-zA-Z0-9.\\- ]+")) {
+                        if (cs.toString().matches("[a-zA-Z0-9,.\\- ]+")) {
                             return cs;
                         }
                         return "";
@@ -111,59 +136,51 @@ public class FragmentAddPlanogram extends Fragment implements View.OnClickListen
         });
 
         _tPlanogramMobileData = new tPlanogramMobileData();
-//        _tPlanogramMobileData = new tPlanogramMobileBL().getDataByBitActive();
-//
-//        if(_tPlanogramMobileData.get_txtIdPlanogram()!=null){
-//            etDescription.setText(_tPlanogramMobileData.get_txtKeterangan());
-//
-//            byte[] imgFileB1 = _tPlanogramMobileData.get_txtBeforeImg1();
-//            if (imgFileB1 != null) {
-//                Bitmap myBitmap = BitmapFactory.decodeByteArray(imgFileB1, 0, imgFileB1.length);
-//                Bitmap photo_view1 = Bitmap.createScaledBitmap(myBitmap, 150, 150, true);
-//                imageButtonBefore1.setImageBitmap(photo_view1);
-//            }
-//            byte[] imgFileB2 = _tPlanogramMobileData.get_txtBeforeImg2();
-//            if (imgFileB2 != null) {
-//                Bitmap myBitmap = BitmapFactory.decodeByteArray(imgFileB2, 0, imgFileB2.length);
-//                Bitmap photo_view2 = Bitmap.createScaledBitmap(myBitmap, 150, 150, true);
-//                imageButtonBefore2.setImageBitmap(photo_view2);
-//            }
-//            byte[] imgFileA1 = _tPlanogramMobileData.get_txtAfterImg1();
-//            if (imgFileA1 != null) {
-//                Bitmap myBitmap = BitmapFactory.decodeByteArray(imgFileA1, 0, imgFileA1.length);
-//                Bitmap photo_view3 = Bitmap.createScaledBitmap(myBitmap, 150, 150, true);
-//                imageButtonAfter1.setImageBitmap(photo_view3);
-//            }
-//            byte[] imgFileA2 = _tPlanogramMobileData.get_txtAfterImg2();
-//            if (imgFileA2 != null) {
-//                Bitmap myBitmap = BitmapFactory.decodeByteArray(imgFileA2, 0, imgFileA2.length);
-//                Bitmap photo_view4 = Bitmap.createScaledBitmap(myBitmap, 150, 150, true);
-//                imageButtonAfter2.setImageBitmap(photo_view4);
-//            }
-//
-//        } else {
-//            _tPlanogramMobileData.set_txtIdPlanogram(String.valueOf(new clsMainActivity().GenerateGuid()));
-//
-//            visitplanAbsenData dtAbsen = new clsHelperBL().getDataCheckInActive();
-//            tUserLoginData dtLogin = new tUserLoginBL().getUserLogin();
-//
-//            _tPlanogramMobileData.set_bitActive("1");
-//            _tPlanogramMobileData.set_intSync("0");
-//            _tPlanogramMobileData.set_intSubmit("0");
-//            _tPlanogramMobileData.set_txtKeterangan(String.valueOf(etDescription.getText()));
-//            _tPlanogramMobileData.set_OutletCode(dtAbsen.get_txtOutletCode());
-//            _tPlanogramMobileData.set_OutletName(dtAbsen.get_txtOutletName());
-//            _tPlanogramMobileData.set_txtBranchCode(dtAbsen.get_txtBranchCode());
-//            _tPlanogramMobileData.set_txtBranchName(dtAbsen.get_txtBranchName());
-//            _tPlanogramMobileData.set_txtNIK(dtLogin.get_TxtEmpId());
-//
-//            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-//            Calendar cal = Calendar.getInstance();
-//
-//            _tPlanogramMobileData.set_dtDate(dateFormat.format(cal.getTime()));
-//        }
+
+        m_fillSpinner();
+
+        spn_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                String id = HMcategory.get(spn_category.getSelectedItem().toString());
+
+                tKategoryPlanogramMobileData _tKategoryPlanogramMobileData = new tKategoryPlanogramMobileData();
+
+                _tKategoryPlanogramMobileData = new tKategoryPlanogramMobileBL().getDataById(id);
+
+                if(_tKategoryPlanogramMobileData!=null){
+                    if(_tKategoryPlanogramMobileData.get_intIsCheckValid().equals("1")){
+                        lnlayoutIsValidPattern.setVisibility(View.VISIBLE);
+                    } else if (_tKategoryPlanogramMobileData.get_intIsCheckValid().equals("0")){
+                        lnlayoutIsValidPattern.setVisibility(View.GONE);
+                    } else {
+                        lnlayoutIsValidPattern.setVisibility(View.GONE);
+                    }
+                } else {
+                    lnlayoutIsValidPattern.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         return v;
+    }
+
+    private void m_fillSpinner() {
+        arrCategory.add("Select Category");
+
+        List<tKategoryPlanogramMobileData> _tKategoryPlanogramMobileData = new tKategoryPlanogramMobileBL().getAllData();
+
+        for (tKategoryPlanogramMobileData dt : _tKategoryPlanogramMobileData) {
+            arrCategory.add(dt.get_txtName());
+            HMcategory.put(dt.get_txtName(), dt.get_intKategoryPlanogram());
+        }
+        spn_category.setAdapter(new MyAdapter(getActivity(), R.layout.custom_spinner, arrCategory));
     }
 
     @Override
@@ -184,15 +201,24 @@ public class FragmentAddPlanogram extends Fragment implements View.OnClickListen
             case R.id.btnSave:
 
                 new clsMainActivity().removeErrorMessage(textInputLayoutDescription);
-                if (etDescription.getText().toString().equals("") && etDescription.getText().toString().length() == 0) {
+
+                if(spn_category.getSelectedItem().toString().equals("Select Category")){
+                    new clsMainActivity().showCustomToast(getContext(), "Please " + spn_category.getSelectedItem().toString() , false);
+                }
+
+                else if(lnlayoutIsValidPattern.getVisibility()==View.VISIBLE&&rg_isValidPattern.getCheckedRadioButtonId()==-1){
+                    new clsMainActivity().showCustomToast(getContext(), "Please Check Is Valid Pattern are not" , false);
+                }
+
+                else if (etDescription.getText().toString().equals("") && etDescription.getText().toString().length() == 0) {
                     new clsMainActivity().setErrorMessage(getContext(), textInputLayoutDescription, etDescription, "Please give Description");
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                         etDescription.setBackground(null);
                     }
                 }
-//                else if(_tPlanogramMobileData.get_txtBeforeImg1()==null&&_tPlanogramMobileData.get_txtBeforeImg2()==null){
-//                    new clsMainActivity().showCustomToast(getContext(), "Please take at least one Photo Before", false);
-//                }
+                else if(_tPlanogramMobileData.get_txtBeforeImg1()==null&&_tPlanogramMobileData.get_txtBeforeImg2()==null){
+                    new clsMainActivity().showCustomToast(getContext(), "Please take at least one Photo Before", false);
+                }
                 else if(_tPlanogramMobileData.get_txtAfterImg1()==null&&_tPlanogramMobileData.get_txtAfterImg2()==null){
                     new clsMainActivity().showCustomToast(getContext(), "Please take at least one Photo After", false);
                 } else {
@@ -209,6 +235,19 @@ public class FragmentAddPlanogram extends Fragment implements View.OnClickListen
                             visitplanAbsenData dtAbsen = new clsHelperBL().getDataCheckInActive();
                             tUserLoginData dtLogin = new tUserLoginBL().getUserLogin();
 
+                            int selecterIdValidPattern = rg_isValidPattern.getCheckedRadioButtonId();
+                            RadioButton rb_validPattern = (RadioButton) v.findViewById(selecterIdValidPattern);
+
+                            String resultRbValid = null;
+
+                            try{
+                                resultRbValid = String.valueOf(rb_validPattern.getText());
+                                resultRbValid = resultRbValid.equals("Yes") ? "1" : "0";
+                            }catch (Exception e){
+                                String a = e.toString();
+                                resultRbValid = "";
+                            }
+
                             _tPlanogramMobileData.set_txtKeterangan(String.valueOf(etDescription.getText()));
                             _tPlanogramMobileData.set_OutletCode(dtAbsen.get_txtOutletCode());
                             _tPlanogramMobileData.set_OutletName(dtAbsen.get_txtOutletName());
@@ -219,6 +258,9 @@ public class FragmentAddPlanogram extends Fragment implements View.OnClickListen
                             _tPlanogramMobileData.set_txtRoleId(dtLogin.get_txtRoleId());
                             _tPlanogramMobileData.set_intIdAbsenUser(dtLogin.get_txtDataId());
                             _tPlanogramMobileData.set_txtDeviceId(String.valueOf(dtAbsen.get_txtDeviceId()));
+                            _tPlanogramMobileData.set_txtCategoryName(spn_category.getSelectedItem().toString());
+                            _tPlanogramMobileData.set_txtIdCategory(HMcategory.get(spn_category.getSelectedItem().toString()));
+                            _tPlanogramMobileData.set_intIsValid(resultRbValid);
 
                             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                             Calendar cal = Calendar.getInstance();
@@ -624,5 +666,39 @@ public class FragmentAddPlanogram extends Fragment implements View.OnClickListen
         myIntent.putExtra("key_view", "View Planogram");
         getActivity().finish();
         startActivity(myIntent);
+    }
+    public class MyAdapter extends ArrayAdapter<String> {
+
+        List<String> arrObject;
+        Context context;
+
+        public MyAdapter(Context context, int textViewResourceId, List<String> objects) {
+            super(context, textViewResourceId, objects);
+            arrObject = new ArrayList<>();
+            arrObject = objects;
+            this.context = context;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            return getCustomView(position, convertView, parent);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            return getCustomView(position, convertView, parent);
+        }
+
+        public View getCustomView(int position, View convertView, ViewGroup parent) {
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            View row = inflater.inflate(R.layout.custom_spinner, parent, false);
+            TextView label = (TextView) row.findViewById(R.id.tvTitle);
+            label.setText(arrObject.get(position));
+            TextView sub = (TextView) row.findViewById(R.id.tvDesc);
+            sub.setVisibility(View.INVISIBLE);
+            sub.setVisibility(View.GONE);
+            row.setBackgroundColor(new Color().TRANSPARENT);
+            return row;
+        }
     }
 }

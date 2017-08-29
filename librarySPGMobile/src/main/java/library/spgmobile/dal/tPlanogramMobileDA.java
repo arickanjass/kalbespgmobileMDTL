@@ -46,7 +46,10 @@ public class tPlanogramMobileDA {
                 + dt.Property_txtBeforeImg2 + " BLOB NULL,"
                 + dt.Property_txtAfterImg1 + " BLOB NULL,"
                 + dt.Property_txtAfterImg2 + " BLOB NULL,"
-                + dt.Property_txtDeviceId + " TEXT NULL" + ")";
+                + dt.Property_txtDeviceId + " TEXT NULL,"
+                + dt.Property_txtIdCategory + " TEXT NULL,"
+                + dt.Property_txtCategoryName + " TEXT NULL,"
+                + dt.Property_intIsValid + " TEXT NULL" + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
 
@@ -80,6 +83,9 @@ public class tPlanogramMobileDA {
         cv.put(dt.Property_intIdAbsenUser, data.get_intIdAbsenUser());
         cv.put(dt.Property_txtRoleId, data.get_txtRoleId());
         cv.put(dt.Property_txtDeviceId, data.get_txtDeviceId());
+        cv.put(dt.Property_txtIdCategory, data.get_txtIdCategory());
+        cv.put(dt.Property_txtCategoryName, data.get_txtCategoryName());
+        cv.put(dt.Property_intIsValid, data.get_intIsValid());
 //        cv.put(dt.Property_txtBeforeImg1, data.get_txtBeforeImg1());
 //        cv.put(dt.Property_txtBeforeImg2, data.get_txtBeforeImg2());
 //        cv.put(dt.Property_txtAfterImg1, data.get_txtAfterImg1());
@@ -118,6 +124,9 @@ public class tPlanogramMobileDA {
                 contact.set_txtAfterImg1(cursor.getBlob(17));
                 contact.set_txtAfterImg2(cursor.getBlob(18));
                 contact.set_txtDeviceId(cursor.getString(19));
+                contact.set_txtIdCategory(cursor.getString(20));
+                contact.set_txtCategoryName(cursor.getString(21));
+                contact.set_intIsValid(cursor.getString(22));
                 // Adding contact to list
 //						contactList.add(contact);
             } while (cursor.moveToNext());
@@ -160,6 +169,9 @@ public class tPlanogramMobileDA {
                 contact.set_txtAfterImg1(cursor.getBlob(17));
                 contact.set_txtAfterImg2(cursor.getBlob(18));
                 contact.set_txtDeviceId(cursor.getString(19));
+                contact.set_txtIdCategory(cursor.getString(20));
+                contact.set_txtCategoryName(cursor.getString(21));
+                contact.set_intIsValid(cursor.getString(22));
                 contactList.add(contact);
             } while (cursor.moveToNext());
         }
@@ -310,6 +322,9 @@ public class tPlanogramMobileDA {
                 contact.set_txtAfterImg1(cursor.getBlob(17));
                 contact.set_txtAfterImg2(cursor.getBlob(18));
                 contact.set_txtDeviceId(cursor.getString(19));
+                contact.set_txtIdCategory(cursor.getString(20));
+                contact.set_txtCategoryName(cursor.getString(21));
+                contact.set_intIsValid(cursor.getString(22));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -352,6 +367,9 @@ public class tPlanogramMobileDA {
                 contact.set_txtAfterImg1(cursor.getBlob(17));
                 contact.set_txtAfterImg2(cursor.getBlob(18));
                 contact.set_txtDeviceId(cursor.getString(19));
+                contact.set_txtIdCategory(cursor.getString(20));
+                contact.set_txtCategoryName(cursor.getString(21));
+                contact.set_intIsValid(cursor.getString(22));
 
                 // Adding contact to list
                 contactList.add(contact);
@@ -630,6 +648,9 @@ public class tPlanogramMobileDA {
                 contact.set_txtAfterImg1(cursor.getBlob(17));
                 contact.set_txtAfterImg2(cursor.getBlob(18));
                 contact.set_txtDeviceId(cursor.getString(19));
+                contact.set_txtIdCategory(cursor.getString(20));
+                contact.set_txtCategoryName(cursor.getString(21));
+                contact.set_intIsValid(cursor.getString(22));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());

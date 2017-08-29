@@ -11,6 +11,7 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -264,13 +265,14 @@ public class FragmentAddNearEDTL extends Fragment implements IXListViewListener 
         preview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (edKeterangan.getText().toString().equals("")) {
-                    _clsMainActivity.showCustomToast(getActivity(), "Please fill Description...", false);
-                } else if (phtAfter1 == null && phtAfter2 == null) {
-                    _clsMainActivity.showCustomToast(getContext(), "Please take at least 1 photo for after", false);
-                } else if (phtBefore1 == null && phtBefore2 == null) {
-                    _clsMainActivity.showCustomToast(getContext(), "Please take at least 1 photo for before", false);
-                } else if (dtListProduct.size() == 0) {
+//                if (edKeterangan.getText().toString().equals("")) {
+//                    _clsMainActivity.showCustomToast(getActivity(), "Please fill Description...", false);
+//                } else if (phtAfter1 == null && phtAfter2 == null) {
+//                    _clsMainActivity.showCustomToast(getContext(), "Please take at least 1 photo for after", false);
+//                } else if (phtBefore1 == null && phtBefore2 == null) {
+//                    _clsMainActivity.showCustomToast(getContext(), "Please take at least 1 photo for before", false);
+//                } else
+                if (dtListProduct.size() == 0) {
                     _clsMainActivity.showCustomToast(getContext(), "Please Add least 1 Product...", false);
                 } else {
                     final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
@@ -312,6 +314,9 @@ public class FragmentAddNearEDTL extends Fragment implements IXListViewListener 
         final Spinner spnKalbeProduct = (Spinner) promptView.findViewById(R.id.spnProductQuantity);
         final DatePicker dp = (DatePicker) promptView.findViewById(R.id.dp_expire_date);
         final EditText editTextKeterangan = (EditText) promptView.findViewById(R.id.editTextKeterangan);
+
+        int maxLength = 3;
+        editTextQty.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxLength)});
 
 //        List<tSalesProductQuantityDetailData> dataProduct = null;
 
@@ -368,6 +373,21 @@ public class FragmentAddNearEDTL extends Fragment implements IXListViewListener 
         // set date min today
         dp.setMinDate(System.currentTimeMillis() - 1000);
 
+        String qtyProduct = null;
+        qtyProduct = editTextQty.getText().toString();
+
+        boolean validQty = true;
+
+        if (qtyProduct.equals("0") || qtyProduct.equals("00") || qtyProduct.equals("000")) {
+            validQty = false;
+        }
+
+        if(validQty){
+
+        } else{
+
+        }
+
         // muncul dialog
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this.getContext());
         alertDialogBuilder.setView(promptView);
@@ -376,77 +396,69 @@ public class FragmentAddNearEDTL extends Fragment implements IXListViewListener 
                 .setPositiveButton("Save",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-                                alertDialog.setTitle("Confirm");
-                                alertDialog.setMessage("Are you sure?");
-                                alertDialog.setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        clsMainBL _clsMainBL = new clsMainBL();
+                                clsMainBL _clsMainBL = new clsMainBL();
 //                                        SQLiteDatabase _db = _clsMainBL.getDb();
 
-                                        String selectedOneKNProduct = spnKalbeProduct.getSelectedItem().toString();
-                                        tUserLoginData dtUser = new tUserLoginBL().getUserActive();
-                                        java.text.DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                                        Calendar cal = Calendar.getInstance();
+                                String qtyProduct = null;
+                                qtyProduct = editTextQty.getText().toString();
 
-                                        int day = dp.getDayOfMonth();
-                                        int month = dp.getMonth() + 1;
-                                        int year = dp.getYear();
-                                        final String expireDate = year + "-" + month + "-" + day;
+                                boolean validQty = true;
 
-                                        String qtyProduct = null;
-                                        String keterangan;
-                                        qtyProduct = editTextQty.getText().toString();
-                                        keterangan = editTextKeterangan.getText().toString();
+                                if (qtyProduct.equals("0") || qtyProduct.equals("00") || qtyProduct.equals("000")) {
+                                    validQty = true;
+                                    qtyProduct = "1";
+                                }
 
-                                        if (qtyProduct.length() == 0) {
-                                            qtyProduct = "0";
-                                        }
-                                        if (keterangan.length() == 0) {
-                                            keterangan = "";
-                                        }
+                                if(validQty){
+                                    String selectedOneKNProduct = spnKalbeProduct.getSelectedItem().toString();
+                                    tUserLoginData dtUser = new tUserLoginBL().getUserActive();
+                                    java.text.DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                                    Calendar cal = Calendar.getInstance();
 
-                                        tSalesProductQuantityDetailData data = new tSalesProductQuantityDetailData();
-                                        if (dataDetail.getIntId() != null) {
-                                            data.setIntId(dataDetail.getIntId());
-                                        } else {
-                                            data.setIntId(_clsMainActivity.GenerateGuid());
-                                        }
+                                    int day = dp.getDayOfMonth();
+                                    int month = dp.getMonth() + 1;
+                                    int year = dp.getYear();
+                                    final String expireDate = year + "-" + month + "-" + day;
 
-                                        data.set_txtQuantityStock(tv_noQuantityStock.getText().toString());
-                                        data.set_dtDate(dateFormat.format(cal.getTime()));
-                                        data.set_txtCodeProduct(HMProduct.get(selectedOneKNProduct));
-                                        data.set_txtKeterangan(keterangan);
-                                        data.setTxtProduct(selectedOneKNProduct);
-                                        data.setTxtExpireDate(expireDate);
-                                        data.setTxtQuantity(qtyProduct);
-                                        data.set_intPrice(HMProduct.get(HMProduct.get(selectedOneKNProduct)));
+                                    String keterangan;
+                                    keterangan = editTextKeterangan.getText().toString();
 
-                                        double prc = Double.valueOf(HMProduct.get(HMProduct.get(selectedOneKNProduct)));
-                                        double itm = Double.valueOf(qtyProduct);
+                                    if (keterangan.length() == 0) {
+                                        keterangan = "";
+                                    }
 
-                                        data.set_intTotal(_clsMainActivity.convertNumberDec2(prc * itm));
-                                        data.set_txtNIK(dtUser.get_txtUserId());
+                                    tSalesProductQuantityDetailData data = new tSalesProductQuantityDetailData();
+                                    if (dataDetail.getIntId() != null) {
+                                        data.setIntId(dataDetail.getIntId());
+                                    } else {
+                                        data.setIntId(_clsMainActivity.GenerateGuid());
+                                    }
 
-                                        new tSalesProductQuantityDetailBL().saveData(data);
+                                    data.set_txtQuantityStock(tv_noQuantityStock.getText().toString());
+                                    data.set_dtDate(dateFormat.format(cal.getTime()));
+                                    data.set_txtCodeProduct(HMProduct.get(selectedOneKNProduct));
+                                    data.set_txtKeterangan(keterangan);
+                                    data.setTxtProduct(selectedOneKNProduct);
+                                    data.setTxtExpireDate(expireDate);
+                                    data.setTxtQuantity(qtyProduct);
+                                    data.set_intPrice(HMProduct.get(HMProduct.get(selectedOneKNProduct)));
+
+                                    double prc = Double.valueOf(HMProduct.get(HMProduct.get(selectedOneKNProduct)));
+                                    double itm = Double.valueOf(qtyProduct);
+
+                                    data.set_intTotal(_clsMainActivity.convertNumberDec2(prc * itm));
+                                    data.set_txtNIK(dtUser.get_txtUserId());
+
+                                    new tSalesProductQuantityDetailBL().saveData(data);
 //                                        new tSalesProductQuantityDetailDA(_db).SaveDatatSalesProductQuantityDetailData(_db, data);
 
-                                        dialog.dismiss();
-                                        TableProduct();
+                                    dialog.dismiss();
+                                    TableProduct();
 
-                                        _clsMainActivity.showCustomToast(getActivity(), "Saved", true);
-                                    }
-                                });
-                                alertDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-
-                                    }
-                                });
-
-                                alertDialog.show();
+                                    _clsMainActivity.showCustomToast(getActivity(), "Saved", true);
+                                } else {
+                                    _clsMainActivity.showCustomToast(getActivity(), "Quantity Cannot 0", true);
+                                }
                             }
                         })
                 .setNegativeButton("Close", new DialogInterface.OnClickListener() {
@@ -770,15 +782,18 @@ public class FragmentAddNearEDTL extends Fragment implements IXListViewListener 
 
             swplist = new clsSwipeList();
 
+            String ed = new clsMainActivity().giveFormatDate2(data.getTxtExpireDate());
+
             swplist.set_txtTitle("Product : " + data.getTxtProduct());
             swplist.set_txtDescription("Total Product : " + data.getTxtQuantity());
+            swplist.set_txtDescription2("ED : " + ed);
             swipeList.add(swplist);
         }
 
         clsMainActivity clsMain = new clsMainActivity();
 
         mListView = (PullToRefreshSwipeMenuListView) v.findViewById(R.id.listViewQuantity);
-        AppAdapter mAdapter = clsMainActivity.setList(getActivity().getApplicationContext(), swipeList);
+        AppAdapter mAdapter = clsMainActivity.setListNearEdTr(getActivity().getApplicationContext(), swipeList);
         mListView.setAdapter(mAdapter);
         mListView.setPullRefreshEnable(false);
         mListView.setPullLoadEnable(true);

@@ -535,6 +535,51 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/ll_kategoryPlanogram"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/txtkategoryPlanogram"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/view2"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:text="Category Planogram"
+                            android:textColor="#000" />
+
+                        <Spinner
+                            android:id="@+id/spnkategoryPlanogram"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/txtProduct"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/bg_edtext" />
+
+                        <Button
+                            android:id="@+id/btnkategoryPlanogram"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/spnProduct"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/btn_on_click"
+                            android:text="Download Category Planogram" />
+
+                        <View
+                            android:id="@+id/view301"
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dp"
+                            android:layout_below="@+id/btnkategoryPlanogram"
+                            android:layout_marginTop="10dp"
+                            android:background="#bfbfbf" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:id="@+id/ll_dataQuesioner"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -823,7 +868,7 @@
                         android:layout_below="@+id/viewKordinasiOutlet"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
-                        android:text="Stock In Hand"
+                        android:text="Stock On Hand"
                         android:textColor="#000" />
 
                     <Spinner
@@ -840,7 +885,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="5dp"
                         android:background="@drawable/btn_on_click"
-                        android:text="Download Stock In Hand" />
+                        android:text="Download Stock On Hand" />
 
                     <View
                         android:id="@+id/view1212"

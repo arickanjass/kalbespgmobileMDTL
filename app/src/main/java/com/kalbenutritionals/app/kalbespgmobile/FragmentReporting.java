@@ -249,6 +249,9 @@ public class FragmentReporting extends Fragment {
                         rt.set_total_product(datas.get_intSumItem());
                         rt.set_total_price(new clsMainActivity().convertNumberDec(Double.valueOf(datas.get_intSumAmount())));
                         rt.set_status(datas.get_OutletName());
+                        if(datas.get_OutletName().equals("null")){
+                            rt.set_status("-");
+                        }
 
                         List<tSalesProductDetailData> dt_detail = new tSalesProductDetailBL().GetDataByNoSO(datas.get_txtNoSo());
 
@@ -268,13 +271,13 @@ public class FragmentReporting extends Fragment {
                 }
 
                 ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
-        } else if(spinnerSelected.contains("Stock In Hand")){
+        } else if(spinnerSelected.contains("Stock on Hand")){
             header = new String[6];
             header[1] = "NO";
             header[2] = "Tot. Prd";
             header[3] = "Tot. Qty";
-            header[4] = "Tot. Price";
-            header[5] = "Outlet";
+//            header[4] = "Tot. Price";
+            header[4] = "Outlet";
 
             ReportTableView.setColumnCount(header.length);
 
@@ -287,14 +290,14 @@ public class FragmentReporting extends Fragment {
             ReportTableView.setColumnComparator(1, ReportComparators.getNoSoComparator());
             ReportTableView.setColumnComparator(2, ReportComparators.getTotalProductComparator());
             ReportTableView.setColumnComparator(3, ReportComparators.getTotalItemComparator());
-            ReportTableView.setColumnComparator(4, ReportComparators.getTotalPriceComparator());
-            ReportTableView.setColumnComparator(5, ReportComparators.getStatusComparator());
+//            ReportTableView.setColumnComparator(4, ReportComparators.getTotalPriceComparator());
+            ReportTableView.setColumnComparator(4, ReportComparators.getStatusComparator());
 
             ReportTableView.setColumnWeight(1, 2);
             ReportTableView.setColumnWeight(2, 1);
             ReportTableView.setColumnWeight(3, 1);
-            ReportTableView.setColumnWeight(4, 2);
-            ReportTableView.setColumnWeight(5, 1);
+            ReportTableView.setColumnWeight(4, 1);
+//            ReportTableView.setColumnWeight(5, 1);
 
             ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
 
@@ -440,7 +443,9 @@ public class FragmentReporting extends Fragment {
                     rt.set_report_type("Activity");
                     rt.set_txtDesc(datas.get_txtDesc());
                     rt.set_txtOutletName(datas.get_txtOutletName());
-
+                    if(datas.get_txtOutletName().equals("null")){
+                        rt.set_txtOutletName("-");
+                    }
                     reportList.add(rt);
                 }
             } else if(dt_actV2 != null&&dt_actV2.size()>0){
@@ -450,6 +455,9 @@ public class FragmentReporting extends Fragment {
                     rt.set_report_type("Activity");
                     rt.set_txtDesc(datas.get_txtDesc());
                     rt.set_txtOutletName(datas.get_txtOutletName());
+                    if(datas.get_txtOutletName().equals("null")){
+                        rt.set_txtOutletName("-");
+                    }
 
                     reportList.add(rt);
                 }
@@ -528,8 +536,8 @@ public class FragmentReporting extends Fragment {
             header[1] = "NO";
             header[2] = "Tot. Prd";
             header[3] = "Tot. Qty";
-            header[4] = "Tot. Price";
-            header[5] = "Outlet";
+//            header[4] = "Tot. Price";
+            header[4] = "Outlet";
 
             ReportTableView.setColumnCount(header.length);
 
@@ -542,14 +550,14 @@ public class FragmentReporting extends Fragment {
             ReportTableView.setColumnComparator(1, ReportComparators.getNoQStockComparator());
             ReportTableView.setColumnComparator(2, ReportComparators.getTotalProductComparator());
             ReportTableView.setColumnComparator(3, ReportComparators.getTotalItemComparator());
-            ReportTableView.setColumnComparator(4, ReportComparators.getTotalPriceComparator());
-            ReportTableView.setColumnComparator(5, ReportComparators.getStatusComparator());
+//            ReportTableView.setColumnComparator(4, ReportComparators.getTotalPriceComparator());
+            ReportTableView.setColumnComparator(4, ReportComparators.getStatusComparator());
 
             ReportTableView.setColumnWeight(1, 2);
             ReportTableView.setColumnWeight(2, 1);
             ReportTableView.setColumnWeight(3, 1);
-            ReportTableView.setColumnWeight(4, 2);
-            ReportTableView.setColumnWeight(5, 1);
+            ReportTableView.setColumnWeight(4, 1);
+//            ReportTableView.setColumnWeight(5, 1);
 
             ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
 
@@ -627,7 +635,31 @@ public class FragmentReporting extends Fragment {
 
             ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
         } else {
-                Toast.makeText(getContext(), "No Data to Show", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "No Data to Show", Toast.LENGTH_SHORT).show();
+                header = new String[6];
+
+                ReportTableView.setColumnCount(header.length);
+
+                simpleTableHeaderAdapter = new SimpleTableHeaderAdapter(getContext(), header);
+                simpleTableHeaderAdapter.setTextColor(ContextCompat.getColor(getContext(), R.color.table_header_text));
+                simpleTableHeaderAdapter.setTextSize(14);
+                simpleTableHeaderAdapter.setPaddingBottom(20);
+                simpleTableHeaderAdapter.setPaddingTop(20);
+
+                ReportTableView.setColumnWeight(1, 2);
+
+                ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
+
+                reportList = new ArrayList<>();
+
+                ReportTable rt = new ReportTable();
+
+                rt.set_no_po("No Data");
+                rt.set_report_type("no data");
+
+                reportList.add(rt);
+
+                ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
         }
 
 //        switch (spinnerSelected){

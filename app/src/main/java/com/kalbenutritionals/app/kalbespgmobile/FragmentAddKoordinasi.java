@@ -111,6 +111,9 @@ public class FragmentAddKoordinasi extends Fragment implements View.OnClickListe
         date.setText("Date " + timeStamp);
 
         String txtOutletName = "Outlet Name : " + String.valueOf(absenUserData.get_txtOutletName());
+        if(absenUserData.get_txtOutletName().toString().equals("null")){
+            txtOutletName = "Outlet Name : -";
+        }
         tvOutlet.setText(txtOutletName);
 
         tvStatus.setText("Status : Open");
@@ -236,6 +239,9 @@ public class FragmentAddKoordinasi extends Fragment implements View.OnClickListe
 
             date.setText("Date : " + listData.get(0).get_dtDate());
             tvOutlet.setText("Outlet Name : " + listData.get(0).get_txtOutletName());
+            if(listData.get(0).get_txtOutletName().toString().equals("null")){
+                tvOutlet.setText("Outlet Name : " + "-");
+            }
             keterangan.setText(listData.get(0).get_txtKeterangan());
             keterangan.setTextColor(Color.BLACK);
             keterangan.setEnabled(false);

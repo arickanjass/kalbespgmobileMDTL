@@ -71,6 +71,75 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_data_activityV2"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tvActivityV2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_medium"
+            android:layout_marginTop="5dp"
+            android:textColor="#000"
+            android:text="Activity MDTL" />
+
+        <TableLayout
+            android:id="@+id/tlActivityV2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </TableLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_data_planogram"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tvplanogram"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_medium"
+            android:layout_marginTop="5dp"
+            android:textColor="#000"
+            android:text="Planogram" />
+
+        <TableLayout
+            android:id="@+id/tlplanogram"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </TableLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_data_KoordinasiOutlet"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tvKoordinasiOutlet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_medium"
+            android:layout_marginTop="5dp"
+            android:textColor="#000"
+            android:text="Koordinasi Outlet" />
+
+        <TableLayout
+            android:id="@+id/tlKoordinasiOutlet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </TableLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/ll_data_customerbased"
         android:orientation="vertical"
         android:visibility="gone"
@@ -116,6 +185,28 @@
 
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/ll_data_stockIH"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tvstockIH"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_medium"
+            android:layout_marginTop="5dp"
+            android:textColor="#000"
+            android:text="Stock In Hand" />
+
+        <TableLayout
+            android:id="@+id/tlstockIH"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </TableLayout>
+
+    </LinearLayout>
+    <LinearLayout
         android:id="@+id/ll_dataQuantityStock"
         android:orientation="vertical"
         android:visibility="gone"
@@ -128,7 +219,7 @@
             android:textSize="18sp"
             android:layout_marginTop="5dp"
             android:textColor="#000"
-            android:text="Quantity Stock"/>
+            android:text="Near ED"/>
 
         <TableLayout
             android:id="@+id/tl_quantity_stock"
@@ -179,7 +270,27 @@
             android:layout_height="wrap_content" >
         </TableLayout>
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_data_attendance"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tvAttendance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_medium"
+            android:layout_marginTop="5dp"
+            android:textColor="#000"
+            android:text="Attendance FPE" />
 
+        <TableLayout
+            android:id="@+id/tl_attendance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </TableLayout>
+    </LinearLayout>
     <LinearLayout
         android:id="@+id/ll_data_leave"
         android:orientation="vertical"

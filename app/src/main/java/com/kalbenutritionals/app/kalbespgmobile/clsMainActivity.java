@@ -557,6 +557,24 @@ public class clsMainActivity extends Activity {
 
     }
 
+    public static AppAdapter setListNearEdTr(Context _ctx, final List<clsSwipeList> swipeList) {
+        final AppAdapter mAdapter;
+        PullToRefreshSwipeMenuListView mListView;
+        Handler mHandler;
+
+        List<String> mAppList = new ArrayList<String>();
+
+        for (int i = 0; i < swipeList.size(); i++) {
+            clsSwipeList getswipeList = swipeList.get(i);
+            mAppList.add(getswipeList.get_txtTitle() + "\n" + getswipeList.get_txtDescription() + "\n" + getswipeList.get_txtDescription2());
+        }
+
+        mAdapter = new AppAdapter(_ctx, mAppList);
+
+        return mAdapter;
+
+    }
+
     public SwipeMenuCreator setCreator(final Context _ctx, final Map<String, HashMap> map) {
         SwipeMenuCreator creator = new SwipeMenuCreator() {
 

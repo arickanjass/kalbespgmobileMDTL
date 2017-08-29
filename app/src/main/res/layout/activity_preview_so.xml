@@ -111,6 +111,7 @@
                 </TableRow>
 
                 <TableRow
+                    android:id="@+id/tr_amount"
                     android:background="#ffffff"
                     android:padding="5dp">
 
@@ -180,6 +181,7 @@
 
                     <TableLayout
                         android:id="@+id/tlProduct"
+                        android:layout_gravity="center"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_below="@+id/ll1"

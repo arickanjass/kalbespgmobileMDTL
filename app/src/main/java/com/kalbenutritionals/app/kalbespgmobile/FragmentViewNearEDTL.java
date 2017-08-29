@@ -159,6 +159,9 @@ public class FragmentViewNearEDTL extends Fragment implements IXListViewListener
         final  TextView tv_status = (TextView) promptView.findViewById(R.id.tvStatus);
         tv_status.setTypeface(null, Typeface.BOLD);
 
+        final TableRow tr_neared = (TableRow) promptView.findViewById(R.id.tr_neared);
+        tr_neared.setVisibility(View.GONE);
+
         if (dt.get(position).get_intSubmit().equals("1")&&dt.get(position).get_intSync().equals("0")){
             tv_status.setText(": Submit");
         } else if (dt.get(position).get_intSubmit().equals("1")&&dt.get(position).get_intSync().equals("1")){
@@ -175,7 +178,7 @@ public class FragmentViewNearEDTL extends Fragment implements IXListViewListener
 
         TableLayout tl = new TableLayout(getContext());
 
-        String[] colTextHeader = {"Nama", "Qty", "Price", "Amount"};
+        String[] colTextHeader = {"Nama", "Qty","ED"};
 
         for (String text : colTextHeader) {
             TextView tv = new TextView(getContext());
@@ -211,7 +214,7 @@ public class FragmentViewNearEDTL extends Fragment implements IXListViewListener
 
             TextView product = new TextView(getContext());
             product.setTextSize(12);
-            product.setWidth(200);
+            product.setWidth(400);
             product.setPadding(10, 10, 10, 10);
             product.setBackgroundColor(Color.parseColor("#f0f0f0"));
             product.setTextColor(Color.BLACK);
@@ -233,22 +236,22 @@ public class FragmentViewNearEDTL extends Fragment implements IXListViewListener
             price.setBackgroundColor(Color.parseColor("#f0f0f0"));
             price.setTextColor(Color.BLACK);
             price.setGravity(Gravity.RIGHT);
-            price.setText(new clsMainActivity().convertNumberDec(Double.valueOf(dat.get_intPrice())));
+            price.setText(new clsMainActivity().giveFormatDate2(dat.getTxtExpireDate()));
             tr.addView(price,params);
-
-            TextView amount = new TextView(getContext());
-            amount.setTextSize(12);
-            amount.setWidth(200);
-            amount.setPadding(10, 10, 10, 10);
-            amount.setBackgroundColor(Color.parseColor("#f0f0f0"));
-            amount.setTextColor(Color.BLACK);
-            amount.setGravity(Gravity.RIGHT);
-            double prc = Double.valueOf(dat.get_intPrice());
-            double itm = Double.valueOf(dat.getTxtQuantity());
-            qtyNum = prc * itm;
-            qtySum += qtyNum;
-            amount.setText(new clsMainActivity().convertNumberDec(qtyNum));
-            tr.addView(amount,params);
+//
+//            TextView amount = new TextView(getContext());
+//            amount.setTextSize(12);
+//            amount.setWidth(200);
+//            amount.setPadding(10, 10, 10, 10);
+//            amount.setBackgroundColor(Color.parseColor("#f0f0f0"));
+//            amount.setTextColor(Color.BLACK);
+//            amount.setGravity(Gravity.RIGHT);
+//            double prc = Double.valueOf(dat.get_intPrice());
+//            double itm = Double.valueOf(dat.getTxtQuantity());
+//            qtyNum = prc * itm;
+//            qtySum += qtyNum;
+//            amount.setText(new clsMainActivity().convertNumberDec(qtyNum));
+//            tr.addView(amount,params);
 
             tl.addView(tr, tableRowParams);
         }
@@ -546,17 +549,17 @@ public class FragmentViewNearEDTL extends Fragment implements IXListViewListener
         mHandler = new Handler();
 
         HashMap<String, String> mapView = new HashMap<String, String>();
-        HashMap<String, String> mapImage = new HashMap<String, String>();
+//        HashMap<String, String> mapImage = new HashMap<String, String>();
 
         mapView.put("name", "View");
         mapView.put("bgColor", "#3498db");
 
-        mapImage.put("name", "View");
-        mapImage.put("bgColor", "#FF0000");
+//        mapImage.put("name", "View");
+//        mapImage.put("bgColor", "#FF0000");
 
         mapMenu = new HashMap<String, HashMap>();
         mapMenu.put("0", mapView);
-        mapMenu.put("1", mapImage);
+//        mapMenu.put("1", mapImage);
 
         SwipeMenuCreator creator = clsMain.setCreator(getActivity().getApplicationContext(), mapMenu);
         mListView.setMenuCreator(creator);

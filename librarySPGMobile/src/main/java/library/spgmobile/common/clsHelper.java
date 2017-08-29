@@ -69,6 +69,7 @@ import library.spgmobile.dal.tCustomerBasedMobileHeaderDA;
 import library.spgmobile.dal.tDeviceInfoUserDA;
 import library.spgmobile.dal.tDisplayPictureDA;
 import library.spgmobile.dal.tJawabanUserDA;
+import library.spgmobile.dal.tKategoryPlanogramMobileDA;
 import library.spgmobile.dal.tLeaveMobileDA;
 import library.spgmobile.dal.tNotificationDA;
 import library.spgmobile.dal.tPlanogramImageDA;
@@ -360,10 +361,12 @@ public class clsHelper {
 		_tDisplayPictureDA = new tDisplayPictureDA(db);
 		mCountConsumerMTDDA _mCountConsumerMTDDA = new mCountConsumerMTDDA(db);
 		tSubTypeActivityDA _tSubTypeActivityDA = new tSubTypeActivityDA(db);
+		tKategoryPlanogramMobileDA _tKategoryPlanogramMobileDA = new tKategoryPlanogramMobileDA(db);
 		tPlanogramMobileDA _tPlanogramMobileDA = new tPlanogramMobileDA(db);
 		tPlanogramImageDA _tPlanogramImageDA = new tPlanogramImageDA(db);
 
 		_tSubTypeActivityDA.Droptable(db);
+		_tKategoryPlanogramMobileDA.Droptable(db);
 		_mMCategoryVisitPlanDA.DropTable(db);
 		_tVisitPlanHeader_mobileDA.DropTable(db);
 		_tVisitPlanRealisasiDA.DropTable(db);
@@ -451,6 +454,7 @@ public class clsHelper {
 		new tAttendanceUserDA(db);
 		new tStockInHandHeaderDA(db);
 		new tStockInHandDetailDA(db);
+		new tKategoryPlanogramMobileDA(db);
 
 		_mPriceInOutletDA=new mPriceInOutletDA(db);
 		_mUserRoleDA=new mUserRoleDA(db);

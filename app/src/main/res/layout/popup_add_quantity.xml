@@ -78,7 +78,8 @@
             android:layout_marginLeft="100dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/bg_edtext"
-            android:hint="0"
+            android:text="1"
+            android:maxLength="3"
             android:inputType="number" />
 
         <ListView

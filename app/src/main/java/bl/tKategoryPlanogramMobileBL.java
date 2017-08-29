@@ -14,48 +14,55 @@ import java.util.List;
 import library.spgmobile.common.clsHelper;
 import library.spgmobile.common.linkAPI;
 import library.spgmobile.common.mconfigData;
-import library.spgmobile.common.tActivityMobileData;
+import library.spgmobile.common.tKategoryPlanogramMobileData;
 import library.spgmobile.common.tSubTypeActivityData;
 import library.spgmobile.common.tUserLoginData;
 import library.spgmobile.dal.clsHardCode;
 import library.spgmobile.dal.enumConfigData;
 import library.spgmobile.dal.mconfigDA;
-import library.spgmobile.dal.tActivityMobileDA;
+import library.spgmobile.dal.tKategoryPlanogramMobileDA;
 import library.spgmobile.dal.tSubTypeActivityDA;
 import library.spgmobile.dal.tUserLoginDA;
 
 /**
- * Created by rhezaTesar on 7/18/2017.
+ * Created by aan.junianto on 28/08/2017.
  */
 
-public class tSubTypeActivityBL extends clsMainBL{
-    public void saveData(List<tSubTypeActivityData> dt) {
+public class tKategoryPlanogramMobileBL extends clsMainBL {
+    public void saveData(List<tKategoryPlanogramMobileData> dt) {
         SQLiteDatabase db = getDb();
-        tSubTypeActivityDA _tSubTypeActivityDA = new tSubTypeActivityDA(db);
-        _tSubTypeActivityDA.deleteContact(db);
-        for (tSubTypeActivityData data : dt) {
-            tSubTypeActivityDA.SaveDatatSubTypeActivityData(db, data);
+        tKategoryPlanogramMobileDA _tKategoryPlanogramMobileDA = new tKategoryPlanogramMobileDA(db);
+        _tKategoryPlanogramMobileDA.deleteContact(db);
+        for (tKategoryPlanogramMobileData data : dt) {
+            _tKategoryPlanogramMobileDA.SaveDatatKategoryPlanogramMobileData(db, data);
         }
         db.close();
     }
-    public List<tSubTypeActivityData> getAllData(){
+    public List<tKategoryPlanogramMobileData> getAllData(){
         SQLiteDatabase _db = getDb();
-        List<tSubTypeActivityData> dtDetail = new tSubTypeActivityDA(_db).getAll(_db);
+        List<tKategoryPlanogramMobileData> dtDetail = new tKategoryPlanogramMobileDA(_db).getAll(_db);
         _db.close();
         return dtDetail;
     }
 
-    public List<tSubTypeActivityData> getAllDataByTxtType(String txtType){
+    public tKategoryPlanogramMobileData getDataById(String id){
+        SQLiteDatabase _db = getDb();
+        tKategoryPlanogramMobileData dt = new tKategoryPlanogramMobileDA(_db).getDataHeaderId(_db, id);
+        _db.close();
+        return dt;
+    }
+
+    public List<tKategoryPlanogramMobileData> getAllDataByTxtType(String txtType){
         SQLiteDatabase _db =getDb();
-        tSubTypeActivityDA _tSubTypeActivityDA = new tSubTypeActivityDA(db);
-        List<tSubTypeActivityData> dtDetail = _tSubTypeActivityDA.getAllDataByTxtType(db, txtType);
+        tKategoryPlanogramMobileDA _tKategoryPlanogramMobileDA = new tKategoryPlanogramMobileDA(_db);
+        List<tKategoryPlanogramMobileData> dtDetail = _tKategoryPlanogramMobileDA.getAllDataByTxtType(_db, txtType);
         if(dtDetail == null){
             dtDetail = new ArrayList<>();
         }
         return dtDetail;
     }
 
-    public JSONArray DownloadtSubTypeActivity(String versionName, String intRoleId) throws Exception{
+    public JSONArray DownloadKategoryPlanogram(String versionName, String intRoleId) throws Exception{
         SQLiteDatabase _db=getDb();
         tUserLoginDA _tUserLoginDA=new tUserLoginDA(_db);
         mconfigDA _mconfigDA =new mconfigDA(_db);
@@ -75,7 +82,7 @@ public class tSubTypeActivityBL extends clsMainBL{
         tUserLoginData _dataUserLogin = _tUserLoginDA.getData(db, 1);
         clsHelper _help =new clsHelper();
         linkAPI dtlinkAPI=new linkAPI();
-        String txtMethod="getDatatSubTypeActivity";
+        String txtMethod="getDatatKategoryPlanogram";
         JSONObject resJson = new JSONObject();
         resJson.put("intRoleId", intRoleId);
         dtlinkAPI.set_txtMethod(txtMethod);

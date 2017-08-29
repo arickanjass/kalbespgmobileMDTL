@@ -995,6 +995,9 @@ public class dataJson {
                     item1.put(dttPlanogramMobileData.Property_UserId, String.valueOf(data.get_UserId()));
                     item1.put(dttPlanogramMobileData.Property_txtRoleId, String.valueOf(data.get_txtRoleId()));
                     item1.put(dttPlanogramMobileData.Property_txtDeviceId, String.valueOf(data.get_txtDeviceId()));
+                    item1.put(dttPlanogramMobileData.Property_txtIdCategory, String.valueOf(data.get_txtIdCategory()));
+                    item1.put(dttPlanogramMobileData.Property_txtCategoryName, String.valueOf(data.get_txtCategoryName()));
+                    item1.put(dttPlanogramMobileData.Property_intIsValid, String.valueOf(data.get_intIsValid()));
                     itemsListJquey.add(item1);
                 }
                 resJson.put(dttPlanogramMobileData.Property_ListOftPlanogramMobileData, new JSONArray(itemsListJquey));

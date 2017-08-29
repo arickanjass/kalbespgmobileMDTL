@@ -107,7 +107,7 @@ public class tSalesProductQuantityDetailDA {
         Cursor cursor = db.query(TABLE_CONTACTS, new String[] { dt.Property_intId,
                 dt.Property_dtDate, dt.Property_intPrice, dt.Property_txtQuantity,
                 dt.Property_txtCodeProduct, dt.Property_txtKeterangan, dt.Property_txtProduct,
-                dt.Property_txtNIK, dt.Property_intTotal, dt.Property_txtQuantityStock}, dt.Property_txtQuantityStock + "=?",
+                dt.Property_txtNIK, dt.Property_intTotal, dt.Property_txtQuantityStock, dt.Property_txtExpireDate}, dt.Property_txtQuantityStock + "=?",
                 new String[] { String.valueOf(Noso) }, null, null, null, null);
         if (cursor != null) {
             if (cursor.moveToFirst()) {
@@ -124,6 +124,7 @@ public class tSalesProductQuantityDetailDA {
                     contact.set_txtNIK(cursor.getString(7));
                     contact.set_intTotal(cursor.getString(8));
                     contact.set_txtQuantityStock(cursor.getString(9));
+                    contact.setTxtExpireDate(cursor.getString(10));
                     contactList.add(contact);
                 } while (cursor.moveToNext());
             }

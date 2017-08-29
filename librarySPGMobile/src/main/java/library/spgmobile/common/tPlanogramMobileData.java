@@ -185,6 +185,35 @@ public class tPlanogramMobileData {
     private byte[] _txtBeforeImg2;
     private String _txtDeviceId;
 
+    public String get_txtIdCategory() {
+        return _txtIdCategory;
+    }
+
+    public void set_txtIdCategory(String _txtIdCategory) {
+        this._txtIdCategory = _txtIdCategory;
+    }
+
+    public String get_txtCategoryName() {
+        return _txtCategoryName;
+    }
+
+    public void set_txtCategoryName(String _txtCategoryName) {
+        this._txtCategoryName = _txtCategoryName;
+    }
+
+    private  String _txtIdCategory;
+    private  String _txtCategoryName;
+
+    public String get_intIsValid() {
+        return _intIsValid;
+    }
+
+    public void set_intIsValid(String _intIsValid) {
+        this._intIsValid = _intIsValid;
+    }
+
+    private String _intIsValid;
+
     public String Property_intId = "intId";
     public String Property_txtIdPlanogram = "txtIdPlanogram";
     public String Property_txtNIK = "txtNIK";
@@ -205,6 +234,9 @@ public class tPlanogramMobileData {
     public String Property_txtBeforeImg1="txtBeforeImg1";
     public String Property_txtBeforeImg2="txtBeforeImg2";
     public String Property_txtDeviceId="txtDeviceId";
+    public String Property_txtIdCategory="txtIdCategory";
+    public String Property_txtCategoryName="txtCategoryName";
+    public String Property_intIsValid="intIsValid";
     public String Property_ListOftPlanogramMobileData = "ListOftPlanogramMobileData";
 
     public tPlanogramMobileData() {
@@ -231,5 +263,8 @@ public class tPlanogramMobileData {
                     Property_txtBeforeImg2 + "," +
                     Property_txtAfterImg1 + "," +
                     Property_txtAfterImg2 + "," +
-                    Property_txtDeviceId;
+                    Property_txtDeviceId + "," +
+                    Property_txtIdCategory + "," +
+                    Property_txtCategoryName + "," +
+                    Property_intIsValid;
 }

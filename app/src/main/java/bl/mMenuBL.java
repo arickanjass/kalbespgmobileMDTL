@@ -91,7 +91,7 @@ public class mMenuBL extends clsMainBL {
                     _mEmployeeAreaDA = new mEmployeeAreaDA(db);
                     _mEmployeeBranchDA = new mEmployeeBranchDA(db);
                     mTypeLeaveMobileDA _mTypeLeaveMobileDA = new mTypeLeaveMobileDA(db);
-                    if (data.get_TxtDescription().contains("mnVisitPlanMobile")&&_mEmployeeAreaDA.getContactsCount(db) > 0 && _mEmployeeBranchDA.getContactsCount(db) > 0) {
+                    if (data.get_TxtDescription().contains("mnVisitPlanMobile") && _mEmployeeBranchDA.getContactsCount(db) > 0) {
                         int validate = 0;
                         if (listDataLeave.size() == 0) {
                             validate = 1;
@@ -172,7 +172,6 @@ public class mMenuBL extends clsMainBL {
                     tSubTypeActivityDA _tSubTypeActivityDA = new tSubTypeActivityDA(db);
 
                     if (data.get_TxtDescription().contains("mnAbsenTL")&&
-                            _mEmployeeAreaDA.getContactsCount(db) > 0 &&
                             _mEmployeeSalesProductDA.getContactsCount(db) > 0 &&
                             _tSubTypeActivityDA.getContactsCount(db) > 0 &&
                             _mEmployeeBranchDA.getContactsCount(db) > 0) {
@@ -207,19 +206,19 @@ public class mMenuBL extends clsMainBL {
                         int validate = 0;
                         if (listDataLeave.size() == 0) {
                             validate = 1;
-                            List<mEmployeeAreaData> datamEmployeeArea = new mEmployeeAreaBL().GetAllData();
-
-                            for (mEmployeeAreaData dt : datamEmployeeArea) {
-                                if (dt.get_txtLatitude().equals("") || dt.get_txtLatitude() == null || dt.get_txtLatitude().equals("") && dt.get_txtLongitude().equals("") || dt.get_txtLongitude() == null || dt.get_txtLongitude().equals("")) {
-                                    validate = 0;
-                                }
-                            }
+//                            List<mEmployeeAreaData> datamEmployeeArea = new mEmployeeAreaBL().GetAllData();
+//
+//                            for (mEmployeeAreaData dt : datamEmployeeArea) {
+//                                if (dt.get_txtLatitude().equals("") || dt.get_txtLatitude() == null || dt.get_txtLatitude().equals("") && dt.get_txtLongitude().equals("") || dt.get_txtLongitude() == null || dt.get_txtLongitude().equals("")) {
+//                                    validate = 0;
+//                                }
+//                            }
                         }
                         if (validate == 1) {
                             tmpData.add(data);
                         }
                     }
-                    else if (data.get_TxtDescription().contains("mnLeave") && listDataLeave.size() > 0 && _mEmployeeAreaDA.getContactsCount(db) > 0 && _mEmployeeBranchDA.getContactsCount(db) > 0) {
+                    else if (data.get_TxtDescription().contains("mnLeave") && listDataLeave.size() > 0 && _mEmployeeBranchDA.getContactsCount(db) > 0) {
                         tmpData.add(data);
 
                     } else if (data.get_TxtDescription().contains("mnPushDataSPG") && listDataLeave.size() == 0) {
