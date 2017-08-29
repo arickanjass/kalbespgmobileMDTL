@@ -1751,6 +1751,7 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
         dtHeader.set_dtDate(dateFormat.format(cal.getTime()));
         dtHeader.set_intSubmit("0");
         dtHeader.set_intSync("0");
+        dtHeader.set_txtRoleId(_viAbsenData.get_txtRoleId());
         new tCustomerBasedMobileHeaderBL().saveData(dtHeader);
 
         setTablePerson();

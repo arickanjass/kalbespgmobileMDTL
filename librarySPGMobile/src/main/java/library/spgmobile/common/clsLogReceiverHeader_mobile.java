@@ -127,10 +127,10 @@ public class clsLogReceiverHeader_mobile {
     public String Property_txtIdLogReceiver = "txtIdLogReceiver";
     public String Property_txtStatus = "txtStatus";
     public String Property_txtNIK = "txtNIK";
-    public String Property_txtUSerName = "txtUSerName"; 
+    public String Property_txtUSerName = "txtUSerName";
     public String Property_dtInserted = "dtInserted";
     public String Property_dtUpdated = "dtUpdated";
-    public String Property_intActive = "intActive";
+    public String Property_intActive = "intActive";  
     public String Property_intSubmit = "intSubmit";
     public String Property_intSync = "intSync";
     public String Property_txtIdReceiver = "txtIdReceiver";
