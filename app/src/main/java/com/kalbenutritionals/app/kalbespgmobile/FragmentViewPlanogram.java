@@ -30,6 +30,8 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Transformers.BaseTransformer;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -72,7 +74,7 @@ import static com.kalbenutritionals.app.kalbespgmobile.R.id.textView9Quantity;
 public class FragmentViewPlanogram extends Fragment implements IXListViewListener{
 
     private List<clsSwipeList> swipeList = new ArrayList<clsSwipeList>();
-    private AppAdapter mAdapter;
+    private AppAdapterViewCusBase mAdapter;
 
     private PullToRefreshSwipeMenuListView mListView;
 
@@ -149,16 +151,21 @@ public class FragmentViewPlanogram extends Fragment implements IXListViewListene
             for (int i = 0; i < dt.size(); i++) {
                 String status = dt.get(i).get_intSubmit().equals("1") && dt.get(i).get_intSync().equals("1") ? "Sync" : "Submit";
                 swplist = new clsSwipeList();
-                swplist.set_txtTitle("Outlet : " + dt.get(i).get_OutletName());
-                swplist.set_txtDescription("Description : " + dt.get(i).get_txtKeterangan() + "\n" + status);
-                swipeList.add(swplist);
+                swplist.set_txtTitle("Category : " + dt.get(i).get_txtCategoryName());
+                String desc = dt.get(i).get_txtKeterangan();
+                if(desc.length()>20){
+                    desc = dt.get(i).get_txtKeterangan().substring(0,20) + "...";
+                }
+                swplist.set_txtDescription("Description : " + desc);
+                swplist.set_txtDescription2(status);
+                swipeList.add(swplist);;
             }
         }
 
         clsMainActivity clsMain = new clsMainActivity();
 
         mListView = (PullToRefreshSwipeMenuListView) v.findViewById(R.id.SwipelistView);
-        mAdapter = clsMain.setList(getActivity().getApplicationContext(), swipeList);
+        mAdapter = clsMain.setListViewCusBase(getActivity().getApplicationContext(), swipeList);
         mListView.setAdapter(mAdapter);
         mListView.setPullRefreshEnable(true);
         mListView.setPullLoadEnable(true);
@@ -209,13 +216,27 @@ public class FragmentViewPlanogram extends Fragment implements IXListViewListene
         final Button btnSave = (Button) promptView.findViewById(R.id.btnSaveQuantity);
         final RadioButton rbKalbe = (RadioButton) promptView.findViewById(R.id.rbKalbeQuantity);
         final RadioButton rbCompetitor = (RadioButton) promptView.findViewById(R.id.rbCompetitorQuantity);
-        final TextView status = (TextView) promptView.findViewById(textView9Quantity);
+        final TextView status = (TextView) promptView.findViewById(R.id.textView9Quantity);
+        final TextView tv_category = (TextView) promptView.findViewById(R.id.tv_category);
+        final TextView tv_valid = (TextView) promptView.findViewById(R.id.tv_valid);
         mDemoSlider = (SliderLayout) promptView.findViewById(R.id.sliderQuantity);
 
         String statusText = dt.get(position).get_intSubmit().equals("1") && dt.get(position).get_intSync().equals("1") ? "Sync" : "Submit";
         dataImage = new tPlanogramImageBL().getDataHeaderId(dt.get(position).get_txtIdPlanogram());
 
-        status.setText(statusText);
+        String validDisplay = dt.get(position).get_intIsValid().equals("1") ? "Plano is Valid" : "Plano is Invalid";
+
+        if(dt.get(position).get_intIsValid().toString().equals("null")){
+                validDisplay = "";
+        }
+
+        tv_category.setVisibility(View.VISIBLE);
+        tv_category.setText("Category : "+dt.get(position).get_txtCategoryName().toString());
+
+        tv_valid.setVisibility(View.VISIBLE);
+        tv_valid.setText(validDisplay);
+
+        status.setText("Status : "+statusText);
 
         rbKalbe.setTextColor(Color.BLACK);
         rbKalbe.setEnabled(false);

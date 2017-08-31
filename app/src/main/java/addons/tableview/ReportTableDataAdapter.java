@@ -175,6 +175,24 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
                     break;
             }
         }
+        if(data.get_report_type() == "Customer Base MTD"){
+            switch (columnIndex) {
+                case 1:
+                    renderedView = renderString(data.get_outlet_code(), "left");
+                    break;
+                case 2:
+                    renderedView = renderString(data.get_outlet_name(), "left");
+                    break;
+                case 3:
+                    renderedView = renderString(data.get_sum_daily(), "right");
+                    break;
+                case 4:
+                    renderedView = renderString(data.get_sum_MTD(), "right");
+                    break;
+                default:
+                    break;
+            }
+        }
 
         return renderedView;
     }

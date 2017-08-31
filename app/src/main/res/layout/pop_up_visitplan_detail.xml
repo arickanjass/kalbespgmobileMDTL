@@ -28,7 +28,6 @@
         <TableLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/tlAbesen"
-            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/view2">
@@ -47,170 +46,146 @@
 
             <TableRow
                 android:background="#ffffff"
+                android:weightSum="100"
                 android:padding="5dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="5dp"
+                    android:layout_weight="20"
+                    android:padding="5dp"
                     android:text="Outlet Name" />
                 <TextView
                     android:id="@+id/tvNamaOutlet"
+                    android:padding="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="80"
                     android:text="" />
             </TableRow>
             <TableRow
                 android:background="#ffffff"
+                android:weightSum="100"
                 android:padding="5dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="5dp"
+                    android:layout_weight="20"
+                    android:padding="5dp"
                     android:text="Longitude" />
                 <TextView
                     android:id="@+id/tvLong"
+                    android:padding="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="80"
                     android:text="" />
             </TableRow>
             <TableRow
                 android:background="#ffffff"
+                android:weightSum="100"
                 android:padding="5dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="5dp"
+                    android:layout_weight="20"
+                    android:padding="5dp"
                     android:text="Latitude" />
                 <TextView
                     android:id="@+id/tvLat"
+                    android:padding="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="80"
                     android:text="" />
             </TableRow>
             <TableRow
                 android:background="#ffffff"
+                android:weightSum="100"
                 android:padding="5dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="5dp"
+                    android:layout_weight="20"
+                    android:padding="5dp"
                     android:text="Accuracy" />
                 <TextView
                     android:id="@+id/tvAcc"
+                    android:padding="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="80"
                     android:text="" />
             </TableRow>
             <TableRow
                 android:background="#ffffff"
+                android:weightSum="100"
                 android:padding="5dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="5dp"
+                    android:layout_weight="20"
+                    android:padding="5dp"
                     android:text="Distance" />
                 <TextView
                     android:id="@+id/tvDistance"
+                    android:padding="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="80"
                     android:text="" />
             </TableRow>
             <TableRow
                 android:background="#ffffff"
+                android:weightSum="100"
                 android:padding="5dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="5dp"
+                    android:layout_weight="20"
+                    android:padding="5dp"
                     android:text="Date Visited" />
                 <TextView
                     android:id="@+id/tvDateVisited"
+                    android:padding="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="80"
                     android:text="" />
             </TableRow>
             <TableRow
                 android:background="#ffffff"
+                android:weightSum="100"
                 android:padding="5dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="5dp"
-                    android:text="Description" />
+                    android:layout_weight="20"
+                    android:padding="5dp"
+                    android:text="Desc" />
                 <TextView
                     android:id="@+id/description"
+                    android:padding="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="80"
                     android:text="" />
             </TableRow>
             <TableRow
                 android:background="#ffffff"
+                android:weightSum="100"
                 android:padding="5dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="5dp"
-                    android:text="Description Reply" />
+                    android:layout_weight="20"
+                    android:padding="5dp"
+                    android:text="Desc Reply" />
                 <TextView
                     android:id="@+id/descriptionReply"
+                    android:padding="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="80"
                     android:text="" />
             </TableRow>
         </TableLayout>

@@ -28,6 +28,7 @@ import java.util.Set;
 import addons.tableview.ReportComparators;
 import addons.tableview.ReportTableDataAdapter;
 import addons.tableview.SortableReportTableView;
+import bl.mCountConsumerMTDBL;
 import bl.mDownloadMasterData_mobileBL;
 import bl.mEmployeeAreaBL;
 import bl.mMenuBL;
@@ -48,6 +49,7 @@ import bl.tStockInHandDetailBL;
 import bl.tStockInHandHeaderBL;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 import library.spgmobile.common.ReportTable;
+import library.spgmobile.common.mCountConsumerMTDData;
 import library.spgmobile.common.mDownloadMasterData_mobileData;
 import library.spgmobile.common.mEmployeeAreaData;
 import library.spgmobile.common.mMenuData;
@@ -179,6 +181,9 @@ public class FragmentReporting extends Fragment {
         if(menu.size()>0){
             for(mMenuData _mMenuData : menu){
                 arrData.add(_mMenuData.get_TxtMenuName());
+                if(_mMenuData.get_TxtMenuName().contains("Customer Base")){
+                    arrData.add("Customer Base MTD");
+                }
             }
         }
 
@@ -410,6 +415,54 @@ public class FragmentReporting extends Fragment {
                 }
 
                 ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
+        } else if(spinnerSelected.contains("Customer Base MTD")){
+            header = new String[6];
+            header[1] = "Outlet Code";
+            header[2] = "Outlet Name";
+            header[3] = "Daily";
+            header[4] = "MTD";
+
+            ReportTableView.setColumnCount(header.length);
+
+            simpleTableHeaderAdapter = new SimpleTableHeaderAdapter(getContext(), header);
+            simpleTableHeaderAdapter.setTextColor(ContextCompat.getColor(getContext(), R.color.table_header_text));
+            simpleTableHeaderAdapter.setTextSize(14);
+            simpleTableHeaderAdapter.setPaddingBottom(20);
+            simpleTableHeaderAdapter.setPaddingTop(20);
+
+            ReportTableView.setColumnComparator(1, ReportComparators.getNoSoComparator());
+            ReportTableView.setColumnComparator(2, ReportComparators.getTotalProductComparator());
+            ReportTableView.setColumnComparator(3, ReportComparators.getTotalItemComparator());
+            ReportTableView.setColumnComparator(4, ReportComparators.getTotalPriceComparator());
+
+            ReportTableView.setColumnWeight(1, 1);
+            ReportTableView.setColumnWeight(2, 2);
+            ReportTableView.setColumnWeight(3, 1);
+            ReportTableView.setColumnWeight(4, 1);
+
+            ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
+
+            List<mCountConsumerMTDData> dt_mCountConsumerMTDData = new mCountConsumerMTDBL().getAllmCountConsumerMTDDA(outletcode);
+            reportList = new ArrayList<>();
+
+            if(dt_mCountConsumerMTDData != null&&dt_mCountConsumerMTDData.size()>0){
+                for(mCountConsumerMTDData datas : dt_mCountConsumerMTDData ){
+                    ReportTable rt = new ReportTable();
+
+                    rt.set_report_type("Customer Base MTD");
+                    rt.set_outlet_code(datas.getTxtOutletCode());
+                    rt.set_outlet_name(datas.getTxtOutletName());
+                    int CustomerBasedDaily = new tCustomerBasedMobileHeaderBL().getCountAllCustomerBasedAbsen(datas.getTxtOutletCode());
+                    rt.set_sum_daily(new clsMainActivity().convertNumberDec(Double.valueOf(CustomerBasedDaily)));
+                    rt.set_sum_MTD(new clsMainActivity().convertNumberDec(Double.valueOf(datas.getJumlah())+Double.valueOf(CustomerBasedDaily)));
+                    reportList.add(rt);
+                }
+            } else {
+                new clsMainActivity().showCustomToast(getContext(), "No Data to Show", false);
+            }
+
+            ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
+
         } else if (spinnerSelected.contains("Actvity")){
 //            Toast.makeText(getContext(), "Actvity", Toast.LENGTH_SHORT).show();
             header = new String[6];

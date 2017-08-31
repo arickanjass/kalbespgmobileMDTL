@@ -298,7 +298,7 @@ public class FragmentViewActvitySPG extends Fragment implements IXListViewListen
             swplist.set_txtTitle("Type : " + dt.get(i).get_intFlag());
             String desc = dt.get(i).get_txtDesc();
             if(desc.length()>20){
-                desc = dt.get(i).get_txtDesc().substring(0,20) + "..." + "\n" + status;
+                desc = dt.get(i).get_txtDesc().substring(0,20) + "...";
             }
             swplist.set_txtDescription("Description : " + desc);
             swplist.set_txtDescription2(status);

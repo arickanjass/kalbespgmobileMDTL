@@ -10,6 +10,11 @@ import java.io.Serializable;
  */
 public class ReportTable implements Serializable {
 
+    private String _outlet_code;
+    private String _outlet_name;
+    private String _sum_daily;
+    private String _sum_MTD;
+    private String _sum_All;
     private String _report_type;
     private String _customer_name;
     private String _customer_number;
@@ -21,6 +26,46 @@ public class ReportTable implements Serializable {
     private String _status;
     private String _no_cb;
     private String _txtDesc;
+
+    public String get_outlet_code() {
+        return _outlet_code;
+    }
+
+    public void set_outlet_code(String _outlet_code) {
+        this._outlet_code = _outlet_code;
+    }
+
+    public String get_outlet_name() {
+        return _outlet_name;
+    }
+
+    public void set_outlet_name(String _outlet_name) {
+        this._outlet_name = _outlet_name;
+    }
+
+    public String get_sum_daily() {
+        return _sum_daily;
+    }
+
+    public void set_sum_daily(String _sum_daily) {
+        this._sum_daily = _sum_daily;
+    }
+
+    public String get_sum_MTD() {
+        return _sum_MTD;
+    }
+
+    public void set_sum_MTD(String _sum_MTD) {
+        this._sum_MTD = _sum_MTD;
+    }
+
+    public String get_sum_All() {
+        return _sum_All;
+    }
+
+    public void set_sum_All(String _sum_All) {
+        this._sum_All = _sum_All;
+    }
 
     public String get_txtQuantityStock() {
         return _txtQuantityStock;

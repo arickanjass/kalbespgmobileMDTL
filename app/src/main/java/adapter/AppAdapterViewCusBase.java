@@ -53,7 +53,7 @@ public class AppAdapterViewCusBase extends BaseAdapter {
         holder.tv_name.setText(item.get_txtDescription());
         holder.tv_status.setText(item.get_txtDescription2());
         if(item.get_txtDescription2().equals("Sync")){
-            holder.tv_status.setTextColor(Color.GREEN);
+            holder.tv_status.setTextColor(Color.RED);
         } else if (item.get_txtDescription2().equals("Submit")){
             holder.tv_status.setTextColor(Color.BLUE);
         } else if(item.get_txtDescription2().equals("Saved")){

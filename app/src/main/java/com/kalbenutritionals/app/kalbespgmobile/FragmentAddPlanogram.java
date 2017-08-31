@@ -116,6 +116,26 @@ public class FragmentAddPlanogram extends Fragment implements View.OnClickListen
 
         spn_category = (Spinner) v.findViewById(R.id.spn_category);
 
+        //adding date and outlet di menu add
+
+        TextView tv_date = (TextView) v.findViewById(R.id.tv_date);
+        tv_date.setVisibility(View.VISIBLE);
+
+        visitplanAbsenData dtAbsensVisitplan = new clsHelperBL().getDataCheckInActive();
+        String outlet = "-";
+
+        if(dtAbsensVisitplan!=null){
+            outlet = dtAbsensVisitplan.get_txtOutletName();
+            if(dtAbsensVisitplan.get_txtOutletName().toString().equals("null")){
+                outlet = "No Outlet";
+            }
+        }
+
+        // add date & outlet
+        String timeStamp = new SimpleDateFormat("dd/MM/yyyy",
+                Locale.getDefault()).format(new Date());
+        tv_date.setText(outlet + "-" + timeStamp);
+
         Button btnSave = (Button) v.findViewById(R.id.btnSave);
         btnSave.setOnClickListener(this);
 

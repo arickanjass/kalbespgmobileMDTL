@@ -44,6 +44,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import adapter.AppAdapterViewCusBase;
 import bl.clsHelperBL;
 import bl.tSalesProductQuantityDetailBL;
 import bl.tSalesProductQuantityHeaderBL;
@@ -71,7 +72,7 @@ public class FragmentViewQuantityStock extends Fragment implements IXListViewLis
     View v;
 
     private static List<clsSwipeList> swipeList = new ArrayList<clsSwipeList>();
-    private AppAdapter mAdapter;
+    private AppAdapterViewCusBase mAdapter;
     private PullToRefreshSwipeMenuListView mListView;
     private Handler mHandler;
     private static Map<String, HashMap> mapMenu;
@@ -525,9 +526,9 @@ public class FragmentViewQuantityStock extends Fragment implements IXListViewLis
                 swplist = new clsSwipeList();
                 swplist.set_txtTitle(dt.get(i).get_txtQuantityStock());
                 if (dt.get(i).get_intSubmit().equals("1")&&dt.get(i).get_intSync().equals("0")){
-                    swplist.set_txtDescription("Submit");
+                    swplist.set_txtDescription2("Submit");
                 } else if (dt.get(i).get_intSubmit().equals("1")&&dt.get(i).get_intSync().equals("1")){
-                    swplist.set_txtDescription("Sync");
+                    swplist.set_txtDescription2("Sync");
                 }
 
                 swipeList.add(swplist);
@@ -537,7 +538,7 @@ public class FragmentViewQuantityStock extends Fragment implements IXListViewLis
         clsMainActivity clsMain = new clsMainActivity();
 
         mListView = (PullToRefreshSwipeMenuListView) v.findViewById(R.id.listViewQuntity);
-        mAdapter = clsMain.setList(getActivity().getApplicationContext(), swipeList);
+        mAdapter = clsMain.setListViewCusBase(getActivity().getApplicationContext(), swipeList);
         mListView.setAdapter(mAdapter);
         mListView.setPullRefreshEnable(true);
         mListView.setPullLoadEnable(true);

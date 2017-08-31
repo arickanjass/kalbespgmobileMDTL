@@ -138,7 +138,7 @@ public class FragmentViewStockOnHand extends Fragment implements IXListViewListe
         TableLayout tlb = (TableLayout) promptView.findViewById(R.id.tlProduct);
         tlb.removeAllViews();
 
-        TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
+        TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
         params.setMargins(1, 1, 1, 1);
 
         TableRow tr = new TableRow(getContext());
@@ -253,7 +253,11 @@ public class FragmentViewStockOnHand extends Fragment implements IXListViewListe
             for (int i = 0; i < dt.size(); i++) {
                 swplist = new clsSwipeList();
                 swplist.set_txtTitle("No : " + dt.get(i).get_txtNoSo());
-                swplist.set_txtDescription("Description : " + dt.get(i).get_txtKeterangan());
+                String desc = dt.get(i).get_txtKeterangan();
+                if(desc.length()>20){
+                    desc = dt.get(i).get_txtKeterangan().substring(0,20) + "...";
+                }
+                swplist.set_txtDescription("Description : " + desc);
                 if (dt.get(i).get_intSubmit().equals("1")&&dt.get(i).get_intSync().equals("0")){
                     swplist.set_txtDescription2("Submit");
                 } else if (dt.get(i).get_intSubmit().equals("1")&&dt.get(i).get_intSync().equals("1")){

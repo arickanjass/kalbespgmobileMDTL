@@ -126,7 +126,7 @@ public class FragmentAddActvitySPG extends Fragment implements View.OnClickListe
                         if (cs.equals("")) { // for backspace
                             return cs;
                         }
-                        if (cs.toString().matches("[a-zA-Z0-9.\\- ]+")) {
+                        if (cs.toString().matches("[a-zA-Z0-9,.\\- ]+")) {
                             return cs;
                         }
                         return "";

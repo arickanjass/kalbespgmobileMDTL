@@ -33,6 +33,15 @@
         </TableLayout>
 
         <TextView
+            android:id="@+id/tv_date"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/primary_color_theme" />
+
+        <TextView
             android:id="@+id/tvType"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
@@ -128,8 +137,7 @@
                 android:background="@drawable/bg_edtext"
                 android:gravity="top|left"
                 android:inputType="textMultiLine"
-                android:lines="2"
-                android:singleLine="true" />
+                android:lines="2" />
 
         </android.support.design.widget.TextInputLayout>
 

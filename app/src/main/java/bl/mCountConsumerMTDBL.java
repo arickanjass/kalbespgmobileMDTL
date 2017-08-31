@@ -2,6 +2,7 @@ package bl;
 
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import library.spgmobile.common.mCountConsumerMTDData;
@@ -17,6 +18,22 @@ public class mCountConsumerMTDBL extends clsMainBL {
             _mCountConsumerMTD.SaveData(db, data);
         }
         db.close();
+    }
+
+    public List<mCountConsumerMTDData> getAllmCountConsumerMTDDA(String code){
+        SQLiteDatabase db =getDb();
+        List<mCountConsumerMTDData> dt;
+        mCountConsumerMTDDA _mCountConsumerMTDDA = new mCountConsumerMTDDA(db);
+        if(code.equals("ALLOUTLET")){
+            dt = _mCountConsumerMTDDA.getAllDataByOutlet(db,"");
+        } else {
+            dt = _mCountConsumerMTDDA.getAllDataByOutlet(db,code);
+        }
+
+        if(dt == null){
+            dt = new ArrayList<>(0);
+        }
+        return dt ;
     }
 
     public int getCountConsumerMTD(String code) {

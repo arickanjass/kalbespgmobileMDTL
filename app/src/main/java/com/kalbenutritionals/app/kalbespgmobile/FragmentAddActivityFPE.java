@@ -117,6 +117,26 @@ public class FragmentAddActivityFPE extends Fragment implements View.OnClickList
 
         spnTypeActivity = (Spinner) v.findViewById(R.id.spn_typeActivity);
 
+        //adding date and outlet di menu add
+
+        TextView tv_date = (TextView) v.findViewById(R.id.tv_date);
+        tv_date.setVisibility(View.VISIBLE);
+
+        visitplanAbsenData dtAbsensVisitplan = new clsHelperBL().getDataCheckInActive();
+        String outlet = "-";
+
+        if(dtAbsensVisitplan!=null){
+            outlet = dtAbsensVisitplan.get_txtOutletName();
+            if(dtAbsensVisitplan.get_txtOutletName().toString().equals("null")){
+                outlet = "No Outlet";
+            }
+        }
+
+        // add date & outlet
+        String timeStamp = new SimpleDateFormat("dd/MM/yyyy",
+                Locale.getDefault()).format(new Date());
+        tv_date.setText(outlet + "-" + timeStamp);
+
         TableRow tableRow = (TableRow) v.findViewById(R.id.tr_header_act);
         tableRow.setVisibility(View.GONE);
 
@@ -200,7 +220,7 @@ public class FragmentAddActivityFPE extends Fragment implements View.OnClickList
                         if (cs.equals("")) { // for backspace
                             return cs;
                         }
-                        if (cs.toString().matches("[a-zA-Z0-9.\\- ]+")) {
+                        if (cs.toString().matches("[a-zA-Z0-9,.\\- ]+")) {
                             return cs;
                         }
                         return "";
@@ -248,7 +268,7 @@ public class FragmentAddActivityFPE extends Fragment implements View.OnClickList
                     final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
                     alertDialog.setTitle("Confirm");
                     alertDialog.setMessage("Are you sure?");
-                    alertDialog.setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
+                    alertDialog.setPositiveButton("SUBMIT", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 

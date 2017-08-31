@@ -114,27 +114,27 @@ public class FragmentViewResoFPE extends Fragment implements IXListViewListener 
 
         final TextView _tvNoSO = (TextView) promptView.findViewById(R.id.tvnoSOtbl);
         final TextView _tvKet = (TextView) promptView.findViewById(R.id.tvkettbl);
-        _tvNoSO.setText(": " + dt.get(position).get_txtNoSo());
-        _tvKet.setText(": " + dt.get(position).get_txtKeterangan());
+        _tvNoSO.setText(dt.get(position).get_txtNoSo());
+        _tvKet.setText(dt.get(position).get_txtKeterangan());
         final TextView tv_item = (TextView) promptView.findViewById(R.id.tvItemtbl);
         tv_item.setTypeface(null, Typeface.BOLD);
-        tv_item.setText(": " + String.valueOf(dt.get(position).get_intSumItem()));
+        tv_item.setText(String.valueOf(dt.get(position).get_intSumItem()));
         final  TextView tv_amount = (TextView) promptView.findViewById(R.id.tvSumAmount) ;
         tv_amount.setTypeface(null, Typeface.BOLD);
-        tv_amount.setText(": " + new clsMainActivity().convertNumberDec(Double.valueOf(dt.get(position).get_intSumAmount())));
+        tv_amount.setText(new clsMainActivity().convertNumberDec(Double.valueOf(dt.get(position).get_intSumAmount())));
         final  TextView tv_status = (TextView) promptView.findViewById(R.id.tvStatus);
         tv_status.setTypeface(null, Typeface.BOLD);
 
         if (dt.get(position).get_intSubmit().equals("1")&&dt.get(position).get_intSync().equals("0")){
-            tv_status.setText(": Submit");
+            tv_status.setText("Submit");
         } else if (dt.get(position).get_intSubmit().equals("1")&&dt.get(position).get_intSync().equals("1")){
-            tv_status.setText(": Sync");
+            tv_status.setText("Sync");
         }
 
         TableLayout tlb = (TableLayout) promptView.findViewById(R.id.tlProduct);
         tlb.removeAllViews();
 
-        TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
+        TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
         params.setMargins(1, 1, 1, 1);
 
         TableRow tr = new TableRow(getContext());
@@ -248,8 +248,12 @@ public class FragmentViewResoFPE extends Fragment implements IXListViewListener 
         if(dt!=null) {
             for (int i = 0; i < dt.size(); i++) {
                 swplist = new clsSwipeList();
-                swplist.set_txtTitle("No So : " + dt.get(i).get_txtNoSo());
-                swplist.set_txtDescription("Description : " + dt.get(i).get_txtKeterangan());
+                swplist.set_txtTitle("No : " + dt.get(i).get_txtNoSo());
+                String desc = dt.get(i).get_txtKeterangan();
+                if(desc.length()>20){
+                    desc = dt.get(i).get_txtKeterangan().substring(0,20) + "...";
+                }
+                swplist.set_txtDescription("Description : " + desc);
                 if (dt.get(i).get_intSubmit().equals("1")&&dt.get(i).get_intSync().equals("0")){
                     swplist.set_txtDescription2("Submit");
                 } else if (dt.get(i).get_intSubmit().equals("1")&&dt.get(i).get_intSync().equals("1")){

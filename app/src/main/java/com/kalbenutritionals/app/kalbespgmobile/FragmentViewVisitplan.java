@@ -64,7 +64,11 @@ public class FragmentViewVisitplan  extends Fragment implements IXListViewListen
             swplist = new clsSwipeList();
             swplist.set_txtId(dtVisitPlan.get(i).get_txtDataIDRealisasi());
             swplist.set_txtTitle(dtVisitPlan.get(i).get_txtOutletName());
-            swplist.set_txtDescription(dtVisitPlan.get(i).get_txtDesc());
+            String desc = dtVisitPlan.get(i).get_txtDesc();
+            if(dtVisitPlan.get(i).get_txtDesc().length()>20){
+                desc = desc.substring(0,20) + "...";
+            }
+            swplist.set_txtDescription(desc);
             hmIdRealisasi.put(i,dtVisitPlan.get(i).get_txtDataIDRealisasi());
             if(dtVisitPlan.get(i).get_intSubmit().equals("1")){
                 swplist.set_intPIC("Visited");

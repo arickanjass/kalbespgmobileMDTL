@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import adapter.AppAdapterViewCusBase;
 import bl.clsHelperBL;
 import bl.tActivityMobileBL;
 import edu.swu.pulltorefreshswipemenulistview.library.PullToRefreshSwipeMenuListView;
@@ -61,7 +62,7 @@ import static com.kalbenutritionals.app.kalbespgmobile.R.id.textView9;
 
 public class FragmentViewActivityFPE extends Fragment implements IXListViewListener {
     private static List<clsSwipeList> swipeList = new ArrayList<clsSwipeList>();
-    private AppAdapter mAdapter;
+    private AppAdapterViewCusBase mAdapter;
     private PullToRefreshSwipeMenuListView mListView;
     private Handler mHandler;
     private static Map<String, HashMap> mapMenu;
@@ -290,15 +291,20 @@ public class FragmentViewActivityFPE extends Fragment implements IXListViewListe
         for (int i = 0; i < dt.size(); i++) {
             String status = dt.get(i).get_intSubmit().equals("1") && dt.get(i).get_intIdSyn().equals("1") ? "Sync" : "Submit";
             swplist = new clsSwipeList();
-            swplist.set_txtTitle("Type : " + dt.get(i).get_intFlag());
-            swplist.set_txtDescription("Description : " + dt.get(i).get_txtDesc() + "\n" + status);
+            swplist.set_txtTitle("Type : " + dt.get(i).get_intFlag()+ "\n" + "Category : " + dt.get(i).get_txtTypeActivity());
+            String desc = dt.get(i).get_txtDesc();
+            if(desc.length()>20){
+                desc = dt.get(i).get_txtDesc().substring(0,20) + "...";
+            }
+            swplist.set_txtDescription("Description : " + desc);
+            swplist.set_txtDescription2(status);
             swipeList.add(swplist);
         }
 
         clsMainActivity clsMain = new clsMainActivity();
 
         mListView = (PullToRefreshSwipeMenuListView) v.findViewById(R.id.SwipelistView);
-        mAdapter = clsMain.setList(getActivity().getApplicationContext(), swipeList);
+        mAdapter = clsMain.setListViewCusBase(getActivity().getApplicationContext(), swipeList);
         mListView.setAdapter(mAdapter);
         mListView.setPullRefreshEnable(true);
         mListView.setPullLoadEnable(true);

@@ -4,10 +4,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <HorizontalScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <!--<HorizontalScrollView-->
+        <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
         <LinearLayout
             android:id="@+id/ll0"
             android:layout_gravity="center"
@@ -19,13 +19,12 @@
             android:id="@+id/ll1"
             android:gravity="center_vertical|center_horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <TableLayout
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/tlAbesen"
-                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/view2">
@@ -44,108 +43,93 @@
 
                 <TableRow
                     android:background="#ffffff"
+                    android:weightSum="100"
                     android:padding="5dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginLeft="5dp"
+                        android:layout_weight="0"
+                        android:padding="5dp"
                         android:text="No" />
                     <TextView
                         android:id="@+id/tvnoSOtbl"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:layout_weight="100"
                         android:text="" />
                 </TableRow>
                 <TableRow
                     android:background="#ffffff"
+                    android:weightSum="100"
                     android:padding="5dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginLeft="5dp"
-                        android:text="Keterangan" />
+                        android:layout_weight="0"
+                        android:padding="5dp"
+                        android:text="Desc" />
                     <TextView
                         android:id="@+id/tvkettbl"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:layout_weight="100"
                         android:text="" />
                 </TableRow>
                 <TableRow
                     android:background="#ffffff"
+                    android:weightSum="100"
                     android:padding="5dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginLeft="5dp"
+                        android:layout_weight="0"
+                        android:padding="5dp"
                         android:text="Item" />
                     <TextView
                         android:id="@+id/tvItemtbl"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:layout_weight="100"
                         android:text="" />
                 </TableRow>
                 <TableRow
                     android:id="@+id/tr_neared"
                     android:background="#ffffff"
+                    android:weightSum="100"
                     android:padding="5dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginLeft="5dp"
+                        android:layout_weight="0"
+                        android:padding="5dp"
                         android:text="Sum Amount" />
                     <TextView
                         android:id="@+id/tvSumAmount"
+                        android:padding="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="100"
                         android:text="" />
                 </TableRow>
                 <TableRow
                     android:background="#ffffff"
+                    android:weightSum="100"
                     android:padding="5dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginLeft="5dp"
+                        android:layout_weight="0"
+                        android:padding="5dp"
                         android:text="Status" />
                     <TextView
                         android:id="@+id/tvStatus"
+                        android:padding="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="100"
                         android:text="" />
                 </TableRow>
             </TableLayout>
@@ -164,5 +148,5 @@
     </TableLayout>
         </LinearLayout>
         </LinearLayout>
-    </HorizontalScrollView>
+    <!--</HorizontalScrollView>-->
 </ScrollView>

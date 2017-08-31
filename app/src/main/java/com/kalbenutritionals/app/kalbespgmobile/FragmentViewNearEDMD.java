@@ -44,6 +44,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import adapter.AppAdapterViewCusBase;
 import bl.clsHelperBL;
 import bl.tSalesProductQuantityDetailBL;
 import bl.tSalesProductQuantityHeaderBL;
@@ -71,7 +72,7 @@ public class FragmentViewNearEDMD extends Fragment implements IXListViewListener
     View v;
 
     private static List<clsSwipeList> swipeList = new ArrayList<clsSwipeList>();
-    private AppAdapter mAdapter;
+    private AppAdapterViewCusBase mAdapter;
     private PullToRefreshSwipeMenuListView mListView;
     private Handler mHandler;
     private static Map<String, HashMap> mapMenu;
@@ -148,14 +149,14 @@ public class FragmentViewNearEDMD extends Fragment implements IXListViewListener
 
         final TextView _tvNoSO = (TextView) promptView.findViewById(R.id.tvnoSOtbl);
         final TextView _tvKet = (TextView) promptView.findViewById(R.id.tvkettbl);
-        _tvNoSO.setText(": " + dt.get(position).get_txtQuantityStock());
-        _tvKet.setText(": " + dt.get(position).get_txtKeterangan());
+        _tvNoSO.setText(dt.get(position).get_txtQuantityStock());
+        _tvKet.setText(dt.get(position).get_txtKeterangan());
         final TextView tv_item = (TextView) promptView.findViewById(R.id.tvItemtbl);
         tv_item.setTypeface(null, Typeface.BOLD);
-        tv_item.setText(": " + String.valueOf(dt.get(position).get_intSumItem()));
+        tv_item.setText(String.valueOf(dt.get(position).get_intSumItem()));
         final  TextView tv_amount = (TextView) promptView.findViewById(R.id.tvSumAmount) ;
         tv_amount.setTypeface(null, Typeface.BOLD);
-        tv_amount.setText(": " + String.valueOf(dt.get(position).get_intSumAmount()));
+        tv_amount.setText(String.valueOf(dt.get(position).get_intSumAmount()));
         final  TextView tv_status = (TextView) promptView.findViewById(R.id.tvStatus);
         tv_status.setTypeface(null, Typeface.BOLD);
 
@@ -163,15 +164,15 @@ public class FragmentViewNearEDMD extends Fragment implements IXListViewListener
         tr_neared.setVisibility(View.GONE);
 
         if (dt.get(position).get_intSubmit().equals("1")&&dt.get(position).get_intSync().equals("0")){
-            tv_status.setText(": Submit");
+            tv_status.setText("ubmit");
         } else if (dt.get(position).get_intSubmit().equals("1")&&dt.get(position).get_intSync().equals("1")){
-            tv_status.setText(": Sync");
+            tv_status.setText("Sync");
         }
 
         TableLayout tlb = (TableLayout) promptView.findViewById(R.id.tlProductQty);
         tlb.removeAllViews();
 
-        TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
+        TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
         params.setMargins(1, 1, 1, 1);
 
         TableRow tr = new TableRow(getContext());
@@ -527,10 +528,15 @@ public class FragmentViewNearEDMD extends Fragment implements IXListViewListener
             for (int i = 0; i < dt.size(); i++) {
                 swplist = new clsSwipeList();
                 swplist.set_txtTitle(dt.get(i).get_txtQuantityStock());
+                String desc = dt.get(i).get_txtKeterangan();
+                if(desc.length()>20){
+                    desc = dt.get(i).get_txtKeterangan().substring(0,20) + "...";
+                }
+                swplist.set_txtDescription("Description : " + desc);
                 if (dt.get(i).get_intSubmit().equals("1")&&dt.get(i).get_intSync().equals("0")){
-                    swplist.set_txtDescription("Submit");
+                    swplist.set_txtDescription2("Submit");
                 } else if (dt.get(i).get_intSubmit().equals("1")&&dt.get(i).get_intSync().equals("1")){
-                    swplist.set_txtDescription("Sync");
+                    swplist.set_txtDescription2("Sync");
                 }
 
                 swipeList.add(swplist);
@@ -540,7 +546,7 @@ public class FragmentViewNearEDMD extends Fragment implements IXListViewListener
         clsMainActivity clsMain = new clsMainActivity();
 
         mListView = (PullToRefreshSwipeMenuListView) v.findViewById(R.id.listViewQuntity);
-        mAdapter = clsMain.setList(getActivity().getApplicationContext(), swipeList);
+        mAdapter = clsMain.setListViewCusBase(getActivity().getApplicationContext(), swipeList);
         mListView.setAdapter(mAdapter);
         mListView.setPullRefreshEnable(true);
         mListView.setPullLoadEnable(true);

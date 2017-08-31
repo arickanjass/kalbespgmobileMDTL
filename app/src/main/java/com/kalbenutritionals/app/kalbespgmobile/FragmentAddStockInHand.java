@@ -117,7 +117,7 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
                 if (charSequence.equals("")) { // for backspace
                     return charSequence;
                 }
-                if (charSequence.toString().matches("[a-zA-Z0-9.\\- ]+")) {
+                if (charSequence.toString().matches("[a-zA-Z0-9.,\\- ]+")) {
                     return charSequence;
                 }
                 return "";
@@ -145,9 +145,30 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
         }
         tv_noso.setText(noso);
 
+//        String timeStamp = new SimpleDateFormat("dd/MM/yyyy",
+//                Locale.getDefault()).format(new Date());
+//        tv_date.setText(timeStamp);
+
+        //adding date and outlet di menu add
+        TextView txtDate = (TextView) v.findViewById(R.id.txtDate);
+        txtDate.setText("Outlet-Date");
+        tv_date.setVisibility(View.VISIBLE);
+
+        visitplanAbsenData dtAbsensVisitplan = new clsHelperBL().getDataCheckInActive();
+        String outlet = "-";
+
+        if(dtAbsensVisitplan!=null){
+            outlet = dtAbsensVisitplan.get_txtOutletName();
+            if(dtAbsensVisitplan.get_txtOutletName().toString().equals("null")){
+                outlet = "No Outlet";
+            }
+        }
+
+        // add date & outlet
         String timeStamp = new SimpleDateFormat("dd/MM/yyyy",
                 Locale.getDefault()).format(new Date());
-        tv_date.setText(timeStamp);
+        tv_date.setText(outlet + "-" + timeStamp);
+
         Button btn_preview = (Button) v.findViewById(R.id.btnPreviewReso);
         btn_preview.setOnClickListener(this);
 

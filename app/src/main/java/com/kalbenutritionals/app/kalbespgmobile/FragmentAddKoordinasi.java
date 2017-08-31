@@ -12,6 +12,8 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -93,6 +95,22 @@ public class FragmentAddKoordinasi extends Fragment implements View.OnClickListe
         image1 = (ImageView) view.findViewById(R.id.image1);
         image2 = (ImageView) view.findViewById(R.id.image2);
 
+        keterangan.setFilters(new InputFilter[]{
+                new InputFilter() {
+                    @Override
+                    public CharSequence filter(CharSequence cs, int start,
+                                               int end, Spanned spanned, int dStart, int dEnd) {
+                        if (cs.equals("")) { // for backspace
+                            return cs;
+                        }
+                        if (cs.toString().matches("[a-zA-Z0-9,.\\- ]+")) {
+                            return cs;
+                        }
+                        return "";
+                    }
+                }, new InputFilter.AllCaps()
+        });
+
 //        final tAbsenUserData absenUserData = new tAbsenUserBL().getDataCheckInActive();
         final tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
         final int index = new KoordinasiOutletBL().getContactCount() + 1;
@@ -112,7 +130,9 @@ public class FragmentAddKoordinasi extends Fragment implements View.OnClickListe
 
         String txtOutletName = "Outlet Name : " + String.valueOf(absenUserData.get_txtOutletName());
         if(absenUserData.get_txtOutletName().toString().equals("null")){
-            txtOutletName = "Outlet Name : -";
+            tvOutlet.setVisibility(View.GONE);
+            View view2 = (View) view.findViewById(R.id.view2);
+            view2.setVisibility(View.GONE);
         }
         tvOutlet.setText(txtOutletName);
 
@@ -166,65 +186,83 @@ public class FragmentAddKoordinasi extends Fragment implements View.OnClickListe
             @Override
             public void onClick(View view) {
                 if (keterangan.getText().toString().equals("")){
-                    Toast.makeText(getContext(), "Keterangan tidak boleh kosong", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Description cannot empy", Toast.LENGTH_SHORT).show();
                 } else if (phtImage1 == null && phtImage2 == null){
-                    Toast.makeText(getContext(), "Ambil gambar minimal 1", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Please Take at Least 1 Photo", Toast.LENGTH_SHORT).show();
                 } else {
-                    LayoutInflater layoutInflater = LayoutInflater.from(getContext());
-                    final View promptView = layoutInflater.inflate(R.layout.confirm_data, null);
+                    final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+                    alertDialog.setTitle("Confirm");
+                    alertDialog.setMessage("Are you sure?");
+                    alertDialog.setPositiveButton("SUBMIT", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            KoordinasiOutletData koordinasiOutletData = new KoordinasiOutletData();
+                            java.text.DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                            Calendar cal = Calendar.getInstance();
 
-                    final TextView _tvConfirm = (TextView) promptView.findViewById(R.id.tvTitle);
-                    final TextView _tvDesc = (TextView) promptView.findViewById(R.id.tvDesc);
-                    _tvDesc.setVisibility(View.INVISIBLE);
-                    _tvConfirm.setText("Are you sure ?");
+                            koordinasiOutletData.set_intId(txtHDId.getText().toString());
+                            koordinasiOutletData.set_dtDate(dateFormat.format(cal.getTime()));
+                            koordinasiOutletData.set_txtKeterangan(keterangan.getText().toString());
+                            koordinasiOutletData.set_txtUserId(absenUserData.get_txtUserId());
+                            koordinasiOutletData.set_txtUsername(dataUserActive.get_txtUserName());
+                            koordinasiOutletData.set_txtRoleId(absenUserData.get_txtRoleId());
+                            koordinasiOutletData.set_txtOutletCode(absenUserData.get_txtOutletCode());
+                            koordinasiOutletData.set_txtOutletName(absenUserData.get_txtOutletName());
+                            koordinasiOutletData.set_txtBranchCode(absenUserData.get_txtBranchCode());
+                            koordinasiOutletData.set_txtBranchName(absenUserData.get_txtBranchName());
+                            koordinasiOutletData.set_txtNIK(dataUserActive.get_TxtEmpId());
+                            koordinasiOutletData.set_intSubmit("1");
+                            koordinasiOutletData.set_intSync("0");
+                            new KoordinasiOutletBL().SaveDataKoordinasiOutlet(koordinasiOutletData);
 
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-                    alertDialogBuilder.setView(promptView);
-                    alertDialogBuilder
-                            .setCancelable(false)
-                            .setPositiveButton("OK",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            KoordinasiOutletData koordinasiOutletData = new KoordinasiOutletData();
-                                            java.text.DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                                            Calendar cal = Calendar.getInstance();
-
-                                            koordinasiOutletData.set_intId(txtHDId.getText().toString());
-                                            koordinasiOutletData.set_dtDate(dateFormat.format(cal.getTime()));
-                                            koordinasiOutletData.set_txtKeterangan(keterangan.getText().toString());
-                                            koordinasiOutletData.set_txtUserId(absenUserData.get_txtUserId());
-                                            koordinasiOutletData.set_txtUsername(dataUserActive.get_txtUserName());
-                                            koordinasiOutletData.set_txtRoleId(absenUserData.get_txtRoleId());
-                                            koordinasiOutletData.set_txtOutletCode(absenUserData.get_txtOutletCode());
-                                            koordinasiOutletData.set_txtOutletName(absenUserData.get_txtOutletName());
-                                            koordinasiOutletData.set_txtBranchCode(absenUserData.get_txtBranchCode());
-                                            koordinasiOutletData.set_txtBranchName(absenUserData.get_txtBranchName());
-                                            koordinasiOutletData.set_txtNIK(dataUserActive.get_TxtEmpId());
-                                            koordinasiOutletData.set_intSubmit("1");
-                                            koordinasiOutletData.set_intSync("0");
-                                            new KoordinasiOutletBL().SaveDataKoordinasiOutlet(koordinasiOutletData);
-
-                                            savePicture1();
-                                            savePicture2();
+                            savePicture1();
+                            savePicture2();
 
 //                                            Intent nextScreen = new Intent(getContext(), MainMenu.class);
 //                                            startActivity(nextScreen);
 
-                                            Intent myIntent = new Intent(getContext(), MainMenu.class);
-                                            getActivity().finish();
-                                            startActivity(myIntent);
+                            Intent myIntent = new Intent(getContext(), MainMenu.class);
+                            getActivity().finish();
+                            startActivity(myIntent);
+                            _clsMainActivity.showCustomToast(getActivity(), "Submit", true);
+                        }
+                    });
+                    alertDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
 
-                                            new clsMainActivity().showCustomToast(getActivity(), "Saved", true);
-                                        }
-                                    })
-                            .setNegativeButton("Cancel",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    final AlertDialog alertD = alertDialogBuilder.create();
-                    alertD.show();
+                        }
+                    });
+                    alertDialog.show();
+//                    LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+//                    final View promptView = layoutInflater.inflate(R.layout.confirm_data, null);
+//
+//                    final TextView _tvConfirm = (TextView) promptView.findViewById(R.id.tvTitle);
+//                    final TextView _tvDesc = (TextView) promptView.findViewById(R.id.tvDesc);
+//                    _tvDesc.setVisibility(View.INVISIBLE);
+//                    _tvConfirm.setText("Are you sure ?");
+//
+//                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+//                    alertDialogBuilder.setView(promptView);
+//                    alertDialogBuilder
+//                            .setCancelable(false)
+//                            .setPositiveButton("OK",
+//                                    new DialogInterface.OnClickListener() {
+//                                        public void onClick(DialogInterface dialog, int id) {
+//
+//
+//                                            new clsMainActivity().showCustomToast(getActivity(), "Saved", true);
+//                                        }
+//                                    })
+//                            .setNegativeButton("Cancel",
+//                                    new DialogInterface.OnClickListener() {
+//                                        public void onClick(DialogInterface dialog, int id) {
+//                                            dialog.cancel();
+//                                        }
+//                                    });
+//                    final AlertDialog alertD = alertDialogBuilder.create();
+//                    alertD.show();
                 }
             }
         });

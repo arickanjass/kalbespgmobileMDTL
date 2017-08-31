@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.InputFilter;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -153,7 +154,7 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
             if (dataFirstIsExist.size() == 1) {
                 clsHelper _clsHelper = new clsHelper();
                 String oldVersion = dtLast.get(0).get_txtQuantityStock();
-                noQuantityStock = _clsHelper.generateNewId(oldVersion, "-", "5");
+                noQuantityStock = _clsHelper.generateNewId(oldVersion, "-", "6");
             } else {
                 noQuantityStock = new mCounterNumberBL().getData(enumCounterData.NoQuantityStock);
             }
@@ -161,9 +162,29 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
         tv_noQuantityStock.setText(noQuantityStock);
 
         // add date in txtviewDateQuantity
+//        String timeStamp = new SimpleDateFormat("dd/MM/yyyy",
+//                Locale.getDefault()).format(new Date());
+//        tv_date.setText(timeStamp);
+
+        //adding date and outlet di menu add
+        TextView txtDate = (TextView) v.findViewById(R.id.txtDateQuantity);
+        txtDate.setText("Outlet-Date");
+        tv_date.setVisibility(View.VISIBLE);
+
+        visitplanAbsenData dtAbsensVisitplan = new clsHelperBL().getDataCheckInActive();
+        String outlet = "-";
+
+        if(dtAbsensVisitplan!=null){
+            outlet = dtAbsensVisitplan.get_txtOutletName();
+            if(dtAbsensVisitplan.get_txtOutletName().toString().equals("null")){
+                outlet = "No Outlet";
+            }
+        }
+
+        // add date & outlet
         String timeStamp = new SimpleDateFormat("dd/MM/yyyy",
                 Locale.getDefault()).format(new Date());
-        tv_date.setText(timeStamp);
+        tv_date.setText(outlet + "-" + timeStamp);
 
         phtAfter1 = null;
         phtAfter2 = null;
@@ -279,7 +300,7 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
                     final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
                     alertDialog.setTitle("Confirm");
                     alertDialog.setMessage("Are you sure?");
-                    alertDialog.setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
+                    alertDialog.setPositiveButton("SUBMIT", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             save();
@@ -289,7 +310,7 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
                             savePicture4();
                             viewQuantityFragment();
 
-                            _clsMainActivity.showCustomToast(getActivity(), "Saved", true);
+                            _clsMainActivity.showCustomToast(getActivity(), "Submit", true);
                         }
                     });
                     alertDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -303,6 +324,23 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
                 }
             }
         });
+
+        edKeterangan.setFilters(new InputFilter[]{
+                new InputFilter() {
+                    @Override
+                    public CharSequence filter(CharSequence cs, int start,
+                                               int end, Spanned spanned, int dStart, int dEnd) {
+                        if (cs.equals("")) { // for backspace
+                            return cs;
+                        }
+                        if (cs.toString().matches("[a-zA-Z0-9,.\\- ]+")) {
+                            return cs;
+                        }
+                        return "";
+                    }
+                }, new InputFilter.AllCaps()
+        });
+
         TableProduct();
         return v;
     }

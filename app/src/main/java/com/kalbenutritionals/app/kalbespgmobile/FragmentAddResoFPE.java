@@ -114,7 +114,7 @@ public class FragmentAddResoFPE extends Fragment implements View.OnClickListener
                 if (charSequence.equals("")) { // for backspace
                     return charSequence;
                 }
-                if (charSequence.toString().matches("[a-zA-Z0-9.\\- ]+")) {
+                if (charSequence.toString().matches("[a-zA-Z0-9,.\\- ]+")) {
                     return charSequence;
                 }
                 return "";
@@ -142,9 +142,30 @@ public class FragmentAddResoFPE extends Fragment implements View.OnClickListener
         }
         tv_noso.setText(noso);
 
+//        String timeStamp = new SimpleDateFormat("dd/MM/yyyy",
+//                Locale.getDefault()).format(new Date());
+//        tv_date.setText(timeStamp);
+
+        //adding date and outlet di menu add
+        TextView txtDate = (TextView) v.findViewById(R.id.txtDate);
+        txtDate.setText("Outlet-Date");
+        tv_date.setVisibility(View.VISIBLE);
+
+        visitplanAbsenData dtAbsensVisitplan = new clsHelperBL().getDataCheckInActive();
+        String outlet = "-";
+
+        if(dtAbsensVisitplan!=null){
+            outlet = dtAbsensVisitplan.get_txtOutletName();
+            if(dtAbsensVisitplan.get_txtOutletName().toString().equals("null")){
+                outlet = "No Outlet";
+            }
+        }
+
+        // add date & outlet
         String timeStamp = new SimpleDateFormat("dd/MM/yyyy",
                 Locale.getDefault()).format(new Date());
-        tv_date.setText(timeStamp);
+        tv_date.setText(outlet + "-" + timeStamp);
+
         Button btn_preview = (Button) v.findViewById(R.id.btnPreviewReso);
         btn_preview.setOnClickListener(this);
 
@@ -285,8 +306,8 @@ public class FragmentAddResoFPE extends Fragment implements View.OnClickListener
 
                     final TextView _tvNoSO = (TextView) promptView.findViewById(R.id.tvnoSOtbl);
                     final TextView _tvKet = (TextView) promptView.findViewById(R.id.tvkettbl);
-                    _tvNoSO.setText(String.format(": %s", noso));
-                    _tvKet.setText(String.format(": %s", edketerangan.getText().toString()));
+                    _tvNoSO.setText(String.format(noso));
+                    _tvKet.setText(String.format(edketerangan.getText().toString()));
 
                     arr = new ArrayList<>();
                     arr = modelItems;
@@ -385,16 +406,16 @@ public class FragmentAddResoFPE extends Fragment implements View.OnClickListener
                     final TextView tv_item = (TextView) promptView.findViewById(R.id.tvItemtbl);
                     tv_item.setTypeface(null, Typeface.BOLD);
                     int sumItem = arrdataPriv.size();
-                    tv_item.setText(String.format(": %s", String.valueOf(sumItem)));
+                    tv_item.setText(String.format(String.valueOf(sumItem)));
 
                     final TextView tv_amount = (TextView) promptView.findViewById(R.id.tvSumAmount);
                     tv_amount.setTypeface(null, Typeface.BOLD);
                     String nilai = new clsMainActivity().convertNumberDec(qtySum);
-                    tv_amount.setText(String.format(": %s", String.valueOf(nilai)));
+                    tv_amount.setText(String.format(String.valueOf(nilai)));
 
                     final TextView tv_status = (TextView) promptView.findViewById(R.id.tvStatus);
                     tv_status.setTypeface(null, Typeface.BOLD);
-                    tv_status.setText(": Open");
+                    tv_status.setText("Open");
 
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
                     alertDialogBuilder.setView(promptView);
@@ -522,7 +543,7 @@ public class FragmentAddResoFPE extends Fragment implements View.OnClickListener
 
         }
 
-        _clsMainActivity.showCustomToast(getActivity(), "Saved", true);
+        _clsMainActivity.showCustomToast(getActivity(), "Submited", true);
     }
 
 
