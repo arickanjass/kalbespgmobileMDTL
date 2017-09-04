@@ -26,6 +26,42 @@ public class ReportTable implements Serializable {
     private String _status;
     private String _no_cb;
     private String _txtDesc;
+    private String _Group_Question;
+    private String _Question;
+    private String _Answer;
+
+    public String get_type() {
+        return _type;
+    }
+
+    public void set_type(String _type) {
+        this._type = _type;
+    }
+
+    private String _type;
+    public String get_Group_Question() {
+        return _Group_Question;
+    }
+
+    public void set_Group_Question(String _Group_Question) {
+        this._Group_Question = _Group_Question;
+    }
+
+    public String get_Question() {
+        return _Question;
+    }
+
+    public void set_Question(String _Question) {
+        this._Question = _Question;
+    }
+
+    public String get_Answer() {
+        return _Answer;
+    }
+
+    public void set_Answer(String _Answer) {
+        this._Answer = _Answer;
+    }
 
     public String get_outlet_code() {
         return _outlet_code;

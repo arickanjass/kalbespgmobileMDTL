@@ -13,6 +13,13 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.InputType;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.AndroidException;
 import android.util.Log;
 import android.view.Gravity;
@@ -131,11 +138,55 @@ public class FragmentKuesionerPart extends Fragment {
             setListViewHeightBasedOnItems(listView);
             llMain.addView(listView);
         } else if (typeJawaban == 3) {
-            EditText etTest = new EditText(getContext());
+            final EditText etTest = new EditText(getContext());
             etTest.setText("");
             etTest.setHint("Please fill...");
             etTest.setId(noSoal);
             llMain.addView(etTest);
+            final EditText editText = (EditText)v.findViewById(etTest.getId());
+            InputFilter filter = new InputFilter() {
+                boolean canEnterSpace = false;
+
+                public CharSequence filter(CharSequence source, int start, int end,
+                                           Spanned dest, int dstart, int dend) {
+
+                    if (editText.getText().toString().equals("")) {
+                        canEnterSpace = false;
+                    }
+
+                    StringBuilder builder = new StringBuilder();
+
+                    for (int i = start; i < end; i++) {
+                        char currentChar = source.charAt(i);
+
+                        if (Character.isLetterOrDigit(currentChar) || currentChar == '_') {
+                            builder.append(currentChar);
+                            canEnterSpace = true;
+                        }
+
+                        if (Character.isWhitespace(currentChar) && canEnterSpace) {
+                            builder.append(currentChar);
+                        }
+
+                    }
+                    if (canEnterSpace)
+                        return null;
+                    else {
+                        if (source instanceof Spanned) {
+                            SpannableString sp = new SpannableString(builder);
+                            TextUtils.copySpansFrom((Spanned) source, start, end, null, sp, 0);
+                            return sp;
+                        } else {
+                            return builder.toString();
+                        }
+                    }
+
+                }
+
+            };
+
+            editText.setFilters(new InputFilter[]{filter, new InputFilter.LengthFilter(490)});
+
         } else if (typeJawaban == 6) {
             RadioButton[] rb = new RadioButton[_jawabanModel.size()];
             RadioGroup rg = new RadioGroup(getContext()); //create the RadioGroup
@@ -244,16 +295,10 @@ public class FragmentKuesionerPart extends Fragment {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    Intent pickIntent = new Intent(Intent.ACTION_VIEW,
-//                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//        Intent pickIntent = new Intent(Intent.ACTION_GET_CONTENT);
                     Intent pickIntent = new Intent(Intent.ACTION_GET_CONTENT);
                     pickIntent.addCategory(Intent.CATEGORY_OPENABLE);
-//                    pickIntent.setType("application/pdf" + "," + "application/msword");
-//                    pickIntent.setType("application/msword");
-//                    pickIntent.setType("application/vnd.ms-excel");
 //                    pickIntent.setType("application/x-compressed-zip");
-//                    pickIntent.setType("application/*");
+                    pickIntent.setType("application/*");
                     String[] mimetypes = {"application/pdf" , "application/msword" , "application/vnd.ms-excel"};
                     pickIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
                     startActivityForResult(pickIntent, PICK_FILE_ID);
@@ -426,8 +471,10 @@ public class FragmentKuesionerPart extends Fragment {
                         }
                     } else if (resultCode == 0) {
                         _clsMainActivity.showCustomToast(getContext(), "User canceled photo", false);
+//                    imageView.setBackgroundResource(R.drawable.profile);
                     } else {
                         _clsMainActivity.showCustomToast(getContext(), "Something error", false);
+//                    imageView.setBackgroundResource(R.drawable.profile);
                     }
                 break;
             case PICK_FILE_ID:

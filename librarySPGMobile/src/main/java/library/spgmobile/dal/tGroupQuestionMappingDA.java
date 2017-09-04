@@ -116,4 +116,58 @@ public class tGroupQuestionMappingDA {
         cursor.close();
         return contactList;
     }
+    public List<tGroupQuestionMappingData> GetDataByQuestionId(SQLiteDatabase db, String intQuestionId){
+        List<tGroupQuestionMappingData> contactList = new ArrayList<tGroupQuestionMappingData>();
+        tGroupQuestionMappingData dt = new tGroupQuestionMappingData();
+        mPertanyaanData dtQuestion = new mPertanyaanData();
+        tJawabanUserData dtJawaban = new tJawabanUserData();
+        String selectQuery = "Select " + dt.Property_AllS + " FROM " + TABLE_CONTACTS + " lEFT OUTER JOIN " + TABLE_PERTANYAAN +
+                " ON " + TABLE_CONTACTS + "." + dt.Property_intId + "=" + TABLE_PERTANYAAN + "." + dtQuestion.Property_inttGroupQuestionMapping +
+                " WHERE " + TABLE_PERTANYAAN + "." + dtQuestion.Property_intQuestionId +
+                "='" + intQuestionId +"' GROUP BY " + dt.Property_AllS  + " ORDER BY intId ASC";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()){
+            do {
+                tGroupQuestionMappingData contact = new tGroupQuestionMappingData();
+
+                contact.set_intId(cursor.getString(0));
+                contact.set_txtGroupQuestion(cursor.getString(1));
+                contact.set_intRoleId(cursor.getString(2));
+                contact.set_txtRepeatQuestion(cursor.getString(3));
+                contact.set_dtStart(cursor.getString(4));
+                contact.set_dtEnd(cursor.getString(5));
+                contactList.add(contact);
+
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return contactList;
+    }
+
+    public List<mPertanyaanData> GetDataByQstId(SQLiteDatabase db, String intQuestionId){
+        List<mPertanyaanData> contactList = new ArrayList<mPertanyaanData>();
+        tGroupQuestionMappingData dt = new tGroupQuestionMappingData();
+        mPertanyaanData dtQuestion = new mPertanyaanData();
+        String selectQuery = "Select " + dtQuestion.Property_AllS + " FROM " + TABLE_PERTANYAAN + " lEFT OUTER JOIN " + TABLE_CONTACTS +
+                " ON " +  TABLE_PERTANYAAN + "." + dtQuestion.Property_inttGroupQuestionMapping + "=" +TABLE_CONTACTS + "." + dt.Property_intId +
+                " WHERE " + TABLE_PERTANYAAN + "." + dtQuestion.Property_intQuestionId +
+                "='" + intQuestionId +"' GROUP BY " + dtQuestion.Property_AllS  + " ORDER BY intId ASC";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()){
+            do {
+                mPertanyaanData contact = new mPertanyaanData();
+                contact.set_intQuestionId(cursor.getString(0));
+                contact.set_intSoalId(cursor.getString(1));
+                contact.set_intCategoryId(cursor.getString(2));
+                contact.set_txtQuestionDesc(cursor.getString(3));
+                contact.set_intTypeQuestionId(cursor.getString(4));
+                contact.set_decBobot(cursor.getString(5));
+                contact.set_bolHaveAnswerList(cursor.getString(6));
+                contact.set_inttGroupQuestionMapping(cursor.getString(7));
+                contactList.add(contact);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return contactList;
+    }
 }

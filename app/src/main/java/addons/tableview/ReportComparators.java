@@ -75,6 +75,17 @@ public final class ReportComparators {
         return new totalPriceComparator();
     }
 
+    public static Comparator<ReportTable> getGroupQuestionComparator(){
+        return new groupQuestionComparator();
+    }
+
+    public static Comparator<ReportTable> getQuestionComparator(){
+        return new questionComparator();
+    }
+
+    public static Comparator<ReportTable> getAnswerComparator(){
+        return new answerComparator();
+    }
     private static class noSoComparator implements Comparator<ReportTable> {
 
         @Override
@@ -208,6 +219,30 @@ public final class ReportComparators {
         @Override
         public int compare(final ReportTable data1, final ReportTable data2) {
             return data1.get_txtQuantityStock().compareTo(data2.get_txtQuantityStock());
+        }
+    }
+
+    private static class groupQuestionComparator implements Comparator<ReportTable>{
+
+        @Override
+        public int compare(final ReportTable data1, final ReportTable data2) {
+            return data1.get_Group_Question().compareTo(data2.get_Group_Question());
+        }
+    }
+
+    private static class questionComparator implements Comparator<ReportTable>{
+
+        @Override
+        public int compare(final ReportTable data1, final ReportTable data2) {
+            return data1.get_Question().compareTo(data2.get_Question());
+        }
+    }
+
+    private static class answerComparator implements Comparator<ReportTable>{
+
+        @Override
+        public int compare(final ReportTable data1, final ReportTable data2) {
+            return data1.get_Answer().compareTo(data2.get_Answer());
         }
     }
 }

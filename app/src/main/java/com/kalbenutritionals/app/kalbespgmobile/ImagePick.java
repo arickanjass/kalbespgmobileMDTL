@@ -71,7 +71,7 @@ public class ImagePick {
         pickIntent.setType("image/*");
         pickIntent.putExtra("return-data", true);
         pickIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriImage);
-        intentList = addIntentsToList(context, intentList, pickIntent);
+//        intentList = addIntentsToList(context, intentList, pickIntent);
         intentList = addIntentsToList(context, intentList, takePhotoIntent);
 
         if (intentList.size() > 0) {
@@ -179,7 +179,7 @@ public class ImagePick {
         if (fileName.length() >0){
             String fileExtension = fileName.substring(fileName.lastIndexOf("."));
             String fileNameWithoutExtension = fileName.substring(0, fileName.lastIndexOf('.'));
-            mediaFile = new File(mediaStorageDir.getPath() + File.separator + fileNameWithoutExtension + timeStamp + fileExtension);
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator + fileNameWithoutExtension + "_" +timeStamp + fileExtension);
 
         }
         return  Uri.fromFile(mediaFile);

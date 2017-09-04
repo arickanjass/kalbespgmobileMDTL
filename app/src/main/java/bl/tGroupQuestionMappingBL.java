@@ -4,6 +4,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.List;
 
+import library.spgmobile.common.mPertanyaanData;
 import library.spgmobile.common.tGroupQuestionMappingData;
 import library.spgmobile.dal.tGroupQuestionMappingDA;
 
@@ -38,6 +39,19 @@ public class tGroupQuestionMappingBL extends clsMainBL{
         SQLiteDatabase _db = getDb();
         tGroupQuestionMappingDA _tGroupQuestionMappingDA = new tGroupQuestionMappingDA(_db);
         List<tGroupQuestionMappingData> listData = _tGroupQuestionMappingDA.GetDataByIdActive(_db);
+        return listData;
+    }
+
+    public List<tGroupQuestionMappingData> GetDataByQuestionId(String intQuestionId){
+        SQLiteDatabase _db = getDb();
+        tGroupQuestionMappingDA _tGroupQuestionMappingDA = new tGroupQuestionMappingDA(_db);
+        List<tGroupQuestionMappingData> listData = _tGroupQuestionMappingDA.GetDataByQuestionId(_db, intQuestionId);
+        return listData;
+    }
+    public List<mPertanyaanData> GetDataByQstId(String intQuestionId){
+        SQLiteDatabase _db = getDb();
+        tGroupQuestionMappingDA _tGroupQuestionMappingDA = new tGroupQuestionMappingDA(_db);
+        List<mPertanyaanData> listData = _tGroupQuestionMappingDA.GetDataByQstId(_db, intQuestionId);
         return listData;
     }
 

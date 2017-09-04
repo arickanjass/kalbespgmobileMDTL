@@ -61,7 +61,7 @@ public class tJawabanUserDA {
     public List<tJawabanUserData> GetAllData(SQLiteDatabase db){
         List<tJawabanUserData> contactList = new ArrayList<tJawabanUserData>();
         tJawabanUserData dt = new tJawabanUserData();
-        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " ORDER BY intUserId ASC";
+        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intSubmit + "=1" + " ORDER BY intUserId ASC";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()){
             do {
@@ -77,9 +77,10 @@ public class tJawabanUserDA {
                 contact.set_txtValue(cursor.getString(8));
                 byte[] blob = cursor.getBlob(9);
                 contact.set_ptQuiz(blob);
-                contact.set_decBobot(cursor.getString(10));
-                contact.set_intSubmit(cursor.getString(11));
-                contact.set_intSync(cursor.getString(12));
+                contact.set_txtFileQuiz(cursor.getBlob(10));
+                contact.set_decBobot(cursor.getString(11));
+                contact.set_intSubmit(cursor.getString(12));
+                contact.set_intSync(cursor.getString(13));
                 contactList.add(contact);
             }while (cursor.moveToNext());
         }

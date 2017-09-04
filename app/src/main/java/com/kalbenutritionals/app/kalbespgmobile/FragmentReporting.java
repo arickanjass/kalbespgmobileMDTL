@@ -38,6 +38,8 @@ import bl.tActivityMobileBL;
 import bl.tCustomerBasedMobileDetailBL;
 import bl.tCustomerBasedMobileDetailProductBL;
 import bl.tCustomerBasedMobileHeaderBL;
+import bl.tGroupQuestionMappingBL;
+import bl.tJawabanUserBL;
 import bl.tPlanogramMobileBL;
 import bl.tPurchaseOrderDetailBL;
 import bl.tPurchaseOrderHeaderBL;
@@ -53,12 +55,15 @@ import library.spgmobile.common.mCountConsumerMTDData;
 import library.spgmobile.common.mDownloadMasterData_mobileData;
 import library.spgmobile.common.mEmployeeAreaData;
 import library.spgmobile.common.mMenuData;
+import library.spgmobile.common.mPertanyaanData;
 import library.spgmobile.common.mTypeSubmissionMobile;
 import library.spgmobile.common.tActivityData;
 import library.spgmobile.common.tActivityMobileData;
 import library.spgmobile.common.tCustomerBasedMobileDetailData;
 import library.spgmobile.common.tCustomerBasedMobileDetailProductData;
 import library.spgmobile.common.tCustomerBasedMobileHeaderData;
+import library.spgmobile.common.tGroupQuestionMappingData;
+import library.spgmobile.common.tJawabanUserData;
 import library.spgmobile.common.tPlanogramMobileData;
 import library.spgmobile.common.tPurchaseOrderDetailData;
 import library.spgmobile.common.tPurchaseOrderHeaderData;
@@ -685,6 +690,53 @@ public class FragmentReporting extends Fragment {
             }
 
             ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
+
+            ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
+        } else if (spinnerSelected.contains("Kuesioner")){
+//            Toast.makeText(getContext(), "Actvity", Toast.LENGTH_SHORT).show();
+            header = new String[6];
+            header[1] = "Group Question";
+            header[2] = "Question";
+            header[3] = "Answer";
+
+            ReportTableView.setColumnCount(header.length);
+
+            simpleTableHeaderAdapter = new SimpleTableHeaderAdapter(getContext(), header);
+            simpleTableHeaderAdapter.setTextColor(ContextCompat.getColor(getContext(), R.color.table_header_text));
+            simpleTableHeaderAdapter.setTextSize(14);
+            simpleTableHeaderAdapter.setPaddingBottom(20);
+            simpleTableHeaderAdapter.setPaddingTop(20);
+
+            ReportTableView.setColumnComparator(1, ReportComparators.getGroupQuestionComparator());
+            ReportTableView.setColumnComparator(2, ReportComparators.getQuestionComparator());
+            ReportTableView.setColumnComparator(3, ReportComparators.getAnswerComparator());
+
+
+            ReportTableView.setColumnWeight(1, 2);
+            ReportTableView.setColumnWeight(2, 2);
+            ReportTableView.setColumnWeight(3, 2);
+
+            ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
+
+            List<tJawabanUserData> dt_Answer = new tJawabanUserBL().GetAllData();
+            reportList = new ArrayList<>();
+
+            if(dt_Answer != null&&dt_Answer.size()>0){
+                for(tJawabanUserData data : dt_Answer ){
+                    ReportTable rt = new ReportTable();
+                    List<tGroupQuestionMappingData> dt_group = new tGroupQuestionMappingBL().GetDataByQuestionId(data.get_intQuestionId());
+                    List<mPertanyaanData> dt_Question  = new  tGroupQuestionMappingBL().GetDataByQstId(data.get_intQuestionId());
+
+                    rt.set_report_type("Kuesioner");
+                    rt.set_Group_Question(dt_group.get(0).get_txtGroupQuestion());
+                    rt.set_Question(dt_Question.get(0).get_txtQuestionDesc());
+                    rt.set_Answer(data.get_txtValue());
+                    rt.set_type(data.get_intTypeQuestionId());
+                    reportList.add(rt);
+                }
+            } else {
+                new clsMainActivity().showCustomToast(getContext(), "No Data to Show", false);
+            }
 
             ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
         } else {
