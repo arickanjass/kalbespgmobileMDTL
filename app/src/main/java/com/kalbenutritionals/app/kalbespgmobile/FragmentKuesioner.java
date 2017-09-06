@@ -50,13 +50,17 @@ import bl.mPertanyaanBL;
 import bl.tAbsenUserBL;
 import bl.tGroupQuestionMappingBL;
 import bl.tJawabanUserBL;
+import bl.tJawabanUserHeaderBL;
 import library.spgmobile.common.jawabanModel;
 import library.spgmobile.common.mKategoriData;
 import library.spgmobile.common.mListJawabanData;
 import library.spgmobile.common.mPertanyaanData;
+import library.spgmobile.common.tAbsenUserData;
 import library.spgmobile.common.tGroupQuestionMappingData;
 import library.spgmobile.common.tJawabanUserData;
+import library.spgmobile.common.tJawabanUserHeaderData;
 import library.spgmobile.common.tUserLoginData;
+import library.spgmobile.dal.tJawabanUserHeaderDA;
 
 /**
  * Created by Arick.Anjasmara on 11/05/2017.
@@ -718,90 +722,38 @@ public class FragmentKuesioner extends Fragment {
             intGroupId = bundle.getInt("Key_GroupId");
         }
         final  List<mPertanyaanData> listDataPertanyaan = new mPertanyaanBL().GetDataByGroupQuestion(intGroupId);
-        for (int i = 0; i < listDataPertanyaan.size(); i++) {
+        if (listDataPertanyaan.size() > 0){
             tUserLoginData dataUserActive = new tAbsenUserBL().getUserActive();
-            List<mListJawabanData> mListJawabanDatas = new mListJawabanBL().GetDataByTypeQuestion(HMPertanyaan.get(HMPertanyaan.get(dataPertanyaan.get(i))), HMPertanyaan.get(dataPertanyaan.get(i)));
-            dataJawaban = new ArrayList<>();
-            if (mListJawabanDatas.size() > 0) {
-                for (mListJawabanData jd : mListJawabanDatas) {
-                    dataJawaban.add(jd.get_txtKey());
-                    HMJawaban.put(jd.get_txtKey(), jd.get_intListAnswerId());
-                    HMJawaban.put(jd.get_intListAnswerId(), jd.get_txtValue());
-                }
-            }
-            if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("5")) {
-                LinearLayout linearLayout = (LinearLayout) listAnswer.get(i);
-                for (int x = 0; x < linearLayout.getChildCount(); x++) {
-                    View nextChild = linearLayout.getChildAt(x);
-                    if (nextChild instanceof SeekBar) {
-                        seekbar = (SeekBar) nextChild;
-                        tJawabanUserData dt = new tJawabanUserData();
-                        dt.set_intUserAnswer(ImagePick.GenerateGuid());
-                        dt.set_intUserId(dataUserActive.get_txtUserId());
-                        dt.set_intNik(dataUserActive.get_TxtEmpId());
-                        dt.set_intRoleId(dataUserActive.get_txtRoleId());
-                        dt.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
-                        dt.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
-                        dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
-                        dt.set_intAnswerId(HMJawaban.get(seekbar.getProgress()));
-                        dt.set_txtValue(String.valueOf(seekbar.getProgress()));
-                        dt.set_ptQuiz(null);
-                        dt.set_txtFileQuiz(null);
-                        dt.set_txtPath(null);
-                        dt.set_decBobot("");
-                        dt.set_intSubmit("1");
-                        dt.set_intSync("0");
-                        listData.add(dt);
-                        new tJawabanUserBL().SaveDatatJawabanUser(dt);
+            tAbsenUserData dataOutletCheckIn = new tAbsenUserBL().getDataCheckInActive();
+            tJawabanUserHeaderData data = new tJawabanUserHeaderData();
+            data.set_intHeaderId(ImagePick.GenerateGuid());
+            data.set_intNik(dataUserActive.get_TxtEmpId());
+            data.set_txtUserName(dataUserActive.get_txtUserName());
+            data.set_intRoleId(dataUserActive.get_txtRoleId());
+            data.set_txtOutletCode(dataOutletCheckIn.get_txtOutletCode());
+            data.set_txtOutletName(dataOutletCheckIn.get_txtOutletName());
+            data.set_dtDate(dataUserActive.get_dtLastLogin());
+            data.set_intGroupQuestionId(String.valueOf(intGroupId));
+            data.set_intSubmit("0");
+            data.set_intSync("0");
+            new tJawabanUserHeaderBL().SaveDatatJawabanHeaderUser(data);
+            List<tJawabanUserHeaderData> dataHeader = new tJawabanUserHeaderBL().GetLastBeforeSaveDetail();
+            for (int i = 0; i < listDataPertanyaan.size(); i++) {
+                List<mListJawabanData> mListJawabanDatas = new mListJawabanBL().GetDataByTypeQuestion(HMPertanyaan.get(HMPertanyaan.get(dataPertanyaan.get(i))), HMPertanyaan.get(dataPertanyaan.get(i)));
+                dataJawaban = new ArrayList<>();
+                if (mListJawabanDatas.size() > 0) {
+                    for (mListJawabanData jd : mListJawabanDatas) {
+                        dataJawaban.add(jd.get_txtKey());
+                        HMJawaban.put(jd.get_txtKey(), jd.get_intListAnswerId());
+                        HMJawaban.put(jd.get_intListAnswerId(), jd.get_txtValue());
                     }
                 }
-            } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("1")) {
-                Spinner spinner = (Spinner) listAnswer.get(i);
-                tJawabanUserData dt = new tJawabanUserData();
-                dt.set_intUserAnswer(ImagePick.GenerateGuid());
-                dt.set_intUserId(dataUserActive.get_txtUserId());
-                dt.set_intNik(dataUserActive.get_TxtEmpId());
-                dt.set_intRoleId(dataUserActive.get_txtRoleId());
-                dt.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
-                dt.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
-                dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
-                dt.set_intAnswerId(HMJawaban.get(spinner.getSelectedItem().toString()));
-                dt.set_txtValue(HMJawaban.get(HMJawaban.get(spinner.getSelectedItem().toString())));
-                dt.set_ptQuiz(null);
-                dt.set_txtFileQuiz(null);
-                dt.set_txtPath(null);
-                dt.set_decBobot("");
-                dt.set_intSubmit("1");
-                dt.set_intSync("0");
-                listData.add(dt);
-                new tJawabanUserBL().SaveDatatJawabanUser(dt);
-            } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("3")) {
-                EditText editText = (EditText) listAnswer.get(i);
-                tJawabanUserData dt = new tJawabanUserData();
-                dt.set_intUserAnswer(ImagePick.GenerateGuid());
-                dt.set_intUserId(dataUserActive.get_txtUserId());
-                dt.set_intNik(dataUserActive.get_TxtEmpId());
-                dt.set_intRoleId(dataUserActive.get_txtRoleId());
-                dt.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
-                dt.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
-                dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
-                dt.set_intAnswerId(HMJawaban.get(editText.getText().toString()));
-                dt.set_txtValue(editText.getText().toString());
-                dt.set_ptQuiz(null);
-                dt.set_txtFileQuiz(null);
-                dt.set_txtPath(null);
-                dt.set_decBobot("");
-                dt.set_intSubmit("1");
-                dt.set_intSync("0");
-                listData.add(dt);
-                new tJawabanUserBL().SaveDatatJawabanUser(dt);
-            } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("2")) {
-                ListView listView = (ListView) listAnswer.get(i);
-                for (int x = 0; x < listView.getChildCount(); x++) {
-                    View nextChild = listView.getChildAt(x);
-                    if (nextChild instanceof CheckBox) {
-                        cbTestGet = (CheckBox) nextChild;
-                        if (cbTestGet.isChecked()) {
+                if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("5")) {
+                    LinearLayout linearLayout = (LinearLayout) listAnswer.get(i);
+                    for (int x = 0; x < linearLayout.getChildCount(); x++) {
+                        View nextChild = linearLayout.getChildAt(x);
+                        if (nextChild instanceof SeekBar) {
+                            seekbar = (SeekBar) nextChild;
                             tJawabanUserData dt = new tJawabanUserData();
                             dt.set_intUserAnswer(ImagePick.GenerateGuid());
                             dt.set_intUserId(dataUserActive.get_txtUserId());
@@ -810,125 +762,166 @@ public class FragmentKuesioner extends Fragment {
                             dt.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
                             dt.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
                             dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
-                            dt.set_intAnswerId(HMJawaban.get(cbTestGet.getText().toString()));
-                            dt.set_txtValue(HMJawaban.get(HMJawaban.get(cbTestGet.getText().toString())));
+                            dt.set_intAnswerId(HMJawaban.get(seekbar.getProgress()));
+                            dt.set_txtValue(String.valueOf(seekbar.getProgress()));
                             dt.set_ptQuiz(null);
                             dt.set_txtFileQuiz(null);
                             dt.set_txtPath(null);
                             dt.set_decBobot("");
                             dt.set_intSubmit("1");
                             dt.set_intSync("0");
+                            dt.set_intHeaderId(dataHeader.get(0).get_intHeaderId());
+                            dt.set_dtDate(dataHeader.get(0).get_dtDate());
                             listData.add(dt);
                             new tJawabanUserBL().SaveDatatJawabanUser(dt);
                         }
                     }
-                }
-            } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("6")) {
-                RadioGroup radioGroup = (RadioGroup) listAnswer.get(i);
-
-                if (!radioGroup.onCheckIsTextEditor()) {
-                    int selectedId = radioGroup.getCheckedRadioButtonId();
-                    if (selectedId > -1) {
-                        RadioButton radioButton = (RadioButton) v.findViewById(selectedId);
-                        if (radioButton.isChecked()) {
-                            tJawabanUserData dt = new tJawabanUserData();
-                            dt.set_intUserAnswer(ImagePick.GenerateGuid());
-                            dt.set_intUserId(dataUserActive.get_txtUserId());
-                            dt.set_intNik(dataUserActive.get_TxtEmpId());
-                            dt.set_intRoleId(dataUserActive.get_txtRoleId());
-                            dt.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
-                            dt.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
-                            dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
-                            dt.set_intAnswerId(HMJawaban.get(radioButton.getText().toString()));
-                            dt.set_txtValue(HMJawaban.get(HMJawaban.get(radioButton.getText().toString())));
-                            dt.set_ptQuiz(null);
-                            dt.set_txtFileQuiz(null);
-                            dt.set_txtPath(null);
-                            dt.set_decBobot("");
-                            dt.set_intSubmit("1");
-                            dt.set_intSync("0");
-                            listData.add(dt);
-                            new tJawabanUserBL().SaveDatatJawabanUser(dt);
-                        }
-                    }
-                }
-            } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("4")) {
-                LinearLayout linearLayout = (LinearLayout) listAnswer.get(i);
-                for (int x = 0; x < linearLayout.getChildCount(); x++) {
-                    View nextChild = linearLayout.getChildAt(x);
-                    if (nextChild instanceof EditText) {
-                        dateView = (EditText) nextChild;
-                        tJawabanUserData dt = new tJawabanUserData();
-                        dt.set_intUserAnswer(ImagePick.GenerateGuid());
-                        dt.set_intUserId(dataUserActive.get_txtUserId());
-                        dt.set_intNik(dataUserActive.get_TxtEmpId());
-                        dt.set_intRoleId(dataUserActive.get_txtRoleId());
-                        dt.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
-                        dt.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
-                        dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
-                        dt.set_intAnswerId(HMJawaban.get(dateView.getText().toString()));
-                        dt.set_txtValue(dateView.getText().toString());
-                        dt.set_ptQuiz(null);
-                        dt.set_txtFileQuiz(null);
-                        dt.set_txtPath(null);
-                        dt.set_decBobot("");
-                        dt.set_intSubmit("1");
-                        dt.set_intSync("0");
-                        listData.add(dt);
-                        new tJawabanUserBL().SaveDatatJawabanUser(dt);
-                    }
-                }
-            } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("7")) {
-                LinearLayout linearLayout = (LinearLayout) listAnswer.get(i);
-
-                BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-                for (int z = 0; z < linearLayout.getChildCount(); z++) {
-                    View nextChild = linearLayout.getChildAt(z);
-                    if (nextChild instanceof TextView) {
-                        tvImgQuiz = (TextView) nextChild;
-                        String selectedImage = tvImgQuiz.getText().toString();
-                        String fileName = selectedImage.substring(selectedImage.lastIndexOf('/')+1, selectedImage.length());
-                        Bitmap bm = BitmapFactory.decodeFile(selectedImage, bitmapOptions);
-                        byte[] byteQuiz = ImagePick.byteQuiz(bm);
-                        tJawabanUserData dt7 = new tJawabanUserData();
-                        dt7.set_intUserAnswer(ImagePick.GenerateGuid());
-                        dt7.set_intUserId(dataUserActive.get_txtUserId());
-                        dt7.set_intNik(dataUserActive.get_TxtEmpId());
-                        dt7.set_intRoleId(dataUserActive.get_txtRoleId());
-                        dt7.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
-                        dt7.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
-                        dt7.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
-                        dt7.set_intAnswerId(null);
-                        dt7.set_txtValue(fileName);
-                        dt7.set_ptQuiz(byteQuiz);
-                        dt7.set_txtFileQuiz(null);
-                        dt7.set_txtPath(selectedImage);
-                        dt7.set_decBobot("");
-                        dt7.set_intSubmit("1");
-                        dt7.set_intSync("0");
-                        listData.add(dt7);
-                        new tJawabanUserBL().SaveDatatJawabanUser(dt7);
-                    }
-                }
-            }else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("8")) {
-                LinearLayout linearLayout = (LinearLayout) listAnswer.get(i);
-                for (int z = 0; z < linearLayout.getChildCount(); z++) {
-                    View nextChild = linearLayout.getChildAt(z);
-                    if (nextChild instanceof Button) {
-
-                    } else {
-                        TextView textView = (TextView) nextChild;
-                        if (textView.getId() == layoutFileQuiz.getId() * 37){
-                            tvFileQuiz = (TextView) nextChild;
-                            tJawabanUserData dt7 = new tJawabanUserData();
-                            String uri = tvFilePathQuiz.getText().toString();
-                            String fileName = uri.substring(uri.lastIndexOf('/')+1, uri.length());
-                            byte[] byteFile = null;
-                            try {
-                                byteFile = ImagePick.getFile(Uri.parse(uri), getContext());
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
+                } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("1")) {
+                    Spinner spinner = (Spinner) listAnswer.get(i);
+                    tJawabanUserData dt = new tJawabanUserData();
+                    dt.set_intUserAnswer(ImagePick.GenerateGuid());
+                    dt.set_intUserId(dataUserActive.get_txtUserId());
+                    dt.set_intNik(dataUserActive.get_TxtEmpId());
+                    dt.set_intRoleId(dataUserActive.get_txtRoleId());
+                    dt.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
+                    dt.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
+                    dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
+                    dt.set_intAnswerId(HMJawaban.get(spinner.getSelectedItem().toString()));
+                    dt.set_txtValue(HMJawaban.get(HMJawaban.get(spinner.getSelectedItem().toString())));
+                    dt.set_ptQuiz(null);
+                    dt.set_txtFileQuiz(null);
+                    dt.set_txtPath(null);
+                    dt.set_decBobot("");
+                    dt.set_intSubmit("1");
+                    dt.set_intSync("0");
+                    dt.set_intHeaderId(dataHeader.get(0).get_intHeaderId());
+                    dt.set_dtDate(dataHeader.get(0).get_dtDate());
+                    listData.add(dt);
+                    new tJawabanUserBL().SaveDatatJawabanUser(dt);
+                } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("3")) {
+                    EditText editText = (EditText) listAnswer.get(i);
+                    tJawabanUserData dt = new tJawabanUserData();
+                    dt.set_intUserAnswer(ImagePick.GenerateGuid());
+                    dt.set_intUserId(dataUserActive.get_txtUserId());
+                    dt.set_intNik(dataUserActive.get_TxtEmpId());
+                    dt.set_intRoleId(dataUserActive.get_txtRoleId());
+                    dt.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
+                    dt.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
+                    dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
+                    dt.set_intAnswerId(HMJawaban.get(editText.getText().toString()));
+                    dt.set_txtValue(editText.getText().toString());
+                    dt.set_ptQuiz(null);
+                    dt.set_txtFileQuiz(null);
+                    dt.set_txtPath(null);
+                    dt.set_decBobot("");
+                    dt.set_intSubmit("1");
+                    dt.set_intSync("0");
+                    dt.set_intHeaderId(dataHeader.get(0).get_intHeaderId());
+                    dt.set_dtDate(dataHeader.get(0).get_dtDate());
+                    listData.add(dt);
+                    new tJawabanUserBL().SaveDatatJawabanUser(dt);
+                } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("2")) {
+                    ListView listView = (ListView) listAnswer.get(i);
+                    for (int x = 0; x < listView.getChildCount(); x++) {
+                        View nextChild = listView.getChildAt(x);
+                        if (nextChild instanceof CheckBox) {
+                            cbTestGet = (CheckBox) nextChild;
+                            if (cbTestGet.isChecked()) {
+                                tJawabanUserData dt = new tJawabanUserData();
+                                dt.set_intUserAnswer(ImagePick.GenerateGuid());
+                                dt.set_intUserId(dataUserActive.get_txtUserId());
+                                dt.set_intNik(dataUserActive.get_TxtEmpId());
+                                dt.set_intRoleId(dataUserActive.get_txtRoleId());
+                                dt.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
+                                dt.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
+                                dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
+                                dt.set_intAnswerId(HMJawaban.get(cbTestGet.getText().toString()));
+                                dt.set_txtValue(HMJawaban.get(HMJawaban.get(cbTestGet.getText().toString())));
+                                dt.set_ptQuiz(null);
+                                dt.set_txtFileQuiz(null);
+                                dt.set_txtPath(null);
+                                dt.set_decBobot("");
+                                dt.set_intSubmit("1");
+                                dt.set_intSync("0");
+                                dt.set_intHeaderId(dataHeader.get(0).get_intHeaderId());
+                                dt.set_dtDate(dataHeader.get(0).get_dtDate());
+                                listData.add(dt);
+                                new tJawabanUserBL().SaveDatatJawabanUser(dt);
                             }
+                        }
+                    }
+                } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("6")) {
+                    RadioGroup radioGroup = (RadioGroup) listAnswer.get(i);
+
+                    if (!radioGroup.onCheckIsTextEditor()) {
+                        int selectedId = radioGroup.getCheckedRadioButtonId();
+                        if (selectedId > -1) {
+                            RadioButton radioButton = (RadioButton) v.findViewById(selectedId);
+                            if (radioButton.isChecked()) {
+                                tJawabanUserData dt = new tJawabanUserData();
+                                dt.set_intUserAnswer(ImagePick.GenerateGuid());
+                                dt.set_intUserId(dataUserActive.get_txtUserId());
+                                dt.set_intNik(dataUserActive.get_TxtEmpId());
+                                dt.set_intRoleId(dataUserActive.get_txtRoleId());
+                                dt.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
+                                dt.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
+                                dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
+                                dt.set_intAnswerId(HMJawaban.get(radioButton.getText().toString()));
+                                dt.set_txtValue(HMJawaban.get(HMJawaban.get(radioButton.getText().toString())));
+                                dt.set_ptQuiz(null);
+                                dt.set_txtFileQuiz(null);
+                                dt.set_txtPath(null);
+                                dt.set_decBobot("");
+                                dt.set_intSubmit("1");
+                                dt.set_intSync("0");
+                                dt.set_intHeaderId(dataHeader.get(0).get_intHeaderId());
+                                dt.set_dtDate(dataHeader.get(0).get_dtDate());
+                                listData.add(dt);
+                                new tJawabanUserBL().SaveDatatJawabanUser(dt);
+                            }
+                        }
+                    }
+                } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("4")) {
+                    LinearLayout linearLayout = (LinearLayout) listAnswer.get(i);
+                    for (int x = 0; x < linearLayout.getChildCount(); x++) {
+                        View nextChild = linearLayout.getChildAt(x);
+                        if (nextChild instanceof EditText) {
+                            dateView = (EditText) nextChild;
+                            tJawabanUserData dt = new tJawabanUserData();
+                            dt.set_intUserAnswer(ImagePick.GenerateGuid());
+                            dt.set_intUserId(dataUserActive.get_txtUserId());
+                            dt.set_intNik(dataUserActive.get_TxtEmpId());
+                            dt.set_intRoleId(dataUserActive.get_txtRoleId());
+                            dt.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
+                            dt.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
+                            dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
+                            dt.set_intAnswerId(HMJawaban.get(dateView.getText().toString()));
+                            dt.set_txtValue(dateView.getText().toString());
+                            dt.set_ptQuiz(null);
+                            dt.set_txtFileQuiz(null);
+                            dt.set_txtPath(null);
+                            dt.set_decBobot("");
+                            dt.set_intSubmit("1");
+                            dt.set_intSync("0");
+                            dt.set_intHeaderId(dataHeader.get(0).get_intHeaderId());
+                            dt.set_dtDate(dataHeader.get(0).get_dtDate());
+                            listData.add(dt);
+                            new tJawabanUserBL().SaveDatatJawabanUser(dt);
+                        }
+                    }
+                } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("7")) {
+                    LinearLayout linearLayout = (LinearLayout) listAnswer.get(i);
+
+                    BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+                    for (int z = 0; z < linearLayout.getChildCount(); z++) {
+                        View nextChild = linearLayout.getChildAt(z);
+                        if (nextChild instanceof TextView) {
+                            tvImgQuiz = (TextView) nextChild;
+                            String selectedImage = tvImgQuiz.getText().toString();
+                            String fileName = selectedImage.substring(selectedImage.lastIndexOf('/')+1, selectedImage.length());
+                            Bitmap bm = BitmapFactory.decodeFile(selectedImage, bitmapOptions);
+                            byte[] byteQuiz = ImagePick.byteQuiz(bm);
+                            tJawabanUserData dt7 = new tJawabanUserData();
                             dt7.set_intUserAnswer(ImagePick.GenerateGuid());
                             dt7.set_intUserId(dataUserActive.get_txtUserId());
                             dt7.set_intNik(dataUserActive.get_TxtEmpId());
@@ -936,21 +929,69 @@ public class FragmentKuesioner extends Fragment {
                             dt7.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
                             dt7.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
                             dt7.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
-                            dt7.set_intAnswerId(HMJawaban.get(textView.getText().toString()));
+                            dt7.set_intAnswerId(null);
                             dt7.set_txtValue(fileName);
-                            dt7.set_ptQuiz(null);
-                            dt7.set_txtFileQuiz(byteFile);
-                            dt7.set_txtPath(uri);
-                            dt7.set_decBobot(""); 
+                            dt7.set_ptQuiz(byteQuiz);
+                            dt7.set_txtFileQuiz(null);
+                            dt7.set_txtPath(selectedImage);
+                            dt7.set_decBobot("");
                             dt7.set_intSubmit("1");
                             dt7.set_intSync("0");
+                            dt7.set_intHeaderId(dataHeader.get(0).get_intHeaderId());
+                            dt7.set_dtDate(dataHeader.get(0).get_dtDate());
                             listData.add(dt7);
                             new tJawabanUserBL().SaveDatatJawabanUser(dt7);
-                        }else if (textView.getId() == layoutFileQuiz.getId() * 63){
-                            tvFilePathQuiz = (TextView) nextChild;
+                        }
+                    }
+                }else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("8")) {
+                    LinearLayout linearLayout = (LinearLayout) listAnswer.get(i);
+                    for (int z = 0; z < linearLayout.getChildCount(); z++) {
+                        View nextChild = linearLayout.getChildAt(z);
+                        if (nextChild instanceof Button) {
+
+                        } else {
+                            TextView textView = (TextView) nextChild;
+                            if (textView.getId() == layoutFileQuiz.getId() * 37){
+                                tvFileQuiz = (TextView) nextChild;
+                                tJawabanUserData dt7 = new tJawabanUserData();
+                                String uri = tvFilePathQuiz.getText().toString();
+                                String fileName = uri.substring(uri.lastIndexOf('/')+1, uri.length());
+                                byte[] byteFile = null;
+                                try {
+                                    byteFile = ImagePick.getFile(Uri.parse(uri), getContext());
+                                } catch (FileNotFoundException e) {
+                                    e.printStackTrace();
+                                }
+                                dt7.set_intUserAnswer(ImagePick.GenerateGuid());
+                                dt7.set_intUserId(dataUserActive.get_txtUserId());
+                                dt7.set_intNik(dataUserActive.get_TxtEmpId());
+                                dt7.set_intRoleId(dataUserActive.get_txtRoleId());
+                                dt7.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
+                                dt7.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
+                                dt7.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
+                                dt7.set_intAnswerId(HMJawaban.get(textView.getText().toString()));
+                                dt7.set_txtValue(fileName);
+                                dt7.set_ptQuiz(null);
+                                dt7.set_txtFileQuiz(byteFile);
+                                dt7.set_txtPath(uri);
+                                dt7.set_decBobot("");
+                                dt7.set_intSubmit("1");
+                                dt7.set_intSync("0");
+                                dt7.set_intHeaderId(dataHeader.get(0).get_intHeaderId());
+                                dt7.set_dtDate(dataHeader.get(0).get_dtDate());
+                                listData.add(dt7);
+                                new tJawabanUserBL().SaveDatatJawabanUser(dt7);
+                            }else if (textView.getId() == layoutFileQuiz.getId() * 63){
+                                tvFilePathQuiz = (TextView) nextChild;
+                            }
                         }
                     }
                 }
+            }
+            for (tJawabanUserHeaderData dt : dataHeader){
+                dt.set_intSubmit("1");
+                dt.set_intId(dataHeader.get(0).get_intId());
+                new tJawabanUserHeaderBL().SaveDatatJawabanHeaderUser(dt);
             }
         }
         return listData;

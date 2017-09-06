@@ -573,12 +573,31 @@ public class dataJson {
                 resJson.put(dttPurchaseOrderHeaderData.Property_ListOftPurchaseOrderHeaderData, new JSONArray(itemsListJquey));
             }
 
+            if (this.getListOftJawabanUserHeaderData() != null){
+                tJawabanUserHeaderData dttJawabanUserHeaderData = new tJawabanUserHeaderData();
+                itemsListJquey = new ArrayList<JSONObject>();
+                for (tJawabanUserHeaderData data :this.getListOftJawabanUserHeaderData()){
+                    JSONObject item = new JSONObject();
+                    item.put(dttJawabanUserHeaderData.Property_intHeaderId, String.valueOf(data.get_intHeaderId()));
+                    item.put(dttJawabanUserHeaderData.Property_intNik, String.valueOf(data.get_intNik()));
+                    item.put(dttJawabanUserHeaderData.Property_txtUserName, String.valueOf(data.get_txtUserName()));
+                    item.put(dttJawabanUserHeaderData.Property_intGroupQuestionId, String.valueOf(data.get_intGroupQuestionId()));
+                    item.put(dttJawabanUserHeaderData.Property_intRoleId, String.valueOf(data.get_intRoleId()));
+                    item.put(dttJawabanUserHeaderData.Property_txtOutletCode, String.valueOf(data.get_txtOutletCode()));
+                    item.put(dttJawabanUserHeaderData.Property_txtOutletName, String.valueOf(data.get_txtOutletName()));
+                    item.put(dttJawabanUserHeaderData.Property_dtDate, String.valueOf(data.get_dtDate()));
+                    itemsListJquey.add(item);
+                }
+                resJson.put(dttJawabanUserHeaderData.Property_ListOftJawabanUserHeaderData, new JSONArray(itemsListJquey));
+            }
+
             if (this.getListOftJawabanUserData() != null){
                 tJawabanUserData dtJawabanUserData = new tJawabanUserData();
                 itemsListJquey = new ArrayList<JSONObject>();
                 for (tJawabanUserData data  : this.getListOftJawabanUserData()){
                     JSONObject item = new JSONObject();
                     item.put(dtJawabanUserData.Property_intUserAnswer, String.valueOf(data.get_intUserAnswer()));
+                    item.put(dtJawabanUserData.Property_intHeaderId, String.valueOf(data.get_intHeaderId()));
                     item.put(dtJawabanUserData.Property_intUserId, String.valueOf(data.get_intUserId()));
                     item.put(dtJawabanUserData.Property_intNik, String.valueOf(data.get_intNik()));
                     item.put(dtJawabanUserData.Property_intRoleId, String.valueOf(data.get_intRoleId()));
@@ -590,6 +609,7 @@ public class dataJson {
                     item.put(dtJawabanUserData.Property_ptQuiz, String.valueOf(data.get_ptQuiz()));
                     item.put(dtJawabanUserData.Property_txtFileQuiz, String.valueOf(data.get_txtFileQuiz()));
                     item.put(dtJawabanUserData.Property_decBobot, String.valueOf(data.get_decBobot()));
+                    item.put(dtJawabanUserData.Property_dtDate, String.valueOf(data.get_dtDate()));
                     itemsListJquey.add(item);
                 }
                 resJson.put(dtJawabanUserData.Property_ListOftJawabanUserData, new JSONArray(itemsListJquey));
@@ -1238,6 +1258,7 @@ public class dataJson {
     private List<tPlanogramImageData> ListOftPlanogramImageData;
     private List<tPurchaseOrderHeaderData> ListOftPurchaseOrderHeaderData;
     private List<tJawabanUserData> ListOftJawabanUserData;
+    private List<tJawabanUserHeaderData> ListOftJawabanUserHeaderData;
     private List<tSalesProductQuantityHeaderData> ListOftSalesProductQuantityData;
     private List<tPlanogramMobileData> ListOftPlanogramMobileData;
     private List<tCustomerBasedMobileHeaderData> ListOftCustomerBasedMobileHeaderData;
@@ -1249,6 +1270,14 @@ public class dataJson {
     private List<KoordinasiOutletData> ListOfKoordinasiOutletData;
     private List<KoordinasiOutletImageData> ListOfKoordinasiOutletImageData;
 
+
+    public List<tJawabanUserHeaderData> getListOftJawabanUserHeaderData() {
+        return ListOftJawabanUserHeaderData;
+    }
+
+    public void setListOftJawabanUserHeaderData(List<tJawabanUserHeaderData> listOftJawabanUserHeaderData) {
+        ListOftJawabanUserHeaderData = listOftJawabanUserHeaderData;
+    }
     public List<tStockInHandHeaderData> getListOftStockInHandHeaderData() {
         return ListOftStockInHandHeaderData;
     }

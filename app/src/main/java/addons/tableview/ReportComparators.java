@@ -86,6 +86,14 @@ public final class ReportComparators {
     public static Comparator<ReportTable> getAnswerComparator(){
         return new answerComparator();
     }
+
+    public static Comparator<ReportTable> getRepeatComparator(){
+        return new repeatComparator();
+    }
+
+    public static Comparator<ReportTable> getCategoryComparator(){
+        return new categoryComparator();
+    }
     private static class noSoComparator implements Comparator<ReportTable> {
 
         @Override
@@ -235,6 +243,22 @@ public final class ReportComparators {
         @Override
         public int compare(final ReportTable data1, final ReportTable data2) {
             return data1.get_Question().compareTo(data2.get_Question());
+        }
+    }
+
+    private static class categoryComparator implements Comparator<ReportTable>{
+
+        @Override
+        public int compare(final ReportTable data1, final ReportTable data2) {
+            return data1.get_Category().compareTo(data2.get_Category());
+        }
+    }
+
+    private static class repeatComparator implements Comparator<ReportTable>{
+
+        @Override
+        public int compare(final ReportTable data1, final ReportTable data2) {
+            return data1.get_RepeatQuiz().compareTo(data2.get_RepeatQuiz());
         }
     }
 

@@ -35,19 +35,13 @@ public class tGroupQuestionMappingBL extends clsMainBL{
         return listData;
     }
 
-    public List<tGroupQuestionMappingData> GetDataByIdActive(){
+    public List<tGroupQuestionMappingData> GetDataByIdActive(String groupId){
         SQLiteDatabase _db = getDb();
         tGroupQuestionMappingDA _tGroupQuestionMappingDA = new tGroupQuestionMappingDA(_db);
-        List<tGroupQuestionMappingData> listData = _tGroupQuestionMappingDA.GetDataByIdActive(_db);
+        List<tGroupQuestionMappingData> listData = _tGroupQuestionMappingDA.GetDataByIdActive(_db, groupId);
         return listData;
     }
 
-    public List<tGroupQuestionMappingData> GetDataByQuestionId(String intQuestionId){
-        SQLiteDatabase _db = getDb();
-        tGroupQuestionMappingDA _tGroupQuestionMappingDA = new tGroupQuestionMappingDA(_db);
-        List<tGroupQuestionMappingData> listData = _tGroupQuestionMappingDA.GetDataByQuestionId(_db, intQuestionId);
-        return listData;
-    }
     public List<mPertanyaanData> GetDataByQstId(String intQuestionId){
         SQLiteDatabase _db = getDb();
         tGroupQuestionMappingDA _tGroupQuestionMappingDA = new tGroupQuestionMappingDA(_db);

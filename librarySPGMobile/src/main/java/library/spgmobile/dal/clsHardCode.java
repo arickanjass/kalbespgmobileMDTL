@@ -84,6 +84,7 @@ public class clsHardCode  {
 	public String txtTable_mKategori = "mKategori";
 	public String txtTable_mPertanyaan = "mPertanyaan";
 	public String txtTable_tJawabanUser = "tJawabanUser";
+	public String txtTable_tJawabanUserHeader = "tJawabanUserHeaderDA";
 	public String txtTable_mTypePertanyaan = "mTypePertanyaan";
 	public String txtTable_mListJawaban = "mListJawaban";
 	public String txtTable_tGroupQuestionMapping = "tGroupQuestionMapping";

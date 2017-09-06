@@ -29,6 +29,35 @@ public class ReportTable implements Serializable {
     private String _Group_Question;
     private String _Question;
     private String _Answer;
+    private String _RepeatQuiz;
+    private String _Category;
+
+    public String get_dummy() {
+        return _dummy;
+    }
+
+    public void set_dummy(String _dummy) {
+        this._dummy = _dummy;
+    }
+
+    private String _dummy;
+
+    public String get_RepeatQuiz() {
+        return _RepeatQuiz;
+    }
+
+    public void set_RepeatQuiz(String _RepeatQuiz) {
+        this._RepeatQuiz = _RepeatQuiz;
+    }
+
+    public String get_Category() {
+        return _Category;
+    }
+
+    public void set_Category(String _Category) {
+        this._Category = _Category;
+    }
+
 
     public String get_type() {
         return _type;

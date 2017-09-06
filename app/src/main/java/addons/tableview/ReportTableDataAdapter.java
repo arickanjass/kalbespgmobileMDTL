@@ -2,28 +2,19 @@ package addons.tableview;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.pm.PackageInstaller;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.github.barteksc.pdfviewer.PDFView;
 import com.kalbenutritionals.app.kalbespgmobile.FragmentKuesioner;
+import com.kalbenutritionals.app.kalbespgmobile.ReportDetailQuiz;
 import com.kalbenutritionals.app.kalbespgmobile.PdfView;
 import com.kalbenutritionals.app.kalbespgmobile.R;
 import com.kalbenutritionals.app.kalbespgmobile.clsMainActivity;
@@ -222,16 +213,36 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
 
             switch (columnIndex) {
                 case 1:
-                    renderedView = renderString(data.get_Group_Question(), "left");
+                    renderedView = renderStringViewDetail(data.get_RepeatQuiz(), data.get_dummy(), data.get_type(), "left");
                     break;
                 case 2:
-                    renderedView = renderString(data.get_Question(), "left");
+                    renderedView = renderString(data.get_Group_Question(), "left");
                     break;
                 case 3:
+                    renderedView =  renderString(data.get_txtOutletName(), "left");
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if(data.get_report_type() == "Kuesioner Detail"){
+
+            switch (columnIndex) {
+                case 1:
+                    renderedView = renderStringDetail(data.get_Category(), "left");
+                    break;
+                case 2:
+                    renderedView = renderStringDetail(data.get_RepeatQuiz(), "left");
+                    break;
+                case 3:
+                    renderedView =  renderStringDetail(data.get_Question(), "left");
+                    break;
+                case 4:
                     if (data.get_type().equals("8") || data.get_type().equals("7")){
                         renderedView = renderStringImage(data.get_Answer(), "left");
                     } else {
-                        renderedView = renderString(data.get_Answer(), "left");
+                        renderedView = renderStringDetail(data.get_Answer(), "left");
                     }
                     break;
                 default:
@@ -252,6 +263,20 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
         	textView.setGravity(Gravity.RIGHT);
         }
         
+        return textView;
+    }
+
+    private View renderStringDetail(final String value, final String align) {
+        final TextView textView = new TextView(getContext());
+        textView.setText(value);
+        textView.setPadding(20, 10, 20, 10);
+        textView.setTextSize(TEXT_SIZE);
+        textView.setTextColor(Color.BLACK);
+
+        if(align.equals("right")){
+            textView.setGravity(Gravity.RIGHT);
+        }
+
         return textView;
     }
 
@@ -278,11 +303,6 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
                     } else if (fileExtension.contains(".xls")){
                         intent.setDataAndType(Uri.fromFile(mediaStorageDir), "application/vnd.ms-excel");
                     }else if (fileExtension.contains(".pdf")){
-//                        Bundle bundle = new Bundle();
-//                        bundle.putString("Key_QuizFile", mediaStorageDir.getPath().toString());
-//                        Intent intentPDf = new Intent(getContext().getApplicationContext(), PdfView.class);
-//                        intentPDf.putExtra("Key_QuizFile", mediaStorageDir.getPath().toString());
-//                        getContext().startActivity(intentPDf);
                         intent.setDataAndType(Uri.fromFile(mediaStorageDir), "application/pdf");
                     }
                     getContext().startActivity(intent);
@@ -290,34 +310,6 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
                     clsMainActivity _clsMainActivity = new clsMainActivity();
                     _clsMainActivity.showCustomToast(getContext(), "You haven't app for open this file", false);
                 }
-//                LayoutInflater layoutInflater = LayoutInflater.from(getContext());
-//                final View promptView = layoutInflater.inflate(R.layout.activity_kuesioner, null);
-//                LinearLayout layout = (LinearLayout) promptView.findViewById(R.id.ll_quiz);
-////                LinearLayout linearLayout = new LinearLayout(getContext());
-////                linearLayout.setOrientation(LinearLayout.VERTICAL);
-////                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(300, 300);
-////                layoutParams.gravity = Gravity.CENTER;
-////                linearLayout.setLayoutParams(layoutParams);
-////                layout.addView(linearLayout);
-//                ImageView imageView = new ImageView(getContext());
-//                LinearLayout.LayoutParams layoutParamImg = new LinearLayout.LayoutParams(200,200);
-//                layoutParamImg.gravity = Gravity.CENTER;
-//                imageView.setLayoutParams(layoutParamImg);
-//                BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-//                Bitmap bm = BitmapFactory.decodeFile(String.valueOf(mediaStorageDir), bitmapOptions);
-//                imageView.setImageBitmap(bm);
-//                layout.addView(imageView);
-//                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-//                alertDialogBuilder.setView(promptView);
-//                alertDialogBuilder.setCancelable(false);
-//                alertDialogBuilder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        dialog.dismiss();
-//                    }
-//                });
-//                final AlertDialog alertD = alertDialogBuilder.create();
-//                alertD.show();
             }
         });
 
@@ -328,4 +320,29 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
         return textView;
     }
 
+    private View renderStringViewDetail(final String value, final String dummy, final String iterasi, final String align) {
+        final TextView textView = new TextView(getContext());
+        textView.setText(value);
+        textView.setPadding(20, 10, 20, 10);
+        textView.setTextSize(TEXT_SIZE);
+        textView.setTextColor(Color.BLUE);
+
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    String[] passingValue = {dummy, iterasi};
+                        Bundle bundle = new Bundle();
+                        bundle.putStringArray("Key_HeaderId", passingValue);
+                        Intent intent = new Intent(getContext().getApplicationContext(), ReportDetailQuiz.class);
+                        intent.putExtra("Key_HeaderId", passingValue);
+                        getContext().startActivity(intent);
+            }
+        });
+
+        if(align.equals("right")){
+            textView.setGravity(Gravity.RIGHT);
+        }
+
+        return textView;
+    }
 }

@@ -48,6 +48,19 @@ public class mPertanyaanBL extends clsMainBL {
         return dt;
     }
 
+    public List<mPertanyaanData> GetDataByQuestionId(String intId){
+        SQLiteDatabase _db = getDb();
+        mPertanyaanDA _mPertanyaanDA = new mPertanyaanDA(_db);
+        List<mPertanyaanData> dt = _mPertanyaanDA.GetDataByQuestionId(_db, intId);
+        return dt;
+    }
+
+    public List<mPertanyaanData> GetDataByCategoryInAndByGroupId(String groupId, String categoryId){
+        SQLiteDatabase _db = getDb();
+        mPertanyaanDA _mPertanyaanDA = new mPertanyaanDA(_db);
+        List<mPertanyaanData> dt = _mPertanyaanDA.GetDataByCategoryInAndByGroupId(_db, groupId, categoryId);
+        return dt;
+    }
     public void DeletemPertanyaan(){
         SQLiteDatabase _db = getDb();
         mPertanyaanDA _mPertanyaanDA = new mPertanyaanDA(_db);

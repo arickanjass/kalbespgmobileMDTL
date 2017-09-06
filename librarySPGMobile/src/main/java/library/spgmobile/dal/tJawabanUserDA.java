@@ -20,6 +20,7 @@ public class tJawabanUserDA {
         tJawabanUserData dt = new tJawabanUserData();
         String CREATE_CONTACTS_TABLE = "CREATE TABLE IF NOT EXISTS "
                 + TABLE_CONTACTS + "( " + dt.Property_intUserAnswer + " TEXT PRIMARY KEY,"
+                + dt.Property_intHeaderId + " TEXT NULL," + dt.Property_dtDate + " TEXT NULL,"
                 + dt.Property_intUserId + " TEXT NULL,"  + dt.Property_intNik + " TEXT NULL,"
                 + dt.Property_intRoleId + " TEXT NULL," + dt.Property_intQuestionId + " TEXT NULL,"
                 + dt.Property_intTypeQuestionId + " TEXT NULL,"+ dt.Property_bolHaveAnswerList + " TEXT NULL,"
@@ -47,6 +48,8 @@ public class tJawabanUserDA {
         cv.put(dt.Property_txtFileQuiz, data.get_txtFileQuiz());
         cv.put(dt.Property_decBobot, String.valueOf(data.get_decBobot()));
         cv.put(dt.Property_intSubmit, String.valueOf(data.get_intSubmit()));
+        cv.put(dt.Property_intHeaderId, String.valueOf(data.get_intHeaderId()));
+        cv.put(dt.Property_dtDate, String.valueOf(data.get_dtDate()));
         if (data.get_intAnswerId() == null){
             cv.put(dt.Property_intSync, String.valueOf(data.get_intSync()));
             db.insert(TABLE_CONTACTS, null, cv);
@@ -81,12 +84,47 @@ public class tJawabanUserDA {
                 contact.set_decBobot(cursor.getString(11));
                 contact.set_intSubmit(cursor.getString(12));
                 contact.set_intSync(cursor.getString(13));
+                contact.set_intHeaderId(cursor.getString(14));
+                contact.set_dtDate(cursor.getString(15));
                 contactList.add(contact);
             }while (cursor.moveToNext());
         }
         cursor.close();
         return contactList;
     }
+
+    public List<tJawabanUserData> GetDataByHeaderId(SQLiteDatabase db, String intHeaderId){
+        List<tJawabanUserData> contactList = new ArrayList<tJawabanUserData>();
+        tJawabanUserData dt = new tJawabanUserData();
+        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intHeaderId + "='" + intHeaderId +"' ORDER BY intUserId ASC";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()){
+            do {
+                tJawabanUserData contact = new tJawabanUserData();
+                contact.set_intUserAnswer(cursor.getString(0));
+                contact.set_intUserId(cursor.getString(1));
+                contact.set_intNik(cursor.getString(2));
+                contact.set_intRoleId(cursor.getString(3));
+                contact.set_intQuestionId(cursor.getString(4));
+                contact.set_intTypeQuestionId(cursor.getString(5));
+                contact.set_bolHaveAnswerList(cursor.getString(6));
+                contact.set_intAnswerId(cursor.getString(7));
+                contact.set_txtValue(cursor.getString(8));
+                byte[] blob = cursor.getBlob(9);
+                contact.set_ptQuiz(blob);
+                contact.set_txtFileQuiz(cursor.getBlob(10));
+                contact.set_decBobot(cursor.getString(11));
+                contact.set_intSubmit(cursor.getString(12));
+                contact.set_intSync(cursor.getString(13));
+                contact.set_intHeaderId(cursor.getString(14));
+                contact.set_dtDate(cursor.getString(15));
+                contactList.add(contact);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return contactList;
+    }
+
     public List<tJawabanUserData> GetDataToPushAnswer(SQLiteDatabase db){
         List<tJawabanUserData> contactList = null;
         tJawabanUserData dt = new tJawabanUserData();
@@ -112,6 +150,8 @@ public class tJawabanUserDA {
                 contact.set_decBobot(cursor.getString(11));
                 contact.set_intSubmit(cursor.getString(12));
                 contact.set_intSync(cursor.getString(13));
+                contact.set_intHeaderId(cursor.getString(14));
+                contact.set_dtDate(cursor.getString(15));
                 contactList.add(contact);
             }while (cursor.moveToNext());
         }

@@ -35,6 +35,7 @@ import library.spgmobile.common.tCustomerBasedMobileDetailData;
 import library.spgmobile.common.tCustomerBasedMobileDetailProductData;
 import library.spgmobile.common.tCustomerBasedMobileHeaderData;
 import library.spgmobile.common.tJawabanUserData;
+import library.spgmobile.common.tJawabanUserHeaderData;
 import library.spgmobile.common.tLeaveMobileData;
 import library.spgmobile.common.tLogErrorData;
 import library.spgmobile.common.tNotificationData;
@@ -71,6 +72,7 @@ import library.spgmobile.dal.tCustomerBasedMobileDetailDA;
 import library.spgmobile.dal.tCustomerBasedMobileDetailProductDA;
 import library.spgmobile.dal.tCustomerBasedMobileHeaderDA;
 import library.spgmobile.dal.tJawabanUserDA;
+import library.spgmobile.dal.tJawabanUserHeaderDA;
 import library.spgmobile.dal.tLeaveMobileDA;
 import library.spgmobile.dal.tLogErrorDA;
 import library.spgmobile.dal.tPlanogramImageDA;
@@ -569,6 +571,7 @@ public class clsHelperBL extends clsMainBL {
             tSalesProductDetailDA _tSalesProductDetailDA = new tSalesProductDetailDA(db);
             tPurchaseOrderDetailDA _tPurchaseOrderDetailDA = new tPurchaseOrderDetailDA(db);
             tJawabanUserDA _tJawabanUserDA = new tJawabanUserDA(db);
+            tJawabanUserHeaderDA _tJawabanUserHeaderDA = new tJawabanUserHeaderDA(db);
             tPurchaseOrderHeaderDA _tPurchaseOrderHeaderDA = new tPurchaseOrderHeaderDA(db);
             tSalesProductQuantityHeaderDA _tSalesProductQuantityDA = new tSalesProductQuantityHeaderDA(db);
             tSalesProductQuantityDetailDA _tSalesProductQuantityDetailDA = new tSalesProductQuantityDetailDA(db);
@@ -981,6 +984,14 @@ public class clsHelperBL extends clsMainBL {
                 tJawabanUserDA _tJawabanUserDA = new tJawabanUserDA(db);
                 dt.set_intSync("1");
                 _tJawabanUserDA.SaveDatatJawabanUser(db,dt);
+            }
+        }
+
+        if (validPush && dtJson.getListOftJawabanUserHeaderData() != null){
+            for (tJawabanUserHeaderData dt : dtJson.getListOftJawabanUserHeaderData()){
+                tJawabanUserHeaderDA _tJawabanUserHeaderDA = new tJawabanUserHeaderDA(db);
+                dt.set_intSync("1");
+                _tJawabanUserHeaderDA.SaveDatatJawabanUserHeader(db, dt);
             }
         }
 

@@ -111,6 +111,13 @@
                 android:value=".MainMenu" />
         </activity>
         <activity
+            android:name=".ReportDetailQuiz"
+            android:label="">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainMenu" />
+        </activity>
+        <activity
             android:name=".PushData"
             android:configChanges="orientation|screenSize"
             android:label="" />

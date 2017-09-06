@@ -40,6 +40,7 @@ import bl.tCustomerBasedMobileDetailProductBL;
 import bl.tCustomerBasedMobileHeaderBL;
 import bl.tGroupQuestionMappingBL;
 import bl.tJawabanUserBL;
+import bl.tJawabanUserHeaderBL;
 import bl.tPlanogramMobileBL;
 import bl.tPurchaseOrderDetailBL;
 import bl.tPurchaseOrderHeaderBL;
@@ -64,6 +65,7 @@ import library.spgmobile.common.tCustomerBasedMobileDetailProductData;
 import library.spgmobile.common.tCustomerBasedMobileHeaderData;
 import library.spgmobile.common.tGroupQuestionMappingData;
 import library.spgmobile.common.tJawabanUserData;
+import library.spgmobile.common.tJawabanUserHeaderData;
 import library.spgmobile.common.tPlanogramMobileData;
 import library.spgmobile.common.tPurchaseOrderDetailData;
 import library.spgmobile.common.tPurchaseOrderHeaderData;
@@ -693,11 +695,10 @@ public class FragmentReporting extends Fragment {
 
             ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
         } else if (spinnerSelected.contains("Kuesioner")){
-//            Toast.makeText(getContext(), "Actvity", Toast.LENGTH_SHORT).show();
             header = new String[6];
-            header[1] = "Group Question";
-            header[2] = "Question";
-            header[3] = "Answer";
+            header[1] = "Jawaban ke-";
+            header[2] = "Group Question";
+            header[3] = "Outlet";
 
             ReportTableView.setColumnCount(header.length);
 
@@ -707,9 +708,9 @@ public class FragmentReporting extends Fragment {
             simpleTableHeaderAdapter.setPaddingBottom(20);
             simpleTableHeaderAdapter.setPaddingTop(20);
 
-            ReportTableView.setColumnComparator(1, ReportComparators.getGroupQuestionComparator());
-            ReportTableView.setColumnComparator(2, ReportComparators.getQuestionComparator());
-            ReportTableView.setColumnComparator(3, ReportComparators.getAnswerComparator());
+            ReportTableView.setColumnComparator(1, ReportComparators.getRepeatComparator());
+            ReportTableView.setColumnComparator(2, ReportComparators.getGroupQuestionComparator());
+            ReportTableView.setColumnComparator(3, ReportComparators.getOutletActivityComparator());
 
 
             ReportTableView.setColumnWeight(1, 2);
@@ -719,19 +720,21 @@ public class FragmentReporting extends Fragment {
             ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
 
             List<tJawabanUserData> dt_Answer = new tJawabanUserBL().GetAllData();
+            List<tJawabanUserHeaderData> dt_HeaderAnswer = new tJawabanUserHeaderBL().GetDataByOutletCode(outletcode);
             reportList = new ArrayList<>();
-
-            if(dt_Answer != null&&dt_Answer.size()>0){
-                for(tJawabanUserData data : dt_Answer ){
+            int iterator = 0;
+            if(dt_HeaderAnswer != null&&dt_HeaderAnswer.size()>0){
+                for(tJawabanUserHeaderData data : dt_HeaderAnswer ){
+                    iterator +=1;
                     ReportTable rt = new ReportTable();
-                    List<tGroupQuestionMappingData> dt_group = new tGroupQuestionMappingBL().GetDataByQuestionId(data.get_intQuestionId());
-                    List<mPertanyaanData> dt_Question  = new  tGroupQuestionMappingBL().GetDataByQstId(data.get_intQuestionId());
+                    List<tGroupQuestionMappingData> dt_group = new tGroupQuestionMappingBL().GetDataById(Integer.parseInt(data.get_intGroupQuestionId()));
 
                     rt.set_report_type("Kuesioner");
                     rt.set_Group_Question(dt_group.get(0).get_txtGroupQuestion());
-                    rt.set_Question(dt_Question.get(0).get_txtQuestionDesc());
-                    rt.set_Answer(data.get_txtValue());
-                    rt.set_type(data.get_intTypeQuestionId());
+                    rt.set_RepeatQuiz("Jawaban ke- " + String.valueOf(iterator));
+                    rt.set_txtOutletName(data.get_txtOutletName());
+                    rt.set_dummy(data.get_intHeaderId());
+                    rt.set_type(String.valueOf(iterator));
                     reportList.add(rt);
                 }
             } else {

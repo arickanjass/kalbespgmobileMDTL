@@ -53,4 +53,22 @@ public class mKategoriDA {
         cursor.close();
         return contactList;
     }
+
+    public mKategoriData GetCategoryById (SQLiteDatabase db, String intId){
+        mKategoriData dt = new mKategoriData();
+        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intCategoryId + "='" + intId + "'";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        mKategoriData contact = null;
+        if (cursor.moveToFirst()){
+            do {
+                contact = new mKategoriData();
+                contact.set_intCategoryId(cursor.getString(0));
+                contact.set_intParentId(cursor.getString(1));
+                contact.set_txtCategoryName(cursor.getString(2));
+
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return contact;
+    }
 }

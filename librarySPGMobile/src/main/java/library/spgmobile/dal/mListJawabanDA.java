@@ -81,4 +81,23 @@ public class mListJawabanDA {
         cursor.close();
         return contactList;
     }
+
+    public mListJawabanData GetDataById(SQLiteDatabase db, String intId){
+        mListJawabanData dt = new mListJawabanData();
+        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intListAnswerId + "='" + intId + "'";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        mListJawabanData contact = null;
+        if (cursor.moveToFirst()){
+            do {
+                contact = new mListJawabanData();
+                contact.set_intListAnswerId(cursor.getString(0));
+                contact.set_intQuestionId(cursor.getString(1));
+                contact.set_intTypeQuestionId(cursor.getString(2));
+                contact.set_txtKey(cursor.getString(3));
+                contact.set_txtValue(cursor.getString(4));
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return contact;
+    }
 }

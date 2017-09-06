@@ -27,6 +27,13 @@ public class mKategoriBL extends clsMainBL {
         return dt;
     }
 
+    public mKategoriData GetCategoryById(String intId){
+        SQLiteDatabase _db = getDb();
+        mKategoriDA _mKategoriDA = new mKategoriDA(_db);
+        mKategoriData dt = _mKategoriDA.GetCategoryById(_db, intId);
+        return dt;
+    }
+
     public void DeletemKategori(){
         SQLiteDatabase _db = getDb();
         mKategoriDA _mKategoriDA = new mKategoriDA(db);

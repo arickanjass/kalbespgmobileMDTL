@@ -33,6 +33,13 @@ public class mListJawabanBL extends clsMainBL {
         return dt;
     }
 
+    public mListJawabanData GetDataById(String intId){
+        SQLiteDatabase _db = getDb();
+        mListJawabanDA _mListJawabanDA = new mListJawabanDA(_db);
+        mListJawabanData dt = _mListJawabanDA.GetDataById(_db, intId);
+        return dt;
+    }
+
     public void DeletemListJawaban(){
         SQLiteDatabase _db = getDb();
         mListJawabanDA _mListJawabanDA = new mListJawabanDA(_db);

@@ -27,6 +27,7 @@ public class FragmentKuesionerAwal extends Fragment {
     View v;
     Button btn1, btn2;
     List<tGroupQuestionMappingData> groupQuestionMappingDataList = new ArrayList<>();
+    List<tGroupQuestionMappingData> mappingDataList = new ArrayList<>();
     List<mPertanyaanData> mPertanyaanDataList = new ArrayList<>();
     List<mPertanyaanData> listPertanyaanbyQId = new ArrayList<>();
     private LinearLayout lnBtn;
@@ -53,10 +54,11 @@ public class FragmentKuesionerAwal extends Fragment {
             listButton.add(btn2);
            listPertanyaanbyQId = new mPertanyaanBL().GetDataByGroupQuestion(id_);
             final int h = iterator ;
+            mappingDataList = new tGroupQuestionMappingBL().GetDataByIdActive(groupQuestionMappingDataList.get(i).get_intId());
             mPertanyaanDataList = new mPertanyaanBL().GetDataBYGroupQuestionCheck(Integer.parseInt(groupQuestionMappingDataList.get(i).get_intId()));
-            if (mPertanyaanDataList.size() == 0 && groupQuestionMappingDataList.get(i).get_txtRepeatQuestion().equals("Berulang") ){
+            if (mappingDataList.size() == 0 && groupQuestionMappingDataList.get(i).get_txtRepeatQuestion().equals("Berulang") ){
                 listButton.get(i).setVisibility(View.VISIBLE);
-            } else if (mPertanyaanDataList.size() == 0 && groupQuestionMappingDataList.get(i).get_txtRepeatQuestion().equals("Sekali Jawab")){
+            } else if (mappingDataList.size() == 0 && groupQuestionMappingDataList.get(i).get_txtRepeatQuestion().equals("Sekali Jawab")){
                 listButton.get(i).setVisibility(View.GONE);
             }
 
