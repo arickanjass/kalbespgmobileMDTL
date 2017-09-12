@@ -13,23 +13,31 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 import addons.tableview.ReportComparators;
 import addons.tableview.ReportTableDataAdapter;
 import addons.tableview.SortabeReportTableViewDetail;
+import bl.mEmployeeSalesProductBL;
 import bl.mKategoriBL;
 import bl.mListJawabanBL;
 import bl.mPertanyaanBL;
+import bl.tAbsenUserBL;
 import bl.tGroupQuestionMappingBL;
+import bl.tHirarkiBISBL;
 import bl.tJawabanUserBL;
 import bl.tJawabanUserHeaderBL;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 import library.spgmobile.common.ReportTable;
+import library.spgmobile.common.mEmployeeSalesProductData;
 import library.spgmobile.common.mKategoriData;
 import library.spgmobile.common.mListJawabanData;
 import library.spgmobile.common.mPertanyaanData;
+import library.spgmobile.common.tAbsenUserData;
 import library.spgmobile.common.tGroupQuestionMappingData;
+import library.spgmobile.common.tHirarkiBIS;
 import library.spgmobile.common.tJawabanUserData;
 import library.spgmobile.common.tJawabanUserHeaderData;
 
@@ -102,7 +110,7 @@ public class ReportDetailQuiz extends AppCompatActivity {
 
             ReportTableView.setColumnWeight(1, 2);
             ReportTableView.setColumnWeight(2, 2);
-            ReportTableView.setColumnWeight(3, 2); 
+            ReportTableView.setColumnWeight(3, 2);
             ReportTableView.setColumnWeight(4, 2);
 
             ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
@@ -113,16 +121,53 @@ public class ReportDetailQuiz extends AppCompatActivity {
                 for(tJawabanUserData data : dt_Answer ){
                     ReportTable rt = new ReportTable();
                     List<mPertanyaanData> dt_Question  = new mPertanyaanBL().GetDataByQuestionId(data.get_intQuestionId());
+                    List<tJawabanUserData> dataAnswer = new tJawabanUserBL().GetDataByQuestionId(data.get_intQuestionId(), dataHeader.get_intHeaderId());
                     mKategoriData kategoriData = new mKategoriBL().GetCategoryById(dt_Question.get(0).get_intCategoryId());
-
                     rt.set_report_type("Kuesioner Detail");
                     rt.set_RepeatQuiz(dt_Question.get(0).get_intSoalId());
                     rt.set_dummy(data.get_intHeaderId());
                     rt.set_Category(kategoriData.get_txtCategoryName());
                     rt.set_Question(dt_Question.get(0).get_txtQuestionDesc());
                     if (data.get_intTypeQuestionId().equals("1") || data.get_intTypeQuestionId().equals("2") || data.get_intTypeQuestionId().equals("6")){
-                        mListJawabanData answer = new mListJawabanBL().GetDataById(data.get_intAnswerId());
-                        rt.set_Answer(answer.get_txtKey());
+                        String jawab = null;
+                        if (dataAnswer != null && dataAnswer.size()>0){
+                            for (tJawabanUserData dt : dataAnswer){
+                                mListJawabanData answer = new mListJawabanBL().GetDataById(dt.get_intAnswerId());
+                                final HashMap<String, String> HMProduct = new HashMap<String, String>();
+                                tAbsenUserData dataOutletCheckIn = new tAbsenUserBL().getDataCheckInActive();
+                                List<String> dataJawaban = new ArrayList<>();
+                                if (answer.get_txtValue().equals("SPG01")){
+
+                                    List<tHirarkiBIS> listSPG = new tHirarkiBISBL().GetDataByOutlet(dataOutletCheckIn.get_txtOutletCode());
+                                    if (listSPG.size() > 0) {
+                                        for (tHirarkiBIS dat : listSPG) {
+                                            dataJawaban.add(dat.get_txtNik());
+                                            HMProduct.put(dat.get_txtNik(), dat.get_txtName());
+                                        }
+                                    }
+                                    String jawaban = HMProduct.get(data.get_txtValue());
+                                    rt.set_Answer(jawaban);
+                                } else if (answer.get_txtValue().equals("CUS01")){
+                                    List<mEmployeeSalesProductData> listDataProductKalbe = new mEmployeeSalesProductBL().GetAllData();
+                                    if (listDataProductKalbe.size() > 0) {
+                                        for (mEmployeeSalesProductData dat : listDataProductKalbe) {
+                                            dataJawaban.add(dat.get_txtBrandDetailGramCode());
+                                            HMProduct.put(dat.get_txtBrandDetailGramCode(), dat.get_txtProductBrandDetailGramName());
+                                        }
+                                    }
+                                    String jawaban = HMProduct.get(data.get_txtValue());
+                                    rt.set_Answer(jawaban);
+                                }else {
+                                    if (jawab != null){
+                                        jawab += answer.get_txtKey() + " ,";
+                                    }else {
+                                        jawab = answer.get_txtKey() + " ,";
+                                    }
+                                    String jawabFinal = jawab.substring(0, jawab.lastIndexOf(',')).trim();
+                                    rt.set_Answer(jawabFinal);
+                                }
+                            }
+                        }
                     } else {
                         rt.set_Answer(data.get_txtValue());
                     }

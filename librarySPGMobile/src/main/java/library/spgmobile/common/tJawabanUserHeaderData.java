@@ -17,6 +17,16 @@ public class tJawabanUserHeaderData {
     private String _intGroupQuestionId;
     private String _txtOutletName;
 
+    public String get_dtDatetime() {
+        return _dtDatetime;
+    }
+
+    public void set_dtDatetime(String _dtDatetime) {
+        this._dtDatetime = _dtDatetime;
+    }
+
+    private String _dtDatetime;
+
     public String get_txtOutletName() {
         return _txtOutletName;
     }
@@ -117,11 +127,12 @@ public class tJawabanUserHeaderData {
     public String Property_intId = "intId";
     public String Property_intGroupQuestionId = "intGroupQuestionId";
     public String Property_txtOutletName = "txtOutletName";
+    public String Property_dtDatetime = "dtDatetime";
     public String Property_ListOftJawabanUserHeaderData = "ListOftJawabanUserHeaderData";
     public String Property_All =  Property_intHeaderId + "," + Property_intNik + "," + Property_txtUserName
             + "," + Property_intRoleId + "," + Property_txtOutletCode + "," + Property_dtDate
-            + "," + Property_intSubmit + "," + Property_intSync + "," + Property_intId
-            + "," + Property_intGroupQuestionId + "," + Property_txtOutletName ;
+            + "," + Property_intSubmit + "," + Property_intSync
+            + "," + Property_intGroupQuestionId + "," + Property_txtOutletName +  "," +Property_dtDatetime ;
     public tJawabanUserHeaderData(){
         super();
     }

@@ -25,19 +25,19 @@ public class tJawabanUserHeaderBL extends clsMainBL {
     public List<tJawabanUserHeaderData> GetAllData(){
         SQLiteDatabase _db = getDb();
         tJawabanUserHeaderDA _tJawabanUserDA = new tJawabanUserHeaderDA(_db);
-        List<tJawabanUserHeaderData> listData = _tJawabanUserDA.GetAllData(_db);
+        List<tJawabanUserHeaderData> listData = _tJawabanUserDA.GetAllDatas(_db);
         db.close();
         return listData;
     }
 
-    public List<tJawabanUserHeaderData> GetDataByOutletCode(String code){
+    public List<tJawabanUserHeaderData> GetDataByOutletCode(String code, String date){
         SQLiteDatabase _db = getDb();
         tJawabanUserHeaderDA _tJawabanUserDA = new tJawabanUserHeaderDA(_db);
         List<tJawabanUserHeaderData> listData ;
         if (code.equals("ALLOUTLET")){
-            listData = _tJawabanUserDA.GetAllData(_db);
+            listData = _tJawabanUserDA.GetAllData(_db, date);
         } else {
-            listData = _tJawabanUserDA.GetDataByOutletCode(_db, code);
+            listData = _tJawabanUserDA.GetDataByOutletCode(_db, code, date);
         }
         if (listData == null){
             listData = new ArrayList<>(0);

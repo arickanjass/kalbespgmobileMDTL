@@ -55,10 +55,17 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import bl.mEmployeeSalesProductBL;
+import bl.tAbsenUserBL;
+import bl.tHirarkiBISBL;
 import library.spgmobile.common.jawabanModel;
+import library.spgmobile.common.mEmployeeSalesProductData;
+import library.spgmobile.common.tAbsenUserData;
+import library.spgmobile.common.tHirarkiBIS;
 import library.spgmobile.dal.clsHardCode;
 
 
@@ -78,6 +85,7 @@ public class FragmentKuesionerPart extends Fragment {
     private static final int PICK_IMAGE_ID = 1993;
     private static final int PICK_FILE_ID = 98;
     ImageView imageView;
+    final HashMap<String, String> HMProduct = new HashMap<String, String>();
     private Uri uriImage;
     private static byte[] phtQuiz;
     clsMainActivity _clsMainActivity = new clsMainActivity();
@@ -105,8 +113,28 @@ public class FragmentKuesionerPart extends Fragment {
         if (typeJawaban == 1) {
             ArrayList<String> spinnerArray = new ArrayList<String>();
 
-            for (int i = 0; i < _jawabanModel.size(); i++) {
-                spinnerArray.add(_jawabanModel.get(i).getKey());
+            if(_jawabanModel.get(0).getValue().equals("SPG01")){
+                tAbsenUserData dataOutletCheckIn = new tAbsenUserBL().getDataCheckInActive();
+                List<tHirarkiBIS> listSPG = new tHirarkiBISBL().GetDataByOutlet(dataOutletCheckIn.get_txtOutletCode());
+                if (listSPG.size() > 0) {
+                    for (tHirarkiBIS dt : listSPG) {
+                        spinnerArray.add(dt.get_txtName());
+                        HMProduct.put(dt.get_txtName(), dt.get_txtNik());
+                    }
+                }
+            }else if (_jawabanModel.get(0).getValue().equals("CUS01")){
+                List<mEmployeeSalesProductData> listDataProductKalbe = new mEmployeeSalesProductBL().GetAllData();
+                if (listDataProductKalbe.size() > 0) {
+                    for (mEmployeeSalesProductData dt : listDataProductKalbe) {
+                        spinnerArray.add(dt.get_txtProductBrandDetailGramName());
+                        HMProduct.put(dt.get_txtProductBrandDetailGramName(), dt.get_txtBrandDetailGramCode());
+                        HMProduct.put(dt.get_txtBrandDetailGramCode(), dt.get_txtBrandDetailGramCode());
+                    }
+                }
+            } else {
+                for (int i = 0; i < _jawabanModel.size(); i++) {
+                    spinnerArray.add(_jawabanModel.get(i).getKey());
+                }
             }
             spinnerArray.add("Select One");
             final int listsize = spinnerArray.size() - 1;

@@ -586,6 +586,7 @@ public class dataJson {
                     item.put(dttJawabanUserHeaderData.Property_txtOutletCode, String.valueOf(data.get_txtOutletCode()));
                     item.put(dttJawabanUserHeaderData.Property_txtOutletName, String.valueOf(data.get_txtOutletName()));
                     item.put(dttJawabanUserHeaderData.Property_dtDate, String.valueOf(data.get_dtDate()));
+                    item.put(dttJawabanUserHeaderData.Property_dtDatetime, String.valueOf(data.get_dtDatetime()));
                     itemsListJquey.add(item);
                 }
                 resJson.put(dttJawabanUserHeaderData.Property_ListOftJawabanUserHeaderData, new JSONArray(itemsListJquey));

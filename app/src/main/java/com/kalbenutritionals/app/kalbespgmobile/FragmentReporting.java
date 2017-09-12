@@ -33,6 +33,7 @@ import bl.mDownloadMasterData_mobileBL;
 import bl.mEmployeeAreaBL;
 import bl.mMenuBL;
 import bl.mTypeSubmissionMobileBL;
+import bl.tAbsenUserBL;
 import bl.tActivityBL;
 import bl.tActivityMobileBL;
 import bl.tCustomerBasedMobileDetailBL;
@@ -75,6 +76,7 @@ import library.spgmobile.common.tSalesProductQuantityDetailData;
 import library.spgmobile.common.tSalesProductQuantityHeaderData;
 import library.spgmobile.common.tStockInHandDetailData;
 import library.spgmobile.common.tStockInHandHeaderData;
+import library.spgmobile.common.tUserLoginData;
 
 public class FragmentReporting extends Fragment {
 
@@ -696,9 +698,10 @@ public class FragmentReporting extends Fragment {
             ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
         } else if (spinnerSelected.contains("Kuesioner")){
             header = new String[6];
-            header[1] = "Jawaban ke-";
+            header[1] = "No.";
             header[2] = "Group Question";
             header[3] = "Outlet";
+            header[4] = "Answered at -";
 
             ReportTableView.setColumnCount(header.length);
 
@@ -711,16 +714,19 @@ public class FragmentReporting extends Fragment {
             ReportTableView.setColumnComparator(1, ReportComparators.getRepeatComparator());
             ReportTableView.setColumnComparator(2, ReportComparators.getGroupQuestionComparator());
             ReportTableView.setColumnComparator(3, ReportComparators.getOutletActivityComparator());
+            ReportTableView.setColumnComparator(4, ReportComparators.getDatetimeComparator());
 
 
-            ReportTableView.setColumnWeight(1, 2);
+            ReportTableView.setColumnWeight(1, 1);
             ReportTableView.setColumnWeight(2, 2);
             ReportTableView.setColumnWeight(3, 2);
+            ReportTableView.setColumnWeight(4, 2);
+
 
             ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
 
-            List<tJawabanUserData> dt_Answer = new tJawabanUserBL().GetAllData();
-            List<tJawabanUserHeaderData> dt_HeaderAnswer = new tJawabanUserHeaderBL().GetDataByOutletCode(outletcode);
+            tUserLoginData dataUserActive = new tAbsenUserBL().getUserActive();
+            List<tJawabanUserHeaderData> dt_HeaderAnswer = new tJawabanUserHeaderBL().GetDataByOutletCode(outletcode, dataUserActive.get_dtLastLogin());
             reportList = new ArrayList<>();
             int iterator = 0;
             if(dt_HeaderAnswer != null&&dt_HeaderAnswer.size()>0){
@@ -731,10 +737,11 @@ public class FragmentReporting extends Fragment {
 
                     rt.set_report_type("Kuesioner");
                     rt.set_Group_Question(dt_group.get(0).get_txtGroupQuestion());
-                    rt.set_RepeatQuiz("Jawaban ke- " + String.valueOf(iterator));
+                    rt.set_RepeatQuiz( String.valueOf(iterator));
                     rt.set_txtOutletName(data.get_txtOutletName());
                     rt.set_dummy(data.get_intHeaderId());
-                    rt.set_type(String.valueOf(iterator));
+//                    rt.set_type(String.valueOf(iterator));
+                    rt.set_dateTime(data.get_dtDatetime());
                     reportList.add(rt);
                 }
             } else {

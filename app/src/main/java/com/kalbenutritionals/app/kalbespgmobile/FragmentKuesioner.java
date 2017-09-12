@@ -39,24 +39,32 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.FileNotFoundException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import bl.mEmployeeSalesProductBL;
 import bl.mKategoriBL;
 import bl.mListJawabanBL;
 import bl.mPertanyaanBL;
 import bl.tAbsenUserBL;
 import bl.tGroupQuestionMappingBL;
+import bl.tHirarkiBISBL;
 import bl.tJawabanUserBL;
 import bl.tJawabanUserHeaderBL;
 import library.spgmobile.common.jawabanModel;
+import library.spgmobile.common.mEmployeeSalesProductData;
 import library.spgmobile.common.mKategoriData;
 import library.spgmobile.common.mListJawabanData;
 import library.spgmobile.common.mPertanyaanData;
 import library.spgmobile.common.tAbsenUserData;
 import library.spgmobile.common.tGroupQuestionMappingData;
+import library.spgmobile.common.tHirarkiBIS;
 import library.spgmobile.common.tJawabanUserData;
 import library.spgmobile.common.tJawabanUserHeaderData;
 import library.spgmobile.common.tUserLoginData;
@@ -140,22 +148,6 @@ public class FragmentKuesioner extends Fragment {
         final FrameLayout frameLayout = (FrameLayout) v.findViewById(R.id.fbSubmit);
 //        tabLayout.setupWithViewPager(viewPager);
 
-        int a = toolbar.getMeasuredWidth();
-        int display = getResources().getDisplayMetrics().widthPixels;
-//        int width = getWindowManager().getDefaultDisplay().getWidth();
-//      final   LinearLayout tabStrip = ((LinearLayout)tabLayout.getChildAt(0));
-//        for(int i = 0; i < tabStrip.getChildCount(); i++) {
-////            tabStrip.getChildAt(i).setKeepScreenOn(true);
-//
-//            tabStrip.getChildAt(i).setMinimumWidth(display);
-////            tabStrip.getChildAt(i).setVisibility(View.GONE);
-//            tabStrip.getChildAt(i).setOnTouchListener(new View.OnTouchListener() {
-//                @Override
-//                public boolean onTouch(View v, MotionEvent event) {
-//                    return true;
-//                }
-//            });
-//        }
         final int iterator = viewPager.getCurrentItem();
         tvQuiz.setText("Soal " + HMPertanyaan3.get(HMPertanyaan3.get(dataPertanyaan3.get(iterator))));
         toolbar.setSubtitle(HMKategori.get(HMPertanyaan2.get(HMPertanyaan.get(dataPertanyaan.get(iterator)))));
@@ -726,13 +718,26 @@ public class FragmentKuesioner extends Fragment {
             tUserLoginData dataUserActive = new tAbsenUserBL().getUserActive();
             tAbsenUserData dataOutletCheckIn = new tAbsenUserBL().getDataCheckInActive();
             tJawabanUserHeaderData data = new tJawabanUserHeaderData();
+            DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date time = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            Date date = null;
+            try {
+               date = sdf.parse(dataUserActive.get_dtLastLogin());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            String timeNow = timeFormat.format(time);
+            String dateNow = dateFormat.format(date);
             data.set_intHeaderId(ImagePick.GenerateGuid());
             data.set_intNik(dataUserActive.get_TxtEmpId());
             data.set_txtUserName(dataUserActive.get_txtUserName());
             data.set_intRoleId(dataUserActive.get_txtRoleId());
             data.set_txtOutletCode(dataOutletCheckIn.get_txtOutletCode());
             data.set_txtOutletName(dataOutletCheckIn.get_txtOutletName());
-            data.set_dtDate(dataUserActive.get_dtLastLogin());
+            data.set_dtDatetime(dateNow+" "+timeNow);
+            data.set_dtDate(dateNow);
             data.set_intGroupQuestionId(String.valueOf(intGroupId));
             data.set_intSubmit("0");
             data.set_intSync("0");
@@ -742,12 +747,33 @@ public class FragmentKuesioner extends Fragment {
                 List<mListJawabanData> mListJawabanDatas = new mListJawabanBL().GetDataByTypeQuestion(HMPertanyaan.get(HMPertanyaan.get(dataPertanyaan.get(i))), HMPertanyaan.get(dataPertanyaan.get(i)));
                 dataJawaban = new ArrayList<>();
                 if (mListJawabanDatas.size() > 0) {
-                    for (mListJawabanData jd : mListJawabanDatas) {
-                        dataJawaban.add(jd.get_txtKey());
-                        HMJawaban.put(jd.get_txtKey(), jd.get_intListAnswerId());
-                        HMJawaban.put(jd.get_intListAnswerId(), jd.get_txtValue());
+                    if (mListJawabanDatas.get(0).get_txtValue().equals("SPG01")){
+                        List<tHirarkiBIS> listSPG = new tHirarkiBISBL().GetDataByOutlet(dataOutletCheckIn.get_txtOutletCode());
+                        if (listSPG.size() > 0) {
+                            for (tHirarkiBIS dt : listSPG) {
+                                dataJawaban.add(dt.get_txtName());
+                                HMJawaban.put(dt.get_txtName(), dt.get_txtNik());
+                                HMJawaban.put(dt.get_txtNik(), mListJawabanDatas.get(0).get_intListAnswerId());
+                            }
+                        }
+                    } else if (mListJawabanDatas.get(0).get_txtValue().equals("CUS01")){
+                        List<mEmployeeSalesProductData> listDataProductKalbe = new mEmployeeSalesProductBL().GetAllData();
+                        if (listDataProductKalbe.size() > 0) {
+                            for (mEmployeeSalesProductData dt : listDataProductKalbe) {
+                                dataJawaban.add(dt.get_txtProductBrandDetailGramName());
+                                HMJawaban.put(dt.get_txtProductBrandDetailGramName(), dt.get_txtBrandDetailGramCode());
+                                HMJawaban.put(dt.get_txtBrandDetailGramCode(), mListJawabanDatas.get(0).get_intListAnswerId());
+                            }
+                        }
+                    }else {
+                        for (mListJawabanData jd : mListJawabanDatas) {
+                            dataJawaban.add(jd.get_txtKey());
+                            HMJawaban.put(jd.get_txtKey(), jd.get_txtValue());
+                            HMJawaban.put(jd.get_txtValue(), jd.get_intListAnswerId());
+                        }
                     }
                 }
+
                 if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("5")) {
                     LinearLayout linearLayout = (LinearLayout) listAnswer.get(i);
                     for (int x = 0; x < linearLayout.getChildCount(); x++) {
@@ -762,7 +788,7 @@ public class FragmentKuesioner extends Fragment {
                             dt.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
                             dt.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
                             dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
-                            dt.set_intAnswerId(HMJawaban.get(seekbar.getProgress()));
+                            dt.set_intAnswerId(HMJawaban.get(HMJawaban.get(seekbar.getProgress())));
                             dt.set_txtValue(String.valueOf(seekbar.getProgress()));
                             dt.set_ptQuiz(null);
                             dt.set_txtFileQuiz(null);
@@ -786,8 +812,8 @@ public class FragmentKuesioner extends Fragment {
                     dt.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
                     dt.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
                     dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
-                    dt.set_intAnswerId(HMJawaban.get(spinner.getSelectedItem().toString()));
-                    dt.set_txtValue(HMJawaban.get(HMJawaban.get(spinner.getSelectedItem().toString())));
+                    dt.set_intAnswerId(HMJawaban.get(HMJawaban.get(spinner.getSelectedItem().toString())));
+                    dt.set_txtValue(HMJawaban.get(spinner.getSelectedItem().toString()));
                     dt.set_ptQuiz(null);
                     dt.set_txtFileQuiz(null);
                     dt.set_txtPath(null);
@@ -808,7 +834,7 @@ public class FragmentKuesioner extends Fragment {
                     dt.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
                     dt.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
                     dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
-                    dt.set_intAnswerId(HMJawaban.get(editText.getText().toString()));
+                    dt.set_intAnswerId(HMJawaban.get(HMJawaban.get(editText.getText().toString())));
                     dt.set_txtValue(editText.getText().toString());
                     dt.set_ptQuiz(null);
                     dt.set_txtFileQuiz(null);
@@ -835,8 +861,8 @@ public class FragmentKuesioner extends Fragment {
                                 dt.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
                                 dt.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
                                 dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
-                                dt.set_intAnswerId(HMJawaban.get(cbTestGet.getText().toString()));
-                                dt.set_txtValue(HMJawaban.get(HMJawaban.get(cbTestGet.getText().toString())));
+                                dt.set_intAnswerId(HMJawaban.get(HMJawaban.get(cbTestGet.getText().toString())));
+                                dt.set_txtValue(HMJawaban.get(cbTestGet.getText().toString()));
                                 dt.set_ptQuiz(null);
                                 dt.set_txtFileQuiz(null);
                                 dt.set_txtPath(null);
@@ -866,8 +892,8 @@ public class FragmentKuesioner extends Fragment {
                                 dt.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
                                 dt.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
                                 dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
-                                dt.set_intAnswerId(HMJawaban.get(radioButton.getText().toString()));
-                                dt.set_txtValue(HMJawaban.get(HMJawaban.get(radioButton.getText().toString())));
+                                dt.set_intAnswerId(HMJawaban.get(HMJawaban.get(radioButton.getText().toString())));
+                                dt.set_txtValue(HMJawaban.get(radioButton.getText().toString()));
                                 dt.set_ptQuiz(null);
                                 dt.set_txtFileQuiz(null);
                                 dt.set_txtPath(null);
@@ -895,7 +921,7 @@ public class FragmentKuesioner extends Fragment {
                             dt.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
                             dt.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
                             dt.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
-                            dt.set_intAnswerId(HMJawaban.get(dateView.getText().toString()));
+                            dt.set_intAnswerId(HMJawaban.get(HMJawaban.get(dateView.getText().toString())));
                             dt.set_txtValue(dateView.getText().toString());
                             dt.set_ptQuiz(null);
                             dt.set_txtFileQuiz(null);
@@ -969,7 +995,7 @@ public class FragmentKuesioner extends Fragment {
                                 dt7.set_intQuestionId(listDataPertanyaan.get(i).get_intQuestionId());
                                 dt7.set_intTypeQuestionId(listDataPertanyaan.get(i).get_intTypeQuestionId());
                                 dt7.set_bolHaveAnswerList(listDataPertanyaan.get(i).get_bolHaveAnswerList());
-                                dt7.set_intAnswerId(HMJawaban.get(textView.getText().toString()));
+                                dt7.set_intAnswerId(HMJawaban.get(HMJawaban.get(textView.getText().toString())));
                                 dt7.set_txtValue(fileName);
                                 dt7.set_ptQuiz(null);
                                 dt7.set_txtFileQuiz(byteFile);

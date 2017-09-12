@@ -71,6 +71,7 @@ import library.spgmobile.dal.tAttendanceUserDA;
 import library.spgmobile.dal.tCustomerBasedMobileDetailDA;
 import library.spgmobile.dal.tCustomerBasedMobileDetailProductDA;
 import library.spgmobile.dal.tCustomerBasedMobileHeaderDA;
+import library.spgmobile.dal.tHirarkiBISDA;
 import library.spgmobile.dal.tJawabanUserDA;
 import library.spgmobile.dal.tJawabanUserHeaderDA;
 import library.spgmobile.dal.tLeaveMobileDA;
@@ -571,6 +572,7 @@ public class clsHelperBL extends clsMainBL {
             tSalesProductDetailDA _tSalesProductDetailDA = new tSalesProductDetailDA(db);
             tPurchaseOrderDetailDA _tPurchaseOrderDetailDA = new tPurchaseOrderDetailDA(db);
             tJawabanUserDA _tJawabanUserDA = new tJawabanUserDA(db);
+            tHirarkiBISDA _tHirarkiBISDA = new tHirarkiBISDA(db);
             tJawabanUserHeaderDA _tJawabanUserHeaderDA = new tJawabanUserHeaderDA(db);
             tPurchaseOrderHeaderDA _tPurchaseOrderHeaderDA = new tPurchaseOrderHeaderDA(db);
             tSalesProductQuantityHeaderDA _tSalesProductQuantityDA = new tSalesProductQuantityHeaderDA(db);
@@ -602,6 +604,7 @@ public class clsHelperBL extends clsMainBL {
             List<tPurchaseOrderDetailData> ListOfPurchaseOrderDetail = _tPurchaseOrderDetailDA.getAllDataToPushDataPO(db, ListOfPurchaseOrderHeader);
             List<tSalesProductQuantityHeaderData> ListOfSalesProductQuantityHeader = _tSalesProductQuantityDA.getAllDataToPushData(db);
             List<tJawabanUserData> ListOfJawabanUser = _tJawabanUserDA.GetDataToPushAnswer(db);
+            List<tJawabanUserHeaderData> ListOfJawabanUserHeader = _tJawabanUserHeaderDA.GetDataToPushAnswer(db);
             List<tSalesProductQuantityDetailData> ListOfSalesProductQuantityDetail = _tSalesProductQuantityDetailDA.getAllDataToPushData(db, ListOfSalesProductQuantityHeader);
             List<tSalesProductQuantityImageData> ListOfSalesProductQuantityImage = _tSalesProductQuantityImageDA.getAllDataToPushData(db, ListOfSalesProductQuantityHeader);
             List<trackingLocationData> ListOfTrackingLocation = _trackingLocationDA.getAllDataToPushData(db);
@@ -820,6 +823,9 @@ public class clsHelperBL extends clsMainBL {
                 dtPush.setListOftJawabanUserData(ListOfJawabanUser);
             }
 
+            if (ListOfJawabanUserHeader  != null){
+                dtPush.setListOftJawabanUserHeaderData(ListOfJawabanUserHeader);
+            }
             if (ListOfPurchaseOrderDetail != null){
                 dtPush.setListOftPurchaseOrderDetailData(ListOfPurchaseOrderDetail);
             }
@@ -875,17 +881,6 @@ public class clsHelperBL extends clsMainBL {
         dtclsPushData.setDtdataJson(dtPush);
         dtclsPushData.setFileUpload(FileUpload);
         return dtclsPushData;
-    }
-
-    public void deleteDataPush(dataJson dtJson, JSONArray JsonResult) {
-        SQLiteDatabase db = getDb();
-        if (dtJson.getListOftJawabanUserData() != null) {
-            for (tJawabanUserData dt : dtJson.getListOftJawabanUserData()) {
-                tJawabanUserDA _tJawabanUserDA = new tJawabanUserDA(db);
-                _tJawabanUserDA.DeleteAllDatatJawabanUser(db);
-            }
-        }
-        db.close();
     }
 
     public void saveDataPush(dataJson dtJson, org.json.simple.JSONArray JsonResult) {

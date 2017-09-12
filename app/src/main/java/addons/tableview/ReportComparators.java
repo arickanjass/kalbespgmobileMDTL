@@ -19,6 +19,10 @@ public final class ReportComparators {
         return new outlet_ActivityComparator();
     }
 
+    public static Comparator<ReportTable> getDatetimeComparator() {
+        return new dateTimeComparator();
+    }
+
     public static Comparator<ReportTable> getCustomerNameComparator() {
         return new customerNameComparator();
     }
@@ -211,6 +215,12 @@ public final class ReportComparators {
         @Override
         public int compare(ReportTable data1, ReportTable data2) {
             return data1.get_txtOutletName().compareTo(data2.get_txtOutletName());
+        }
+    }
+    private static class dateTimeComparator implements Comparator<ReportTable> {
+        @Override
+        public int compare(ReportTable data1, ReportTable data2) {
+            return data1.get_dateTime().compareTo(data2.get_dateTime());
         }
     }
 

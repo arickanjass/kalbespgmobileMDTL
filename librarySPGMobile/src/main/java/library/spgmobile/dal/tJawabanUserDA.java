@@ -96,7 +96,40 @@ public class tJawabanUserDA {
     public List<tJawabanUserData> GetDataByHeaderId(SQLiteDatabase db, String intHeaderId){
         List<tJawabanUserData> contactList = new ArrayList<tJawabanUserData>();
         tJawabanUserData dt = new tJawabanUserData();
-        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intHeaderId + "='" + intHeaderId +"' ORDER BY intUserId ASC";
+        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intHeaderId + "='" + intHeaderId +"' GROUP BY " + dt.Property_intQuestionId;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()){
+            do {
+                tJawabanUserData contact = new tJawabanUserData();
+                contact.set_intUserAnswer(cursor.getString(0));
+                contact.set_intUserId(cursor.getString(1));
+                contact.set_intNik(cursor.getString(2));
+                contact.set_intRoleId(cursor.getString(3));
+                contact.set_intQuestionId(cursor.getString(4));
+                contact.set_intTypeQuestionId(cursor.getString(5));
+                contact.set_bolHaveAnswerList(cursor.getString(6));
+                contact.set_intAnswerId(cursor.getString(7));
+                contact.set_txtValue(cursor.getString(8));
+                byte[] blob = cursor.getBlob(9);
+                contact.set_ptQuiz(blob);
+                contact.set_txtFileQuiz(cursor.getBlob(10));
+                contact.set_decBobot(cursor.getString(11));
+                contact.set_intSubmit(cursor.getString(12));
+                contact.set_intSync(cursor.getString(13));
+                contact.set_intHeaderId(cursor.getString(14));
+                contact.set_dtDate(cursor.getString(15));
+                contactList.add(contact);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return contactList;
+    }
+
+    public List<tJawabanUserData> GetDataByQuestionId(SQLiteDatabase db, String intQuestionId, String intHeaderId){
+        List<tJawabanUserData> contactList = new ArrayList<tJawabanUserData>();
+        tJawabanUserData dt = new tJawabanUserData();
+        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intQuestionId + "='"
+                + intQuestionId + "' AND " + dt.Property_intHeaderId + "='" + intHeaderId + "'";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()){
             do {

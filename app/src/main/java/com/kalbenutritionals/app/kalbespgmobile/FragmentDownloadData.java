@@ -7,7 +7,10 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,12 +34,21 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
 import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.sql.Array;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import bl.KoordinasiOutletBL;
 import bl.clsMainBL;
@@ -66,7 +78,9 @@ import bl.tCustomerBasedMobileDetailBL;
 import bl.tCustomerBasedMobileDetailProductBL;
 import bl.tCustomerBasedMobileHeaderBL;
 import bl.tGroupQuestionMappingBL;
+import bl.tHirarkiBISBL;
 import bl.tJawabanUserBL;
+import bl.tJawabanUserHeaderBL;
 import bl.tKategoryPlanogramMobileBL;
 import bl.tLeaveMobileBL;
 import bl.tPlanogramMobileBL;
@@ -109,7 +123,9 @@ import library.spgmobile.common.tCustomerBasedMobileDetailData;
 import library.spgmobile.common.tCustomerBasedMobileDetailProductData;
 import library.spgmobile.common.tCustomerBasedMobileHeaderData;
 import library.spgmobile.common.tGroupQuestionMappingData;
+import library.spgmobile.common.tHirarkiBIS;
 import library.spgmobile.common.tJawabanUserData;
+import library.spgmobile.common.tJawabanUserHeaderData;
 import library.spgmobile.common.tKategoryPlanogramMobileData;
 import library.spgmobile.common.tLeaveMobileData;
 import library.spgmobile.common.tPlanogramImageData;
@@ -558,8 +574,12 @@ public class FragmentDownloadData extends Fragment {
             @Override
             public void onClick(View v) {
                 intProcesscancel = 0;
+                AsyncCallQuis1 task1 = new AsyncCallQuis1();
+                task1.execute();
                 AsyncCallQuis task = new AsyncCallQuis();
                 task.execute();
+
+
             }
         });
         btnDataPO.setOnClickListener(new View.OnClickListener() {
@@ -1150,6 +1170,12 @@ public class FragmentDownloadData extends Fragment {
                     org.json.simple.JSONObject innerObj_Quiz = (org.json.simple.JSONObject) x.next();
                     int boolValid_po = Integer.valueOf(String.valueOf(innerObj_Quiz.get("_pboolValid")));
                     if (boolValid_po == 1) SaveDataQuesioner(Json);
+
+                    Json = new mParentBL().DownlaodDataSPGfromTL(pInfo.versionName);
+                    Iterator y = Json.iterator();
+                    JSONObject innnerObj_SPGFromTL = (JSONObject) y.next();
+                    int boolValid_SPG = Integer.valueOf(String.valueOf(innnerObj_SPGFromTL.get("_pboolValid")));
+                    if (boolValid_SPG == 1) SaveDataSPGFromTL(Json);
                 }
 
                 if (ll_dataQuantityStock != null && checkVisibility(ll_dataQuantityStock)) {
@@ -1944,6 +1970,76 @@ public class FragmentDownloadData extends Fragment {
         return null;
     }
 
+    private byte[] getImageAndFile(String url, String namaFile) {
+        OutputStream out = null;
+        InputStream in = null;
+        File mediaStorageDir = new File(new clsHardCode().txtFolderQuiz + File.separator);
+        // Create the storage directory if it does not exist
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                Log.d("File", "Failed create directory");
+                return null;
+            }
+        }
+        // Create a media file name
+        File mediaFile;
+        mediaFile = new File(mediaStorageDir.getPath() + File.separator + namaFile);
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+
+            URL imageUrl = new URL(url);
+            URLConnection ucon = imageUrl.openConnection();
+            String contentType = ucon.getHeaderField("Content-Type");
+            boolean image = contentType.startsWith("image/");
+            boolean text = contentType.startsWith("application/");
+
+            if (image) {
+                InputStream is = ucon.getInputStream();
+                in = new BufferedInputStream(is, 1024);
+                out = new FileOutputStream(mediaFile);
+
+                // Transfer bytes from in to out
+                byte[] buf = new byte[1024];
+                int len;
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
+                is.close();
+                out.close();
+                BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+                Bitmap bm = BitmapFactory.decodeFile(mediaFile.getPath().toString(), bitmapOptions);
+                byte[] byteQuiz = ImagePick.byteQuiz(bm);
+                return byteQuiz;
+            } else if (text){
+                InputStream is = ucon.getInputStream();
+                BufferedInputStream bis = new BufferedInputStream(is);
+                out = new FileOutputStream(mediaFile);
+                ByteArrayBuffer baf = new ByteArrayBuffer(500);
+                int current;
+                while ((current = bis.read()) != -1) {
+                    baf.append((byte) current);
+                }
+
+                out.write(baf.toByteArray());
+                // Transfer bytes from in to out
+                out.close();
+                byte[] byteFile = null;
+                try {
+                    byteFile = ImagePick.getFile(Uri.parse(mediaFile.getPath().toString()), getContext());
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                return baf.toByteArray();
+            }else {
+                return null;
+            }
+        } catch (Exception e) {
+            Log.d("ImageManager", "Error: " + e.toString());
+        }
+        return null;
+    }
+
     private List<String> SaveDatatCustomerBasedData(JSONArray JData) {
         List<String> _array;
         APIData dtAPIDATA = new APIData();
@@ -2083,12 +2179,71 @@ public class FragmentDownloadData extends Fragment {
         return _array;
     }
 
+    private class AsyncCallQuis1 extends AsyncTask<JSONArray, Void, JSONArray> {
+        @Override
+        protected JSONArray doInBackground(JSONArray... params) {
+            JSONArray Json = null;
+            try {
+//                Json = new mParentBL().DownlaodDataQuesioner(pInfo.versionName);
+                Json = new mParentBL().DownlaodDataSPGfromTL(pInfo.versionName);
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return Json;
+        }
+
+        private ProgressDialog Dialog = new ProgressDialog(getContext());
+
+        @Override
+        protected void onCancelled() {
+            Dialog.dismiss();
+            new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessCancelRequest, false);
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray jsonArray) {
+            if (jsonArray != null && jsonArray.size() > 0) {
+//                arrData = SaveDataQuesioner(jsonArray);
+                arrData = SaveDataSPGFromTL(jsonArray);
+                loadData();
+//                new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
+            } else {
+                if (intProcesscancel == 1) {
+                    onCancelled();
+                } else {
+                    new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
+                }
+            }
+            checkingDataTable("");
+            Dialog.dismiss();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            Dialog.setMessage("Getting Question");
+            Dialog.setCancelable(false);
+//            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    intProcesscancel = 1;
+//                }
+//            });
+            Dialog.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            Dialog.dismiss();
+        }
+    }
     private class AsyncCallQuis extends AsyncTask<JSONArray, Void, JSONArray> {
         @Override
         protected JSONArray doInBackground(JSONArray... params) {
             JSONArray Json = null;
             try {
                 Json = new mParentBL().DownlaodDataQuesioner(pInfo.versionName);
+//                Json = new mParentBL().DownlaodDataSPGfromTL(pInfo.versionName);
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -2108,6 +2263,7 @@ public class FragmentDownloadData extends Fragment {
         protected void onPostExecute(JSONArray jsonArray) {
             if (jsonArray != null && jsonArray.size() > 0) {
                 arrData = SaveDataQuesioner(jsonArray);
+//                arrData = SaveDataSPGFromTL(jsonArray);
                 loadData();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
@@ -4098,15 +4254,59 @@ public class FragmentDownloadData extends Fragment {
                         new mTypePertanyaanBL().SaveData(_data);
                     }
 
-                    JSONArray jsonArray_jawabanSPG = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListtJAwabanSPG_mobile")));
-                    for (Object aJsonArray_jawabanSPG : jsonArray_jawabanSPG ){
-                        tJawabanUserData _data = new tJawabanUserData(); 
-                        JSONObject innerObj_JawabanSPG = (JSONObject) aJsonArray_jawabanSPG ;
-                        _data .set_intUserAnswer(String.valueOf(innerObj_JawabanSPG.get("IntListAnswerId")));
-                        _data .set_intQuestionId(String.valueOf(innerObj_JawabanSPG.get("IntQuestionId"))) ;
-                        _data .set_intRoleId(String.valueOf(innerObj_JawabanSPG.get("IntRoleId"))) ;
-                        _data .set_intUserId(String.valueOf(innerObj_JawabanSPG.get("IntUserId"))) ;
+                    JSONArray jsonArray_jawabanSPG = new clsHelper() .ResultJsonArray(String.valueOf(innerObj.get("ListtJawabanSPG_mobile")));
+                    for (Object ajsonArray_jawabanSPG : jsonArray_jawabanSPG){
+                        tJawabanUserData _data = new tJawabanUserData();
+                        JSONObject innerObj_JawabanSPG = (JSONObject) ajsonArray_jawabanSPG;
+                        _data.set_intUserAnswer(String.valueOf(innerObj_JawabanSPG.get("IntJawabanSPG")));
+                        _data.set_intHeaderId(String.valueOf(innerObj_JawabanSPG.get("IntHeaderId")));
+                        _data.set_intUserId(String.valueOf(innerObj_JawabanSPG.get("IntUserId")));
+                        _data.set_intNik(String.valueOf(innerObj_JawabanSPG.get("IntNik")));
+                        _data.set_dtDate(String.valueOf(innerObj_JawabanSPG.get("DtDate")));
+                        _data.set_intRoleId(String.valueOf(innerObj_JawabanSPG.get("IntRoleId")));
+                        _data.set_intQuestionId(String.valueOf(innerObj_JawabanSPG.get("IntQuestionId")));
+                        _data.set_intTypeQuestionId(String.valueOf(innerObj_JawabanSPG.get("IntTypeQuestionId")));
+                        _data.set_bolHaveAnswerList(String.valueOf(innerObj_JawabanSPG.get("BolHaveAnswerList")));
+                        _data.set_intAnswerId(String.valueOf(innerObj_JawabanSPG.get("IntListAnswerId")));
+                        _data.set_txtValue(String.valueOf(innerObj_JawabanSPG.get("TxtValueSPG")));
+                        _data.set_decBobot(String.valueOf(innerObj_JawabanSPG.get("DecBobot")));
+                        String urlImg = String.valueOf(innerObj_JawabanSPG.get("TxtLinkImg"));
+                        String urlFile = String.valueOf(innerObj_JawabanSPG.get("TxtLinkFile"));
+                        String value = String.valueOf(innerObj_JawabanSPG.get("TxtValueSPG"));
+                        byte[] Img = null;
+                        byte[] filedata = null;
+                        if (urlImg != "null"){
+                            Img = getImageAndFile(urlImg, value );
+                        } else if (urlFile != "null"){
+                            filedata= getImageAndFile(urlFile, value);
+                        }
+
+                        if (Img != null){
+                            _data.set_ptQuiz(Img);
+                        }
+                        if (filedata != null){
+                            _data.set_txtFileQuiz(filedata);
+                        }
+                        _data.set_intSubmit("1");
+                        _data.set_intSync("1");
                         new tJawabanUserBL().SaveDatatJawabanUser(_data);
+                    }
+                    JSONArray jsonArray_jawabanSPGHeader = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListtJawabanHeaderSPG_mobile")));
+                    for (Object aJsonArray_jawabanSPGHeader : jsonArray_jawabanSPGHeader ){
+                        tJawabanUserHeaderData _data = new tJawabanUserHeaderData();
+                        JSONObject innerObj_JawabanSPGHeader = (JSONObject) aJsonArray_jawabanSPGHeader ;
+                        _data.set_intHeaderId(String.valueOf(innerObj_JawabanSPGHeader.get("IntHeaderId")));
+                        _data.set_intGroupQuestionId(String.valueOf(innerObj_JawabanSPGHeader.get("IntGroupQuestionId")));
+                        _data.set_intNik(String.valueOf(innerObj_JawabanSPGHeader.get("IntNik")));
+                        _data.set_txtUserName(String.valueOf(innerObj_JawabanSPGHeader.get("TxtUserName")));
+                        _data.set_txtOutletName(String.valueOf(innerObj_JawabanSPGHeader.get("TxtOutletName")));
+                        _data.set_txtOutletCode(String.valueOf(innerObj_JawabanSPGHeader.get("TxtOutletCode")));
+                        _data.set_dtDate(String.valueOf(innerObj_JawabanSPGHeader.get("DtDate")));
+                        _data.set_dtDatetime(String.valueOf(innerObj_JawabanSPGHeader.get("DtDatetime")));
+                        _data.set_intRoleId(String.valueOf(innerObj_JawabanSPGHeader.get("IntRoleId"))) ;
+                        _data.set_intSubmit("1");
+                        _data.set_intSync("1");
+                        new tJawabanUserHeaderBL().SaveDatatJawabanHeaderUser(_data);
                     }
                 } else {
                     new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
@@ -4115,6 +4315,36 @@ public class FragmentDownloadData extends Fragment {
                 e.printStackTrace();
             }
         }
+        return _array;
+    }
+
+    private List<String> SaveDataSPGFromTL(JSONArray jsonArray) {
+        List<String> _array;
+        APIData dtAPIDATA = new APIData();
+        _array = new ArrayList<>();
+        int id = 0;
+        for (Object aJsonArray : jsonArray) {
+            JSONObject innerObj = (JSONObject) aJsonArray;
+                int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
+                if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
+                    tHirarkiBIS _data = new  tHirarkiBIS();
+                    id+=1;
+                    _data.set_intId(String.valueOf(id));
+                    _data.set_txtNik(String.valueOf(innerObj.get("IntNIK")));
+                    _data.set_txtName(String.valueOf(innerObj.get("TxtName")));
+                    _data.set_txtLOB(String.valueOf(innerObj.get("TxtLOB")));
+                    _data.set_intBranchId(String.valueOf(innerObj.get("IntBranchId")));
+                    _data.set_txtBranchCode(String.valueOf(innerObj.get("TxtBranchCode")));
+                    _data.set_txtBranchName(String.valueOf(innerObj.get("TXtBranchName")));
+                    _data.set_intOutletId(String.valueOf(innerObj.get("IntOutletId")));
+                    _data.set_txtOutletCode(String.valueOf(innerObj.get("TxtOutletName")));
+                    _data.set_txtOutletName(String.valueOf(innerObj.get("TxtOutletCode")));
+                    new tHirarkiBISBL().SaveDataSPGFromTL(_data);
+                } else {
+                    String error = String.valueOf(innerObj.get(dtAPIDATA.strMessage));
+                    new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
+                }
+            }
         return _array;
     }
 

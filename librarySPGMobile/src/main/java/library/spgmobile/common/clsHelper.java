@@ -68,6 +68,7 @@ import library.spgmobile.dal.tCustomerBasedMobileDetailProductDA;
 import library.spgmobile.dal.tCustomerBasedMobileHeaderDA;
 import library.spgmobile.dal.tDeviceInfoUserDA;
 import library.spgmobile.dal.tDisplayPictureDA;
+import library.spgmobile.dal.tHirarkiBISDA;
 import library.spgmobile.dal.tJawabanUserDA;
 import library.spgmobile.dal.tJawabanUserHeaderDA;
 import library.spgmobile.dal.tKategoryPlanogramMobileDA;
@@ -342,6 +343,7 @@ public class clsHelper {
 		mListJawabanDA _mListJawabanDA = new mListJawabanDA(db);
 		mPertanyaanDA _mPertanyaanDA = new mPertanyaanDA(db);
 		tJawabanUserDA _tJawabanUserDA = new tJawabanUserDA(db);
+		tHirarkiBISDA _tHirarkiBISDA = new tHirarkiBISDA(db);
 		tJawabanUserHeaderDA _tJawabanUserHeaderDA = new tJawabanUserHeaderDA(db);
 		mCategoryVisitPlanDA _mMCategoryVisitPlanDA = new mCategoryVisitPlanDA(db);
 		trackingLocationDA _trackingLocationDA = new trackingLocationDA(db);
@@ -419,6 +421,7 @@ public class clsHelper {
 		_mListJawabanDA.DropTable(db);
 		_mPertanyaanDA.DropTable(db);
 		_tJawabanUserDA.DropTable(db);
+		_tHirarkiBISDA.DropTable(db);
 		_tJawabanUserHeaderDA.DropTable(db);
 		_trackingLocationDA.DropTable(db);
 		_KoordinasiOutletDA.DropTable(db);
@@ -445,6 +448,7 @@ public class clsHelper {
 		_mListJawabanDA = new mListJawabanDA(db);
 		_mPertanyaanDA = new mPertanyaanDA(db);
 		_tJawabanUserDA = new tJawabanUserDA(db);
+		_tHirarkiBISDA = new tHirarkiBISDA(db);
 		_tJawabanUserHeaderDA = new tJawabanUserHeaderDA(db);
 		_trackingLocationDA = new trackingLocationDA(db);
 		_KoordinasiOutletDA = new KoordinasiOutletDA(db);

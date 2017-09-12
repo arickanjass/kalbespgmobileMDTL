@@ -213,13 +213,16 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
 
             switch (columnIndex) {
                 case 1:
-                    renderedView = renderStringViewDetail(data.get_RepeatQuiz(), data.get_dummy(), data.get_type(), "left");
+                    renderedView = renderString(data.get_RepeatQuiz(), "left");
                     break;
                 case 2:
                     renderedView = renderString(data.get_Group_Question(), "left");
                     break;
                 case 3:
                     renderedView =  renderString(data.get_txtOutletName(), "left");
+                    break;
+                case 4:
+                    renderedView = renderStringViewDetail(data.get_dateTime(), data.get_dummy(), "left");
                     break;
                 default:
                     break;
@@ -320,7 +323,7 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
         return textView;
     }
 
-    private View renderStringViewDetail(final String value, final String dummy, final String iterasi, final String align) {
+    private View renderStringViewDetail(final String value, final String dummy, final String align) {
         final TextView textView = new TextView(getContext());
         textView.setText(value);
         textView.setPadding(20, 10, 20, 10);
@@ -330,7 +333,7 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    String[] passingValue = {dummy, iterasi};
+                    String[] passingValue = {dummy, value};
                         Bundle bundle = new Bundle();
                         bundle.putStringArray("Key_HeaderId", passingValue);
                         Intent intent = new Intent(getContext().getApplicationContext(), ReportDetailQuiz.class);

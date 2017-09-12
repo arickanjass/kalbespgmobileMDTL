@@ -32,6 +32,15 @@ public class ReportTable implements Serializable {
     private String _RepeatQuiz;
     private String _Category;
 
+    public String get_dateTime() {
+        return _dateTime;
+    }
+
+    public void set_dateTime(String _dateTime) {
+        this._dateTime = _dateTime;
+    }
+
+    private String _dateTime;
     public String get_dummy() {
         return _dummy;
     }

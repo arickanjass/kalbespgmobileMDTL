@@ -150,7 +150,7 @@ public class mconfigDA {
 		txtQuery = "insert or replace into mconfig(intId,txtName,txtValue,txtDefaultValue,intEditAdmin )"
 				//+ "select  2,'API','http://xt34m.kalbenutritionals.co.id/WebDashboard/api/api.aspx?callback=?','https://appgw01.kalbenutritionals.com/kndashboard/api/default.aspx?callback=?',1;";
 //				+ "select  2,'API','http://10.171.10.17:8001/api/api.aspx?callback=?','https://appgw01.kalbenutritionals.com/kndashboard/api/default.aspx?callback=?',1;";
-				+ "select  2,'API','http://10.171.10.15/webdashboard/api/API.aspx?callback=?','https://appgw01.kalbenutritionals.com/kndashboard/api/default.aspx?callback=?',1;";
+				+ "select  2,'API','http://10.171.11.111/webdashboard/api/API.aspx?callback=?','https://appgw01.kalbenutritionals.com/kndashboard/api/default.aspx?callback=?',1;";
 		db.execSQL(txtQuery);
 		txtQuery = "insert or replace into mconfig(intId,txtName,txtValue,txtDefaultValue,intEditAdmin )"
 				+ "select  3,'Type Mobile','SPGMobile-Android','SPGMobile-Android',1;";

@@ -36,6 +36,7 @@ import java.util.List;
 import bl.clsHelperBL;
 import bl.mDownloadMasterData_mobileBL;
 import bl.tAbsenUserBL;
+import bl.tGroupQuestionMappingBL;
 import bl.tNotificationBL;
 import bl.tUserLoginBL;
 import come.example.viewbadger.ShortcutBadger;
@@ -49,7 +50,9 @@ import library.spgmobile.common.tActivityData;
 import library.spgmobile.common.tActivityMobileData;
 import library.spgmobile.common.tAttendanceUserData;
 import library.spgmobile.common.tCustomerBasedMobileHeaderData;
+import library.spgmobile.common.tGroupQuestionMappingData;
 import library.spgmobile.common.tJawabanUserData;
+import library.spgmobile.common.tJawabanUserHeaderData;
 import library.spgmobile.common.tLeaveMobileData;
 import library.spgmobile.common.tNotificationData;
 import library.spgmobile.common.tPlanogramMobileData;
@@ -169,9 +172,9 @@ public class FragmentPushData extends Fragment {
             } else if (txt_id.equals(res.getResourceEntryName(ll_data_koordinasi.getId()))){
                 ll_data_koordinasi.setVisibility(View.VISIBLE);
             }
-//            else if (txt_id.equals(res.getResourceEntryName(ll_dataQuesioner.getId()))){
-//                ll_dataQuesioner.setVisibility(View.VISIBLE);
-//            }
+            else if (txt_id.equals(res.getResourceEntryName(ll_dataQuesioner.getId()))){
+                ll_dataQuesioner.setVisibility(View.VISIBLE);
+            }
             else if (txt_id.equals(res.getResourceEntryName(ll_data_attendance.getId()))){
                 ll_data_attendance.setVisibility(View.VISIBLE);
             }
@@ -235,8 +238,8 @@ public class FragmentPushData extends Fragment {
                     initPOHeader(getContext(),null);
                 }
 
-                if (dtJson.getListOftJawabanUserData() != null){
-                    initQuis(getContext(), dtJson.getListOftJawabanUserData());
+                if (dtJson.getListOftJawabanUserHeaderData() != null){
+                    initQuis(getContext(), dtJson.getListOftJawabanUserHeaderData());
                 }
                 else {
                     initQuis(getContext(), null);
@@ -1034,7 +1037,7 @@ public class FragmentPushData extends Fragment {
     }
 
     //table for view quis
-    private void initQuis(Context context, List<tJawabanUserData> listOftJawabanUserData) {
+    private void initQuis(Context context, List<tJawabanUserHeaderData> listOftJawabanUserHeaderData) {
         tlsQuis = (TableLayout) v.findViewById(R.id.tl_quiz);
         tlsQuis.removeAllViews();
 
@@ -1043,7 +1046,7 @@ public class FragmentPushData extends Fragment {
 
         TableRow tr = new TableRow(getContext());
 
-        String[] colTextHeader = {"No. Question", "Answer"};
+        String[] colTextHeader = {"No.", "Group Question", "Outlet"};
 
         for (String text : colTextHeader) {
             TextView tv = new TextView(getContext());
@@ -1061,9 +1064,9 @@ public class FragmentPushData extends Fragment {
         }
         tlsQuis.addView(tr);
 
-        if(listOftJawabanUserData!=null){
+        if(listOftJawabanUserHeaderData!=null){
             int index = 1;
-            for(tJawabanUserData dat : listOftJawabanUserData){
+            for(tJawabanUserHeaderData dat : listOftJawabanUserHeaderData){
 
                 tr = new TableRow(getContext());
                 TextView tv_no_quis = new TextView(getContext());
@@ -1076,13 +1079,25 @@ public class FragmentPushData extends Fragment {
                 tv_no_quis.setLayoutParams(params);
                 tr.addView(tv_no_quis);
 
+                List<tGroupQuestionMappingData> dt_group = new tGroupQuestionMappingBL().GetDataById(Integer.parseInt(dat.get_intGroupQuestionId()));
+                TextView groupQuis = new TextView(getContext());
+                groupQuis.setTextSize(12);
+                groupQuis.setPadding(10, 10, 10, 10);
+                groupQuis.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                groupQuis.setTextColor(Color.BLACK);
+                groupQuis.setGravity(Gravity.CENTER);
+                groupQuis.setText(dt_group.get(0).get_txtGroupQuestion());
+                groupQuis.setLayoutParams(params);
+
+                tr.addView(groupQuis);
+
                 TextView answer = new TextView(getContext());
                 answer.setTextSize(12);
                 answer.setPadding(10, 10, 10, 10);
                 answer.setBackgroundColor(Color.parseColor("#f0f0f0"));
                 answer.setTextColor(Color.BLACK);
                 answer.setGravity(Gravity.CENTER);
-                answer.setText("Done Question no. " + index);
+                answer.setText(dat.get_txtOutletName());
                 answer.setLayoutParams(params);
 
                 tr.addView(answer);
