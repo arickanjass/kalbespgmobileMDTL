@@ -218,13 +218,10 @@ public class FragmentAddKoordinasi extends Fragment implements View.OnClickListe
                             savePicture1();
                             savePicture2();
 
-//                                            Intent nextScreen = new Intent(getContext(), MainMenu.class);
-//                                            startActivity(nextScreen);
-
                             Intent myIntent = new Intent(getContext(), MainMenu.class);
                             getActivity().finish();
                             startActivity(myIntent);
-                            _clsMainActivity.showCustomToast(getActivity(), "Submit", true);
+                            new clsMainActivity().showCustomToast(getActivity(), "Submit", true);
                         }
                     });
                     alertDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -235,34 +232,6 @@ public class FragmentAddKoordinasi extends Fragment implements View.OnClickListe
                         }
                     });
                     alertDialog.show();
-//                    LayoutInflater layoutInflater = LayoutInflater.from(getContext());
-//                    final View promptView = layoutInflater.inflate(R.layout.confirm_data, null);
-//
-//                    final TextView _tvConfirm = (TextView) promptView.findViewById(R.id.tvTitle);
-//                    final TextView _tvDesc = (TextView) promptView.findViewById(R.id.tvDesc);
-//                    _tvDesc.setVisibility(View.INVISIBLE);
-//                    _tvConfirm.setText("Are you sure ?");
-//
-//                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-//                    alertDialogBuilder.setView(promptView);
-//                    alertDialogBuilder
-//                            .setCancelable(false)
-//                            .setPositiveButton("OK",
-//                                    new DialogInterface.OnClickListener() {
-//                                        public void onClick(DialogInterface dialog, int id) {
-//
-//
-//                                            new clsMainActivity().showCustomToast(getActivity(), "Saved", true);
-//                                        }
-//                                    })
-//                            .setNegativeButton("Cancel",
-//                                    new DialogInterface.OnClickListener() {
-//                                        public void onClick(DialogInterface dialog, int id) {
-//                                            dialog.cancel();
-//                                        }
-//                                    });
-//                    final AlertDialog alertD = alertDialogBuilder.create();
-//                    alertD.show();
                 }
             }
         });
@@ -272,21 +241,21 @@ public class FragmentAddKoordinasi extends Fragment implements View.OnClickListe
         List<KoordinasiOutletData> listData = _KoordinasiOutletBL.getData("");
         List<KoordinasiOutletImageData> listImage = _KoordinasiOutletImageBL.getDataHeaderId("");
 
-        if (listData.size() > 0) {
+        if (dt != null) {
 
 
-            date.setText("Date : " + listData.get(0).get_dtDate());
-            tvOutlet.setText("Outlet Name : " + listData.get(0).get_txtOutletName());
-            if(listData.get(0).get_txtOutletName().toString().equals("null")){
+            date.setText("Date : " + dt.get(0).get_dtDate());
+            tvOutlet.setText("Outlet Name : " + dt.get(0).get_txtOutletName());
+            if(dt.get(0).get_txtOutletName().toString().equals("null")){
                 tvOutlet.setText("Outlet Name : " + "-");
             }
-            keterangan.setText(listData.get(0).get_txtKeterangan());
+            keterangan.setText(dt.get(0).get_txtKeterangan());
             keterangan.setTextColor(Color.BLACK);
             keterangan.setEnabled(false);
             image1.setEnabled(false);
             image2.setEnabled(false);
 
-            if (!listData.get(0).get_intSync().equals("0")){
+            if (!dt.get(0).get_intSync().equals("0")){
                 tvStatus.setText("Status : Sync");
             } else {
                 tvStatus.setText("Status : Submit");

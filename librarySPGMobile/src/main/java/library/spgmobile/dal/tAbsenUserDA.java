@@ -238,7 +238,7 @@ public class tAbsenUserDA {
 		return contact;
 	}
 
-	public tAbsenUserData getDataCheckInActive(SQLiteDatabase db) {
+	public tAbsenUserData 	getDataCheckInActive(SQLiteDatabase db) {
 		// Select All Query
 		tAbsenUserData dt=new tAbsenUserData();
 		String selectQuery = "SELECT  "+dt.Property_All+" FROM " + TABLE_CONTACTS +" Where "+dt.Property_dtDateCheckOut+" in ('null','') AND intSubmit='0' AND sync='0' ";
@@ -531,5 +531,18 @@ public class tAbsenUserDA {
 
 		// return count
 		return num;
+	}
+
+	public int checkoutSystem(SQLiteDatabase db, String id, String dTime) {
+		tAbsenUserData dt = new tAbsenUserData();
+
+		ContentValues values = new ContentValues();
+		values.put(dt.Property_dtDateCheckOut, dTime);
+		values.put(dt.Property_intSubmit, "1");
+		values.put(dt.Property_intSync, "0");
+		values.put(dt.Property_txtAbsen, "0");
+		// updating row
+		return db.update(TABLE_CONTACTS, values, dt.Property_intId + " = ? ",
+				new String[] { String.valueOf(id) });
 	}
 }

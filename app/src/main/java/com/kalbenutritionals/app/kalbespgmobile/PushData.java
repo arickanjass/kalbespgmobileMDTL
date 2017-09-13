@@ -22,10 +22,16 @@ import android.widget.Toast;
 
 import org.json.simple.JSONArray;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import bl.clsHelperBL;
+import bl.tAbsenUserBL;
+import bl.tAttendanceUserBL;
+import bl.tVisitPlanRealisasiBL;
 import library.spgmobile.common.clsPushData;
 import library.spgmobile.common.dataJson;
 import library.spgmobile.common.tAbsenUserData;
@@ -34,6 +40,7 @@ import library.spgmobile.common.tCustomerBasedMobileHeaderData;
 import library.spgmobile.common.tLeaveMobileData;
 import library.spgmobile.common.tPurchaseOrderHeaderData;
 import library.spgmobile.common.tSalesProductHeaderData;
+import library.spgmobile.common.visitplanAbsenData;
 import library.spgmobile.dal.clsHardCode;
 
 public class PushData extends AppCompatActivity {
@@ -67,6 +74,22 @@ public class PushData extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Push Data");
         setSupportActionBar(toolbar);
+
+        visitplanAbsenData dataAttendance = new clsHelperBL().getDataCheckInActive();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
+
+        if (dataAttendance != null && dataAttendance.getType().equals("visitPlan")){
+            new tVisitPlanRealisasiBL().checkOutSystem(dataAttendance.get_intId(),dateFormat.format(cal.getTime()));
+
+        } else if (dataAttendance != null && dataAttendance.getType().equals("absen")){
+            String dtime = new clsMainActivity().FormatDateDB();
+            new tAbsenUserBL().checkOutSystem(dataAttendance.get_intId(), dtime);
+
+        } else if (dataAttendance != null && dataAttendance.getType().equals("absenFPE")){
+            String dtime = new clsMainActivity().FormatDateDB();
+            new tAttendanceUserBL().checkOutSystem(dataAttendance.get_txtId(), dtime);
+        }
 
         Bundle bundle = new Bundle();
         String myMessage = "notMainMenu";

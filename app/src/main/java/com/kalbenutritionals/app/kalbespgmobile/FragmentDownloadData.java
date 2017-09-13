@@ -1005,7 +1005,7 @@ public class FragmentDownloadData extends Fragment {
         }
 
         arrData = new ArrayList<>();
-        if (listtLeaveData != null) {
+        if (listtLeaveData.size() > 0) {
             for (tLeaveMobileData dt : listtLeaveData) {
                 arrData.add(dt.get_txtTypeAlasanName());
             }
@@ -4460,26 +4460,28 @@ public class FragmentDownloadData extends Fragment {
                     }
 
                     JSONArray jsonArray_Image = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListtSalesProductQuantityImage_mobile")));
-                    Iterator l = jsonArray_Image.iterator();
-                    clsMainBL _clsMainBL_image = new clsMainBL();
-                    SQLiteDatabase _db_image = _clsMainBL_image.getDb();
-                    while (l.hasNext()) {
-                        tSalesProductQuantityImageData _data = new tSalesProductQuantityImageData();
-                        JSONObject innerObj_image = (JSONObject) l.next();
-                        _data.set_txtId(String.valueOf(innerObj_image.get("TxtTrSalesProductQuantityImage")));
-                        _data.set_txtHeaderId(String.valueOf(innerObj_image.get("TxtQuantityStock")));
-                        _data.set_intPosition(String.valueOf(innerObj_image.get("IntPosition")));
-                        _data.set_txtType(String.valueOf(innerObj_image.get("TxtType")));
+                    if(jsonArray_Image!=null){
+                        Iterator l = jsonArray_Image.iterator();
+                        clsMainBL _clsMainBL_image = new clsMainBL();
+                        SQLiteDatabase _db_image = _clsMainBL_image.getDb();
+                        while (l.hasNext()) {
+                            tSalesProductQuantityImageData _data = new tSalesProductQuantityImageData();
+                            JSONObject innerObj_image = (JSONObject) l.next();
+                            _data.set_txtId(String.valueOf(innerObj_image.get("TxtTrSalesProductQuantityImage")));
+                            _data.set_txtHeaderId(String.valueOf(innerObj_image.get("TxtQuantityStock")));
+                            _data.set_intPosition(String.valueOf(innerObj_image.get("IntPosition")));
+                            _data.set_txtType(String.valueOf(innerObj_image.get("TxtType")));
 
-                        String url = String.valueOf(innerObj_image.get("TxtImage"));
+                            String url = String.valueOf(innerObj_image.get("TxtImage"));
 
-                        byte[] logoImage = getLogoImage(url);
+                            byte[] logoImage = getLogoImage(url);
 
-                        if (logoImage != null) {
-                            _data.set_txtImage(logoImage);
+                            if (logoImage != null) {
+                                _data.set_txtImage(logoImage);
+                            }
+
+                            new tSalesProductQuantityImageDA(_db_image).SaveDataImage(_db_image, _data);
                         }
-
-                        new tSalesProductQuantityImageDA(_db_image).SaveDataImage(_db_image, _data);
                     }
                 } else {
 //                    new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);

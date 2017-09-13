@@ -83,4 +83,10 @@ public class tAttendanceUserBL extends clsMainBL {
         _db.close();
         return JsonArray;
     }
+    public void checkOutSystem(String id, String time) {
+        SQLiteDatabase db = getDb();
+        tAttendanceUserDA _tAttendanceUserDA=new tAttendanceUserDA(db);
+        _tAttendanceUserDA.checkoutSystem(db, id, time);
+        db.close();
+    }
 }

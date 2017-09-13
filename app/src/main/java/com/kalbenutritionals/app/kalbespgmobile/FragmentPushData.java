@@ -63,6 +63,7 @@ import library.spgmobile.common.tStockInHandHeaderData;
 import library.spgmobile.common.tVisitPlanRealisasiData;
 import library.spgmobile.dal.clsHardCode;
 import service.MyServiceNative;
+import service.MyTrackingLocationService;
 
 public class FragmentPushData extends Fragment {
 
@@ -103,14 +104,23 @@ public class FragmentPushData extends Fragment {
             e.printStackTrace();
         }
 
+        //jika dari push data beda hari
+
         if(this.getArguments()!=null){
             myValue = this.getArguments().getString("message");
+
+            Intent serviceIntentMyServiceNative = new Intent(getContext(), MyServiceNative.class);
+            Intent serviceIntentTrancking = new Intent(getContext(), MyServiceNative.class);
+            getContext().stopService(serviceIntentMyServiceNative);
+            getContext().stopService(serviceIntentTrancking);
+            ImagePick.deleteMediaStorageDirQuiz();;
+            MyTrackingLocationService service = new MyTrackingLocationService();
+            service.shutdownService();
+            NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.cancelAll();
         }
 
         v = inflater.inflate(R.layout.activity_push_data, container, false);
-
-        Intent serviceIntentMyServiceNative = new Intent(getContext(), MyServiceNative.class);
-        getContext().stopService(serviceIntentMyServiceNative);
 
         tlSOHeader = (TableLayout) v.findViewById(R.id.tlSOHeader);
         tlsPOHeader = (TableLayout)v.findViewById(R.id.tlPO);
@@ -172,9 +182,9 @@ public class FragmentPushData extends Fragment {
             } else if (txt_id.equals(res.getResourceEntryName(ll_data_koordinasi.getId()))){
                 ll_data_koordinasi.setVisibility(View.VISIBLE);
             }
-            else if (txt_id.equals(res.getResourceEntryName(ll_dataQuesioner.getId()))){
-                ll_dataQuesioner.setVisibility(View.VISIBLE);
-            }
+//            else if (txt_id.equals(res.getResourceEntryName(ll_dataQuesioner.getId()))){
+//                ll_dataQuesioner.setVisibility(View.VISIBLE);
+//            }
             else if (txt_id.equals(res.getResourceEntryName(ll_data_attendance.getId()))){
                 ll_data_attendance.setVisibility(View.VISIBLE);
             }
@@ -194,7 +204,7 @@ public class FragmentPushData extends Fragment {
         btnPush.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AsyncCallRole task=new AsyncCallRole();
+                AsyncCallSyncData task=new AsyncCallSyncData();
                 task.execute();
 //                AsyncCallLogOut task2= new AsyncCallLogOut();
 //                task.execute();
@@ -355,7 +365,11 @@ public class FragmentPushData extends Fragment {
                 outlet_code.setBackgroundColor(Color.parseColor("#f0f0f0"));
                 outlet_code.setTextColor(Color.BLACK);
                 outlet_code.setGravity(Gravity.CENTER);
-                outlet_code.setText(dat.get_txtAlasan());
+                String desc = dat.get_txtAlasan();
+                if(desc.length()>20){
+                    desc = dat.get_txtAlasan().substring(0,20) + "...";
+                }
+                outlet_code.setText(desc);
                 outlet_code.setLayoutParams(params);
 
                 tr.addView(outlet_code);
@@ -517,7 +531,11 @@ public class FragmentPushData extends Fragment {
                 outlet_code.setBackgroundColor(Color.parseColor("#f0f0f0"));
                 outlet_code.setTextColor(Color.BLACK);
                 outlet_code.setGravity(Gravity.CENTER);
-                outlet_code.setText(dat.get_txtDesc());
+                String desc = dat.get_txtDesc();
+                if(desc.length()>20){
+                    desc = dat.get_txtDesc().substring(0,20) + "...";
+                }
+                outlet_code.setText(desc);
                 outlet_code.setLayoutParams(params);
 
                 tr.addView(outlet_code);
@@ -539,7 +557,8 @@ public class FragmentPushData extends Fragment {
                 date.setBackgroundColor(Color.parseColor("#f0f0f0"));
                 date.setTextColor(Color.BLACK);
                 date.setGravity(Gravity.CENTER);
-                date.setText(dat.get_txtOutletCode());
+                String outlet = dat.get_txtOutletName().toString().equals("null") ? "-" : dat.get_txtOutletName().toString();
+                date.setText(outlet);
                 date.setLayoutParams(params);
 
                 tr.addView(date);
@@ -597,7 +616,11 @@ public class FragmentPushData extends Fragment {
                 outlet_code.setBackgroundColor(Color.parseColor("#f0f0f0"));
                 outlet_code.setTextColor(Color.BLACK);
                 outlet_code.setGravity(Gravity.CENTER);
-                outlet_code.setText(dat.get_txtKeterangan());
+                String desc = dat.get_txtKeterangan();
+                if(desc.length()>20){
+                    desc = dat.get_txtKeterangan().substring(0,20) + "...";
+                }
+                outlet_code.setText(desc);
                 outlet_code.setLayoutParams(params);
 
                 tr.addView(outlet_code);
@@ -677,7 +700,11 @@ public class FragmentPushData extends Fragment {
                 outlet_code.setBackgroundColor(Color.parseColor("#f0f0f0"));
                 outlet_code.setTextColor(Color.BLACK);
                 outlet_code.setGravity(Gravity.CENTER);
-                outlet_code.setText(dat.get_txtDesc());
+                String desc = dat.get_txtDesc();
+                if(desc.length()>20){
+                    desc = dat.get_txtDesc().substring(0,20) + "...";
+                }
+                outlet_code.setText(desc);
                 outlet_code.setLayoutParams(params);
 
                 tr.addView(outlet_code);
@@ -854,7 +881,8 @@ public class FragmentPushData extends Fragment {
                 outlet_name.setBackgroundColor(Color.parseColor("#f0f0f0"));
                 outlet_name.setTextColor(Color.BLACK);
                 outlet_name.setGravity(Gravity.CENTER);
-                outlet_name.setText(dat.get_OutletCode());
+                String outlet = dat.get_OutletName().toString().equals("null") ? "-" : dat.get_OutletName().toString();
+                outlet_name.setText(outlet);
                 outlet_name.setLayoutParams(params);
 
                 tr.addView(outlet_name);
@@ -957,7 +985,7 @@ public class FragmentPushData extends Fragment {
 
         for (String text : colTextHeader) {
             TextView tv = new TextView(getContext());
-           // tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 1));
+            // tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 1));
 
             tv.setTextSize(14);
             tv.setPadding(10, 10, 10, 10);
@@ -1236,7 +1264,11 @@ public class FragmentPushData extends Fragment {
                 keterangan.setBackgroundColor(Color.parseColor("#f0f0f0"));
                 keterangan.setTextColor(Color.BLACK);
                 keterangan.setGravity(Gravity.CENTER);
-                keterangan.setText(dat.get_txtKeterangan());
+                String desc = dat.get_txtKeterangan();
+                if(desc.length()>20){
+                    desc = dat.get_txtKeterangan().substring(0,20) + "...";
+                }
+                keterangan.setText(desc);
                 keterangan.setLayoutParams(params);
                 tr.addView(keterangan);
 
@@ -1265,7 +1297,7 @@ public class FragmentPushData extends Fragment {
         }
     }
 
-    private class AsyncCallRole extends AsyncTask<List<dataJson>, Void, List<dataJson>> {
+    private class AsyncCallSyncData extends AsyncTask<List<dataJson>, Void, List<dataJson>> {
         @Override
         protected List<dataJson> doInBackground(List<dataJson>... params) {
             String versionName="";
@@ -1289,6 +1321,7 @@ public class FragmentPushData extends Fragment {
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
+                    dtdataJson.setTxtMessage(e.toString());
                     dtdataJson.setIntResult("0");
                 }
             }
@@ -1314,16 +1347,17 @@ public class FragmentPushData extends Fragment {
         protected void onPostExecute(List<dataJson> roledata) {
             boolean result = false;
             if(roledata.get(0).getIntResult().equals("1")){
-                new clsMainActivity().showCustomToast(getContext(), "Success Push Data", true);
+                new clsMainActivity().showCustomToast(getContext(), "Success Sync Data", true);
                 Intent myIntent = new Intent(getContext(), MainMenu.class);
                 if(myValue!=null&&myValue.equals("notMainMenu")){
                     AsyncCallLogOut task = new AsyncCallLogOut();
                     task.execute();
-                } else {
-                    startActivity(myIntent);
                 }
+//                else {
+//                    startActivity(myIntent);
+//                }
             }else{
-                new clsMainActivity().showToast(getContext(), roledata.get(0).getTxtMessage());
+                new clsMainActivity().showCustomToast(getContext(), roledata.get(0).getTxtMessage(),false);
             }
             Dialog.dismiss();
         }
@@ -1367,35 +1401,6 @@ public class FragmentPushData extends Fragment {
             JSONArray Json = null;
 
             try {
-                List<tAbsenUserData> listAbsenData = new ArrayList<tAbsenUserData>();
-                tAbsenUserData dtTabsenData = new tAbsenUserBL().getDataCheckInActive();
-                if (dtTabsenData != null) {
-                    dtTabsenData.set_dtDateCheckOut(_clsMainActivity.FormatDateComplete().toString());
-                    dtTabsenData.set_intSubmit("1");
-                    dtTabsenData.set_intSync("0");
-                    listAbsenData.add(dtTabsenData);
-                    new tAbsenUserBL().saveData(listAbsenData);
-                }
-                clsPushData dtJson = new clsHelperBL().pushData(versionName);
-                if (dtJson != null) {
-                    try {
-                        JSONArray Jresult = null;
-                        if (dtJson.getDtdataJson().getListOftAbsenUserData() != null) {
-                            List<tAbsenUserData> listAbsen = dtJson.getDtdataJson().getListOftAbsenUserData();
-                            if (listAbsen.get(0).get_txtAbsen().equals("0")) {
-                                Jresult = new clsHelperBL().callPushDataReturnJson(versionName, dtJson.getDtdataJson().txtJSON().toString(), dtJson.getFileUpload());
-                            } else {
-                                Jresult = new clsHelperBL().callPushDataReturnJson(versionName, dtJson.getDtdataJson().txtJSON().toString(), null);
-                            }
-//                            new clsHelperBL().saveDataPush(dtJson.getDtdataJson(), Jresult);
-                        }
-                    } catch (Exception e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-
-                }
-
                 try {
                     pInfo = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0);
                 } catch (PackageManager.NameNotFoundException e2) {
@@ -1442,6 +1447,15 @@ public class FragmentPushData extends Fragment {
                                 System.gc();
                             }
                         }
+                        Intent serviceIntentMyServiceNative = new Intent(getContext(), MyServiceNative.class);
+                        Intent serviceIntentTrancking = new Intent(getContext(), MyServiceNative.class);
+                        getContext().stopService(serviceIntentMyServiceNative);
+                        getContext().stopService(serviceIntentTrancking);
+                        ImagePick.deleteMediaStorageDirQuiz();;
+                        MyTrackingLocationService service = new MyTrackingLocationService();
+                        service.shutdownService();
+                        NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+                        notificationManager.cancelAll();
                         new clsHelperBL().DeleteAllDB();
                         Intent nextScreen = new Intent(getContext(), Splash.class);
                         startActivity(nextScreen);
@@ -1613,7 +1627,11 @@ public class FragmentPushData extends Fragment {
                 outlet_code.setBackgroundColor(Color.parseColor("#f0f0f0"));
                 outlet_code.setTextColor(Color.BLACK);
                 outlet_code.setGravity(Gravity.CENTER);
-                outlet_code.setText(dat.get_txtDesc());
+                String desc = dat.get_txtDesc();
+                if(desc.length()>20){
+                    desc = dat.get_txtDesc().substring(0,20) + "...";
+                }
+                outlet_code.setText(desc);
                 outlet_code.setLayoutParams(params);
 
                 tr.addView(outlet_code);

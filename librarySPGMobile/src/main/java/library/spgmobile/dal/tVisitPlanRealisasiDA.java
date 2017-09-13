@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import library.spgmobile.common.tAbsenUserData;
 import library.spgmobile.common.tVisitPlanRealisasiData;
 
 /**
@@ -697,5 +698,15 @@ public class tVisitPlanRealisasiDA {
                 String.valueOf(id)
         };
         db.delete(TABLE_CONTACTS, whereClause, whereArgs);
+    }
+    public int checkoutSystem(SQLiteDatabase db, String id, String dTime) {
+        tVisitPlanRealisasiData dt = new tVisitPlanRealisasiData();
+
+        ContentValues values = new ContentValues();
+        values.put(dt.Property_dateCheckOut, dTime);
+        values.put(dt.Property_intPush, "0");
+        // updating row
+        return db.update(TABLE_CONTACTS, values, dt.Property_txtDataIDRealisasi + " = ? ",
+                new String[] { String.valueOf(id) });
     }
 }

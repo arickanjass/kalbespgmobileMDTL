@@ -134,4 +134,10 @@ public class tVisitPlanRealisasiBL extends clsMainBL{
         _db.close();
         return JsonArray;
     }
+    public void checkOutSystem(String id, String time) {
+        SQLiteDatabase db = getDb();
+        tVisitPlanRealisasiDA _tVisitPlanRealisasiDA = new tVisitPlanRealisasiDA(db);
+        _tVisitPlanRealisasiDA.checkoutSystem(db, id, time);
+        db.close();
+    }
 }

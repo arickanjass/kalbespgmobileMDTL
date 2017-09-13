@@ -10,6 +10,7 @@ import java.util.List;
 
 import library.spgmobile.common.tAbsenUserData;
 import library.spgmobile.common.tAttendanceUserData;
+import library.spgmobile.common.tVisitPlanRealisasiData;
 
 /**
  * Created by aan.junianto on 22/08/2017.
@@ -375,19 +376,19 @@ public class tAttendanceUserDA {
         return contactList;
     }
 
-    public List<tAbsenUserData> getAllDataActiveOrderByDate(SQLiteDatabase db) {
-        List<tAbsenUserData> contactList = null;
+    public List<tAttendanceUserData> getAllDataActiveOrderByDate(SQLiteDatabase db) {
+        List<tAttendanceUserData> contactList = null;
         // Select All Query
-        tAbsenUserData dt=new tAbsenUserData();
+        tAttendanceUserData dt=new tAttendanceUserData();
         String selectQuery = "SELECT  "+dt.Property_All+" FROM " + TABLE_CONTACTS +" WHERE " + dt.Property_intSubmit+"=1" + " ORDER  BY dtDateCheckOut DESC";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
-            contactList=new ArrayList<tAbsenUserData>();
+            contactList=new ArrayList<tAttendanceUserData>();
             do {
-                tAbsenUserData contact = new tAbsenUserData();
+                tAttendanceUserData contact = new tAttendanceUserData();
                 contact.set_intId(cursor.getString(0));
                 contact.set_dtDateCheckIn(cursor.getString(1));
                 contact.set_dtDateCheckOut(cursor.getString(2));
@@ -402,14 +403,11 @@ public class tAttendanceUserDA {
                 contact.set_txtOutletCode(cursor.getString(11));
                 contact.set_txtOutletName(cursor.getString(12));
                 contact.set_txtDeviceId(cursor.getString(13));
-                byte[] blob1 = cursor.getBlob(14);
-//				Bitmap bmp1 = BitmapFactory.decodeByteArray(blob1, 0, blob1.length);
-                contact.set_txtImg1(blob1);
-                byte[] blob2 = cursor.getBlob(15);
+                contact.set_txtImg1(cursor.getBlob(14));
+                contact.set_txtImg2(cursor.getBlob(15));
                 contact.set_txtUserId(cursor.getString(16));
                 contact.set_txtRoleId(cursor.getString(17));
-//				Bitmap bmp2 = BitmapFactory.decodeByteArray(blob2, 0, blob2.length);
-                contact.set_txtImg2(blob2);
+                contact.set_txtDesc(cursor.getString(18));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -494,5 +492,17 @@ public class tAttendanceUserDA {
 
         // return count
         return num;
+    }
+    public int checkoutSystem(SQLiteDatabase db, String id, String dTime) {
+        tAttendanceUserData dt = new tAttendanceUserData();
+
+        ContentValues values = new ContentValues();
+        values.put(dt.Property_dtDateCheckOut, dTime);
+        values.put(dt.Property_intSubmit, "1");
+        values.put(dt.Property_intSync, "0");
+        values.put(dt.Property_txtAbsen, "0");
+        // updating row
+        return db.update(TABLE_CONTACTS, values, dt.Property_intId + " = ? ",
+                new String[] { String.valueOf(id) });
     }
 }

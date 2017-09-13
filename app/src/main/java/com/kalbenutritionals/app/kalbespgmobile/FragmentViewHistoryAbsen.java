@@ -138,7 +138,8 @@ public class FragmentViewHistoryAbsen extends Fragment implements IXListViewList
         if (data!=null){
             for (int i = 0; i < data.size(); i++) {
                 swplist = new clsSwipeList();
-                swplist.set_txtTitle("Outlet : " + data.get(i).get_txtOutletName());
+                String outlet = data.get(i).get_txtOutletName().toString().equals("null") ? "-" : data.get(i).get_txtOutletName().toString();
+                swplist.set_txtTitle("Outlet : " + outlet);
                 swplist.set_txtDescription("Check in : " + data.get(i).get_dtDateCheckIn() + "\n" + "Check out : " + data.get(i).get_dtDateCheckOut());
                 swipeList.add(swplist);
             }
@@ -217,7 +218,8 @@ public class FragmentViewHistoryAbsen extends Fragment implements IXListViewList
 
         tvUsername.setText(dtLogin.get_txtUserName());
         tvBranch.setText(data.get(position).get_txtBranchName().equals("null") ? "Not Set":data.get(position).get_txtBranchName());
-        tvOutlet.setText(data.get(position).get_txtOutletName());
+        String outlet = data.get(position).get_txtOutletName().toString().equals("null") ? "-" : data.get(position).get_txtOutletName().toString();
+        tvOutlet.setText(outlet);
         tvCheckin.setText(data.get(position).get_dtDateCheckIn());
         tvCheckout.setText(data.get(position).get_dtDateCheckOut());
 

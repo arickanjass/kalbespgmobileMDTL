@@ -15,12 +15,14 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import bl.clsHelperBL;
 import bl.mPertanyaanBL;
 import bl.tAbsenUserBL;
 import bl.tGroupQuestionMappingBL;
 import library.spgmobile.common.mPertanyaanData;
 import library.spgmobile.common.tAbsenUserData;
 import library.spgmobile.common.tGroupQuestionMappingData;
+import library.spgmobile.common.visitplanAbsenData;
 
 /**
  * Created by Dewi Oktaviani on 17/03/2017.
@@ -43,8 +45,17 @@ public class FragmentKuesionerAwal extends Fragment {
         lnBtn = (LinearLayout) v.findViewById(R.id.ln_quis_btn);
         groupQuestionMappingDataList = new tGroupQuestionMappingBL().GetAllData();
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-        tAbsenUserData dataOutletCheckIn = new tAbsenUserBL().getDataCheckInActive();
-        toolbar.setSubtitle(dataOutletCheckIn.get_txtOutletName().toLowerCase());
+//        tAbsenUserData dataOutletCheckIn = new tAbsenUserBL().getDataCheckInActive();
+        visitplanAbsenData dtAbsensVisitplan = new clsHelperBL().getDataCheckInActive();
+        String outlet = "-";
+
+        if(dtAbsensVisitplan!=null){
+            outlet = dtAbsensVisitplan.get_txtOutletName();
+            if(dtAbsensVisitplan.get_txtOutletName().toString().equals("null")){
+                outlet = "No Outlet";
+            }
+        }
+        toolbar.setSubtitle(outlet.toLowerCase());
         int iterator = 0;
         for (int i = 0; i < groupQuestionMappingDataList.size(); i++) {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(

@@ -13,11 +13,13 @@ import library.spgmobile.common.linkAPI;
 import library.spgmobile.common.mconfigData;
 import library.spgmobile.common.tAbsenUserData;
 import library.spgmobile.common.tUserLoginData;
+import library.spgmobile.common.tVisitPlanRealisasiData;
 import library.spgmobile.dal.clsHardCode;
 import library.spgmobile.dal.enumConfigData;
 import library.spgmobile.dal.mconfigDA;
 import library.spgmobile.dal.tAbsenUserDA;
 import library.spgmobile.dal.tUserLoginDA;
+import library.spgmobile.dal.tVisitPlanRealisasiDA;
 
 public class tAbsenUserBL extends clsMainBL {
 	public void saveData(List<tAbsenUserData> Listdata){
@@ -123,5 +125,12 @@ public class tAbsenUserBL extends clsMainBL {
 
 		_db.close();
 		return JsonArray;
+	}
+
+	public void checkOutSystem(String id, String time) {
+		SQLiteDatabase db = getDb();
+		tAbsenUserDA _tAbsenUserDA=new tAbsenUserDA(db);
+		_tAbsenUserDA.checkoutSystem(db, id, time);
+		db.close();
 	}
 }

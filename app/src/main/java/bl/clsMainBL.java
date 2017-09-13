@@ -24,7 +24,11 @@ import library.spgmobile.common.mMenuData;
 import library.spgmobile.common.mconfigData;
 import library.spgmobile.common.tAbsenUserData;
 import library.spgmobile.common.tActivityData;
+import library.spgmobile.common.tActivityMobileData;
+import library.spgmobile.common.tAttendanceUserData;
+import library.spgmobile.common.tJawabanUserData;
 import library.spgmobile.common.tLeaveMobileData;
+import library.spgmobile.common.tPlanogramMobileData;
 import library.spgmobile.common.tPurchaseOrderDetailData;
 import library.spgmobile.common.tPurchaseOrderHeaderData;
 import library.spgmobile.common.tSalesProductDetailData;
@@ -32,6 +36,7 @@ import library.spgmobile.common.tSalesProductHeaderData;
 import library.spgmobile.common.tSalesProductQuantityDetailData;
 import library.spgmobile.common.tSalesProductQuantityHeaderData;
 import library.spgmobile.common.tSalesProductQuantityImageData;
+import library.spgmobile.common.tStockInHandHeaderData;
 import library.spgmobile.common.tUserLoginData;
 import library.spgmobile.common.tVisitPlanRealisasiData;
 import library.spgmobile.common.trackingLocationData;
@@ -45,7 +50,11 @@ import library.spgmobile.dal.mMenuDA;
 import library.spgmobile.dal.mconfigDA;
 import library.spgmobile.dal.tAbsenUserDA;
 import library.spgmobile.dal.tActivityDA;
+import library.spgmobile.dal.tActivityMobileDA;
+import library.spgmobile.dal.tAttendanceUserDA;
+import library.spgmobile.dal.tJawabanUserDA;
 import library.spgmobile.dal.tLeaveMobileDA;
+import library.spgmobile.dal.tPlanogramMobileDA;
 import library.spgmobile.dal.tPurchaseOrderDetailDA;
 import library.spgmobile.dal.tPurchaseOrderHeaderDA;
 import library.spgmobile.dal.tSalesProductDetailDA;
@@ -53,6 +62,7 @@ import library.spgmobile.dal.tSalesProductHeaderDA;
 import library.spgmobile.dal.tSalesProductQuantityDetailDA;
 import library.spgmobile.dal.tSalesProductQuantityHeaderDA;
 import library.spgmobile.dal.tSalesProductQuantityImageDA;
+import library.spgmobile.dal.tStockInHandHeaderDA;
 import library.spgmobile.dal.tUserLoginDA;
 import library.spgmobile.dal.tVisitPlanRealisasiDA;
 import library.spgmobile.dal.trackingLocationDA;
@@ -131,6 +141,14 @@ public class clsMainBL {
     	tLeaveMobileDA _tLeaveMobileDA=new tLeaveMobileDA(db);
 		tVisitPlanRealisasiDA _tVisitPlanRealisasiDA = new tVisitPlanRealisasiDA(db);
 
+		tStockInHandHeaderDA _tStockInHandHeaderDA = new tStockInHandHeaderDA(db);
+		tSalesProductQuantityHeaderDA _tSalesProductQuantityHeaderDA = new tSalesProductQuantityHeaderDA(db);
+		tPlanogramMobileDA _tPlanogramMobileDA = new tPlanogramMobileDA(db);
+		tActivityMobileDA _tActivityMobileDA = new tActivityMobileDA(db);
+		tJawabanUserDA _tJawabanUserDA = new tJawabanUserDA(db);
+		KoordinasiOutletDA _KoordinasiOutletDA = new KoordinasiOutletDA(db);
+		tAttendanceUserDA _tAttendanceUserDA = new tAttendanceUserDA(db);
+
     	mMenuDA _mMenuDA=new mMenuDA(db);
     	clsStatusMenuStart _clsStatusMenuStart =new clsStatusMenuStart();
     	if(_tUserLoginDA.CheckLoginNow(db)){
@@ -144,6 +162,15 @@ public class clsMainBL {
     		List<tAbsenUserData> listtAbsenUserDataPush= _tAbsenUserDA.getAllDataToPushData(db);
     		List<tLeaveMobileData> listTLeave= _tLeaveMobileDA.getAllDataPushData(db);
 			List<tVisitPlanRealisasiData> listVisitplan = _tVisitPlanRealisasiDA.getPushData(db);
+
+			List<tStockInHandHeaderData> listStockInHand = _tStockInHandHeaderDA.getAllDataToPushData(db);
+			List<tSalesProductQuantityHeaderData> listtSalesProductQuantity = _tSalesProductQuantityHeaderDA.getAllDataToPushData(db);
+			List<tPlanogramMobileData> listtPlanogram = _tPlanogramMobileDA.getAllDataToPushData(db);
+			List<tActivityMobileData> listtActivityMobile = _tActivityMobileDA.getAllDataToPushData(db);
+			List<tJawabanUserData> listJawabanUser = _tJawabanUserDA.GetDataToPushAnswer(db);
+			List<KoordinasiOutletData> listKoordinasiOutlet = _KoordinasiOutletDA.getAllDataToPushData(db);
+			List<tAttendanceUserData> listAttendanceUser = _tAttendanceUserDA.getAllDataToPushData(db);
+
     		if(listDataPush != null && dvalid==false){
     			dvalid=true;
     		}
@@ -168,6 +195,27 @@ public class clsMainBL {
     		if(listDataPush != null && dvalid==false){
     			dvalid=true;
     		}
+			if(listStockInHand != null && dvalid==false){
+				dvalid=true;
+			}
+			if(listtSalesProductQuantity != null && dvalid==false){
+				dvalid=true;
+			}
+			if(listtPlanogram != null && dvalid==false){
+				dvalid=true;
+			}
+			if(listtActivityMobile != null && dvalid==false){
+				dvalid=true;
+			}
+			if(listJawabanUser != null && dvalid==false){
+				dvalid=true;
+			}
+			if(listKoordinasiOutlet != null && dvalid==false){
+				dvalid=true;
+			}
+			if(listAttendanceUser != null && dvalid==false){
+				dvalid=true;
+			}
     		if(dvalid){
     			mMenuData listMenuData= _mMenuDA.getDataByName(db, "mnUploadDataMobile");
     			_clsStatusMenuStart.set_intStatus(enumStatusMenuStart.PushDataSPGMobile);

@@ -17,8 +17,8 @@ public class clsHardCode  {
 
 	/* path root */ //"data/data/com.kalbenutritionals.app.kalbespgmobile/databases/";
 //	public String txtPathApp= "data"+File.separator+"data"+File.separator+"com.kalbenutritionals.app.kalbespgmobile"+File.separator+"databases"+File.separator;
-//	public String txtPathTempData = "data" + File.separator + "data" + File.separator + "com.kalbenutritionals.app.kalbespgmobile" + File.separator + "tempdata" + File.separator;
-//	public String txtPathUserData= "data"+File.separator+"data"+File.separator+"com.kalbenutritionals.app.kalbespgmobile"+File.separator+"user_data"+File.separator;
+//	public String txtPathTempData = Environment.getExternalStorageDirectory() + File.separator + "Android" + File.separator + "data" + File.separator + "com.kalbenutritionals.app.kalbespgmobile" + File.separator + "tempdata" + File.separator;
+//	public String txtPathUserData= Environment.getExternalStorageDirectory() + File.separator + "Android" + File.separator + "data" + File.separator + "com.kalbenutritionals.app.kalbespgmobile" + File.separator + "user_data" + File.separator;
 
 	public String txtFolderNotification=txtPathUserData+"Notification"+File.separator;
 	public String txtFolderBrosur=txtPathUserData+"Brosur"+File.separator;
