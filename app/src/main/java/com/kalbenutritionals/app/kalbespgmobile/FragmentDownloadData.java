@@ -4355,7 +4355,8 @@ public class FragmentDownloadData extends Fragment {
                         _data.set_intHeaderId(String.valueOf(innerObj_JawabanSPG.get("IntHeaderId")));
                         _data.set_intUserId(String.valueOf(innerObj_JawabanSPG.get("IntUserId")));
                         _data.set_intNik(String.valueOf(innerObj_JawabanSPG.get("IntNik")));
-                        _data.set_dtDate(String.valueOf(innerObj_JawabanSPG.get("DtDate")));
+                        _data.set_dtDate(String.valueOf(innerObj_JawabanSPG.get("DtDate")).replace("/", "-"));
+                        _data.set_dtDatetime(String.valueOf(innerObj_JawabanSPG.get("DtDatetime")).replace("/", "-"));
                         _data.set_intRoleId(String.valueOf(innerObj_JawabanSPG.get("IntRoleId")));
                         _data.set_intQuestionId(String.valueOf(innerObj_JawabanSPG.get("IntQuestionId")));
                         _data.set_intTypeQuestionId(String.valueOf(innerObj_JawabanSPG.get("IntTypeQuestionId")));
@@ -4394,9 +4395,11 @@ public class FragmentDownloadData extends Fragment {
                         _data.set_txtUserName(String.valueOf(innerObj_JawabanSPGHeader.get("TxtUserName")));
                         _data.set_txtOutletName(String.valueOf(innerObj_JawabanSPGHeader.get("TxtOutletName")));
                         _data.set_txtOutletCode(String.valueOf(innerObj_JawabanSPGHeader.get("TxtOutletCode")));
-                        _data.set_dtDate(String.valueOf(innerObj_JawabanSPGHeader.get("DtDate")));
-                        _data.set_dtDatetime(String.valueOf(innerObj_JawabanSPGHeader.get("DtDatetime")));
+                        _data.set_dtDate(String.valueOf(innerObj_JawabanSPGHeader.get("DtDate")).replace("/", "-")); 
+                        _data.set_dtDatetime(String.valueOf(innerObj_JawabanSPGHeader.get("DtDatetime")).replace("/", "-"));
                         _data.set_intRoleId(String.valueOf(innerObj_JawabanSPGHeader.get("IntRoleId"))) ;
+                        _data.set_intSum(String.valueOf(innerObj_JawabanSPGHeader.get("IntSum")));
+                        _data.set_intAverage(String.valueOf(innerObj_JawabanSPGHeader.get("IntAverage")));
                         _data.set_intSubmit("1");
                         _data.set_intSync("1");
                         new tJawabanUserHeaderBL().SaveDatatJawabanHeaderUser(_data);

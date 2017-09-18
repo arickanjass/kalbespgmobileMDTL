@@ -158,7 +158,7 @@ public class ReportDetailQuiz extends AppCompatActivity {
                                 List<String> dataJawaban = new ArrayList<>();
                                 if (answer.get_txtValue().equals("SPG01")){
 
-                                    List<tHirarkiBIS> listSPG = new tHirarkiBISBL().GetDataByOutlet(dataOutletCheckIn.get_txtOutletCode());
+                                    List<tHirarkiBIS> listSPG = new tHirarkiBISBL().GetDataByOutlet(dataHeader.get_txtOutletCode());
                                     if (listSPG.size() > 0) {
                                         for (tHirarkiBIS dat : listSPG) {
                                             dataJawaban.add(dat.get_txtNik());
