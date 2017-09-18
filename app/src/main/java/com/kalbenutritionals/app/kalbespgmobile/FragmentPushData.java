@@ -55,6 +55,7 @@ import library.spgmobile.common.tJawabanUserData;
 import library.spgmobile.common.tJawabanUserHeaderData;
 import library.spgmobile.common.tLeaveMobileData;
 import library.spgmobile.common.tNotificationData;
+import library.spgmobile.common.tOverStockHeaderData;
 import library.spgmobile.common.tPlanogramMobileData;
 import library.spgmobile.common.tPurchaseOrderHeaderData;
 import library.spgmobile.common.tSalesProductHeaderData;
@@ -83,9 +84,10 @@ public class FragmentPushData extends Fragment {
     private TableLayout  tlActivityV2;
     private TableLayout  tlstockIH;
     private TableLayout  tlplanogram;
+    private TableLayout  tl_overStock;
     private Button btnPush;
     private String myValue;
-    private LinearLayout ll_data_planogram, ll_data_stockIH,ll_data_activityV2,ll_data_attendance,ll_reso, ll_data_activity, ll_data_customerbased, ll_purchase_order, ll_dataQuantityStock, ll_absen, ll_dataVisitPlan, ll_data_leave, ll_data_koordinasi, ll_dataQuesioner;
+    private LinearLayout ll_data_planogram, ll_data_stockIH,ll_data_activityV2,ll_data_attendance,ll_reso, ll_data_activity, ll_data_customerbased, ll_purchase_order, ll_dataQuantityStock, ll_absen, ll_dataVisitPlan, ll_data_leave, ll_data_koordinasi, ll_dataQuesioner, ll_data_overStock;
 
     View v;
 
@@ -136,6 +138,7 @@ public class FragmentPushData extends Fragment {
         tl_attendance = (TableLayout) v.findViewById(R.id.tl_attendance);
         tlstockIH = (TableLayout) v.findViewById(R.id.tlstockIH);
         tlplanogram = (TableLayout) v.findViewById(R.id.tlplanogram);
+        tl_overStock = (TableLayout) v.findViewById(R.id.tl_overStock);
 
         btnPush = (Button) v.findViewById(R.id.btnPush);
 
@@ -153,6 +156,7 @@ public class FragmentPushData extends Fragment {
         ll_dataQuesioner = (LinearLayout) v.findViewById(R.id.ll_dataQuesioner);
         ll_data_stockIH = (LinearLayout) v.findViewById(R.id.ll_data_stockIH);
         ll_data_planogram = (LinearLayout) v.findViewById(R.id.ll_data_planogram);
+        ll_data_overStock = (LinearLayout) v.findViewById(R.id.ll_data_overStock);
 
         List<mDownloadMasterData_mobileData> mDownloadMasterData_mobileDataList = new ArrayList<>();
 
@@ -196,6 +200,9 @@ public class FragmentPushData extends Fragment {
             }
             else if (txt_id.equals(res.getResourceEntryName(ll_data_planogram.getId()))){
                 ll_data_planogram.setVisibility(View.VISIBLE);
+            }
+            else if (txt_id.equals(res.getResourceEntryName(ll_data_overStock.getId()))){
+                ll_data_overStock.setVisibility(View.VISIBLE);
             }
         }
 
@@ -264,6 +271,12 @@ public class FragmentPushData extends Fragment {
                     initQuantityStockHeader(getContext(),dtJson.getListOftSalesProductQuantityHeaderData());
                 } else {
                     initQuantityStockHeader(getContext(), null);
+                }
+
+                if (dtJson.getListOftOverStockHeaderData() != null){
+                    initOverStockHeader(getContext(),dtJson.getListOftOverStockHeaderData());
+                } else {
+                    initOverStockHeader(getContext(), null);
                 }
 
                 if (dtJson.getListOfKoordinasiOutletImageData() != null){
@@ -1212,6 +1225,86 @@ public class FragmentPushData extends Fragment {
                 tr.addView(outlet_code);
 
                 tlsQuantityStock.addView(tr, index++);
+            }
+        }
+    }
+
+    private void initOverStockHeader(Context context, List<tOverStockHeaderData> listOftOverStockHeaderData) {
+        tl_overStock = (TableLayout) v.findViewById(R.id.tl_overStock);
+        tl_overStock.removeAllViews();
+
+        TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1f);
+        params.setMargins(1, 1, 1, 1);
+
+        TableRow tr = new TableRow(getContext());
+
+        String[] colTextHeader = {"No.", "No", "Date", "Outlet Code"};
+
+        for (String text : colTextHeader) {
+            TextView tv = new TextView(getContext());
+            // tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 1));
+
+            tv.setTextSize(14);
+            tv.setPadding(10, 10, 10, 10);
+            tv.setText(text);
+            tv.setGravity(Gravity.CENTER);
+            tv.setBackgroundColor(Color.parseColor("#4CAF50"));
+            tv.setTextColor(Color.WHITE);
+            tv.setLayoutParams(params);
+
+            tr.addView(tv);
+        }
+        tl_overStock.addView(tr);
+
+        if (listOftOverStockHeaderData != null){
+            int index = 1;
+            for (tOverStockHeaderData dat : listOftOverStockHeaderData){
+                tr = new TableRow(getContext());
+
+                TextView tv_index = new TextView(getContext());
+                tv_index.setTextSize(12);
+                tv_index.setPadding(10, 10, 10, 10);
+                tv_index.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                tv_index.setGravity(Gravity.CENTER);
+                tv_index.setTextColor(Color.BLACK);
+                tv_index.setText(String.valueOf(index + "."));
+                tv_index.setLayoutParams(params);
+                tr.addView(tv_index);
+
+                TextView no_quantity_stock = new TextView(getContext());
+                no_quantity_stock.setTextSize(12);
+                no_quantity_stock.setPadding(10, 10, 10, 10);
+                no_quantity_stock.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                no_quantity_stock.setTextColor(Color.BLACK);
+                no_quantity_stock.setGravity(Gravity.CENTER);
+                no_quantity_stock.setText(dat.get_txtOverStock());
+                no_quantity_stock.setLayoutParams(params);
+
+                tr.addView(no_quantity_stock);
+
+                TextView date = new TextView(getContext());
+                date.setTextSize(12);
+                date.setPadding(10, 10, 10, 10);
+                date.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                date.setTextColor(Color.BLACK);
+                date.setGravity(Gravity.CENTER);
+                date.setText(new clsMainActivity().giveFormatDate2(dat.get_dtDate()));
+                date.setLayoutParams(params);
+
+                tr.addView(date);
+
+                TextView outlet_code = new TextView(getContext());
+                outlet_code.setTextSize(12);
+                outlet_code.setPadding(10, 10, 10, 10);
+                outlet_code.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                outlet_code.setTextColor(Color.BLACK);
+                outlet_code.setGravity(Gravity.CENTER);
+                outlet_code.setText(dat.get_OutletCode());
+                outlet_code.setLayoutParams(params);
+
+                tr.addView(outlet_code);
+
+                tl_overStock.addView(tr, index++);
             }
         }
     }

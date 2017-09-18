@@ -164,7 +164,7 @@ public class FragmentViewNearEDMD extends Fragment implements IXListViewListener
         tr_neared.setVisibility(View.GONE);
 
         if (dt.get(position).get_intSubmit().equals("1")&&dt.get(position).get_intSync().equals("0")){
-            tv_status.setText("ubmit");
+            tv_status.setText("submit");
         } else if (dt.get(position).get_intSubmit().equals("1")&&dt.get(position).get_intSync().equals("1")){
             tv_status.setText("Sync");
         }

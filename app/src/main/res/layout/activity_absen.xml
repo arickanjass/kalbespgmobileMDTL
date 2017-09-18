@@ -402,7 +402,7 @@
                 android:layout_alignParentRight="true"
                 android:background="@drawable/btn_download_all"
                 android:gravity="right"
-                android:text="View location on Map"
+                android:text="View Map"
                 android:textColor="#FFF" />
         </RelativeLayout>
 

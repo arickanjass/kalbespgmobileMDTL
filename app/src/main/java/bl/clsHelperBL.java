@@ -39,6 +39,8 @@ import library.spgmobile.common.tJawabanUserHeaderData;
 import library.spgmobile.common.tLeaveMobileData;
 import library.spgmobile.common.tLogErrorData;
 import library.spgmobile.common.tNotificationData;
+import library.spgmobile.common.tOverStockDetailData;
+import library.spgmobile.common.tOverStockHeaderData;
 import library.spgmobile.common.tPlanogramImageData;
 import library.spgmobile.common.tPlanogramMobileData;
 import library.spgmobile.common.tPurchaseOrderDetailData;
@@ -76,6 +78,8 @@ import library.spgmobile.dal.tJawabanUserDA;
 import library.spgmobile.dal.tJawabanUserHeaderDA;
 import library.spgmobile.dal.tLeaveMobileDA;
 import library.spgmobile.dal.tLogErrorDA;
+import library.spgmobile.dal.tOverStockDetailDA;
+import library.spgmobile.dal.tOverStockHeaderDA;
 import library.spgmobile.dal.tPlanogramImageDA;
 import library.spgmobile.dal.tPlanogramMobileDA;
 import library.spgmobile.dal.tPurchaseOrderDetailDA;
@@ -627,6 +631,8 @@ public class clsHelperBL extends clsMainBL {
             tPurchaseOrderHeaderDA _tPurchaseOrderHeaderDA = new tPurchaseOrderHeaderDA(db);
             tSalesProductQuantityHeaderDA _tSalesProductQuantityDA = new tSalesProductQuantityHeaderDA(db);
             tSalesProductQuantityDetailDA _tSalesProductQuantityDetailDA = new tSalesProductQuantityDetailDA(db);
+            tOverStockHeaderDA _tOverStockHeaderDA = new tOverStockHeaderDA(db);
+            tOverStockDetailDA _tOverStockDetailDA = new tOverStockDetailDA(db);
             tSalesProductQuantityImageDA _tSalesProductQuantityImageDA = new tSalesProductQuantityImageDA(db);
             tCustomerBasedMobileHeaderDA _tCustomerBasedMobileHeaderDA = new tCustomerBasedMobileHeaderDA(db);
             tCustomerBasedMobileDetailDA _tCustomerBasedMobileDetailDA = new tCustomerBasedMobileDetailDA(db);
@@ -653,10 +659,12 @@ public class clsHelperBL extends clsMainBL {
             List<tPurchaseOrderHeaderData> ListOfPurchaseOrderHeader = _tPurchaseOrderHeaderDA.getAllDataToPushData(db);
             List<tPurchaseOrderDetailData> ListOfPurchaseOrderDetail = _tPurchaseOrderDetailDA.getAllDataToPushDataPO(db, ListOfPurchaseOrderHeader);
             List<tSalesProductQuantityHeaderData> ListOfSalesProductQuantityHeader = _tSalesProductQuantityDA.getAllDataToPushData(db);
+            List<tOverStockHeaderData> ListOftOverStockHeader = _tOverStockHeaderDA.getAllDataToPushData(db);
             List<tJawabanUserData> ListOfJawabanUser = _tJawabanUserDA.GetDataToPushAnswer(db);
             List<tJawabanUserHeaderData> ListOfJawabanUserHeader = _tJawabanUserHeaderDA.GetDataToPushAnswer(db);
             List<tSalesProductQuantityDetailData> ListOfSalesProductQuantityDetail = _tSalesProductQuantityDetailDA.getAllDataToPushData(db, ListOfSalesProductQuantityHeader);
             List<tSalesProductQuantityImageData> ListOfSalesProductQuantityImage = _tSalesProductQuantityImageDA.getAllDataToPushData(db, ListOfSalesProductQuantityHeader);
+            List<tOverStockDetailData> ListOftOverStockDetail = _tOverStockDetailDA.getAllDataToPushData(db, ListOftOverStockHeader);
             List<trackingLocationData> ListOfTrackingLocation = _trackingLocationDA.getAllDataToPushData(db);
             List<KoordinasiOutletData> ListOfKoordinasiOutlet = _KoordinasiOutletDA.getAllDataToPushData(db);
             List<KoordinasiOutletImageData> ListOfKoordinasiOutletImage = _KoordinasiOutletImageDA.getAllDataToPushData(db, ListOfKoordinasiOutlet);
@@ -890,6 +898,13 @@ public class clsHelperBL extends clsMainBL {
                 dtPush.setListOftSalesProductQuantityData(ListOfSalesProductQuantityHeader);
             }
 
+            if (ListOftOverStockDetail != null){
+                dtPush.setListOftOverStockDetailData(ListOftOverStockDetail);
+            }
+            if (ListOftOverStockHeader != null){
+                dtPush.setListOftOverStockHeaderData(ListOftOverStockHeader);
+            }
+
             if (ListOftPlanogramMobileData != null){
                 dtPush.setListOftPlanogramMobileData(ListOftPlanogramMobileData);
             }
@@ -1045,6 +1060,14 @@ public class clsHelperBL extends clsMainBL {
                 tSalesProductQuantityHeaderDA _tSalesProductQuantityDA = new tSalesProductQuantityHeaderDA(db);
                 dt.set_intSync("1");
                 _tSalesProductQuantityDA.SaveDataSalesProductQuantityData(db, dt);
+            }
+        }
+
+        if (validPush && dtJson.getListOftOverStockHeaderData() != null){
+            for (tOverStockHeaderData dt : dtJson.getListOftOverStockHeaderData()){
+                tOverStockHeaderDA _tOverStockHeaderDA = new tOverStockHeaderDA(db);
+                dt.set_intSync("1");
+                _tOverStockHeaderDA.SaveDataOverStockData(db, dt);
             }
         }
 

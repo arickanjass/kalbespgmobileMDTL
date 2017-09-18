@@ -35,6 +35,7 @@ import bl.tVisitPlanRealisasiBL;
 import edu.swu.pulltorefreshswipemenulistview.library.pulltorefresh.interfaces.IXListViewListener;
 import library.spgmobile.common.clsSwipeList;
 import library.spgmobile.common.tVisitPlanRealisasiData;
+import library.spgmobile.dal.clsHardCode;
 
 /**
  * Created by Robert on 16/05/2017.
@@ -132,7 +133,8 @@ public class FragmentViewVisitplanDone extends Fragment implements IXListViewLis
 
         img1.setEnabled(true);
         img2.setEnabled(true);
-        File folder = new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata");
+//        File folder = new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata");
+        File folder = new File(new clsHardCode().txtPathTempData);
         folder.mkdir();
 
         final byte[] imgFile = data.get_dtPhoto1();
@@ -143,7 +145,8 @@ public class FragmentViewVisitplanDone extends Fragment implements IXListViewLis
 
                 File file = null;
                 try {
-                    file = File.createTempFile("image-", ".jpg", new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata"));
+//                    file = File.createTempFile("image-", ".jpg", new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata"));
+                    file = File.createTempFile("image-", ".jpg", new File(new clsHardCode().txtPathTempData));
                     FileOutputStream out = new FileOutputStream(file);
                     out.write(imgFile);
                     out.close();
@@ -175,7 +178,8 @@ public class FragmentViewVisitplanDone extends Fragment implements IXListViewLis
 
             File file = null;
             try {
-                file = File.createTempFile("image-", ".jpg", new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata"));
+//                file = File.createTempFile("image-", ".jpg", new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata"));
+                file = File.createTempFile("image-", ".jpg", new File(new clsHardCode().txtPathTempData));
                 FileOutputStream out = new FileOutputStream(file);
                 out.write(imgFile2);
                 out.close();

@@ -47,6 +47,7 @@ import bl.clsMainBL;
 import bl.mCounterNumberBL;
 import bl.mEmployeeSalesProductBL;
 import bl.tOverStockDetailBL;
+import bl.tOverStockHeaderBL;
 import bl.tSalesProductQuantityDetailBL;
 import bl.tSalesProductQuantityHeaderBL;
 import bl.tSalesProductQuantityImageBL;
@@ -61,6 +62,7 @@ import library.spgmobile.common.clsHelper;
 import library.spgmobile.common.clsSwipeList;
 import library.spgmobile.common.mEmployeeSalesProductData;
 import library.spgmobile.common.tOverStockDetailData;
+import library.spgmobile.common.tOverStockHeaderData;
 import library.spgmobile.common.tSalesProductQuantityDetailData;
 import library.spgmobile.common.tSalesProductQuantityHeaderData;
 import library.spgmobile.common.tSalesProductQuantityImageData;
@@ -70,10 +72,10 @@ import library.spgmobile.dal.clsHardCode;
 import library.spgmobile.dal.enumCounterData;
 
 /**
- * Created by aan.junianto on 24/08/2017.
+ * Created by aan.junianto on 15/09/2017.
  */
 
-public class FragmentAddNearEDMD extends Fragment implements IXListViewListener {
+public class FragmentAddOverStockMD extends Fragment implements IXListViewListener {
     View v;
 
     //    private ArrayList<ModelListview> modelItems;
@@ -81,8 +83,8 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
 //    private ArrayList<ModelListview> arrdataPriv;
 //    ListView listView;
 //    int selectedId;
-    static List<tSalesProductQuantityHeaderData> dt;
-    static List<tSalesProductQuantityHeaderData> data;
+    static List<tOverStockHeaderData> dt;
+    static List<tOverStockHeaderData> data;
     //    private FloatingActionButton fab;
 //    private List<String> arrData;
     private EditText edKeterangan;
@@ -93,7 +95,7 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
     TextView tv_date, txtHDId;
     TextView tv_noQuantityStock;
     //    List<tSalesProductQuantityHeaderData> dtListDetailProduct;
-    List<tSalesProductQuantityDetailData> dtListProduct;
+    List<tOverStockDetailData> dtListProduct;
 //    AdapterListProductQuantityDetail AdapterProduct;
 
     private List<clsSwipeList> swipeList = new ArrayList<>();
@@ -107,7 +109,7 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
     private static final int CAMERA_REQUEST4 = 130;
     private static final String IMAGE_DIRECTORY_NAME = "Image Activity";
 
-    private tSalesProductQuantityHeaderData dtQuantityData;
+    private tOverStockHeaderData dtQuantityData;
 
     private static Bitmap photoAfter1, photoAfter2, photoBefore1, photoBefore2;
     private static ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -137,7 +139,7 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
 //        editTextQty = (EditText) v.findViewById(R.id.editTextQty);
 
         _clsMainActivity = new clsMainActivity();
-        dtQuantityData = new tSalesProductQuantityHeaderData();
+        dtQuantityData = new tOverStockHeaderData();
         txtHDId.setText(String.valueOf(new clsMainActivity().GenerateGuid()));
 
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
@@ -145,20 +147,20 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
         imm.hideSoftInputFromWindow(edKeterangan.getWindowToken(), 0);
 
         // add no Quantity Stock in Textview txtNoQuantity
-        List<tSalesProductQuantityHeaderData> dtLast = new tSalesProductQuantityHeaderBL().getLastData();
+        List<tOverStockHeaderData> dtLast = new tOverStockHeaderBL().getLastData();
         String noQuantityStock;
         if (dtLast == null || dtLast.size() == 0) {
-            noQuantityStock = new mCounterNumberBL().getData(enumCounterData.NoQuantityStock);
+            noQuantityStock = new mCounterNumberBL().getData(enumCounterData.NoOS);
 
         } else {
-            noQuantityStock = new mCounterNumberBL().getData(enumCounterData.NoQuantityStock);
-            List<tSalesProductQuantityHeaderData> dataFirstIsExist = new tSalesProductQuantityHeaderBL().getDataByNoQuantityStock(noQuantityStock);
+            noQuantityStock = new mCounterNumberBL().getData(enumCounterData.NoOS);
+            List<tOverStockHeaderData> dataFirstIsExist = new tOverStockHeaderBL().getDataByNoOverStock(noQuantityStock);
             if (dataFirstIsExist.size() == 1) {
                 clsHelper _clsHelper = new clsHelper();
-                String oldVersion = dtLast.get(0).get_txtQuantityStock();
+                String oldVersion = dtLast.get(0).get_txtOverStock();
                 noQuantityStock = _clsHelper.generateNewId(oldVersion, "-", "6");
             } else {
-                noQuantityStock = new mCounterNumberBL().getData(enumCounterData.NoQuantityStock);
+                noQuantityStock = new mCounterNumberBL().getData(enumCounterData.NoOS);
             }
         }
         tv_noQuantityStock.setText(noQuantityStock);
@@ -280,7 +282,7 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
         btnAddQuantity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                popUpAddQuantity(new tSalesProductQuantityDetailData());
+                popUpAddQuantity(new tOverStockDetailData());
             }
         });
 
@@ -347,7 +349,7 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
         return v;
     }
 
-    private void popUpAddQuantity(final tSalesProductQuantityDetailData dataDetail) {
+    private void popUpAddQuantity(final tOverStockDetailData dataDetail) {
         LayoutInflater layoutInflater = LayoutInflater.from(getContext());
         final View promptView = layoutInflater.inflate(R.layout.popup_add_quantity, null);
         final HashMap<String, String> HMProduct = new HashMap<String, String>();
@@ -437,7 +439,7 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
                 .setPositiveButton("Save",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                        clsMainBL _clsMainBL = new clsMainBL();
+                                clsMainBL _clsMainBL = new clsMainBL();
 //                                        SQLiteDatabase _db = _clsMainBL.getDb();
 
                                 String qtyProduct = null;
@@ -468,14 +470,14 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
                                         keterangan = "";
                                     }
 
-                                    tSalesProductQuantityDetailData data = new tSalesProductQuantityDetailData();
+                                    tOverStockDetailData data = new tOverStockDetailData();
                                     if (dataDetail.getIntId() != null) {
                                         data.setIntId(dataDetail.getIntId());
                                     } else {
                                         data.setIntId(_clsMainActivity.GenerateGuid());
                                     }
 
-                                    data.set_txtQuantityStock(tv_noQuantityStock.getText().toString());
+                                    data.set_txtOverStock(tv_noQuantityStock.getText().toString());
                                     data.set_dtDate(dateFormat.format(cal.getTime()));
                                     data.set_txtCodeProduct(HMProduct.get(selectedOneKNProduct));
                                     data.set_txtKeterangan(keterangan);
@@ -490,7 +492,7 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
                                     data.set_intTotal(_clsMainActivity.convertNumberDec2(prc * itm));
                                     data.set_txtNIK(dtUser.get_txtUserId());
 
-                                    new tSalesProductQuantityDetailBL().saveData(data);
+                                    new tOverStockDetailBL().saveData(data);
 //                                        new tSalesProductQuantityDetailDA(_db).SaveDatatSalesProductQuantityDetailData(_db, data);
 
                                     dialog.dismiss();
@@ -641,7 +643,7 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
             } else {
                 dtQuantityData.set_txtAfterImg1(phtAfter1);
             }
-            List<tSalesProductQuantityHeaderData> tSalesProductQuantityDatas = new ArrayList<>();
+            List<tOverStockHeaderData> tSalesProductQuantityDatas = new ArrayList<>();
             tSalesProductQuantityDatas.add(dtQuantityData);
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -677,7 +679,7 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
             } else {
                 dtQuantityData.set_txtAfterImg2(phtAfter2);
             }
-            List<tSalesProductQuantityHeaderData> tSalesProductQuantityDatas = new ArrayList<>();
+            List<tOverStockHeaderData> tSalesProductQuantityDatas = new ArrayList<>();
             tSalesProductQuantityDatas.add(dtQuantityData);
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -713,7 +715,7 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
             } else {
                 dtQuantityData.set_txtBeforeImg1(phtBefore1);
             }
-            List<tSalesProductQuantityHeaderData> tSalesProductQuantityDatas = new ArrayList<>();
+            List<tOverStockHeaderData> tSalesProductQuantityDatas = new ArrayList<>();
             tSalesProductQuantityDatas.add(dtQuantityData);
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -749,7 +751,7 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
             } else {
                 dtQuantityData.set_txtBeforeImg2(phtBefore2);
             }
-            List<tSalesProductQuantityHeaderData> tSalesProductQuantityDatas = new ArrayList<>();
+            List<tOverStockHeaderData> tSalesProductQuantityDatas = new ArrayList<>();
             tSalesProductQuantityDatas.add(dtQuantityData);
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -811,13 +813,13 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
         sv.setFillViewport(true);
 
 //        dtListDetailProduct = new tSalesProductQuantityHeaderBL().getDataByNoQuantityStock(tv_noQuantityStock.getText().toString());
-        dtListProduct = new tSalesProductQuantityDetailBL().GetDataByNoQuantityStock(tv_noQuantityStock.getText().toString());
+        dtListProduct = new tOverStockDetailBL().GetDataByNoOverStock(tv_noQuantityStock.getText().toString());
 
         clsSwipeList swplist;
 
         swipeList.clear();
 
-        for (tSalesProductQuantityDetailData data : dtListProduct) {
+        for (tOverStockDetailData data : dtListProduct) {
 //            List<tSalesProductQuantityDetailData> dtListProduct = new tSalesProductQuantityDetailBL().GetDataByNoQuantityStock(dtListDetailProduct.get(i).get_txtQuantityStock());
 //            List<tSalesProductQuantityDetailData> dtListProduct = new tSalesProductQuantityDetailBL().GetDataByNoQuantityStock(noSO);
 
@@ -879,7 +881,7 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
     }
 
     private void deleteList(Context ctx, int position) {
-        final tSalesProductQuantityDetailData dtDetail = dtListProduct.get(position);
+        final tOverStockDetailData dtDetail = dtListProduct.get(position);
 
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
         alertDialog.setTitle("Confirm");
@@ -887,7 +889,7 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
         alertDialog.setPositiveButton("SUBMIT", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                new tSalesProductQuantityDetailBL().deleteData(dtDetail);
+                new tOverStockDetailBL().deleteData(dtDetail);
                 TableProduct();
                 _clsMainActivity.showCustomToast(getActivity(), dtDetail.getTxtProduct()+" was deleted", true);
             }
@@ -900,7 +902,6 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
             }
         });
         alertDialog.show();
-
     }
 
     private void save() {
@@ -911,7 +912,7 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
         visitplanAbsenData absenUserData = new clsHelperBL().getDataCheckInActive();
 //        modelItems = new ArrayList<ModelListview>();
         String noQtyStock = tv_noQuantityStock.getText().toString();
-        List<tSalesProductQuantityDetailData> productDetail = new tSalesProductQuantityDetailBL().GetDataByNoQuantityStock(noQtyStock);
+        List<tOverStockDetailData> productDetail = new tOverStockDetailBL().GetDataByNoOverStock(noQtyStock);
 
 //        arrdataPriv = new ArrayList<ModelListview>();
         double qntySum = 0;
@@ -937,7 +938,7 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
         dtQuantityData.set_intSumAmount(String.valueOf(result));
 
         dtQuantityData.set_intId(txtHDId.getText().toString());
-        dtQuantityData.set_txtQuantityStock(tv_noQuantityStock.getText().toString());
+        dtQuantityData.set_txtOverStock(tv_noQuantityStock.getText().toString());
         dtQuantityData.set_dtDate(dateFormat.format(cal.getTime()));
         dtQuantityData.set_OutletCode(absenUserData.get_txtOutletCode());
         dtQuantityData.set_OutletName(absenUserData.get_txtOutletName());
@@ -954,9 +955,9 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
         dtQuantityData.set_txtNIK(dataUserActive.get_TxtEmpId());
         dtQuantityData.set_intSubmit("1");
         dtQuantityData.set_intSync("0");
-        List<tSalesProductQuantityHeaderData> dtList = new ArrayList<>();
+        List<tOverStockHeaderData> dtList = new ArrayList<>();
         dtList.add(dtQuantityData);
-        new tSalesProductQuantityHeaderBL().SaveData2(dtList);
+        new tOverStockHeaderBL().SaveData2(dtList);
     }
 
     private void savePicture1() {
@@ -1036,7 +1037,7 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
 //        fragmentManager.beginTransaction().replace(R.id.frame, new FragmentViewQuantityStock()).commit();
 
         Intent myIntent = new Intent(getContext(), MainMenu.class);
-        myIntent.putExtra("key_view", "View Near ED MD");
+        myIntent.putExtra("key_view", "View Over Stock MD");
         getActivity().finish();
         startActivity(myIntent);
 //        return;

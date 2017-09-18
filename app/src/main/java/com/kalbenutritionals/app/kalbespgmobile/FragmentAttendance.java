@@ -459,7 +459,7 @@ public class FragmentAttendance extends Fragment implements GoogleApiClient.Conn
     private File getOutputMediaFile() {
         // External sdcard location
 
-        File mediaStorageDir = new File(new clsHardCode().txtFolderPlanogram + File.separator);
+        File mediaStorageDir = new File(new clsHardCode().txtFolderAbsen + File.separator);
         // Create the storage directory if it does not exist
         if (!mediaStorageDir.exists()) {
             if (!mediaStorageDir.mkdirs()) {

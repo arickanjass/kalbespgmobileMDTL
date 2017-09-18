@@ -359,6 +359,29 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/ll_data_overStock"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tvoverStock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_medium"
+            android:layout_marginTop="5dp"
+            android:textColor="#000"
+            android:text="Over Stock" />
+
+        <TableLayout
+            android:id="@+id/tl_overStock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </TableLayout>
+
+    </LinearLayout>
+
         <Button
             android:id="@+id/btnPush"
              android:layout_width="fill_parent"

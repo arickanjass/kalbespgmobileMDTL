@@ -28,6 +28,7 @@ import library.spgmobile.common.tActivityMobileData;
 import library.spgmobile.common.tAttendanceUserData;
 import library.spgmobile.common.tJawabanUserData;
 import library.spgmobile.common.tLeaveMobileData;
+import library.spgmobile.common.tOverStockHeaderData;
 import library.spgmobile.common.tPlanogramMobileData;
 import library.spgmobile.common.tPurchaseOrderDetailData;
 import library.spgmobile.common.tPurchaseOrderHeaderData;
@@ -54,6 +55,7 @@ import library.spgmobile.dal.tActivityMobileDA;
 import library.spgmobile.dal.tAttendanceUserDA;
 import library.spgmobile.dal.tJawabanUserDA;
 import library.spgmobile.dal.tLeaveMobileDA;
+import library.spgmobile.dal.tOverStockHeaderDA;
 import library.spgmobile.dal.tPlanogramMobileDA;
 import library.spgmobile.dal.tPurchaseOrderDetailDA;
 import library.spgmobile.dal.tPurchaseOrderHeaderDA;
@@ -143,6 +145,7 @@ public class clsMainBL {
 
 		tStockInHandHeaderDA _tStockInHandHeaderDA = new tStockInHandHeaderDA(db);
 		tSalesProductQuantityHeaderDA _tSalesProductQuantityHeaderDA = new tSalesProductQuantityHeaderDA(db);
+		tOverStockHeaderDA _tOverStockHeaderDA = new tOverStockHeaderDA(db);
 		tPlanogramMobileDA _tPlanogramMobileDA = new tPlanogramMobileDA(db);
 		tActivityMobileDA _tActivityMobileDA = new tActivityMobileDA(db);
 		tJawabanUserDA _tJawabanUserDA = new tJawabanUserDA(db);
@@ -165,6 +168,7 @@ public class clsMainBL {
 
 			List<tStockInHandHeaderData> listStockInHand = _tStockInHandHeaderDA.getAllDataToPushData(db);
 			List<tSalesProductQuantityHeaderData> listtSalesProductQuantity = _tSalesProductQuantityHeaderDA.getAllDataToPushData(db);
+			List<tOverStockHeaderData> listtOverStockHeader = _tOverStockHeaderDA.getAllDataToPushData(db);
 			List<tPlanogramMobileData> listtPlanogram = _tPlanogramMobileDA.getAllDataToPushData(db);
 			List<tActivityMobileData> listtActivityMobile = _tActivityMobileDA.getAllDataToPushData(db);
 			List<tJawabanUserData> listJawabanUser = _tJawabanUserDA.GetDataToPushAnswer(db);
@@ -199,6 +203,9 @@ public class clsMainBL {
 				dvalid=true;
 			}
 			if(listtSalesProductQuantity != null && dvalid==false){
+				dvalid=true;
+			}
+			if(listtOverStockHeader != null && dvalid==false){
 				dvalid=true;
 			}
 			if(listtPlanogram != null && dvalid==false){

@@ -63,6 +63,7 @@ import library.spgmobile.common.tPlanogramMobileData;
 import library.spgmobile.common.tSalesProductQuantityHeaderData;
 import library.spgmobile.common.tSalesProductQuantityImageData;
 import library.spgmobile.common.visitplanAbsenData;
+import library.spgmobile.dal.clsHardCode;
 
 import static com.kalbenutritionals.app.kalbespgmobile.R.id.textView9;
 import static com.kalbenutritionals.app.kalbespgmobile.R.id.textView9Quantity;
@@ -249,7 +250,8 @@ public class FragmentViewPlanogram extends Fragment implements IXListViewListene
         btnSave.setVisibility(View.GONE);
         etDesc.setText(dt.get(position).get_txtKeterangan());
 
-        File folder = new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata");
+//        File folder = new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata");
+        File folder = new File(new clsHardCode().txtPathTempData);
         folder.mkdir();
 
 //        final byte[] imgFile = dt.get(position).get_txtBeforeImg1();
@@ -263,7 +265,8 @@ public class FragmentViewPlanogram extends Fragment implements IXListViewListene
 
                     File file = null;
                     try {
-                        file = File.createTempFile("image-", ".jpg", new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata"));
+//                        file = File.createTempFile("image-", ".jpg", new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata"));
+                        file = File.createTempFile("image-", ".jpg", new File(new clsHardCode().txtPathTempData));
                         FileOutputStream out = new FileOutputStream(file);
                         out.write(imgFile);
                         out.close();
@@ -298,7 +301,8 @@ public class FragmentViewPlanogram extends Fragment implements IXListViewListene
 
                     File file = null;
                     try {
-                        file = File.createTempFile("image-", ".jpg", new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata"));
+//                        file = File.createTempFile("image-", ".jpg", new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata"));
+                        file = File.createTempFile("image-", ".jpg", new File(new clsHardCode().txtPathTempData));
                         FileOutputStream out = new FileOutputStream(file);
                         out.write(imgFile2);
                         out.close();
@@ -333,7 +337,8 @@ public class FragmentViewPlanogram extends Fragment implements IXListViewListene
 
                     File file = null;
                     try {
-                        file = File.createTempFile("image-", ".jpg", new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata"));
+//                        file = File.createTempFile("image-", ".jpg", new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata"));
+                        file = File.createTempFile("image-", ".jpg", new File(new clsHardCode().txtPathTempData));
                         FileOutputStream out = new FileOutputStream(file);
                         out.write(imgFile3);
                         out.close();
@@ -368,7 +373,8 @@ public class FragmentViewPlanogram extends Fragment implements IXListViewListene
 
                     File file = null;
                     try {
-                        file = File.createTempFile("image-", ".jpg", new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata"));
+//                        file = File.createTempFile("image-", ".jpg", new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata"));
+                        file = File.createTempFile("image-", ".jpg", new File(new clsHardCode().txtPathTempData));
                         FileOutputStream out = new FileOutputStream(file);
                         out.write(imgFile4);
                         out.close();

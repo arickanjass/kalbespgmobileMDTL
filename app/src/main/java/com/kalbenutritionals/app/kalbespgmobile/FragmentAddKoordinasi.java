@@ -269,7 +269,8 @@ public class FragmentAddKoordinasi extends Fragment implements View.OnClickListe
 
     private void viewImage() {
         dataImage = new KoordinasiOutletImageBL().getDataHeaderId(dt.get(0).get_intId());
-        File folder = new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata");
+//        File folder = new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata");
+        File folder = new File(new clsHardCode().txtPathTempData);
         folder.mkdir();
 
         for (KoordinasiOutletImageData imgDt : dataImage){
@@ -282,7 +283,8 @@ public class FragmentAddKoordinasi extends Fragment implements View.OnClickListe
 
                     File file = null;
                     try {
-                        file = File.createTempFile("image-", ".jpg", new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata"));
+//                        file = File.createTempFile("image-", ".jpg", new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata"));
+                        file = File.createTempFile("image-", ".jpg", new File(new clsHardCode().txtPathTempData));
                         FileOutputStream out = new FileOutputStream(file);
                         out.write(imgFile);
                         out.close();
@@ -301,7 +303,8 @@ public class FragmentAddKoordinasi extends Fragment implements View.OnClickListe
 
                     File file = null;
                     try {
-                        file = File.createTempFile("image-", ".jpg", new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata"));
+//                        file = File.createTempFile("image-", ".jpg", new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata"));
+                        file = File.createTempFile("image-", ".jpg", new File(new clsHardCode().txtPathTempData));
                         FileOutputStream out = new FileOutputStream(file);
                         out.write(imgFile2);
                         out.close();

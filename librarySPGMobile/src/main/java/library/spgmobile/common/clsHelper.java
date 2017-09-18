@@ -74,6 +74,8 @@ import library.spgmobile.dal.tJawabanUserHeaderDA;
 import library.spgmobile.dal.tKategoryPlanogramMobileDA;
 import library.spgmobile.dal.tLeaveMobileDA;
 import library.spgmobile.dal.tNotificationDA;
+import library.spgmobile.dal.tOverStockDetailDA;
+import library.spgmobile.dal.tOverStockHeaderDA;
 import library.spgmobile.dal.tPlanogramImageDA;
 import library.spgmobile.dal.tPlanogramMobileDA;
 import library.spgmobile.dal.tPurchaseOrderDetailDA;
@@ -169,7 +171,8 @@ public class clsHelper {
 		String Result="";
 		clsHelper _clsClsHelper = new clsHelper();
 
-		File folder = new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata");
+//		File folder = new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata");
+		File folder = new File(new clsHardCode().txtPathTempData);
 		folder.mkdir();
 
 		try {
@@ -188,7 +191,8 @@ public class clsHelper {
 //                String value = entry.getValue();
 
 				byte [] array = entry.getValue();
-				File file = File.createTempFile("file-", ekstension, new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata"));
+//				File file = File.createTempFile("file-", ekstension, new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata"));
+				File file = File.createTempFile("image-", ".jpg", new File(new clsHardCode().txtPathTempData));
 				FileOutputStream out = new FileOutputStream( file );
 				out.write( array );
 				out.close();
@@ -359,6 +363,8 @@ public class clsHelper {
 		tSalesProductQuantityHeaderDA _tSalesProductQuantityDA = new tSalesProductQuantityHeaderDA(db);
 		tSalesProductQuantityDetailDA _tSalesProductQuantityDetailDA = new tSalesProductQuantityDetailDA(db);
 		tSalesProductQuantityImageDA _tSalesProductQuantityImageDA = new tSalesProductQuantityImageDA(db);
+		tOverStockHeaderDA _tOverStockHeaderDA = new tOverStockHeaderDA(db);
+		tOverStockDetailDA _tOverStockDetailDA = new tOverStockDetailDA(db);
 		tCustomerBasedMobileHeaderDA _tCustomerBasedMobileHeaderDA = new tCustomerBasedMobileHeaderDA(db);
 		tCustomerBasedMobileDetailDA _tCustomerBasedMobileDetailDA = new tCustomerBasedMobileDetailDA(db);
 		tCustomerBasedMobileDetailProductDA _tCustomerBasedMobileDetailProductDA = new tCustomerBasedMobileDetailProductDA(db);
@@ -383,6 +389,8 @@ public class clsHelper {
 		_mTypeSubmissionMobileDA.DropTable(db);
 		_tSalesProductQuantityDA.Droptable(db);
 		_tSalesProductQuantityDetailDA.DropTable(db);
+		_tOverStockHeaderDA.Droptable(db);
+		_tOverStockDetailDA.DropTable(db);
 		_tSalesProductQuantityImageDA.Droptable(db);
 		_tCustomerBasedMobileHeaderDA.DropTable(db);
 		_tCustomerBasedMobileDetailDA.DropTable(db);
@@ -463,6 +471,8 @@ public class clsHelper {
 		new tStockInHandHeaderDA(db);
 		new tStockInHandDetailDA(db);
 		new tKategoryPlanogramMobileDA(db);
+		new tOverStockHeaderDA(db);
+		new tOverStockDetailDA(db);
 
 		_mPriceInOutletDA=new mPriceInOutletDA(db);
 		_mUserRoleDA=new mUserRoleDA(db);

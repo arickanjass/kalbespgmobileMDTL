@@ -234,8 +234,10 @@ public class clsHardCode  {
 	public String txtTable_mTypeSubmissionMobile="mTypeSubmissionMobile";
 	public String txtTable_mProductCompetitorData="mProductCompetitorData";
 	public String txtTable_tSalesQuantityStock="tSalesProductQuantityHeader";
+	public String txtTable_tOverStockHeader="tOverStockHeader";
 	public String txtTable_tPlanogramMobile="tPlanogramMobile";
 	public String txtTable_tSalesProductQuantityDetail="tSalesProductQuantityDetail";
+	public String txtTable_tOverStockDetail="tOverStockDetail";
 	public String txtTable_tSalesProductQuantityImage="tSalesProductQuantityImage";
 	public String txtTable_tPlanogramImage="tPlanogramImage";
 	public String txtTable_trackingLocation="trackingLocation";

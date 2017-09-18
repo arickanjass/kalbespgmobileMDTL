@@ -870,10 +870,27 @@ public class FragmentAddNearEDTL extends Fragment implements IXListViewListener 
     }
 
     private void deleteList(Context ctx, int position) {
-        tSalesProductQuantityDetailData dtDetail = dtListProduct.get(position);
+        final tSalesProductQuantityDetailData dtDetail = dtListProduct.get(position);
 
-        new tSalesProductQuantityDetailBL().deleteData(dtDetail);
-        TableProduct();
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+        alertDialog.setTitle("Confirm");
+        alertDialog.setMessage("Are you sure?");
+        alertDialog.setPositiveButton("SUBMIT", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                new tSalesProductQuantityDetailBL().deleteData(dtDetail);
+                TableProduct();
+                _clsMainActivity.showCustomToast(getActivity(), dtDetail.getTxtProduct()+" was deleted", true);
+            }
+        });
+        alertDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+
+            }
+        });
+        alertDialog.show();
     }
 
     private void save() {

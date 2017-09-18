@@ -90,6 +90,78 @@
                         android:gravity="center"
                         android:orientation="horizontal">
 
+                        <!--visit outstanding-->
+
+                        <LinearLayout
+                            android:id="@+id/ll_dataVisitPlan"
+                            android:visibility="gone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <com.owater.library.CircleTextView
+                                android:id="@+id/tvTotalVisitPlan"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_weight="0.25"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="25dp"
+                                app:ct_backgroundColor="#FFFFFF"
+                                app:ct_border_alpha="0.5"
+                                app:ct_border_color="@color/colorAccent"
+                                app:ct_border_width="10dp"
+                                app:ct_type="shadow_alpha" />
+
+                            <TextView
+                                android:id="@+id/textView12345678"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="OUTS. VISIT"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                        <!--visit done-->
+
+                        <LinearLayout
+                            android:id="@+id/ll_dataVisitPlanDone"
+                            android:visibility="gone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <com.owater.library.CircleTextView
+                                android:id="@+id/tvTotalVisitPlanDone"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_weight="0.25"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="25dp"
+                                app:ct_backgroundColor="#FFFFFF"
+                                app:ct_border_alpha="0.5"
+                                app:ct_border_color="@color/colorAccent"
+                                app:ct_border_width="10dp"
+                                app:ct_type="shadow_alpha" />
+
+                            <TextView
+                                android:id="@+id/textView123456789"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="VISIT DONE"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
                         <!--Reso-->
 
                         <LinearLayout
@@ -485,6 +557,42 @@
                                 android:textSize="11sp" />
                         </LinearLayout>
 
+                        <!--over Stock-->
+
+                        <LinearLayout
+                            android:id="@+id/ll_data_overStock"
+                            android:visibility="gone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <com.owater.library.CircleTextView
+                                android:id="@+id/tvTotaloverStock"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_weight="0.25"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="25dp"
+                                app:ct_backgroundColor="#FFFFFF"
+                                app:ct_border_alpha="0.5"
+                                app:ct_border_color="@color/colorAccent"
+                                app:ct_border_width="10dp"
+                                app:ct_type="shadow_alpha" />
+
+                            <TextView
+                                android:id="@+id/textView1234567810"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="OVER STOCK"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
                         <!--<LinearLayout-->
                         <!--android:layout_width="match_parent"-->
                         <!--android:layout_height="wrap_content"-->
@@ -575,6 +683,82 @@
                                 android:gravity="center"
                                 android:text="Pushed"
                                 android:textColor="@color/white" />
+                        </TableRow>
+                        <!--table oust. visit-->
+                        <TableRow
+                            android:id="@+id/tr_oustVisit"
+                            android:visibility="gone"
+                            android:background="#f0f0f0"
+                            android:gravity="center_horizontal"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Oust. Visit" />
+
+                            <TextView
+                                android:id="@+id/tv_oustVisit0"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tv_oustVisit1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tv_oustVisit2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+                        </TableRow>
+                        <!--table dne visit-->
+                        <TableRow
+                            android:id="@+id/tr_doneVisit"
+                            android:visibility="gone"
+                            android:background="#f0f0f0"
+                            android:gravity="center_horizontal"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Visit Done" />
+
+                            <TextView
+                                android:id="@+id/tv_doneVisit0"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tv_doneVisit1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tv_doneVisit2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
                         </TableRow>
                         <!--table reso-->
                         <TableRow
@@ -801,6 +985,46 @@
 
                             <TextView
                                 android:id="@+id/tv_qs2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+                        </TableRow>
+
+                        <!--table over Stock-->
+                        <TableRow
+                            android:id="@+id/tr_overStock"
+                            android:background="#f0f0f0"
+                            android:visibility="gone"
+                            android:gravity="center_horizontal"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:paddingRight="5dp"
+                                android:text="Over Stock" />
+
+                            <TextView
+                                android:id="@+id/tv_os0"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tv_os1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tv_os2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"

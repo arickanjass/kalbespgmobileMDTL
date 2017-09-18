@@ -1187,6 +1187,53 @@
 
                 </LinearLayout>
 
+                <!--data over stock-->
+
+                <LinearLayout
+                    android:id="@+id/ll_data_overStock"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/txtVwDataOverStock"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/view10"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Over Stock"
+                        android:textColor="#000" />
+
+                    <Spinner
+                        android:id="@+id/spnDataOverStock"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtVwDataOverStock"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/bg_edtext" />
+
+                    <Button
+                        android:id="@+id/btnDataOverStock"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/spnKordinasiOutlet"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/btn_on_click"
+                        android:text="Download Data Over Stock" />
+
+                    <View
+                        android:id="@+id/viewDataOverStock"
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/btnDataOverStock"
+                        android:layout_marginTop="10dp"
+                        android:background="#bfbfbf" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
             <!--<View-->

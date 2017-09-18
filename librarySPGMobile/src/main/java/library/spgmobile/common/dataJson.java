@@ -587,8 +587,6 @@ public class dataJson {
                     item.put(dttJawabanUserHeaderData.Property_txtOutletName, String.valueOf(data.get_txtOutletName()));
                     item.put(dttJawabanUserHeaderData.Property_dtDate, String.valueOf(data.get_dtDate()));
                     item.put(dttJawabanUserHeaderData.Property_dtDatetime, String.valueOf(data.get_dtDatetime()));
-                    item.put(dttJawabanUserHeaderData.Property_intAverage, String.valueOf(data.get_intAverage()));
-                    item.put(dttJawabanUserHeaderData.Property_intSum, String.valueOf(data.get_intSum()));
                     itemsListJquey.add(item);
                 }
                 resJson.put(dttJawabanUserHeaderData.Property_ListOftJawabanUserHeaderData, new JSONArray(itemsListJquey));
@@ -613,11 +611,58 @@ public class dataJson {
                     item.put(dtJawabanUserData.Property_txtFileQuiz, String.valueOf(data.get_txtFileQuiz()));
                     item.put(dtJawabanUserData.Property_decBobot, String.valueOf(data.get_decBobot()));
                     item.put(dtJawabanUserData.Property_dtDate, String.valueOf(data.get_dtDate()));
-                    item.put(dtJawabanUserData.Property_dtDatetime, String.valueOf(data.get_dtDatetime()));
                     itemsListJquey.add(item);
                 }
                 resJson.put(dtJawabanUserData.Property_ListOftJawabanUserData, new JSONArray(itemsListJquey));
             }
+
+            if (this.getListOftOverStockHeaderData() != null){
+                tOverStockHeaderData dttOverStockHeaderData = new tOverStockHeaderData();
+                itemsListJquey = new ArrayList<JSONObject>();
+                for (tOverStockHeaderData data : this.getListOftOverStockHeaderData()){
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dttOverStockHeaderData.Property_intId, String.valueOf(data.get_intId()));
+                    item1.put(dttOverStockHeaderData.Property_txtOverStock, String.valueOf(data.get_txtOverStock()));
+                    item1.put(dttOverStockHeaderData.Property_OutletCode, String.valueOf(data.get_OutletCode()));
+                    item1.put(dttOverStockHeaderData.Property_OutletName, String.valueOf(data.get_OutletName()));
+                    item1.put(dttOverStockHeaderData.Property_txtDate, String.valueOf(data.get_dtDate()));
+                    item1.put(dttOverStockHeaderData.Property_intIdAbsenUser, String.valueOf(data.get_intIdAbsenUser()));
+                    item1.put(dttOverStockHeaderData.Property_intSubmit, String.valueOf(data.get_intSubmit()));
+                    item1.put(dttOverStockHeaderData.Property_intSumAmount, String.valueOf(data.get_intSumAmount()));
+                    item1.put(dttOverStockHeaderData.Property_intSumItem, String.valueOf(data.get_intSumItem()));
+                    item1.put(dttOverStockHeaderData.Property_intSync, String.valueOf(data.get_intSync()));
+                    item1.put(dttOverStockHeaderData.Property_txtBranchCode, String.valueOf(data.get_txtBranchCode()));
+                    item1.put(dttOverStockHeaderData.Property_txtBranchName, String.valueOf(data.get_txtBranchName()));
+                    item1.put(dttOverStockHeaderData.Property_UserId, String.valueOf(data.get_UserId()));
+                    item1.put(dttOverStockHeaderData.Property_txtKeterangan, String.valueOf(data.get_txtKeterangan()));
+                    item1.put(dttOverStockHeaderData.Property_txtNIK, String.valueOf(data.get_txtNIK()));
+                    item1.put(dttOverStockHeaderData.Property_txtRoleId, String.valueOf(data.get_txtRoleId()));
+                    itemsListJquey.add(item1);
+                }
+                resJson.put(dttOverStockHeaderData.Property_ListOftOverStockHeaderData, new JSONArray(itemsListJquey));
+            }
+
+            if (this.getListOftOverStockDetailData() != null){
+                tOverStockDetailData dttOverStockDetailData = new tOverStockDetailData();
+                itemsListJquey = new ArrayList<JSONObject>();
+                for (tOverStockDetailData data : this.getListOftOverStockDetailData()){
+                    JSONObject item = new JSONObject();
+                    item.put(dttOverStockDetailData.Property_intId, String.valueOf(data.getIntId()));
+                    item.put(dttOverStockDetailData.Property_dtDate, String.valueOf(data.get_dtDate()));
+                    item.put(dttOverStockDetailData.Property_intPrice, String.valueOf(data.get_intTotal()));
+                    item.put(dttOverStockDetailData.Property_txtQuantity, String.valueOf(data.getTxtExpireDate()));
+                    item.put(dttOverStockDetailData.Property_txtCodeProduct, String.valueOf(data.get_intPrice()));
+                    item.put(dttOverStockDetailData.Property_txtKeterangan, String.valueOf(data.get_txtCodeProduct()));
+                    item.put(dttOverStockDetailData.Property_txtExpireDate, String.valueOf(data.getTxtProduct()));
+                    item.put(dttOverStockDetailData.Property_txtProduct, String.valueOf(data.get_txtKeterangan()));
+                    item.put(dttOverStockDetailData.Property_txtNIK, String.valueOf(data.get_txtNIK()));
+                    item.put(dttOverStockDetailData.Property_intTotal, String.valueOf(data.get_txtOverStock()));
+                    item.put(dttOverStockDetailData.Property_txtOverStock, String.valueOf(data.getTxtQuantity()));
+                    itemsListJquey.add(item);
+                }
+                resJson.put(dttOverStockDetailData.Property_ListOftOverStockDetailData, new JSONArray(itemsListJquey));
+            }
+
             if (this.getListOftSalesProductQuantityHeaderData() != null){
                 tSalesProductQuantityHeaderData dttSalesProductQuantityData = new tSalesProductQuantityHeaderData();
                 itemsListJquey = new ArrayList<JSONObject>();
@@ -1258,12 +1303,32 @@ public class dataJson {
     private List<tSalesProductHeaderData> ListOftSalesProductHeaderData;
     private List<tPurchaseOrderDetailData> ListOftPurchaseOrderDetailData;
     private List<tSalesProductQuantityDetailData> ListOftSalesProductQuantityDetailData;
+
+    public List<tOverStockDetailData> getListOftOverStockDetailData() {
+        return ListOftOverStockDetailData;
+    }
+
+    public void setListOftOverStockDetailData(List<tOverStockDetailData> listOftOverStockDetailData) {
+        ListOftOverStockDetailData = listOftOverStockDetailData;
+    }
+
+    private List<tOverStockDetailData> ListOftOverStockDetailData;
     private List<tSalesProductQuantityImageData> ListOftSalesProductQuantityImageData;
     private List<tPlanogramImageData> ListOftPlanogramImageData;
     private List<tPurchaseOrderHeaderData> ListOftPurchaseOrderHeaderData;
     private List<tJawabanUserData> ListOftJawabanUserData;
     private List<tJawabanUserHeaderData> ListOftJawabanUserHeaderData;
     private List<tSalesProductQuantityHeaderData> ListOftSalesProductQuantityData;
+
+    public List<tOverStockHeaderData> getListOftOverStockHeaderData() {
+        return ListOftOverStockHeaderData;
+    }
+
+    public void setListOftOverStockHeaderData(List<tOverStockHeaderData> listOftOverStockHeaderData) {
+        ListOftOverStockHeaderData = listOftOverStockHeaderData;
+    }
+
+    private List<tOverStockHeaderData> ListOftOverStockHeaderData;
     private List<tPlanogramMobileData> ListOftPlanogramMobileData;
     private List<tCustomerBasedMobileHeaderData> ListOftCustomerBasedMobileHeaderData;
     private List<tCustomerBasedMobileDetailData> ListOftCustomerBasedMobileDetailData;
