@@ -88,7 +88,7 @@ public class ReportDetailQuiz extends AppCompatActivity {
         if(kategoriData.get_intParentId().equals("1")){
             tvAverage.setVisibility(View.GONE);
             tvSum.setVisibility(View.GONE);
-            tvSumSum.setVisibility(View.GONE); 
+            tvSumSum.setVisibility(View.GONE);
             tvAvg.setVisibility(View.GONE);
         } else {
             tvSum .setText(" : " + dataHeader.get_intSum());

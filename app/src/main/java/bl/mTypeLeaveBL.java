@@ -64,7 +64,7 @@ public class mTypeLeaveBL extends clsMainBL{
 		linkAPI dtlinkAPI=new linkAPI();
 		String txtMethod="GetDatamTypeLeaveMobile";
 		dtlinkAPI.set_txtMethod(txtMethod);
-		dtlinkAPI.set_txtParam(_dataUserLogin.get_TxtEmpId()+"|||");
+		dtlinkAPI.set_txtParam(_dataUserLogin.get_TxtEmpId()+"|" + _dataUserLogin.get_txtRoleId());
 		dtlinkAPI.set_txtToken(new clsHardCode().txtTokenAPI);
 		dtlinkAPI.set_txtVesion(versionName);
 		String strLinkAPI= dtlinkAPI.QueryString(strVal2);
