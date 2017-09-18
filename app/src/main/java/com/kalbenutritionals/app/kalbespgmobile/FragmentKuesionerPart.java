@@ -533,7 +533,8 @@ public class FragmentKuesionerPart extends Fragment {
     }
     private void previewCapturedImage1(Bitmap photo) {
             Bitmap bitmap = new clsMainActivity().resizeImageForBlob(photo);
-            imageView.setImageBitmap(bitmap);
+            Bitmap imgView = Bitmap.createScaledBitmap(bitmap, 200, 200, true); 
+            imageView.setImageBitmap(imgView);
             imageView.setBackgroundResource(0);
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(300,300);
             layoutParams.gravity = Gravity.CENTER;

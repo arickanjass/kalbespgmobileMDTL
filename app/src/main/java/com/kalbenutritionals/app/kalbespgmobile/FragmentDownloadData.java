@@ -4395,7 +4395,7 @@ public class FragmentDownloadData extends Fragment {
                         _data.set_txtUserName(String.valueOf(innerObj_JawabanSPGHeader.get("TxtUserName")));
                         _data.set_txtOutletName(String.valueOf(innerObj_JawabanSPGHeader.get("TxtOutletName")));
                         _data.set_txtOutletCode(String.valueOf(innerObj_JawabanSPGHeader.get("TxtOutletCode")));
-                        _data.set_dtDate(String.valueOf(innerObj_JawabanSPGHeader.get("DtDate")).replace("/", "-")); 
+                        _data.set_dtDate(String.valueOf(innerObj_JawabanSPGHeader.get("DtDate")).replace("/", "-"));
                         _data.set_dtDatetime(String.valueOf(innerObj_JawabanSPGHeader.get("DtDatetime")).replace("/", "-"));
                         _data.set_intRoleId(String.valueOf(innerObj_JawabanSPGHeader.get("IntRoleId"))) ;
                         _data.set_intSum(String.valueOf(innerObj_JawabanSPGHeader.get("IntSum")));
