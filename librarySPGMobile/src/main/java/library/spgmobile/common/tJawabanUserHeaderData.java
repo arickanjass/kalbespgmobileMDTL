@@ -16,6 +16,23 @@ public class tJawabanUserHeaderData {
     private String _intId;
     private String _intGroupQuestionId;
     private String _txtOutletName;
+    private String _intSum;
+    private String _intAverage;
+    public String get_intSum() {
+        return _intSum;
+    }
+
+    public void set_intSum(String _intSum) {
+        this._intSum = _intSum;
+    }
+
+    public String get_intAverage() {
+        return _intAverage;
+    }
+
+    public void set_intAverage(String _intAverage) {
+        this._intAverage = _intAverage;
+    }
 
     public String get_dtDatetime() {
         return _dtDatetime;
@@ -128,11 +145,14 @@ public class tJawabanUserHeaderData {
     public String Property_intGroupQuestionId = "intGroupQuestionId";
     public String Property_txtOutletName = "txtOutletName";
     public String Property_dtDatetime = "dtDatetime";
+    public String Property_intSum = "intSum";
+    public String Property_intAverage = "intAverage";
     public String Property_ListOftJawabanUserHeaderData = "ListOftJawabanUserHeaderData";
     public String Property_All =  Property_intHeaderId + "," + Property_intNik + "," + Property_txtUserName
             + "," + Property_intRoleId + "," + Property_txtOutletCode + "," + Property_dtDate
             + "," + Property_intSubmit + "," + Property_intSync
-            + "," + Property_intGroupQuestionId + "," + Property_txtOutletName +  "," +Property_dtDatetime ;
+            + "," + Property_intGroupQuestionId + "," + Property_txtOutletName +  "," +Property_dtDatetime
+            + "," + Property_intAverage + "," + Property_intSum;
     public tJawabanUserHeaderData(){
         super();
     }

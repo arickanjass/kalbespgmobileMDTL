@@ -40,6 +40,7 @@ import android.widget.Toast;
 
 import java.io.FileNotFoundException;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -741,6 +742,8 @@ public class FragmentKuesioner extends Fragment {
             data.set_intGroupQuestionId(String.valueOf(intGroupId));
             data.set_intSubmit("0");
             data.set_intSync("0");
+            data.set_intAverage("0");
+            data.set_intSum("0");
             new tJawabanUserHeaderBL().SaveDatatJawabanHeaderUser(data);
             List<tJawabanUserHeaderData> dataHeader = new tJawabanUserHeaderBL().GetLastBeforeSaveDetail();
             for (int i = 0; i < listDataPertanyaan.size(); i++) {
@@ -798,6 +801,7 @@ public class FragmentKuesioner extends Fragment {
                             dt.set_intSync("0");
                             dt.set_intHeaderId(dataHeader.get(0).get_intHeaderId());
                             dt.set_dtDate(dataHeader.get(0).get_dtDate());
+                            dt.set_dtDatetime(dateNow +" "+ timeNow);
                             listData.add(dt);
                             new tJawabanUserBL().SaveDatatJawabanUser(dt);
                         }
@@ -822,6 +826,7 @@ public class FragmentKuesioner extends Fragment {
                     dt.set_intSync("0");
                     dt.set_intHeaderId(dataHeader.get(0).get_intHeaderId());
                     dt.set_dtDate(dataHeader.get(0).get_dtDate());
+                    dt.set_dtDatetime(dateNow +" "+ timeNow);
                     listData.add(dt);
                     new tJawabanUserBL().SaveDatatJawabanUser(dt);
                 } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("3")) {
@@ -844,6 +849,7 @@ public class FragmentKuesioner extends Fragment {
                     dt.set_intSync("0");
                     dt.set_intHeaderId(dataHeader.get(0).get_intHeaderId());
                     dt.set_dtDate(dataHeader.get(0).get_dtDate());
+                    dt.set_dtDatetime(dateNow +" "+ timeNow);
                     listData.add(dt);
                     new tJawabanUserBL().SaveDatatJawabanUser(dt);
                 } else if (listDataPertanyaan.get(i).get_intTypeQuestionId().equals("2")) {
@@ -871,6 +877,7 @@ public class FragmentKuesioner extends Fragment {
                                 dt.set_intSync("0");
                                 dt.set_intHeaderId(dataHeader.get(0).get_intHeaderId());
                                 dt.set_dtDate(dataHeader.get(0).get_dtDate());
+                                dt.set_dtDatetime(dateNow +" "+ timeNow);
                                 listData.add(dt);
                                 new tJawabanUserBL().SaveDatatJawabanUser(dt);
                             }
@@ -902,6 +909,7 @@ public class FragmentKuesioner extends Fragment {
                                 dt.set_intSync("0");
                                 dt.set_intHeaderId(dataHeader.get(0).get_intHeaderId());
                                 dt.set_dtDate(dataHeader.get(0).get_dtDate());
+                                dt.set_dtDatetime(dateNow +" "+ timeNow);
                                 listData.add(dt);
                                 new tJawabanUserBL().SaveDatatJawabanUser(dt);
                             }
@@ -931,6 +939,7 @@ public class FragmentKuesioner extends Fragment {
                             dt.set_intSync("0");
                             dt.set_intHeaderId(dataHeader.get(0).get_intHeaderId());
                             dt.set_dtDate(dataHeader.get(0).get_dtDate());
+                            dt.set_dtDatetime(dateNow +" "+ timeNow);
                             listData.add(dt);
                             new tJawabanUserBL().SaveDatatJawabanUser(dt);
                         }
@@ -965,6 +974,7 @@ public class FragmentKuesioner extends Fragment {
                             dt7.set_intSync("0");
                             dt7.set_intHeaderId(dataHeader.get(0).get_intHeaderId());
                             dt7.set_dtDate(dataHeader.get(0).get_dtDate());
+                            dt7.set_dtDatetime(dateNow +" "+ timeNow);
                             listData.add(dt7);
                             new tJawabanUserBL().SaveDatatJawabanUser(dt7);
                         }
@@ -1005,6 +1015,7 @@ public class FragmentKuesioner extends Fragment {
                                 dt7.set_intSync("0");
                                 dt7.set_intHeaderId(dataHeader.get(0).get_intHeaderId());
                                 dt7.set_dtDate(dataHeader.get(0).get_dtDate());
+                                dt7.set_dtDatetime(dateNow +" "+ timeNow);
                                 listData.add(dt7);
                                 new tJawabanUserBL().SaveDatatJawabanUser(dt7);
                             }else if (textView.getId() == layoutFileQuiz.getId() * 63){
@@ -1015,6 +1026,27 @@ public class FragmentKuesioner extends Fragment {
                 }
             }
             for (tJawabanUserHeaderData dt : dataHeader){
+
+                int total = 0;
+                int penyebut = 0;
+                List<tJawabanUserData> list = new tJawabanUserBL().GetDataByHeaderId(dt.get_intHeaderId());
+                if (list.size()>0){
+                    //cek parentnya soal bukan
+                    mKategoriData kategoriData = new mKategoriBL().GetCategoryById(listDataPertanyaan.get(0).get_intCategoryId());
+                    if (kategoriData.get_intParentId().equals("2")){
+                        for(tJawabanUserData datum : list){
+                            if (datum.get_intTypeQuestionId().equals("5")){
+                                total += Integer.parseInt(datum.get_txtValue().trim());
+                                penyebut +=1;
+                            }
+                        }
+                        Double average = Double.parseDouble(String.valueOf(total))/penyebut;
+                        DecimalFormat df = new DecimalFormat("#.##");
+                        String avg = df.format(average).replace(",", ".");
+                        dt.set_intSum(String.valueOf(total));
+                        dt.set_intAverage(avg);
+                    }
+                }
                 dt.set_intSubmit("1");
                 dt.set_intId(dataHeader.get(0).get_intId());
                 new tJawabanUserHeaderBL().SaveDatatJawabanHeaderUser(dt);

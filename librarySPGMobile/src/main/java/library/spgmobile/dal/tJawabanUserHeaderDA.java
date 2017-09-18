@@ -28,6 +28,7 @@ public class tJawabanUserHeaderDA {
                 + dt.Property_intGroupQuestionId + " TEXT NULL,"+ dt.Property_intRoleId + " TEXT NULL,"
                 + dt.Property_txtOutletCode + " TEXT NULL," + dt.Property_txtOutletName + " TEXT NULL,"
                 + dt.Property_dtDate + " TEXT NULL," + dt.Property_dtDatetime + " TEXT NULL,"
+                + dt.Property_intSum + " TEXT NULL," + dt.Property_intAverage + " TEXT NULL,"
                 + dt.Property_intSubmit + " TEXT NULL," + dt.Property_intSync + " TEXT NULL)";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
@@ -47,10 +48,14 @@ public class tJawabanUserHeaderDA {
         cv.put(dt.Property_dtDate, String.valueOf(data.get_dtDate()));
         cv.put(dt.Property_dtDatetime, String.valueOf(data.get_dtDatetime()));
         if (data.get_intHeaderId() == null){
+            cv.put(dt.Property_intSum, String.valueOf(data.get_intSum()));
+            cv.put(dt.Property_intAverage, String.valueOf(data.get_intAverage()));
             cv.put(dt.Property_intSubmit, String.valueOf(data.get_intSubmit()));
             cv.put(dt.Property_intSync, String.valueOf(data.get_intSync()));
             db.insert(TABLE_CONTACTS, null, cv);
         } else {
+            cv.put(dt.Property_intSum, String.valueOf(data.get_intSum()));
+            cv.put(dt.Property_intAverage, String.valueOf(data.get_intAverage()));
             cv.put(dt.Property_intSubmit, String.valueOf(data.get_intSubmit()));
             cv.put(dt.Property_intSync, String.valueOf(data.get_intSync()));
             db.replace(TABLE_CONTACTS, null, cv);
@@ -87,6 +92,8 @@ public class tJawabanUserHeaderDA {
                 contact.set_intGroupQuestionId(cursor.getString(8));
                 contact.set_txtOutletName(cursor.getString(9));
                 contact.set_dtDatetime(cursor.getString(10));
+                contact.set_intAverage(cursor.getString(11));
+                contact.set_intSum(cursor.getString(12));
                 contactList.add(contact);
             }while (cursor.moveToNext());
         }
@@ -112,6 +119,8 @@ public class tJawabanUserHeaderDA {
                 contact.set_intGroupQuestionId(cursor.getString(8));
                 contact.set_txtOutletName(cursor.getString(9));
                 contact.set_dtDatetime(cursor.getString(10));
+                contact.set_intAverage(cursor.getString(11));
+                contact.set_intSum(cursor.getString(12));
                 contactList.add(contact);
             }while (cursor.moveToNext());
         }
@@ -147,6 +156,8 @@ public class tJawabanUserHeaderDA {
                 contact.set_intGroupQuestionId(cursor.getString(8));
                 contact.set_txtOutletName(cursor.getString(9));
                 contact.set_dtDatetime(cursor.getString(10));
+                contact.set_intAverage(cursor.getString(11));
+                contact.set_intSum(cursor.getString(12));
                 contactList.add(contact);
             }while (cursor.moveToNext());
         }
@@ -173,6 +184,8 @@ public class tJawabanUserHeaderDA {
                 contact.set_intGroupQuestionId(cursor.getString(8));
                 contact.set_txtOutletName(cursor.getString(9));
                 contact.set_dtDatetime(cursor.getString(10));
+                contact.set_intAverage(cursor.getString(11));
+                contact.set_intSum(cursor.getString(12));
                 contactList.add(contact);
             }while (cursor.moveToNext());
         }
@@ -199,6 +212,8 @@ public class tJawabanUserHeaderDA {
                 contact.set_intGroupQuestionId(cursor.getString(8));
                 contact.set_txtOutletName(cursor.getString(9));
                 contact.set_dtDatetime(cursor.getString(10));
+                contact.set_intAverage(cursor.getString(11));
+                contact.set_intSum(cursor.getString(12));
             }while (cursor.moveToNext());
         }
         cursor.close();
@@ -225,6 +240,8 @@ public class tJawabanUserHeaderDA {
                 contact.set_intGroupQuestionId(cursor.getString(8));
                 contact.set_txtOutletName(cursor.getString(9));
                 contact.set_dtDatetime(cursor.getString(10));
+                contact.set_intAverage(cursor.getString(11));
+                contact.set_intSum(cursor.getString(12));
                 contactList.add(contact);
             }while (cursor.moveToNext());
         }

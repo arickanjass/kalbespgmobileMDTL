@@ -22,6 +22,15 @@ public class tJawabanUserData {
     private byte[] _txtFileQuiz;
     private String _intHeaderId;
     private String _dtDate;
+    private String _dtDatetime;
+
+    public String get_dtDatetime() {
+        return _dtDatetime;
+    }
+
+    public void set_dtDatetime(String _dtDatetime) {
+        this._dtDatetime = _dtDatetime;
+    }
 
     public String get_intHeaderId() {
         return _intHeaderId;
@@ -174,12 +183,13 @@ public class tJawabanUserData {
     public String Property_txtFileQuiz = "txtFileQuiz";
     public String Property_intHeaderId = "intHeaderId";
     public String Property_dtDate = "dtDate";
+    public String Property_dtDatetime = "dtDatetime";
     public String Property_ListOftJawabanUserData = "ListOftJawabanUserData";
     public String Property_All = Property_intUserAnswer + "," + Property_intUserId + "," + Property_intNik + ","
             + Property_intRoleId + "," + Property_intQuestionId + "," + Property_intTypeQuestionId + "," + Property_bolHaveAnswerList
             + "," + Property_intAnswerId + "," + Property_txtValue + "," + Property_ptQuiz + ","
             + Property_txtFileQuiz + "," + Property_decBobot + "," + Property_intSubmit + "," + Property_intSync + ","
-            + Property_intHeaderId + "," + Property_dtDate;
+            + Property_intHeaderId + "," + Property_dtDate + "," + Property_dtDatetime;
     public tJawabanUserData(){
         super();
     }

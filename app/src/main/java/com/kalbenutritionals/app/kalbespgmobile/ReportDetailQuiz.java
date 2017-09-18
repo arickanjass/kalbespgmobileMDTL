@@ -47,7 +47,7 @@ import library.spgmobile.common.tJawabanUserHeaderData;
 
 public class ReportDetailQuiz extends AppCompatActivity {
     View v;
-    private TextView tvGroupQuiz, tvOutlet, tvIterasi;
+    private TextView tvGroupQuiz, tvOutlet, tvIterasi, tvSum, tvAverage, tvSumSum, tvAvg;
     Toolbar toolbar;
     String[] intHeaderId;
     private SortabeReportTableViewDetail ReportTableView;
@@ -70,6 +70,10 @@ public class ReportDetailQuiz extends AppCompatActivity {
         tvGroupQuiz = (TextView)findViewById(R.id.tv2quiz);
         tvOutlet = (TextView) findViewById(R.id.tv4quiz);
         tvIterasi = (TextView) findViewById(R.id.tv1quiz);
+        tvSum = (TextView) findViewById(R.id.tv6quiz);
+        tvAverage = (TextView) findViewById(R.id.tv7quiz);
+        tvSumSum = (TextView) findViewById(R.id.tv55Quis);
+        tvAvg = (TextView) findViewById(R.id.tv66Quis);
         ReportTableView = (SortabeReportTableViewDetail) findViewById(R.id.tableViewQuis);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -78,6 +82,18 @@ public class ReportDetailQuiz extends AppCompatActivity {
 
         tJawabanUserHeaderData dataHeader = new tJawabanUserHeaderBL().GetDataByHeaderId(intHeaderId[0]);
         List<tGroupQuestionMappingData> dt_group = new tGroupQuestionMappingBL().GetDataById(Integer.parseInt(dataHeader.get_intGroupQuestionId()));
+        List<tJawabanUserData> dataAnswer = new tJawabanUserBL().GetDataByHeaderId(dataHeader.get_intHeaderId());
+        List<mPertanyaanData> dt_Question  = new mPertanyaanBL().GetDataByQuestionId(dataAnswer.get(0).get_intQuestionId());
+        mKategoriData kategoriData = new mKategoriBL().GetCategoryById(dt_Question.get(0).get_intCategoryId());
+        if(kategoriData.get_intParentId().equals("1")){
+            tvAverage.setVisibility(View.GONE);
+            tvSum.setVisibility(View.GONE);
+            tvSumSum.setVisibility(View.GONE); 
+            tvAvg.setVisibility(View.GONE);
+        } else {
+            tvSum .setText(" : " + dataHeader.get_intSum());
+            tvAverage.setText(" : " + dataHeader.get_intAverage());
+        }
         tvGroupQuiz.setText(" : "+ dt_group.get(0).get_txtGroupQuestion());
         tvOutlet.setText(" : "+ dataHeader.get_txtOutletName());
         tvIterasi.setText(" : " + intHeaderId[1]);
@@ -123,6 +139,10 @@ public class ReportDetailQuiz extends AppCompatActivity {
                     List<mPertanyaanData> dt_Question  = new mPertanyaanBL().GetDataByQuestionId(data.get_intQuestionId());
                     List<tJawabanUserData> dataAnswer = new tJawabanUserBL().GetDataByQuestionId(data.get_intQuestionId(), dataHeader.get_intHeaderId());
                     mKategoriData kategoriData = new mKategoriBL().GetCategoryById(dt_Question.get(0).get_intCategoryId());
+                    if(kategoriData.get_intParentId().equals(2)){
+                        tvAverage.setVisibility(View.GONE);
+                        tvSum.setVisibility(View.GONE);
+                    }
                     rt.set_report_type("Kuesioner Detail");
                     rt.set_RepeatQuiz(dt_Question.get(0).get_intSoalId());
                     rt.set_dummy(data.get_intHeaderId());

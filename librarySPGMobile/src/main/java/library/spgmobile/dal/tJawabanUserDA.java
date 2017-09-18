@@ -21,11 +21,12 @@ public class tJawabanUserDA {
         String CREATE_CONTACTS_TABLE = "CREATE TABLE IF NOT EXISTS "
                 + TABLE_CONTACTS + "( " + dt.Property_intUserAnswer + " TEXT PRIMARY KEY,"
                 + dt.Property_intHeaderId + " TEXT NULL," + dt.Property_dtDate + " TEXT NULL,"
-                + dt.Property_intUserId + " TEXT NULL,"  + dt.Property_intNik + " TEXT NULL,"
-                + dt.Property_intRoleId + " TEXT NULL," + dt.Property_intQuestionId + " TEXT NULL,"
-                + dt.Property_intTypeQuestionId + " TEXT NULL,"+ dt.Property_bolHaveAnswerList + " TEXT NULL,"
-                + dt.Property_intAnswerId + " TEXT NULL," + dt.Property_txtValue + " TEXT NULL,"
-                + dt.Property_ptQuiz + " TEXT NULL,"  + dt.Property_txtFileQuiz + " TEXT NULL," + dt.Property_decBobot + " TEXT NULL,"
+                + dt.Property_dtDatetime + " TEXT NULL," + dt.Property_intUserId + " TEXT NULL,"
+                + dt.Property_intNik + " TEXT NULL," + dt.Property_intRoleId + " TEXT NULL,"
+                + dt.Property_intQuestionId + " TEXT NULL," + dt.Property_intTypeQuestionId + " TEXT NULL,"
+                + dt.Property_bolHaveAnswerList + " TEXT NULL," + dt.Property_intAnswerId + " TEXT NULL,"
+                + dt.Property_txtValue + " TEXT NULL," + dt.Property_ptQuiz + " TEXT NULL,"
+                + dt.Property_txtFileQuiz + " TEXT NULL," + dt.Property_decBobot + " TEXT NULL,"
                 + dt.Property_intSubmit + " TEXT NULL," + dt.Property_intSync + " TEXT NULL)";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
@@ -50,6 +51,7 @@ public class tJawabanUserDA {
         cv.put(dt.Property_intSubmit, String.valueOf(data.get_intSubmit()));
         cv.put(dt.Property_intHeaderId, String.valueOf(data.get_intHeaderId()));
         cv.put(dt.Property_dtDate, String.valueOf(data.get_dtDate()));
+        cv.put(dt.Property_dtDatetime, String.valueOf(data.get_dtDatetime()));
         if (data.get_intAnswerId() == null){
             cv.put(dt.Property_intSync, String.valueOf(data.get_intSync()));
             db.insert(TABLE_CONTACTS, null, cv);
@@ -86,6 +88,7 @@ public class tJawabanUserDA {
                 contact.set_intSync(cursor.getString(13));
                 contact.set_intHeaderId(cursor.getString(14));
                 contact.set_dtDate(cursor.getString(15));
+                contact.set_dtDatetime(cursor.getString(16));
                 contactList.add(contact);
             }while (cursor.moveToNext());
         }
@@ -118,6 +121,7 @@ public class tJawabanUserDA {
                 contact.set_intSync(cursor.getString(13));
                 contact.set_intHeaderId(cursor.getString(14));
                 contact.set_dtDate(cursor.getString(15));
+                contact.set_dtDatetime(cursor.getString(16));
                 contactList.add(contact);
             }while (cursor.moveToNext());
         }
@@ -151,6 +155,7 @@ public class tJawabanUserDA {
                 contact.set_intSync(cursor.getString(13));
                 contact.set_intHeaderId(cursor.getString(14));
                 contact.set_dtDate(cursor.getString(15));
+                contact.set_dtDatetime(cursor.getString(16));
                 contactList.add(contact);
             }while (cursor.moveToNext());
         }
@@ -185,6 +190,7 @@ public class tJawabanUserDA {
                 contact.set_intSync(cursor.getString(13));
                 contact.set_intHeaderId(cursor.getString(14));
                 contact.set_dtDate(cursor.getString(15));
+                contact.set_dtDatetime(cursor.getString(16));
                 contactList.add(contact);
             }while (cursor.moveToNext());
         }
