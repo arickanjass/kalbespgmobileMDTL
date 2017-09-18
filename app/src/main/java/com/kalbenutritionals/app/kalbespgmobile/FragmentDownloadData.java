@@ -841,7 +841,7 @@ public class FragmentDownloadData extends Fragment {
         arrData = new ArrayList<>();
         if (listDataLeave.size() > 0) {
             for (mTypeLeaveMobileData dt : listDataLeave) {
-                arrData.add(dt.get_intTipeLeave() + " - " + dt.get_txtTipeLeaveName());
+                arrData.add(dt.get_txtTipeLeaveName());
             }
             spnLeave.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
             spnLeave.setEnabled(true);
