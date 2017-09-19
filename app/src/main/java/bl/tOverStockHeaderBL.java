@@ -55,15 +55,15 @@ public class tOverStockHeaderBL extends clsMainBL {
         _db.close();
     }
 
-    public int getCountQStockStatusSubmit(String code) {
+    public int getCountOStockStatusSubmit(String code) {
         SQLiteDatabase _db = getDb();
-        int count = new tOverStockHeaderDA(_db).countQStockStatusSubmit(_db, code);
+        int count = new tOverStockHeaderDA(_db).countOStockStatusSubmit(_db, code);
         return count;
     }
 
-    public int countQStockPush( String code) {
+    public int countOStockPush( String code) {
         SQLiteDatabase _db = getDb();
-        int count = new tOverStockHeaderDA(_db).countQStockPush(_db, code);
+        int count = new tOverStockHeaderDA(_db).countOStockPush(_db, code);
         return count;
     }
 

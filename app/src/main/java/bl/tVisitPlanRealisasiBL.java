@@ -17,6 +17,7 @@ import library.spgmobile.common.tVisitPlanRealisasiData;
 import library.spgmobile.dal.clsHardCode;
 import library.spgmobile.dal.enumConfigData;
 import library.spgmobile.dal.mconfigDA;
+import library.spgmobile.dal.tOverStockHeaderDA;
 import library.spgmobile.dal.tUserLoginDA;
 import library.spgmobile.dal.tVisitPlanRealisasiDA;
 
@@ -139,5 +140,15 @@ public class tVisitPlanRealisasiBL extends clsMainBL{
         tVisitPlanRealisasiDA _tVisitPlanRealisasiDA = new tVisitPlanRealisasiDA(db);
         _tVisitPlanRealisasiDA.checkoutSystem(db, id, time);
         db.close();
+    }
+    public int getCountOutVisitStatusSubmit(String code) {
+        SQLiteDatabase _db = getDb();
+        int count = new tVisitPlanRealisasiDA(_db).countOutVisitStatusSubmit(_db, code);
+        return count;
+    }
+    public int countOutVisitPush( String code) {
+        SQLiteDatabase _db = getDb();
+        int count = new tVisitPlanRealisasiDA(_db).countOutVisitPush(_db, code);
+        return count;
     }
 }

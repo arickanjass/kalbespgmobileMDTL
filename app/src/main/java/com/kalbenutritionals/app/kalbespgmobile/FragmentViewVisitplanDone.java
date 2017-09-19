@@ -87,7 +87,7 @@ public class FragmentViewVisitplanDone extends Fragment implements IXListViewLis
             if(dtVisitPlan.get(i).get_txtDesc().length()>20){
                 desc = desc.substring(0,20) + "...";
             }
-            swplist.set_txtDescription(desc);
+            swplist.set_txtDescription(new clsMainActivity().giveFormatDate2(dtVisitPlan.get(i).get_dtDate()));
             hmIdRealisasi.put(i,dtVisitPlan.get(i).get_txtDataIDRealisasi());
             if(dtVisitPlan.get(i).get_intSubmit().equals("1")){
                 swplist.set_intPIC("Done");

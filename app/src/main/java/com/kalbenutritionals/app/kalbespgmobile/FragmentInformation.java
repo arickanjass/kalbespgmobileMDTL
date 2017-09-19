@@ -69,6 +69,7 @@ public class FragmentInformation extends Fragment implements View.OnClickListene
     private LinearLayout ll_data_overStock, ll_dataVisitPlan, ll_dataVisitPlanDone, ll_reso, ll_data_activity, ll_data_activityV2 , ll_data_customerbased, ll_data_customerbasedMTD, ll_purchase_order, ll_dataQuantityStock,ll_dataKuesioner, ll_dataKoordinasi, ll_data_planogram, ll_data_stockIH;
     private TableRow tr_overStock, tr_oustVisit, tr_doneVisit, tr_reso, tr_activity, tr_activityV2, tr_cunsomer, tr_po, tr_qStock,tr_StockINhand,tr_koordinasi,tr_planogram,tr_quesioner;
     LocationManager locationManager;
+    TextView tv_oustVisit0, tv_oustVisit1, tv_oustVisit2, tv_doneVisit0, tv_doneVisit1, tv_doneVisit2, tv_os0, tv_os1, tv_os2;
 
     @Nullable
     @Override
@@ -115,6 +116,15 @@ public class FragmentInformation extends Fragment implements View.OnClickListene
         tv_qs0 = (TextView) v.findViewById(R.id.tv_qs0);
         tv_qs1 = (TextView) v.findViewById(R.id.tv_qs1);
         tv_qs2 = (TextView) v.findViewById(R.id.tv_qs2);
+        tv_oustVisit0 = (TextView) v.findViewById(R.id.tv_oustVisit0);
+        tv_oustVisit1 = (TextView) v.findViewById(R.id.tv_oustVisit1);
+        tv_oustVisit2 = (TextView) v.findViewById(R.id.tv_oustVisit2);
+        tv_doneVisit0 = (TextView) v.findViewById(R.id.tv_doneVisit0);
+        tv_doneVisit1 = (TextView) v.findViewById(R.id.tv_doneVisit1);
+        tv_doneVisit2 = (TextView) v.findViewById(R.id.tv_doneVisit2);
+        tv_os0 = (TextView) v.findViewById(R.id.tv_os0);
+        tv_os1 = (TextView) v.findViewById(R.id.tv_os1);
+        tv_os2 = (TextView) v.findViewById(R.id.tv_os2);
 
         tv_StockINhand0 = (TextView) v.findViewById(R.id.tv_StockINhand0);
         tv_StockINhand1 = (TextView) v.findViewById(R.id.tv_StockINhand1);
@@ -208,10 +218,10 @@ public class FragmentInformation extends Fragment implements View.OnClickListene
                     ll_dataVisitPlan.setVisibility(View.VISIBLE);
                     ll_dataVisitPlanDone.setVisibility(View.VISIBLE);
 //                    tr_doneVisit.setVisibility(View.VISIBLE);
-//                    tr_oustVisit.setVisibility(View.VISIBLE);
+                    tr_oustVisit.setVisibility(View.VISIBLE);
                 } else if (txt_id.equals(res.getResourceEntryName(ll_data_overStock.getId()))){
                     ll_data_overStock.setVisibility(View.VISIBLE);
-//                    tr_overStock.setVisibility(View.VISIBLE);
+                    tr_overStock.setVisibility(View.VISIBLE);
                 }
             }
         }
@@ -307,6 +317,18 @@ public class FragmentInformation extends Fragment implements View.OnClickListene
             tv_qs0.setText("0");
             tv_qs1.setText("0");
             tv_qs2.setText("0");
+
+            tv_oustVisit0.setText("0");
+            tv_oustVisit1.setText("0");
+            tv_oustVisit2.setText("0");
+
+            tv_doneVisit0.setText("0");
+            tv_doneVisit1.setText("0");
+            tv_doneVisit2.setText("0");
+
+            tv_os0.setText("0");
+            tv_os1.setText("0");
+            tv_os2.setText("0");
         } else if (dtAbsen != null) {
             String txtBranchOutlet = dtAbsen.get_txtBranchCode() + " - " + dtAbsen.get_txtOutletName();
             tvBranchOutlet.setText(dtAbsen.get_txtOutletName().toString().equals("null") ? "-" : txtBranchOutlet);
@@ -341,6 +363,18 @@ public class FragmentInformation extends Fragment implements View.OnClickListene
             dt_qStock_save = 0;
             dt_qStock_unpush = new tSalesProductQuantityHeaderBL().getCountQStockStatusSubmit(dtAbsen.get_txtOutletCode());
             dt_qStock_push = new tSalesProductQuantityHeaderBL().countQStockPush(dtAbsen.get_txtOutletCode());
+            int dt_oStock_save = 0;
+            int dt_oStock_unpush= new tOverStockHeaderBL().getCountOStockStatusSubmit(dtAbsen.get_txtOutletCode());
+            int dt_oStock_push = new tOverStockHeaderBL().countOStockPush(dtAbsen.get_txtOutletCode());
+
+            int dt_outVisit_save = 0;
+            int dt_outVisit_unpush= new tVisitPlanRealisasiBL().getCountOutVisitStatusSubmit(dtAbsen.get_txtOutletCode());
+            int dt_outVisit_push = new tVisitPlanRealisasiBL().countOutVisitPush(dtAbsen.get_txtOutletCode());
+
+            int dt_doneVisit_save = 0;
+            int dt_doneVisit_unpush= new tOverStockHeaderBL().getCountOStockStatusSubmit(dtAbsen.get_txtOutletCode());
+            int dt_doneVisit_push = new tOverStockHeaderBL().countOStockPush(dtAbsen.get_txtOutletCode());
+
             List<tVisitPlanRealisasiData> dtVisitPlan = new tVisitPlanRealisasiBL().getAllDataByIntSubmit("0");
             List<tVisitPlanRealisasiData> dtVisitPlanDone = new tVisitPlanRealisasiBL().getAllDataByIntSubmit("1");
 
@@ -389,6 +423,12 @@ public class FragmentInformation extends Fragment implements View.OnClickListene
             tv_qs0.setText(String.valueOf(dt_qStock_save));
             tv_qs1.setText(String.valueOf(dt_qStock_unpush));
             tv_qs2.setText(String.valueOf(dt_qStock_push));
+            tv_os0.setText(String.valueOf(dt_oStock_save));
+            tv_os1.setText(String.valueOf(dt_oStock_unpush));
+            tv_os2.setText(String.valueOf(dt_oStock_push));
+            tv_oustVisit0.setText(String.valueOf(dt_outVisit_save));
+            tv_oustVisit1.setText(String.valueOf(dt_outVisit_unpush));
+            tv_oustVisit2.setText(String.valueOf(dt_outVisit_push));
 
             tv_reso0.setText("0");
             tv_StockINhand0.setText("0");
@@ -431,6 +471,12 @@ public class FragmentInformation extends Fragment implements View.OnClickListene
             tv_qs0.setText("0");
             tv_qs1.setText("0");
             tv_qs2.setText("0");
+            tv_os0.setText("0");
+            tv_os1.setText("0");
+            tv_os2.setText("0");
+            tv_oustVisit0.setText("0");
+            tv_oustVisit1.setText("0");
+            tv_oustVisit2.setText("0");
 
             tv_StockINhand0.setText("0");
             tv_StockINhand1.setText("0");

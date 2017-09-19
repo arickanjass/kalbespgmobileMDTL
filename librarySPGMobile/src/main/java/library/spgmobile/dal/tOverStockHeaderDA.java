@@ -169,7 +169,7 @@ public class tOverStockHeaderDA {
     }
 
     //getting data status submit
-    public int countQStockStatusSubmit(SQLiteDatabase db, String code) {
+    public int countOStockStatusSubmit(SQLiteDatabase db, String code) {
 
         String selectQuery = "select coalesce(sum(1),0) from [tOverStockHeader] where OutletCode='" + code + "' and intSubmit=1 and [intSync]=0";
 
@@ -189,7 +189,7 @@ public class tOverStockHeaderDA {
     }
 
     //getting count data push
-    public int countQStockPush(SQLiteDatabase db,  String code) {
+    public int countOStockPush(SQLiteDatabase db,  String code) {
         String selectQuery = "select coalesce(sum(1),0) from [tOverStockHeader] where OutletCode='" + code + "' and intSubmit=1 and [intSync]=1";
 
         Cursor cursor = db.rawQuery(selectQuery, null);

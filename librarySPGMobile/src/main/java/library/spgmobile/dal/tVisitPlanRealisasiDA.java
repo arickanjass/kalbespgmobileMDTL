@@ -709,4 +709,41 @@ public class tVisitPlanRealisasiDA {
         return db.update(TABLE_CONTACTS, values, dt.Property_txtDataIDRealisasi + " = ? ",
                 new String[] { String.valueOf(id) });
     }
+    //getting data status submit
+    public int countOutVisitStatusSubmit(SQLiteDatabase db, String code) {
+
+        String selectQuery = "select coalesce(sum(1),0) from [tVisitplanRealisasi] where txtOutletCode='" + code + "' and intSubmit=1 and [intPush]=0";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        int count = 0;
+
+        if (cursor.moveToFirst()) {
+            do {
+                count=Integer.valueOf(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        // return contact list
+        return count;
+    }
+    //getting count data push
+    public int countOutVisitPush(SQLiteDatabase db,  String code) {
+        String selectQuery = "select coalesce(sum(1),0) from [tVisitplanRealisasi] where txtOutletCode='" + code + "' and intSubmit=1 and [intPush]=1";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        int count = 0;
+
+        if (cursor.moveToFirst()) {
+            do {
+                count=Integer.valueOf(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        // return contact list
+        return count;
+    }
 }

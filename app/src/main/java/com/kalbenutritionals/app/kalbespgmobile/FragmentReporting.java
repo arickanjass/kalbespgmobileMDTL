@@ -42,6 +42,8 @@ import bl.tCustomerBasedMobileHeaderBL;
 import bl.tGroupQuestionMappingBL;
 import bl.tJawabanUserBL;
 import bl.tJawabanUserHeaderBL;
+import bl.tOverStockDetailBL;
+import bl.tOverStockHeaderBL;
 import bl.tPlanogramMobileBL;
 import bl.tPurchaseOrderDetailBL;
 import bl.tPurchaseOrderHeaderBL;
@@ -67,6 +69,8 @@ import library.spgmobile.common.tCustomerBasedMobileHeaderData;
 import library.spgmobile.common.tGroupQuestionMappingData;
 import library.spgmobile.common.tJawabanUserData;
 import library.spgmobile.common.tJawabanUserHeaderData;
+import library.spgmobile.common.tOverStockDetailData;
+import library.spgmobile.common.tOverStockHeaderData;
 import library.spgmobile.common.tPlanogramMobileData;
 import library.spgmobile.common.tPurchaseOrderDetailData;
 import library.spgmobile.common.tPurchaseOrderHeaderData;
@@ -511,10 +515,40 @@ public class FragmentReporting extends Fragment {
                     reportList.add(rt);
                 }
             } else if(dt_actV2 != null&&dt_actV2.size()>0){
+                ReportTableView = (SortableReportTableView) v.findViewById(R.id.tableView);
+
+                header = new String[6];
+                header[1] = "Outlet";
+                header[2] = "Type";
+                header[3] = "Category";
+                header[4] = "Desc.";
+
+                ReportTableView.setColumnCount(header.length);
+
+                simpleTableHeaderAdapter = new SimpleTableHeaderAdapter(getContext(), header);
+                simpleTableHeaderAdapter.setTextColor(ContextCompat.getColor(getContext(), R.color.table_header_text));
+                simpleTableHeaderAdapter.setTextSize(14);
+                simpleTableHeaderAdapter.setPaddingBottom(20);
+                simpleTableHeaderAdapter.setPaddingTop(20);
+
+                ReportTableView.setColumnComparator(1, ReportComparators.getOutletActivityComparator());
+                ReportTableView.setColumnComparator(2, ReportComparators.getStatusComparator());
+                ReportTableView.setColumnComparator(3, ReportComparators.getCategoryComparator());
+                ReportTableView.setColumnComparator(4, ReportComparators.getDescActivityComparator());
+
+                ReportTableView.setColumnWeight(1, 2);
+                ReportTableView.setColumnWeight(2, 2);
+                ReportTableView.setColumnWeight(3, 2);
+                ReportTableView.setColumnWeight(4, 2);
+
+                ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
+
                 for(tActivityMobileData datas : dt_actV2 ){
                     ReportTable rt = new ReportTable();
 
                     rt.set_report_type("Activity");
+                    rt.set_status(datas.get_intFlag());
+                    rt.set_Category(datas.get_txtTypeActivity());
                     rt.set_txtDesc(datas.get_txtDesc());
                     rt.set_txtOutletName(datas.get_txtOutletName());
                     if(datas.get_txtOutletName().equals("null")){
@@ -635,8 +669,71 @@ public class FragmentReporting extends Fragment {
                     rt.set_total_product(datas.get_intSumItem());
                     rt.set_total_price(new clsMainActivity().convertNumberDec(Double.valueOf(datas.get_intSumAmount())));
                     rt.set_status(datas.get_OutletName());
+                    rt.set_dummy(datas.get_txtQuantityStock());
 
                     List<tSalesProductQuantityDetailData> dt_detail = new tSalesProductQuantityDetailBL().GetDataByNoQuantityStock(datas.get_txtQuantityStock());
+
+                    int total_item = 0;
+
+                    for(i = 0; i < dt_detail.size(); i++){
+                        total_item = total_item + Integer.parseInt(dt_detail.get(i).getTxtQuantity());
+                    }
+
+                    rt.set_total_item(String.valueOf(total_item));
+                    rt.set_total_product(String.valueOf(dt_detail.size()));
+
+                    reportList.add(rt);
+                }
+            } else {
+                new clsMainActivity().showCustomToast(getContext(), "No Data to Show", false);
+            }
+
+            ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
+        } else if (spinnerSelected.contains("Over Stock")){
+//            Toast.makeText(getContext(), "Quantity Stock", Toast.LENGTH_SHORT).show();
+            header = new String[6];
+            header[1] = "NO";
+            header[2] = "Tot. Prd";
+            header[3] = "Tot. Qty";
+//            header[4] = "Tot. Price";
+            header[4] = "Outlet";
+
+            ReportTableView.setColumnCount(header.length);
+
+            simpleTableHeaderAdapter = new SimpleTableHeaderAdapter(getContext(), header);
+            simpleTableHeaderAdapter.setTextColor(ContextCompat.getColor(getContext(), R.color.table_header_text));
+            simpleTableHeaderAdapter.setTextSize(14);
+            simpleTableHeaderAdapter.setPaddingBottom(20);
+            simpleTableHeaderAdapter.setPaddingTop(20);
+
+            ReportTableView.setColumnComparator(1, ReportComparators.getNoQStockComparator());
+            ReportTableView.setColumnComparator(2, ReportComparators.getTotalProductComparator());
+            ReportTableView.setColumnComparator(3, ReportComparators.getTotalItemComparator());
+//            ReportTableView.setColumnComparator(4, ReportComparators.getTotalPriceComparator());
+            ReportTableView.setColumnComparator(4, ReportComparators.getStatusComparator());
+
+            ReportTableView.setColumnWeight(1, 2);
+            ReportTableView.setColumnWeight(2, 1);
+            ReportTableView.setColumnWeight(3, 1);
+            ReportTableView.setColumnWeight(4, 1);
+//            ReportTableView.setColumnWeight(5, 1);
+
+            ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
+
+            List<tOverStockHeaderData> dt_qs = new tOverStockHeaderBL().getAllOverStockHeaderByOutletCode(outletcode);
+            reportList = new ArrayList<>();
+
+            if(dt_qs != null&&dt_qs.size()>0){
+                for(tOverStockHeaderData datas : dt_qs ){
+                    ReportTable rt = new ReportTable();
+
+                    rt.set_report_type("QStock");
+                    rt.set_txtQuantityStock(datas.get_txtOverStock());
+                    rt.set_total_product(datas.get_intSumItem());
+                    rt.set_total_price(new clsMainActivity().convertNumberDec(Double.valueOf(datas.get_intSumAmount())));
+                    rt.set_status(datas.get_OutletName());
+
+                    List<tOverStockDetailData> dt_detail = new tOverStockDetailBL().GetDataByNoOverStock(datas.get_txtOverStock());
 
                     int total_item = 0;
 
@@ -658,7 +755,9 @@ public class FragmentReporting extends Fragment {
 //            Toast.makeText(getContext(), "Actvity", Toast.LENGTH_SHORT).show();
             header = new String[6];
             header[1] = "Outlet";
-            header[2] = "Desc.";
+            header[2] = "Category";
+            header[3] = "Valid";
+            header[4] = "Desc.";
 
             ReportTableView.setColumnCount(header.length);
 
@@ -669,10 +768,14 @@ public class FragmentReporting extends Fragment {
             simpleTableHeaderAdapter.setPaddingTop(20);
 
             ReportTableView.setColumnComparator(1, ReportComparators.getOutletActivityComparator());
-            ReportTableView.setColumnComparator(2, ReportComparators.getDescActivityComparator());
+            ReportTableView.setColumnComparator(2, ReportComparators.getCategoryComparator());
+            ReportTableView.setColumnComparator(3, ReportComparators.getStatusComparator());
+            ReportTableView.setColumnComparator(4, ReportComparators.getDescActivityComparator());
 
             ReportTableView.setColumnWeight(1, 2);
             ReportTableView.setColumnWeight(2, 2);
+            ReportTableView.setColumnWeight(3, 1);
+            ReportTableView.setColumnWeight(4, 2);
 
             ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
 
@@ -686,6 +789,10 @@ public class FragmentReporting extends Fragment {
                     rt.set_report_type("Planogram");
                     rt.set_txtDesc(datas.get_txtKeterangan());
                     rt.set_txtOutletName(datas.get_OutletName());
+                    rt.set_Category(datas.get_txtCategoryName());
+                    String validPlano = "";
+                    validPlano = datas.get_intIsValid().toString().equals("1")?"Yes":"No";
+                    rt.set_status(validPlano);
 
                     reportList.add(rt);
                 }

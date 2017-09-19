@@ -35,7 +35,7 @@ public class AdapterListVisitplan extends BaseAdapter implements ListAdapter{
 
     @Override
     public String getItem(int position) {
-        return String.valueOf("Outlet : " + mAppList.get(position).get_txtTitle()+"\n"+"Desc : " + mAppList.get(position).get_txtDescription()+"\n" + "Status : " + mAppList.get(position).get_intPIC());
+        return String.valueOf("Outlet : " + mAppList.get(position).get_txtTitle()+"\n"+"Date Plan : " + mAppList.get(position).get_txtDescription()+"\n" + "Status : " + mAppList.get(position).get_intPIC());
     }
 
     @Override
