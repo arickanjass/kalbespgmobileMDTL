@@ -587,6 +587,8 @@ public class dataJson {
                     item.put(dttJawabanUserHeaderData.Property_txtOutletName, String.valueOf(data.get_txtOutletName()));
                     item.put(dttJawabanUserHeaderData.Property_dtDate, String.valueOf(data.get_dtDate()));
                     item.put(dttJawabanUserHeaderData.Property_dtDatetime, String.valueOf(data.get_dtDatetime()));
+                    item.put(dttJawabanUserHeaderData.Property_intSum, String.valueOf(data.get_intSum()));
+                    item.put(dttJawabanUserHeaderData.Property_intAverage, String.valueOf(data.get_intAverage()));
                     itemsListJquey.add(item);
                 }
                 resJson.put(dttJawabanUserHeaderData.Property_ListOftJawabanUserHeaderData, new JSONArray(itemsListJquey));
@@ -611,6 +613,7 @@ public class dataJson {
                     item.put(dtJawabanUserData.Property_txtFileQuiz, String.valueOf(data.get_txtFileQuiz()));
                     item.put(dtJawabanUserData.Property_decBobot, String.valueOf(data.get_decBobot()));
                     item.put(dtJawabanUserData.Property_dtDate, String.valueOf(data.get_dtDate()));
+                    item.put(dtJawabanUserData.Property_dtDatetime, String.valueOf(data.get_dtDatetime()));
                     itemsListJquey.add(item);
                 }
                 resJson.put(dtJawabanUserData.Property_ListOftJawabanUserData, new JSONArray(itemsListJquey));
