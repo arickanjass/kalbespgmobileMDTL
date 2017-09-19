@@ -32,6 +32,16 @@ public class ReportTable implements Serializable {
     private String _RepeatQuiz;
     private String _Category;
 
+    public String get_view_detail() {
+        return _view_detail;
+    }
+
+    public void set_view_detail(String _view_detail) {
+        this._view_detail = _view_detail;
+    }
+
+    private String _view_detail;
+
     public String get_ed() {
         return _ed;
     }

@@ -15,6 +15,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -29,12 +30,20 @@ import java.io.File;
 import java.text.NumberFormat;
 import java.util.List;
 
+import bl.tOverStockDetailBL;
+import bl.tOverStockHeaderBL;
 import bl.tSalesProductQuantityDetailBL;
 import bl.tSalesProductQuantityHeaderBL;
+import bl.tStockInHandDetailBL;
+import bl.tStockInHandHeaderBL;
 import de.codecrafters.tableview.TableDataAdapter;
 import library.spgmobile.common.ReportTable;
+import library.spgmobile.common.tOverStockDetailData;
+import library.spgmobile.common.tOverStockHeaderData;
 import library.spgmobile.common.tSalesProductQuantityDetailData;
 import library.spgmobile.common.tSalesProductQuantityHeaderData;
+import library.spgmobile.common.tStockInHandDetailData;
+import library.spgmobile.common.tStockInHandHeaderData;
 import library.spgmobile.dal.clsHardCode;
 
 
@@ -86,11 +95,11 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
                 case 3:
                     renderedView = renderString(data.get_total_item(), "right");
                     break;
-//                case 4:
-//                    renderedView = renderString(data.get_total_price(), "right");
-//                    break;
                 case 4:
                     renderedView = renderString(data.get_status(), "left");
+                    break;
+                case 5:
+                    renderedView = renderViewDetailNearEdTl(data.get_view_detail(), data.get_no_so(), data.get_report_type(), "left");
                     break;
                 default:
                     break;
@@ -206,8 +215,10 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
 //                    renderedView = renderString(data.get_total_price(), "right");
 //                    break;
                 case 4:
-                    renderedView = renderViewDetailNearEd(data.get_status(), data.get_dummy() , "left");
+                    renderedView = renderString(data.get_status() , "left");
                     break;
+                case 5:
+                    renderedView = renderViewDetailNearEdTl(data.get_view_detail(), data.get_txtQuantityStock(), data.get_dummy() , "left");
                 default:
                     break;
             }
@@ -390,6 +401,274 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
 
         return textView;
     }
+
+    private View renderViewDetailNearEdTl(final String value, final String dummy, final String type, final String align){
+        final Button textView = new Button(getContext());
+        textView.setText(value);
+        textView.setPadding(20, 10, 20, 10);
+        textView.setTextSize(TEXT_SIZE);
+        textView.setTextColor(Color.WHITE);
+        textView.setBackgroundResource(R.drawable.btn_download_all);
+
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (type == "Stock In Hand"){
+                    viewDetailStockOnHand(dummy);
+                } else if (type == "Near ED"){
+                    viewDetailNearEd(dummy);
+                } else if (type == "Over Stock"){
+                    viewDetailOverStock(dummy);
+                }
+
+            }
+        });
+
+        if(align.equals("right")){
+            textView.setGravity(Gravity.RIGHT);
+        }
+
+        return textView;
+    }
+
+    private void viewDetailOverStock(final String dummy) {
+        LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+        final View promptView = layoutInflater.inflate(R.layout.activity_preview_quantity, null);
+
+        final TextView _tvNoSO = (TextView) promptView.findViewById(R.id.tvnoSOtbl);
+        final TextView _tvKet = (TextView) promptView.findViewById(R.id.tvkettbl);
+
+        List<tOverStockHeaderData> header = new tOverStockHeaderBL().getDataByNoOverStock(dummy);
+        _tvNoSO.setText(header.get(0).get_txtOverStock());
+        _tvKet.setText(header.get(0).get_txtKeterangan());
+        final TextView tv_item = (TextView) promptView.findViewById(R.id.tvItemtbl);
+        tv_item.setTypeface(null, Typeface.BOLD);
+        tv_item.setText(String.valueOf(header.get(0).get_intSumItem()));
+        final  TextView tv_amount = (TextView) promptView.findViewById(R.id.tvSumAmount) ;
+        tv_amount.setTypeface(null, Typeface.BOLD);
+        tv_amount.setText(String.valueOf(header.get(0).get_intSumAmount()));
+        final  TextView tv_status = (TextView) promptView.findViewById(R.id.tvStatus);
+        tv_status.setTypeface(null, Typeface.BOLD);
+
+        final TableRow tr_neared = (TableRow) promptView.findViewById(R.id.tr_neared);
+        tr_neared.setVisibility(View.GONE);
+
+        if (header.get(0).get_intSubmit().equals("1")&&header.get(0).get_intSync().equals("0")){
+            tv_status.setText("submit");
+        } else if (header.get(0).get_intSubmit().equals("1")&&header.get(0).get_intSync().equals("1")){
+            tv_status.setText("Sync");
+        }
+
+        TableLayout tlb = (TableLayout) promptView.findViewById(R.id.tlProductQty);
+        tlb.removeAllViews();
+
+        TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
+        params.setMargins(1, 1, 1, 1);
+
+        TableRow tr = new TableRow(getContext());
+
+        TableLayout tl = new TableLayout(getContext());
+
+        String[] colTextHeader = {"Nama", "Qty", "ED"};
+
+        for (String text : colTextHeader) {
+            TextView tv = new TextView(getContext());
+            tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 1));
+
+            tv.setTextSize(14);
+            tv.setPadding(10, 10, 10, 10);
+            tv.setText(text);
+            tv.setGravity(Gravity.CENTER);
+            tv.setBackgroundColor(Color.parseColor("#4CAF50"));
+            tv.setTextColor(Color.WHITE);
+            tr.addView(tv,params);
+        }
+        tl.addView(tr);
+
+        List<tOverStockDetailData> data = new tOverStockDetailBL().GetDataNoOverStock(header.get(0).get_txtOverStock());
+
+        double qtySum=0;
+        double qtyNum;
+        for(tOverStockDetailData dat : data){
+            tr = new TableRow(getContext());
+            TableLayout.LayoutParams tableRowParams=
+                    new TableLayout.LayoutParams
+                            (TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.WRAP_CONTENT);
+
+            int leftMargin=0;
+            int topMargin=0;
+            int rightMargin=0;
+            int bottomMargin=0;
+            tableRowParams.setMargins(leftMargin, topMargin, rightMargin, bottomMargin);
+
+            tr.setLayoutParams(tableRowParams);
+
+            TextView product = new TextView(getContext());
+            product.setTextSize(12);
+            product.setWidth(400);
+            product.setPadding(10, 10, 10, 10);
+            product.setBackgroundColor(Color.parseColor("#f0f0f0"));
+            product.setTextColor(Color.BLACK);
+            product.setText(dat.getTxtProduct());
+            tr.addView(product,params);
+
+            TextView qty = new TextView(getContext());
+            qty.setTextSize(12);
+            qty.setPadding(10, 10, 10, 10);
+            qty.setBackgroundColor(Color.parseColor("#f0f0f0"));
+            qty.setTextColor(Color.BLACK);
+            qty.setGravity(Gravity.RIGHT);
+            qty.setText(dat.getTxtQuantity());
+            tr.addView(qty,params);
+
+            TextView price = new TextView(getContext());
+            price.setTextSize(12);
+            price.setPadding(10, 10, 10, 10);
+            price.setBackgroundColor(Color.parseColor("#f0f0f0"));
+            price.setTextColor(Color.BLACK);
+            price.setGravity(Gravity.RIGHT);
+            price.setText(new clsMainActivity().giveFormatDate2(dat.getTxtExpireDate()));
+            tr.addView(price,params);
+//
+//            TextView amount = new TextView(getContext());
+//            amount.setTextSize(12);
+//            amount.setWidth(200);
+//            amount.setPadding(10, 10, 10, 10);
+//            amount.setBackgroundColor(Color.parseColor("#f0f0f0"));
+//            amount.setTextColor(Color.BLACK);
+//            amount.setGravity(Gravity.RIGHT);
+//            double prc = Double.valueOf(dat.get_intPrice());
+//            double itm = Double.valueOf(dat.getTxtQuantity());
+//            qtyNum = prc * itm;
+//            qtySum += qtyNum;
+//            amount.setText(new clsMainActivity().convertNumberDec(qtyNum));
+//            tr.addView(amount,params);
+
+            tl.addView(tr, tableRowParams);
+        }
+
+        tlb.addView(tl);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this.getContext());
+        alertDialogBuilder.setView(promptView);
+        alertDialogBuilder
+                .setCancelable(false)
+                .setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        final AlertDialog alertD = alertDialogBuilder.create();
+        alertD.show();
+    }
+
+    private void viewDetailStockOnHand(final String dummy) {
+        LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+        final View promptView = layoutInflater.inflate(R.layout.activity_preview_so, null);
+
+        List<tStockInHandHeaderData> header = new tStockInHandHeaderBL().getDataByNoSO(dummy);
+
+        final TextView _tvNoSO = (TextView) promptView.findViewById(R.id.tvnoSOtbl);
+        final TextView _tvKet = (TextView) promptView.findViewById(R.id.tvkettbl);
+        _tvNoSO.setText(": " + dummy);
+        _tvKet.setText(": " + header.get(0).get_txtKeterangan());
+        final TextView tv_item = (TextView) promptView.findViewById(R.id.tvItemtbl);
+        tv_item.setTypeface(null, Typeface.BOLD);
+        tv_item.setText(": " + String.valueOf(header.get(0).get_intSumItem()));
+        final  TextView tv_amount = (TextView) promptView.findViewById(R.id.tvSumAmount) ;
+        tv_amount.setTypeface(null, Typeface.BOLD);
+        tv_amount.setText(": " + new clsMainActivity().convertNumberDec(Double.valueOf(header.get(0).get_intSumAmount())));
+        final  TextView tv_status = (TextView) promptView.findViewById(R.id.tvStatus);
+        tv_status.setTypeface(null, Typeface.BOLD);
+
+        final TableRow tr_amount = (TableRow) promptView.findViewById(R.id.tr_amount);
+        tr_amount.setVisibility(View.GONE);
+
+        if (header.get(0).get_intSubmit().equals("1")&&header.get(0).get_intSync().equals("0")){
+            tv_status.setText(": Submit");
+        } else if (header.get(0).get_intSubmit().equals("1")&&header.get(0).get_intSync().equals("1")){
+            tv_status.setText(": Sync");
+        }
+
+        TableLayout tlb = (TableLayout) promptView.findViewById(R.id.tlProduct);
+        tlb.removeAllViews();
+
+        TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
+        params.setMargins(1, 1, 1, 1);
+
+        TableRow tr = new TableRow(getContext());
+
+        TableLayout tl = new TableLayout(getContext());
+
+        String[] colTextHeader = {"Name", "Qty"};
+
+        for (String text : colTextHeader) {
+            TextView tv = new TextView(getContext());
+            tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 1));
+
+            tv.setTextSize(14);
+            tv.setPadding(10, 10, 10, 10);
+            tv.setText(text);
+            tv.setGravity(Gravity.CENTER);
+            tv.setBackgroundColor(Color.parseColor("#4CAF50"));
+            tv.setTextColor(Color.WHITE);
+            tr.addView(tv,params);
+        }
+        tl.addView(tr);
+
+        List<tStockInHandDetailData> data= new tStockInHandDetailBL().GetDataByNoSO(dummy);
+
+        double qtySum=0;
+        double qtyNum;
+        for(tStockInHandDetailData dat : data){
+            tr = new TableRow(getContext());
+            TableLayout.LayoutParams tableRowParams=
+                    new TableLayout.LayoutParams
+                            (TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.WRAP_CONTENT);
+
+            int leftMargin=0;
+            int topMargin=0;
+            int rightMargin=0;
+            int bottomMargin=0;
+            tableRowParams.setMargins(leftMargin, topMargin, rightMargin, bottomMargin);
+
+            tr.setLayoutParams(tableRowParams);
+
+            TextView product = new TextView(getContext());
+            product.setTextSize(12);
+            product.setWidth(400);
+            product.setPadding(10, 10, 10, 10);
+            product.setBackgroundColor(Color.parseColor("#f0f0f0"));
+            product.setTextColor(Color.BLACK);
+            product.setText(dat.get_txtNameProduct());
+            tr.addView(product,params);
+
+            TextView qty = new TextView(getContext());
+            qty.setTextSize(12);
+            qty.setPadding(10, 10, 10, 10);
+            qty.setBackgroundColor(Color.parseColor("#f0f0f0"));
+            qty.setTextColor(Color.BLACK);
+            qty.setGravity(Gravity.RIGHT);
+            qty.setText(dat.get_intQty());
+            tr.addView(qty,params);
+            tl.addView(tr, tableRowParams);
+        }
+
+        tlb.addView(tl);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this.getContext());
+        alertDialogBuilder.setView(promptView);
+        alertDialogBuilder
+                .setCancelable(false)
+                .setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        final AlertDialog alertD = alertDialogBuilder.create();
+        alertD.show();
+    }
+
     private void viewDetailNearEd(final String dummy) {
         LayoutInflater layoutInflater = LayoutInflater.from(getContext());
         final View promptView = layoutInflater.inflate(R.layout.activity_preview_quantity, null);

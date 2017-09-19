@@ -39,6 +39,10 @@ public final class ReportComparators {
         return new statusComparator();
     }
 
+    public static Comparator<ReportTable> getviewDetailComparator() {
+        return new viewDetailComparator();
+    }
+
     public static Comparator<ReportTable> getTotalProductComparator() {
         return new totalProductComparator();
     }
@@ -135,6 +139,14 @@ public final class ReportComparators {
         @Override
         public int compare(final ReportTable data1, final ReportTable data2) {
             return data1.get_status().compareTo(data2.get_status());
+        }
+    }
+
+    private static class viewDetailComparator implements Comparator<ReportTable> {
+
+        @Override
+        public int compare(final ReportTable data1, final ReportTable data2) {
+            return data1.get_view_detail().compareTo(data2.get_view_detail());
         }
     }
 

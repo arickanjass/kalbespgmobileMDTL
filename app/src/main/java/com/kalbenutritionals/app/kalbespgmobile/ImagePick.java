@@ -81,7 +81,7 @@ public class ImagePick {
             chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentList.toArray(new Parcelable[]{}));
         }
 
-        return takePhotoIntent; 
+        return takePhotoIntent;
     }
 
     private static List<Intent> addIntentsToList(Context context, List<Intent> list, Intent intent) {

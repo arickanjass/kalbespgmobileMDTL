@@ -296,6 +296,7 @@ public class FragmentReporting extends Fragment {
             header[3] = "Tot. Qty";
 //            header[4] = "Tot. Price";
             header[4] = "Outlet";
+            header[5] = "";
 
             ReportTableView.setColumnCount(header.length);
 
@@ -310,12 +311,13 @@ public class FragmentReporting extends Fragment {
             ReportTableView.setColumnComparator(3, ReportComparators.getTotalItemComparator());
 //            ReportTableView.setColumnComparator(4, ReportComparators.getTotalPriceComparator());
             ReportTableView.setColumnComparator(4, ReportComparators.getStatusComparator());
+            ReportTableView.setColumnComparator(5, ReportComparators.getviewDetailComparator());
 
             ReportTableView.setColumnWeight(1, 2);
             ReportTableView.setColumnWeight(2, 1);
             ReportTableView.setColumnWeight(3, 1);
             ReportTableView.setColumnWeight(4, 1);
-//            ReportTableView.setColumnWeight(5, 1);
+            ReportTableView.setColumnWeight(5, 1);
 
             ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
 
@@ -331,6 +333,8 @@ public class FragmentReporting extends Fragment {
                     rt.set_total_product(datas.get_intSumItem());
                     rt.set_total_price(new clsMainActivity().convertNumberDec(Double.valueOf(datas.get_intSumAmount())));
                     rt.set_status(datas.get_OutletName());
+                    rt.set_view_detail("View Detail");
+                    rt.set_dummy("Stock on Hand");
 
                     List<tStockInHandDetailData> dt_detail = new tStockInHandDetailBL().GetDataByNoSO(datas.get_txtNoSo());
 
@@ -634,6 +638,7 @@ public class FragmentReporting extends Fragment {
             header[3] = "Tot. Qty";
 //            header[4] = "Tot. Price";
             header[4] = "Outlet";
+            header[5] = "";
 
             ReportTableView.setColumnCount(header.length);
 
@@ -648,12 +653,13 @@ public class FragmentReporting extends Fragment {
             ReportTableView.setColumnComparator(3, ReportComparators.getTotalItemComparator());
 //            ReportTableView.setColumnComparator(4, ReportComparators.getTotalPriceComparator());
             ReportTableView.setColumnComparator(4, ReportComparators.getStatusComparator());
+            ReportTableView.setColumnComparator(5, ReportComparators.getviewDetailComparator());
 
             ReportTableView.setColumnWeight(1, 2);
             ReportTableView.setColumnWeight(2, 1);
             ReportTableView.setColumnWeight(3, 1);
             ReportTableView.setColumnWeight(4, 1);
-//            ReportTableView.setColumnWeight(5, 1);
+            ReportTableView.setColumnWeight(5, 1);
 
             ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
 
@@ -669,7 +675,8 @@ public class FragmentReporting extends Fragment {
                     rt.set_total_product(datas.get_intSumItem());
                     rt.set_total_price(new clsMainActivity().convertNumberDec(Double.valueOf(datas.get_intSumAmount())));
                     rt.set_status(datas.get_OutletName());
-                    rt.set_dummy(datas.get_txtQuantityStock());
+                    rt.set_dummy("Near ED");
+                    rt.set_view_detail("View Detail");
 
                     List<tSalesProductQuantityDetailData> dt_detail = new tSalesProductQuantityDetailBL().GetDataByNoQuantityStock(datas.get_txtQuantityStock());
 
@@ -697,6 +704,7 @@ public class FragmentReporting extends Fragment {
             header[3] = "Tot. Qty";
 //            header[4] = "Tot. Price";
             header[4] = "Outlet";
+            header[5] = "";
 
             ReportTableView.setColumnCount(header.length);
 
@@ -709,14 +717,14 @@ public class FragmentReporting extends Fragment {
             ReportTableView.setColumnComparator(1, ReportComparators.getNoQStockComparator());
             ReportTableView.setColumnComparator(2, ReportComparators.getTotalProductComparator());
             ReportTableView.setColumnComparator(3, ReportComparators.getTotalItemComparator());
-//            ReportTableView.setColumnComparator(4, ReportComparators.getTotalPriceComparator());
             ReportTableView.setColumnComparator(4, ReportComparators.getStatusComparator());
+            ReportTableView.setColumnComparator(5, ReportComparators.getviewDetailComparator());
 
             ReportTableView.setColumnWeight(1, 2);
             ReportTableView.setColumnWeight(2, 1);
             ReportTableView.setColumnWeight(3, 1);
             ReportTableView.setColumnWeight(4, 1);
-//            ReportTableView.setColumnWeight(5, 1);
+            ReportTableView.setColumnWeight(5, 1);
 
             ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
 
@@ -732,6 +740,8 @@ public class FragmentReporting extends Fragment {
                     rt.set_total_product(datas.get_intSumItem());
                     rt.set_total_price(new clsMainActivity().convertNumberDec(Double.valueOf(datas.get_intSumAmount())));
                     rt.set_status(datas.get_OutletName());
+                    rt.set_dummy("Over Stock");
+                    rt.set_view_detail("View Detail");
 
                     List<tOverStockDetailData> dt_detail = new tOverStockDetailBL().GetDataByNoOverStock(datas.get_txtOverStock());
 
