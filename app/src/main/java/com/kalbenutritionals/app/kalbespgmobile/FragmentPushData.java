@@ -186,9 +186,9 @@ public class FragmentPushData extends Fragment {
             } else if (txt_id.equals(res.getResourceEntryName(ll_data_koordinasi.getId()))){
                 ll_data_koordinasi.setVisibility(View.VISIBLE);
             }
-//            else if (txt_id.equals(res.getResourceEntryName(ll_dataQuesioner.getId()))){
-//                ll_dataQuesioner.setVisibility(View.VISIBLE);
-//            }
+            else if (txt_id.equals(res.getResourceEntryName(ll_dataQuesioner.getId()))){
+                ll_dataQuesioner.setVisibility(View.VISIBLE);
+            }
             else if (txt_id.equals(res.getResourceEntryName(ll_data_attendance.getId()))){
                 ll_data_attendance.setVisibility(View.VISIBLE);
             }

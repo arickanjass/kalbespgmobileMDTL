@@ -45,6 +45,16 @@ public class tJawabanUserHeaderBL extends clsMainBL {
         return listData;
     }
 
+    public List<tJawabanUserHeaderData> GetDataByOutletCodeAndSync(String code, String date, String sync){
+        SQLiteDatabase _db = getDb();
+        tJawabanUserHeaderDA _tJawabanUserDA = new tJawabanUserHeaderDA(_db);
+        List<tJawabanUserHeaderData> listData = _tJawabanUserDA.GetDataByOutletCodeAndSync(_db, code, date, sync);
+        if (listData == null){
+            listData = new ArrayList<>(0);
+        }
+        return listData;
+    }
+
     public List<tJawabanUserHeaderData> GetLastBeforeSaveDetail(){
         SQLiteDatabase _db = getDb();
         tJawabanUserHeaderDA _tJawabanUserDA = new tJawabanUserHeaderDA(_db);

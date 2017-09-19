@@ -165,6 +165,44 @@ public class tJawabanUserHeaderDA {
         return contactList;
     }
 
+    public List<tJawabanUserHeaderData> GetDataByOutletCodeAndSync(SQLiteDatabase db, String code, String dateLogin, String sync){
+        List<tJawabanUserHeaderData> contactList = new ArrayList<tJawabanUserHeaderData>();
+        tJawabanUserHeaderData dt = new tJawabanUserHeaderData();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Date date = null;
+        try {
+            date = sdf.parse(dateLogin);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String dateNow = dateFormat.format(date);
+        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_dtDate + "='" + dateNow + "' AND "
+                + dt.Property_txtOutletCode + "='" + code + "' AND " + dt.Property_intSync + "='" + sync + "'";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()){
+            do {
+                tJawabanUserHeaderData contact = new tJawabanUserHeaderData();
+                contact.set_intHeaderId(cursor.getString(0));
+                contact.set_intNik(cursor.getString(1));
+                contact.set_txtUserName(cursor.getString(2));
+                contact.set_intRoleId(cursor.getString(3));
+                contact.set_txtOutletCode(cursor.getString(4));
+                contact.set_dtDate(cursor.getString(5));
+                contact.set_intSubmit(cursor.getString(6));
+                contact.set_intSync(cursor.getString(7));
+                contact.set_intGroupQuestionId(cursor.getString(8));
+                contact.set_txtOutletName(cursor.getString(9));
+                contact.set_dtDatetime(cursor.getString(10));
+                contact.set_intAverage(cursor.getString(11));
+                contact.set_intSum(cursor.getString(12));
+                contactList.add(contact);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return contactList;
+    }
+
     public List<tJawabanUserHeaderData> GetLastBeforeSaveDetail(SQLiteDatabase db){
         List<tJawabanUserHeaderData> contactList = new ArrayList<tJawabanUserHeaderData>();
         tJawabanUserHeaderData dt = new tJawabanUserHeaderData();
