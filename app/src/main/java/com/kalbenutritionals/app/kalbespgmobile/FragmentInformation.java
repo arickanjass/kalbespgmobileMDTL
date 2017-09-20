@@ -243,9 +243,9 @@ public class FragmentInformation extends Fragment implements View.OnClickListene
         List<tActivityData> dtActivity;
         List<tActivityMobileData> dtActivityV2;
         List<tPlanogramMobileData> dtPlanogram;
-        List<tJawabanUserHeaderData> dtQuis;
-        List<tJawabanUserHeaderData> dtQuis_push;
-        List<tJawabanUserHeaderData> dtQuis_unpush;
+        List<tJawabanUserHeaderData> dtQuis = null;
+        List<tJawabanUserHeaderData> dtQuis_push = null;
+        List<tJawabanUserHeaderData> dtQuis_unpush = null;
         tUserLoginData dataUserActive = new tAbsenUserBL().getUserActive();
         List<tSalesProductHeaderData> dt_reso_unpush;
         List<tSalesProductHeaderData> dt_reso_push;
@@ -268,8 +268,8 @@ public class FragmentInformation extends Fragment implements View.OnClickListene
         int dt_qStock_save;
         int dt_qStock_unpush;
         int dt_qStock_push;
-        int dt_quis_push;
-        int dt_quis_unpush;
+        int dt_quis_push = 0;
+        int dt_quis_unpush = 0;
         int dt_quis_save;
 
         tvUsername.setText(dt.get_txtUserName().toUpperCase());
@@ -282,7 +282,7 @@ public class FragmentInformation extends Fragment implements View.OnClickListene
             tvTotalCustomerBase.setText("0");
             tvTotalCustomerBaseMTD.setText("0");
             tvTotalPO.setText("0");
-            tvTotalPlanogram.setText("0");
+            tvTotalPlanogram.setText("0"); 
             tvTotalQStock.setText("0");
             tvTotaloverStock.setText("0");
             tvTotalVisitPlan.setText("0");
@@ -354,9 +354,11 @@ public class FragmentInformation extends Fragment implements View.OnClickListene
             dtActivity = new tActivityBL().getAllDataByOutletCode(dtAbsen.get_txtOutletCode());
             dtActivityV2 = new tActivityMobileBL().getAllDataByOutletCode(dtAbsen.get_txtOutletCode());
             dtPlanogram = new tPlanogramMobileBL().getAllPlanogramByOutletCode(dtAbsen.get_txtOutletCode());
-            dtQuis = new tJawabanUserHeaderBL().GetDataByOutletCode(dtAbsen.get_txtOutletCode(), dtAbsen.get_dtDateCheckIn());
-            dtQuis_push = new tJawabanUserHeaderBL().GetDataByOutletCodeAndSync(dtAbsen.get_txtOutletCode(), dtAbsen.get_dtDateCheckIn(), "1");
-            dtQuis_unpush = new tJawabanUserHeaderBL().GetDataByOutletCodeAndSync(dtAbsen.get_txtOutletCode(), dtAbsen.get_dtDateCheckIn(), "0");
+            if (dtAbsen.getType().equals("absen") || dtAbsen.getType().equals("absenFPE")){
+                dtQuis = new tJawabanUserHeaderBL().GetDataByOutletCode(dtAbsen.get_txtOutletCode(), dtAbsen.get_dtDateCheckIn());
+                dtQuis_push = new tJawabanUserHeaderBL().GetDataByOutletCodeAndSync(dtAbsen.get_txtOutletCode(), dtAbsen.get_dtDateCheckIn(), "1");
+                dtQuis_unpush = new tJawabanUserHeaderBL().GetDataByOutletCodeAndSync(dtAbsen.get_txtOutletCode(), dtAbsen.get_dtDateCheckIn(), "0");
+            }
             dtCbase = new tCustomerBasedMobileHeaderBL().getCountAllCustomerBasedAbsen(dtAbsen.get_txtOutletCode());
             dtCbaseMTD = new mCountConsumerMTDBL().getCountConsumerMTD(dtAbsen.get_txtOutletCode());
             dt_reso_unpush = new tSalesProductHeaderBL().getAllDataByIntSycAndOutlet("0", dtAbsen.get_txtOutletCode());
@@ -393,8 +395,13 @@ public class FragmentInformation extends Fragment implements View.OnClickListene
             int dt_doneVisit_push = new tOverStockHeaderBL().countOStockPush(dtAbsen.get_txtOutletCode());
 
             dt_quis_save = 0;
-            dt_quis_push = dtQuis_push.size();
-            dt_quis_unpush = dtQuis_unpush.size();
+            if (dtQuis_push != null){
+                dt_quis_push = dtQuis_push.size();
+            }
+            if (dtQuis_unpush != null){
+                dt_quis_unpush = dtQuis_unpush.size();
+
+            }
 
             List<tVisitPlanRealisasiData> dtVisitPlan = new tVisitPlanRealisasiBL().getAllDataByIntSubmit("0");
             List<tVisitPlanRealisasiData> dtVisitPlanDone = new tVisitPlanRealisasiBL().getAllDataByIntSubmit("1");
