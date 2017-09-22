@@ -33,6 +33,8 @@ public class KoordinasiOutletDA {
                 + dt.Property_txtOutletName + " TEXT NULL,"
                 + dt.Property_txtBranchCode + " TEXT NULL,"
                 + dt.Property_txtBranchName + " TEXT NULL,"
+                + dt.Property_intCategoriId + " TEXT NULL,"
+                + dt.Property_txtCategory + " TEXT NULL,"
                 + dt.Property_txtNIK + " TEXT NULL,"
                 + dt.Property_intSubmit + " TEXT NULL,"
                 + dt.Property_intSync + " TEXT NULL" + ")";
@@ -58,6 +60,8 @@ public class KoordinasiOutletDA {
         cv.put(dt.Property_txtOutletName, String.valueOf(data.get_txtOutletName()));
         cv.put(dt.Property_txtBranchCode, String.valueOf(data.get_txtBranchCode()));
         cv.put(dt.Property_txtBranchName, String.valueOf(data.get_txtBranchName()));
+        cv.put(dt.Property_intCategoriId, String.valueOf(data.get_intCategoriId()));
+        cv.put(dt.Property_txtCategory, String.valueOf(data.get_txtCategory()));
         cv.put(dt.Property_txtNIK, String.valueOf(data.get_txtNIK()));
         cv.put(dt.Property_intSubmit, String.valueOf(data.get_intSubmit()));
         cv.put(dt.Property_intSync, String.valueOf(data.get_intSync()));
@@ -102,6 +106,8 @@ public class KoordinasiOutletDA {
                 contact.set_txtNIK(cursor.getString(10));
                 contact.set_intSubmit(cursor.getString(11));
                 contact.set_intSync(cursor.getString(12));
+                contact.set_intCategoriId(cursor.getString(13));
+                contact.set_txtCategory(cursor.getString(14));
                 contactList.add(contact);
             } while (cursor.moveToNext());
         }
@@ -134,6 +140,8 @@ public class KoordinasiOutletDA {
             contact.set_txtNIK(cursor.getString(10));
             contact.set_intSubmit(cursor.getString(11));
             contact.set_intSync(cursor.getString(12));
+            contact.set_intCategoriId(cursor.getString(13));
+            contact.set_txtCategory(cursor.getString(14));
         } else {
             contact = null;
         }
@@ -165,6 +173,8 @@ public class KoordinasiOutletDA {
                 contact.set_txtNIK(cursor.getString(10));
                 contact.set_intSubmit(cursor.getString(11));
                 contact.set_intSync(cursor.getString(12));
+                contact.set_intCategoriId(cursor.getString(13));
+                contact.set_txtCategory(cursor.getString(14));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -199,6 +209,8 @@ public class KoordinasiOutletDA {
                 contact.set_txtNIK(cursor.getString(10));
                 contact.set_intSubmit(cursor.getString(11));
                 contact.set_intSync(cursor.getString(12));
+                contact.set_intCategoriId(cursor.getString(13));
+                contact.set_txtCategory(cursor.getString(14));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());

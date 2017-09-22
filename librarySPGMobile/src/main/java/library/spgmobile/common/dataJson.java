@@ -735,6 +735,8 @@ public class dataJson {
                     item.put(dtKoordinasiOutletData.Property_txtNIK, String.valueOf(data.get_txtNIK()));
                     item.put(dtKoordinasiOutletData.Property_intSubmit, String.valueOf(data.get_intSubmit()));
                     item.put(dtKoordinasiOutletData.Property_intSync, String.valueOf(data.get_intSync()));
+                    item.put(dtKoordinasiOutletData.Property_intCategoriId, String.valueOf(data.get_intCategoriId()));
+                    item.put(dtKoordinasiOutletData.Property_txtCategory, String.valueOf(data.get_txtCategory()));
                     itemsListJquey.add(item);
                 }
                 resJson.put(dtKoordinasiOutletData.Property_ListOfKoordinasiOutlet, new JSONArray(itemsListJquey));

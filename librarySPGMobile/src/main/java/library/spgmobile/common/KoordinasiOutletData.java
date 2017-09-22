@@ -123,6 +123,25 @@ public class KoordinasiOutletData {
     private String _intSubmit;
     private String _intSync;
 
+    public synchronized String get_intCategoriId() {
+        return _intCategoriId;
+    }
+
+    public synchronized void set_intCategoriId(String _intCategoriId) {
+        this._intCategoriId = _intCategoriId;
+    }
+
+    public synchronized String get_txtCategory() {
+        return _txtCategory;
+    }
+
+    public synchronized void set_txtCategory(String _txtCategory) {
+        this._txtCategory = _txtCategory;
+    }
+
+    private String _intCategoriId;
+    private String _txtCategory;
+
     public String Property_intId = "intId";
     public String Property_dtDate = "dtDate";
     public String Property_txtKeterangan = "txtKeterangan";
@@ -136,6 +155,8 @@ public class KoordinasiOutletData {
     public String Property_txtNIK = "txtNIK";
     public String Property_intSubmit = "intSubmit";
     public String Property_intSync = "intSync";
+    public String Property_txtCategory = "txtCategory";
+    public String Property_intCategoriId = "intCategoriId";
     public String Property_ListOfKoordinasiOutlet = "ListOfKoordinasiOutletData";
     public String Property_All = Property_intId + "," +
             Property_dtDate + "," +
@@ -149,7 +170,9 @@ public class KoordinasiOutletData {
             Property_txtBranchName + "," +
             Property_txtNIK + "," +
             Property_intSubmit + "," +
-            Property_intSync;
+            Property_intSync + "," +
+            Property_intCategoriId + "," +
+            Property_txtCategory ;
 
     public KoordinasiOutletData() {
         super();

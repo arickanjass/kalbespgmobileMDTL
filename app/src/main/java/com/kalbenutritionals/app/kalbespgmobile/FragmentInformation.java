@@ -270,7 +270,7 @@ public class FragmentInformation extends Fragment implements View.OnClickListene
         int dt_qStock_push;
         int dt_quis_push = 0;
         int dt_quis_unpush = 0;
-        int dt_quis_save; 
+        int dt_quis_save;
 
         tvUsername.setText(dt.get_txtUserName().toUpperCase());
 

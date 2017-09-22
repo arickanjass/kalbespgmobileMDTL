@@ -438,10 +438,62 @@
                         android:text="Download Type Leave" />
 
                     <View
-                        android:id="@+id/view10"
+                        android:id="@+id/view50"
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_below="@+id/btnLeave"
+                        android:layout_marginTop="10dp"
+                        android:background="#bfbfbf" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_CategoryKoordinasiOutlet"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/txtCategoryKoordinasi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/viewVisitPlan"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:text="Kategori Koordinasi Outlet"
+                            android:textColor="#000" />
+
+                        <Spinner
+                            android:id="@+id/spnCategoryKoordinasiOutlet"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/txtCategoryKoordinasi"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/bg_edtext" />
+
+                        <Button
+                            android:id="@+id/btnCategoryKoordinasiOutlet"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/spnCategoryKoordinasiOutlet"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/btn_on_click"
+                            android:text="Download kategori Koordinasi Outlet" />
+
+                        <View
+                            android:id="@+id/viewCategoryKoordinasi"
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="10dp"
+                            android:background="#bfbfbf" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/view10"
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/ll_CategoryKoordinasiOutlet"
                         android:layout_marginTop="10dp"
                         android:background="#bfbfbf" />
 

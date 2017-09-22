@@ -99,6 +99,7 @@ import library.spgmobile.common.KoordinasiOutletData;
 import library.spgmobile.common.KoordinasiOutletImageData;
 import library.spgmobile.common.clsHelper;
 import library.spgmobile.common.dataJson;
+import library.spgmobile.common.mCategoryKoordinasiOutletData;
 import library.spgmobile.common.mCategoryVisitPlanData;
 import library.spgmobile.common.mDownloadMasterData_mobileData;
 import library.spgmobile.common.mEmployeeAreaData;
@@ -160,6 +161,7 @@ import library.spgmobile.dal.tStockInHandDetailDA;
 public class FragmentDownloadData extends Fragment {
     View v;
     private Spinner spnKordinasiOutlet;
+    private Spinner spnCategoryKordinasiOutlet;
     private Spinner spnBranch;
     private Spinner spnVisitPlan, spnTrVisitPlan;
     private Spinner spnOutlet;
@@ -191,6 +193,7 @@ public class FragmentDownloadData extends Fragment {
     private LinearLayout ll_dataVisitPlan;
     private LinearLayout ll_dataQuantityStock;
     private LinearLayout ll_dataKordinasiOutlet;
+    private LinearLayout ll_dataCategoryKordinasiOutlet;
     private LinearLayout ll_dataQuesioner,ll_data_planogram, ll_kategoryPlanogram, ll_data_stockIH, ll_outlet, ll_data_overStock;
 
     private PackageInfo pInfo = null;
@@ -213,6 +216,8 @@ public class FragmentDownloadData extends Fragment {
 
         Button btnKordinasiOutlet = (Button) v.findViewById(R.id.btnKordinasiOutlet);
         spnKordinasiOutlet = (Spinner) v.findViewById(R.id.spnKordinasiOutlet);
+        Button btnCategoryKordinasiOutlet = (Button) v.findViewById(R.id.btnCategoryKoordinasiOutlet);
+        spnCategoryKordinasiOutlet = (Spinner) v.findViewById(R.id.spnCategoryKoordinasiOutlet);
         Button btnBranch = (Button) v.findViewById(R.id.btnBranch);
         spnBranch = (Spinner) v.findViewById(R.id.spnType);
         Button btnOutlet = (Button) v.findViewById(R.id.btnOutlet);
@@ -282,6 +287,7 @@ public class FragmentDownloadData extends Fragment {
         ll_dataVisitPlan = (LinearLayout) v.findViewById(R.id.ll_dataVisitPlan);
         ll_dataQuantityStock = (LinearLayout) v.findViewById(R.id.ll_dataQuantityStock);
         ll_dataKordinasiOutlet = (LinearLayout) v.findViewById(R.id.ll_dataKordinasiOutlet);
+        ll_dataCategoryKordinasiOutlet = (LinearLayout) v.findViewById(R.id.ll_CategoryKoordinasiOutlet);
         ll_dataQuesioner = (LinearLayout) v.findViewById(R.id.ll_dataQuesioner);
         ll_subtypeactivity = (LinearLayout) v.findViewById(R.id.ll_subtypeactivity);
         ll_kategoryPlanogram = (LinearLayout) v.findViewById(R.id.ll_kategoryPlanogram);
@@ -395,6 +401,7 @@ public class FragmentDownloadData extends Fragment {
                 ll_dataQuantityStock.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_dataKordinasiOutlet.getId()))) {
                 ll_dataKordinasiOutlet.setVisibility(View.VISIBLE);
+                ll_dataCategoryKordinasiOutlet.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_reso.getId()))) {
                 ll_reso.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_data_activity.getId()))) {
@@ -442,6 +449,14 @@ public class FragmentDownloadData extends Fragment {
             }
         });
 
+        btnCategoryKordinasiOutlet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intProcesscancel = 0;
+                AsyncCallDataCategoryKoordinasiOutlet task = new AsyncCallDataCategoryKoordinasiOutlet();
+                task.execute();
+            }
+        });
         btnVisitPlan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -683,6 +698,7 @@ public class FragmentDownloadData extends Fragment {
         List<tOverStockHeaderData> listOverStockHeaderData = new tOverStockHeaderBL().getAllOverStockHeader();
 //        List<trackingLocationData> listtrackingLocationData = new trackingLocationBL().getAllDataTrackingLocation();
         List<KoordinasiOutletData> listKoordinasiOutletData = new KoordinasiOutletBL().getAllKoordinasiOutletData();
+        List<mCategoryKoordinasiOutletData> lisCategoryKoordinasiOutletData = new KoordinasiOutletBL().GetAllCategoryKoordinasiOutletData();
         List<mProductCompetitorData> productCompetitorDataList = new mProductCompetitorBL().GetAllData();
         List<mTypeSubmissionMobile> typeSubmissionDataList = new mTypeSubmissionMobileBL().GetAllData();
         List<mProductSPGData> mProductSPGDataList = new mProductSPGBL().GetAllData();
@@ -1036,6 +1052,20 @@ public class FragmentDownloadData extends Fragment {
         }
 
         arrData = new ArrayList<>();
+        if (lisCategoryKoordinasiOutletData != null && lisCategoryKoordinasiOutletData.size() != 0) {
+            for (mCategoryKoordinasiOutletData dt : lisCategoryKoordinasiOutletData) {
+                arrData.add(dt.get_txtCategory());
+            }
+            spnCategoryKordinasiOutlet.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
+            spnCategoryKordinasiOutlet.setEnabled(true);
+        } else {
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<>(getContext(),
+                    android.R.layout.simple_spinner_item, strip);
+            spnCategoryKordinasiOutlet.setAdapter(adapterspn);
+            spnCategoryKordinasiOutlet.setEnabled(false);
+        }
+
+        arrData = new ArrayList<>();
         if (listtLeaveData.size() > 0) {
             for (tLeaveMobileData dt : listtLeaveData) {
                 arrData.add(dt.get_txtTypeAlasanName());
@@ -1239,6 +1269,12 @@ public class FragmentDownloadData extends Fragment {
                     org.json.simple.JSONObject innerObj_koordinasiOutlet = (org.json.simple.JSONObject) m.next();
                     int boolValid_koordinasiOutlet = Integer.valueOf(String.valueOf(innerObj_koordinasiOutlet.get("_pboolValid")));
                     if (boolValid_koordinasiOutlet == 1) SaveDataKoordinasiOutletData(Json);
+
+                    Json = new KoordinasiOutletBL().DownloadDataCategoryKoordinasiOutlet(pInfo.versionName);
+                    Iterator c = Json.iterator();
+                    org.json.simple.JSONObject innerObj_categoryKoordinasiOutlet = (org.json.simple.JSONObject) c.next();
+                    int boolValid_categoryKoordinasiOutlet = Integer.valueOf(String.valueOf(innerObj_categoryKoordinasiOutlet.get("_pboolValid")));
+                    if (boolValid_categoryKoordinasiOutlet == 1) SaveDataCategoryKoordinasiOutletData(Json);
                 }
 
                 if (ll_data_planogram != null && checkVisibility(ll_data_planogram)) {
@@ -3205,6 +3241,58 @@ public class FragmentDownloadData extends Fragment {
         }
     }
 
+    private class AsyncCallDataCategoryKoordinasiOutlet extends AsyncTask<JSONArray, Void, JSONArray> {
+        @Override
+        protected JSONArray doInBackground(JSONArray... params) {
+            JSONArray Json = null;
+            try {
+                Json = new KoordinasiOutletBL().DownloadDataCategoryKoordinasiOutlet(pInfo.versionName);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return Json;
+        }
+
+        private ProgressDialog dialog = new ProgressDialog(getContext());
+
+        @Override
+        protected void onCancelled() {
+            dialog.dismiss();
+            new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessCancelRequest, false);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog.setMessage("Getting Data Koordinasi Outlet");
+            dialog.setCancelable(false);
+            dialog.show();
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray jsonArray) {
+            if (jsonArray != null && jsonArray.size() > 0) {
+                arrData = SaveDataCategoryKoordinasiOutletData(jsonArray);
+                loadData();
+                new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
+            } else {
+                if (intProcesscancel == 1) {
+                    onCancelled();
+                } else {
+                    new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
+                }
+            }
+            checkingDataTable("");
+            dialog.dismiss();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+            dialog.dismiss();
+        }
+    }
+
     private class AsyncCallDataLeave extends AsyncTask<JSONArray, Void, JSONArray> {
         @Override
         protected JSONArray doInBackground(JSONArray... params) {
@@ -4103,7 +4191,7 @@ public class FragmentDownloadData extends Fragment {
     private class AsyncCallDataProdPICCusBased extends AsyncTask<JSONArray, Void, JSONArray> {
         @Override
         protected JSONArray doInBackground(JSONArray... params) {
-//            android.os.Debug.waitForDebugger();
+//            android.os.Debug.waitForDebugger(); 
             JSONArray Json = null;
             try {
                 Json = new mProductPICBL().DownloadProductPIC(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
@@ -4771,6 +4859,8 @@ public class FragmentDownloadData extends Fragment {
                         _data.set_txtBranchCode(String.valueOf(innerObj_header.get("TxtBranchCode")));
                         _data.set_txtBranchName(String.valueOf(innerObj_header.get("TxtBranchName")));
                         _data.set_txtNIK(String.valueOf(innerObj_header.get("TxtNIK")));
+                        _data.set_intCategoriId(String.valueOf(innerObj_header.get("IntCategoryId")));
+                        _data.set_txtCategory(String.valueOf(innerObj_header.get("TxtCategory")));
                         _data.set_intSubmit("1");
                         _data.set_intSync("1");
                         new KoordinasiOutletBL().SaveDataKoordinasiOutlet(_data);
@@ -4800,6 +4890,31 @@ public class FragmentDownloadData extends Fragment {
                 } else {
 //                    new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
                     _array.add("Data Koordinasi Outlet not Found");
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return _array;
+    }
+    private List<String> SaveDataCategoryKoordinasiOutletData(JSONArray jsonArray) {
+        List<String> _array;
+        _array = new ArrayList<>();
+        for (Object aJsonArray : jsonArray) {
+            JSONObject innerObj = (JSONObject) aJsonArray;
+            try {
+                JSONArray jsonArray_header = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListCategoryKoordinasiOutlet_mobile")));
+                if (jsonArray_header != null) {
+                    for (Object aJsonArray_header : jsonArray_header) {
+                        mCategoryKoordinasiOutletData _data = new mCategoryKoordinasiOutletData();
+                        JSONObject innerObj_header = (JSONObject) aJsonArray_header;
+                        _data.set_intId(String.valueOf(innerObj_header.get("IntId")));
+                        _data.set_txtCategory(String.valueOf(innerObj_header.get("TxtCategory")));
+                        new KoordinasiOutletBL().SaveDataCategoryKoordinasiOutlet(_data);
+                    }
+                } else {
+//                    new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
+                    _array.add("Data Category Koordinasi Outlet not Found");
                 }
             } catch (ParseException e) {
                 e.printStackTrace();

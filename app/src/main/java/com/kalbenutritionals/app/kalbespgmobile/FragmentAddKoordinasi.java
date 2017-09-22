@@ -1,6 +1,7 @@
 package com.kalbenutritionals.app.kalbespgmobile;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -18,9 +19,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +36,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -44,6 +48,7 @@ import bl.tUserLoginBL;
 import edu.swu.pulltorefreshswipemenulistview.library.pulltorefresh.interfaces.IXListViewListener;
 import library.spgmobile.common.KoordinasiOutletData;
 import library.spgmobile.common.KoordinasiOutletImageData;
+import library.spgmobile.common.mCategoryKoordinasiOutletData;
 import library.spgmobile.common.tAbsenUserData;
 import library.spgmobile.common.tUserLoginData;
 import library.spgmobile.common.visitplanAbsenData;
@@ -59,6 +64,7 @@ public class FragmentAddKoordinasi extends Fragment implements View.OnClickListe
     private TextView tvStatus;
     private TextView tvOutlet, txtHDId;
     private Button btnSave;
+    private Spinner spnKategori;
     EditText keterangan;
     private ImageView image1, image2;
     private Uri uriImage;
@@ -78,6 +84,8 @@ public class FragmentAddKoordinasi extends Fragment implements View.OnClickListe
     private KoordinasiOutletImageData dtKoordinasiImage;
     static List<KoordinasiOutletData> dt;
     static List<KoordinasiOutletImageData> dataImage;
+    private ArrayList<String> arrCategoryKoordinasi = new ArrayList<>();
+    private HashMap<String, String> HMsubCategory = new HashMap<>();
     clsMainActivity _clsMainActivity;
 
     @Nullable
@@ -94,6 +102,7 @@ public class FragmentAddKoordinasi extends Fragment implements View.OnClickListe
         tvOutlet = (TextView) view.findViewById(R.id.textViewOutletName);
         image1 = (ImageView) view.findViewById(R.id.image1);
         image2 = (ImageView) view.findViewById(R.id.image2);
+        spnKategori = (Spinner) view.findViewById(R.id.spn_kategoriKoordinasi);
 
         keterangan.setFilters(new InputFilter[]{
                 new InputFilter() {
@@ -211,6 +220,8 @@ public class FragmentAddKoordinasi extends Fragment implements View.OnClickListe
                             koordinasiOutletData.set_txtBranchCode(absenUserData.get_txtBranchCode());
                             koordinasiOutletData.set_txtBranchName(absenUserData.get_txtBranchName());
                             koordinasiOutletData.set_txtNIK(dataUserActive.get_TxtEmpId());
+                            koordinasiOutletData.set_intCategoriId(HMsubCategory.get(spnKategori.getSelectedItem().toString()));
+                            koordinasiOutletData.set_txtCategory(spnKategori.getSelectedItem().toString());
                             koordinasiOutletData.set_intSubmit("1");
                             koordinasiOutletData.set_intSync("0");
                             new KoordinasiOutletBL().SaveDataKoordinasiOutlet(koordinasiOutletData);
@@ -263,9 +274,22 @@ public class FragmentAddKoordinasi extends Fragment implements View.OnClickListe
             viewImage();
             btnSave.setVisibility(View.INVISIBLE);
         }
+        m_fillSpinner();
 
         return view;
     }
+
+    private void m_fillSpinner() {
+
+        List<mCategoryKoordinasiOutletData> _kategori = new KoordinasiOutletBL().GetAllCategoryKoordinasiOutletData();
+        arrCategoryKoordinasi.add("- Select One -");
+        for (mCategoryKoordinasiOutletData dt : _kategori) {
+            arrCategoryKoordinasi.add(dt.get_txtCategory());
+            HMsubCategory.put(dt.get_txtCategory(), dt.get_intId());
+        }
+        spnKategori.setAdapter(new MyAdapter(getActivity(), R.layout.custom_spinner, arrCategoryKoordinasi));
+    }
+
 
     private void viewImage() {
         dataImage = new KoordinasiOutletImageBL().getDataHeaderId(dt.get(0).get_intId());
@@ -527,5 +551,40 @@ public class FragmentAddKoordinasi extends Fragment implements View.OnClickListe
     @Override
     public void onClick(View view) {
 
+    }
+
+    public class MyAdapter extends ArrayAdapter<String> {
+
+        List<String> arrObject;
+        Context context;
+
+        public MyAdapter(Context context, int textViewResourceId, List<String> objects) {
+            super(context, textViewResourceId, objects);
+            arrObject = new ArrayList<>();
+            arrObject = objects;
+            this.context = context;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            return getCustomView(position, convertView, parent);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            return getCustomView(position, convertView, parent);
+        }
+
+        public View getCustomView(int position, View convertView, ViewGroup parent) {
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            View row = inflater.inflate(R.layout.custom_spinner, parent, false);
+            TextView label = (TextView) row.findViewById(R.id.tvTitle);
+            label.setText(arrObject.get(position));
+            TextView sub = (TextView) row.findViewById(R.id.tvDesc);
+            sub.setVisibility(View.INVISIBLE);
+            sub.setVisibility(View.GONE);
+            row.setBackgroundColor(new Color().TRANSPARENT);
+            return row;
+        }
     }
 }
