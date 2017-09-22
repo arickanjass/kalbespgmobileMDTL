@@ -270,7 +270,7 @@ public class FragmentInformation extends Fragment implements View.OnClickListene
         int dt_qStock_push;
         int dt_quis_push = 0;
         int dt_quis_unpush = 0;
-        int dt_quis_save;
+        int dt_quis_save; 
 
         tvUsername.setText(dt.get_txtUserName().toUpperCase());
 
@@ -282,7 +282,7 @@ public class FragmentInformation extends Fragment implements View.OnClickListene
             tvTotalCustomerBase.setText("0");
             tvTotalCustomerBaseMTD.setText("0");
             tvTotalPO.setText("0");
-            tvTotalPlanogram.setText("0"); 
+            tvTotalPlanogram.setText("0");
             tvTotalQStock.setText("0");
             tvTotaloverStock.setText("0");
             tvTotalVisitPlan.setText("0");
