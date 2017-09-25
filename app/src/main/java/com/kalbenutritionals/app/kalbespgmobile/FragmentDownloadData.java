@@ -409,6 +409,7 @@ public class FragmentDownloadData extends Fragment {
                 ll_dataQuantityStock.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_dataKordinasiOutlet.getId()))) {
                 ll_dataKordinasiOutlet.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_dataCategoryKordinasiOutlet.getId()))){
                 ll_dataCategoryKordinasiOutlet.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_reso.getId()))) {
                 ll_reso.setVisibility(View.VISIBLE);
