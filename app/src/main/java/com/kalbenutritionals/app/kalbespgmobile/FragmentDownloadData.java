@@ -4191,7 +4191,7 @@ public class FragmentDownloadData extends Fragment {
     private class AsyncCallDataProdPICCusBased extends AsyncTask<JSONArray, Void, JSONArray> {
         @Override
         protected JSONArray doInBackground(JSONArray... params) {
-//            android.os.Debug.waitForDebugger(); 
+//            android.os.Debug.waitForDebugger();
             JSONArray Json = null;
             try {
                 Json = new mProductPICBL().DownloadProductPIC(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
