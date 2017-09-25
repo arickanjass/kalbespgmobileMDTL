@@ -1224,6 +1224,286 @@ public class dataJson {
         return resJson;
     }
 
+    public JSONObject generateJsonReqDownloadAllData() throws JSONException {
+        JSONObject resJson = new JSONObject();
+        Collection<JSONObject> itemsListJquey = new ArrayList<JSONObject>();
+        try {
+
+            if(this.getDttSubTypeActivityData()!=null){
+                if(this.getDttSubTypeActivityData().getBoolValid().equals("1")){
+                    tSubTypeActivityData dtConfig = new tSubTypeActivityData();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDttSubTypeActivityData().getBoolValid()));
+                    resJson.put(dtConfig.Property_ListOftSubTypeActivityData, item1);
+                }
+            }
+
+            if(this.getDttKategoryPlanogramMobileData()!=null){
+                if(this.getDttKategoryPlanogramMobileData().getBoolValid().equals("1")){
+                    tKategoryPlanogramMobileData dtConfig = new tKategoryPlanogramMobileData();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDttKategoryPlanogramMobileData().getBoolValid()));
+                    resJson.put(dtConfig.Property_ListOftKategoryPlanogramMobileData, item1);
+                }
+            }
+
+            if(this.getDtmEmployeeBranchData()!=null){
+                if(this.getDtmEmployeeBranchData().getBoolValid().equals("1")){
+                    mEmployeeBranchData dtConfig = new mEmployeeBranchData();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDtmEmployeeBranchData().getBoolValid()));
+                    resJson.put(dtConfig.Property_ListOfEmployeeBranchData, item1);
+                }
+            }
+
+            if(this.getDtmTypeLeaveMobileData()!=null){
+                if(this.getDtmTypeLeaveMobileData().getBoolValid().equals("1")){
+                    mTypeLeaveMobileData dtConfig = new mTypeLeaveMobileData();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDtmTypeLeaveMobileData().getBoolValid()));
+                    resJson.put(dtConfig.PropertyListOfmTypeLeaveMobileData, item1);
+                }
+            }
+
+            if(this.getDtmEmployeeSalesProductData()!=null){
+                if(this.getDtmEmployeeSalesProductData().getBoolValid().equals("1")){
+                    mEmployeeSalesProductData dtConfig = new mEmployeeSalesProductData();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDtmEmployeeSalesProductData().getBoolValid()));
+                    resJson.put(dtConfig.Property_ListOfmEmployeeSalesProductData, item1);
+                }
+            }
+
+            if(this.getDtmProductBrandHeaderData()!=null){
+                if(this.getDtmProductBrandHeaderData().getBoolValid().equals("1")){
+                    mProductBrandHeaderData dtConfig = new mProductBrandHeaderData();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDtmProductBrandHeaderData().getBoolValid()));
+                    resJson.put(dtConfig.Property_ListOfmProductBrandHeader, item1);
+                }
+            }
+
+            if(this.getDtmCategoryVisitPlanData()!=null){
+                if(this.getDtmCategoryVisitPlanData().getBoolValid().equals("1")){
+                    mCategoryVisitPlanData dtConfig = new mCategoryVisitPlanData();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDtmCategoryVisitPlanData().getBoolValid()));
+                    resJson.put(dtConfig.Property_ListOfmCategoryVisitPlanData, item1);
+                }
+            }
+
+            if(this.getDtmEmployeeAreaData()!=null){
+                if(this.getDtmEmployeeAreaData().getBoolValid().equals("1")){
+                    mEmployeeAreaData dtConfig = new mEmployeeAreaData();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDtmEmployeeAreaData().getBoolValid()));
+                    resJson.put(dtConfig.Property_ListOfmEmployeeAreaData, item1);
+                }
+            }
+
+            if(this.getDtmProductCompetitorData()!=null){
+                if(this.getDtmProductCompetitorData().getBoolValid().equals("1")){
+                    mProductCompetitorData dtConfig = new mProductCompetitorData();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDtmProductCompetitorData().getBoolValid()));
+                    resJson.put(dtConfig.Property_ListOfmProductCompetitor, item1);
+                }
+            }
+
+            if(this.getDtmProductSPGData()!=null){
+                if(this.getDtmProductSPGData().getBoolValid().equals("1")){
+                    mProductSPGData dtConfig = new mProductSPGData();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDtmProductSPGData().getBoolValid()));
+                    resJson.put(dtConfig.Property_ListOfmProductSPGData, item1);
+                }
+            }
+
+            if(this.getDtmProductPICData()!=null){
+                if(this.getDtmProductPICData().getBoolValid().equals("1")){
+                    mProductPICData dtConfig = new mProductPICData();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDtmProductPICData().getBoolValid()));
+                    resJson.put(dtConfig.Property_ListOfmProductPICData, item1);
+                }
+            }
+
+            if(this.getDtmTypeSubmissionMobile()!=null){
+                if(this.getDtmTypeSubmissionMobile().getBoolValid().equals("1")){
+                    mTypeSubmissionMobile dtConfig = new mTypeSubmissionMobile();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDtmTypeSubmissionMobile().getBoolValid()));
+                    resJson.put(dtConfig.Property_ListOfmTypeSubmissionMobile, item1);
+                }
+            }
+
+            if(this.getDttVisitPlanRealisasiData()!=null){
+                if(this.getDttVisitPlanRealisasiData().getBoolValid().equals("1")){
+                    tVisitPlanRealisasiData dtConfig = new tVisitPlanRealisasiData();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDttVisitPlanRealisasiData().getBoolValid()));
+                    resJson.put(dtConfig.Property_listOftVisitPlanRealisasiData, item1);
+                }
+            }
+
+            if(this.getDttAttendanceUserData()!=null){
+                if(this.getDttAttendanceUserData().getBoolValid().equals("1")){
+                    tAttendanceUserData dtConfig = new tAttendanceUserData();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDttAttendanceUserData().getBoolValid()));
+                    resJson.put(dtConfig.Property_ListOftAttendanceUser, item1);
+                }
+            }
+
+            if(this.getDttSalesProductHeaderData()!=null){
+                if(this.getDttSalesProductHeaderData().getBoolValid().equals("1")){
+                    tSalesProductHeaderData dtConfig = new tSalesProductHeaderData();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDttSalesProductHeaderData().getBoolValid()));
+                    resJson.put(dtConfig.Property_ListOftSalesProductHeaderData, item1);
+                }
+            }
+
+            if(this.getDttPurchaseOrderHeaderData()!=null){
+                if(this.getDttPurchaseOrderHeaderData().getBoolValid().equals("1")){
+                    tPurchaseOrderHeaderData dtConfig = new tPurchaseOrderHeaderData();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDttPurchaseOrderHeaderData().getBoolValid()));
+                    resJson.put(dtConfig.Property_ListOftPurchaseOrderHeaderData, item1);
+                }
+            }
+
+            if(this.getDttStockInHandHeaderData()!=null){
+                if(this.getDttStockInHandHeaderData().getBoolValid().equals("1")){
+                    tStockInHandHeaderData dtConfig = new tStockInHandHeaderData();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDttStockInHandHeaderData().getBoolValid()));
+                    resJson.put(dtConfig.Property_ListOftSalesProductHeaderData, item1);
+                }
+            }
+
+            if(this.getDtmParentData()!=null){
+                if(this.getDtmParentData().getBoolValid().equals("1")){
+                    mParentData dtConfig = new mParentData();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDtmParentData().getBoolValid()));
+                    resJson.put(dtConfig.Property_ListOfmParentData, item1);
+                }
+            }
+
+            if(this.getDttHirarkiBIS()!=null){
+                if(this.getDttHirarkiBIS().getBoolValid().equals("1")){
+                    tHirarkiBIS dtConfig = new tHirarkiBIS();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDttHirarkiBIS().getBoolValid()));
+                    resJson.put(dtConfig.Property_ListOftHirarkiBIS, item1);
+                }
+            }
+
+            if(this.getDttSalesProductQuantityHeaderData()!=null){
+                if(this.getDttSalesProductQuantityHeaderData().getBoolValid().equals("1")){
+                    tSalesProductQuantityHeaderData dtConfig = new tSalesProductQuantityHeaderData();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDttSalesProductQuantityHeaderData().getBoolValid()));
+                    resJson.put(dtConfig.Property_ListOftSalesProductHeaderData, item1);
+                }
+            }
+
+            if(this.getDttOverStockHeaderData()!=null){
+                if(this.getDttOverStockHeaderData().getBoolValid().equals("1")){
+                    tOverStockHeaderData dtConfig = new tOverStockHeaderData();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDttOverStockHeaderData().getBoolValid()));
+                    resJson.put(dtConfig.Property_ListOftOverStockHeaderData, item1);
+                }
+            }
+
+            if(this.getDttrackingLocationData()!=null){
+                if(this.getDttrackingLocationData().getBoolValid().equals("1")){
+                    trackingLocationData dtConfig = new trackingLocationData();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDttrackingLocationData().getBoolValid()));
+                    resJson.put(dtConfig.Property_ListOftrackingLocation, item1);
+                }
+            }
+
+            if(this.getDtKoordinasiOutletData()!=null){
+                if(this.getDtKoordinasiOutletData().getBoolValid().equals("1")){
+                    KoordinasiOutletData dtConfig = new KoordinasiOutletData();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDtKoordinasiOutletData().getBoolValid()));
+                    resJson.put(dtConfig.Property_ListOfKoordinasiOutlet, item1);
+                }
+            }
+
+            if(this.getDttPlanogramMobileData()!=null){
+                if(this.getDttPlanogramMobileData().getBoolValid().equals("1")){
+                    tPlanogramMobileData dtConfig = new tPlanogramMobileData();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDttPlanogramMobileData().getBoolValid()));
+                    resJson.put(dtConfig.Property_ListOftPlanogramMobileData, item1);
+                }
+            }
+
+            if(this.getDttActivityData()!=null){
+                if(this.getDttActivityData().getBoolValid().equals("1")){
+                    tActivityData dtConfig = new tActivityData();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDttActivityData().getBoolValid()));
+                    resJson.put(dtConfig.Property_ListOfTActivity, item1);
+                }
+            }
+
+            if(this.getDttActivityMobileData()!=null){
+                if(this.getDttActivityMobileData().getBoolValid().equals("1")){
+                    tActivityMobileData dtConfig = new tActivityMobileData();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDttActivityMobileData().getBoolValid()));
+                    resJson.put(dtConfig.Property_ListOfTActivityMobile, item1);
+                }
+            }
+            if(this.getDttCustomerBasedMobileHeaderData()!=null){
+                if(this.getDttCustomerBasedMobileHeaderData().getBoolValid().equals("1")){
+                    tCustomerBasedMobileHeaderData dtConfig = new tCustomerBasedMobileHeaderData();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDttCustomerBasedMobileHeaderData().getBoolValid()));
+                    resJson.put(dtConfig.Property_ListOftCustomerBasedMobileHeaderData, item1);
+                }
+            }
+            if(this.getDttAbsenUserData()!=null){
+                if(this.getDttAbsenUserData().getBoolValid().equals("1")){
+                    tAbsenUserData dtConfig = new tAbsenUserData();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDttAbsenUserData().getBoolValid()));
+                    resJson.put(dtConfig.Property_ListOftAbsenUser, item1);
+                }
+            }
+            if(this.getDttLeaveMobileData()!=null){
+                if(this.getDttLeaveMobileData().getBoolValid().equals("1")){
+                    tLeaveMobileData dtConfig = new tLeaveMobileData();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDttLeaveMobileData().getBoolValid()));
+                    resJson.put(dtConfig.PropertyListOftLeaveMobileData, item1);
+                }
+            }
+
+        } catch (Exception ex) {
+
+        }
+        resJson.put(Property_intResult, getIntResult());
+        resJson.put(Property_dtDate, get_dtDate());
+        resJson.put(Property_txtDescription, getTxtDescription());
+        resJson.put(Property_txtMessage, getTxtMessage());
+        resJson.put(Property_txtMethod, getTxtMethod());
+        resJson.put(Property_txtValue, getTxtValue());
+        resJson.put(Property_txtSessionLoginId, get_txtSessionLoginId());
+        resJson.put(Property_txtUserId, get_txtUserId());
+        resJson.put(Property_intRoleId, get_intRoleId());
+        resJson.put(Property_txtEmpId, get_txtEmpId());
+        resJson.put(Property_txtVersionApp, get_txtVersionApp());
+        return resJson;
+    }
+
     public JSONObject GenerateJsontSalesProductDetailData(tSalesProductDetailData data) throws JSONException {
         JSONObject item1 = new JSONObject();
         item1.put(data.Property_dtDate, String.valueOf(data.get_dtDate()));
@@ -1422,6 +1702,281 @@ public class dataJson {
     private List<tLogErrorData> ListOftErrorLogData;
     private List<tAbsenUserData> ListOftAbsenUserData;
 
+    private tVisitPlanRealisasiData dttVisitPlanRealisasiData;
+    private tAttendanceUserData dttAttendanceUserData;
+    private tSalesProductHeaderData dttSalesProductHeaderData;
+    private tPurchaseOrderHeaderData dttPurchaseOrderHeaderData;
+    private tStockInHandHeaderData dttStockInHandHeaderData;
+
+    public tVisitPlanRealisasiData getDttVisitPlanRealisasiData() {
+        return dttVisitPlanRealisasiData;
+    }
+
+    public void setDttVisitPlanRealisasiData(tVisitPlanRealisasiData dttVisitPlanRealisasiData) {
+        this.dttVisitPlanRealisasiData = dttVisitPlanRealisasiData;
+    }
+
+    public tAttendanceUserData getDttAttendanceUserData() {
+        return dttAttendanceUserData;
+    }
+
+    public void setDttAttendanceUserData(tAttendanceUserData dttAttendanceUserData) {
+        this.dttAttendanceUserData = dttAttendanceUserData;
+    }
+
+    public tSalesProductHeaderData getDttSalesProductHeaderData() {
+        return dttSalesProductHeaderData;
+    }
+
+    public void setDttSalesProductHeaderData(tSalesProductHeaderData dttSalesProductHeaderData) {
+        this.dttSalesProductHeaderData = dttSalesProductHeaderData;
+    }
+
+    public tPurchaseOrderHeaderData getDttPurchaseOrderHeaderData() {
+        return dttPurchaseOrderHeaderData;
+    }
+
+    public void setDttPurchaseOrderHeaderData(tPurchaseOrderHeaderData dttPurchaseOrderHeaderData) {
+        this.dttPurchaseOrderHeaderData = dttPurchaseOrderHeaderData;
+    }
+
+    public tStockInHandHeaderData getDttStockInHandHeaderData() {
+        return dttStockInHandHeaderData;
+    }
+
+    public void setDttStockInHandHeaderData(tStockInHandHeaderData dttStockInHandHeaderData) {
+        this.dttStockInHandHeaderData = dttStockInHandHeaderData;
+    }
+
+    public mParentData getDtmParentData() {
+        return dtmParentData;
+    }
+
+    public void setDtmParentData(mParentData dtmParentData) {
+        this.dtmParentData = dtmParentData;
+    }
+
+    public tHirarkiBIS getDttHirarkiBIS() {
+        return dttHirarkiBIS;
+    }
+
+    public void setDttHirarkiBIS(tHirarkiBIS dttHirarkiBIS) {
+        this.dttHirarkiBIS = dttHirarkiBIS;
+    }
+
+    public tSalesProductQuantityHeaderData getDttSalesProductQuantityHeaderData() {
+        return dttSalesProductQuantityHeaderData;
+    }
+
+    public void setDttSalesProductQuantityHeaderData(tSalesProductQuantityHeaderData dttSalesProductQuantityHeaderData) {
+        this.dttSalesProductQuantityHeaderData = dttSalesProductQuantityHeaderData;
+    }
+
+    public tOverStockHeaderData getDttOverStockHeaderData() {
+        return dttOverStockHeaderData;
+    }
+
+    public void setDttOverStockHeaderData(tOverStockHeaderData dttOverStockHeaderData) {
+        this.dttOverStockHeaderData = dttOverStockHeaderData;
+    }
+
+    public trackingLocationData getDttrackingLocationData() {
+        return dttrackingLocationData;
+    }
+
+    public void setDttrackingLocationData(trackingLocationData dttrackingLocationData) {
+        this.dttrackingLocationData = dttrackingLocationData;
+    }
+
+    public KoordinasiOutletData getDtKoordinasiOutletData() {
+        return dtKoordinasiOutletData;
+    }
+
+    public void setDtKoordinasiOutletData(KoordinasiOutletData dtKoordinasiOutletData) {
+        this.dtKoordinasiOutletData = dtKoordinasiOutletData;
+    }
+
+    public tPlanogramMobileData getDttPlanogramMobileData() {
+        return dttPlanogramMobileData;
+    }
+
+    public void setDttPlanogramMobileData(tPlanogramMobileData dttPlanogramMobileData) {
+        this.dttPlanogramMobileData = dttPlanogramMobileData;
+    }
+
+    public tActivityData getDttActivityData() {
+        return dttActivityData;
+    }
+
+    public void setDttActivityData(tActivityData dttActivityData) {
+        this.dttActivityData = dttActivityData;
+    }
+
+    public tActivityMobileData getDttActivityMobileData() {
+        return dttActivityMobileData;
+    }
+
+    public void setDttActivityMobileData(tActivityMobileData dttActivityMobileData) {
+        this.dttActivityMobileData = dttActivityMobileData;
+    }
+
+    public tCustomerBasedMobileHeaderData getDttCustomerBasedMobileHeaderData() {
+        return dttCustomerBasedMobileHeaderData;
+    }
+
+    public void setDttCustomerBasedMobileHeaderData(tCustomerBasedMobileHeaderData dttCustomerBasedMobileHeaderData) {
+        this.dttCustomerBasedMobileHeaderData = dttCustomerBasedMobileHeaderData;
+    }
+
+    public tAbsenUserData getDttAbsenUserData() {
+        return dttAbsenUserData;
+    }
+
+    public void setDttAbsenUserData(tAbsenUserData dttAbsenUserData) {
+        this.dttAbsenUserData = dttAbsenUserData;
+    }
+
+    public tLeaveMobileData getDttLeaveMobileData() {
+        return dttLeaveMobileData;
+    }
+
+    public void setDttLeaveMobileData(tLeaveMobileData dttLeaveMobileData) {
+        this.dttLeaveMobileData = dttLeaveMobileData;
+    }
+
+    private mParentData dtmParentData;
+    private tHirarkiBIS dttHirarkiBIS;
+    private tSalesProductQuantityHeaderData dttSalesProductQuantityHeaderData;
+    private tOverStockHeaderData dttOverStockHeaderData;
+    private trackingLocationData dttrackingLocationData;
+    private KoordinasiOutletData dtKoordinasiOutletData;
+    private tPlanogramMobileData dttPlanogramMobileData;
+    private tActivityData dttActivityData;
+    private tActivityMobileData dttActivityMobileData;
+    private tCustomerBasedMobileHeaderData dttCustomerBasedMobileHeaderData;
+    private tAbsenUserData dttAbsenUserData;
+    private tLeaveMobileData dttLeaveMobileData;
+
+    public tSubTypeActivityData getDttSubTypeActivityData() {
+        return dttSubTypeActivityData;
+    }
+
+    public void setDttSubTypeActivityData(tSubTypeActivityData dttSubTypeActivityData) {
+        this.dttSubTypeActivityData = dttSubTypeActivityData;
+    }
+
+    private tSubTypeActivityData dttSubTypeActivityData;
+
+    public tKategoryPlanogramMobileData getDttKategoryPlanogramMobileData() {
+        return dttKategoryPlanogramMobileData;
+    }
+
+    public void setDttKategoryPlanogramMobileData(tKategoryPlanogramMobileData dttKategoryPlanogramMobileData) {
+        this.dttKategoryPlanogramMobileData = dttKategoryPlanogramMobileData;
+    }
+
+    private tKategoryPlanogramMobileData dttKategoryPlanogramMobileData;
+
+    public mEmployeeBranchData getDtmEmployeeBranchData() {
+        return dtmEmployeeBranchData;
+    }
+
+    public void setDtmEmployeeBranchData(mEmployeeBranchData dtmEmployeeBranchData) {
+        this.dtmEmployeeBranchData = dtmEmployeeBranchData;
+    }
+
+    private mEmployeeBranchData dtmEmployeeBranchData;
+
+    public mTypeLeaveMobileData getDtmTypeLeaveMobileData() {
+        return dtmTypeLeaveMobileData;
+    }
+
+    public void setDtmTypeLeaveMobileData(mTypeLeaveMobileData dtmTypeLeaveMobileData) {
+        this.dtmTypeLeaveMobileData = dtmTypeLeaveMobileData;
+    }
+
+    private mTypeLeaveMobileData dtmTypeLeaveMobileData;
+
+    public mEmployeeSalesProductData getDtmEmployeeSalesProductData() {
+        return dtmEmployeeSalesProductData;
+    }
+
+    public void setDtmEmployeeSalesProductData(mEmployeeSalesProductData dtmEmployeeSalesProductData) {
+        this.dtmEmployeeSalesProductData = dtmEmployeeSalesProductData;
+    }
+
+    private mEmployeeSalesProductData dtmEmployeeSalesProductData;
+
+    public mProductBrandHeaderData getDtmProductBrandHeaderData() {
+        return dtmProductBrandHeaderData;
+    }
+
+    public void setDtmProductBrandHeaderData(mProductBrandHeaderData dtmProductBrandHeaderData) {
+        this.dtmProductBrandHeaderData = dtmProductBrandHeaderData;
+    }
+
+    private mProductBrandHeaderData dtmProductBrandHeaderData;
+
+    public mCategoryVisitPlanData getDtmCategoryVisitPlanData() {
+        return dtmCategoryVisitPlanData;
+    }
+
+    public void setDtmCategoryVisitPlanData(mCategoryVisitPlanData dtmCategoryVisitPlanData) {
+        this.dtmCategoryVisitPlanData = dtmCategoryVisitPlanData;
+    }
+
+    private mCategoryVisitPlanData dtmCategoryVisitPlanData;
+
+    public mEmployeeAreaData getDtmEmployeeAreaData() {
+        return dtmEmployeeAreaData;
+    }
+
+    public void setDtmEmployeeAreaData(mEmployeeAreaData dtmEmployeeAreaData) {
+        this.dtmEmployeeAreaData = dtmEmployeeAreaData;
+    }
+
+    private mEmployeeAreaData dtmEmployeeAreaData;
+
+    public mProductCompetitorData getDtmProductCompetitorData() {
+        return dtmProductCompetitorData;
+    }
+
+    public void setDtmProductCompetitorData(mProductCompetitorData dtmProductCompetitorData) {
+        this.dtmProductCompetitorData = dtmProductCompetitorData;
+    }
+
+    private mProductCompetitorData dtmProductCompetitorData;
+
+    public mProductSPGData getDtmProductSPGData() {
+        return dtmProductSPGData;
+    }
+
+    public void setDtmProductSPGData(mProductSPGData dtmProductSPGData) {
+        this.dtmProductSPGData = dtmProductSPGData;
+    }
+
+    private mProductSPGData dtmProductSPGData;
+
+    public mProductPICData getDtmProductPICData() {
+        return dtmProductPICData;
+    }
+
+    public void setDtmProductPICData(mProductPICData dtmProductPICData) {
+        this.dtmProductPICData = dtmProductPICData;
+    }
+
+    private mProductPICData dtmProductPICData;
+
+    public mTypeSubmissionMobile getDtmTypeSubmissionMobile() {
+        return dtmTypeSubmissionMobile;
+    }
+
+    public void setDtmTypeSubmissionMobile(mTypeSubmissionMobile dtmTypeSubmissionMobile) {
+        this.dtmTypeSubmissionMobile = dtmTypeSubmissionMobile;
+    }
+
+    private mTypeSubmissionMobile dtmTypeSubmissionMobile;
+
     public List<tAttendanceUserData> getListOftAttendanceUserData() {
         return ListOftAttendanceUserData;
     }
@@ -1534,6 +2089,39 @@ public class dataJson {
 
     public String _txtVersionApp;
 
+    public String get_intRoleId() {
+        return _intRoleId;
+    }
+
+    public void set_intRoleId(String _intRoleId) {
+        this._intRoleId = _intRoleId;
+    }
+
+    private String _intRoleId;
+
+    public String get_txtEmpId() {
+        return _txtEmpId;
+    }
+
+    public void set_txtEmpId(String _txtEmpId) {
+        this._txtEmpId = _txtEmpId;
+    }
+
+    private String _txtEmpId;
+
+    public String get_dtDate() {
+        return _dtDate;
+    }
+
+    public void set_dtDate(String _dtDate) {
+        this._dtDate = _dtDate;
+    }
+
+    private String _dtDate;
+
+    private String Property_dtDate = "dtDate";
+    private String Property_txtEmpId = "txtEmpId";
+    private String Property_intRoleId = "intRoleId";
     private String Property_txtUserId = "txtUserId";
     private String Property_txtSessionLoginId = "txtSessionLoginId";
     public String Property_intResult = "intResult";

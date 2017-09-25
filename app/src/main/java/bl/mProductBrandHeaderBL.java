@@ -11,11 +11,13 @@ import java.util.List;
 import library.spgmobile.common.APIData;
 import library.spgmobile.common.clsHelper;
 import library.spgmobile.common.linkAPI;
+import library.spgmobile.common.mEmployeeSalesProductData;
 import library.spgmobile.common.mProductBrandHeaderData;
 import library.spgmobile.common.mconfigData;
 import library.spgmobile.common.tUserLoginData;
 import library.spgmobile.dal.clsHardCode;
 import library.spgmobile.dal.enumConfigData;
+import library.spgmobile.dal.mEmployeeSalesProductDA;
 import library.spgmobile.dal.mProductBrandHeaderDA;
 import library.spgmobile.dal.mconfigDA;
 import library.spgmobile.dal.tUserLoginDA;
@@ -95,4 +97,22 @@ public class mProductBrandHeaderBL extends clsMainBL{
         }
         return ListData;
     }
+
+	public int  getContactsCount(){
+		SQLiteDatabase db=getDb();
+		mProductBrandHeaderDA _mProductBrandHeaderDA=new mProductBrandHeaderDA(db);
+		return _mProductBrandHeaderDA.getContactsCount(db);
+	}
+
+	public void saveData(mProductBrandHeaderData data){
+		SQLiteDatabase db=getDb();
+		mProductBrandHeaderDA _mProductBrandHeaderDA=new mProductBrandHeaderDA(db);
+		_mProductBrandHeaderDA.SaveDataMConfig(db, data);
+	}
+
+	public void DeleteAllData(){
+		SQLiteDatabase db=getDb();
+		mProductBrandHeaderDA _mProductBrandHeaderDA=new mProductBrandHeaderDA(db);
+		_mProductBrandHeaderDA.DeleteAllDataMConfig(db);
+	}
 }

@@ -1,6 +1,6 @@
 package library.spgmobile.common;
 
-public class tCustomerBasedMobileHeaderData {
+public class tCustomerBasedMobileHeaderData extends APIData{
 	private String _intTrCustomerId;
 	private String _txtSubmissionId;
 	private String _txtSubmissionCode;

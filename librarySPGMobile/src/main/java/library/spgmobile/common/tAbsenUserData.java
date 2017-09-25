@@ -1,6 +1,6 @@
 package library.spgmobile.common;
 
-public class tAbsenUserData {
+public class tAbsenUserData extends APIData {
     public synchronized byte[] get_txtImg1() {
         return _txtImg1;
     }

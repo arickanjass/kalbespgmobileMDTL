@@ -4,7 +4,7 @@ package library.spgmobile.common;
  * Created by Rian Andrivani on 3/8/2017.
  */
 
-public class mProductCompetitorData {
+public class mProductCompetitorData extends  APIData {
     public synchronized String get_txtProductDetailCode() {
         return _txtProductDetailCode;
     }

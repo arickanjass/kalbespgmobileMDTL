@@ -4,7 +4,7 @@ package library.spgmobile.common;
  * Created by Rian Andrivani on 6/6/2017.
  */
 
-public class KoordinasiOutletData {
+public class KoordinasiOutletData extends APIData {
     public synchronized String get_intId() {
         return _intId;
     }

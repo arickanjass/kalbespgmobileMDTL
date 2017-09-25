@@ -8,12 +8,14 @@ import java.util.Iterator;
 import java.util.List;
 
 import library.spgmobile.common.APIData;
+import library.spgmobile.common.clsFileAttach_mobile;
 import library.spgmobile.common.clsHelper;
 import library.spgmobile.common.linkAPI;
 import library.spgmobile.common.mCounterNumberData;
 import library.spgmobile.common.mEmployeeSalesProductData;
 import library.spgmobile.common.mconfigData;
 import library.spgmobile.common.tUserLoginData;
+import library.spgmobile.dal.clsFileAttach_mobileDA;
 import library.spgmobile.dal.clsHardCode;
 import library.spgmobile.dal.enumConfigData;
 import library.spgmobile.dal.enumCounterData;
@@ -125,5 +127,22 @@ public class mEmployeeSalesProductBL extends clsMainBL{
 		List<mEmployeeSalesProductData>ListData=_mEmployeeSalesProductDA.SearchData(db, "", Name);
 		db.close();
 		return ListData;
+	}
+
+	public int  getContactsCount(){
+		SQLiteDatabase db=getDb();
+		mEmployeeSalesProductDA _mEmployeeSalesProductDA= new mEmployeeSalesProductDA(db);
+		return _mEmployeeSalesProductDA.getContactsCount(db);
+	}
+
+	public void saveData(mEmployeeSalesProductData data){
+		SQLiteDatabase db=getDb();
+		mEmployeeSalesProductDA _mEmployeeSalesProductDA= new mEmployeeSalesProductDA(db);
+		_mEmployeeSalesProductDA.SaveDataMConfig(db, data);
+	}
+	public void DeleteAllData(){
+		SQLiteDatabase db=getDb();
+		mEmployeeSalesProductDA _mEmployeeSalesProductDA= new mEmployeeSalesProductDA(db);
+		_mEmployeeSalesProductDA.DeleteAllDataMConfig(db);
 	}
 }

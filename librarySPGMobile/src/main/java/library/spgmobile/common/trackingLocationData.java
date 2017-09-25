@@ -4,7 +4,7 @@ package library.spgmobile.common;
  * Created by Rian Andrivani on 5/15/2017.
  */
 
-public class trackingLocationData {
+public class trackingLocationData extends APIData{
     public synchronized String get_intId() {
         return _intId;
     }

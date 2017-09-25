@@ -1,6 +1,6 @@
 package library.spgmobile.common;
 
-public class mProductBrandHeaderData {
+public class mProductBrandHeaderData extends APIData{
 	public synchronized String get_intmProductUmbrandId() {
 		return _intmProductUmbrandId;
 	}

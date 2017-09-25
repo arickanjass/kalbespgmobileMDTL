@@ -1,6 +1,6 @@
 package library.spgmobile.common;
 
-public class tActivityData {
+public class tActivityData extends APIData {
 	public synchronized String get_intFlag() {
 		return _intFlag;
 	}

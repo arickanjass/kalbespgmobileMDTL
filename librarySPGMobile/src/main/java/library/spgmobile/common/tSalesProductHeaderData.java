@@ -1,6 +1,6 @@
 package library.spgmobile.common;
 
-public class tSalesProductHeaderData {
+public class tSalesProductHeaderData extends APIData {
     public synchronized String get_intIdAbsenUser() {
         return _intIdAbsenUser;
     }

@@ -1,6 +1,6 @@
 package library.spgmobile.common;
 
-public class mTypeLeaveMobileData {
+public class mTypeLeaveMobileData extends APIData {
 	public synchronized String get_intTipeLeave() {
 		return _intTipeLeave;
 	}

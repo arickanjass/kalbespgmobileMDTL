@@ -82,6 +82,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
     private tAbsenUserData dttAbsenUserData;
     private visitplanAbsenData dtAbsensVisitplan;
     private tVisitPlanRealisasiData dtRealisasi;
+    private NavigationView navigationView;
 
     PackageInfo pInfo = null;
 
@@ -98,28 +99,31 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
     @Override
     public void onBackPressed() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        builder.setTitle("Exit");
-        builder.setMessage("Do you want to exit?");
-
-        builder.setPositiveButton("EXIT", new DialogInterface.OnClickListener() {
-
-            public void onClick(DialogInterface dialog, int which) {
+        boolean isHome = false;
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            if (fragment != null && fragment.toString().contains("FragmentInformation") && getSupportFragmentManager().getFragments().size() == 1) {
+                isHome = true;
                 finish();
+            } else if (fragment != null && fragment.toString().contains("FragmentInformation") && getSupportFragmentManager().getFragments().size() > 1) {
+                if (fragment.isVisible()) {
+                    finish();
+                }
+            } else if (fragment != null && !fragment.toString().contains("FragmentInformation") && getSupportFragmentManager().getFragments().size() > 1) {
+                isHome = false;
             }
-        });
+        }
+        if (!isHome) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
 
-        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-
-        AlertDialog alert = builder.create();
-        alert.show();
+            toolbar.setTitle("Home");
+            FragmentInformation homeFragment = new FragmentInformation();
+            FragmentTransaction fragmentTransactionHome = getSupportFragmentManager().beginTransaction();
+            fragmentTransactionHome.replace(R.id.frame, homeFragment);
+            fragmentTransactionHome.commit();
+            navigationView.getMenu().getItem(0).setChecked(true);
+        } else {
+            finish();
+        }
     }
 
     @Override
@@ -164,7 +168,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
         tUserLoginData dt = new tUserLoginBL().getUserActive();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        navigationView = (NavigationView) findViewById(R.id.navigation_view);
         View vwHeader = navigationView.getHeaderView(0);
 
         CircleImageView ivProfile = (CircleImageView) vwHeader.findViewById(R.id.profile_image);

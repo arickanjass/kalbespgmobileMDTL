@@ -1,6 +1,6 @@
 package library.spgmobile.common;
 
-public class tLeaveMobileData {
+public class tLeaveMobileData extends APIData {
 
 	public synchronized String get_txtTypeAlasanName() {
 		return _txtTypeAlasanName;

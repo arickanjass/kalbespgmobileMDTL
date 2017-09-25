@@ -25,7 +25,18 @@ import library.spgmobile.common.clsMappingPushFile;
 import library.spgmobile.common.clsPushData;
 import library.spgmobile.common.dataJson;
 import library.spgmobile.common.linkAPI;
+import library.spgmobile.common.mCategoryVisitPlanData;
 import library.spgmobile.common.mCounterNumberData;
+import library.spgmobile.common.mEmployeeAreaData;
+import library.spgmobile.common.mEmployeeBranchData;
+import library.spgmobile.common.mEmployeeSalesProductData;
+import library.spgmobile.common.mParentData;
+import library.spgmobile.common.mProductBrandHeaderData;
+import library.spgmobile.common.mProductCompetitorData;
+import library.spgmobile.common.mProductPICData;
+import library.spgmobile.common.mProductSPGData;
+import library.spgmobile.common.mTypeLeaveMobileData;
+import library.spgmobile.common.mTypeSubmissionMobile;
 import library.spgmobile.common.mconfigData;
 import library.spgmobile.common.tAbsenUserData;
 import library.spgmobile.common.tActivityData;
@@ -34,8 +45,10 @@ import library.spgmobile.common.tAttendanceUserData;
 import library.spgmobile.common.tCustomerBasedMobileDetailData;
 import library.spgmobile.common.tCustomerBasedMobileDetailProductData;
 import library.spgmobile.common.tCustomerBasedMobileHeaderData;
+import library.spgmobile.common.tHirarkiBIS;
 import library.spgmobile.common.tJawabanUserData;
 import library.spgmobile.common.tJawabanUserHeaderData;
+import library.spgmobile.common.tKategoryPlanogramMobileData;
 import library.spgmobile.common.tLeaveMobileData;
 import library.spgmobile.common.tLogErrorData;
 import library.spgmobile.common.tNotificationData;
@@ -52,6 +65,7 @@ import library.spgmobile.common.tSalesProductQuantityHeaderData;
 import library.spgmobile.common.tSalesProductQuantityImageData;
 import library.spgmobile.common.tStockInHandDetailData;
 import library.spgmobile.common.tStockInHandHeaderData;
+import library.spgmobile.common.tSubTypeActivityData;
 import library.spgmobile.common.tUserLoginData;
 import library.spgmobile.common.tVisitPlanHeader_MobileData;
 import library.spgmobile.common.tVisitPlanRealisasiData;
@@ -501,6 +515,35 @@ public class clsHelperBL extends clsMainBL {
         return JsonArray;
     }
 
+    public String downloadAllData(String versionName, String strJson) throws Exception {
+        SQLiteDatabase _db = getDb();
+        Boolean flag = true;
+        String ErrorMess = "";
+        String txtMethod = "DownloadAllDataMobile";
+        linkAPI dtlinkAPI = new linkAPI();
+        clsHelper _help = new clsHelper();
+        dtlinkAPI = new linkAPI();
+        dtlinkAPI.set_txtMethod(txtMethod);
+        tUserLoginDA _tUserLoginDA = new tUserLoginDA(_db);
+        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
+        dtlinkAPI.set_txtParam(_dataUserLogin.get_txtUserId() + "|||");
+        dtlinkAPI.set_txtToken(new clsHardCode().txtTokenAPI);
+        dtlinkAPI.set_txtVesion(versionName);
+        String strVal2 = "";
+        mconfigDA _mconfigDA = new mconfigDA(_db);
+        mconfigData dataAPI = _mconfigDA.getData(db, enumConfigData.ApiKalbe.getidConfigData());
+        strVal2 = dataAPI.get_txtValue();
+        if (dataAPI.get_txtValue() == "") {
+            strVal2 = dataAPI.get_txtDefaultValue();
+        }
+        dataAPI = _mconfigDA.getData(_db, enumConfigData.BackGroundServiceOnline.getidConfigData());
+        String strLinkAPI = dtlinkAPI.QueryString(strVal2);
+        String JsonData = _help.pushtData(strLinkAPI, strJson, Integer.valueOf(getBackGroundServiceOnline()));
+        //String JsonData= _help.ResultJsonData(_help.getHTML(strLinkAPI));
+
+        return JsonData;
+    }
+
     public org.json.simple.JSONArray GetDatamversionAppPostData(String versionName) throws Exception {
         SQLiteDatabase _db = getDb();
         String txtMethod = "GetDatamversionAppPostData";
@@ -939,6 +982,147 @@ public class clsHelperBL extends clsMainBL {
             if (ListOfLogReceiverDetail_mobile != null){
                 dtPush.setListOfLogReceiverDetail_mobile(ListOfLogReceiverDetail_mobile);
             }
+        } else {
+            dtPush = null;
+        }
+        db.close();
+        dtclsPushData.setDtdataJson(dtPush);
+        dtclsPushData.setFileUpload(FileUpload);
+        return dtclsPushData;
+    }
+
+    public clsPushData downloadData(String versionName) {
+        clsPushData dtclsPushData = new clsPushData();
+        dataJson dtPush = new dataJson();
+        SQLiteDatabase db = getDb();
+        tUserLoginDA _tUserLoginDA = new tUserLoginDA(db);
+        HashMap<clsMappingPushFile, byte[]> FileUpload = null;
+        if (_tUserLoginDA.getContactsCount(db) > 0) {
+            tUserLoginData _tUserLoginData = _tUserLoginDA.getData(db, 1);
+            dtPush.set_txtVersionApp(versionName);
+            dtPush.set_txtUserId(_tUserLoginData.get_txtUserId());
+            dtPush.set_txtSessionLoginId(_tUserLoginData.get_txtDataId());
+            dtPush.set_intRoleId(_tUserLoginData.get_txtRoleId());
+            dtPush.set_txtEmpId(_tUserLoginData.get_TxtEmpId());
+            try {
+                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                Calendar cal = Calendar.getInstance();
+                mCounterNumberDA _mCounterNumberDA = new mCounterNumberDA(db);
+                mCounterNumberData _data = new mCounterNumberData();
+                _data.set_intId(enumCounterData.MonitorSchedule.getidCounterData());
+                _data.set_txtDeskripsi("value menunjukan waktu terakhir menjalankan services");
+                _data.set_txtName("Monitor Service");
+                _data.set_txtValue(dateFormat.format(cal.getTime()));
+                _mCounterNumberDA.SaveDataMConfig(db, _data);
+
+                //new clsInit().PushData(db,versionName);
+            } catch (Exception e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+
+            //master data
+            tSubTypeActivityData dttSubTypeActivityData = new tSubTypeActivityData();
+            tKategoryPlanogramMobileData dttKategoryPlanogramMobileData = new tKategoryPlanogramMobileData();
+            mEmployeeBranchData dtmEmployeeBranchData = new mEmployeeBranchData();
+            mTypeLeaveMobileData dtmTypeLeaveMobileData = new mTypeLeaveMobileData();
+            mEmployeeSalesProductData dtmEmployeeSalesProductData = new mEmployeeSalesProductData();
+            mProductBrandHeaderData dtmProductBrandHeaderData = new mProductBrandHeaderData();
+            mCategoryVisitPlanData dtmCategoryVisitPlanData = new mCategoryVisitPlanData();
+            mEmployeeAreaData dtmEmployeeAreaData = new mEmployeeAreaData();
+            mProductCompetitorData dtmProductCompetitorData = new mProductCompetitorData();
+            mProductSPGData dtmProductSPGData = new mProductSPGData();
+            mProductPICData dtmProductPICData = new mProductPICData();
+            mTypeSubmissionMobile dtmTypeSubmissionMobile = new mTypeSubmissionMobile();
+
+            //master data
+            dttSubTypeActivityData.setBoolValid("0");
+            dttKategoryPlanogramMobileData.setBoolValid("0");
+            dtmEmployeeBranchData.setBoolValid("0");
+            dtmTypeLeaveMobileData.setBoolValid("0");
+            dtmEmployeeSalesProductData.setBoolValid("0");
+            dtmProductBrandHeaderData.setBoolValid("0");
+            dtmCategoryVisitPlanData.setBoolValid("0");
+            dtmEmployeeAreaData.setBoolValid("0");
+            dtmProductCompetitorData.setBoolValid("0");
+            dtmProductSPGData.setBoolValid("0");
+            dtmProductPICData.setBoolValid("0");
+            dtmTypeSubmissionMobile.setBoolValid("0");
+
+            dtPush.setDttSubTypeActivityData(dttSubTypeActivityData);
+            dtPush.setDttKategoryPlanogramMobileData(dttKategoryPlanogramMobileData);
+            dtPush.setDtmEmployeeBranchData(dtmEmployeeBranchData);
+            dtPush.setDtmTypeLeaveMobileData(dtmTypeLeaveMobileData);
+            dtPush.setDtmEmployeeSalesProductData(dtmEmployeeSalesProductData);
+            dtPush.setDtmProductBrandHeaderData(dtmProductBrandHeaderData);
+            dtPush.setDtmCategoryVisitPlanData(dtmCategoryVisitPlanData);
+            dtPush.setDtmEmployeeAreaData(dtmEmployeeAreaData);
+            dtPush.setDtmProductCompetitorData(dtmProductCompetitorData);
+            dtPush.setDtmProductSPGData(dtmProductSPGData);
+            dtPush.setDtmProductPICData(dtmProductPICData);
+            dtPush.setDtmTypeSubmissionMobile(dtmTypeSubmissionMobile);
+
+            //transaction data
+            tVisitPlanRealisasiData dttVisitPlanRealisasiData = new tVisitPlanRealisasiData();
+            tAttendanceUserData dttAttendanceUserData = new tAttendanceUserData();
+            //no so
+            tSalesProductHeaderData dttSalesProductHeaderData = new tSalesProductHeaderData();
+            //no po
+            tPurchaseOrderHeaderData dttPurchaseOrderHeaderData = new tPurchaseOrderHeaderData();
+            tStockInHandHeaderData dttStockInHandHeaderData = new tStockInHandHeaderData();
+            mParentData dtmParentData = new mParentData();
+            tHirarkiBIS dttHirarkiBIS = new tHirarkiBIS();
+            //noQTS
+            tSalesProductQuantityHeaderData dttSalesProductQuantityHeaderData = new tSalesProductQuantityHeaderData();
+            //noOVS
+            tOverStockHeaderData dttOverStockHeaderData = new tOverStockHeaderData();
+            trackingLocationData dttrackingLocationData = new trackingLocationData();
+            KoordinasiOutletData dtKoordinasiOutletData = new KoordinasiOutletData();
+            tPlanogramMobileData dttPlanogramMobileData = new tPlanogramMobileData();
+            tActivityData dttActivityData = new tActivityData();
+            tActivityMobileData dttActivityMobileData = new tActivityMobileData();
+            tCustomerBasedMobileHeaderData dttCustomerBasedMobileHeaderData = new tCustomerBasedMobileHeaderData();
+            tAbsenUserData dttAbsenUserData = new tAbsenUserData();
+            tLeaveMobileData dttLeaveMobileData = new tLeaveMobileData();
+
+            //transaction data
+            dttVisitPlanRealisasiData.setBoolValid("0");
+            dttAttendanceUserData.setBoolValid("0");
+            dttSalesProductHeaderData.setBoolValid("0");
+            dttPurchaseOrderHeaderData.setBoolValid("0");
+            dttStockInHandHeaderData.setBoolValid("0");
+            dtmParentData.setBoolValid("0");
+            dttHirarkiBIS.setBoolValid("0");
+            dttSalesProductQuantityHeaderData.setBoolValid("0");
+            dttOverStockHeaderData.setBoolValid("0");
+            dttrackingLocationData.setBoolValid("0");
+            dtKoordinasiOutletData.setBoolValid("0");
+            dttPlanogramMobileData.setBoolValid("0");
+            dttActivityData.setBoolValid("0");
+            dttActivityMobileData.setBoolValid("0");
+            dttCustomerBasedMobileHeaderData.setBoolValid("0");
+            dttAbsenUserData.setBoolValid("0");
+            dttLeaveMobileData.setBoolValid("0");
+
+            //Transaction data
+            dtPush.setDttVisitPlanRealisasiData(dttVisitPlanRealisasiData);
+            dtPush.setDttAttendanceUserData(dttAttendanceUserData);
+            dtPush.setDttSalesProductHeaderData(dttSalesProductHeaderData);
+            dtPush.setDttPurchaseOrderHeaderData(dttPurchaseOrderHeaderData);
+            dtPush.setDttStockInHandHeaderData(dttStockInHandHeaderData);
+            dtPush.setDtmParentData(dtmParentData);
+            dtPush.setDttHirarkiBIS(dttHirarkiBIS);
+            dtPush.setDttSalesProductQuantityHeaderData(dttSalesProductQuantityHeaderData);
+            dtPush.setDttOverStockHeaderData(dttOverStockHeaderData);
+            dtPush.setDttrackingLocationData(dttrackingLocationData);
+            dtPush.setDtKoordinasiOutletData(dtKoordinasiOutletData);
+            dtPush.setDttPlanogramMobileData(dttPlanogramMobileData);
+            dtPush.setDttActivityData(dttActivityData);
+            dtPush.setDttActivityMobileData(dttActivityMobileData);
+            dtPush.setDttCustomerBasedMobileHeaderData(dttCustomerBasedMobileHeaderData);
+            dtPush.setDttAbsenUserData(dttAbsenUserData);
+            dtPush.setDttLeaveMobileData(dttLeaveMobileData);
+
         } else {
             dtPush = null;
         }

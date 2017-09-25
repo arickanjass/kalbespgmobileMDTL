@@ -4,7 +4,7 @@ package library.spgmobile.common;
  * Created by aan.junianto on 22/08/2017.
  */
 
-public class tAttendanceUserData {
+public class tAttendanceUserData extends APIData {
     public synchronized byte[] get_txtImg1() {
         return _txtImg1;
     }

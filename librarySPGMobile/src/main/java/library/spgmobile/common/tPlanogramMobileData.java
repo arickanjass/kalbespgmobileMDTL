@@ -4,7 +4,7 @@ package library.spgmobile.common;
  * Created by aan.junianto on 10/08/2017.
  */
 
-public class tPlanogramMobileData {
+public class tPlanogramMobileData extends APIData{
     public synchronized String get_intId() {
         return _intId;
     }

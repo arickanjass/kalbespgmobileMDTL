@@ -4,7 +4,7 @@ package library.spgmobile.common;
  * Created by Rian Andrivani on 3/16/2017.
  */
 
-public class tSalesProductQuantityHeaderData {
+public class tSalesProductQuantityHeaderData extends APIData{
     public synchronized String get_intId() {
         return _intId;
     }

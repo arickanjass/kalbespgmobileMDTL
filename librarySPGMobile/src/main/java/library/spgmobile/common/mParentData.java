@@ -4,7 +4,7 @@ package library.spgmobile.common;
  * Created by Dewi Oktaviani on 03/05/2017.
  */
 
-public class mParentData {
+public class mParentData extends APIData{
     private String _intParentId;
     private String _txtParentName;
 

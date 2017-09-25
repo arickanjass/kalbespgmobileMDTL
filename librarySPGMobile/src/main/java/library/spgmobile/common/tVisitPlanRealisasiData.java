@@ -4,7 +4,7 @@ package library.spgmobile.common;
  * Created by Robert on 26/04/2017.
  */
 
-public class tVisitPlanRealisasiData {
+public class tVisitPlanRealisasiData extends APIData{
 
     private String _txtDataIDRealisasi ;
     private String _intCategoryVisitPlan;

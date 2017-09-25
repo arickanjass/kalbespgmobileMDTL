@@ -1,6 +1,6 @@
 package library.spgmobile.common;
 
-public class mEmployeeAreaData {
+public class mEmployeeAreaData extends APIData {
 	public synchronized String get_intEmployeeId() {
 		return _intEmployeeId;
 	}

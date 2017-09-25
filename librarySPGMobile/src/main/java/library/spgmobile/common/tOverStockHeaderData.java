@@ -4,7 +4,7 @@ package library.spgmobile.common;
  * Created by aan.junianto on 14/09/2017.
  */
 
-public class tOverStockHeaderData {
+public class tOverStockHeaderData extends APIData {
     public synchronized String get_intId() {
         return _intId;
     }

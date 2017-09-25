@@ -1,6 +1,6 @@
 package library.spgmobile.common;
 
-public class mEmployeeBranchData {
+public class mEmployeeBranchData extends APIData {
 	public synchronized String get_EmpId() {
 		return _EmpId;
 	}

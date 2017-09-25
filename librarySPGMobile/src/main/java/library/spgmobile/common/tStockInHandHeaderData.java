@@ -4,7 +4,7 @@ package library.spgmobile.common;
  * Created by aan.junianto on 23/08/2017.
  */
 
-public class tStockInHandHeaderData {
+public class tStockInHandHeaderData extends APIData{
     public synchronized String get_intIdAbsenUser() {
         return _intIdAbsenUser;
     }

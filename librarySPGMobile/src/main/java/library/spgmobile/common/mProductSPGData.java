@@ -4,7 +4,7 @@ package library.spgmobile.common;
  * Created by ASUS ZE on 24/03/2017.
  */
 
-public class mProductSPGData {
+public class mProductSPGData extends APIData{
     private String _intId;
     public String _txtNIK;
     public String _txtName;

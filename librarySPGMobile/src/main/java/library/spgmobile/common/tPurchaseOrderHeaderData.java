@@ -4,7 +4,7 @@ package library.spgmobile.common;
  * Created by XSIS on 20/03/2017.
  */
 
-public class tPurchaseOrderHeaderData {
+public class tPurchaseOrderHeaderData extends APIData {
     private String _intId;
     private String _txtNoOrder;
     private String _txtNIK;

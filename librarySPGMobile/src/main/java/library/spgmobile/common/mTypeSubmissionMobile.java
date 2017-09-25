@@ -4,7 +4,7 @@ package library.spgmobile.common;
  * Created by Rian Andrivani on 3/8/2017.
  */
 
-public class mTypeSubmissionMobile {
+public class mTypeSubmissionMobile extends APIData {
 
     public synchronized String get_txtGrupMasterID() {
         return _txtGrupMasterID;

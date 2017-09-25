@@ -4,7 +4,7 @@ package library.spgmobile.common;
  * Created by Dewi Oktaviani on 11/09/2017.
  */
 
-public class tHirarkiBIS {
+public class tHirarkiBIS extends APIData {
     private String _txtNik;
     private String _txtName;
     private String _txtLOB;
@@ -105,6 +105,7 @@ public class tHirarkiBIS {
     public  String Property_txtOutletCode = "txtOutletCode";
     public  String Property_txtOutletName ="txtOutletName";
     public String Property_intId = "intId";
+    public String Property_ListOftHirarkiBIS = "ListOftHirarkiBIS";
     public String Property_All = Property_txtNik + "," + Property_txtName + "," + Property_txtLOB + ","
             + Property_intBranchId + "," + Property_txtBranchCode + "," + Property_txtBranchName + ","
             + Property_intOutletId + "," + Property_txtOutletCode + "," + Property_txtOutletName;

@@ -4,7 +4,7 @@ package library.spgmobile.common;
  * Created by aan.junianto on 28/08/2017.
  */
 
-public class tKategoryPlanogramMobileData {
+public class tKategoryPlanogramMobileData extends APIData {
     private String _intKategoryPlanogram;
     private String _txtType;
     private String _txtName;
@@ -25,6 +25,7 @@ public class tKategoryPlanogramMobileData {
     public String Property_txtName = "txtName";
     public String Property_bitActive = "bitActive";
     public String Property_intIsCheckValid = "intIsCheckValid";
+    public String Property_ListOftKategoryPlanogramMobileData = "ListOftKategoryPlanogramMobileData";
     public String Property_All = Property_intKategoryPlanogram + "," +
             Property_bitActive + "," +
             Property_txtName + "," +

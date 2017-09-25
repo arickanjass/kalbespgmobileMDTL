@@ -4,7 +4,7 @@ package library.spgmobile.common;
  * Created by rhezaTesar on 7/18/2017.
  */
 
-public class tSubTypeActivityData {
+public class tSubTypeActivityData extends APIData {
     private String _intSubTypeActivity;
     private String _txtType;
     private String _txtName;
@@ -14,6 +14,7 @@ public class tSubTypeActivityData {
     public String Property_txtType = "txtType";
     public String Property_txtName = "txtName";
     public String Property_bitActive = "bitActive";
+    public String Property_ListOftSubTypeActivityData = "ListOftSubTypeActivityData";
     public String Property_All = Property_intSubTypeActivity + "," +
             Property_bitActive + "," +
             Property_txtName + "," +

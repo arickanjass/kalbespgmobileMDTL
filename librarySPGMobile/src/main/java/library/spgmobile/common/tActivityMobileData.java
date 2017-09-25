@@ -4,7 +4,7 @@ package library.spgmobile.common;
  * Created by rhezaTesar on 7/19/2017.
  */
 
-public class tActivityMobileData {
+public class tActivityMobileData extends APIData {
     public synchronized String get_intFlag() {
         return _intFlag;
     }

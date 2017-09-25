@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by Robert on 03/05/2017.
  */
 
-public class mCategoryVisitPlanData implements Serializable {
+public class mCategoryVisitPlanData extends APIData implements Serializable {
     private String intCategoryVisitPlan;
     private String txtCatVisitPlan;
     private String bitActive;
@@ -14,6 +14,7 @@ public class mCategoryVisitPlanData implements Serializable {
     public String Property_intCategoryVisitPlan = "intCategoryVisitPlan";
     public String Property_txtCatVisitPlan = "txtCatVisitPlan";
     public String Property_bitActive = "bitActive";
+    public String Property_ListOfmCategoryVisitPlanData = "ListOfmCategoryVisitPlanData";
 
     public String Property_All = Property_intCategoryVisitPlan + "," + Property_txtCatVisitPlan + "," + Property_bitActive;
 
