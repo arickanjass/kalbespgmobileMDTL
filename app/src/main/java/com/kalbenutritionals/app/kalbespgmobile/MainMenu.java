@@ -111,11 +111,12 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
             } else if (fragment != null && !fragment.toString().contains("FragmentInformation") && getSupportFragmentManager().getFragments().size() > 1) {
                 isHome = false;
             }
-        }
+        } 
         if (!isHome) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
 
             toolbar.setTitle("Home");
+            toolbar.setSubtitle(null);
             FragmentInformation homeFragment = new FragmentInformation();
             FragmentTransaction fragmentTransactionHome = getSupportFragmentManager().beginTransaction();
             fragmentTransactionHome.replace(R.id.frame, homeFragment);
