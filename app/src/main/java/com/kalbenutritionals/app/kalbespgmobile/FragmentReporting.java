@@ -819,6 +819,7 @@ public class FragmentReporting extends Fragment {
             header[2] = "Group Question";
             header[3] = "Outlet";
             header[4] = "Answered at -";
+            header[5] = "";
 
             ReportTableView.setColumnCount(header.length);
 
@@ -832,12 +833,14 @@ public class FragmentReporting extends Fragment {
             ReportTableView.setColumnComparator(2, ReportComparators.getGroupQuestionComparator());
             ReportTableView.setColumnComparator(3, ReportComparators.getOutletActivityComparator());
             ReportTableView.setColumnComparator(4, ReportComparators.getDatetimeComparator());
+            ReportTableView.setColumnComparator(5, ReportComparators.getviewDetailComparator());
 
 
             ReportTableView.setColumnWeight(1, 1);
             ReportTableView.setColumnWeight(2, 2);
             ReportTableView.setColumnWeight(3, 2);
             ReportTableView.setColumnWeight(4, 2);
+            ReportTableView.setColumnWeight(5, 2);
 
 
             ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
@@ -857,6 +860,7 @@ public class FragmentReporting extends Fragment {
                     rt.set_RepeatQuiz( String.valueOf(iterator));
                     rt.set_txtOutletName(data.get_txtOutletName());
                     rt.set_dummy(data.get_intHeaderId());
+                    rt.set_view_detail("View Detail");
 //                    rt.set_type(String.valueOf(iterator));
                     rt.set_dateTime(data.get_dtDatetime());
                     reportList.add(rt);

@@ -255,7 +255,10 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
                     renderedView =  renderString(data.get_txtOutletName(), "left");
                     break;
                 case 4:
-                    renderedView = renderStringViewDetail(data.get_dateTime(), data.get_dummy(), "left");
+                    renderedView = renderString(data.get_dateTime(), "left");
+                    break;
+                case 5:
+                    renderedView = renderStringViewDetail(data.get_view_detail(),data.get_dateTime(), data.get_dummy(), "left");
                     break;
                 default:
                     break;
@@ -356,12 +359,13 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
         return textView;
     }
 
-    private View renderStringViewDetail(final String value, final String dummy, final String align) {
-        final TextView textView = new TextView(getContext());
-        textView.setText(value);
+    private View renderStringViewDetail(final String view, final String value, final String dummy, final String align) {
+        final Button textView = new Button(getContext());
+        textView.setText(view);
         textView.setPadding(20, 10, 20, 10);
         textView.setTextSize(TEXT_SIZE);
-        textView.setTextColor(Color.BLUE);
+        textView.setTextColor(Color.WHITE);
+        textView.setBackgroundResource(R.drawable.btn_download_all);
 
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
