@@ -55,7 +55,21 @@ public class KoordinasiOutletBL extends clsMainBL {
         }
         return listData;
     }
+    public List<KoordinasiOutletData> getAllDataByOutletCodeandSync(String outletcode){
+        SQLiteDatabase _db = getDb();
+        KoordinasiOutletDA _KoordinasiOutletDA=new KoordinasiOutletDA(db);
+        List<KoordinasiOutletData> dt;
+        if(outletcode.equals("ALLOUTLET")){
+            dt = _KoordinasiOutletDA.getAllData(_db);
+        } else {
+            dt = _KoordinasiOutletDA.getAllDataByOutletCode(_db,outletcode);
+        }
 
+        if(dt == null){
+            dt = new ArrayList<>(0);
+        }
+        return dt;
+    }
     public List<KoordinasiOutletData> getAllDataByOutletCode(String code){
         SQLiteDatabase _db = getDb();
         KoordinasiOutletDA _KoordinasiOutletDA = new KoordinasiOutletDA(_db);

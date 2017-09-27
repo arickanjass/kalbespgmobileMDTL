@@ -159,6 +159,26 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
             }
         }
 
+        if(data.get_report_type() == "Koordinasi Outlet"){
+            switch (columnIndex) {
+                case 1:
+                    renderedView = renderString(data.get_RepeatQuiz(), "left");
+                    break;
+                case 2:
+                    renderedView = renderString(data.get_txtOutletName(), "left");
+                    break; 
+                case 3:
+                    renderedView = renderString(data.get_Category(), "left");
+                    break;
+                case 4:
+                    renderedView = renderString(data.get_txtDesc(), "left");
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
         if(data.get_report_type() == "Planogram"){
             switch (columnIndex) {
                 case 1:

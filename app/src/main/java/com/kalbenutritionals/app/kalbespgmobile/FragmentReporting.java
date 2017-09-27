@@ -28,6 +28,7 @@ import java.util.Set;
 import addons.tableview.ReportComparators;
 import addons.tableview.ReportTableDataAdapter;
 import addons.tableview.SortableReportTableView;
+import bl.KoordinasiOutletBL;
 import bl.mCountConsumerMTDBL;
 import bl.mDownloadMasterData_mobileBL;
 import bl.mEmployeeAreaBL;
@@ -54,6 +55,7 @@ import bl.tSalesProductQuantityHeaderBL;
 import bl.tStockInHandDetailBL;
 import bl.tStockInHandHeaderBL;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
+import library.spgmobile.common.KoordinasiOutletData;
 import library.spgmobile.common.ReportTable;
 import library.spgmobile.common.mCountConsumerMTDData;
 import library.spgmobile.common.mDownloadMasterData_mobileData;
@@ -863,6 +865,60 @@ public class FragmentReporting extends Fragment {
                     rt.set_view_detail("View Detail");
 //                    rt.set_type(String.valueOf(iterator));
                     rt.set_dateTime(data.get_dtDatetime());
+                    reportList.add(rt);
+                }
+            } else {
+                new clsMainActivity().showCustomToast(getContext(), "No Data to Show", false);
+            }
+
+            ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
+        }else if (spinnerSelected.contains("Koordinasi Outlet")){
+            header = new String[6];
+            header[1] = "No.";
+            header[2] = "Outlet";
+            header[3] = "Category";
+            header[4] = "Desc";
+//            header[5] = "";
+
+            ReportTableView.setColumnCount(header.length);
+
+            simpleTableHeaderAdapter = new SimpleTableHeaderAdapter(getContext(), header);
+            simpleTableHeaderAdapter.setTextColor(ContextCompat.getColor(getContext(), R.color.table_header_text));
+            simpleTableHeaderAdapter.setTextSize(14);
+            simpleTableHeaderAdapter.setPaddingBottom(20);
+            simpleTableHeaderAdapter.setPaddingTop(20);
+
+            ReportTableView.setColumnComparator(1, ReportComparators.getRepeatComparator());
+            ReportTableView.setColumnComparator(2, ReportComparators.getOutletActivityComparator());
+            ReportTableView.setColumnComparator(3, ReportComparators.getCategoryComparator());
+            ReportTableView.setColumnComparator(4, ReportComparators.getDescActivityComparator());
+//            ReportTableView.setColumnComparator(5, ReportComparators.getviewDetailComparator());
+
+
+            ReportTableView.setColumnWeight(1, 1);
+            ReportTableView.setColumnWeight(2, 2);
+            ReportTableView.setColumnWeight(3, 2);
+            ReportTableView.setColumnWeight(4, 2);
+//            ReportTableView.setColumnWeight(5, 2);
+
+
+            ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
+
+            List<KoordinasiOutletData> list = new KoordinasiOutletBL().getAllDataByOutletCodeandSync(outletcode);
+
+            reportList = new ArrayList<>();
+            int iterator = 0;
+            if(list != null&&list.size()>0){
+                for(KoordinasiOutletData data : list ){
+                    iterator +=1;
+                    ReportTable rt = new ReportTable();
+
+                    rt.set_report_type("Koordinasi Outlet");
+                    rt.set_Category(data.get_txtCategory());
+                    rt.set_RepeatQuiz( String.valueOf(iterator));
+                    rt.set_txtOutletName(data.get_txtOutletName());
+                    rt.set_txtDesc(data.get_txtKeterangan());
+//                    rt.set_view_detail("View Detail");
                     reportList.add(rt);
                 }
             } else {
