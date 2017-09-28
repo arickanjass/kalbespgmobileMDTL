@@ -8,6 +8,7 @@ import java.util.List;
 import library.spgmobile.common.mEmployeeAreaData;
 import library.spgmobile.common.mMenuData;
 import library.spgmobile.common.tLeaveMobileData;
+import library.spgmobile.common.tVisitPlanRealisasiData;
 import library.spgmobile.dal.mEmployeeAreaDA;
 import library.spgmobile.dal.mEmployeeBranchDA;
 import library.spgmobile.dal.mEmployeeSalesProductDA;
@@ -20,9 +21,11 @@ import library.spgmobile.dal.mProductSPGDA;
 import library.spgmobile.dal.mTypeLeaveMobileDA;
 import library.spgmobile.dal.mTypeSubmissionMobileDA;
 import library.spgmobile.dal.tAbsenUserDA;
+import library.spgmobile.dal.tAttendanceUserDA;
 import library.spgmobile.dal.tLeaveMobileDA;
 import library.spgmobile.dal.tSalesProductHeaderDA;
 import library.spgmobile.dal.tSubTypeActivityDA;
+import library.spgmobile.dal.tVisitPlanRealisasiDA;
 
 public class mMenuBL extends clsMainBL {
     public void SaveData(List<mMenuData> Listdata) {
@@ -77,7 +80,7 @@ public class mMenuBL extends clsMainBL {
                 }
             } else if (data.get_TxtDescription().contains("mnVisitPlanMobile")
                     || data.get_TxtDescription().contains("mnPushDataSPG")
-                    || data.get_TxtDescription().contains("mnLeaveSPG")
+//                    || data.get_TxtDescription().contains("mnLeaveSPG")
                     || data.get_TxtDescription().contains("mnAbsenSPG")
                     || data.get_TxtDescription().contains("mnAbsenFPE")
                     || data.get_TxtDescription().contains("mnAbsenTL")) {
@@ -86,8 +89,9 @@ public class mMenuBL extends clsMainBL {
                 mProductBarcodeDA _mProductBarcodeDA = new mProductBarcodeDA(db);
                 tLeaveMobileDA _tLeaveMobileDA = new tLeaveMobileDA(db);
                 mEmployeeSalesProductDA _mEmployeeSalesProductDA = new mEmployeeSalesProductDA(db);
+
                 //Untuk visitplan harus pengecekan master data
-                if (data.get_TxtDescription().contains("mnVisitPlanMobile")||data.get_TxtDescription().contains("mnLeave")||data.get_TxtDescription().contains("mnPushDataSPG")) {
+                if (data.get_TxtDescription().contains("mnVisitPlanMobile")||data.get_TxtDescription().contains("mnPushDataSPG")) {
                     _mEmployeeAreaDA = new mEmployeeAreaDA(db);
                     _mEmployeeBranchDA = new mEmployeeBranchDA(db);
                     mTypeLeaveMobileDA _mTypeLeaveMobileDA = new mTypeLeaveMobileDA(db);
@@ -107,21 +111,13 @@ public class mMenuBL extends clsMainBL {
                             tmpData.add(data);
                         }
                     }
-                    else if (data.get_TxtDescription().contains("mnLeave") && listDataLeave.size() > 0 && _mEmployeeAreaDA.getContactsCount(db) > 0 && _mEmployeeBranchDA.getContactsCount(db) > 0) {
+                    else if (data.get_TxtDescription().contains("mnPushDataSPG") && listDataLeave.size() == 0&&_mEmployeeBranchDA.getContactsCount(db) > 0) {
                         tmpData.add(data);
-
-                    } else if (data.get_TxtDescription().contains("mnPushDataSPG") && listDataLeave.size() == 0&&_mEmployeeBranchDA.getContactsCount(db) > 0) {
-                        tmpData.add(data);
-                    } else if (data.get_TxtDescription().contains("mnLeave")) {
-                        _mTypeLeaveMobileDA = new mTypeLeaveMobileDA(db);
-                        tAbsenUserDA _tAbsenUserDA = new tAbsenUserDA(db);
-                        if (_tAbsenUserDA.getContactsCountSubmit(db) == 0 && _mTypeLeaveMobileDA.getContactsCount(db) > 0) {
-                            tmpData.add(data);
-                        }
                     }
                 }
+
                 //Untuk absen SPG Mobile harus pengecekan master data: Branch, Outlet, Product, Brand, Product SPG Customerbased, Product PIC Customerbased, Product Competitor, Type Submission, Type Leave
-                else if (data.get_TxtDescription().contains("mnAbsenSPG")||data.get_TxtDescription().contains("mnLeave")||data.get_TxtDescription().contains("mnPushDataSPG")) {
+                else if (data.get_TxtDescription().contains("mnAbsenSPG")||data.get_TxtDescription().contains("mnPushDataSPG")) {
                     _mEmployeeBranchDA = new mEmployeeBranchDA(db);
                     _mEmployeeAreaDA = new mEmployeeAreaDA(db);
                     _mEmployeeSalesProductDA = new mEmployeeSalesProductDA(db);
@@ -145,22 +141,12 @@ public class mMenuBL extends clsMainBL {
                             tmpData.add(data);
                         }
                     }
-
-                    else if (data.get_TxtDescription().contains("mnLeave") && listDataLeave.size() > 0 && _mEmployeeAreaDA.getContactsCount(db) > 0 && _mEmployeeBranchDA.getContactsCount(db) > 0) {
+                    else if (data.get_TxtDescription().contains("mnPushDataSPG") && listDataLeave.size() == 0&&_mEmployeeBranchDA.getContactsCount(db) > 0) {
                         tmpData.add(data);
-
-                    } else if (data.get_TxtDescription().contains("mnPushDataSPG") && listDataLeave.size() == 0&&_mEmployeeBranchDA.getContactsCount(db) > 0) {
-                        tmpData.add(data);
-                    } else if (data.get_TxtDescription().contains("mnLeave")) {
-                        _mTypeLeaveMobileDA = new mTypeLeaveMobileDA(db);
-                        tAbsenUserDA _tAbsenUserDA = new tAbsenUserDA(db);
-                        if (_tAbsenUserDA.getContactsCountSubmit(db) == 0 && _mTypeLeaveMobileDA.getContactsCount(db) > 0) {
-                            tmpData.add(data);
-                        }
                     }
                 }
 
-                else if (data.get_TxtDescription().contains("mnAbsenTL")||data.get_TxtDescription().contains("mnLeave")||data.get_TxtDescription().contains("mnPushDataSPG")) {
+                else if (data.get_TxtDescription().contains("mnAbsenTL")||data.get_TxtDescription().contains("mnPushDataSPG")) {
                     _mEmployeeBranchDA = new mEmployeeBranchDA(db);
                     _mEmployeeAreaDA = new mEmployeeAreaDA(db);
                     _mEmployeeSalesProductDA = new mEmployeeSalesProductDA(db);
@@ -179,22 +165,13 @@ public class mMenuBL extends clsMainBL {
                             tmpData.add(data);
                         }
                     }
-
-                    else if (data.get_TxtDescription().contains("mnLeave") && listDataLeave.size() > 0 && _mEmployeeAreaDA.getContactsCount(db) > 0 && _mEmployeeBranchDA.getContactsCount(db) > 0) {
+                    else if (data.get_TxtDescription().contains("mnPushDataSPG") && listDataLeave.size() == 0&& _mEmployeeBranchDA.getContactsCount(db) > 0) {
                         tmpData.add(data);
-
-                    } else if (data.get_TxtDescription().contains("mnPushDataSPG") && listDataLeave.size() == 0&& _mEmployeeBranchDA.getContactsCount(db) > 0) {
-                        tmpData.add(data);
-                    } else if (data.get_TxtDescription().contains("mnLeave")) {
-                        _mTypeLeaveMobileDA = new mTypeLeaveMobileDA(db);
-                        tAbsenUserDA _tAbsenUserDA = new tAbsenUserDA(db);
-                        if (_tAbsenUserDA.getContactsCountSubmit(db) == 0 && _mTypeLeaveMobileDA.getContactsCount(db) > 0) {
-                            tmpData.add(data);
-                        }
                     }
                 }
+
                 //Jika Absen FPE
-                else if (data.get_TxtDescription().contains("mnAbsenFPE")||data.get_TxtDescription().contains("mnLeave")||data.get_TxtDescription().contains("mnPushDataSPG")) {
+                else if (data.get_TxtDescription().contains("mnAbsenFPE")||data.get_TxtDescription().contains("mnPushDataSPG")) {
                     _mEmployeeAreaDA = new mEmployeeAreaDA(db);
                     _mEmployeeBranchDA = new mEmployeeBranchDA(db);
                     mTypeLeaveMobileDA _mTypeLeaveMobileDA = new mTypeLeaveMobileDA(db);
@@ -206,35 +183,13 @@ public class mMenuBL extends clsMainBL {
                         int validate = 0;
                         if (listDataLeave.size() == 0) {
                             validate = 1;
-//                            List<mEmployeeAreaData> datamEmployeeArea = new mEmployeeAreaBL().GetAllData();
-//
-//                            for (mEmployeeAreaData dt : datamEmployeeArea) {
-//                                if (dt.get_txtLatitude().equals("") || dt.get_txtLatitude() == null || dt.get_txtLatitude().equals("") && dt.get_txtLongitude().equals("") || dt.get_txtLongitude() == null || dt.get_txtLongitude().equals("")) {
-//                                    validate = 0;
-//                                }
-//                            }
                         }
                         if (validate == 1) {
                             tmpData.add(data);
                         }
                     }
-                    else if (data.get_TxtDescription().contains("mnLeave") && listDataLeave.size() > 0 && _mEmployeeBranchDA.getContactsCount(db) > 0) {
-                        tmpData.add(data);
 
-                    } else if (data.get_TxtDescription().contains("mnPushDataSPG") && listDataLeave.size() == 0) {
-                        tmpData.add(data);
-                    } else if (data.get_TxtDescription().contains("mnLeave")) {
-                        _mTypeLeaveMobileDA = new mTypeLeaveMobileDA(db);
-                        tAbsenUserDA _tAbsenUserDA = new tAbsenUserDA(db);
-                        if (_tAbsenUserDA.getContactsCountSubmit(db) == 0 && _mTypeLeaveMobileDA.getContactsCount(db) > 0) {
-                            tmpData.add(data);
-                        }
-                    }
-                }
-                else if (data.get_TxtDescription().contains("mnLeave")) {
-                    mTypeLeaveMobileDA _mTypeLeaveMobileDA = new mTypeLeaveMobileDA(db);
-                    tAbsenUserDA _tAbsenUserDA = new tAbsenUserDA(db);
-                    if (_tAbsenUserDA.getContactsCountSubmit(db) == 0 && _mTypeLeaveMobileDA.getContactsCount(db) > 0) {
+                    else if (data.get_TxtDescription().contains("mnPushDataSPG") && listDataLeave.size() == 0) {
                         tmpData.add(data);
                     }
                 }
@@ -243,7 +198,37 @@ public class mMenuBL extends clsMainBL {
                     tmpData.add(data);
                 }
 
-            } else {
+            }
+
+            else if(data.get_TxtDescription().contains("mnLeaveSPG")){
+                boolean validAddmnLeave = false;
+                mTypeLeaveMobileDA _mTypeLeaveMobileDA = new mTypeLeaveMobileDA(db);
+                _mTypeLeaveMobileDA = new mTypeLeaveMobileDA(db);
+                tVisitPlanRealisasiDA _tVisitPlanRealisasiDA = new tVisitPlanRealisasiDA(db);
+
+                //md
+                if (_tVisitPlanRealisasiDA.getContactsCountSubmit(db) == 0 && _mTypeLeaveMobileDA.getContactsCount(db) > 0) {
+                    validAddmnLeave = true;
+                }
+
+                //spg dan tl
+                tAbsenUserDA _tAbsenUserDA = new tAbsenUserDA(db);
+                if (_tAbsenUserDA.getContactsCountSubmit(db) == 0 && _mTypeLeaveMobileDA.getContactsCount(db) > 0) {
+                    validAddmnLeave = true;
+                }
+
+                //fpe
+                tAttendanceUserDA _tAttendanceUserDA = new tAttendanceUserDA(db);
+                if (_tAttendanceUserDA.getContactsCountSubmit(db) == 0 && _mTypeLeaveMobileDA.getContactsCount(db) > 0) {
+                    validAddmnLeave = true;
+                }
+
+                if(validAddmnLeave){
+                    tmpData.add(data);
+                }
+            }
+
+            else {
                 tmpData.add(data);
             }
         }
