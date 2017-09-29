@@ -1031,6 +1031,47 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_data_addDisplay"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/txtVwaddDisplayV2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Additional Display"
+                        android:textColor="#000" />
+
+                    <Spinner
+                        android:id="@+id/spnaddDisplay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/bg_edtext" />
+
+                    <Button
+                        android:id="@+id/btnDladdDisplay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/btn_on_click"
+                        android:text="Download Additional Display   " />
+
+                    <View
+                        android:id="@+id/view11addDisplay"
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="10dp"
+                        android:background="#bfbfbf" />
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/ll_data_customerbased"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"

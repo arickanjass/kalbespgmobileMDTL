@@ -1247,6 +1247,15 @@ public class dataJson {
                 }
             }
 
+            if(this.getDtmCategoryKoordinasiOutletData()!=null){
+                if(this.getDtmCategoryKoordinasiOutletData().getBoolValid().equals("1")){
+                    mCategoryKoordinasiOutletData dtConfig = new mCategoryKoordinasiOutletData();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDtmCategoryKoordinasiOutletData().getBoolValid()));
+                    resJson.put(dtConfig.Property_ListOfmCategoryKoordinasiOutlet, item1);
+                }
+            }
+
             if(this.getDtmEmployeeBranchData()!=null){
                 if(this.getDtmEmployeeBranchData().getBoolValid().equals("1")){
                     mEmployeeBranchData dtConfig = new mEmployeeBranchData();
@@ -1976,6 +1985,16 @@ public class dataJson {
     }
 
     private mTypeSubmissionMobile dtmTypeSubmissionMobile;
+
+    public mCategoryKoordinasiOutletData getDtmCategoryKoordinasiOutletData() {
+        return dtmCategoryKoordinasiOutletData;
+    }
+
+    public void setDtmCategoryKoordinasiOutletData(mCategoryKoordinasiOutletData dtmCategoryKoordinasiOutletData) {
+        this.dtmCategoryKoordinasiOutletData = dtmCategoryKoordinasiOutletData;
+    }
+
+    private mCategoryKoordinasiOutletData dtmCategoryKoordinasiOutletData;
 
     public List<tAttendanceUserData> getListOftAttendanceUserData() {
         return ListOftAttendanceUserData;

@@ -146,6 +146,12 @@ public class tVisitPlanRealisasiBL extends clsMainBL{
         int count = new tVisitPlanRealisasiDA(_db).countOutVisitStatusSubmit(_db, code);
         return count;
     }
+
+    public int getCountOutVisitStatusUnsubmit(String code) {
+        SQLiteDatabase _db = getDb();
+        int count = new tVisitPlanRealisasiDA(_db).countOutVisitStatusUnSubmit(_db, code);
+        return count;
+    }
     public int countOutVisitPush( String code) {
         SQLiteDatabase _db = getDb();
         int count = new tVisitPlanRealisasiDA(_db).countOutVisitPush(_db, code);

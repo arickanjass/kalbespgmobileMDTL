@@ -143,7 +143,7 @@ public class FragmentAddActivityMD extends Fragment implements View.OnClickListe
         pht1=null;
         pht2=null;
 
-        arrTypeActivity.add("Select Type Kalbe");
+        arrTypeActivity.add("Select Category");
         selectedRbName = rbKalbe.getText().toString();
 
         m_fillSpinner();
@@ -153,12 +153,12 @@ public class FragmentAddActivityMD extends Fragment implements View.OnClickListe
             public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
                 if(i == R.id.rbKalbe){
                     arrTypeActivity.clear();
-                    arrTypeActivity.add("Select Type Kalbe");
+                    arrTypeActivity.add("Select Category");
                     selectedRbName = rbKalbe.getText().toString();
                     m_fillSpinner();
                 } else if (i == R.id.rbCompetitor){
                     arrTypeActivity.clear();
-                    arrTypeActivity.add("Select Type Competitor");
+                    arrTypeActivity.add("Select Category");
                     selectedRbName = rbComp.getText().toString();
                     m_fillSpinner();
                     lnlayoutIsValidPattern.setVisibility(View.GONE);
@@ -251,7 +251,7 @@ public class FragmentAddActivityMD extends Fragment implements View.OnClickListe
             case R.id.btnSave:
                 new clsMainActivity().removeErrorMessage(textInputLayoutDescription);
 
-                if(spnTypeActivity.getSelectedItem().toString().equals("Select Type Kalbe")||spnTypeActivity.getSelectedItem().toString().equals("Select Type Competitor")){
+                if(spnTypeActivity.getSelectedItem().toString().equals("Select Category")||spnTypeActivity.getSelectedItem().toString().equals("Select Category")){
                     new clsMainActivity().showCustomToast(getContext(), "Please " + spnTypeActivity.getSelectedItem().toString() , false);
                 } else if(lnlayoutIsValidPattern.getVisibility()==View.VISIBLE&&rg_isValidPattern.getCheckedRadioButtonId()==-1){
                         new clsMainActivity().showCustomToast(getContext(), "Please Check Is Valid Pattern are not" , false);

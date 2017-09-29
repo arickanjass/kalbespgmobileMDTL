@@ -262,7 +262,7 @@ public class FragmentAddPlanogram extends Fragment implements View.OnClickListen
 
                             try{
                                 resultRbValid = String.valueOf(rb_validPattern.getText());
-                                resultRbValid = resultRbValid.equals("Yes") ? "1" : "0";
+                                resultRbValid = resultRbValid.equals("Sesuai") ? "1" : "0";
                             }catch (Exception e){
                                 String a = e.toString();
                                 resultRbValid = "";

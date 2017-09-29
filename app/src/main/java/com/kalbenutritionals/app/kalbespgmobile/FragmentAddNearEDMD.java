@@ -827,7 +827,7 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
 
 
             swplist.set_txtTitle("Product : " + data.getTxtProduct());
-            swplist.set_txtDescription("Total Product : " + data.getTxtQuantity());
+            swplist.set_txtDescription("Total Product : " + data.getTxtQuantity() +" pcs");
             swplist.set_txtDescription2("ED : " + ed);
             swipeList.add(swplist);
         }

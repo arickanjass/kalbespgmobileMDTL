@@ -346,7 +346,7 @@ public class FragmentReporting extends Fragment {
                         total_item = total_item + Integer.parseInt(dt_detail.get(i).get_intQty());
                     }
 
-                    rt.set_total_item(String.valueOf(total_item));
+                    rt.set_total_item(String.valueOf(total_item)+ " pcs");
                     rt.set_total_product(String.valueOf(dt_detail.size()));
 
                     reportList.add(rt);
@@ -482,7 +482,7 @@ public class FragmentReporting extends Fragment {
 
             ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
 
-        } else if (spinnerSelected.contains("Actvity")){
+        } else if (spinnerSelected.contains("Actvity")||spinnerSelected.contains("Activity")||spinnerSelected.contains("Additional Display")){
 //            Toast.makeText(getContext(), "Actvity", Toast.LENGTH_SHORT).show();
             header = new String[6];
             header[1] = "Outlet";
@@ -552,7 +552,7 @@ public class FragmentReporting extends Fragment {
                 for(tActivityMobileData datas : dt_actV2 ){
                     ReportTable rt = new ReportTable();
 
-                    rt.set_report_type("Activity");
+                    rt.set_report_type("ActivityV2");
                     rt.set_status(datas.get_intFlag());
                     rt.set_Category(datas.get_txtTypeActivity());
                     rt.set_txtDesc(datas.get_txtDesc());
@@ -688,7 +688,7 @@ public class FragmentReporting extends Fragment {
                         total_item = total_item + Integer.parseInt(dt_detail.get(i).getTxtQuantity());
                     }
 
-                    rt.set_total_item(String.valueOf(total_item));
+                    rt.set_total_item(String.valueOf(total_item)+ " pcs");
                     rt.set_total_product(String.valueOf(dt_detail.size()));
 
                     reportList.add(rt);
@@ -753,7 +753,7 @@ public class FragmentReporting extends Fragment {
                         total_item = total_item + Integer.parseInt(dt_detail.get(i).getTxtQuantity());
                     }
 
-                    rt.set_total_item(String.valueOf(total_item));
+                    rt.set_total_item(String.valueOf(total_item)+ " pcs");
                     rt.set_total_product(String.valueOf(dt_detail.size()));
 
                     reportList.add(rt);
@@ -768,7 +768,7 @@ public class FragmentReporting extends Fragment {
             header = new String[6];
             header[1] = "Outlet";
             header[2] = "Category";
-            header[3] = "Valid";
+            header[3] = "Sesuai/Tidak";
             header[4] = "Desc.";
 
             ReportTableView.setColumnCount(header.length);
@@ -786,7 +786,7 @@ public class FragmentReporting extends Fragment {
 
             ReportTableView.setColumnWeight(1, 2);
             ReportTableView.setColumnWeight(2, 2);
-            ReportTableView.setColumnWeight(3, 1);
+            ReportTableView.setColumnWeight(3, 2);
             ReportTableView.setColumnWeight(4, 2);
 
             ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
@@ -803,7 +803,7 @@ public class FragmentReporting extends Fragment {
                     rt.set_txtOutletName(datas.get_OutletName());
                     rt.set_Category(datas.get_txtCategoryName());
                     String validPlano = "";
-                    validPlano = datas.get_intIsValid().toString().equals("1")?"Yes":"No";
+                    validPlano = datas.get_intIsValid().toString().equals("1")?"Sesuai":"Tidak Sesuai";
                     rt.set_status(validPlano);
 
                     reportList.add(rt);

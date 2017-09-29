@@ -25,6 +25,7 @@ import library.spgmobile.common.clsMappingPushFile;
 import library.spgmobile.common.clsPushData;
 import library.spgmobile.common.dataJson;
 import library.spgmobile.common.linkAPI;
+import library.spgmobile.common.mCategoryKoordinasiOutletData;
 import library.spgmobile.common.mCategoryVisitPlanData;
 import library.spgmobile.common.mCounterNumberData;
 import library.spgmobile.common.mEmployeeAreaData;
@@ -1004,22 +1005,23 @@ public class clsHelperBL extends clsMainBL {
             dtPush.set_txtSessionLoginId(_tUserLoginData.get_txtDataId());
             dtPush.set_intRoleId(_tUserLoginData.get_txtRoleId());
             dtPush.set_txtEmpId(_tUserLoginData.get_TxtEmpId());
-            try {
-                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                Calendar cal = Calendar.getInstance();
-                mCounterNumberDA _mCounterNumberDA = new mCounterNumberDA(db);
-                mCounterNumberData _data = new mCounterNumberData();
-                _data.set_intId(enumCounterData.MonitorSchedule.getidCounterData());
-                _data.set_txtDeskripsi("value menunjukan waktu terakhir menjalankan services");
-                _data.set_txtName("Monitor Service");
-                _data.set_txtValue(dateFormat.format(cal.getTime()));
-                _mCounterNumberDA.SaveDataMConfig(db, _data);
 
-                //new clsInit().PushData(db,versionName);
-            } catch (Exception e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            }
+//            try {
+//                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+//                Calendar cal = Calendar.getInstance();
+//                mCounterNumberDA _mCounterNumberDA = new mCounterNumberDA(db);
+//                mCounterNumberData _data = new mCounterNumberData();
+//                _data.set_intId(enumCounterData.MonitorSchedule.getidCounterData());
+//                _data.set_txtDeskripsi("value menunjukan waktu terakhir menjalankan services");
+//                _data.set_txtName("Monitor Service");
+//                _data.set_txtValue(dateFormat.format(cal.getTime()));
+//                _mCounterNumberDA.SaveDataMConfig(db, _data);
+//
+//                //new clsInit().PushData(db,versionName);
+//            } catch (Exception e1) {
+//                // TODO Auto-generated catch block
+//                e1.printStackTrace();
+//            }
 
             //master data
             tSubTypeActivityData dttSubTypeActivityData = new tSubTypeActivityData();
@@ -1034,6 +1036,7 @@ public class clsHelperBL extends clsMainBL {
             mProductSPGData dtmProductSPGData = new mProductSPGData();
             mProductPICData dtmProductPICData = new mProductPICData();
             mTypeSubmissionMobile dtmTypeSubmissionMobile = new mTypeSubmissionMobile();
+            mCategoryKoordinasiOutletData dtmCategoryKoordinasiOutletData = new mCategoryKoordinasiOutletData();
 
             //master data
             dttSubTypeActivityData.setBoolValid("0");
@@ -1048,6 +1051,7 @@ public class clsHelperBL extends clsMainBL {
             dtmProductSPGData.setBoolValid("0");
             dtmProductPICData.setBoolValid("0");
             dtmTypeSubmissionMobile.setBoolValid("0");
+            dtmCategoryKoordinasiOutletData.setBoolValid("0");
 
             dtPush.setDttSubTypeActivityData(dttSubTypeActivityData);
             dtPush.setDttKategoryPlanogramMobileData(dttKategoryPlanogramMobileData);
@@ -1061,6 +1065,7 @@ public class clsHelperBL extends clsMainBL {
             dtPush.setDtmProductSPGData(dtmProductSPGData);
             dtPush.setDtmProductPICData(dtmProductPICData);
             dtPush.setDtmTypeSubmissionMobile(dtmTypeSubmissionMobile);
+            dtPush.setDtmCategoryKoordinasiOutletData(dtmCategoryKoordinasiOutletData);
 
             //transaction data
             tVisitPlanRealisasiData dttVisitPlanRealisasiData = new tVisitPlanRealisasiData();

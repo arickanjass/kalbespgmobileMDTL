@@ -82,6 +82,16 @@
             android:maxLength="3"
             android:inputType="number" />
 
+        <TextView
+            android:id="@+id/txtPcs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@+id/txtDateExpire"
+            android:text="pcs"
+            android:textColor="#000" />
+
         <ListView
             android:id="@+id/listViewQuantityAdd"
             android:layout_width="match_parent"

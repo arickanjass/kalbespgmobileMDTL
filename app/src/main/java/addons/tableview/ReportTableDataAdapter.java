@@ -146,6 +146,19 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
                     renderedView = renderString(data.get_txtOutletName(), "left");
                     break;
                 case 2:
+                    renderedView = renderString(data.get_txtDesc(), "left");
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if(data.get_report_type() == "ActivityV2"){
+            switch (columnIndex) {
+                case 1:
+                    renderedView = renderString(data.get_txtOutletName(), "left");
+                    break;
+                case 2:
                     renderedView = renderString(data.get_status(), "left");
                     break;
                 case 3:
@@ -542,7 +555,7 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
             qty.setBackgroundColor(Color.parseColor("#f0f0f0"));
             qty.setTextColor(Color.BLACK);
             qty.setGravity(Gravity.RIGHT);
-            qty.setText(dat.getTxtQuantity());
+            qty.setText(dat.getTxtQuantity()+ " pcs");
             tr.addView(qty,params);
 
             TextView price = new TextView(getContext());
@@ -673,7 +686,7 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
             qty.setBackgroundColor(Color.parseColor("#f0f0f0"));
             qty.setTextColor(Color.BLACK);
             qty.setGravity(Gravity.RIGHT);
-            qty.setText(dat.get_intQty());
+            qty.setText(dat.get_intQty()+ " pcs");
             tr.addView(qty,params);
             tl.addView(tr, tableRowParams);
         }
@@ -780,7 +793,7 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
             qty.setBackgroundColor(Color.parseColor("#f0f0f0"));
             qty.setTextColor(Color.BLACK);
             qty.setGravity(Gravity.RIGHT);
-            qty.setText(dat.getTxtQuantity());
+            qty.setText(dat.getTxtQuantity()+ " pcs");
             tr.addView(qty,params);
 
             TextView price = new TextView(getContext());

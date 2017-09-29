@@ -231,7 +231,7 @@ public class FragmentViewOverStockMD extends Fragment implements IXListViewListe
             qty.setBackgroundColor(Color.parseColor("#f0f0f0"));
             qty.setTextColor(Color.BLACK);
             qty.setGravity(Gravity.RIGHT);
-            qty.setText(dat.getTxtQuantity());
+            qty.setText(dat.getTxtQuantity() +" pcs");
             tr.addView(qty,params);
 
             TextView price = new TextView(getContext());

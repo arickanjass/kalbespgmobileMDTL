@@ -87,7 +87,7 @@ public class FragmentViewActivityMD extends Fragment implements IXListViewListen
             @Override
             public void onClick(View v) {
                 Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-                toolbar.setTitle("Add Activity");
+                toolbar.setTitle("Add Additional Display");
 
                 FragmentAddActivityMD fragmentAddActivityMD = new FragmentAddActivityMD();
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();

@@ -225,7 +225,7 @@ public class FragmentViewPlanogram extends Fragment implements IXListViewListene
         String statusText = dt.get(position).get_intSubmit().equals("1") && dt.get(position).get_intSync().equals("1") ? "Sync" : "Submit";
         dataImage = new tPlanogramImageBL().getDataHeaderId(dt.get(position).get_txtIdPlanogram());
 
-        String validDisplay = dt.get(position).get_intIsValid().equals("1") ? "Plano is Valid" : "Plano is Invalid";
+        String validDisplay = dt.get(position).get_intIsValid().equals("1") ? "Plano Sesuai" : "Plano Tidak Sesuai";
 
         if(dt.get(position).get_intIsValid().toString().equals("null")){
                 validDisplay = "";

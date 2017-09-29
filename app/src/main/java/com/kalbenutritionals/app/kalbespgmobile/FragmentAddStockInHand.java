@@ -376,7 +376,7 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
                         qty.setBackgroundColor(Color.parseColor("#f0f0f0"));
                         qty.setTextColor(Color.BLACK);
                         qty.setGravity(Gravity.RIGHT);
-                        qty.setText(String.valueOf(dt.get_value()));
+                        qty.setText(String.valueOf(dt.get_value()+" pcs"));
                         tr.addView(qty,params);
 
 //                        TextView price = new TextView(getContext());

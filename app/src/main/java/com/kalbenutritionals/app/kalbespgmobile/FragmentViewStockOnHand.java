@@ -194,7 +194,7 @@ public class FragmentViewStockOnHand extends Fragment implements IXListViewListe
             qty.setBackgroundColor(Color.parseColor("#f0f0f0"));
             qty.setTextColor(Color.BLACK);
             qty.setGravity(Gravity.RIGHT);
-            qty.setText(dat.get_intQty());
+            qty.setText(dat.get_intQty()+" pcs");
             tr.addView(qty,params);
 
 //            TextView price = new TextView(getContext());

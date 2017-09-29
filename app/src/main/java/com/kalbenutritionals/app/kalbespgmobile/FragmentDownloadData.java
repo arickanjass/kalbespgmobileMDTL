@@ -175,7 +175,7 @@ public class FragmentDownloadData extends Fragment {
     private Spinner spnLeave;
     private Spinner spnBrand;
     private Spinner spnReso;
-    private Spinner spnActivity, spnActivityV2, spnStockIH, spnDataOverStock;
+    private Spinner spnActivity, spnActivityV2, spnStockIH, spnDataOverStock, spnaddDisplay;
     private Spinner spnCustomerBase;
     private Spinner spnAbsen, spnQuiz;
     private Spinner spnkategoryPlanogram,spnAttendanceFpe, spnDataPlanogram, spnDataLeave, spnSubTypeActivity, spnDataPO, spnDataQuantityStock, spnProductComp, spnTypeSubmission, spnProdSPGCusBased, spnProdPICCusBased;
@@ -199,7 +199,7 @@ public class FragmentDownloadData extends Fragment {
     private LinearLayout ll_dataVisitPlan;
     private LinearLayout ll_dataQuantityStock;
     private LinearLayout ll_dataKordinasiOutlet;
-    private LinearLayout ll_dataCategoryKordinasiOutlet;
+    private LinearLayout ll_dataCategoryKordinasiOutlet, ll_data_addDisplay;
     private LinearLayout ll_dataQuesioner,ll_data_planogram, ll_kategoryPlanogram, ll_data_stockIH, ll_outlet, ll_data_overStock;
 
     private PackageInfo pInfo = null;
@@ -219,7 +219,6 @@ public class FragmentDownloadData extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.activity_download_data, container, false);
-        mProgressBar = (ProgressBar) v.findViewById(R.id.progress_bar);
         Button btnAllDownload = (Button) v.findViewById(R.id.btnAllDownload);
 
         Button btnKordinasiOutlet = (Button) v.findViewById(R.id.btnKordinasiOutlet);
@@ -274,6 +273,8 @@ public class FragmentDownloadData extends Fragment {
         Button btnDlStockIH = (Button) v.findViewById(R.id.btnDlStockIH);
         spnDataOverStock = (Spinner) v.findViewById(R.id.spnDataOverStock);
         Button btnDataOverStock = (Button) v.findViewById(R.id.btnDataOverStock);
+        spnaddDisplay = (Spinner) v.findViewById(R.id.spnaddDisplay);
+        Button btnDladdDisplay = (Button) v.findViewById(R.id.btnDladdDisplay);
 
         ll_branch = (LinearLayout) v.findViewById(R.id.ll_branch);
         ll_outlet = (LinearLayout) v.findViewById(R.id.ll_outlet);
@@ -303,6 +304,7 @@ public class FragmentDownloadData extends Fragment {
         ll_data_attendance = (LinearLayout) v.findViewById(R.id.ll_data_attendance);
         ll_data_overStock = (LinearLayout) v.findViewById(R.id.ll_data_overStock);
         ll_data_stockIH = (LinearLayout) v.findViewById(R.id.ll_data_stockIH);
+        ll_data_addDisplay = (LinearLayout) v.findViewById(R.id.ll_data_addDisplay);
 
         spnVisitPlan = (Spinner) v.findViewById(R.id.spnVisitPlan);
         spnTrVisitPlan = (Spinner) v.findViewById(R.id.spnTrVisitPlan);
@@ -314,129 +316,7 @@ public class FragmentDownloadData extends Fragment {
         loginData = new tUserLoginData();
         loginData = new tUserLoginBL().getUserActive();
 
-        List<mDownloadMasterData_mobileData> mDownloadMasterData_mobileDataList;
-
-        mDownloadMasterData_mobileDataList = new mDownloadMasterData_mobileBL().GetAllData();
-
-        Resources res = getResources();
-
-//        for (mDownloadMasterData_mobileData data : mDownloadMasterData_mobileDataList) {
-//            String txt_id = data.get_txtMasterData().replaceAll(" ", "");
-//
-//            //show master data
-//            if (txt_id.equals(res.getResourceEntryName(ll_branch.getId()))) {
-//                ll_branch.setVisibility(View.VISIBLE);
-//            } else if (txt_id.equals(res.getResourceEntryName(ll_outlet.getId()))) {
-//                ll_outlet.setVisibility(View.VISIBLE);
-//            } else if (txt_id.equals(res.getResourceEntryName(ll_product.getId()))) {
-//                ll_product.setVisibility(View.VISIBLE);
-//            } else if (txt_id.equals(res.getResourceEntryName(ll_brand.getId()))) {
-//                ll_brand.setVisibility(View.VISIBLE);
-//            } else if (txt_id.equals(res.getResourceEntryName(ll_type_leave.getId()))) {
-//                ll_type_leave.setVisibility(View.VISIBLE);
-//            } else if (txt_id.equals(res.getResourceEntryName(ll_product_spg.getId()))) {
-//                ll_product_spg.setVisibility(View.VISIBLE);
-//            } else if (txt_id.equals(res.getResourceEntryName(ll_product_pic.getId()))) {
-//                ll_product_pic.setVisibility(View.VISIBLE);
-//            } else if (txt_id.equals(res.getResourceEntryName(ll_product_competitor.getId()))) {
-//                ll_product_competitor.setVisibility(View.VISIBLE);
-//            } else if (txt_id.equals(res.getResourceEntryName(ll_type_submission.getId()))) {
-//                ll_type_submission.setVisibility(View.VISIBLE);
-//            } else if (txt_id.equals(res.getResourceEntryName(ll_kategoriVisitPlan.getId()))) {
-//                ll_kategoriVisitPlan.setVisibility(View.VISIBLE);
-//            } else if (txt_id.equals(res.getResourceEntryName(ll_dataQuesioner.getId()))) {
-//                ll_dataQuesioner.setVisibility(View.VISIBLE);
-//            } else if (txt_id.equals(res.getResourceEntryName(ll_subtypeactivity.getId()))) {
-//                ll_subtypeactivity.setVisibility(View.VISIBLE);
-//            }
-//            // show data transaksi
-//            else if (txt_id.equals(res.getResourceEntryName(ll_dataVisitPlan.getId()))) {
-//                ll_dataVisitPlan.setVisibility(View.VISIBLE);
-//            } else if (txt_id.equals(res.getResourceEntryName(ll_dataQuantityStock.getId()))) {
-//                ll_dataQuantityStock.setVisibility(View.VISIBLE);
-//            } else if (txt_id.equals(res.getResourceEntryName(ll_dataKordinasiOutlet.getId()))) {
-//                ll_dataKordinasiOutlet.setVisibility(View.VISIBLE);
-//            } else if (txt_id.equals(res.getResourceEntryName(ll_reso.getId()))) {
-//                ll_reso.setVisibility(View.VISIBLE);
-//            } else if (txt_id.equals(res.getResourceEntryName(ll_data_activity.getId()))) {
-//                ll_data_activity.setVisibility(View.VISIBLE);
-//            } else if (txt_id.equals(res.getResourceEntryName(ll_data_activityV2.getId()))) {
-//                ll_data_activityV2.setVisibility(View.VISIBLE);
-//            } else if (txt_id.equals(res.getResourceEntryName(ll_data_customerbased.getId()))) {
-//                ll_data_customerbased.setVisibility(View.VISIBLE);
-//            } else if (txt_id.equals(res.getResourceEntryName(ll_absen.getId()))) {
-//                ll_absen.setVisibility(View.VISIBLE);
-//            } else if (txt_id.equals(res.getResourceEntryName(ll_purchase_order.getId()))) {
-//                ll_purchase_order.setVisibility(View.VISIBLE);
-//            } else if (txt_id.equals(res.getResourceEntryName(ll_data_leave.getId()))) {
-//                ll_data_leave.setVisibility(View.VISIBLE);
-//            }
-//        }
-
-        for(int i = 0; i < mDownloadMasterData_mobileDataList.size(); i++){
-            String txt_id = mDownloadMasterData_mobileDataList.get(i).get_txtMasterData().replaceAll(" ", "");
-
-            //show master data
-            if (txt_id.equals(res.getResourceEntryName(ll_branch.getId()))) {
-                ll_branch.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_outlet.getId()))) {
-                ll_outlet.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_product.getId()))) {
-                ll_product.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_brand.getId()))) {
-                ll_brand.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_type_leave.getId()))) {
-                ll_type_leave.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_product_spg.getId()))) {
-                ll_product_spg.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_product_pic.getId()))) {
-                ll_product_pic.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_product_competitor.getId()))) {
-                ll_product_competitor.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_type_submission.getId()))) {
-                ll_type_submission.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_kategoriVisitPlan.getId()))) {
-                ll_kategoriVisitPlan.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_dataQuesioner.getId()))) {
-                ll_dataQuesioner.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_subtypeactivity.getId()))) {
-                ll_subtypeactivity.setVisibility(View.VISIBLE);
-            }
-            // show data transaksi
-            else if (txt_id.equals(res.getResourceEntryName(ll_dataVisitPlan.getId()))) {
-                ll_dataVisitPlan.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_dataQuantityStock.getId()))) {
-                ll_dataQuantityStock.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_dataKordinasiOutlet.getId()))) {
-                ll_dataKordinasiOutlet.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_dataCategoryKordinasiOutlet.getId()))){
-                ll_dataCategoryKordinasiOutlet.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_reso.getId()))) {
-                ll_reso.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_data_activity.getId()))) {
-                ll_data_activity.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_data_activityV2.getId()))) {
-                ll_data_activityV2.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_data_customerbased.getId()))) {
-                ll_data_customerbased.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_absen.getId()))) {
-                ll_absen.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_purchase_order.getId()))) {
-                ll_purchase_order.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_data_leave.getId()))) {
-                ll_data_leave.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_data_planogram.getId()))) {
-                ll_data_planogram.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_data_attendance.getId()))) {
-                ll_data_attendance.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_data_stockIH.getId()))) {
-                ll_data_stockIH.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_kategoryPlanogram.getId()))) {
-                ll_kategoryPlanogram.setVisibility(View.VISIBLE);
-            } else if (txt_id.equals(res.getResourceEntryName(ll_data_overStock.getId()))) {
-                ll_data_overStock.setVisibility(View.VISIBLE);
-            }
-        }
+        generateLayout();
 
         loadData();
 
@@ -502,8 +382,8 @@ public class FragmentDownloadData extends Fragment {
         btnAllDownload.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 intProcesscancel = 0;
-                AsyncCallDownloadAll task = new AsyncCallDownloadAll();
-                //                AsyncCallDownloadAllBundleData task = new AsyncCallDownloadAllBundleData();
+//                AsyncCallDownloadAll task = new AsyncCallDownloadAll();
+                AsyncCallDownloadAllBundleData task = new AsyncCallDownloadAllBundleData();
                 task.execute();
             }
         });
@@ -569,6 +449,14 @@ public class FragmentDownloadData extends Fragment {
             public void onClick(View arg0) {
                 intProcesscancel = 0;
                 AsyncCallActivityV2 task = new AsyncCallActivityV2();
+                task.execute();
+            }
+        });
+
+        btnDladdDisplay.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                intProcesscancel = 0;
+                AsyncCallAddDisPlay task = new AsyncCallAddDisPlay();
                 task.execute();
             }
         });
@@ -671,12 +559,86 @@ public class FragmentDownloadData extends Fragment {
             }
         });
 
-        mProgressBar.setVisibility(View.GONE);
-
         return v;
     }
 
+    private void generateLayout() {
+        List<mDownloadMasterData_mobileData> mDownloadMasterData_mobileDataList;
+
+        mDownloadMasterData_mobileDataList = new mDownloadMasterData_mobileBL().GetAllData();
+
+        Resources res = getResources();
+
+        for(int i = 0; i < mDownloadMasterData_mobileDataList.size(); i++){
+            String txt_id = mDownloadMasterData_mobileDataList.get(i).get_txtMasterData().replaceAll(" ", "");
+
+            //show master data
+            if (txt_id.equals(res.getResourceEntryName(ll_branch.getId()))) {
+                ll_branch.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_outlet.getId()))) {
+                ll_outlet.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_product.getId()))) {
+                ll_product.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_brand.getId()))) {
+                ll_brand.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_type_leave.getId()))) {
+                ll_type_leave.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_product_spg.getId()))) {
+                ll_product_spg.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_product_pic.getId()))) {
+                ll_product_pic.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_product_competitor.getId()))) {
+                ll_product_competitor.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_type_submission.getId()))) {
+                ll_type_submission.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_kategoriVisitPlan.getId()))) {
+                ll_kategoriVisitPlan.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_dataQuesioner.getId()))) {
+                ll_dataQuesioner.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_subtypeactivity.getId()))) {
+                ll_subtypeactivity.setVisibility(View.VISIBLE);
+            }
+            // show data transaksi
+            else if (txt_id.equals(res.getResourceEntryName(ll_dataVisitPlan.getId()))) {
+                ll_dataVisitPlan.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_dataQuantityStock.getId()))) {
+                ll_dataQuantityStock.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_dataKordinasiOutlet.getId()))) {
+                ll_dataKordinasiOutlet.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_dataCategoryKordinasiOutlet.getId()))){
+                ll_dataCategoryKordinasiOutlet.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_reso.getId()))) {
+                ll_reso.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_data_activity.getId()))) {
+                ll_data_activity.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_data_activityV2.getId()))) {
+                ll_data_activityV2.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_data_customerbased.getId()))) {
+                ll_data_customerbased.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_absen.getId()))) {
+                ll_absen.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_purchase_order.getId()))) {
+                ll_purchase_order.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_data_leave.getId()))) {
+                ll_data_leave.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_data_planogram.getId()))) {
+                ll_data_planogram.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_data_attendance.getId()))) {
+                ll_data_attendance.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_data_stockIH.getId()))) {
+                ll_data_stockIH.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_kategoryPlanogram.getId()))) {
+                ll_kategoryPlanogram.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_data_overStock.getId()))) {
+                ll_data_overStock.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_data_addDisplay.getId()))) {
+                ll_data_addDisplay.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
     private void loadData() {
+//        mProgressBar = (ProgressBar) v.findViewById(R.id.progress_bar);
         _clsMainActivity = new clsMainActivity();
         try {
             pInfo = getContext().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
@@ -721,7 +683,7 @@ public class FragmentDownloadData extends Fragment {
         arrData = new ArrayList<>();
         if (tPlanogramMobileDataList.size() > 0) {
             for (tPlanogramMobileData dt : tPlanogramMobileDataList) {
-                arrData.add(dt.get_OutletName());
+                arrData.add(dt.get_txtCategoryName());
             }
             spnDataPlanogram.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
             spnDataPlanogram.setEnabled(true);
@@ -983,6 +945,19 @@ public class FragmentDownloadData extends Fragment {
             spnActivityV2.setEnabled(false);
         }
         arrData = new ArrayList<>();
+        if (listtActivityMobileData != null && listtActivityMobileData.size() != 0) {
+            for (tActivityMobileData dt : listtActivityMobileData) {
+                arrData.add(dt.get_intFlag() + "-" + dt.get_txtDesc());
+            }
+            spnaddDisplay.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
+            spnaddDisplay.setEnabled(true);
+        } else {
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<>(getContext(),
+                    android.R.layout.simple_spinner_item, strip);
+            spnaddDisplay.setAdapter(adapterspn);
+            spnaddDisplay.setEnabled(false);
+        }
+        arrData = new ArrayList<>();
         if (listtAbsenUserData != null) {
             for (tAbsenUserData dt : listtAbsenUserData) {
                 arrData.add(dt.get_txtBranchName() + " - " + dt.get_txtOutletName());
@@ -1089,6 +1064,8 @@ public class FragmentDownloadData extends Fragment {
             spnDataLeave.setAdapter(adapterspn);
             spnDataLeave.setEnabled(false);
         }
+
+//        mProgressBar.setVisibility(View.GONE);
     }
 
     private class MyAdapter extends ArrayAdapter<String> {
@@ -1437,11 +1414,13 @@ public class FragmentDownloadData extends Fragment {
             if (ll_type_submission != null && checkVisibility(ll_type_submission)) {
                 dtJson.getDtdataJson().getDtmTypeSubmissionMobile().setBoolValid("1");
             }
+            if (ll_dataCategoryKordinasiOutlet != null && checkVisibility(ll_dataCategoryKordinasiOutlet)) {
+                dtJson.getDtdataJson().getDtmCategoryKoordinasiOutletData().setBoolValid("1");
+            }
             if (ll_dataQuesioner != null && checkVisibility(ll_dataQuesioner)) {
                 dtJson.getDtdataJson().getDtmParentData().setBoolValid("1");
                 dtJson.getDtdataJson().getDttHirarkiBIS().setBoolValid("1");
             }
-
             //transaksi
             if (ll_dataVisitPlan != null && checkVisibility(ll_dataVisitPlan)) {
                 dtJson.getDtdataJson().getDttVisitPlanRealisasiData().setBoolValid("1");
@@ -1462,6 +1441,7 @@ public class FragmentDownloadData extends Fragment {
                 dtJson.getDtdataJson().getDttSalesProductQuantityHeaderData().setBoolValid("1");
             }
             if (ll_data_overStock != null && checkVisibility(ll_data_overStock)) {
+                dtJson.getDtdataJson().getDttOverStockHeaderData().setBoolValid("1");
             }
             //tracking location
             dtJson.getDtdataJson().getDttrackingLocationData().setBoolValid("1");
@@ -1477,6 +1457,9 @@ public class FragmentDownloadData extends Fragment {
             if (ll_data_activityV2 != null && checkVisibility(ll_data_activityV2)) {
                 dtJson.getDtdataJson().getDttActivityMobileData().setBoolValid("1");
             }
+            if (ll_data_addDisplay != null && checkVisibility(ll_data_addDisplay)) {
+                dtJson.getDtdataJson().getDttActivityMobileData().setBoolValid("1");
+            }
             if (ll_data_customerbased != null && checkVisibility(ll_data_customerbased)) {
                 dtJson.getDtdataJson().getDttCustomerBasedMobileHeaderData().setBoolValid("1");
             }
@@ -1488,32 +1471,14 @@ public class FragmentDownloadData extends Fragment {
             }
             String txtValid = "0";
             String txtMess = "";
+            String jsonData = "";
             try {
-                String jsonData = new clsHelperBL().downloadAllData(pInfo.versionName, dtJson.getDtdataJson().generateJsonReqDownloadAllData().toString());
+                jsonData = new clsHelperBL().downloadAllData(pInfo.versionName, dtJson.getDtdataJson().generateJsonReqDownloadAllData().toString());
 
                 clsHelper _help = new clsHelper();
                 SQLiteDatabase _db = new clsMainBL().getDb();
                 JsonArrayResult = _help.ResultJsonArray(jsonData);
-                APIData dtAPIDATA = new APIData();
-                Iterator a = JsonArrayResult.iterator();
                 mCounterNumberDA _mCounterNumberDA = new mCounterNumberDA(_db);
-                while (a.hasNext()) {
-                    org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) a.next();
-                    int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
-                    if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
-                        mCounterNumberData _data = new mCounterNumberData();
-                        _data.set_intId(enumCounterData.dtPushKBN.getidCounterData());
-                        _data.set_txtDeskripsi((String) innerObj.get("_pstrMethodRequest"));
-                        _data.set_txtName((String) innerObj.get("_pstrMethodRequest"));
-                        _data.set_txtValue((String) innerObj.get("_pstrArgument"));
-                        _mCounterNumberDA.SaveDataMConfig(_db, _data);
-                    } else {
-//                        flag = false;
-//                        ErrorMess = (String) innerObj.get(dtAPIDATA.strMessage);
-//                        break;
-                    }
-                }
-                _db.close();
 
                 if(JsonArrayResult!=null){
                     Iterator i = JsonArrayResult.iterator();
@@ -1681,6 +1646,308 @@ public class FragmentDownloadData extends Fragment {
                                             break;
                                         }
                                     }
+                                    JSONArray jsonArray_CategoryKoordinasiOutlet = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfmCategoryKoordinasiOutlet_mobile")));
+                                    if (jsonArray_CategoryKoordinasiOutlet != null) {
+                                        for (Object aJsonArray_header : jsonArray_CategoryKoordinasiOutlet) {
+                                            JSONObject innerObj_header = (JSONObject) aJsonArray_header;
+                                            String boolValid = String.valueOf(innerObj_header.get("_pboolValid"));
+                                            String pstrMess = String.valueOf(innerObj_header.get("_pstrMessage"));
+                                            if(boolValid.equals("1")){
+                                                SaveDataCategoryKoordinasiOutletData(jsonArray_CategoryKoordinasiOutlet);
+                                            } else if(boolValid.equals("0")){
+                                            }
+                                            break;
+                                        }
+                                    }
+
+                                    JSONArray jsonArray_Quesioner = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfclsDataQuesionerAPI")));
+                                    if (jsonArray_Quesioner != null) {
+                                        for (Object aJsonArray_header : jsonArray_Quesioner) {
+                                            JSONObject innerObj_header = (JSONObject) aJsonArray_header;
+                                            String boolValid = String.valueOf(innerObj_header.get("_pboolValid"));
+                                            String pstrMess = String.valueOf(innerObj_header.get("_pstrMessage"));
+                                            if(boolValid.equals("1")){
+                                                SaveDataQuesioner(jsonArray_Quesioner);
+                                            } else if(boolValid.equals("0")){
+                                            }
+                                            break;
+                                        }
+                                    }
+
+                                    //belum bener list json Array
+                                    JSONArray jsonArray_HirarkiBIS = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOftHirartkiBis_mobile")));
+                                    if (jsonArray_HirarkiBIS != null) {
+                                        for (Object aJsonArray_header : jsonArray_HirarkiBIS) {
+                                            JSONObject innerObj_header = (JSONObject) aJsonArray_header;
+                                            String boolValid = String.valueOf(innerObj_header.get("_pboolValid"));
+                                            String pstrMess = String.valueOf(innerObj_header.get("_pstrMessage"));
+                                            if(boolValid.equals("1")){
+                                                SaveDataSPGFromTL(jsonArray_HirarkiBIS);
+                                            } else if(boolValid.equals("0")){
+                                            }
+                                            break;
+                                        }
+                                    }
+
+                                    //belum bener list json Array
+                                    JSONArray jsonArray_TransaksiVisitPlanAll = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOftTransaksiVisitPlanAll")));
+                                    if (jsonArray_TransaksiVisitPlanAll != null) {
+                                        for (Object aJsonArray_header : jsonArray_TransaksiVisitPlanAll) {
+                                            JSONObject innerObj_header = (JSONObject) aJsonArray_header;
+                                            String boolValid = String.valueOf(innerObj_header.get("_pboolValid"));
+                                            String pstrMess = String.valueOf(innerObj_header.get("_pstrMessage"));
+                                            if(boolValid.equals("1")){
+                                                SaveDatatTransaksiVisitPlanHeaderData(jsonArray_TransaksiVisitPlanAll);
+                                                SaveDatatTransaksiVisitPlanData(jsonArray_TransaksiVisitPlanAll);
+                                            } else if(boolValid.equals("0")){
+                                            }
+                                            break;
+                                        }
+                                    }
+                                    JSONArray jsonArray_Attendace = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOftAttendanceUser_mobile")));
+                                    if (jsonArray_Attendace != null) {
+                                        for (Object aJsonArray_header : jsonArray_Attendace) {
+                                            JSONObject innerObj_header = (JSONObject) aJsonArray_header;
+                                            String boolValid = String.valueOf(innerObj_header.get("_pboolValid"));
+                                            String pstrMess = String.valueOf(innerObj_header.get("_pstrMessage"));
+                                            if(boolValid.equals("1")){
+                                                SaveDatatAttendanceUserData(jsonArray_Attendace);
+                                            } else if(boolValid.equals("0")){
+                                            }
+                                            break;
+                                        }
+                                    }
+
+                                    //belum bener list json Array
+                                    JSONArray jsonArray_Reso = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfclsdataResoAPI")));
+                                    if (jsonArray_Reso != null) {
+                                        for (Object aJsonArray_header : jsonArray_Reso) {
+                                            JSONObject innerObj_header = (JSONObject) aJsonArray_header;
+                                            String boolValid = String.valueOf(innerObj_header.get("_pboolValid"));
+                                            String pstrMess = String.valueOf(innerObj_header.get("_pstrMessage"));
+                                            String txtNoSo = String.valueOf(innerObj_header.get("_pstrArgument"));
+
+                                            mCounterNumberData _data =new mCounterNumberData();
+                                            _db = new clsMainBL().getDb();
+                                            _data.set_intId(enumCounterData.NoDataSO.getidCounterData());
+                                            _data.set_txtDeskripsi((String) innerObj_header.get("_pstrMethodRequest"));
+                                            _data.set_txtName((String) innerObj_header.get("_pstrMethodRequest"));
+                                            _data.set_txtValue((String) innerObj_header.get("_pstrArgument"));
+                                            _mCounterNumberDA.SaveDataMConfig(_db, _data);
+
+                                            if(boolValid.equals("1")){
+                                                SaveDatatSalesProductData(jsonArray_Reso);
+                                            } else if(boolValid.equals("0")){
+                                            }
+                                            break;
+                                        }
+                                    }
+
+                                    JSONArray jsonArray_Po = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfclsDatatPurchaseOrderAPI")));
+                                    if (jsonArray_Po != null) {
+                                        for (Object aJsonArray_header : jsonArray_Po) {
+                                            JSONObject innerObj_header = (JSONObject) aJsonArray_header;
+                                            String boolValid = String.valueOf(innerObj_header.get("_pboolValid"));
+                                            String pstrMess = String.valueOf(innerObj_header.get("_pstrMessage"));
+                                            String txtNoPo = String.valueOf(innerObj_header.get("_pstrArgument"));
+
+                                            mCounterNumberData _data =new mCounterNumberData();
+                                            _db = new clsMainBL().getDb();
+                                            _data.set_intId(enumCounterData.NoPurchaseOrder.getidCounterData());
+                                            _data.set_txtDeskripsi((String) innerObj_header.get("_pstrMethodRequest"));
+                                            _data.set_txtName((String) innerObj_header.get("_pstrMethodRequest"));
+                                            _data.set_txtValue((String) innerObj_header.get("_pstrArgument"));
+                                            _mCounterNumberDA.SaveDataMConfig(_db, _data);
+
+                                            if(boolValid.equals("1")){
+                                                SaveDatatPurchaseOrderData(jsonArray_Po);
+                                            } else if(boolValid.equals("0")){
+                                            }
+                                            break;
+                                        }
+                                    }
+
+                                    JSONArray jsonArray_StockOnHandHeader = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfclsDataStockInHandAPI")));
+                                    if (jsonArray_StockOnHandHeader != null) {
+                                        for (Object aJsonArray_header : jsonArray_StockOnHandHeader) {
+                                            JSONObject innerObj_header = (JSONObject) aJsonArray_header;
+                                            String boolValid = String.valueOf(innerObj_header.get("_pboolValid"));
+                                            String pstrMess = String.valueOf(innerObj_header.get("_pstrMessage"));
+                                            String txtNoSOH = String.valueOf(innerObj_header.get("_pstrArgument"));
+
+                                            mCounterNumberData _data =new mCounterNumberData();
+                                            _data.set_intId(enumCounterData.NoSIH.getidCounterData());
+                                            _data.set_txtDeskripsi((String) innerObj_header.get("_pstrMethodRequest"));
+                                            _data.set_txtName((String) innerObj_header.get("_pstrMethodRequest"));
+                                            _data.set_txtValue((String) innerObj_header.get("_pstrArgument"));
+                                            _mCounterNumberDA.SaveDataMConfig(_db, _data);
+
+                                            if(boolValid.equals("1")){
+                                                SaveDatatStockInHandData(jsonArray_StockOnHandHeader);
+                                            } else if(boolValid.equals("0")){
+                                            }
+                                            break;
+                                        }
+                                    }
+
+                                    JSONArray jsonArray_NearEd = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfclstQuantityStockHeader")));
+                                    if (jsonArray_NearEd != null) {
+                                        for (Object aJsonArray_header : jsonArray_NearEd) {
+                                            JSONObject innerObj_header = (JSONObject) aJsonArray_header;
+                                            String boolValid = String.valueOf(innerObj_header.get("_pboolValid"));
+                                            String pstrMess = String.valueOf(innerObj_header.get("_pstrMessage"));
+                                            String txtNoQTS = String.valueOf(innerObj_header.get("_pstrArgument"));
+
+                                            _db = new clsMainBL().getDb();
+                                            mCounterNumberData _data =new mCounterNumberData();
+                                            _data.set_intId(enumCounterData.NoQuantityStock.getidCounterData());
+                                            _data.set_txtDeskripsi((String) innerObj_header.get("_pstrMethodRequest"));
+                                            _data.set_txtName((String) innerObj_header.get("_pstrMethodRequest"));
+                                            _data.set_txtValue((String) innerObj_header.get("_pstrArgument"));
+                                            _mCounterNumberDA.SaveDataMConfig(_db, _data);
+
+                                            if(boolValid.equals("1")){
+                                                SaveDatatSalesProductQuantityData(jsonArray_NearEd);
+                                            } else if(boolValid.equals("0")){
+                                            }
+                                            break;
+                                        }
+                                    }
+
+                                    JSONArray jsonArray_OverStock = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfclstOverStockHeader")));
+                                    if (jsonArray_OverStock != null) {
+                                        for (Object aJsonArray_header : jsonArray_OverStock) {
+                                            JSONObject innerObj_header = (JSONObject) aJsonArray_header;
+                                            String boolValid = String.valueOf(innerObj_header.get("_pboolValid"));
+                                            String pstrMess = String.valueOf(innerObj_header.get("_pstrMessage"));
+                                            String txtOVS = String.valueOf(innerObj_header.get("_pstrArgument"));
+
+                                            _db = new clsMainBL().getDb();
+                                            mCounterNumberData _data =new mCounterNumberData();
+                                            _data.set_intId(enumCounterData.NoOS.getidCounterData());
+                                            _data.set_txtDeskripsi((String) innerObj_header.get("_pstrMethodRequest"));
+                                            _data.set_txtName((String) innerObj_header.get("_pstrMethodRequest"));
+                                            _data.set_txtValue((String) innerObj_header.get("_pstrArgument"));
+                                            _mCounterNumberDA.SaveDataMConfig(_db, _data);
+
+                                            if(boolValid.equals("1")){
+                                                SaveDatatOverStockData(jsonArray_OverStock);
+                                            } else if(boolValid.equals("0")){
+                                            }
+                                            break;
+                                        }
+                                    }
+
+                                    JSONArray jsonArray_TrackingLocation = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfclsTrackingLocation_mobile")));
+                                    if (jsonArray_TrackingLocation != null) {
+                                        for (Object aJsonArray_header : jsonArray_TrackingLocation) {
+                                            JSONObject innerObj_header = (JSONObject) aJsonArray_header;
+                                            String boolValid = String.valueOf(innerObj_header.get("_pboolValid"));
+                                            String pstrMess = String.valueOf(innerObj_header.get("_pstrMessage"));
+                                            if(boolValid.equals("1")){
+                                                SaveDataTrackingLocationData(jsonArray_TrackingLocation);
+                                            } else if(boolValid.equals("0")){
+                                            }
+                                            break;
+                                        }
+                                    }
+
+                                    JSONArray jsonArray_KoordinasiOutlet = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfclsKoordinasiOutlet_mobile")));
+                                    if (jsonArray_KoordinasiOutlet != null) {
+                                        for (Object aJsonArray_header : jsonArray_KoordinasiOutlet) {
+                                            JSONObject innerObj_header = (JSONObject) aJsonArray_header;
+                                            String boolValid = String.valueOf(innerObj_header.get("_pboolValid"));
+                                            String pstrMess = String.valueOf(innerObj_header.get("_pstrMessage"));
+                                            if(boolValid.equals("1")){
+                                                SaveDataKoordinasiOutletData(jsonArray_KoordinasiOutlet);
+                                            } else if(boolValid.equals("0")){
+                                            }
+                                            break;
+                                        }
+                                    }
+
+                                    JSONArray jsonArray_Planogram = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfclsPlanogramMobile")));
+                                    if (jsonArray_Planogram != null) {
+                                        for (Object aJsonArray_header : jsonArray_Planogram) {
+                                            JSONObject innerObj_header = (JSONObject) aJsonArray_header;
+                                            String boolValid = String.valueOf(innerObj_header.get("_pboolValid"));
+                                            String pstrMess = String.valueOf(innerObj_header.get("_pstrMessage"));
+                                            if(boolValid.equals("1")){
+                                                SaveDatatPlamogramData(jsonArray_Planogram);
+                                            } else if(boolValid.equals("0")){
+                                            }
+                                            break;
+                                        }
+                                    }
+
+                                    JSONArray jsonArray_Activity = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOftActivity_mobile")));
+                                    if (jsonArray_Activity != null) {
+                                        for (Object aJsonArray_header : jsonArray_Activity) {
+                                            JSONObject innerObj_header = (JSONObject) aJsonArray_header;
+                                            String boolValid = String.valueOf(innerObj_header.get("_pboolValid"));
+                                            String pstrMess = String.valueOf(innerObj_header.get("_pstrMessage"));
+                                            if(boolValid.equals("1")){
+                                                SaveDatatActivityData(jsonArray_Activity);
+                                            } else if(boolValid.equals("0")){
+                                            }
+                                            break;
+                                        }
+                                    }
+
+                                    JSONArray jsonArray_ActivityV2 = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOftActivity_mobileNew")));
+                                    if (jsonArray_ActivityV2 != null) {
+                                        for (Object aJsonArray_header : jsonArray_ActivityV2) {
+                                            JSONObject innerObj_header = (JSONObject) aJsonArray_header;
+                                            String boolValid = String.valueOf(innerObj_header.get("_pboolValid"));
+                                            String pstrMess = String.valueOf(innerObj_header.get("_pstrMessage"));
+                                            if(boolValid.equals("1")){
+                                                SaveDatatActivityDataV2(jsonArray_ActivityV2);
+                                            } else if(boolValid.equals("0")){
+                                            }
+                                            break;
+                                        }
+                                    }
+
+                                    JSONArray jsonArray_CustomerBased = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfclsdataCustomerBasedAPI")));
+                                    if (jsonArray_CustomerBased != null) {
+                                        for (Object aJsonArray_header : jsonArray_CustomerBased) {
+                                            JSONObject innerObj_header = (JSONObject) aJsonArray_header;
+                                            String boolValid = String.valueOf(innerObj_header.get("_pboolValid"));
+                                            String pstrMess = String.valueOf(innerObj_header.get("_pstrMessage"));
+                                            if(boolValid.equals("1")){
+                                                SaveDatatCustomerBasedData(jsonArray_CustomerBased);
+                                            } else if(boolValid.equals("0")){
+                                            }
+                                            break;
+                                        }
+                                    }
+
+                                    JSONArray jsonArray_AbsenUser = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOftAbsenUser_mobile")));
+                                    if (jsonArray_AbsenUser != null) {
+                                        for (Object aJsonArray_header : jsonArray_AbsenUser) {
+                                            JSONObject innerObj_header = (JSONObject) aJsonArray_header;
+                                            String boolValid = String.valueOf(innerObj_header.get("_pboolValid"));
+                                            String pstrMess = String.valueOf(innerObj_header.get("_pstrMessage"));
+                                            if(boolValid.equals("1")){
+                                                SaveDatatAbsenUserData(jsonArray_AbsenUser);
+                                            } else if(boolValid.equals("0")){
+                                            }
+                                            break;
+                                        }
+                                    }
+                                    JSONArray jsonArray_ListOftLeaveMobile = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOftLeaveMobile")));
+                                    if (jsonArray_ListOftLeaveMobile != null) {
+                                        for (Object aJsonArray_header : jsonArray_ListOftLeaveMobile) {
+                                            JSONObject innerObj_header = (JSONObject) aJsonArray_header;
+                                            String boolValid = String.valueOf(innerObj_header.get("_pboolValid"));
+                                            String pstrMess = String.valueOf(innerObj_header.get("_pstrMessage"));
+                                            if(boolValid.equals("1")){
+                                                SaveDatatLeaveData(jsonArray_ListOftLeaveMobile);
+                                            } else if(boolValid.equals("0")){
+                                            }
+                                            break;
+                                        }
+                                    }
 
                                 } catch (ParseException e) {
                                     e.printStackTrace();
@@ -1698,7 +1965,7 @@ public class FragmentDownloadData extends Fragment {
                 dtdataJson.setTxtMessage(txtMess);
             } catch (Exception e) {
                 dtdataJson.setIntResult("0");
-                dtdataJson.setTxtMessage(e.toString());
+                dtdataJson.setTxtMessage(e.toString() + "\n" + jsonData);
                 eMessage = e.toString();
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -1795,7 +2062,7 @@ public class FragmentDownloadData extends Fragment {
                             _data.set_txtOutletCode((String) innerObjListoftTransaksiRealisasiVisitPlanData.get("txtOutletCode"));
                             _data.set_txtOutletName((String) innerObjListoftTransaksiRealisasiVisitPlanData.get("txtOutletName"));
                             _data.set_txtBranchCode((String) innerObjListoftTransaksiRealisasiVisitPlanData.get("txtBranchCode"));
-                            _data.set_txtBranchCode((String) innerObjListoftTransaksiRealisasiVisitPlanData.get("txtBranchName"));
+                            _data.set_txtBranchName((String) innerObjListoftTransaksiRealisasiVisitPlanData.get("txtBranchName"));
                             _data.set_dtDate((String) innerObjListoftTransaksiRealisasiVisitPlanData.get("dtDate"));
                             _data.set_intBobot((String) innerObjListoftTransaksiRealisasiVisitPlanData.get("intBobot"));
                             _data.set_txtDesc((String) innerObjListoftTransaksiRealisasiVisitPlanData.get("txtDesc"));
@@ -1823,6 +2090,44 @@ public class FragmentDownloadData extends Fragment {
 
         }
 
+        return _array;
+    }
+
+    private List<String> SaveDatatTransaksiVisitPlanDataV2(JSONArray JData) {
+        List<String> _array;
+        APIData dtAPIDATA = new APIData();
+        _array = new ArrayList<>();
+        Iterator i = JData.iterator();
+        List<tVisitPlanRealisasiData> _Listdata = new ArrayList<>();
+        while (i.hasNext()) {
+            org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
+            int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
+            if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
+                            tVisitPlanRealisasiData _data = new tVisitPlanRealisasiData();
+                            _data.set_txtDataIDRealisasi((String) innerObj.get("txtDataIdRealisasi"));
+                            _data.set_intCategoryVisitPlan((String) innerObj.get("intCategoryVisitPlan"));
+                            _data.set_intDetailID((String) innerObj.get("intDetailId"));
+                            _data.set_intHeaderID((String) innerObj.get("intHeaderId"));
+                            _data.set_intUserID((String) innerObj.get("intUserId"));
+                            _data.set_txtOutletCode((String) innerObj.get("txtOutletCode"));
+                            _data.set_txtOutletName((String) innerObj.get("txtOutletName"));
+                            _data.set_txtBranchCode((String) innerObj.get("txtBranchCode"));
+                            _data.set_txtBranchName((String) innerObj.get("txtBranchName"));
+                            _data.set_dtDate((String) innerObj.get("dtDate"));
+                            _data.set_intBobot((String) innerObj.get("intBobot"));
+                            _data.set_txtDesc((String) innerObj.get("txtDesc"));
+                            _data.set_bitActive((String) innerObj.get("bitActive"));
+                            _data.set_txtLongSource((String) innerObj.get("txtLong"));
+                            _data.set_txtLatSource((String) innerObj.get("txtLat"));
+                            _data.set_txtAcc((String) innerObj.get("txtAcc"));
+                            _data.set_intSubmit("0");
+                            _data.set_intPush("0");
+                            _data.set_intCheckout("0");
+                            _array.add(_data.get_txtOutletName() + "-" + _data.get_txtDesc());
+                            _Listdata.add(_data);
+            }
+        }
+        new tVisitPlanRealisasiBL().downloadData(_Listdata);
         return _array;
     }
 
@@ -1876,6 +2181,34 @@ public class FragmentDownloadData extends Fragment {
 //        return _array;
     }
 
+    private void SaveDatatTransaksiVisitPlanHeaderDataV2(JSONArray JData) {
+        APIData dtAPIDATA = new APIData();
+        Iterator i = JData.iterator();
+        List<tVisitPlanHeader_MobileData> _Listdata = new ArrayList<>();
+        while (i.hasNext()) {
+            org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
+            int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
+            if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
+                            tVisitPlanHeader_MobileData _data = new tVisitPlanHeader_MobileData();
+                            _data.set_intHeaderId((String) innerObj.get("intHeaderId"));
+                            _data.set_txtUserId((String) innerObj.get("txtUserId"));
+                            _data.set_txtPeriode((String) innerObj.get("txtPeriode"));
+                            _data.set_txtGuidUnplan((String) innerObj.get("txtGuidIdUnplan"));
+                            _data.set_intUnplan((String) innerObj.get("intUnplan"));
+                            _data.set_txtBranchCode((String) innerObj.get("txtBranchCode"));
+                            _data.set_bitActive((String) innerObj.get("bitActive"));
+                            _data.set_dtStart((String) innerObj.get("dtStart"));
+                            _data.set_dtEnd((String) innerObj.get("dtEnd"));
+                            _data.set_intSumBobot((String) innerObj.get("intSumBobot"));
+                            _data.set_intRealisasi((String) innerObj.get("intRealisasi"));
+//                            _array.add(_data.get_txtOutletName()+"-"+_data.get_txtDesc());
+                            _data.set_intSubmit("0");
+                            _data.set_intPush("0");
+                            _Listdata.add(_data);
+            }
+        }
+        new tVisitPlanHeader_MobileBL().saveData(_Listdata);
+    }
 
     private List<String> SaveDatamEmployeeBranchData(JSONArray JData) {
         List<String> _array;
@@ -3081,6 +3414,68 @@ public class FragmentDownloadData extends Fragment {
             // Make ProgressBar invisible
             // pg.setVisibility(View.VISIBLE);
             Dialog.setMessage("Getting Activity MDTL");
+            Dialog.setCancelable(false);
+//            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    intProcesscancel = 1;
+//                }
+//            });
+            Dialog.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            Dialog.dismiss();
+        }
+    }
+
+    private class AsyncCallAddDisPlay extends AsyncTask<JSONArray, Void, JSONArray> {
+        @Override
+        protected JSONArray doInBackground(JSONArray... params) {
+//            android.os.Debug.waitForDebugger();
+            JSONArray Json = null;
+            try {
+                Json = new tActivityMobileBL().DownloadActivityV2(pInfo.versionName);
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return Json;
+        }
+
+        private ProgressDialog Dialog = new ProgressDialog(getContext());
+
+        @Override
+        protected void onCancelled() {
+            Dialog.dismiss();
+            new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessCancelRequest, false);
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray roledata) {
+            if (roledata != null && roledata.size() > 0) {
+                arrData = SaveDatatActivityDataV2(roledata);
+                //spnBranch.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
+                loadData();
+                new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
+            } else {
+                if (intProcesscancel == 1) {
+                    onCancelled();
+                } else {
+                    new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
+                }
+
+            }
+            checkingDataTable("");
+            Dialog.dismiss();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            // Make ProgressBar invisible
+            // pg.setVisibility(View.VISIBLE);
+            Dialog.setMessage("Getting Add Display");
             Dialog.setCancelable(false);
 //            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
 //                @Override
