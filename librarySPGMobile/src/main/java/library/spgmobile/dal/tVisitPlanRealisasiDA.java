@@ -728,6 +728,26 @@ public class tVisitPlanRealisasiDA {
         // return contact list
         return count;
     }
+
+    //getting data status unsubmit
+    public int countOutVisitStatusUnSubmit(SQLiteDatabase db, String code) {
+
+        String selectQuery = "select coalesce(sum(1),0) from [tVisitplanRealisasi] where txtOutletCode='" + code + "' and intSubmit=0 and [intPush]=0";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        int count = 0;
+
+        if (cursor.moveToFirst()) {
+            do {
+                count=Integer.valueOf(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        // return contact list
+        return count;
+    }
     //getting count data push
     public int countOutVisitPush(SQLiteDatabase db,  String code) {
         String selectQuery = "select coalesce(sum(1),0) from [tVisitplanRealisasi] where txtOutletCode='" + code + "' and intSubmit=1 and [intPush]=1";
@@ -745,5 +765,16 @@ public class tVisitPlanRealisasiDA {
         cursor.close();
         // return contact list
         return count;
+    }
+    // Getting contacts Count
+    public int getContactsCountSubmit(SQLiteDatabase db) {
+        tVisitPlanRealisasiData dt = new tVisitPlanRealisasiData();
+        String countQuery = "SELECT * FROM " + TABLE_CONTACTS +" WHERE "+dt.Property_intSubmit +" = 1";
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int num =cursor.getCount();
+        cursor.close();
+
+        // return count
+        return num;
     }
 }
