@@ -707,7 +707,7 @@ public class clsHelperBL extends clsMainBL {
             List<tJawabanUserData> ListOfJawabanUser = _tJawabanUserDA.GetDataToPushAnswer(db);
             List<tJawabanUserHeaderData> ListOfJawabanUserHeader = _tJawabanUserHeaderDA.GetDataToPushAnswer(db);
             List<tSalesProductQuantityDetailData> ListOfSalesProductQuantityDetail = _tSalesProductQuantityDetailDA.getAllDataToPushData(db, ListOfSalesProductQuantityHeader);
-            List<tSalesProductQuantityImageData> ListOfSalesProductQuantityImage = _tSalesProductQuantityImageDA.getAllDataToPushData(db, ListOfSalesProductQuantityHeader);
+//            List<tSalesProductQuantityImageData> ListOfSalesProductQuantityImage = _tSalesProductQuantityImageDA.getAllDataToPushData(db, ListOfSalesProductQuantityHeader);
             List<tOverStockDetailData> ListOftOverStockDetail = _tOverStockDetailDA.getAllDataToPushData(db, ListOftOverStockHeader);
             List<trackingLocationData> ListOfTrackingLocation = _trackingLocationDA.getAllDataToPushData(db);
             List<KoordinasiOutletData> ListOfKoordinasiOutlet = _KoordinasiOutletDA.getAllDataToPushData(db);
@@ -793,34 +793,34 @@ public class clsHelperBL extends clsMainBL {
                     }
                 }
             }
-            if (ListOfSalesProductQuantityImage != null){
-                dtPush.setListOftSalesProductQuantityImageData(ListOfSalesProductQuantityImage);
-                for (tSalesProductQuantityImageData dttQuantityImageData : ListOfSalesProductQuantityImage) {
-                    clsMappingPushFile mappingPushFile = new clsMappingPushFile();
-                    if (dttQuantityImageData.get_txtImage() != null) {
-                        if (dttQuantityImageData.get_txtType().equals("After") &&  dttQuantityImageData.get_intPosition().equals("1")) {
-                            mappingPushFile.setKey("FUQTS" + dttQuantityImageData.get_txtId());
-                            mappingPushFile.setEkstension(".jpg");
-                            FileUpload.put(mappingPushFile, dttQuantityImageData.get_txtImage());
-                        }
-                        if (dttQuantityImageData.get_txtType().equals("After") &&  dttQuantityImageData.get_intPosition().equals("2")) {
-                            mappingPushFile.setKey("FUQTS" + dttQuantityImageData.get_txtId());
-                            mappingPushFile.setEkstension(".jpg");
-                            FileUpload.put(mappingPushFile, dttQuantityImageData.get_txtImage());
-                        }
-                        if (dttQuantityImageData.get_txtType().equals("Before") &&  dttQuantityImageData.get_intPosition().equals("1")) {
-                            mappingPushFile.setKey("FUQTS" + dttQuantityImageData.get_txtId());
-                            mappingPushFile.setEkstension(".jpg");
-                            FileUpload.put(mappingPushFile, dttQuantityImageData.get_txtImage());
-                        }
-                        if (dttQuantityImageData.get_txtType().equals("Before") &&  dttQuantityImageData.get_intPosition().equals("2")) {
-                            mappingPushFile.setKey("FUQTS" + dttQuantityImageData.get_txtId());
-                            mappingPushFile.setEkstension(".jpg");
-                            FileUpload.put(mappingPushFile, dttQuantityImageData.get_txtImage());
-                        }
-                    }
-                }
-            }
+//            if (ListOfSalesProductQuantityImage != null){
+//                dtPush.setListOftSalesProductQuantityImageData(ListOfSalesProductQuantityImage);
+//                for (tSalesProductQuantityImageData dttQuantityImageData : ListOfSalesProductQuantityImage) {
+//                    clsMappingPushFile mappingPushFile = new clsMappingPushFile();
+//                    if (dttQuantityImageData.get_txtImage() != null) {
+//                        if (dttQuantityImageData.get_txtType().equals("After") &&  dttQuantityImageData.get_intPosition().equals("1")) {
+//                            mappingPushFile.setKey("FUQTS" + dttQuantityImageData.get_txtId());
+//                            mappingPushFile.setEkstension(".jpg");
+//                            FileUpload.put(mappingPushFile, dttQuantityImageData.get_txtImage());
+//                        }
+//                        if (dttQuantityImageData.get_txtType().equals("After") &&  dttQuantityImageData.get_intPosition().equals("2")) {
+//                            mappingPushFile.setKey("FUQTS" + dttQuantityImageData.get_txtId());
+//                            mappingPushFile.setEkstension(".jpg");
+//                            FileUpload.put(mappingPushFile, dttQuantityImageData.get_txtImage());
+//                        }
+//                        if (dttQuantityImageData.get_txtType().equals("Before") &&  dttQuantityImageData.get_intPosition().equals("1")) {
+//                            mappingPushFile.setKey("FUQTS" + dttQuantityImageData.get_txtId());
+//                            mappingPushFile.setEkstension(".jpg");
+//                            FileUpload.put(mappingPushFile, dttQuantityImageData.get_txtImage());
+//                        }
+//                        if (dttQuantityImageData.get_txtType().equals("Before") &&  dttQuantityImageData.get_intPosition().equals("2")) {
+//                            mappingPushFile.setKey("FUQTS" + dttQuantityImageData.get_txtId());
+//                            mappingPushFile.setEkstension(".jpg");
+//                            FileUpload.put(mappingPushFile, dttQuantityImageData.get_txtImage());
+//                        }
+//                    }
+//                }
+//            }
             if (ListOftPlanogramImageData != null){
                 dtPush.setListOftPlanogramImageData(ListOftPlanogramImageData);
                 for (tPlanogramImageData dttPlanogramImageData : ListOftPlanogramImageData) {

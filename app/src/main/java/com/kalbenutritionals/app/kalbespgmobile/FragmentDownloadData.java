@@ -1490,7 +1490,8 @@ public class FragmentDownloadData extends Fragment {
                             for (Object aJsonArray : JsonArrayResult) {
                                 JSONObject innerObj = (JSONObject) aJsonArray;
                                 try {
-                                    JSONArray jsonArray_tSubTypeActivityData = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOftSubTypeActivity")));
+//                                    JSONArray jsonArray_tSubTypeActivityData = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOftSubTypeActivity")));
+                                    JSONArray jsonArray_tSubTypeActivityData = (JSONArray) innerObj.get("ListOftSubTypeActivity");
                                     if (jsonArray_tSubTypeActivityData != null) {
                                         for (Object aJsonArray_header : jsonArray_tSubTypeActivityData) {
                                             JSONObject innerObj_header = (JSONObject) aJsonArray_header;
@@ -1503,7 +1504,8 @@ public class FragmentDownloadData extends Fragment {
                                             break;
                                         }
                                     }
-                                    JSONArray jsonArray_KategoryPlanogram = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOftKategoryPlanogram")));
+//                                    JSONArray jsonArray_KategoryPlanogram = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOftKategoryPlanogram")));
+                                    JSONArray jsonArray_KategoryPlanogram = (JSONArray) innerObj.get("ListOftKategoryPlanogram");
                                     if (jsonArray_KategoryPlanogram != null) {
                                         for (Object aJsonArray_header : jsonArray_KategoryPlanogram) {
                                             JSONObject innerObj_header = (JSONObject) aJsonArray_header;
@@ -1516,7 +1518,8 @@ public class FragmentDownloadData extends Fragment {
                                             break;
                                         }
                                     }
-                                    JSONArray jsonArray_EmployeeBranchData = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfEmployeeBranchData")));
+//                                    JSONArray jsonArray_EmployeeBranchData = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfEmployeeBranchData")));
+                                    JSONArray jsonArray_EmployeeBranchData = (JSONArray) innerObj.get("ListOfEmployeeBranchData");
                                     if (jsonArray_EmployeeBranchData != null) {
                                         for (Object aJsonArray_header : jsonArray_EmployeeBranchData) {
                                             JSONObject innerObj_header = (JSONObject) aJsonArray_header;
@@ -1529,7 +1532,8 @@ public class FragmentDownloadData extends Fragment {
                                             break;
                                         }
                                     }
-                                    JSONArray jsonArray_TypeLeaveMobileData = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfmTypeLeaveMobile")));
+//                                    JSONArray jsonArray_TypeLeaveMobileData = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfmTypeLeaveMobile")));
+                                    JSONArray jsonArray_TypeLeaveMobileData = (JSONArray) innerObj.get("ListOfmTypeLeaveMobile");
                                     if (jsonArray_TypeLeaveMobileData != null) {
                                         for (Object aJsonArray_header : jsonArray_TypeLeaveMobileData) {
                                             JSONObject innerObj_header = (JSONObject) aJsonArray_header;
@@ -1542,7 +1546,8 @@ public class FragmentDownloadData extends Fragment {
                                             break;
                                         }
                                     }
-                                    JSONArray jsonArray_SalesProductData = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfvw_SalesInsentive_EmployeeSalesProductDetailData")));
+//                                    JSONArray jsonArray_SalesProductData = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfvw_SalesInsentive_EmployeeSalesProductDetailData")));
+                                    JSONArray jsonArray_SalesProductData = (JSONArray) innerObj.get("ListOfvw_SalesInsentive_EmployeeSalesProductDetailData");
                                     if (jsonArray_SalesProductData != null) {
                                         for (Object aJsonArray_header : jsonArray_SalesProductData) {
                                             JSONObject innerObj_header = (JSONObject) aJsonArray_header;
@@ -1555,7 +1560,8 @@ public class FragmentDownloadData extends Fragment {
                                             break;
                                         }
                                     }
-                                    JSONArray jsonArray_ProductBrandHeaderData = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfmProductBrandHeader")));
+//                                    JSONArray jsonArray_ProductBrandHeaderData = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfmProductBrandHeader")));
+                                    JSONArray jsonArray_ProductBrandHeaderData = (JSONArray) innerObj.get("ListOfmProductBrandHeader");
                                     if (jsonArray_ProductBrandHeaderData != null) {
                                         for (Object aJsonArray_header : jsonArray_ProductBrandHeaderData) {
                                             JSONObject innerObj_header = (JSONObject) aJsonArray_header;
@@ -1568,7 +1574,8 @@ public class FragmentDownloadData extends Fragment {
                                             break;
                                         }
                                     }
-                                    JSONArray jsonArray_CategoryVisitPlanData = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfmCategoryVisitPlanData")));
+//                                    JSONArray jsonArray_CategoryVisitPlanData = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfmCategoryVisitPlanData")));
+                                    JSONArray jsonArray_CategoryVisitPlanData = (JSONArray) innerObj.get("ListOfmCategoryVisitPlanData");
                                     if (jsonArray_CategoryVisitPlanData != null) {
                                         for (Object aJsonArray_header : jsonArray_CategoryVisitPlanData) {
                                             JSONObject innerObj_header = (JSONObject) aJsonArray_header;
@@ -1581,7 +1588,8 @@ public class FragmentDownloadData extends Fragment {
                                             break;
                                         }
                                     }
-                                    JSONArray jsonArray_EmployeeAreaData = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfvw_SalesInsentive_EmployeeAreaData")));
+//                                    JSONArray jsonArray_EmployeeAreaData = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfvw_SalesInsentive_EmployeeAreaData")));
+                                    JSONArray jsonArray_EmployeeAreaData = (JSONArray) innerObj.get("ListOfvw_SalesInsentive_EmployeeAreaData");
                                     if (jsonArray_EmployeeAreaData != null) {
                                         for (Object aJsonArray_header : jsonArray_EmployeeAreaData) {
                                             JSONObject innerObj_header = (JSONObject) aJsonArray_header;
@@ -1594,7 +1602,8 @@ public class FragmentDownloadData extends Fragment {
                                             break;
                                         }
                                     }
-                                    JSONArray jsonArray_ProductCompetitorData = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfvw_SalesInsentive_EmployeeSalesProductCompetitorData")));
+//                                    JSONArray jsonArray_ProductCompetitorData = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfvw_SalesInsentive_EmployeeSalesProductCompetitorData")));
+                                    JSONArray jsonArray_ProductCompetitorData = (JSONArray) innerObj.get("ListOfvw_SalesInsentive_EmployeeSalesProductCompetitorData");
                                     if (jsonArray_ProductCompetitorData != null) {
                                         for (Object aJsonArray_header : jsonArray_ProductCompetitorData) {
                                             JSONObject innerObj_header = (JSONObject) aJsonArray_header;
@@ -1607,7 +1616,8 @@ public class FragmentDownloadData extends Fragment {
                                             break;
                                         }
                                     }
-                                    JSONArray jsonArray_ProductSPGData = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfvw_SalesInsentive_EmployeeSalesProductSPGData")));
+//                                    JSONArray jsonArray_ProductSPGData = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfvw_SalesInsentive_EmployeeSalesProductSPGData")));
+                                    JSONArray jsonArray_ProductSPGData = (JSONArray) innerObj.get("ListOfvw_SalesInsentive_EmployeeSalesProductSPGData");
                                     if (jsonArray_ProductSPGData != null) {
                                         for (Object aJsonArray_header : jsonArray_ProductSPGData) {
                                             JSONObject innerObj_header = (JSONObject) aJsonArray_header;
@@ -1620,7 +1630,8 @@ public class FragmentDownloadData extends Fragment {
                                             break;
                                         }
                                     }
-                                    JSONArray jsonArray_ProductPICData = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfvw_SalesInsentive_EmployeeSalesProductPICData")));
+//                                    JSONArray jsonArray_ProductPICData = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfvw_SalesInsentive_EmployeeSalesProductPICData")));
+                                    JSONArray jsonArray_ProductPICData = (JSONArray) innerObj.get("ListOfvw_SalesInsentive_EmployeeSalesProductPICData");
                                     if (jsonArray_ProductPICData != null) {
                                         for (Object aJsonArray_header : jsonArray_ProductPICData) {
                                             JSONObject innerObj_header = (JSONObject) aJsonArray_header;
@@ -1633,7 +1644,8 @@ public class FragmentDownloadData extends Fragment {
                                             break;
                                         }
                                     }
-                                    JSONArray jsonArray_TypeSubmissionMobile = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfmTypeSubmissionMobile")));
+//                                    JSONArray jsonArray_TypeSubmissionMobile = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfmTypeSubmissionMobile")));
+                                    JSONArray jsonArray_TypeSubmissionMobile = (JSONArray) innerObj.get("ListOfmTypeSubmissionMobile");
                                     if (jsonArray_TypeSubmissionMobile != null) {
                                         for (Object aJsonArray_header : jsonArray_TypeSubmissionMobile) {
                                             JSONObject innerObj_header = (JSONObject) aJsonArray_header;
@@ -2915,6 +2927,39 @@ public class FragmentDownloadData extends Fragment {
     }
 
     private List<String> SaveDatamEmployeeSalesProductData (JSONArray JData) {
+        List<String> _array = new ArrayList<>();
+        APIData dtAPIDATA = new APIData();
+        Iterator i = JData.iterator();
+        Boolean flag=true;
+        String ErrorMess="";
+        new mEmployeeSalesProductBL().DeleteAllData();
+        int intsum = new mEmployeeSalesProductBL().getContactsCount();
+        while (i.hasNext()) {
+            org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
+            int boolValid= Integer.valueOf(String.valueOf( innerObj.get(dtAPIDATA.boolValid)));
+            if(boolValid == Integer.valueOf(new clsHardCode().intSuccess)){
+                intsum+=1;
+                mEmployeeSalesProductData _data =new mEmployeeSalesProductData();
+                //mEmployeeSalesProductData _dataProperty =new mEmployeeSalesProductData();
+                _data.set_intId(String.valueOf(intsum));
+                _data.set_decBobot((String) innerObj.get("DecBobot"));
+                _data.set_decHJD((String) innerObj.get("DecHJD"));
+                _data.set_txtBrandDetailGramCode((String) innerObj.get("TxtBrandDetailGramCode"));
+                _data.set_txtNIK((String) innerObj.get("TxtNIK"));
+                _data.set_txtName((String) innerObj.get("TxtName"));
+                _data.set_txtProductBrandDetailGramName((String) innerObj.get("TxtProductBrandDetailGramName"));
+                _data.set_txtProductDetailCode((String) innerObj.get("TxtProductDetailCode"));
+                _data.set_txtProductDetailName((String) innerObj.get("TxtProductDetailName"));
+                _data.set_txtLobName((String) innerObj.get("TxtLobName"));
+                new mEmployeeSalesProductBL().saveData(_data);
+            }else{
+
+            }
+        }
+        return _array;
+    }
+
+    private List<String> SaveDatamEmployeeSalesProductDataV2 (JSONArray JData) {
         List<String> _array = new ArrayList<>();
         APIData dtAPIDATA = new APIData();
         Iterator i = JData.iterator();

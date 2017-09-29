@@ -506,20 +506,20 @@ public class dataJson {
                 resJson.put(dttSalesProductQuantityDetailData.Property_ListOftSalesProductQuantityDetailData, new JSONArray(itemsListJquey));
             }
 
-            if (this.getListOftSalesProductQuantityImageData() != null) {
-                tSalesProductQuantityImageData dttSalesProductQuantityImageData = new tSalesProductQuantityImageData();
-                itemsListJquey = new ArrayList<JSONObject>();
-                for (tSalesProductQuantityImageData data : this.getListOftSalesProductQuantityImageData()) {
-                    JSONObject item = new JSONObject();
-                    item.put(dttSalesProductQuantityImageData.Property_txtId, String.valueOf(data.get_txtId()));
-                    item.put(dttSalesProductQuantityImageData.Property_txtHeaderId, String.valueOf(data.get_txtHeaderId()));
-                    item.put(dttSalesProductQuantityImageData.Property_txtImage, String.valueOf(data.get_txtImage()));
-                    item.put(dttSalesProductQuantityImageData.Property_intPosition, String.valueOf(data.get_intPosition()));
-                    item.put(dttSalesProductQuantityImageData.Property_txtType, String.valueOf(data.get_txtType()));
-                    itemsListJquey.add(item);
-                }
-                resJson.put(dttSalesProductQuantityImageData.Property_ListOftSalesProductQuantityImageData, new JSONArray(itemsListJquey));
-            }
+//            if (this.getListOftSalesProductQuantityImageData() != null) {
+//                tSalesProductQuantityImageData dttSalesProductQuantityImageData = new tSalesProductQuantityImageData();
+//                itemsListJquey = new ArrayList<JSONObject>();
+//                for (tSalesProductQuantityImageData data : this.getListOftSalesProductQuantityImageData()) {
+//                    JSONObject item = new JSONObject();
+//                    item.put(dttSalesProductQuantityImageData.Property_txtId, String.valueOf(data.get_txtId()));
+//                    item.put(dttSalesProductQuantityImageData.Property_txtHeaderId, String.valueOf(data.get_txtHeaderId()));
+//                    item.put(dttSalesProductQuantityImageData.Property_txtImage, String.valueOf(data.get_txtImage()));
+//                    item.put(dttSalesProductQuantityImageData.Property_intPosition, String.valueOf(data.get_intPosition()));
+//                    item.put(dttSalesProductQuantityImageData.Property_txtType, String.valueOf(data.get_txtType()));
+//                    itemsListJquey.add(item);
+//                }
+//                resJson.put(dttSalesProductQuantityImageData.Property_ListOftSalesProductQuantityImageData, new JSONArray(itemsListJquey));
+//            }
 
             if (this.getListOftSalesProductHeaderData() != null) {
                 tSalesProductHeaderData dttSalesProductHeaderData = new tSalesProductHeaderData();
