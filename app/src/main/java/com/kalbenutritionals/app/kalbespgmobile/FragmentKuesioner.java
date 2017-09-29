@@ -632,6 +632,8 @@ public class FragmentKuesioner extends Fragment {
                 if ((spinner = (Spinner) jawaban).getSelectedItem().toString().equals("Select One")) {
 //                    tabLayout.getTabAt(i).setCustomView(tab);
                     validate = false;
+                } else if ((spinner = (Spinner) jawaban).getSelectedItem().toString().equals("You Have Finished This Section")){
+                    validate = false;
                 } else {
 //                    tabLayout.getTabAt(i).setCustomView(null);
                 }
@@ -1155,7 +1157,7 @@ public class FragmentKuesioner extends Fragment {
                     modelJawaban.add(dt);
                 }
             }
-            adapter.addFrag(new FragmentKuesionerPart( i + 1, dataPertanyaan.get(i), Integer.parseInt( HMPertanyaan.get(HMPertanyaan.get(dataPertanyaan.get(i)))), modelJawaban), "SOAL " + HMPertanyaan3.get(HMPertanyaan3.get(dataPertanyaan3.get(i))));
+            adapter.addFrag(new FragmentKuesionerPart(HMPertanyaan.get(dataPertanyaan.get(i)), i + 1, dataPertanyaan.get(i), Integer.parseInt( HMPertanyaan.get(HMPertanyaan.get(dataPertanyaan.get(i)))), modelJawaban), "SOAL " + HMPertanyaan3.get(HMPertanyaan3.get(dataPertanyaan3.get(i))));
         }
         viewPager.setAdapter(adapter);
     }

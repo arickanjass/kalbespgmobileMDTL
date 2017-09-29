@@ -75,6 +75,7 @@ public class FragmentKuesionerPart extends Fragment {
     int noSoal;
     String soal, kategori;
     int typeJawaban;
+    String questionId;
     List<jawabanModel> _jawabanModel;
     ListAdapter myAdapter;
     TextView textView, tvFile, tvImg, tvPathFile;
@@ -90,7 +91,8 @@ public class FragmentKuesionerPart extends Fragment {
     private static byte[] phtQuiz;
     clsMainActivity _clsMainActivity = new clsMainActivity();
     private static final String IMAGE_DIRECTORY_NAME = "Image Quiz";
-    public FragmentKuesionerPart(int noSoal, String soal, int typeJawaban, List<jawabanModel> _jawabanModel) {
+    public FragmentKuesionerPart(String questionId,int noSoal, String soal, int typeJawaban, List<jawabanModel> _jawabanModel) {
+        this.questionId = questionId;
         this.noSoal = noSoal;
         this.soal = soal;
         this.typeJawaban = typeJawaban;
@@ -115,8 +117,18 @@ public class FragmentKuesionerPart extends Fragment {
 
             if(_jawabanModel.get(0).getValue().equals("SPG01")){
                 tAbsenUserData dataOutletCheckIn = new tAbsenUserBL().getDataCheckInActive();
+                List<tHirarkiBIS> bisList = new tHirarkiBISBL().GetDataByOutletSpinner(dataOutletCheckIn.get_txtOutletCode(), questionId);
                 List<tHirarkiBIS> listSPG = new tHirarkiBISBL().GetDataByOutlet(dataOutletCheckIn.get_txtOutletCode());
-                if (listSPG.size() > 0) {
+                if (bisList.size()>0 && listSPG.size() > 0){
+                    for (tHirarkiBIS dt : listSPG) {
+                        for (tHirarkiBIS dat : bisList){
+                            if (!dt.get_txtNik().equals(dat.get_txtNik())){
+                                spinnerArray.add(dt.get_txtName());
+                                HMProduct.put(dt.get_txtName(), dt.get_txtNik());
+                            }
+                        }
+                    }
+                } else if (listSPG.size() > 0) {
                     for (tHirarkiBIS dt : listSPG) {
                         spinnerArray.add(dt.get_txtName());
                         HMProduct.put(dt.get_txtName(), dt.get_txtNik());
@@ -136,7 +148,13 @@ public class FragmentKuesionerPart extends Fragment {
                     spinnerArray.add(_jawabanModel.get(i).getKey());
                 }
             }
-            spinnerArray.add("Select One");
+
+            if (spinnerArray.size() ==0 ){
+                spinnerArray.add("You Have Finished This Section");
+                spinnerArray.add("You Have Finished This Section");
+            } else {
+                spinnerArray.add("Select One");
+            }
             final int listsize = spinnerArray.size() - 1;
             Spinner spinner = new Spinner(getContext());
             spinner.setId(noSoal);

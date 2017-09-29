@@ -496,8 +496,8 @@ public class FragmentDownloadData extends Fragment {
             @Override
             public void onClick(View v) {
                 intProcesscancel = 0;
-                AsyncCallQuis1 task1 = new AsyncCallQuis1();
-                task1.execute();
+//                AsyncCallQuis1 task1 = new AsyncCallQuis1();
+//                task1.execute();
                 AsyncCallQuis task = new AsyncCallQuis();
                 task.execute();
 
@@ -1220,11 +1220,11 @@ public class FragmentDownloadData extends Fragment {
                     int boolValid_po = Integer.valueOf(String.valueOf(innerObj_Quiz.get("_pboolValid")));
                     if (boolValid_po == 1) SaveDataQuesioner(Json);
 
-                    Json = new mParentBL().DownlaodDataSPGfromTL(pInfo.versionName);
-                    Iterator y = Json.iterator();
-                    JSONObject innnerObj_SPGFromTL = (JSONObject) y.next();
-                    int boolValid_SPG = Integer.valueOf(String.valueOf(innnerObj_SPGFromTL.get("_pboolValid")));
-                    if (boolValid_SPG == 1) SaveDataSPGFromTL(Json);
+//                    Json = new mParentBL().DownlaodDataSPGfromTL(pInfo.versionName);
+//                    Iterator y = Json.iterator();
+//                    JSONObject innnerObj_SPGFromTL = (JSONObject) y.next();
+//                    int boolValid_SPG = Integer.valueOf(String.valueOf(innnerObj_SPGFromTL.get("_pboolValid")));
+//                    if (boolValid_SPG == 1) SaveDataSPGFromTL(Json);
                 }
 
                 if (ll_dataQuantityStock != null && checkVisibility(ll_dataQuantityStock)) {
@@ -5232,6 +5232,25 @@ public class FragmentDownloadData extends Fragment {
                         _data.set_intTypeQuestionId(String.valueOf(innerObj_TypePertanyaan.get("IntTypeQuestionId")));
                         _data.set_txtTypeQuestion(String.valueOf(innerObj_TypePertanyaan.get("TxtTypeQuestion")));
                         new mTypePertanyaanBL().SaveData(_data);
+                    }
+
+                    JSONArray jsonArray_listSPG = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListDataSpGFromTl_mobile")));
+                    int id = 0;
+                    for (Object aJsonArray_listSPG : jsonArray_listSPG) {
+                        JSONObject innerObj_listSPG = (JSONObject) aJsonArray_listSPG;
+                        tHirarkiBIS _data = new  tHirarkiBIS();
+                        id+=1;
+                        _data.set_intId(String.valueOf(id));
+                        _data.set_txtNik(String.valueOf(innerObj_listSPG .get("IntNIK")));
+                        _data.set_txtName(String.valueOf(innerObj_listSPG.get("TxtName")));
+                        _data.set_txtLOB(String.valueOf(innerObj_listSPG.get("TxtLOB")));
+                        _data.set_intBranchId(String.valueOf(innerObj_listSPG.get("IntBranchId")));
+                        _data.set_txtBranchCode(String.valueOf(innerObj_listSPG.get("TxtBranchCode")));
+                        _data.set_txtBranchName(String.valueOf(innerObj_listSPG.get("TXtBranchName")));
+                        _data.set_intOutletId(String.valueOf(innerObj_listSPG.get("IntOutletId")));
+                        _data.set_txtOutletCode(String.valueOf(innerObj_listSPG.get("TxtOutletName")));
+                        _data.set_txtOutletName(String.valueOf(innerObj_listSPG.get("TxtOutletCode")));
+                        new tHirarkiBISBL().SaveDataSPGFromTL(_data);
                     }
 
                     JSONArray jsonArray_jawabanSPG = new clsHelper() .ResultJsonArray(String.valueOf(innerObj.get("ListtJawabanSPG_mobile")));

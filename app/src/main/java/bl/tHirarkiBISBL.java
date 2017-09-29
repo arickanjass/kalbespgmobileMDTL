@@ -32,4 +32,12 @@ public class tHirarkiBISBL extends clsMainBL {
         db.close();
         return listData;
     }
+
+    public List<tHirarkiBIS> GetDataByOutletSpinner(String txtOutlet, String questionId){
+        SQLiteDatabase _db = getDb();
+        tHirarkiBISDA _tHirarkiBISDA = new tHirarkiBISDA(_db);
+        List<tHirarkiBIS> listData = _tHirarkiBISDA.GetDataByOutletspinner(_db,txtOutlet, questionId);
+        db.close();
+        return listData;
+    }
 }

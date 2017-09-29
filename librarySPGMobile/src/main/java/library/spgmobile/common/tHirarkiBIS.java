@@ -1,5 +1,7 @@
 package library.spgmobile.common;
 
+import library.spgmobile.dal.clsHardCode;
+
 /**
  * Created by Dewi Oktaviani on 11/09/2017.
  */
@@ -95,6 +97,7 @@ public class tHirarkiBIS extends APIData {
     public void set_txtOutletName(String _txtOutletName) {
         this._txtOutletName = _txtOutletName;
     }
+    private static final String TABLE_CONTACT = new clsHardCode().txtTable_tHirarkiBIS;
     public String Property_txtNik = "txtNik";
     public String Property_txtName = "txtName";
     public  String Property_txtLOB = "txtLOB";
@@ -109,4 +112,7 @@ public class tHirarkiBIS extends APIData {
     public String Property_All = Property_txtNik + "," + Property_txtName + "," + Property_txtLOB + ","
             + Property_intBranchId + "," + Property_txtBranchCode + "," + Property_txtBranchName + ","
             + Property_intOutletId + "," + Property_txtOutletCode + "," + Property_txtOutletName;
+    public String Property_Alls = TABLE_CONTACT + "." + Property_txtNik + "," + TABLE_CONTACT + "." + Property_txtName + "," + TABLE_CONTACT + "." + Property_txtLOB + ","
+            + TABLE_CONTACT + "." + Property_intBranchId + ","  + TABLE_CONTACT + "."+ Property_txtBranchCode + ","  + TABLE_CONTACT + "."+ Property_txtBranchName + ","
+            + TABLE_CONTACT + "." + Property_intOutletId + ","  + TABLE_CONTACT + "." + Property_txtOutletCode + ","  + TABLE_CONTACT + "." + Property_txtOutletName;
 }

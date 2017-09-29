@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import library.spgmobile.common.tHirarkiBIS;
+import library.spgmobile.common.tJawabanUserData;
 
 /**
  * Created by Dewi Oktaviani on 11/09/2017.
@@ -15,6 +16,8 @@ import library.spgmobile.common.tHirarkiBIS;
 
 public class tHirarkiBISDA {
     private static final String TABLE_CONTACTS = new clsHardCode().txtTable_tHirarkiBIS;
+    private static final String TABLE_JAWABANSPG = new clsHardCode().txtTable_tJawabanUser;
+    private static final String TABLE_QUESTION = new clsHardCode().txtTable_mPertanyaan;
     public tHirarkiBISDA(SQLiteDatabase db){
         tHirarkiBIS dt = new tHirarkiBIS();
         String CREATE_CONTACTS_TABLE = "CREATE TABLE IF NOT EXISTS "
@@ -62,6 +65,35 @@ public class tHirarkiBISDA {
         List<tHirarkiBIS> contactList = new ArrayList<tHirarkiBIS>();
         tHirarkiBIS dt = new tHirarkiBIS();
         String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " Where " + dt.Property_txtOutletCode + "='" + txtOutlet + "'";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()){
+            do {
+                tHirarkiBIS contact = new tHirarkiBIS();
+                contact.set_txtNik(cursor.getString(0));
+                contact.set_txtName(cursor.getString(1));
+                contact.set_txtLOB(cursor.getString(2));
+                contact.set_intBranchId(cursor.getString(3));
+                contact.set_txtBranchCode(cursor.getString(4));
+                contact.set_txtBranchName(cursor.getString(5));
+                contact.set_intOutletId(cursor.getString(6));
+                contact.set_txtOutletCode(cursor.getString(7));
+                contact.set_txtOutletName(cursor.getString(8));
+                contactList.add(contact);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return contactList;
+    }
+    public List<tHirarkiBIS> GetDataByOutletspinner(SQLiteDatabase db, String txtOutlet, String questionId){
+        List<tHirarkiBIS> contactList = new ArrayList<tHirarkiBIS>();
+        tHirarkiBIS dt = new tHirarkiBIS();
+        tJawabanUserData data = new tJawabanUserData();
+        String selectQuery = "Select " + dt.Property_Alls + " FROM " + TABLE_CONTACTS + " LEFT OUTER JOIN " + TABLE_JAWABANSPG + " ON "
+                + TABLE_CONTACTS + "." + dt.Property_txtNik + "=" + TABLE_JAWABANSPG +  "." + data.Property_txtValue +
+                " Where " + TABLE_CONTACTS + "." +  dt.Property_txtOutletCode + "='" + txtOutlet + "' AND " //+ TABLE_JAWABANSPG +  "." + data.Property_txtValue + " IS NULL OR "
+                + TABLE_JAWABANSPG +  "." + data.Property_intQuestionId + "='" + questionId + "'";
+               // + questionId + "'";// AND " + TABLE_JAWABANSPG +  "." + data.Property_txtValue + " IS NULL ";
+
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()){
             do {
