@@ -412,7 +412,7 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
         }
 
         // set date min today
-        dp.setMinDate(System.currentTimeMillis() - 1000);
+//        dp.setMinDate(System.currentTimeMillis() - 1000);
 
         String qtyProduct = null;
         qtyProduct = editTextQty.getText().toString();
