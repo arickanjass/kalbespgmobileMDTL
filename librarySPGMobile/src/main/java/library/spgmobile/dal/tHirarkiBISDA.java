@@ -84,6 +84,31 @@ public class tHirarkiBISDA {
         cursor.close();
         return contactList;
     }
+
+    public List<tHirarkiBIS> GetAllData(SQLiteDatabase db){
+        List<tHirarkiBIS> contactList = new ArrayList<tHirarkiBIS>();
+        tHirarkiBIS dt = new tHirarkiBIS();
+        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()){
+            do {
+                tHirarkiBIS contact = new tHirarkiBIS();
+                contact.set_txtNik(cursor.getString(0));
+                contact.set_txtName(cursor.getString(1));
+                contact.set_txtLOB(cursor.getString(2));
+                contact.set_intBranchId(cursor.getString(3));
+                contact.set_txtBranchCode(cursor.getString(4));
+                contact.set_txtBranchName(cursor.getString(5));
+                contact.set_intOutletId(cursor.getString(6));
+                contact.set_txtOutletCode(cursor.getString(7));
+                contact.set_txtOutletName(cursor.getString(8));
+                contactList.add(contact);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return contactList;
+    }
+
     public List<tHirarkiBIS> GetDataByOutletspinner(SQLiteDatabase db, String txtOutlet, String questionId){
         List<tHirarkiBIS> contactList = new ArrayList<tHirarkiBIS>();
         tHirarkiBIS dt = new tHirarkiBIS();

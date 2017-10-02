@@ -177,7 +177,7 @@ public class FragmentDownloadData extends Fragment {
     private Spinner spnReso;
     private Spinner spnActivity, spnActivityV2, spnStockIH, spnDataOverStock, spnaddDisplay;
     private Spinner spnCustomerBase;
-    private Spinner spnAbsen, spnQuiz;
+    private Spinner spnAbsen, spnQuiz, spnSPG;
     private Spinner spnkategoryPlanogram,spnAttendanceFpe, spnDataPlanogram, spnDataLeave, spnSubTypeActivity, spnDataPO, spnDataQuantityStock, spnProductComp, spnTypeSubmission, spnProdSPGCusBased, spnProdPICCusBased;
     private LinearLayout ll_subtypeactivity;
     private LinearLayout ll_branch;
@@ -200,7 +200,7 @@ public class FragmentDownloadData extends Fragment {
     private LinearLayout ll_dataQuantityStock;
     private LinearLayout ll_dataKordinasiOutlet;
     private LinearLayout ll_dataCategoryKordinasiOutlet, ll_data_addDisplay;
-    private LinearLayout ll_dataQuesioner,ll_data_planogram, ll_kategoryPlanogram, ll_data_stockIH, ll_outlet, ll_data_overStock;
+    private LinearLayout ll_dataQuesioner,ll_data_planogram, ll_kategoryPlanogram, ll_data_stockIH, ll_outlet, ll_data_overStock, ll_dataSPG;
 
     private PackageInfo pInfo = null;
     private String intRoleId = "";
@@ -252,6 +252,8 @@ public class FragmentDownloadData extends Fragment {
         spnDataQuantityStock = (Spinner) v.findViewById(R.id.spnDataQuantityStock);
         Button btnDataQuantityStock = (Button) v.findViewById(R.id.btnDlDataQuantityStock);
         spnQuiz = (Spinner) v.findViewById(R.id.spnQuiz);
+        spnSPG = (Spinner) v.findViewById(R.id.spnSPG);
+//        Button btnSPG = (Button) v.findViewById(R.id.btnSPG);
         Button btnQuiz = (Button) v.findViewById(R.id.btnQuiz);
         spnProductComp = (Spinner) v.findViewById(R.id.spnProdComp);
         Button btnProductComp = (Button) v.findViewById(R.id.btnProdComp);
@@ -298,6 +300,7 @@ public class FragmentDownloadData extends Fragment {
         ll_dataKordinasiOutlet = (LinearLayout) v.findViewById(R.id.ll_dataKordinasiOutlet);
         ll_dataCategoryKordinasiOutlet = (LinearLayout) v.findViewById(R.id.ll_CategoryKoordinasiOutlet);
         ll_dataQuesioner = (LinearLayout) v.findViewById(R.id.ll_dataQuesioner);
+        ll_dataSPG = (LinearLayout) v.findViewById(R.id.ll_dataSPG);
         ll_subtypeactivity = (LinearLayout) v.findViewById(R.id.ll_subtypeactivity);
         ll_kategoryPlanogram = (LinearLayout) v.findViewById(R.id.ll_kategoryPlanogram);
         ll_data_planogram = (LinearLayout) v.findViewById(R.id.ll_data_planogram);
@@ -595,6 +598,7 @@ public class FragmentDownloadData extends Fragment {
                 ll_kategoriVisitPlan.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_dataQuesioner.getId()))) {
                 ll_dataQuesioner.setVisibility(View.VISIBLE);
+                ll_dataSPG.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_subtypeactivity.getId()))) {
                 ll_subtypeactivity.setVisibility(View.VISIBLE);
             }
@@ -666,6 +670,7 @@ public class FragmentDownloadData extends Fragment {
         List<mTypePertanyaanData> typePertanyaanDataList = new mTypePertanyaanBL().GetAllData();
         List<tGroupQuestionMappingData> tGroupQuestionMappingDataList = new tGroupQuestionMappingBL().GetAllData();
         List<mKategoriData> kategoriDataList = new mKategoriBL().GetAllData();
+        List<tHirarkiBIS> listSPG = new tHirarkiBISBL().GetAllData();
         List<tPurchaseOrderHeaderData> listPurchaseOrderHeaderData = new tPurchaseOrderHeaderBL().getAllPurchaseOrderHeader();
         List<tSalesProductQuantityHeaderData> listQuantityStockHeaderData = new tSalesProductQuantityHeaderBL().getAllSalesQuantityHeader();
         List<tOverStockHeaderData> listOverStockHeaderData = new tOverStockHeaderBL().getAllOverStockHeader();
@@ -800,6 +805,20 @@ public class FragmentDownloadData extends Fragment {
                     android.R.layout.simple_spinner_item, strip);
             spnQuiz.setAdapter(adapterspn);
             spnQuiz.setEnabled(false);
+        }
+
+        arrData = new ArrayList<>();
+        if (listSPG.size() > 0) {
+            for (tHirarkiBIS dt : listSPG){
+                arrData.add(dt.get_txtName());
+            }
+            spnSPG.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
+            spnSPG.setEnabled(true);
+        } else {
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<>(getContext(),
+                    android.R.layout.simple_spinner_item, strip);
+            spnSPG.setAdapter(adapterspn);
+            spnSPG.setEnabled(false);
         }
 
         arrData = new ArrayList<>();

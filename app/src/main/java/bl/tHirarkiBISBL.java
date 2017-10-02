@@ -40,4 +40,12 @@ public class tHirarkiBISBL extends clsMainBL {
         db.close();
         return listData;
     }
+
+    public List<tHirarkiBIS> GetAllData(){
+        SQLiteDatabase _db = getDb();
+        tHirarkiBISDA _tHirarkiBISDA = new tHirarkiBISDA(_db);
+        List<tHirarkiBIS> listData = _tHirarkiBISDA.GetAllData(_db);
+        db.close();
+        return listData;
+    }
 }
