@@ -1500,6 +1500,7 @@ public class dataJson {
 
         }
         resJson.put(Property_intResult, getIntResult());
+        resJson.put(Property_txtBranchCode, get_txtBranchCode());
         resJson.put(Property_dtDate, get_dtDate());
         resJson.put(Property_txtDescription, getTxtDescription());
         resJson.put(Property_txtMessage, getTxtMessage());
@@ -2118,6 +2119,16 @@ public class dataJson {
 
     private String _intRoleId;
 
+    public String get_txtBranchCode() {
+        return _txtBranchCode;
+    }
+
+    public void set_txtBranchCode(String _txtBranchCode) {
+        this._txtBranchCode = _txtBranchCode;
+    }
+
+    private String _txtBranchCode;
+
     public String get_txtEmpId() {
         return _txtEmpId;
     }
@@ -2138,6 +2149,7 @@ public class dataJson {
 
     private String _dtDate;
 
+    private String Property_txtBranchCode = "txtBranchCode";
     private String Property_dtDate = "dtDate";
     private String Property_txtEmpId = "txtEmpId";
     private String Property_intRoleId = "intRoleId";

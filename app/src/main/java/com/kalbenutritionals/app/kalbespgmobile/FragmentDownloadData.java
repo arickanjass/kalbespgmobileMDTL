@@ -1438,7 +1438,7 @@ public class FragmentDownloadData extends Fragment {
             }
             if (ll_dataQuesioner != null && checkVisibility(ll_dataQuesioner)) {
                 dtJson.getDtdataJson().getDtmParentData().setBoolValid("1");
-                dtJson.getDtdataJson().getDttHirarkiBIS().setBoolValid("1");
+//                dtJson.getDtdataJson().getDttHirarkiBIS().setBoolValid("1");
             }
             //transaksi
             if (ll_dataVisitPlan != null && checkVisibility(ll_dataVisitPlan)) {
@@ -1705,20 +1705,20 @@ public class FragmentDownloadData extends Fragment {
                                         }
                                     }
 
-                                    //belum bener list json Array
-                                    JSONArray jsonArray_HirarkiBIS = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOftHirartkiBis_mobile")));
-                                    if (jsonArray_HirarkiBIS != null) {
-                                        for (Object aJsonArray_header : jsonArray_HirarkiBIS) {
-                                            JSONObject innerObj_header = (JSONObject) aJsonArray_header;
-                                            String boolValid = String.valueOf(innerObj_header.get("_pboolValid"));
-                                            String pstrMess = String.valueOf(innerObj_header.get("_pstrMessage"));
-                                            if(boolValid.equals("1")){
-                                                SaveDataSPGFromTL(jsonArray_HirarkiBIS);
-                                            } else if(boolValid.equals("0")){
-                                            }
-                                            break;
-                                        }
-                                    }
+//                                    //belum bener list json Array
+//                                    JSONArray jsonArray_HirarkiBIS = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOftHirartkiBis_mobile")));
+//                                    if (jsonArray_HirarkiBIS != null) {
+//                                        for (Object aJsonArray_header : jsonArray_HirarkiBIS) {
+//                                            JSONObject innerObj_header = (JSONObject) aJsonArray_header;
+//                                            String boolValid = String.valueOf(innerObj_header.get("_pboolValid"));
+//                                            String pstrMess = String.valueOf(innerObj_header.get("_pstrMessage"));
+//                                            if(boolValid.equals("1")){
+//                                                SaveDataSPGFromTL(jsonArray_HirarkiBIS);
+//                                            } else if(boolValid.equals("0")){
+//                                            }
+//                                            break;
+//                                        }
+//                                    }
 
                                     //belum bener list json Array
                                     JSONArray jsonArray_TransaksiVisitPlanAll = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOftTransaksiVisitPlanAll")));

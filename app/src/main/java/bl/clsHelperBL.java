@@ -1005,6 +1005,7 @@ public class clsHelperBL extends clsMainBL {
             dtPush.set_txtSessionLoginId(_tUserLoginData.get_txtDataId());
             dtPush.set_intRoleId(_tUserLoginData.get_txtRoleId());
             dtPush.set_txtEmpId(_tUserLoginData.get_TxtEmpId());
+            dtPush.set_txtBranchCode(_tUserLoginData.get_txtBranchCode());
 
 //            try {
 //                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
