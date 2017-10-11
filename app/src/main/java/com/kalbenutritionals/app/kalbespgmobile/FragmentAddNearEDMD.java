@@ -136,6 +136,10 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
         before2 = (ImageView) v.findViewById(R.id.imageBefore2);
 //        editTextQty = (EditText) v.findViewById(R.id.editTextQty);
 
+        edKeterangan.setVisibility(View.GONE);
+        TextView tvket = (TextView) v.findViewById(R.id.txtKet_quantity);
+        tvket.setVisibility(View.GONE);
+
         _clsMainActivity = new clsMainActivity();
         dtQuantityData = new tSalesProductQuantityHeaderData();
         txtHDId.setText(String.valueOf(new clsMainActivity().GenerateGuid()));
@@ -362,7 +366,7 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
 //        List<tSalesProductQuantityDetailData> dataProduct = null;
 
         List<String> dataProductKalbe = new ArrayList<>();
-        List<mEmployeeSalesProductData> listDataProductKalbe = new mEmployeeSalesProductBL().GetAllData();
+        List<mEmployeeSalesProductData> listDataProductKalbe = new mEmployeeSalesProductBL().getAllDataNotWhere();
 //        modelItems = new ArrayList<>();
 
 //        editTextQty.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -829,6 +833,7 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
             swplist.set_txtTitle("Product : " + data.getTxtProduct());
             swplist.set_txtDescription("Total Product : " + data.getTxtQuantity() +" pcs");
             swplist.set_txtDescription2("ED : " + ed);
+            swplist.set_txtDescription3("Desc : " + data.get_txtKeterangan());
             swipeList.add(swplist);
         }
 

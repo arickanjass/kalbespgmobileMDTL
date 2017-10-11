@@ -540,6 +540,7 @@ public class Login extends clsMainActivity {
                                 data.set_intVersionApp((String) innerObjDetail.get("_intVersionApp"));
                                 data.set_txtTypeApp((String) innerObjDetail.get("_txtTypeApp"));
                                 data.set_txtVersion((String) innerObjDetail.get("_txtVersion"));
+                                data.set_txtMasterDataName((String) innerObjDetail.get("_txtMasterDataName"));
                                 listDatamDownloadData.add(data);
                             }
                             new mDownloadMasterData_mobileBL().SaveData(listDatamDownloadData);

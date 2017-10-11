@@ -100,4 +100,13 @@ public class mListJawabanDA {
         cursor.close();
         return contact;
     }
+    // Getting contacts Count
+    public int getContactsCount(SQLiteDatabase db) {
+        String countQuery = "SELECT * FROM " + TABLE_CONTACTS;
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int countData = cursor.getCount();
+        cursor.close();
+        // return count
+        return countData;
+    }
 }

@@ -69,6 +69,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import adapter.AppAdapterViewCusBase;
+import adapter.GridAdapter;
 import addons.adapter.AdapterListProductCustomerBased;
 import addons.adapter.AdapterListVisitplan;
 import addons.zoomview.CustomZoomView;
@@ -501,6 +502,22 @@ public class clsMainActivity extends Activity {
 
     }
 
+    public GridAdapter setGridDownloadData(Context _ctx, final List<clsSwipeList> swipeList) {
+        final GridAdapter mAdapter;
+
+        List<clsSwipeList> mAppList = new ArrayList<clsSwipeList>();
+
+        for (int i = 0; i < swipeList.size(); i++) {
+            clsSwipeList getswipeList = swipeList.get(i);
+            mAppList.add(getswipeList);
+        }
+
+        mAdapter = new GridAdapter(_ctx, mAppList);
+
+        return mAdapter;
+
+    }
+
 
     public AppAdapter setList2(Context _ctx, final List<clsSwipeList> swipeList) {
         final AppAdapter mAdapter;
@@ -566,7 +583,7 @@ public class clsMainActivity extends Activity {
 
         for (int i = 0; i < swipeList.size(); i++) {
             clsSwipeList getswipeList = swipeList.get(i);
-            mAppList.add(getswipeList.get_txtTitle() + "\n" + getswipeList.get_txtDescription() + "\n" + getswipeList.get_txtDescription2());
+            mAppList.add(getswipeList.get_txtTitle() + "\n" + getswipeList.get_txtDescription() + "\n" + getswipeList.get_txtDescription2()+ "\n"+getswipeList.get_txtDescription3());
         }
 
         mAdapter = new AppAdapter(_ctx, mAppList);
@@ -609,6 +626,14 @@ public class clsMainActivity extends Activity {
                         int icon = R.drawable.ic_shopping_cart;
                         menuItem.setIcon(icon);
                         menuItem.setBackground(new ColorDrawable(Color.parseColor("#27ae60")));
+                    } else if (map2.get("name") == "ViewData") {
+                        int icon = R.drawable.ic_view_data;
+                        menuItem.setIcon(icon);
+                        menuItem.setBackground(new ColorDrawable(Color.parseColor("#16a085")));
+                    } else if (map2.get("name") == "ViewImage") {
+                        int icon = R.drawable.ic_view_image;
+                        menuItem.setIcon(icon);
+                        menuItem.setBackground(new ColorDrawable(Color.parseColor("#ffa200")));
                     }
                     menu.addMenuItem(menuItem);
                 }

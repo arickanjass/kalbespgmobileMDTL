@@ -60,6 +60,16 @@ public class mDownloadMasterData_mobileData {
     public String _intVersionApp;
     public String _txtTypeApp;
 
+    public String get_txtMasterDataName() {
+        return _txtMasterDataName;
+    }
+
+    public void set_txtMasterDataName(String _txtMasterDataName) {
+        this._txtMasterDataName = _txtMasterDataName;
+    }
+
+    public String _txtMasterDataName;
+
     public String get_txtVersion() {
         return _txtVersion;
     }
@@ -78,7 +88,7 @@ public class mDownloadMasterData_mobileData {
     public mDownloadMasterData_mobileData(String _intId, String _intModule,
                                           String _txtModuleName,
                                           String _txtMasterData, String _intVersionApp,
-                                          String _txtTypeApp, String _txtVersion) {
+                                          String _txtTypeApp, String _txtVersion, String _txtMasterDataName) {
         this._intId = _intId;
         this._intModule = _intModule;
         this._txtModuleName = _txtModuleName;
@@ -86,17 +96,19 @@ public class mDownloadMasterData_mobileData {
         this._intVersionApp = _intVersionApp;
         this._txtTypeApp = _txtTypeApp;
         this._txtVersion = _txtVersion;
+        this._txtMasterDataName = _txtMasterDataName;
     }
 
     public String Property_intId="intId";
     public String Property_intModule="intModule";
     public String Property_txtModuleName="txtModuleName";
     public String Property_txtMasterData="txtMasterData";
+    public String Property_txtMasterDataName="txtMasterDataName";
     public String Property_intVersionApp="intVersionApp";
     public String Property_txtTypeApp="txtTypeApp";
     public String Property_txtVersion="txtVersion";
     public String Property_All= Property_intId +","+ Property_intModule+","+Property_txtModuleName+","+
-            Property_txtMasterData+","+Property_intVersionApp+","+Property_txtTypeApp+","+Property_txtVersion;
+            Property_txtMasterData+","+Property_intVersionApp+","+Property_txtTypeApp+","+Property_txtVersion+","+Property_txtMasterDataName;
 
 
 }

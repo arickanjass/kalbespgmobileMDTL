@@ -427,13 +427,13 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
                     alertDialogBuilder.setView(promptView);
                     alertDialogBuilder
                             .setCancelable(false)
-                            .setPositiveButton("Submit",
+                            .setPositiveButton("Save",
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
                                             final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
                                             alertDialog.setTitle("Confirm");
                                             alertDialog.setMessage("Are you sure?");
-                                            alertDialog.setPositiveButton("SUBMIT", new DialogInterface.OnClickListener() {
+                                            alertDialog.setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
                                                     saveReso();
@@ -516,7 +516,7 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
         dt.set_intSumAmount(String.valueOf(result));
         dt.set_UserId(_viAbsenData.get_txtUserId());
         dt.set_txtRoleId(_viAbsenData.get_txtRoleId());
-        dt.set_intSubmit("1");
+        dt.set_intSubmit("0");
         dt.set_intSync("0");
         dt.set_txtBranchCode(_viAbsenData.get_txtBranchCode());
         dt.set_txtBranchName(_viAbsenData.get_txtBranchName());
@@ -784,7 +784,7 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
         protected final ArrayList<ModelListview> doInBackground(ArrayList<ModelListview>... params) {
             //android.os.Debug.waitForDebugger();
 
-            List<mEmployeeSalesProductData> employeeSalesProductDataList = new mEmployeeSalesProductBL().GetAllData();
+            List<mEmployeeSalesProductData> employeeSalesProductDataList = new mEmployeeSalesProductBL().getAllDataNotWhere();
 
             modelItems = new ArrayList<>();
 

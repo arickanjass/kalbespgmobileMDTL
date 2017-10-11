@@ -1368,6 +1368,100 @@
 
                 </LinearLayout>
 
+                <!--data kemasan rusak-->
+
+                <LinearLayout
+                    android:id="@+id/ll_data_kemasanrusak"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/txtVwDatakemasanrusak"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/view10"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Kemasan Rusak"
+                        android:textColor="#000" />
+
+                    <Spinner
+                        android:id="@+id/spnDatakemasanrusak"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtVwDatakemasanrusak"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/bg_edtext" />
+
+                    <Button
+                        android:id="@+id/btnDatakemasanrusak"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/spnDatakemasanrusak"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/btn_on_click"
+                        android:text="Download Data Kemasan Rusak" />
+
+                    <View
+                        android:id="@+id/viewDatakemasanrusak"
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/btnDataOverStock"
+                        android:layout_marginTop="10dp"
+                        android:background="#bfbfbf" />
+
+                </LinearLayout>
+
+                <!--data tidak sesuai pesanan-->
+
+                <LinearLayout
+                    android:id="@+id/ll_data_tidaksesuaipesanan"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/txtVwDatatidaksesuaipesanan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/view10"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Tidak Sesuai Pesanan Outlet"
+                        android:textColor="#000" />
+
+                    <Spinner
+                        android:id="@+id/spnDatatidaksesuaipesanan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtVwDatakemasanrusak"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/bg_edtext" />
+
+                    <Button
+                        android:id="@+id/btnDatatidaksesuaipesanan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/spnDatatidaksesuaipesanan"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/btn_on_click"
+                        android:text="Download Data Tidak Sesuai Pesanan" />
+
+                    <View
+                        android:id="@+id/viewDatatidaksesuaipesanan"
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/btnDatatidaksesuaipesanan"
+                        android:layout_marginTop="10dp"
+                        android:background="#bfbfbf" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
             <!--<View-->

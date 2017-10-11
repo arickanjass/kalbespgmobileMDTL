@@ -42,6 +42,13 @@ public class mDownloadMasterData_mobileBL extends clsMainBL {
         db.close();
         return ListData;
     }
+    public List<mDownloadMasterData_mobileData> getAllDataDistict(){
+        SQLiteDatabase db=getDb();
+        mDownloadMasterData_mobileDA _mDownloadMasterData_mobileDA=new mDownloadMasterData_mobileDA(db);
+        List<mDownloadMasterData_mobileData>ListData=_mDownloadMasterData_mobileDA.getAllDataDistict(db);
+        db.close();
+        return ListData;
+    }
     public int getContactCount(){
         int count = 0;
         mDownloadMasterData_mobileDA _mDownloadMasterData_mobileDA=new mDownloadMasterData_mobileDA(db);

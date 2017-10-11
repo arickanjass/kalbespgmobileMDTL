@@ -120,7 +120,13 @@ public class mEmployeeSalesProductBL extends clsMainBL{
 		db.close();
 		return ListData;
 	}
-
+	public List<mEmployeeSalesProductData> getAllDataNotWhere(){
+		SQLiteDatabase db=getDb();
+		mEmployeeSalesProductDA _mEmployeeSalesProductDA= new mEmployeeSalesProductDA(db);
+		List<mEmployeeSalesProductData>ListData=_mEmployeeSalesProductDA.getAllDataNotWhere(db);
+		db.close();
+		return ListData;
+	}
 	public List<mEmployeeSalesProductData> GetDataByProductName(String Name){
 		SQLiteDatabase db=getDb();
 		mEmployeeSalesProductDA _mEmployeeSalesProductDA= new mEmployeeSalesProductDA(db);

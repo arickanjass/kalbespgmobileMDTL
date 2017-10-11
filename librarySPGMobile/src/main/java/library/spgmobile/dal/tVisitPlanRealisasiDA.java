@@ -777,4 +777,15 @@ public class tVisitPlanRealisasiDA {
         // return count
         return num;
     }
+    // Getting contacts Count
+    public int getContactsCount(SQLiteDatabase db) {
+        tVisitPlanRealisasiData dt = new tVisitPlanRealisasiData();
+        String countQuery = "SELECT * FROM " + TABLE_CONTACTS;
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int num =cursor.getCount();
+        cursor.close();
+
+        // return count
+        return num;
+    }
 }

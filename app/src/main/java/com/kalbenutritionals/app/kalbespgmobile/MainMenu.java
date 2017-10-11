@@ -57,6 +57,7 @@ import bl.tAbsenUserBL;
 import bl.tAttendanceUserBL;
 import bl.tDisplayPictureBL;
 import bl.tNotificationBL;
+import bl.tPlanogramMobileBL;
 import bl.tUserLoginBL;
 import bl.tVisitPlanRealisasiBL;
 import come.example.viewbadger.ShortcutBadger;
@@ -67,6 +68,7 @@ import library.spgmobile.common.mMenuData;
 import library.spgmobile.common.tAbsenUserData;
 import library.spgmobile.common.tAttendanceUserData;
 import library.spgmobile.common.tNotificationData;
+import library.spgmobile.common.tPlanogramMobileData;
 import library.spgmobile.common.tUserLoginData;
 import library.spgmobile.common.tVisitPlanRealisasiData;
 import library.spgmobile.common.visitplanAbsenData;
@@ -514,13 +516,24 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                                 .setCancelable(false)
                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
+
+                                        //update data visit
                                         tVisitPlanRealisasiData data = new tVisitPlanRealisasiData();
                                         data = dtRealisasi;
                                         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                         Calendar cal = Calendar.getInstance();
+                                        data.set_intSubmit("1");
                                         data.set_dateCheckout(dateFormat.format(cal.getTime()));
                                         data.set_intPush("0");
                                         new tVisitPlanRealisasiBL().UpdateData(data);
+
+                                        //update data planogram status save
+                                        List<tPlanogramMobileData> _tPlanogramMobileData = new tPlanogramMobileBL().getAllHeaderByOutletCodeUnsubmit(dtRealisasi.get_txtOutletCode());
+                                        for(tPlanogramMobileData dttPlanogramMobileData : _tPlanogramMobileData){
+                                            dttPlanogramMobileData.set_intSubmit("1");
+                                            new tPlanogramMobileBL().saveData(dttPlanogramMobileData);
+                                        }
+
                                         finish();
                                         Intent nextScreen = new Intent(getApplicationContext(), MainMenu.class);
                                         nextScreen.putExtra("keyMainMenu", "main_menu");

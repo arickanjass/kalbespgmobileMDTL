@@ -26,7 +26,9 @@ import library.spgmobile.common.tAbsenUserData;
 import library.spgmobile.common.tActivityData;
 import library.spgmobile.common.tActivityMobileData;
 import library.spgmobile.common.tAttendanceUserData;
+import library.spgmobile.common.tHirarkiBIS;
 import library.spgmobile.common.tJawabanUserData;
+import library.spgmobile.common.tKemasanRusakHeaderData;
 import library.spgmobile.common.tLeaveMobileData;
 import library.spgmobile.common.tOverStockHeaderData;
 import library.spgmobile.common.tPlanogramMobileData;
@@ -38,22 +40,45 @@ import library.spgmobile.common.tSalesProductQuantityDetailData;
 import library.spgmobile.common.tSalesProductQuantityHeaderData;
 import library.spgmobile.common.tSalesProductQuantityImageData;
 import library.spgmobile.common.tStockInHandHeaderData;
+import library.spgmobile.common.tTidakSesuaiPesananHeaderData;
 import library.spgmobile.common.tUserLoginData;
 import library.spgmobile.common.tVisitPlanRealisasiData;
 import library.spgmobile.common.trackingLocationData;
 import library.spgmobile.dal.KoordinasiOutletDA;
 import library.spgmobile.dal.KoordinasiOutletImageDA;
+import library.spgmobile.dal.clsEnumDownloadData;
 import library.spgmobile.dal.clsHardCode;
 import library.spgmobile.dal.enumConfigData;
 import library.spgmobile.dal.enumRole;
 import library.spgmobile.dal.enumStatusMenuStart;
+import library.spgmobile.dal.mCategoryKoordinasiOutletDA;
+import library.spgmobile.dal.mCategoryVisitPlanDA;
+import library.spgmobile.dal.mEmployeeAreaDA;
+import library.spgmobile.dal.mEmployeeBranchDA;
+import library.spgmobile.dal.mEmployeeSalesProductDA;
+import library.spgmobile.dal.mKategoriDA;
+import library.spgmobile.dal.mListJawabanDA;
 import library.spgmobile.dal.mMenuDA;
+import library.spgmobile.dal.mParentDA;
+import library.spgmobile.dal.mPertanyaanDA;
+import library.spgmobile.dal.mProductBrandHeaderDA;
+import library.spgmobile.dal.mProductCompetitorDA;
+import library.spgmobile.dal.mProductPICDA;
+import library.spgmobile.dal.mProductSPGDA;
+import library.spgmobile.dal.mTypeLeaveMobileDA;
+import library.spgmobile.dal.mTypePertanyaanDA;
+import library.spgmobile.dal.mTypeSubmissionMobileDA;
 import library.spgmobile.dal.mconfigDA;
 import library.spgmobile.dal.tAbsenUserDA;
 import library.spgmobile.dal.tActivityDA;
 import library.spgmobile.dal.tActivityMobileDA;
 import library.spgmobile.dal.tAttendanceUserDA;
+import library.spgmobile.dal.tCustomerBasedMobileHeaderDA;
+import library.spgmobile.dal.tGroupQuestionMappingDA;
+import library.spgmobile.dal.tHirarkiBISDA;
 import library.spgmobile.dal.tJawabanUserDA;
+import library.spgmobile.dal.tKategoryPlanogramMobileDA;
+import library.spgmobile.dal.tKemasanRusakHeaderDA;
 import library.spgmobile.dal.tLeaveMobileDA;
 import library.spgmobile.dal.tOverStockHeaderDA;
 import library.spgmobile.dal.tPlanogramMobileDA;
@@ -65,6 +90,8 @@ import library.spgmobile.dal.tSalesProductQuantityDetailDA;
 import library.spgmobile.dal.tSalesProductQuantityHeaderDA;
 import library.spgmobile.dal.tSalesProductQuantityImageDA;
 import library.spgmobile.dal.tStockInHandHeaderDA;
+import library.spgmobile.dal.tSubTypeActivityDA;
+import library.spgmobile.dal.tTidakSesuaiPesananHeaderDA;
 import library.spgmobile.dal.tUserLoginDA;
 import library.spgmobile.dal.tVisitPlanRealisasiDA;
 import library.spgmobile.dal.trackingLocationDA;
@@ -145,11 +172,13 @@ public class clsMainBL {
 
 		tStockInHandHeaderDA _tStockInHandHeaderDA = new tStockInHandHeaderDA(db);
 		tSalesProductQuantityHeaderDA _tSalesProductQuantityHeaderDA = new tSalesProductQuantityHeaderDA(db);
+		tKemasanRusakHeaderDA _tKemasanRusakHeaderDA = new tKemasanRusakHeaderDA(db);
 		tOverStockHeaderDA _tOverStockHeaderDA = new tOverStockHeaderDA(db);
 		tPlanogramMobileDA _tPlanogramMobileDA = new tPlanogramMobileDA(db);
 		tActivityMobileDA _tActivityMobileDA = new tActivityMobileDA(db);
 		tJawabanUserDA _tJawabanUserDA = new tJawabanUserDA(db);
 		KoordinasiOutletDA _KoordinasiOutletDA = new KoordinasiOutletDA(db);
+		tTidakSesuaiPesananHeaderDA _tTidakSesuaiPesananHeaderDA = new tTidakSesuaiPesananHeaderDA(db);
 		tAttendanceUserDA _tAttendanceUserDA = new tAttendanceUserDA(db);
 
     	mMenuDA _mMenuDA=new mMenuDA(db);
@@ -168,11 +197,13 @@ public class clsMainBL {
 
 			List<tStockInHandHeaderData> listStockInHand = _tStockInHandHeaderDA.getAllDataToPushData(db);
 			List<tSalesProductQuantityHeaderData> listtSalesProductQuantity = _tSalesProductQuantityHeaderDA.getAllDataToPushData(db);
+			List<tKemasanRusakHeaderData> listtKemasanRusakHeaderData = _tKemasanRusakHeaderDA.getAllDataToPushData(db);
 			List<tOverStockHeaderData> listtOverStockHeader = _tOverStockHeaderDA.getAllDataToPushData(db);
 			List<tPlanogramMobileData> listtPlanogram = _tPlanogramMobileDA.getAllDataToPushData(db);
 			List<tActivityMobileData> listtActivityMobile = _tActivityMobileDA.getAllDataToPushData(db);
 			List<tJawabanUserData> listJawabanUser = _tJawabanUserDA.GetDataToPushAnswer(db);
 			List<KoordinasiOutletData> listKoordinasiOutlet = _KoordinasiOutletDA.getAllDataToPushData(db);
+			List<tTidakSesuaiPesananHeaderData> listtTidakSesuaiPesananHeaderData = _tTidakSesuaiPesananHeaderDA.getAllDataToPushData(db);
 			List<tAttendanceUserData> listAttendanceUser = _tAttendanceUserDA.getAllDataToPushData(db);
 
     		if(listDataPush != null && dvalid==false){
@@ -205,6 +236,9 @@ public class clsMainBL {
 			if(listtSalesProductQuantity != null && dvalid==false){
 				dvalid=true;
 			}
+			if(listtKemasanRusakHeaderData != null && dvalid==false){
+				dvalid=true;
+			}
 			if(listtOverStockHeader != null && dvalid==false){
 				dvalid=true;
 			}
@@ -218,6 +252,9 @@ public class clsMainBL {
 				dvalid=true;
 			}
 			if(listKoordinasiOutlet != null && dvalid==false){
+				dvalid=true;
+			}
+			if(listtTidakSesuaiPesananHeaderData != null && dvalid==false){
 				dvalid=true;
 			}
 			if(listAttendanceUser != null && dvalid==false){
@@ -235,6 +272,117 @@ public class clsMainBL {
     	this.db.close();
     	return _clsStatusMenuStart;
 	}
+
+	public String getValueItemDownloadData(String txtMasterData){
+		int value = 0;
+		String tmpvalue ="0";
+
+//        List<trackingLocationData> listtrackingLocationData = new trackingLocationBL().getAllDataTrackingLocation();
+
+		if(txtMasterData.equals(clsEnumDownloadData.ll_kategoriVisitPlan.name())){
+			value = new mCategoryVisitPlanDA(db).getContactsCount(db);
+		}
+		if(txtMasterData.equals(clsEnumDownloadData.ll_dataVisitPlan.name())){
+			value = new tVisitPlanRealisasiDA(db).getContactsCount(db);
+		}
+		if(txtMasterData.equals(clsEnumDownloadData.ll_branch.name())){
+			value = new mEmployeeBranchDA(db).getContactsCount(db);
+		}
+		if(txtMasterData.equals(clsEnumDownloadData.ll_outlet.name())){
+			value = new mEmployeeAreaDA(db).getContactsCount(db);
+		}
+		if(txtMasterData.equals(clsEnumDownloadData.ll_product.name())){
+			value = new mEmployeeSalesProductDA(db).getContactsCount(db);
+		}
+		if(txtMasterData.equals(clsEnumDownloadData.ll_type_leave.name())){
+			value = new mTypeLeaveMobileDA(db).getContactsCount(db);
+		}
+		if(txtMasterData.equals(clsEnumDownloadData.ll_brand.name())){
+			value = new mProductBrandHeaderDA(db).getContactsCount(db);
+		}
+		if(txtMasterData.equals(clsEnumDownloadData.ll_reso.name())){
+			value = new tSalesProductHeaderDA(db).getContactsCount(db);
+		}
+		if(txtMasterData.equals(clsEnumDownloadData.ll_data_reso.name())){
+			value = new tSalesProductHeaderDA(db).getContactsCount(db);
+		}
+		if(txtMasterData.equals(clsEnumDownloadData.ll_data_stockIH.name())){
+			value = new tStockInHandHeaderDA(db).getContactsCount(db);
+		}
+		if(txtMasterData.equals(clsEnumDownloadData.ll_customerbased.name())){
+			value = new tCustomerBasedMobileHeaderDA(db).getContactsCount(db);
+		}
+		if(txtMasterData.equals(clsEnumDownloadData.ll_data_customerbased.name())){
+			value = new tCustomerBasedMobileHeaderDA(db).getContactsCount(db);
+		}
+		if(txtMasterData.equals(clsEnumDownloadData.ll_activity.name())){
+			value = new tActivityDA(db).getContactsCount(db);
+		}
+		if(txtMasterData.equals(clsEnumDownloadData.ll_data_activity.name())){
+			value = new tActivityDA(db).getContactsCount(db);
+		}
+		if(txtMasterData.equals(clsEnumDownloadData.ll_data_activityV2.name())){
+			value = new tActivityMobileDA(db).getContactsCount(db);
+		}
+		if(txtMasterData.equals(clsEnumDownloadData.ll_absen.name())){
+			value = new tAbsenUserDA(db).getContactsCount(db);
+		}
+		if(txtMasterData.equals(clsEnumDownloadData.ll_data_attendance.name())){
+			value = new tAttendanceUserDA(db).getContactsCount(db);
+		}
+		if(txtMasterData.equals(clsEnumDownloadData.ll_dataQuesioner.name())){
+			int parent = new mParentDA(db).getContactsCount(db);
+			int mPertanyaan = new mPertanyaanDA(db).getContactsCount(db);
+			int typePertanyaanData = new mTypePertanyaanDA(db).getContactsCount(db);
+			int tGroupQuestionMappingData = new tGroupQuestionMappingDA(db).getContactsCount(db);
+			int kategoriData = new mKategoriDA(db).getContactsCount(db);
+			if(parent>0&&mPertanyaan>0&&typePertanyaanData>0&&tGroupQuestionMappingData>0&&kategoriData>0){
+				value = parent;
+			}
+		}
+		if(txtMasterData.equals(clsEnumDownloadData.ll_dataSPG.name())){
+			value = new tHirarkiBISDA(db).getContactsCount(db);
+		}
+		if(txtMasterData.equals(clsEnumDownloadData.ll_purchase_order.name())){
+			value = new tPurchaseOrderHeaderDA(db).getContactCountPO(db);
+		}
+		if(txtMasterData.equals(clsEnumDownloadData.ll_dataPurchaseOrder.name())){
+			value = new tPurchaseOrderHeaderDA(db).getContactCountPO(db);
+		}
+		if(txtMasterData.equals(clsEnumDownloadData.ll_dataQuantityStock.name())){
+			value = new tSalesProductQuantityHeaderDA(db).getContactsCount(db);
+		}
+		if(txtMasterData.equals(clsEnumDownloadData.ll_data_overStock.name())){
+			value = new tOverStockHeaderDA(db).getContactsCount(db);
+		}
+		if(txtMasterData.equals(clsEnumDownloadData.ll_product_competitor.name())){
+			value = new mProductCompetitorDA(db).getContactsCount(db);
+		}
+		if(txtMasterData.equals(clsEnumDownloadData.ll_dataKordinasiOutlet.name())){
+			value = new KoordinasiOutletDA(db).getContactsCount(db);
+		}
+		if(txtMasterData.equals(clsEnumDownloadData.ll_CategoryKoordinasiOutlet.name())){
+			value = new mCategoryKoordinasiOutletDA(db).getContactsCount(db);
+		}
+		if(txtMasterData.equals(clsEnumDownloadData.ll_type_submission.name())){
+			value = new mTypeSubmissionMobileDA(db).getContactsCount(db);
+		}
+		if(txtMasterData.equals(clsEnumDownloadData.ll_product_pic.name())){
+			value = new mProductPICDA(db).getContactsCount(db);
+		}
+		if(txtMasterData.equals(clsEnumDownloadData.ll_subtypeactivity.name())){
+			value = new tSubTypeActivityDA(db).getContactsCount(db);
+		}
+		if(txtMasterData.equals(clsEnumDownloadData.ll_data_planogram.name())){
+			value = new tPlanogramMobileDA(db).getContactsCount(db);
+		}
+		if(txtMasterData.equals(clsEnumDownloadData.ll_kategoryPlanogram.name())){
+			value = new tKategoryPlanogramMobileDA(db).getContactsCount(db);
+		}
+
+		return String.valueOf(value);
+	}
+
 	public clsRole checkUserRole() throws ParseException{
 		clsRole _clsRole = new clsRole();
 		tUserLoginData dt = new tUserLoginBL().getUserActive();

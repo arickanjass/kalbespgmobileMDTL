@@ -43,6 +43,8 @@ import bl.tCustomerBasedMobileHeaderBL;
 import bl.tGroupQuestionMappingBL;
 import bl.tJawabanUserBL;
 import bl.tJawabanUserHeaderBL;
+import bl.tKemasanRusakDetailBL;
+import bl.tKemasanRusakHeaderBL;
 import bl.tOverStockDetailBL;
 import bl.tOverStockHeaderBL;
 import bl.tPlanogramMobileBL;
@@ -54,6 +56,7 @@ import bl.tSalesProductQuantityDetailBL;
 import bl.tSalesProductQuantityHeaderBL;
 import bl.tStockInHandDetailBL;
 import bl.tStockInHandHeaderBL;
+import bl.tTidakSesuaiPesananHeaderBL;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 import library.spgmobile.common.KoordinasiOutletData;
 import library.spgmobile.common.ReportTable;
@@ -71,6 +74,8 @@ import library.spgmobile.common.tCustomerBasedMobileHeaderData;
 import library.spgmobile.common.tGroupQuestionMappingData;
 import library.spgmobile.common.tJawabanUserData;
 import library.spgmobile.common.tJawabanUserHeaderData;
+import library.spgmobile.common.tKemasanRusakDetailData;
+import library.spgmobile.common.tKemasanRusakHeaderData;
 import library.spgmobile.common.tOverStockDetailData;
 import library.spgmobile.common.tOverStockHeaderData;
 import library.spgmobile.common.tPlanogramMobileData;
@@ -82,6 +87,7 @@ import library.spgmobile.common.tSalesProductQuantityDetailData;
 import library.spgmobile.common.tSalesProductQuantityHeaderData;
 import library.spgmobile.common.tStockInHandDetailData;
 import library.spgmobile.common.tStockInHandHeaderData;
+import library.spgmobile.common.tTidakSesuaiPesananHeaderData;
 import library.spgmobile.common.tUserLoginData;
 
 public class FragmentReporting extends Fragment {
@@ -698,6 +704,72 @@ public class FragmentReporting extends Fragment {
             }
 
             ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
+        } else if (spinnerSelected.contains("Kemasan Rusak")){
+//            Toast.makeText(getContext(), "Quantity Stock", Toast.LENGTH_SHORT).show();
+            header = new String[6];
+            header[1] = "NO";
+            header[2] = "Tot. Prd";
+            header[3] = "Tot. Qty";
+//            header[4] = "Tot. Price";
+            header[4] = "Outlet";
+            header[5] = "";
+
+            ReportTableView.setColumnCount(header.length);
+
+            simpleTableHeaderAdapter = new SimpleTableHeaderAdapter(getContext(), header);
+            simpleTableHeaderAdapter.setTextColor(ContextCompat.getColor(getContext(), R.color.table_header_text));
+            simpleTableHeaderAdapter.setTextSize(14);
+            simpleTableHeaderAdapter.setPaddingBottom(20);
+            simpleTableHeaderAdapter.setPaddingTop(20);
+
+            ReportTableView.setColumnComparator(1, ReportComparators.getNoQStockComparator());
+            ReportTableView.setColumnComparator(2, ReportComparators.getTotalProductComparator());
+            ReportTableView.setColumnComparator(3, ReportComparators.getTotalItemComparator());
+//            ReportTableView.setColumnComparator(4, ReportComparators.getTotalPriceComparator());
+            ReportTableView.setColumnComparator(4, ReportComparators.getStatusComparator());
+            ReportTableView.setColumnComparator(5, ReportComparators.getviewDetailComparator());
+
+            ReportTableView.setColumnWeight(1, 2);
+            ReportTableView.setColumnWeight(2, 1);
+            ReportTableView.setColumnWeight(3, 1);
+            ReportTableView.setColumnWeight(4, 1);
+            ReportTableView.setColumnWeight(5, 1);
+
+            ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
+
+            List<tKemasanRusakHeaderData> dt_qs = new tKemasanRusakHeaderBL().getAllHeaderByOutletCode(outletcode);
+            reportList = new ArrayList<>();
+
+            if(dt_qs != null&&dt_qs.size()>0){
+                for(tKemasanRusakHeaderData datas : dt_qs ){
+                    ReportTable rt = new ReportTable();
+
+                    rt.set_report_type("KemasanRusak");
+                    rt.set_txtQuantityStock(datas.get_txtKemasanRusak());
+                    rt.set_total_product(datas.get_intSumItem());
+                    rt.set_total_price(new clsMainActivity().convertNumberDec(Double.valueOf(datas.get_intSumAmount())));
+                    rt.set_status(datas.get_OutletName());
+                    rt.set_dummy("Kemasan Rusak");
+                    rt.set_view_detail("View Detail");
+
+                    List<tKemasanRusakDetailData> dt_detail = new tKemasanRusakDetailBL().GetDataByNo(datas.get_txtKemasanRusak());
+
+                    int total_item = 0;
+
+                    for(i = 0; i < dt_detail.size(); i++){
+                        total_item = total_item + Integer.parseInt(dt_detail.get(i).getTxtQuantity());
+                    }
+
+                    rt.set_total_item(String.valueOf(total_item)+ " pcs");
+                    rt.set_total_product(String.valueOf(dt_detail.size()));
+
+                    reportList.add(rt);
+                }
+            } else {
+                new clsMainActivity().showCustomToast(getContext(), "No Data to Show", false);
+            }
+
+            ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
         } else if (spinnerSelected.contains("Over Stock")){
 //            Toast.makeText(getContext(), "Quantity Stock", Toast.LENGTH_SHORT).show();
             header = new String[6];
@@ -926,7 +998,58 @@ public class FragmentReporting extends Fragment {
             }
 
             ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
-        } else {
+        } else if (spinnerSelected.contains("Tidak Sesuai Pesanan")){
+            header = new String[6];
+            header[1] = "No.";
+            header[2] = "Outlet";
+            header[3] = "Desc";
+//            header[5] = "";
+
+            ReportTableView.setColumnCount(header.length);
+
+            simpleTableHeaderAdapter = new SimpleTableHeaderAdapter(getContext(), header);
+            simpleTableHeaderAdapter.setTextColor(ContextCompat.getColor(getContext(), R.color.table_header_text));
+            simpleTableHeaderAdapter.setTextSize(14);
+            simpleTableHeaderAdapter.setPaddingBottom(20);
+            simpleTableHeaderAdapter.setPaddingTop(20);
+
+            ReportTableView.setColumnComparator(1, ReportComparators.getRepeatComparator());
+            ReportTableView.setColumnComparator(2, ReportComparators.getOutletActivityComparator());
+            ReportTableView.setColumnComparator(4, ReportComparators.getDescActivityComparator());
+//            ReportTableView.setColumnComparator(5, ReportComparators.getviewDetailComparator());
+
+
+            ReportTableView.setColumnWeight(1, 1);
+            ReportTableView.setColumnWeight(2, 2);
+            ReportTableView.setColumnWeight(3, 2);
+//            ReportTableView.setColumnWeight(5, 2);
+
+
+            ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
+
+            List<tTidakSesuaiPesananHeaderData> list = new tTidakSesuaiPesananHeaderBL().getAllDataByOutletCodeReport(outletcode);
+
+            reportList = new ArrayList<>();
+            int iterator = 0;
+            if(list != null&&list.size()>0){
+                for(tTidakSesuaiPesananHeaderData data : list ){
+                    iterator +=1;
+                    ReportTable rt = new ReportTable();
+
+                    rt.set_report_type("Tidak Sesuai Pesanan");
+                    rt.set_RepeatQuiz( String.valueOf(iterator));
+                    rt.set_txtOutletName(data.get_txtOutletName());
+                    rt.set_txtDesc(data.get_txtKeterangan());
+//                    rt.set_view_detail("View Detail");
+                    reportList.add(rt);
+                }
+            } else {
+                new clsMainActivity().showCustomToast(getContext(), "No Data to Show", false);
+            }
+
+            ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
+        }
+        else {
 //                Toast.makeText(getContext(), "No Data to Show", Toast.LENGTH_SHORT).show();
                 header = new String[6];
 

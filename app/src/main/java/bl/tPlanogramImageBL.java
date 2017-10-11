@@ -7,6 +7,7 @@ import java.util.List;
 import library.spgmobile.common.tPlanogramImageData;
 import library.spgmobile.common.tSalesProductQuantityImageData;
 import library.spgmobile.dal.tPlanogramImageDA;
+import library.spgmobile.dal.tPlanogramMobileDA;
 import library.spgmobile.dal.tSalesProductQuantityImageDA;
 
 /**
@@ -31,5 +32,10 @@ public class tPlanogramImageBL extends clsMainBL {
         List<tPlanogramImageData>ListData = _tPlanogramImageDA.getDataHeaderId(db, id);
         db.close();
         return ListData;
+    }
+
+    public void deleteTrId(String id) {
+        SQLiteDatabase _db=getDb();
+        new tPlanogramImageDA(_db).deleteByID(_db, id);
     }
 }

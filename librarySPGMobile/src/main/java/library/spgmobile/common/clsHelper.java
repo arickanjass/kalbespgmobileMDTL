@@ -72,6 +72,9 @@ import library.spgmobile.dal.tHirarkiBISDA;
 import library.spgmobile.dal.tJawabanUserDA;
 import library.spgmobile.dal.tJawabanUserHeaderDA;
 import library.spgmobile.dal.tKategoryPlanogramMobileDA;
+import library.spgmobile.dal.tKemasanRusakDetailDA;
+import library.spgmobile.dal.tKemasanRusakHeaderDA;
+import library.spgmobile.dal.tKemasanRusakImageDA;
 import library.spgmobile.dal.tLeaveMobileDA;
 import library.spgmobile.dal.tNotificationDA;
 import library.spgmobile.dal.tOverStockDetailDA;
@@ -88,6 +91,8 @@ import library.spgmobile.dal.tSalesProductQuantityImageDA;
 import library.spgmobile.dal.tStockInHandDetailDA;
 import library.spgmobile.dal.tStockInHandHeaderDA;
 import library.spgmobile.dal.tSubTypeActivityDA;
+import library.spgmobile.dal.tTidakSesuaiPesananHeaderDA;
+import library.spgmobile.dal.tTidakSesuaiPesananImageDA;
 import library.spgmobile.dal.tUserLoginDA;
 import library.spgmobile.dal.tVisitPlanHeader_MobileDA;
 import library.spgmobile.dal.tVisitPlanRealisasiDA;
@@ -374,6 +379,11 @@ public class clsHelper {
 		tKategoryPlanogramMobileDA _tKategoryPlanogramMobileDA = new tKategoryPlanogramMobileDA(db);
 		tPlanogramMobileDA _tPlanogramMobileDA = new tPlanogramMobileDA(db);
 		tPlanogramImageDA _tPlanogramImageDA = new tPlanogramImageDA(db);
+		tKemasanRusakHeaderDA _tKemasanRusakHeaderDA = new tKemasanRusakHeaderDA(db);
+		tKemasanRusakDetailDA _tKemasanRusakDetailDA = new tKemasanRusakDetailDA(db);
+		tKemasanRusakImageDA _tKemasanRusakImageDA = new tKemasanRusakImageDA(db);
+		tTidakSesuaiPesananHeaderDA _tTidakSesuaiPesananHeaderDA = new tTidakSesuaiPesananHeaderDA(db);
+		tTidakSesuaiPesananImageDA _tTidakSesuaiPesananImageDA = new tTidakSesuaiPesananImageDA(db);
 
 		_tSubTypeActivityDA.Droptable(db);
 		_tKategoryPlanogramMobileDA.Droptable(db);
@@ -436,6 +446,11 @@ public class clsHelper {
 		_KoordinasiOutletImageDA.Droptable(db);
 		_tPlanogramMobileDA.Droptable(db);
 		_tPlanogramImageDA.Droptable(db);
+		_tKemasanRusakHeaderDA.Droptable(db);
+		_tKemasanRusakDetailDA.DropTable(db);
+		_tKemasanRusakImageDA.Droptable(db);
+		_tTidakSesuaiPesananHeaderDA.DropTable(db);
+		_tTidakSesuaiPesananImageDA.Droptable(db);
 
 		_mMCategoryVisitPlanDA = new mCategoryVisitPlanDA(db);
 		_tVisitPlanRealisasiDA = new tVisitPlanRealisasiDA(db);
@@ -473,6 +488,11 @@ public class clsHelper {
 		new tKategoryPlanogramMobileDA(db);
 		new tOverStockHeaderDA(db);
 		new tOverStockDetailDA(db);
+		new tKemasanRusakHeaderDA(db);
+		new tKemasanRusakDetailDA(db);
+		new tKemasanRusakImageDA(db);
+		new tTidakSesuaiPesananHeaderDA(db);
+		new tTidakSesuaiPesananImageDA(db);
 
 		_mPriceInOutletDA=new mPriceInOutletDA(db);
 		_mUserRoleDA=new mUserRoleDA(db);

@@ -234,15 +234,20 @@ public class clsHardCode  {
 	public String txtTable_mTypeSubmissionMobile="mTypeSubmissionMobile";
 	public String txtTable_mProductCompetitorData="mProductCompetitorData";
 	public String txtTable_tSalesQuantityStock="tSalesProductQuantityHeader";
+	public String txtTable_tKemasanRusakHeader="tKemasanRusakHeader";
 	public String txtTable_tOverStockHeader="tOverStockHeader";
 	public String txtTable_tPlanogramMobile="tPlanogramMobile";
 	public String txtTable_tSalesProductQuantityDetail="tSalesProductQuantityDetail";
+	public String txtTable_tKemasanRusakDetail="tKemasanRusakDetail";
 	public String txtTable_tOverStockDetail="tOverStockDetail";
 	public String txtTable_tSalesProductQuantityImage="tSalesProductQuantityImage";
+	public String txtTable_tKemasanRusakImage="tKemasanRusakImage";
 	public String txtTable_tPlanogramImage="tPlanogramImage";
 	public String txtTable_trackingLocation="trackingLocation";
 	public String txtTable_KoordinasiOutlet="KoordinasiOutlet";
+	public String txtTable_tTidakSesuaiPesananHeader="tTidakSesuaiPesananHeader";
 	public String txtTable_KoordinasiOutletImage="KoordinasiOutletImage";
+	public String txtTable_tTidakSesuaiPesananImage="tTidakSesuaiPesananImage";
 	public String txtTable_mCategoryKoordinasiOutlet="mCategoryKoordinasiOutlet";
 
 	public String dtDateTimeNow(){

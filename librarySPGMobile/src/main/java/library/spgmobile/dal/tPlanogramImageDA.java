@@ -134,4 +134,14 @@ public class tPlanogramImageDA {
         cursor.close();
         return contactList;
     }
+    // Deleting single contact
+    public void deleteByID(SQLiteDatabase db, String id) {
+        tPlanogramImageData dt = new tPlanogramImageData();
+        String whereClause = dt.Property_txtId + " = ?";
+        String[] whereArgs = new String[]{
+                String.valueOf(id)
+        };
+
+        db.delete(TABLE_CONTACTS, whereClause, whereArgs);
+    }
 }

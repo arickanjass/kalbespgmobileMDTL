@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_add"
+        android:icon="@drawable/ic_add_black_48dp"
+        android:title="Add New" />
+    <item
+        android:id="@+id/action_submitAll"
+        android:icon="@drawable/ic_input_black_48dp"
+        android:title="Submit All" />
+</menu>

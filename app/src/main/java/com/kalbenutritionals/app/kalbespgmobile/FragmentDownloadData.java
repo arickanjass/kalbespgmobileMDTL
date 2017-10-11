@@ -84,6 +84,7 @@ import bl.tHirarkiBISBL;
 import bl.tJawabanUserBL;
 import bl.tJawabanUserHeaderBL;
 import bl.tKategoryPlanogramMobileBL;
+import bl.tKemasanRusakHeaderBL;
 import bl.tLeaveMobileBL;
 import bl.tOverStockHeaderBL;
 import bl.tPlanogramMobileBL;
@@ -92,6 +93,7 @@ import bl.tSalesProductHeaderBL;
 import bl.tSalesProductQuantityHeaderBL;
 import bl.tStockInHandHeaderBL;
 import bl.tSubTypeActivityBL;
+import bl.tTidakSesuaiPesananHeaderBL;
 import bl.tUserLoginBL;
 import bl.tVisitPlanHeader_MobileBL;
 import bl.tVisitPlanRealisasiBL;
@@ -133,6 +135,9 @@ import library.spgmobile.common.tHirarkiBIS;
 import library.spgmobile.common.tJawabanUserData;
 import library.spgmobile.common.tJawabanUserHeaderData;
 import library.spgmobile.common.tKategoryPlanogramMobileData;
+import library.spgmobile.common.tKemasanRusakDetailData;
+import library.spgmobile.common.tKemasanRusakHeaderData;
+import library.spgmobile.common.tKemasanRusakImageData;
 import library.spgmobile.common.tLeaveMobileData;
 import library.spgmobile.common.tOverStockDetailData;
 import library.spgmobile.common.tOverStockHeaderData;
@@ -148,6 +153,8 @@ import library.spgmobile.common.tSalesProductQuantityImageData;
 import library.spgmobile.common.tStockInHandDetailData;
 import library.spgmobile.common.tStockInHandHeaderData;
 import library.spgmobile.common.tSubTypeActivityData;
+import library.spgmobile.common.tTidakSesuaiPesananHeaderData;
+import library.spgmobile.common.tTidakSesuaiPesananImageData;
 import library.spgmobile.common.tUserLoginData;
 import library.spgmobile.common.tVisitPlanHeader_MobileData;
 import library.spgmobile.common.tVisitPlanRealisasiData;
@@ -156,6 +163,8 @@ import library.spgmobile.dal.KoordinasiOutletImageDA;
 import library.spgmobile.dal.clsHardCode;
 import library.spgmobile.dal.enumCounterData;
 import library.spgmobile.dal.mCounterNumberDA;
+import library.spgmobile.dal.tKemasanRusakDetailDA;
+import library.spgmobile.dal.tKemasanRusakImageDA;
 import library.spgmobile.dal.tOverStockDetailDA;
 import library.spgmobile.dal.tPlanogramImageDA;
 import library.spgmobile.dal.tPurchaseOrderDetailDA;
@@ -163,6 +172,7 @@ import library.spgmobile.dal.tSalesProductDetailDA;
 import library.spgmobile.dal.tSalesProductQuantityDetailDA;
 import library.spgmobile.dal.tSalesProductQuantityImageDA;
 import library.spgmobile.dal.tStockInHandDetailDA;
+import library.spgmobile.dal.tTidakSesuaiPesananImageDA;
 
 public class FragmentDownloadData extends Fragment {
     View v;
@@ -175,7 +185,7 @@ public class FragmentDownloadData extends Fragment {
     private Spinner spnLeave;
     private Spinner spnBrand;
     private Spinner spnReso;
-    private Spinner spnActivity, spnActivityV2, spnStockIH, spnDataOverStock, spnaddDisplay;
+    private Spinner spnActivity, spnActivityV2, spnStockIH, spnDataOverStock, spnaddDisplay,spnDatatidaksesuaipesanan,spnDatakemasanrusak;
     private Spinner spnCustomerBase;
     private Spinner spnAbsen, spnQuiz, spnSPG;
     private Spinner spnkategoryPlanogram,spnAttendanceFpe, spnDataPlanogram, spnDataLeave, spnSubTypeActivity, spnDataPO, spnDataQuantityStock, spnProductComp, spnTypeSubmission, spnProdSPGCusBased, spnProdPICCusBased;
@@ -200,7 +210,7 @@ public class FragmentDownloadData extends Fragment {
     private LinearLayout ll_dataQuantityStock;
     private LinearLayout ll_dataKordinasiOutlet;
     private LinearLayout ll_dataCategoryKordinasiOutlet, ll_data_addDisplay;
-    private LinearLayout ll_dataQuesioner,ll_data_planogram, ll_kategoryPlanogram, ll_data_stockIH, ll_outlet, ll_data_overStock, ll_dataSPG;
+    private LinearLayout ll_dataQuesioner,ll_data_planogram, ll_kategoryPlanogram, ll_data_stockIH, ll_outlet, ll_data_overStock, ll_dataSPG,ll_data_kemasanrusak, ll_data_tidaksesuaipesanan;
 
     private PackageInfo pInfo = null;
     private String intRoleId = "";
@@ -277,6 +287,10 @@ public class FragmentDownloadData extends Fragment {
         Button btnDataOverStock = (Button) v.findViewById(R.id.btnDataOverStock);
         spnaddDisplay = (Spinner) v.findViewById(R.id.spnaddDisplay);
         Button btnDladdDisplay = (Button) v.findViewById(R.id.btnDladdDisplay);
+        spnDatakemasanrusak = (Spinner) v.findViewById(R.id.spnDatakemasanrusak);
+        Button btnDatakemasanrusak = (Button) v.findViewById(R.id.btnDatakemasanrusak);
+        spnDatatidaksesuaipesanan = (Spinner) v.findViewById(R.id.spnDatatidaksesuaipesanan);
+        Button btnDatatidaksesuaipesanan = (Button) v.findViewById(R.id.btnDatatidaksesuaipesanan);
 
         ll_branch = (LinearLayout) v.findViewById(R.id.ll_branch);
         ll_outlet = (LinearLayout) v.findViewById(R.id.ll_outlet);
@@ -308,6 +322,8 @@ public class FragmentDownloadData extends Fragment {
         ll_data_overStock = (LinearLayout) v.findViewById(R.id.ll_data_overStock);
         ll_data_stockIH = (LinearLayout) v.findViewById(R.id.ll_data_stockIH);
         ll_data_addDisplay = (LinearLayout) v.findViewById(R.id.ll_data_addDisplay);
+        ll_data_kemasanrusak = (LinearLayout) v.findViewById(R.id.ll_data_kemasanrusak);
+        ll_data_tidaksesuaipesanan = (LinearLayout) v.findViewById(R.id.ll_data_tidaksesuaipesanan);
 
         spnVisitPlan = (Spinner) v.findViewById(R.id.spnVisitPlan);
         spnTrVisitPlan = (Spinner) v.findViewById(R.id.spnTrVisitPlan);
@@ -337,6 +353,15 @@ public class FragmentDownloadData extends Fragment {
             public void onClick(View v) {
                 intProcesscancel = 0;
                 AsyncCallDataKoordinasiOutlet task = new AsyncCallDataKoordinasiOutlet();
+                task.execute();
+            }
+        });
+
+        btnDatatidaksesuaipesanan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intProcesscancel = 0;
+                AsyncCallDataTidakSesuaiPesanan task = new AsyncCallDataTidakSesuaiPesanan();
                 task.execute();
             }
         });
@@ -515,6 +540,14 @@ public class FragmentDownloadData extends Fragment {
                 task.execute();
             }
         });
+        btnDatakemasanrusak.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                intProcesscancel = 0;
+                AsyncCallDataKemasanRusak task = new AsyncCallDataKemasanRusak();
+                task.execute();
+            }
+        });
         btnDataQuantityStock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -637,6 +670,10 @@ public class FragmentDownloadData extends Fragment {
                 ll_data_overStock.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_data_addDisplay.getId()))) {
                 ll_data_addDisplay.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_data_kemasanrusak.getId()))) {
+                ll_data_kemasanrusak.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_data_tidaksesuaipesanan.getId()))) {
+                ll_data_tidaksesuaipesanan.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -684,6 +721,36 @@ public class FragmentDownloadData extends Fragment {
         List<tSubTypeActivityData> tSubTypeActivityDataList = new tSubTypeActivityBL().getAllData();
         List<tPlanogramMobileData> tPlanogramMobileDataList = new tPlanogramMobileBL().getAllData();
         List<tKategoryPlanogramMobileData> tKategoryPlanogramDataList = new tKategoryPlanogramMobileBL().getAllData();
+        List<tKemasanRusakHeaderData> tKemasanRusakHeaderDataList = new tKemasanRusakHeaderBL().getAllHeader();
+        List<tTidakSesuaiPesananHeaderData> tTidakSesuaiPesananHeaderDataList = new tTidakSesuaiPesananHeaderBL().getAllData();
+
+        arrData = new ArrayList<>();
+        if (tKemasanRusakHeaderDataList!=null) {
+            for (tKemasanRusakHeaderData dt : tKemasanRusakHeaderDataList) {
+                arrData.add(dt.get_txtKemasanRusak());
+            }
+            spnDatakemasanrusak.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
+            spnDatakemasanrusak.setEnabled(true);
+        } else {
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<>(getContext(),
+                    android.R.layout.simple_spinner_item, strip);
+            spnDatakemasanrusak.setAdapter(adapterspn);
+            spnDatakemasanrusak.setEnabled(false);
+        }
+
+        arrData = new ArrayList<>();
+        if (tTidakSesuaiPesananHeaderDataList!=null && tTidakSesuaiPesananHeaderDataList.size() > 0) {
+            for (tTidakSesuaiPesananHeaderData dt : tTidakSesuaiPesananHeaderDataList) {
+                arrData.add(dt.get_txtOutletName());
+            }
+            spnDatatidaksesuaipesanan.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
+            spnDatatidaksesuaipesanan.setEnabled(true);
+        } else {
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<>(getContext(),
+                    android.R.layout.simple_spinner_item, strip);
+            spnDatatidaksesuaipesanan.setAdapter(adapterspn);
+            spnDatatidaksesuaipesanan.setEnabled(false);
+        }
 
         arrData = new ArrayList<>();
         if (tPlanogramMobileDataList.size() > 0) {
@@ -1488,6 +1555,12 @@ public class FragmentDownloadData extends Fragment {
             if (ll_data_leave != null && checkVisibility(ll_data_leave)) {
                 dtJson.getDtdataJson().getDttLeaveMobileData().setBoolValid("1");
             }
+            if(ll_data_kemasanrusak !=null && checkVisibility(ll_data_kemasanrusak)){
+                dtJson.getDtdataJson().getDttKemasanRusakHeaderData().setBoolValid("1");
+            }
+            if(ll_data_tidaksesuaipesanan !=null && checkVisibility(ll_data_tidaksesuaipesanan)){
+                dtJson.getDtdataJson().getDttTidakSesuaiPesananHeaderData().setBoolValid("1");
+            }
             String txtValid = "0";
             String txtMess = "";
             String jsonData = "";
@@ -1845,6 +1918,30 @@ public class FragmentDownloadData extends Fragment {
                                         }
                                     }
 
+                                    JSONArray jsonArray_KmsnRusak = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfclsKemasanRusakHeader")));
+                                    if (jsonArray_KmsnRusak != null) {
+                                        for (Object aJsonArray_header : jsonArray_KmsnRusak) {
+                                            JSONObject innerObj_header = (JSONObject) aJsonArray_header;
+                                            String boolValid = String.valueOf(innerObj_header.get("_pboolValid"));
+                                            String pstrMess = String.valueOf(innerObj_header.get("_pstrMessage"));
+                                            String txtNoKRS = String.valueOf(innerObj_header.get("_pstrArgument"));
+
+                                            _db = new clsMainBL().getDb();
+                                            mCounterNumberData _data =new mCounterNumberData();
+                                            _data.set_intId(enumCounterData.NoKRS.getidCounterData());
+                                            _data.set_txtDeskripsi((String) innerObj_header.get("_pstrMethodRequest"));
+                                            _data.set_txtName((String) innerObj_header.get("_pstrMethodRequest"));
+                                            _data.set_txtValue((String) innerObj_header.get("_pstrArgument"));
+                                            _mCounterNumberDA.SaveDataMConfig(_db, _data);
+
+                                            if(boolValid.equals("1")){
+                                                SaveDatatKemasanRusakData(jsonArray_KmsnRusak);
+                                            } else if(boolValid.equals("0")){
+                                            }
+                                            break;
+                                        }
+                                    }
+
                                     JSONArray jsonArray_OverStock = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfclstOverStockHeader")));
                                     if (jsonArray_OverStock != null) {
                                         for (Object aJsonArray_header : jsonArray_OverStock) {
@@ -1891,6 +1988,20 @@ public class FragmentDownloadData extends Fragment {
                                             String pstrMess = String.valueOf(innerObj_header.get("_pstrMessage"));
                                             if(boolValid.equals("1")){
                                                 SaveDataKoordinasiOutletData(jsonArray_KoordinasiOutlet);
+                                            } else if(boolValid.equals("0")){
+                                            }
+                                            break;
+                                        }
+                                    }
+
+                                    JSONArray jsonArray_TSesuaiPesanan = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfclsclsTidakSesuaiPesanan")));
+                                    if (jsonArray_TSesuaiPesanan != null) {
+                                        for (Object aJsonArray_header : jsonArray_TSesuaiPesanan) {
+                                            JSONObject innerObj_header = (JSONObject) aJsonArray_header;
+                                            String boolValid = String.valueOf(innerObj_header.get("_pboolValid"));
+                                            String pstrMess = String.valueOf(innerObj_header.get("_pstrMessage"));
+                                            if(boolValid.equals("1")){
+                                                SaveDataTidakSesuaiPesanan(jsonArray_TSesuaiPesanan);
                                             } else if(boolValid.equals("0")){
                                             }
                                             break;
@@ -3905,6 +4016,66 @@ public class FragmentDownloadData extends Fragment {
         }
     }
 
+    private class AsyncCallDataKemasanRusak extends AsyncTask<JSONArray, Void, JSONArray> {
+        @Override
+        protected JSONArray doInBackground(JSONArray... params) {
+            JSONArray Json = null;
+            try {
+                Json = new tKemasanRusakHeaderBL().DownloadTransactionKemasanRusak(pInfo.versionName);
+                new tKemasanRusakHeaderBL().DownloadNOKemasanRusak(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+//                new tSalesProductQuantityHeaderBL().DownloadNOQuantityStock(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return Json;
+        }
+
+        private ProgressDialog dialog = new ProgressDialog(getContext());
+
+        @Override
+        protected void onCancelled() {
+            dialog.dismiss();
+            new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessCancelRequest, false);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog.setMessage("Getting Data Kemasan Rusak");
+            dialog.setCancelable(false);
+//            dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    intProcesscancel = 1;
+//                }
+//            });
+            dialog.show();
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray jsonArray) {
+            if (jsonArray != null && jsonArray.size() > 0) {
+                arrData = SaveDatatKemasanRusakData(jsonArray);
+                loadData();
+                new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
+            } else {
+                if (intProcesscancel == 1) {
+                    onCancelled();
+                } else {
+                    new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
+                }
+            }
+            checkingDataTable("");
+            dialog.dismiss();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+            dialog.dismiss();
+        }
+    }
+
     private class AsyncCallDataPlanogram extends AsyncTask<JSONArray, Void, JSONArray> {
         @Override
         protected JSONArray doInBackground(JSONArray... params) {
@@ -3981,6 +4152,64 @@ public class FragmentDownloadData extends Fragment {
         protected void onPostExecute(JSONArray jsonArray) {
             if (jsonArray != null && jsonArray.size() > 0) {
                 arrData = SaveDataTrackingLocationData(jsonArray);
+                loadData();
+                new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
+            } else {
+                if (intProcesscancel == 1) {
+                    onCancelled();
+                } else {
+                    new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
+                }
+            }
+            checkingDataTable("");
+            dialog.dismiss();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+            dialog.dismiss();
+        }
+    }
+
+    private class AsyncCallDataTidakSesuaiPesanan extends AsyncTask<JSONArray, Void, JSONArray> {
+        @Override
+        protected JSONArray doInBackground(JSONArray... params) {
+            JSONArray Json = null;
+            try {
+                Json = new tTidakSesuaiPesananHeaderBL().DownloadDataTidakSesuaiPesanan(pInfo.versionName);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return Json;
+        }
+
+        private ProgressDialog dialog = new ProgressDialog(getContext());
+
+        @Override
+        protected void onCancelled() {
+            dialog.dismiss();
+            new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessCancelRequest, false);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog.setMessage("Getting Data");
+            dialog.setCancelable(false);
+//            dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    intProcesscancel = 1;
+//                }
+//            });
+            dialog.show();
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray jsonArray) {
+            if (jsonArray != null && jsonArray.size() > 0) {
+                arrData = SaveDataTidakSesuaiPesanan(jsonArray);
                 loadData();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
@@ -5576,6 +5805,92 @@ public class FragmentDownloadData extends Fragment {
         return _array;
     }
 
+    private List<String> SaveDatatKemasanRusakData(JSONArray jsonArray) {
+        List<String> _array;
+        _array = new ArrayList<>();
+        for (Object aJsonArray : jsonArray) {
+            JSONObject innerObj = (JSONObject) aJsonArray;
+            try {
+                JSONArray jsonArray_header = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListtKemasanRusakHeader_mobile")));
+                if (jsonArray_header != null) {
+                    for (Object aJsonArray_header : jsonArray_header) {
+                        tKemasanRusakHeaderData _data = new tKemasanRusakHeaderData();
+                        JSONObject innerObj_header = (JSONObject) aJsonArray_header;
+                        _data.set_intId(String.valueOf(innerObj_header.get("txtDataId")));
+                        _data.set_txtKemasanRusak(String.valueOf(innerObj_header.get("TxtNoKemasanRusak")));
+                        _data.set_dtDate(String.valueOf(innerObj_header.get("DtDate")));
+                        _data.set_OutletCode(String.valueOf(innerObj_header.get("TxtOutletCode")));
+                        _data.set_OutletName(String.valueOf(innerObj_header.get("TxtOutletName")));
+                        _data.set_txtKeterangan(String.valueOf(innerObj_header.get("TxtKeterangan")));
+                        _data.set_intSumItem(String.valueOf(innerObj_header.get("IntSumItem")));
+                        _data.set_intSumAmount(String.valueOf(innerObj_header.get("IntSumAmount")));
+                        _data.set_UserId(String.valueOf(innerObj_header.get("TxtUserId")));
+                        _data.set_txtBranchCode(String.valueOf(innerObj_header.get("TxtBranchCode")));
+                        _data.set_txtBranchName(String.valueOf(innerObj_header.get("TxtBranchName")));
+                        _data.set_intIdAbsenUser(String.valueOf(innerObj_header.get("IntIdAbsenUser")));
+                        _data.set_txtRoleId(String.valueOf(innerObj_header.get("TxtRoleId")));
+                        _data.set_txtNIK(String.valueOf(innerObj_header.get("TxtNIK")));
+                        _data.set_intSubmit("1");
+                        _data.set_intSync("1");
+                        new tKemasanRusakHeaderBL().SaveData(_data);
+                    }
+
+                    JSONArray jsonArray_Detail = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListtKemasanRusakDetail_mobile")));
+                    Iterator k = jsonArray_Detail.iterator();
+                    clsMainBL _clsMainBL = new clsMainBL();
+                    SQLiteDatabase _db = _clsMainBL.getDb();
+                    while (k.hasNext()) {
+                        tKemasanRusakDetailData _data = new tKemasanRusakDetailData();
+                        JSONObject innerObj_detail = (JSONObject) k.next();
+                        _data.setIntId(String.valueOf(innerObj_detail.get("TxtTrKemasanRusakDetail")));
+                        _data.set_txtKemasanRusak(String.valueOf(innerObj_detail.get("TxtNoKemasanRusak")));
+                        _data.set_dtDate(String.valueOf(innerObj_detail.get("DtDate")));
+                        _data.set_intPrice(String.valueOf(innerObj_detail.get("IntPrice")));
+                        _data.set_txtCodeProduct(String.valueOf(innerObj_detail.get("TxtCodeProduct")));
+                        _data.set_txtKeterangan(String.valueOf(innerObj_detail.get("TxtKeterangan")));
+                        _data.setTxtProduct(String.valueOf(innerObj_detail.get("TxtProduct")));
+                        _data.setTxtExpireDate(String.valueOf(innerObj_detail.get("TxtExpireDate")));
+                        _data.setTxtQuantity(String.valueOf(innerObj_detail.get("TxtQuantity")));
+                        _data.set_intTotal(String.valueOf(innerObj_detail.get("IntTotal")));
+                        _data.set_txtNIK(String.valueOf(innerObj_detail.get("TxtUserId")));
+                        new tKemasanRusakDetailDA(_db).SaveData(_db, _data);
+                    }
+
+                    JSONArray jsonArray_Image = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListtKemasanRusakImage_mobile")));
+                    if(jsonArray_Image!=null){
+                        Iterator l = jsonArray_Image.iterator();
+                        clsMainBL _clsMainBL_image = new clsMainBL();
+                        SQLiteDatabase _db_image = _clsMainBL_image.getDb();
+                        while (l.hasNext()) {
+                            tKemasanRusakImageData _data = new tKemasanRusakImageData();
+                            JSONObject innerObj_image = (JSONObject) l.next();
+                            _data.set_txtId(String.valueOf(innerObj_image.get("TxtTrKemasanRusakImage")));
+                            _data.set_txtHeaderId(String.valueOf(innerObj_image.get("TxtKemasanRusak")));
+                            _data.set_intPosition(String.valueOf(innerObj_image.get("IntPosition")));
+                            _data.set_txtType(String.valueOf(innerObj_image.get("TxtType")));
+
+                            String url = String.valueOf(innerObj_image.get("TxtImage"));
+
+                            byte[] logoImage = getLogoImage(url);
+
+                            if (logoImage != null) {
+                                _data.set_txtImage(logoImage);
+                            }
+
+                            new tKemasanRusakImageDA(_db_image).SaveDataImage(_db_image, _data);
+                        }
+                    }
+                } else {
+//                    new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
+                    _array.add("Data Kemasan Rusak Not Found");
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return _array;
+    }
+
     private List<String> SaveDatatPlamogramData(JSONArray jsonArray) {
         List<String> _array;
         _array = new ArrayList<>();
@@ -5727,6 +6042,66 @@ public class FragmentDownloadData extends Fragment {
                 } else {
 //                    new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
                     _array.add("Data Koordinasi Outlet not Found");
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return _array;
+    }
+    private List<String> SaveDataTidakSesuaiPesanan(JSONArray jsonArray) {
+        List<String> _array;
+        _array = new ArrayList<>();
+        for (Object aJsonArray : jsonArray) {
+            JSONObject innerObj = (JSONObject) aJsonArray;
+            try {
+                JSONArray jsonArray_header = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListtTidakSesuaiPesananOutlet_mobile")));
+                if (jsonArray_header != null) {
+                    for (Object aJsonArray_header : jsonArray_header) {
+                        tTidakSesuaiPesananHeaderData _data = new tTidakSesuaiPesananHeaderData();
+                        JSONObject innerObj_header = (JSONObject) aJsonArray_header;
+                        _data.set_intId(String.valueOf(innerObj_header.get("IntId")));
+                        _data.set_dtDate(String.valueOf(innerObj_header.get("DtDate")));
+                        _data.set_txtKeterangan(String.valueOf(innerObj_header.get("TxtKeterangan")));
+                        _data.set_txtUserId(String.valueOf(innerObj_header.get("TxtUserId")));
+                        _data.set_txtUsername(String.valueOf(innerObj_header.get("TxtUsername")));
+                        _data.set_txtRoleId(String.valueOf(innerObj_header.get("TxtRoleId")));
+                        _data.set_txtOutletCode(String.valueOf(innerObj_header.get("TxtOutletCode")));
+                        _data.set_txtOutletName(String.valueOf(innerObj_header.get("TxtOutletName")));
+                        _data.set_txtBranchCode(String.valueOf(innerObj_header.get("TxtBranchCode")));
+                        _data.set_txtBranchName(String.valueOf(innerObj_header.get("TxtBranchName")));
+                        _data.set_txtNIK(String.valueOf(innerObj_header.get("TxtNIK")));
+                        _data.set_intCategoriId(String.valueOf(innerObj_header.get("IntCategoryId")));
+                        _data.set_txtCategory(String.valueOf(innerObj_header.get("TxtCategory")));
+                        _data.set_intSubmit("1");
+                        _data.set_intSync("1");
+                        new tTidakSesuaiPesananHeaderBL().SaveData(_data);
+                    }
+
+                    JSONArray jsonArray_Image = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListtTidakSesuaiPesananOutletImage_mobile")));
+                    Iterator l = jsonArray_Image.iterator();
+                    clsMainBL _clsMainBL_image = new clsMainBL();
+                    SQLiteDatabase _db_image = _clsMainBL_image.getDb();
+                    while (l.hasNext()) {
+                        tTidakSesuaiPesananImageData _data = new tTidakSesuaiPesananImageData();
+                        JSONObject innerObj_image = (JSONObject) l.next();
+                        _data.set_txtId(String.valueOf(innerObj_image.get("TxtId")));
+                        _data.set_txtHeaderId(String.valueOf(innerObj_image.get("TxtHeaderId")));
+                        _data.set_intPosition(String.valueOf(innerObj_image.get("IntPosition")));
+
+                        String url = String.valueOf(innerObj_image.get("TxtImage"));
+
+                        byte[] logoImage = getLogoImage(url);
+
+                        if (logoImage != null) {
+                            _data.set_txtImage(logoImage);
+                        }
+
+                        new tTidakSesuaiPesananImageDA(_db_image).SaveDataImage(_db_image, _data);
+                    }
+                } else {
+//                    new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
+                    _array.add("Data not Found");
                 }
             } catch (ParseException e) {
                 e.printStackTrace();

@@ -53,6 +53,7 @@ import library.spgmobile.common.tCustomerBasedMobileHeaderData;
 import library.spgmobile.common.tGroupQuestionMappingData;
 import library.spgmobile.common.tJawabanUserData;
 import library.spgmobile.common.tJawabanUserHeaderData;
+import library.spgmobile.common.tKemasanRusakHeaderData;
 import library.spgmobile.common.tLeaveMobileData;
 import library.spgmobile.common.tNotificationData;
 import library.spgmobile.common.tOverStockHeaderData;
@@ -61,6 +62,7 @@ import library.spgmobile.common.tPurchaseOrderHeaderData;
 import library.spgmobile.common.tSalesProductHeaderData;
 import library.spgmobile.common.tSalesProductQuantityHeaderData;
 import library.spgmobile.common.tStockInHandHeaderData;
+import library.spgmobile.common.tTidakSesuaiPesananHeaderData;
 import library.spgmobile.common.tVisitPlanRealisasiData;
 import library.spgmobile.dal.clsHardCode;
 import service.MyServiceNative;
@@ -84,10 +86,10 @@ public class FragmentPushData extends Fragment {
     private TableLayout  tlActivityV2;
     private TableLayout  tlstockIH;
     private TableLayout  tlplanogram;
-    private TableLayout  tl_overStock, tladdDisplay;
+    private TableLayout  tl_overStock, tladdDisplay, tl_kemasanrusak, tl_tidaksesuaipesanan;
     private Button btnPush;
     private String myValue;
-    private LinearLayout ll_data_addDisplay,ll_data_planogram, ll_data_stockIH,ll_data_activityV2,ll_data_attendance,ll_reso, ll_data_activity, ll_data_customerbased, ll_purchase_order, ll_dataQuantityStock, ll_absen, ll_dataVisitPlan, ll_data_leave, ll_data_koordinasi, ll_dataQuesioner, ll_data_overStock;
+    private LinearLayout ll_data_tidaksesuaipesanan,ll_data_kemasanrusak,ll_data_addDisplay,ll_data_planogram, ll_data_stockIH,ll_data_activityV2,ll_data_attendance,ll_reso, ll_data_activity, ll_data_customerbased, ll_purchase_order, ll_dataQuantityStock, ll_absen, ll_dataVisitPlan, ll_data_leave, ll_data_koordinasi, ll_dataQuesioner, ll_data_overStock;
 
     View v;
 
@@ -140,6 +142,8 @@ public class FragmentPushData extends Fragment {
         tlplanogram = (TableLayout) v.findViewById(R.id.tlplanogram);
         tl_overStock = (TableLayout) v.findViewById(R.id.tl_overStock);
         tladdDisplay = (TableLayout) v.findViewById(R.id.tladdDisplay);
+        tl_kemasanrusak = (TableLayout) v.findViewById(R.id.tl_kemasanrusak);
+        tl_tidaksesuaipesanan = (TableLayout) v.findViewById(R.id.tl_tidaksesuaipesanan);
 
         btnPush = (Button) v.findViewById(R.id.btnPush);
 
@@ -159,6 +163,8 @@ public class FragmentPushData extends Fragment {
         ll_data_stockIH = (LinearLayout) v.findViewById(R.id.ll_data_stockIH);
         ll_data_planogram = (LinearLayout) v.findViewById(R.id.ll_data_planogram);
         ll_data_overStock = (LinearLayout) v.findViewById(R.id.ll_data_overStock);
+        ll_data_kemasanrusak = (LinearLayout) v.findViewById(R.id.ll_data_kemasanrusak);
+        ll_data_tidaksesuaipesanan = (LinearLayout) v.findViewById(R.id.ll_data_tidaksesuaipesanan);
 
         List<mDownloadMasterData_mobileData> mDownloadMasterData_mobileDataList = new ArrayList<>();
 
@@ -208,6 +214,12 @@ public class FragmentPushData extends Fragment {
             }
             else if (txt_id.equals(res.getResourceEntryName(ll_data_overStock.getId()))){
                 ll_data_overStock.setVisibility(View.VISIBLE);
+            }
+            else if (txt_id.equals(res.getResourceEntryName(ll_data_kemasanrusak.getId()))){
+                ll_data_kemasanrusak.setVisibility(View.VISIBLE);
+            }
+            else if (txt_id.equals(res.getResourceEntryName(ll_data_tidaksesuaipesanan.getId()))){
+                ll_data_tidaksesuaipesanan.setVisibility(View.VISIBLE);
             }
         }
 
@@ -278,6 +290,12 @@ public class FragmentPushData extends Fragment {
                     initQuantityStockHeader(getContext(), null);
                 }
 
+                if (dtJson.getListOftKemasanRusakHeaderData() != null){
+                    initKemasanRusakHeader(getContext(),dtJson.getListOftKemasanRusakHeaderData());
+                } else {
+                    initKemasanRusakHeader(getContext(), null);
+                }
+
                 if (dtJson.getListOftOverStockHeaderData() != null){
                     initOverStockHeader(getContext(),dtJson.getListOftOverStockHeaderData());
                 } else {
@@ -288,6 +306,12 @@ public class FragmentPushData extends Fragment {
                     initKoordinasiOutlet(getContext(),dtJson.getListOfKoordinasiOutletData());
                 } else {
                     initKoordinasiOutlet(getContext(), null);
+                }
+
+                if (dtJson.getListOftTidakSesuaiPesananHeaderData() != null){
+                    initTidakSesuaiPesanan(getContext(),dtJson.getListOftTidakSesuaiPesananHeaderData());
+                } else {
+                    initTidakSesuaiPesanan(getContext(), null);
                 }
 
                 if(dtJson.getListOftActivityData()!=null){
@@ -1324,6 +1348,86 @@ public class FragmentPushData extends Fragment {
         }
     }
 
+    private void initKemasanRusakHeader(Context context, List<tKemasanRusakHeaderData> listOftSalesProductQuantityHeaderData) {
+        tl_kemasanrusak = (TableLayout) v.findViewById(R.id.tl_kemasanrusak);
+        tl_kemasanrusak.removeAllViews();
+
+        TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1f);
+        params.setMargins(1, 1, 1, 1);
+
+        TableRow tr = new TableRow(getContext());
+
+        String[] colTextHeader = {"No.", "No Transaksi", "Date", "Outlet Code"};
+
+        for (String text : colTextHeader) {
+            TextView tv = new TextView(getContext());
+            // tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 1));
+
+            tv.setTextSize(14);
+            tv.setPadding(10, 10, 10, 10);
+            tv.setText(text);
+            tv.setGravity(Gravity.CENTER);
+            tv.setBackgroundColor(Color.parseColor("#4CAF50"));
+            tv.setTextColor(Color.WHITE);
+            tv.setLayoutParams(params);
+
+            tr.addView(tv);
+        }
+        tl_kemasanrusak.addView(tr);
+
+        if (listOftSalesProductQuantityHeaderData != null){
+            int index = 1;
+            for (tKemasanRusakHeaderData dat : listOftSalesProductQuantityHeaderData){
+                tr = new TableRow(getContext());
+
+                TextView tv_index = new TextView(getContext());
+                tv_index.setTextSize(12);
+                tv_index.setPadding(10, 10, 10, 10);
+                tv_index.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                tv_index.setGravity(Gravity.CENTER);
+                tv_index.setTextColor(Color.BLACK);
+                tv_index.setText(String.valueOf(index + "."));
+                tv_index.setLayoutParams(params);
+                tr.addView(tv_index);
+
+                TextView no_quantity_stock = new TextView(getContext());
+                no_quantity_stock.setTextSize(12);
+                no_quantity_stock.setPadding(10, 10, 10, 10);
+                no_quantity_stock.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                no_quantity_stock.setTextColor(Color.BLACK);
+                no_quantity_stock.setGravity(Gravity.CENTER);
+                no_quantity_stock.setText(dat.get_txtKemasanRusak());
+                no_quantity_stock.setLayoutParams(params);
+
+                tr.addView(no_quantity_stock);
+
+                TextView date = new TextView(getContext());
+                date.setTextSize(12);
+                date.setPadding(10, 10, 10, 10);
+                date.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                date.setTextColor(Color.BLACK);
+                date.setGravity(Gravity.CENTER);
+                date.setText(new clsMainActivity().giveFormatDate2(dat.get_dtDate()));
+                date.setLayoutParams(params);
+
+                tr.addView(date);
+
+                TextView outlet_code = new TextView(getContext());
+                outlet_code.setTextSize(12);
+                outlet_code.setPadding(10, 10, 10, 10);
+                outlet_code.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                outlet_code.setTextColor(Color.BLACK);
+                outlet_code.setGravity(Gravity.CENTER);
+                outlet_code.setText(dat.get_OutletCode());
+                outlet_code.setLayoutParams(params);
+
+                tr.addView(outlet_code);
+
+                tl_kemasanrusak.addView(tr, index++);
+            }
+        }
+    }
+
     private void initOverStockHeader(Context context, List<tOverStockHeaderData> listOftOverStockHeaderData) {
         tl_overStock = (TableLayout) v.findViewById(R.id.tl_overStock);
         tl_overStock.removeAllViews();
@@ -1485,6 +1589,87 @@ public class FragmentPushData extends Fragment {
         }
     }
 
+    private void initTidakSesuaiPesanan(Context context, List<tTidakSesuaiPesananHeaderData> listOfKoordinasiOutletData) {
+        tl_tidaksesuaipesanan = (TableLayout) v.findViewById(R.id.tl_tidaksesuaipesanan);
+        tl_tidaksesuaipesanan.removeAllViews();
+
+        TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1f);
+        params.setMargins(1, 1, 1, 1);
+
+        TableRow tr = new TableRow(getContext());
+
+        String[] colTextHeader = {"No.", "Keterangan", "Date", "Outlet Code"};
+
+        for (String text : colTextHeader) {
+            TextView tv = new TextView(getContext());
+            // tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 1));
+
+            tv.setTextSize(14);
+            tv.setPadding(10, 10, 10, 10);
+            tv.setText(text);
+            tv.setGravity(Gravity.CENTER);
+            tv.setBackgroundColor(Color.parseColor("#4CAF50"));
+            tv.setTextColor(Color.WHITE);
+            tv.setLayoutParams(params);
+
+            tr.addView(tv);
+        }
+        tl_tidaksesuaipesanan.addView(tr);
+
+        if (listOfKoordinasiOutletData != null){
+            int index = 1;
+            for (tTidakSesuaiPesananHeaderData dat : listOfKoordinasiOutletData){
+                tr = new TableRow(getContext());
+
+                TextView tv_index = new TextView(getContext());
+                tv_index.setTextSize(12);
+                tv_index.setPadding(10, 10, 10, 10);
+                tv_index.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                tv_index.setGravity(Gravity.CENTER);
+                tv_index.setTextColor(Color.BLACK);
+                tv_index.setText(String.valueOf(index + "."));
+                tv_index.setLayoutParams(params);
+                tr.addView(tv_index);
+
+                TextView keterangan = new TextView(getContext());
+                keterangan.setTextSize(12);
+                keterangan.setPadding(10, 10, 10, 10);
+                keterangan.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                keterangan.setTextColor(Color.BLACK);
+                keterangan.setGravity(Gravity.CENTER);
+                String desc = dat.get_txtKeterangan();
+                if(desc.length()>20){
+                    desc = dat.get_txtKeterangan().substring(0,20) + "...";
+                }
+                keterangan.setText(desc);
+                keterangan.setLayoutParams(params);
+                tr.addView(keterangan);
+
+                TextView date = new TextView(getContext());
+                date.setTextSize(12);
+                date.setPadding(10, 10, 10, 10);
+                date.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                date.setTextColor(Color.BLACK);
+                date.setGravity(Gravity.CENTER);
+                date.setText(new clsMainActivity().giveFormatDate2(dat.get_dtDate()));
+                date.setLayoutParams(params);
+                tr.addView(date);
+
+                TextView outlet_code = new TextView(getContext());
+                outlet_code.setTextSize(12);
+                outlet_code.setPadding(10, 10, 10, 10);
+                outlet_code.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                outlet_code.setTextColor(Color.BLACK);
+                outlet_code.setGravity(Gravity.CENTER);
+                outlet_code.setText(dat.get_txtOutletCode());
+                outlet_code.setLayoutParams(params);
+                tr.addView(outlet_code);
+
+                tl_tidaksesuaipesanan.addView(tr, index++);
+            }
+        }
+    }
+
     private class AsyncCallSyncData extends AsyncTask<List<dataJson>, Void, List<dataJson>> {
         @Override
         protected List<dataJson> doInBackground(List<dataJson>... params) {
@@ -1536,6 +1721,7 @@ public class FragmentPushData extends Fragment {
             boolean result = false;
             if(roledata.get(0).getIntResult().equals("1")){
                 new clsMainActivity().showCustomToast(getContext(), "Success Sync Data", true);
+                loadData();
                 Intent myIntent = new Intent(getContext(), MainMenu.class);
                 if(myValue!=null&&myValue.equals("notMainMenu")){
                     AsyncCallLogOut task = new AsyncCallLogOut();

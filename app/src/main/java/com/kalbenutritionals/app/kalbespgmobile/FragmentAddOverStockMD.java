@@ -364,7 +364,7 @@ public class FragmentAddOverStockMD extends Fragment implements IXListViewListen
 //        List<tSalesProductQuantityDetailData> dataProduct = null;
 
         List<String> dataProductKalbe = new ArrayList<>();
-        List<mEmployeeSalesProductData> listDataProductKalbe = new mEmployeeSalesProductBL().GetAllData();
+        List<mEmployeeSalesProductData> listDataProductKalbe = new mEmployeeSalesProductBL().getAllDataNotWhere();
 //        modelItems = new ArrayList<>();
 
 //        editTextQty.setOnFocusChangeListener(new View.OnFocusChangeListener() {

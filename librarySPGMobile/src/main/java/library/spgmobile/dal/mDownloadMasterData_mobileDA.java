@@ -23,7 +23,8 @@ public class mDownloadMasterData_mobileDA {
                 + dt.Property_txtMasterData + " TEXT  NULL,"
                 + dt.Property_intVersionApp + " TEXT  NULL,"
                 + dt.Property_txtTypeApp + " TEXT  NULL,"
-                + dt.Property_txtVersion + " TEXT  NULL)";
+                + dt.Property_txtVersion + " TEXT  NULL,"
+                + dt.Property_txtMasterDataName + " TEXT  NULL)";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
 
@@ -54,6 +55,7 @@ public class mDownloadMasterData_mobileDA {
                 + "," + dt.Property_intVersionApp
                 + "," + dt.Property_txtTypeApp
                 + "," + dt.Property_txtVersion
+                + "," + dt.Property_txtMasterDataName
                 + ") " + "values('"
                 + String.valueOf(data.get_intId()) + "','"
                 + String.valueOf(data.get_intModule()) + "','"
@@ -61,7 +63,8 @@ public class mDownloadMasterData_mobileDA {
                 + String.valueOf(data.get_txtMasterData()) + "','"
                 + String.valueOf(data.get_intVersionApp()) + "','"
                 + String.valueOf(data.get_txtTypeApp()) + "','"
-                + String.valueOf(data.get_txtVersion()) + "')");
+                + String.valueOf(data.get_txtVersion()) + "','"
+                + String.valueOf(data.get_txtMasterDataName()) + "')");
         // db.insert(TABLE_CONTACTS, null, values);
         // db.close(); // Closing database connection
     }
@@ -80,7 +83,8 @@ public class mDownloadMasterData_mobileDA {
                         , dt.Property_txtMasterData
                         , dt.Property_intVersionApp
                         , dt.Property_txtTypeApp
-                        , dt.Property_txtVersion},
+                        , dt.Property_txtVersion
+                        , dt.Property_txtMasterDataName},
                 dt.Property_intId + "=?", new String[] { String.valueOf(id) },
                 null, null, null, null);
         if (cursor != null)
@@ -94,6 +98,7 @@ public class mDownloadMasterData_mobileDA {
             contact.set_intVersionApp(cursor.getString(4));
             contact.set_txtTypeApp(cursor.getString(5));
             contact.set_txtVersion(cursor.getString(6));
+            contact.set_txtMasterDataName(cursor.getString(7));
             // return contact
         } else {
             contact = null;
@@ -122,6 +127,31 @@ public class mDownloadMasterData_mobileDA {
                 contact.set_intVersionApp(cursor.getString(4));
                 contact.set_txtTypeApp(cursor.getString(5));
                 contact.set_txtVersion(cursor.getString(6));
+                contact.set_txtMasterDataName(cursor.getString(7));
+                // Adding contact to list
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        // return contact list
+        return contactList;
+    }
+
+    // Getting All Contacts
+    public List<mDownloadMasterData_mobileData> getAllDataDistict(SQLiteDatabase db) {
+        List<mDownloadMasterData_mobileData> contactList = new ArrayList<mDownloadMasterData_mobileData>();
+        // Select All Query
+        mDownloadMasterData_mobileData dt = new mDownloadMasterData_mobileData();
+        String selectQuery = "SELECT  DISTINCT " + dt.Property_txtMasterDataName + "," + dt.Property_txtMasterData + " FROM "
+                + TABLE_CONTACTS+" ORDER BY "+ dt.Property_txtMasterDataName;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+
+        if (cursor.moveToFirst()) {
+            do {
+                mDownloadMasterData_mobileData contact = new mDownloadMasterData_mobileData();
+                contact.set_txtMasterDataName(cursor.getString(0));
+                contact.set_txtMasterData(cursor.getString(1));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -151,6 +181,7 @@ public class mDownloadMasterData_mobileDA {
                 contact.set_intVersionApp(cursor.getString(4));
                 contact.set_txtTypeApp(cursor.getString(5));
                 contact.set_txtVersion(cursor.getString(6));
+                contact.set_txtMasterDataName(cursor.getString(7));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());

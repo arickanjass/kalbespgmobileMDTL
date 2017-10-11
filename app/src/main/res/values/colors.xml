@@ -31,5 +31,7 @@
 
     <color name="translucte">#8Bbfbfbf</color>
 
+    <color name="transluctes">#ffa200</color>
+
     <color name="background_card_view">#e5e5e5</color>
 </resources>

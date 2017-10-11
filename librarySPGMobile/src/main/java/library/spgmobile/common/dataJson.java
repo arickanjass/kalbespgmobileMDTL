@@ -692,6 +692,68 @@ public class dataJson {
                 resJson.put(dttSalesProductQuantityData.Property_ListOftSalesProductHeaderData, new JSONArray(itemsListJquey));
             }
 
+            if (this.getListOftKemasanRusakHeaderData() != null){
+                tKemasanRusakHeaderData dttKemasanRusakHeaderData = new tKemasanRusakHeaderData();
+                itemsListJquey = new ArrayList<JSONObject>();
+                for (tKemasanRusakHeaderData data : this.getListOftKemasanRusakHeaderData()){
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dttKemasanRusakHeaderData.Property_intId, String.valueOf(data.get_intId()));
+                    item1.put(dttKemasanRusakHeaderData.Property_txtKemasanRusak, String.valueOf(data.get_txtKemasanRusak()));
+                    item1.put(dttKemasanRusakHeaderData.Property_OutletCode, String.valueOf(data.get_OutletCode()));
+                    item1.put(dttKemasanRusakHeaderData.Property_OutletName, String.valueOf(data.get_OutletName()));
+                    item1.put(dttKemasanRusakHeaderData.Property_txtDate, String.valueOf(data.get_dtDate()));
+                    item1.put(dttKemasanRusakHeaderData.Property_intIdAbsenUser, String.valueOf(data.get_intIdAbsenUser()));
+                    item1.put(dttKemasanRusakHeaderData.Property_intSubmit, String.valueOf(data.get_intSubmit()));
+                    item1.put(dttKemasanRusakHeaderData.Property_intSumAmount, String.valueOf(data.get_intSumAmount()));
+                    item1.put(dttKemasanRusakHeaderData.Property_intSumItem, String.valueOf(data.get_intSumItem()));
+                    item1.put(dttKemasanRusakHeaderData.Property_intSync, String.valueOf(data.get_intSync()));
+                    item1.put(dttKemasanRusakHeaderData.Property_txtBranchCode, String.valueOf(data.get_txtBranchCode()));
+                    item1.put(dttKemasanRusakHeaderData.Property_txtBranchName, String.valueOf(data.get_txtBranchName()));
+                    item1.put(dttKemasanRusakHeaderData.Property_UserId, String.valueOf(data.get_UserId()));
+                    item1.put(dttKemasanRusakHeaderData.Property_txtKeterangan, String.valueOf(data.get_txtKeterangan()));
+                    item1.put(dttKemasanRusakHeaderData.Property_txtNIK, String.valueOf(data.get_txtNIK()));
+                    item1.put(dttKemasanRusakHeaderData.Property_txtRoleId, String.valueOf(data.get_txtRoleId()));
+                    itemsListJquey.add(item1);
+                }
+                resJson.put(dttKemasanRusakHeaderData.Property_ListOftKemasanRusakHeaderData, new JSONArray(itemsListJquey));
+            }
+
+            if (this.getListOftKemasanRusakDetailData() != null){
+                tKemasanRusakDetailData dttKemasanRusakDetailData = new tKemasanRusakDetailData();
+                itemsListJquey = new ArrayList<JSONObject>();
+                for (tKemasanRusakDetailData data : this.getListOftKemasanRusakDetailData()){
+                    JSONObject item = new JSONObject();
+                    item.put(dttKemasanRusakDetailData.Property_intId, String.valueOf(data.getIntId()));
+                    item.put(dttKemasanRusakDetailData.Property_dtDate, String.valueOf(data.get_dtDate()));
+                    item.put(dttKemasanRusakDetailData.Property_intPrice, String.valueOf(data.get_intTotal()));
+                    item.put(dttKemasanRusakDetailData.Property_txtQuantity, String.valueOf(data.getTxtExpireDate()));
+                    item.put(dttKemasanRusakDetailData.Property_txtCodeProduct, String.valueOf(data.get_intPrice()));
+                    item.put(dttKemasanRusakDetailData.Property_txtKeterangan, String.valueOf(data.get_txtCodeProduct()));
+                    item.put(dttKemasanRusakDetailData.Property_txtExpireDate, String.valueOf(data.getTxtProduct()));
+                    item.put(dttKemasanRusakDetailData.Property_txtProduct, String.valueOf(data.get_txtKeterangan()));
+                    item.put(dttKemasanRusakDetailData.Property_txtNIK, String.valueOf(data.get_txtNIK()));
+                    item.put(dttKemasanRusakDetailData.Property_intTotal, String.valueOf(data.get_txtKemasanRusak()));
+                    item.put(dttKemasanRusakDetailData.Property_txtKemasanRusak, String.valueOf(data.getTxtQuantity()));
+                    itemsListJquey.add(item);
+                }
+                resJson.put(dttKemasanRusakDetailData.Property_ListOftKemasanRusakDetailData, new JSONArray(itemsListJquey));
+            }
+
+            if (this.getListOftKemasanRusakImageData() != null) {
+                tKemasanRusakImageData dttKemasanRusakImageData = new tKemasanRusakImageData();
+                itemsListJquey = new ArrayList<JSONObject>();
+                for (tKemasanRusakImageData data : this.getListOftKemasanRusakImageData()) {
+                    JSONObject item = new JSONObject();
+                    item.put(dttKemasanRusakImageData.Property_txtId, String.valueOf(data.get_txtId()));
+                    item.put(dttKemasanRusakImageData.Property_txtHeaderId, String.valueOf(data.get_txtHeaderId()));
+                    item.put(dttKemasanRusakImageData.Property_txtImage, String.valueOf(data.get_txtImage()));
+                    item.put(dttKemasanRusakImageData.Property_intPosition, String.valueOf(data.get_intPosition()));
+                    item.put(dttKemasanRusakImageData.Property_txtType, String.valueOf(data.get_txtType()));
+                    itemsListJquey.add(item);
+                }
+                resJson.put(dttKemasanRusakImageData.Property_ListOftKemasanRusakImageData, new JSONArray(itemsListJquey));
+            }
+
             if (this.getListOfTrackingLocationData() != null){
                 trackingLocationData dtTrackingLocationData = new trackingLocationData();
                 itemsListJquey = new ArrayList<JSONObject>();
@@ -746,6 +808,45 @@ public class dataJson {
                 KoordinasiOutletImageData dtKoordinasiOutletImageData = new KoordinasiOutletImageData();
                 itemsListJquey = new ArrayList<JSONObject>();
                 for (KoordinasiOutletImageData data : this.getListOfKoordinasiOutletImageData()){
+                    JSONObject item = new JSONObject();
+                    item.put(dtKoordinasiOutletImageData.Property_txtId, String.valueOf(data.get_txtId()));
+                    item.put(dtKoordinasiOutletImageData.Property_txtHeaderId, String.valueOf(data.get_txtHeaderId()));
+                    item.put(dtKoordinasiOutletImageData.Property_txtImage, String.valueOf(data.get_txtImage()));
+                    item.put(dtKoordinasiOutletImageData.Property_intPosition, String.valueOf(data.get_intPosition()));
+                    itemsListJquey.add(item);
+                }
+                resJson.put(dtKoordinasiOutletImageData.Property_ListOfKoordinasiOutletImageData, new JSONArray(itemsListJquey));
+            }
+
+            if (this.getListOftTidakSesuaiPesananHeaderData() != null){
+                tTidakSesuaiPesananHeaderData dtKoordinasiOutletData = new tTidakSesuaiPesananHeaderData();
+                itemsListJquey = new ArrayList<JSONObject>();
+                for (tTidakSesuaiPesananHeaderData data : this.getListOftTidakSesuaiPesananHeaderData()){
+                    JSONObject item = new JSONObject();
+                    item.put(dtKoordinasiOutletData.Property_intId, String.valueOf(data.get_intId()));
+                    item.put(dtKoordinasiOutletData.Property_dtDate, String.valueOf(data.get_dtDate()));
+                    item.put(dtKoordinasiOutletData.Property_txtKeterangan, String.valueOf(data.get_txtKeterangan()));
+                    item.put(dtKoordinasiOutletData.Property_txtUserId, String.valueOf(data.get_txtUserId()));
+                    item.put(dtKoordinasiOutletData.Property_txtUsername, String.valueOf(data.get_txtUsername()));
+                    item.put(dtKoordinasiOutletData.Property_txtRoleId, String.valueOf(data.get_txtRoleId()));
+                    item.put(dtKoordinasiOutletData.Property_txtOutletCode, String.valueOf(data.get_txtOutletCode()));
+                    item.put(dtKoordinasiOutletData.Property_txtOutletName, String.valueOf(data.get_txtOutletName()));
+                    item.put(dtKoordinasiOutletData.Property_txtBranchCode, String.valueOf(data.get_txtBranchCode()));
+                    item.put(dtKoordinasiOutletData.Property_txtBranchName, String.valueOf(data.get_txtBranchName()));
+                    item.put(dtKoordinasiOutletData.Property_txtNIK, String.valueOf(data.get_txtNIK()));
+                    item.put(dtKoordinasiOutletData.Property_intSubmit, String.valueOf(data.get_intSubmit()));
+                    item.put(dtKoordinasiOutletData.Property_intSync, String.valueOf(data.get_intSync()));
+                    item.put(dtKoordinasiOutletData.Property_intCategoriId, String.valueOf(data.get_intCategoriId()));
+                    item.put(dtKoordinasiOutletData.Property_txtCategory, String.valueOf(data.get_txtCategory()));
+                    itemsListJquey.add(item);
+                }
+                resJson.put(dtKoordinasiOutletData.Property_ListOftTidakSesuaiPesananHeaderData, new JSONArray(itemsListJquey));
+            }
+
+            if (this.getListOftTidakSesuaiPesananImageData() != null){
+                tTidakSesuaiPesananImageData dtKoordinasiOutletImageData = new tTidakSesuaiPesananImageData();
+                itemsListJquey = new ArrayList<JSONObject>();
+                for (tTidakSesuaiPesananImageData data : this.getListOftTidakSesuaiPesananImageData()){
                     JSONObject item = new JSONObject();
                     item.put(dtKoordinasiOutletImageData.Property_txtId, String.valueOf(data.get_txtId()));
                     item.put(dtKoordinasiOutletImageData.Property_txtHeaderId, String.valueOf(data.get_txtHeaderId()));
@@ -1256,6 +1357,24 @@ public class dataJson {
                 }
             }
 
+            if(this.getDttKemasanRusakHeaderData()!=null){
+                if(this.getDttKemasanRusakHeaderData().getBoolValid().equals("1")){
+                    tKemasanRusakHeaderData dtConfig = new tKemasanRusakHeaderData();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDttKemasanRusakHeaderData().getBoolValid()));
+                    resJson.put(dtConfig.Property_ListOftKemasanRusakHeaderData, item1);
+                }
+            }
+
+            if(this.getDttTidakSesuaiPesananHeaderData()!=null){
+                if(this.getDttTidakSesuaiPesananHeaderData().getBoolValid().equals("1")){
+                    tTidakSesuaiPesananHeaderData dtConfig = new tTidakSesuaiPesananHeaderData();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDttTidakSesuaiPesananHeaderData().getBoolValid()));
+                    resJson.put(dtConfig.Property_ListOftTidakSesuaiPesananHeaderData, item1);
+                }
+            }
+
             if(this.getDtmEmployeeBranchData()!=null){
                 if(this.getDtmEmployeeBranchData().getBoolValid().equals("1")){
                     mEmployeeBranchData dtConfig = new mEmployeeBranchData();
@@ -1599,6 +1718,16 @@ public class dataJson {
     private List<tPurchaseOrderDetailData> ListOftPurchaseOrderDetailData;
     private List<tSalesProductQuantityDetailData> ListOftSalesProductQuantityDetailData;
 
+    public List<tKemasanRusakDetailData> getListOftKemasanRusakDetailData() {
+        return ListOftKemasanRusakDetailData;
+    }
+
+    public void setListOftKemasanRusakDetailData(List<tKemasanRusakDetailData> listOftKemasanRusakDetailData) {
+        ListOftKemasanRusakDetailData = listOftKemasanRusakDetailData;
+    }
+
+    private List<tKemasanRusakDetailData> ListOftKemasanRusakDetailData;
+
     public List<tOverStockDetailData> getListOftOverStockDetailData() {
         return ListOftOverStockDetailData;
     }
@@ -1609,11 +1738,31 @@ public class dataJson {
 
     private List<tOverStockDetailData> ListOftOverStockDetailData;
     private List<tSalesProductQuantityImageData> ListOftSalesProductQuantityImageData;
+
+    public List<tKemasanRusakImageData> getListOftKemasanRusakImageData() {
+        return ListOftKemasanRusakImageData;
+    }
+
+    public void setListOftKemasanRusakImageData(List<tKemasanRusakImageData> listOftKemasanRusakImageData) {
+        ListOftKemasanRusakImageData = listOftKemasanRusakImageData;
+    }
+
+    private List<tKemasanRusakImageData> ListOftKemasanRusakImageData;
     private List<tPlanogramImageData> ListOftPlanogramImageData;
     private List<tPurchaseOrderHeaderData> ListOftPurchaseOrderHeaderData;
     private List<tJawabanUserData> ListOftJawabanUserData;
     private List<tJawabanUserHeaderData> ListOftJawabanUserHeaderData;
     private List<tSalesProductQuantityHeaderData> ListOftSalesProductQuantityData;
+
+    public List<tKemasanRusakHeaderData> getListOftKemasanRusakHeaderData() {
+        return ListOftKemasanRusakHeaderData;
+    }
+
+    public void setListOftKemasanRusakHeaderData(List<tKemasanRusakHeaderData> listOftKemasanRusakHeaderData) {
+        ListOftKemasanRusakHeaderData = listOftKemasanRusakHeaderData;
+    }
+
+    private List<tKemasanRusakHeaderData> ListOftKemasanRusakHeaderData;
 
     public List<tOverStockHeaderData> getListOftOverStockHeaderData() {
         return ListOftOverStockHeaderData;
@@ -1633,6 +1782,25 @@ public class dataJson {
     private List<trackingLocationData> ListOfTrackingLocationData;
     private List<KoordinasiOutletData> ListOfKoordinasiOutletData;
     private List<KoordinasiOutletImageData> ListOfKoordinasiOutletImageData;
+    private List<tTidakSesuaiPesananHeaderData> ListOftTidakSesuaiPesananHeaderData;
+
+    public List<tTidakSesuaiPesananHeaderData> getListOftTidakSesuaiPesananHeaderData() {
+        return ListOftTidakSesuaiPesananHeaderData;
+    }
+
+    public void setListOftTidakSesuaiPesananHeaderData(List<tTidakSesuaiPesananHeaderData> listOftTidakSesuaiPesananHeaderData) {
+        ListOftTidakSesuaiPesananHeaderData = listOftTidakSesuaiPesananHeaderData;
+    }
+
+    public List<tTidakSesuaiPesananImageData> getListOftTidakSesuaiPesananImageData() {
+        return ListOftTidakSesuaiPesananImageData;
+    }
+
+    public void setListOftTidakSesuaiPesananImageData(List<tTidakSesuaiPesananImageData> listOftTidakSesuaiPesananImageData) {
+        ListOftTidakSesuaiPesananImageData = listOftTidakSesuaiPesananImageData;
+    }
+
+    private List<tTidakSesuaiPesananImageData> ListOftTidakSesuaiPesananImageData;
 
 
     public List<tJawabanUserHeaderData> getListOftJawabanUserHeaderData() {
@@ -1996,6 +2164,25 @@ public class dataJson {
     }
 
     private mCategoryKoordinasiOutletData dtmCategoryKoordinasiOutletData;
+
+    public tKemasanRusakHeaderData getDttKemasanRusakHeaderData() {
+        return dttKemasanRusakHeaderData;
+    }
+
+    public void setDttKemasanRusakHeaderData(tKemasanRusakHeaderData dttKemasanRusakHeaderData) {
+        this.dttKemasanRusakHeaderData = dttKemasanRusakHeaderData;
+    }
+
+    public tTidakSesuaiPesananHeaderData getDttTidakSesuaiPesananHeaderData() {
+        return dttTidakSesuaiPesananHeaderData;
+    }
+
+    public void setDttTidakSesuaiPesananHeaderData(tTidakSesuaiPesananHeaderData dttTidakSesuaiPesananHeaderData) {
+        this.dttTidakSesuaiPesananHeaderData = dttTidakSesuaiPesananHeaderData;
+    }
+
+    private tKemasanRusakHeaderData dttKemasanRusakHeaderData;
+    private tTidakSesuaiPesananHeaderData dttTidakSesuaiPesananHeaderData;
 
     public List<tAttendanceUserData> getListOftAttendanceUserData() {
         return ListOftAttendanceUserData;

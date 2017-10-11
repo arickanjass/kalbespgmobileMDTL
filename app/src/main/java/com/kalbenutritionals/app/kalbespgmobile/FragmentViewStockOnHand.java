@@ -263,6 +263,9 @@ public class FragmentViewStockOnHand extends Fragment implements IXListViewListe
                 } else if (dt.get(i).get_intSubmit().equals("1")&&dt.get(i).get_intSync().equals("1")){
                     swplist.set_txtDescription2("Sync");
                 }
+                else if (dt.get(i).get_intSubmit().equals("0")&&dt.get(i).get_intSync().equals("0")){
+                    swplist.set_txtDescription2("Save");
+                }
 
                 swipeList.add(swplist);
             }
@@ -278,15 +281,26 @@ public class FragmentViewStockOnHand extends Fragment implements IXListViewListe
         mListView2.setEmptyView( v.findViewById(R.id.LayoutEmpty));
         mListView2.setXListViewListener(this);
         mHandler = new Handler();
+
         HashMap<String, String> mapView = new HashMap<String, String>();
+        HashMap<String, String> mapEdit = new HashMap<String, String>();
+        HashMap<String, String> mapDelete = new HashMap<String, String>();
 
         mapView.put("name", "View");
         mapView.put("bgColor", "#3498db");
 
+        mapEdit.put("name", "Edit");
+        mapEdit.put("bgColor", "#2980b9");
+
+        mapDelete.put("name", "Delete");
+        mapDelete.put("bgColor", "#c0392b");
+
         mapMenu = new HashMap<String, HashMap>();
         mapMenu.put("0", mapView);
+        mapMenu.put("1", mapEdit);
+        mapMenu.put("2", mapDelete);
 
-        SwipeMenuCreator creator = clsMain.setCreator(getActivity().getApplicationContext(), mapMenu);
+        SwipeMenuCreator creator = clsMain.setCreatorForCusBased(getActivity().getApplicationContext(), mapMenu);
         mListView2.setMenuCreator(creator);
         mListView2.setEmptyView(v.findViewById(R.id.LayoutEmpty));
         mListView2.setOnMenuItemClickListener(new OnMenuItemClickListener() {

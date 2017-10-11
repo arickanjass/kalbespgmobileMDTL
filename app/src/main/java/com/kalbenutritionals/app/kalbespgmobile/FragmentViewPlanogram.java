@@ -10,11 +10,13 @@ import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -45,6 +47,9 @@ import java.util.Map;
 
 import adapter.AppAdapterViewCusBase;
 import bl.clsHelperBL;
+import bl.tCustomerBasedMobileDetailBL;
+import bl.tCustomerBasedMobileDetailProductBL;
+import bl.tCustomerBasedMobileHeaderBL;
 import bl.tPlanogramImageBL;
 import bl.tPlanogramMobileBL;
 import bl.tSalesProductQuantityHeaderBL;
@@ -55,9 +60,14 @@ import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.bean.SwipeMenu;
 import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.OnMenuItemClickListener;
 import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.SwipeMenuCreator;
 import edu.swu.pulltorefreshswipemenulistview.library.util.RefreshTime;
+import io.github.yavski.fabspeeddial.FabSpeedDial;
+import io.github.yavski.fabspeeddial.SimpleMenuListenerAdapter;
 import library.spgmobile.common.AppAdapter;
 import library.spgmobile.common.clsSwipeList;
 import library.spgmobile.common.tActivityData;
+import library.spgmobile.common.tCustomerBasedMobileDetailData;
+import library.spgmobile.common.tCustomerBasedMobileDetailProductData;
+import library.spgmobile.common.tCustomerBasedMobileHeaderData;
 import library.spgmobile.common.tPlanogramImageData;
 import library.spgmobile.common.tPlanogramMobileData;
 import library.spgmobile.common.tSalesProductQuantityHeaderData;
@@ -97,19 +107,53 @@ public class FragmentViewPlanogram extends Fragment implements IXListViewListene
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.fragment_view_global, container, false);
+        v = inflater.inflate(R.layout.fragment_view_global_new, container, false);
 
         fab = (FloatingActionButton) v.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        fab.setVisibility(View.GONE);
+        final FabSpeedDial fabSpeedDial = (FabSpeedDial) v.findViewById(R.id.fabView);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+//                toolbar.setTitle("Add Planogram");
+//
+//                FragmentAddPlanogram fragmentAddPlanogram = new FragmentAddPlanogram();
+//                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+//                fragmentTransaction.replace(R.id.frame, fragmentAddPlanogram);
+//                fragmentTransaction.commit();
+//            }
+//        });
+        fabSpeedDial.setMenuListener(new SimpleMenuListenerAdapter() {
             @Override
-            public void onClick(View v) {
+            public boolean onMenuItemSelected(MenuItem menuItem) {
                 Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-                toolbar.setTitle("Add Planogram");
-
-                FragmentAddPlanogram fragmentAddPlanogram = new FragmentAddPlanogram();
+                NavigationView nv = (NavigationView) getActivity().findViewById(R.id.navigation_view);
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.frame, fragmentAddPlanogram);
-                fragmentTransaction.commit();
+
+                switch(menuItem.getItemId()){
+
+                    case R.id.action_add:
+                        toolbar.setTitle("Add Planogram");
+//                        nv.setCheckedItem(2);
+                        FragmentAddPlanogram fragmentAddPlanogram = new FragmentAddPlanogram();
+                        Bundle args = new Bundle();
+                        args.putString("id", "null");
+                        args.putString("param", "null");
+                        fragmentAddPlanogram.setArguments(args);
+                        fragmentTransaction = getFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.frame, fragmentAddPlanogram);
+                        fragmentTransaction.commit();
+                        return true;
+
+                    case R.id.action_submitAll:
+                        saveDataSubmitAll();
+//                        new clsMainActivity().showCustomToast(getContext(), "submit", true);
+                        return true;
+
+                    default:
+                        return false;
+                }
             }
         });
         final PullToRefreshSwipeMenuListView swipeMenuList = (PullToRefreshSwipeMenuListView) v.findViewById(R.id.SwipelistView);
@@ -140,17 +184,63 @@ public class FragmentViewPlanogram extends Fragment implements IXListViewListene
         return v;
     }
 
+    private void saveDataSubmitAll() {
+
+//        tAbsenUserData dtActive = new tAbsenUserBL().getDataCheckInActive();
+
+        visitplanAbsenData _viAbsenData = new visitplanAbsenData();
+        _viAbsenData = new clsHelperBL().getDataCheckInActive();
+
+        final List<tPlanogramMobileData> data = new tPlanogramMobileBL().getAllHeaderByOutletCodeUnsubmit(_viAbsenData.get_txtOutletCode());
+
+        if(data.size()!=0){
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+            builder.setTitle("Confirm");
+            builder.setMessage("Are you sure to submit all transaction ? ");
+
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    for(tPlanogramMobileData dt : data){
+                        new tPlanogramMobileBL().updateDataSubmit(dt);
+                    }
+                    new clsMainActivity().showCustomToast(getContext(), "submit successfull", true);
+                    loadData();
+                }
+            });
+
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            AlertDialog alert = builder.create();
+            alert.show();
+        } else {
+            new clsMainActivity().showCustomToast(getContext(), "There is No data to submit", false);
+        }
+    }
+
     private void loadData() {
         visitplanAbsenData dtActive = new clsHelperBL().getDataCheckInActive();
 
         clsSwipeList swplist;
-        dt = new tPlanogramMobileBL().getAllPlanogramByOutletCode(dtActive.get_txtOutletCode());
+        dt = new tPlanogramMobileBL().getAllHeaderByOutletCodeForView(dtActive.get_txtOutletCode());
 
         swipeList.clear();
 
+        String status ="";
         if (dt != null) {
             for (int i = 0; i < dt.size(); i++) {
-                String status = dt.get(i).get_intSubmit().equals("1") && dt.get(i).get_intSync().equals("1") ? "Sync" : "Submit";
+                if(dt.get(i).get_intSubmit().equals("1") && dt.get(i).get_intSync().equals("1")){
+                    status = "Sync";
+                } else if (dt.get(i).get_intSubmit().equals("1") && dt.get(i).get_intSync().equals("0")){
+                    status = "Submit";
+                } else if(dt.get(i).get_intSubmit().equals("0") && dt.get(i).get_intSync().equals("0")){
+                    status = "Saved";
+                }
                 swplist = new clsSwipeList();
                 swplist.set_txtTitle("Category : " + dt.get(i).get_txtCategoryName());
                 String desc = dt.get(i).get_txtKeterangan();
@@ -175,14 +265,24 @@ public class FragmentViewPlanogram extends Fragment implements IXListViewListene
         mHandler = new Handler();
 
         HashMap<String, String> mapView = new HashMap<String, String>();
+        HashMap<String, String> mapEdit = new HashMap<String, String>();
+        HashMap<String, String> mapDelete = new HashMap<String, String>();
 
         mapView.put("name", "View");
         mapView.put("bgColor", "#3498db");
 
+        mapEdit.put("name", "Edit");
+        mapEdit.put("bgColor", "#2980b9");
+
+        mapDelete.put("name", "Delete");
+        mapDelete.put("bgColor", "#c0392b");
+
         mapMenu = new HashMap<String, HashMap>();
         mapMenu.put("0", mapView);
+        mapMenu.put("1", mapEdit);
+        mapMenu.put("2", mapDelete);
 
-        SwipeMenuCreator creator = clsMain.setCreator(getActivity().getApplicationContext(), mapMenu);
+        SwipeMenuCreator creator = clsMain.setCreatorForCusBased(getActivity().getApplicationContext(), mapMenu);
         mListView.setMenuCreator(creator);
         mListView.setOnMenuItemClickListener(new OnMenuItemClickListener() {
             @Override
@@ -190,6 +290,13 @@ public class FragmentViewPlanogram extends Fragment implements IXListViewListene
                 switch (index) {
                     case 0:
                         viewImage(getActivity().getApplicationContext(), position);
+                        break;
+                    case 1:
+                        editList(getActivity().getApplicationContext(), position);
+//                        new clsMainActivity().showCustomToast(getContext(), "edit", true);
+                        break;
+                    case 2:
+                        deleteList(getActivity().getApplicationContext(), position);
                 }
             }
         });
@@ -222,7 +329,14 @@ public class FragmentViewPlanogram extends Fragment implements IXListViewListene
         final TextView tv_valid = (TextView) promptView.findViewById(R.id.tv_valid);
         mDemoSlider = (SliderLayout) promptView.findViewById(R.id.sliderQuantity);
 
-        String statusText = dt.get(position).get_intSubmit().equals("1") && dt.get(position).get_intSync().equals("1") ? "Sync" : "Submit";
+        String statusTran = "";
+        if(dt.get(position).get_intSubmit().equals("1") && dt.get(position).get_intSync().equals("1")){
+            statusTran = "Sync";
+        } else if (dt.get(position).get_intSubmit().equals("1") && dt.get(position).get_intSync().equals("0")){
+            statusTran = "Submit";
+        } else if(dt.get(position).get_intSubmit().equals("0") && dt.get(position).get_intSync().equals("0")){
+            statusTran = "Save";
+        }
         dataImage = new tPlanogramImageBL().getDataHeaderId(dt.get(position).get_txtIdPlanogram());
 
         String validDisplay = dt.get(position).get_intIsValid().equals("1") ? "Plano Sesuai" : "Plano Tidak Sesuai";
@@ -237,7 +351,7 @@ public class FragmentViewPlanogram extends Fragment implements IXListViewListene
         tv_valid.setVisibility(View.VISIBLE);
         tv_valid.setText(validDisplay);
 
-        status.setText("Status : "+statusText);
+        status.setText("Status : "+statusTran);
 
         rbKalbe.setTextColor(Color.BLACK);
         rbKalbe.setEnabled(false);
@@ -420,6 +534,37 @@ public class FragmentViewPlanogram extends Fragment implements IXListViewListene
         alertDialogBuilder.setView(promptView);
         alertDialogBuilder
                 .setCancelable(false)
+                .setNeutralButton("Submit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                        builder.setTitle("Warning");
+                        builder.setMessage("Are you sure to submit ");
+
+                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                tPlanogramMobileData data = new tPlanogramMobileData();
+                                data.set_txtIdPlanogram(dt.get(position).get_txtIdPlanogram());
+                                data.set_intSubmit("1");
+                                new tPlanogramMobileBL().updateDataSubmit(data);
+                                dialog.cancel();
+                                loadData();
+                            }
+                        });
+
+                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                        AlertDialog alert = builder.create();
+                        alert.show();
+                    }
+                })
                 .setNegativeButton("Close", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         new clsMainActivity().deleteTempFolder();
@@ -428,6 +573,12 @@ public class FragmentViewPlanogram extends Fragment implements IXListViewListene
                 });
         final AlertDialog alertD = alertDialogBuilder.create();
         alertD.show();
+
+        if(!statusTran.equals("")&&statusTran.equals("Save")){
+            alertD.getButton(AlertDialog.BUTTON_NEUTRAL).setEnabled(true);
+        } else {
+            alertD.getButton(AlertDialog.BUTTON_NEUTRAL).setEnabled(false);
+        }
 
         img1.setClickable(true);
         img1.setOnClickListener(new View.OnClickListener() {
@@ -460,6 +611,83 @@ public class FragmentViewPlanogram extends Fragment implements IXListViewListene
                 new clsMainActivity().zoomImage(mybitmap4, getActivity());
             }
         });
+    }
+
+    private void editList(Context applicationContext, int position) {
+        boolean isEditalbe = false;
+        String statusTran = "";
+        if(dt.get(position).get_intSubmit().equals("1") && dt.get(position).get_intSync().equals("1")){
+            statusTran = "Syncronized";
+        } else if (dt.get(position).get_intSubmit().equals("1") && dt.get(position).get_intSync().equals("0")){
+            statusTran = "Submit";
+        } else if(dt.get(position).get_intSubmit().equals("0") && dt.get(position).get_intSync().equals("0")){
+            statusTran = "Save";
+            isEditalbe = true;
+        }
+
+        if(isEditalbe){
+            Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+            toolbar.setTitle("Add Planogram");
+
+            FragmentAddPlanogram fragmentAddPlanogram = new FragmentAddPlanogram();
+            Bundle args = new Bundle();
+            args.putString("id", dt.get( position).get_txtIdPlanogram());
+            args.putString("param", "edit");
+            fragmentAddPlanogram.setArguments(args);
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.frame, fragmentAddPlanogram);
+            fragmentTransaction.commit();
+        } else {
+            String name = dt.get( position).get_txtCategoryName().toString();
+            new clsMainActivity().showCustomToast(getContext(), "Cannot edit, " + "\n data was " + statusTran, false);
+        }
+    }
+
+    private void deleteList(Context applicationContext, final int position) {
+        boolean isDeleteable = false;
+        String statusTran = "";
+        if(dt.get(position).get_intSubmit().equals("1") && dt.get(position).get_intSync().equals("1")){
+            statusTran = "Syncronized";
+        } else if (dt.get(position).get_intSubmit().equals("1") && dt.get(position).get_intSync().equals("0")){
+            statusTran = "Submit";
+        } else if(dt.get(position).get_intSubmit().equals("0") && dt.get(position).get_intSync().equals("0")){
+            statusTran = "Save";
+            isDeleteable = true;
+        }
+
+        if(isDeleteable){
+            final List<tPlanogramImageData> detailData = new tPlanogramImageBL().getDataHeaderId(dt.get(position).get_txtIdPlanogram());
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+            builder.setTitle("Warning");
+            builder.setMessage("Are you sure to delete?" + "\n The operation cannot be undone...");
+
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    new tPlanogramMobileBL().deleteTrId(dt.get( position).get_txtIdPlanogram());
+                    if(detailData!=null&&detailData.size()>0){
+                        for(tPlanogramImageData data : detailData){
+                            new tPlanogramImageBL().deleteTrId(data.get_txtId());
+                        }
+                    }
+                    new clsMainActivity().showCustomToast(getContext(), "Transaction data has been deleted", true);
+                    loadData();
+                }
+            });
+
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            AlertDialog alert = builder.create();
+            alert.show();
+        } else {
+            new clsMainActivity().showCustomToast(getContext(), "Cannot delete data, data was " + statusTran, false);
+        }
     }
 
     @Override

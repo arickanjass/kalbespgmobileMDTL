@@ -30,6 +30,8 @@ import java.io.File;
 import java.text.NumberFormat;
 import java.util.List;
 
+import bl.tKemasanRusakDetailBL;
+import bl.tKemasanRusakHeaderBL;
 import bl.tOverStockDetailBL;
 import bl.tOverStockHeaderBL;
 import bl.tSalesProductQuantityDetailBL;
@@ -38,6 +40,8 @@ import bl.tStockInHandDetailBL;
 import bl.tStockInHandHeaderBL;
 import de.codecrafters.tableview.TableDataAdapter;
 import library.spgmobile.common.ReportTable;
+import library.spgmobile.common.tKemasanRusakDetailData;
+import library.spgmobile.common.tKemasanRusakHeaderData;
 import library.spgmobile.common.tOverStockDetailData;
 import library.spgmobile.common.tOverStockHeaderData;
 import library.spgmobile.common.tSalesProductQuantityDetailData;
@@ -171,6 +175,21 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
                     break;
             }
         }
+        if(data.get_report_type() == "Tidak Sesuai Pesanan"){
+            switch (columnIndex) {
+                case 1:
+                    renderedView = renderString(data.get_RepeatQuiz(), "left");
+                    break;
+                case 2:
+                    renderedView = renderString(data.get_txtOutletName(), "left");
+                    break;
+                case 3:
+                    renderedView = renderString(data.get_txtDesc(), "left");
+                    break;
+                default:
+                    break;
+            }
+        }
 
         if(data.get_report_type() == "Koordinasi Outlet"){
             switch (columnIndex) {
@@ -256,6 +275,31 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
                     break;
             }
         }
+
+        if(data.get_report_type() == "KemasanRusak"){
+            switch (columnIndex) {
+                case 1:
+                    renderedView = renderString(data.get_txtQuantityStock(), "left");
+                    break;
+                case 2:
+                    renderedView = renderString(data.get_total_product(), "right");
+                    break;
+                case 3:
+                    renderedView = renderString(data.get_total_item(), "right");
+                    break;
+//                case 4:
+//                    renderedView = renderString(data.get_total_price(), "right");
+//                    break;
+                case 4:
+                    renderedView = renderString(data.get_status() , "left");
+                    break;
+                case 5:
+                    renderedView = renderViewDetailNearEdTl(data.get_view_detail(), data.get_txtQuantityStock(), data.get_dummy() , "left");
+                default:
+                    break;
+            }
+        }
+
         if(data.get_report_type() == "Customer Base MTD"){
             switch (columnIndex) {
                 case 1:
@@ -456,6 +500,8 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
                     viewDetailNearEd(dummy);
                 } else if (type == "Over Stock"){
                     viewDetailOverStock(dummy);
+                } else if (type == "Kemasan Rusak"){
+                    viewDetailKemasanRusak(dummy);
                 }
 
             }
@@ -542,7 +588,7 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
 
             TextView product = new TextView(getContext());
             product.setTextSize(12);
-            product.setWidth(400);
+            product.setWidth(600);
             product.setPadding(10, 10, 10, 10);
             product.setBackgroundColor(Color.parseColor("#f0f0f0"));
             product.setTextColor(Color.BLACK);
@@ -673,7 +719,7 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
 
             TextView product = new TextView(getContext());
             product.setTextSize(12);
-            product.setWidth(400);
+            product.setWidth(600);
             product.setPadding(10, 10, 10, 10);
             product.setBackgroundColor(Color.parseColor("#f0f0f0"));
             product.setTextColor(Color.BLACK);
@@ -780,7 +826,137 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
 
             TextView product = new TextView(getContext());
             product.setTextSize(12);
-            product.setWidth(400);
+            product.setWidth(600);
+            product.setPadding(10, 10, 10, 10);
+            product.setBackgroundColor(Color.parseColor("#f0f0f0"));
+            product.setTextColor(Color.BLACK);
+            product.setText(dat.getTxtProduct());
+            tr.addView(product,params);
+
+            TextView qty = new TextView(getContext());
+            qty.setTextSize(12);
+            qty.setPadding(10, 10, 10, 10);
+            qty.setBackgroundColor(Color.parseColor("#f0f0f0"));
+            qty.setTextColor(Color.BLACK);
+            qty.setGravity(Gravity.RIGHT);
+            qty.setText(dat.getTxtQuantity()+ " pcs");
+            tr.addView(qty,params);
+
+            TextView price = new TextView(getContext());
+            price.setTextSize(12);
+            price.setPadding(10, 10, 10, 10);
+            price.setBackgroundColor(Color.parseColor("#f0f0f0"));
+            price.setTextColor(Color.BLACK);
+            price.setGravity(Gravity.RIGHT);
+            price.setText(new clsMainActivity().giveFormatDate2(dat.getTxtExpireDate()));
+            tr.addView(price,params);
+//
+//            TextView amount = new TextView(getContext());
+//            amount.setTextSize(12);
+//            amount.setWidth(200);
+//            amount.setPadding(10, 10, 10, 10);
+//            amount.setBackgroundColor(Color.parseColor("#f0f0f0"));
+//            amount.setTextColor(Color.BLACK);
+//            amount.setGravity(Gravity.RIGHT);
+//            double prc = Double.valueOf(dat.get_intPrice());
+//            double itm = Double.valueOf(dat.getTxtQuantity());
+//            qtyNum = prc * itm;
+//            qtySum += qtyNum;
+//            amount.setText(new clsMainActivity().convertNumberDec(qtyNum));
+//            tr.addView(amount,params);
+
+            tl.addView(tr, tableRowParams);
+        }
+
+        tlb.addView(tl);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this.getContext());
+        alertDialogBuilder.setView(promptView);
+        alertDialogBuilder
+                .setCancelable(false)
+                .setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        final AlertDialog alertD = alertDialogBuilder.create();
+        alertD.show();
+    }
+    private void viewDetailKemasanRusak(final String dummy) {
+        LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+        final View promptView = layoutInflater.inflate(R.layout.activity_preview_quantity, null);
+
+        List<tKemasanRusakHeaderData> dtheader = new tKemasanRusakHeaderBL().getDataByNo(dummy);
+
+        final TextView _tvNoSO = (TextView) promptView.findViewById(R.id.tvnoSOtbl);
+        final TextView _tvKet = (TextView) promptView.findViewById(R.id.tvkettbl);
+        _tvNoSO.setText(dtheader.get(0).get_txtKemasanRusak());
+        _tvKet.setText(dtheader.get(0).get_txtKeterangan());
+        final TextView tv_item = (TextView) promptView.findViewById(R.id.tvItemtbl);
+        tv_item.setTypeface(null, Typeface.BOLD);
+        tv_item.setText(String.valueOf(dtheader.get(0).get_intSumItem()));
+        final  TextView tv_amount = (TextView) promptView.findViewById(R.id.tvSumAmount) ;
+        tv_amount.setTypeface(null, Typeface.BOLD);
+        tv_amount.setText(String.valueOf(dtheader.get(0).get_intSumAmount()));
+        final  TextView tv_status = (TextView) promptView.findViewById(R.id.tvStatus);
+        tv_status.setTypeface(null, Typeface.BOLD);
+
+        final TableRow tr_neared = (TableRow) promptView.findViewById(R.id.tr_neared);
+        tr_neared.setVisibility(View.GONE);
+
+        if (dtheader.get(0).get_intSubmit().equals("1")&&dtheader.get(0).get_intSync().equals("0")){
+            tv_status.setText("submit");
+        } else if (dtheader.get(0).get_intSubmit().equals("1")&&dtheader.get(0).get_intSync().equals("1")){
+            tv_status.setText("Sync");
+        }
+
+        TableLayout tlb = (TableLayout) promptView.findViewById(R.id.tlProductQty);
+        tlb.removeAllViews();
+
+        TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
+        params.setMargins(1, 1, 1, 1);
+
+        TableRow tr = new TableRow(getContext());
+
+        TableLayout tl = new TableLayout(getContext());
+
+        String[] colTextHeader = {"Nama", "Qty", "ED"};
+
+        for (String text : colTextHeader) {
+            TextView tv = new TextView(getContext());
+            tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 1));
+
+            tv.setTextSize(14);
+            tv.setPadding(10, 10, 10, 10);
+            tv.setText(text);
+            tv.setGravity(Gravity.CENTER);
+            tv.setBackgroundColor(Color.parseColor("#4CAF50"));
+            tv.setTextColor(Color.WHITE);
+            tr.addView(tv,params);
+        }
+        tl.addView(tr);
+
+        List<tKemasanRusakDetailData> dt_detail = new tKemasanRusakDetailBL().GetDataByNoKemasanRusak(dummy);
+
+        double qtySum=0;
+        double qtyNum;
+        for(tKemasanRusakDetailData dat : dt_detail){
+            tr = new TableRow(getContext());
+            TableLayout.LayoutParams tableRowParams=
+                    new TableLayout.LayoutParams
+                            (TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.WRAP_CONTENT);
+
+            int leftMargin=0;
+            int topMargin=0;
+            int rightMargin=0;
+            int bottomMargin=0;
+            tableRowParams.setMargins(leftMargin, topMargin, rightMargin, bottomMargin);
+
+            tr.setLayoutParams(tableRowParams);
+
+            TextView product = new TextView(getContext());
+            product.setTextSize(12);
+            product.setWidth(600);
             product.setPadding(10, 10, 10, 10);
             product.setBackgroundColor(Color.parseColor("#f0f0f0"));
             product.setTextColor(Color.BLACK);

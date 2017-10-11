@@ -122,7 +122,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:background="@drawable/bg_edtext"
-        android:hint="* optional"
+        android:hint="description"
+        android:maxLines="2"
         android:inputType="text" />
 
     <View
