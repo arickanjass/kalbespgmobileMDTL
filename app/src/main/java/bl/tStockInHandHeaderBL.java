@@ -20,6 +20,7 @@ import library.spgmobile.common.linkAPI;
 import library.spgmobile.common.mCounterNumberData;
 import library.spgmobile.common.mconfigData;
 import library.spgmobile.common.tDeviceInfoUserData;
+import library.spgmobile.common.tPlanogramMobileData;
 import library.spgmobile.common.tSalesProductHeaderData;
 import library.spgmobile.common.tStockInHandHeaderData;
 import library.spgmobile.common.tUserLoginData;
@@ -29,6 +30,7 @@ import library.spgmobile.dal.enumCounterData;
 import library.spgmobile.dal.mCounterNumberDA;
 import library.spgmobile.dal.mconfigDA;
 import library.spgmobile.dal.tDeviceInfoUserDA;
+import library.spgmobile.dal.tPlanogramMobileDA;
 import library.spgmobile.dal.tSalesProductHeaderDA;
 import library.spgmobile.dal.tStockInHandHeaderDA;
 import library.spgmobile.dal.tUserLoginDA;
@@ -110,6 +112,22 @@ public class tStockInHandHeaderBL extends clsMainBL{
         return dt ;
     }
 
+    public List<tStockInHandHeaderData> getAllSalesProductHeaderByOutletCodeReport(String code){
+        SQLiteDatabase _db =getDb();
+        List<tStockInHandHeaderData> dt;
+        tStockInHandHeaderDA _tStockInHandHeaderDA = new tStockInHandHeaderDA(_db);
+        if(code.equals("ALLOUTLET")){
+            dt = _tStockInHandHeaderDA.getAllDataReport(_db);
+        } else {
+            dt = _tStockInHandHeaderDA.getAllDataByOutletCodeReport(_db,code);
+        }
+
+        if(dt == null){
+            dt = new ArrayList<>(0);
+        }
+        return dt ;
+    }
+
     public List<tStockInHandHeaderData> getAllSalesProductHeaderByOutletCodeHome(String code){
         SQLiteDatabase _db =getDb();
         tStockInHandHeaderDA _tStockInHandHeaderDA = new tStockInHandHeaderDA(_db);
@@ -127,6 +145,13 @@ public class tStockInHandHeaderBL extends clsMainBL{
         if(dt == null){
             dt = new ArrayList<>(0);
         }
+        return dt ;
+    }
+
+    public tStockInHandHeaderData getDataByNoSOOne(String noso){
+        SQLiteDatabase _db =getDb();
+        tStockInHandHeaderDA _tStockInHandHeaderDA = new tStockInHandHeaderDA(_db);
+        tStockInHandHeaderData dt = _tStockInHandHeaderDA.getDataByNoSOSelectOne(_db,noso);
         return dt ;
     }
 
@@ -264,5 +289,31 @@ public class tStockInHandHeaderBL extends clsMainBL{
         }
         _db.close();
         return jsonArray;
+    }
+
+    public void updateDataSubmit(tStockInHandHeaderData dt) {
+        SQLiteDatabase _db = getDb();
+        tStockInHandHeaderDA _tStockInHandHeaderDA = new tStockInHandHeaderDA(_db);
+        _tStockInHandHeaderDA.updateDataSubmit(_db, dt);
+    }
+
+    public void deleteTrId(String id) {
+        SQLiteDatabase _db=getDb();
+        new tStockInHandHeaderDA(_db).deleteContact(_db, id);
+    }
+    public List<tStockInHandHeaderData> getAllHeaderByOutletCodeUnsubmit(String code) {
+        SQLiteDatabase _db = getDb();
+        List<tStockInHandHeaderData> dt;
+        tStockInHandHeaderDA _tStockInHandHeaderDA = new tStockInHandHeaderDA(_db);
+        dt = _tStockInHandHeaderDA.getAllDataByOutletCodeUnsubmit(_db, code);
+        if (dt == null) {
+            dt = new ArrayList<>(0);
+        }
+        return dt;
+    }
+    public void updateDataSubmit(tPlanogramMobileData dt) {
+        SQLiteDatabase _db = getDb();
+        tStockInHandHeaderDA _tStockInHandHeaderDA = new tStockInHandHeaderDA(_db);
+        _tStockInHandHeaderDA.updateDataSubmit(_db, dt);
     }
 }

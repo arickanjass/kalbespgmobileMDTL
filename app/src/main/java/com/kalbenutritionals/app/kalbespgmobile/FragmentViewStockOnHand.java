@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -15,6 +16,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -32,6 +34,8 @@ import java.util.Map;
 
 import adapter.AppAdapterViewCusBase;
 import bl.clsHelperBL;
+import bl.tPlanogramImageBL;
+import bl.tPlanogramMobileBL;
 import bl.tStockInHandDetailBL;
 import bl.tStockInHandHeaderBL;
 import edu.swu.pulltorefreshswipemenulistview.library.PullToRefreshSwipeMenuListView;
@@ -39,7 +43,11 @@ import edu.swu.pulltorefreshswipemenulistview.library.pulltorefresh.interfaces.I
 import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.OnMenuItemClickListener;
 import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.SwipeMenuCreator;
 import edu.swu.pulltorefreshswipemenulistview.library.util.RefreshTime;
+import io.github.yavski.fabspeeddial.FabSpeedDial;
+import io.github.yavski.fabspeeddial.SimpleMenuListenerAdapter;
 import library.spgmobile.common.clsSwipeList;
+import library.spgmobile.common.tPlanogramImageData;
+import library.spgmobile.common.tPlanogramMobileData;
 import library.spgmobile.common.tStockInHandDetailData;
 import library.spgmobile.common.tStockInHandHeaderData;
 import library.spgmobile.common.visitplanAbsenData;
@@ -65,22 +73,57 @@ public class FragmentViewStockOnHand extends Fragment implements IXListViewListe
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.fragment_view_global,container,false);
+        v = inflater.inflate(R.layout.fragment_view_global_new,container,false);
 
         fab = (FloatingActionButton) v.findViewById(R.id.fab);
+        fab.setVisibility(View.GONE);
+        final FabSpeedDial fabSpeedDial = (FabSpeedDial) v.findViewById(R.id.fabView);
 
-        fab.setOnClickListener(new View.OnClickListener() {
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+//                toolbar.setTitle("Add Stock On Hand");
+//
+//                FragmentAddStockInHand fragmentAddResoSPG = new FragmentAddStockInHand();
+//                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+//                fragmentTransaction.replace(R.id.frame, fragmentAddResoSPG);
+//                fragmentTransaction.commit();
+//            }
+//        });
+        fabSpeedDial.setMenuListener(new SimpleMenuListenerAdapter() {
             @Override
-            public void onClick(View v) {
+            public boolean onMenuItemSelected(MenuItem menuItem) {
                 Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-                toolbar.setTitle("Add Stock On Hand");
-
-                FragmentAddStockInHand fragmentAddResoSPG = new FragmentAddStockInHand();
+                NavigationView nv = (NavigationView) getActivity().findViewById(R.id.navigation_view);
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.frame, fragmentAddResoSPG);
-                fragmentTransaction.commit();
+
+                switch(menuItem.getItemId()){
+
+                    case R.id.action_add:
+                        toolbar.setTitle("Add Stock On Hand");
+//                        nv.setCheckedItem(2);
+                        FragmentAddStockInHand fragmentAddStockInHand = new FragmentAddStockInHand();
+                        Bundle args = new Bundle();
+                        args.putString("id", "null");
+                        args.putString("param", "null");
+                        fragmentAddStockInHand.setArguments(args);
+                        fragmentTransaction = getFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.frame, fragmentAddStockInHand);
+                        fragmentTransaction.commit();
+                        return true;
+
+                    case R.id.action_submitAll:
+                        saveDataSubmitAll();
+//                        new clsMainActivity().showCustomToast(getContext(), "submit", true);
+                        return true;
+
+                    default:
+                        return false;
+                }
             }
         });
+
         final PullToRefreshSwipeMenuListView swipeMenuList = (PullToRefreshSwipeMenuListView) v.findViewById(R.id.SwipelistView);
         swipeMenuList.setPullRefreshEnable(true);
         swipeMenuList.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -109,7 +152,7 @@ public class FragmentViewStockOnHand extends Fragment implements IXListViewListe
         return v;
     }
 
-    private void viewList(Context ctx, int position) {
+    private void viewList(Context ctx, final int position) {
         LayoutInflater layoutInflater = LayoutInflater.from(getContext());
         final View promptView = layoutInflater.inflate(R.layout.activity_preview_so, null);
 
@@ -129,11 +172,16 @@ public class FragmentViewStockOnHand extends Fragment implements IXListViewListe
         final TableRow tr_amount = (TableRow) promptView.findViewById(R.id.tr_amount);
         tr_amount.setVisibility(View.GONE);
 
-        if (dt.get(position).get_intSubmit().equals("1")&&dt.get(position).get_intSync().equals("0")){
-            tv_status.setText(": Submit");
-        } else if (dt.get(position).get_intSubmit().equals("1")&&dt.get(position).get_intSync().equals("1")){
-            tv_status.setText(": Sync");
+        String statusTran = "";
+        if(dt.get(position).get_intSubmit().equals("1") && dt.get(position).get_intSync().equals("1")){
+            statusTran = "Sync";
+        } else if (dt.get(position).get_intSubmit().equals("1") && dt.get(position).get_intSync().equals("0")){
+            statusTran = "Submit";
+        } else if(dt.get(position).get_intSubmit().equals("0") && dt.get(position).get_intSync().equals("0")){
+            statusTran = "Save";
         }
+
+        tv_status.setText(statusTran);
 
         TableLayout tlb = (TableLayout) promptView.findViewById(R.id.tlProduct);
         tlb.removeAllViews();
@@ -169,7 +217,7 @@ public class FragmentViewStockOnHand extends Fragment implements IXListViewListe
             tr = new TableRow(getContext());
             TableLayout.LayoutParams tableRowParams=
                     new TableLayout.LayoutParams
-                            (TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.WRAP_CONTENT);
+                            (TableLayout.LayoutParams.WRAP_CONTENT,TableLayout.LayoutParams.WRAP_CONTENT);
 
             int leftMargin=0;
             int topMargin=0;
@@ -181,11 +229,13 @@ public class FragmentViewStockOnHand extends Fragment implements IXListViewListe
 
             TextView product = new TextView(getContext());
             product.setTextSize(12);
-            product.setWidth(400);
             product.setPadding(10, 10, 10, 10);
             product.setBackgroundColor(Color.parseColor("#f0f0f0"));
             product.setTextColor(Color.BLACK);
             product.setText(dat.get_txtNameProduct());
+            product.setLayoutParams(new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT));
             tr.addView(product,params);
 
             TextView qty = new TextView(getContext());
@@ -229,6 +279,37 @@ public class FragmentViewStockOnHand extends Fragment implements IXListViewListe
         alertDialogBuilder.setView(promptView);
         alertDialogBuilder
                 .setCancelable(false)
+                .setNeutralButton("Submit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                        builder.setTitle("Warning");
+                        builder.setMessage("Are you sure to submit ");
+
+                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                tStockInHandHeaderData data = new tStockInHandHeaderData();
+                                data.set_intId(dt.get(position).get_intId());
+                                data.set_intSubmit("1");
+                                new tStockInHandHeaderBL().updateDataSubmit(data);
+                                dialog.cancel();
+                                loadData();
+                            }
+                        });
+
+                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                        AlertDialog alert = builder.create();
+                        alert.show();
+                    }
+                })
                 .setNegativeButton("Close", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
@@ -236,6 +317,12 @@ public class FragmentViewStockOnHand extends Fragment implements IXListViewListe
                 });
         final AlertDialog alertD = alertDialogBuilder.create();
         alertD.show();
+
+        if(!statusTran.equals("")&&statusTran.equals("Save")){
+            alertD.getButton(AlertDialog.BUTTON_NEUTRAL).setEnabled(true);
+        } else {
+            alertD.getButton(AlertDialog.BUTTON_NEUTRAL).setEnabled(false);
+        }
     }
 
     private void loadData(){
@@ -311,6 +398,12 @@ public class FragmentViewStockOnHand extends Fragment implements IXListViewListe
                     case 0:
                         viewList(getContext(), position);
                         break;
+                    case 1:
+                        editList(getActivity().getApplicationContext(), position);
+//                        new clsMainActivity().showCustomToast(getContext(), "edit", true);
+                        break;
+                    case 2:
+                        deleteList(getActivity().getApplicationContext(), position);
                 }
             }
         });
@@ -340,5 +433,120 @@ public class FragmentViewStockOnHand extends Fragment implements IXListViewListe
                 loadData();
             }
         }, 1);
+    }
+
+    private void deleteList(Context applicationContext, final int position) {
+        boolean isDeleteable = false;
+        String statusTran = "";
+        if(dt.get(position).get_intSubmit().equals("1") && dt.get(position).get_intSync().equals("1")){
+            statusTran = "Syncronized";
+        } else if (dt.get(position).get_intSubmit().equals("1") && dt.get(position).get_intSync().equals("0")){
+            statusTran = "Submit";
+        } else if(dt.get(position).get_intSubmit().equals("0") && dt.get(position).get_intSync().equals("0")){
+            statusTran = "Save";
+            isDeleteable = true;
+        }
+
+        if(isDeleteable){
+            final List<tStockInHandDetailData> detailData = new tStockInHandDetailBL().GetDataByNoSO(dt.get(position).get_txtNoSo());
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+            builder.setTitle("Warning");
+            builder.setMessage("Are you sure to delete?" + "\n The operation cannot be undone...");
+
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    new tStockInHandHeaderBL().deleteTrId(dt.get( position).get_intId());
+                    if(detailData!=null&&detailData.size()>0){
+                        for(tStockInHandDetailData data : detailData){
+                            new tStockInHandDetailBL().deleteTrId(data.get_intId());
+                        }
+                    }
+                    new clsMainActivity().showCustomToast(getContext(), "Transaction data has been deleted", true);
+                    loadData();
+                }
+            });
+
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            AlertDialog alert = builder.create();
+            alert.show();
+        } else {
+            new clsMainActivity().showCustomToast(getContext(), "Cannot delete data, data was " + statusTran, false);
+        }
+    }
+
+    private void editList(Context applicationContext, int position) {
+        boolean isEditalbe = false;
+        String statusTran = "";
+        if(dt.get(position).get_intSubmit().equals("1") && dt.get(position).get_intSync().equals("1")){
+            statusTran = "Syncronized";
+        } else if (dt.get(position).get_intSubmit().equals("1") && dt.get(position).get_intSync().equals("0")){
+            statusTran = "Submit";
+        } else if(dt.get(position).get_intSubmit().equals("0") && dt.get(position).get_intSync().equals("0")){
+            statusTran = "Save";
+            isEditalbe = true;
+        }
+
+        if(isEditalbe){
+            Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+            toolbar.setTitle("Add Stock On Hand");
+
+            FragmentAddStockInHand fragmentAddStockInHand = new FragmentAddStockInHand();
+            Bundle args = new Bundle();
+            args.putString("id", dt.get( position).get_txtNoSo());
+            args.putString("param", "edit");
+            fragmentAddStockInHand.setArguments(args);
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.frame, fragmentAddStockInHand);
+            fragmentTransaction.commit();
+        } else {
+            String name = dt.get( position).get_txtNoSo().toString();
+            new clsMainActivity().showCustomToast(getContext(), "Cannot edit, " + "\n data was " + statusTran, false);
+        }
+    }
+    private void saveDataSubmitAll() {
+
+//        tAbsenUserData dtActive = new tAbsenUserBL().getDataCheckInActive();
+
+        visitplanAbsenData _viAbsenData = new visitplanAbsenData();
+        _viAbsenData = new clsHelperBL().getDataCheckInActive();
+
+        final List<tStockInHandHeaderData> data = new tStockInHandHeaderBL().getAllHeaderByOutletCodeUnsubmit(_viAbsenData.get_txtOutletCode());
+
+        if(data!=null&&data.size()!=0){
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+            builder.setTitle("Confirm");
+            builder.setMessage("Are you sure to submit all transaction ? ");
+
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    for(tStockInHandHeaderData dt : data){
+                        new tStockInHandHeaderBL().updateDataSubmit(dt);
+                    }
+                    new clsMainActivity().showCustomToast(getContext(), "submit successfull", true);
+                    loadData();
+                }
+            });
+
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            AlertDialog alert = builder.create();
+            alert.show();
+        } else {
+            new clsMainActivity().showCustomToast(getContext(), "There is No data to submit", false);
+        }
     }
 }

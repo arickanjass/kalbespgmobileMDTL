@@ -27,6 +27,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,6 +41,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import org.json.JSONException;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -47,16 +50,22 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import bl.clsHelperBL;
 import bl.clsMainBL;
 import bl.mCounterNumberBL;
 import bl.mEmployeeSalesProductBL;
+import bl.tPlanogramMobileBL;
 import bl.tSalesProductHeaderBL;
+import bl.tStockInHandDetailBL;
 import bl.tStockInHandHeaderBL;
+import edu.swu.pulltorefreshswipemenulistview.library.pulltorefresh.interfaces.OnXScrollListener;
 import library.spgmobile.common.ModelListview;
 import library.spgmobile.common.clsHelper;
 import library.spgmobile.common.mEmployeeSalesProductData;
+import library.spgmobile.common.tPlanogramMobileData;
 import library.spgmobile.common.tStockInHandDetailData;
 import library.spgmobile.common.tStockInHandHeaderData;
 import library.spgmobile.common.visitplanAbsenData;
@@ -76,6 +85,7 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
     private EditText edketerangan, searchProduct;
     private String noso;
     private ArrayList<ModelListview> modelItems;
+    private ArrayList<ModelListview> modelItemsLoadMore;
     private ArrayList<ModelListview> arrdataPriv;
     MyAdapter dataAdapter;
     ListView listView;
@@ -86,6 +96,10 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
     View v;
     FloatingActionButton fab;
     clsMainActivity _clsMainActivity;
+    String idTrCustomer = null;
+    String param = null;
+    tStockInHandHeaderData dt;
+    boolean validViewEdit = false;
 
     @Nullable
     @Override
@@ -93,6 +107,13 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
 
         selectedId = 0;
         v = inflater.inflate(R.layout.coordinator_layout, container, false);
+
+        Bundle mBundle = getArguments();
+        if (mBundle != null) {
+            idTrCustomer = mBundle.getString("id");
+            param = mBundle.getString("param");
+        }
+
         tv_noso = (TextView) v.findViewById(R.id.txtNoreso);
         tv_date = (TextView) v.findViewById(R.id.txtviewDate);
         edketerangan = (EditText) v.findViewById(R.id.etKeterangan);
@@ -138,7 +159,7 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
             if (dataFirstIsExist.size() == 1) {
                 clsHelper _clsHelper = new clsHelper();
                 String oldVersion = dtLast.get(0).get_txtNoSo();
-                noso = _clsHelper.generateNewId(oldVersion, "-", "5");
+                noso = _clsHelper.generateNewId(oldVersion, "-", "4");
             } else {
                 noso = new mCounterNumberBL().getData(enumCounterData.NoSIH);
             }
@@ -174,10 +195,25 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
 
         listView = (ListView) v.findViewById(R.id.lvProduk);
 
-        new GetAllemployeeSalesProductDataList().execute();
-
         final ScrollView scrollView = (ScrollView) v.findViewById(R.id.scroll_reso);
 
+        dt = new tStockInHandHeaderData();
+
+        if(mBundle != null && !idTrCustomer.equals("null")){
+            dt = new tStockInHandHeaderData();
+            dt = new tStockInHandHeaderBL().getDataByNoSOOne(idTrCustomer);
+            if(dt.get_txtNoSo()!=null){
+                validViewEdit = true;
+            }
+        }
+
+        if(validViewEdit){
+            tv_noso.setText(dt.get_txtNoSo());
+            edketerangan.setText(dt.get_txtKeterangan());
+        }
+
+        new GetAllemployeeSalesProductDataList().execute();
+//        loadListData();
 
         scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
@@ -271,6 +307,38 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
             }
         });
 
+//        listView.setOnScrollListener(new OnXScrollListener() {
+//            @Override
+//            public void onXScrolling(View view) {
+//
+//            }
+//
+//            @Override
+//            public void onScrollStateChanged(AbsListView absListView, int i) {
+//
+//            }
+//
+//            @Override
+//            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+//                final int lastItem = i + i1;
+//                if (lastItem == i2) {
+//                    if (moreData) {
+//                        footer.setVisibility(View.VISIBLE);
+//                        footer.setPadding(0, 0, 0, 0);
+//                        Handler handler = new Handler(); // hear is the handler for testing purpose
+//                        handler.postDelayed(new Runnable() { // make some delay for check load more view
+//                            @Override
+//                            public void run() {
+////                                getListData();
+//                            }
+//                        }, 10000);
+//
+//                    }
+//
+//                }
+//            }
+//        });
+
         return v;
     }
 
@@ -285,6 +353,14 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
     public void onClick(View v) {
         switch ( v.getId()) {
             case R.id.btnPreviewReso:
+                final List<tStockInHandDetailData> dataPrevList = new ArrayList<>();
+                tStockInHandDetailData dataPrev = new tStockInHandDetailData();
+                double qntySum = 0;
+                double qntyNum;
+                double value;
+                double price;
+                String result = "0";
+
                 arrdataPriv = new ArrayList<>();
                 for (int i = 0; i < modelItems.size(); i++) {
                     if (modelItems.get(i).get_value() > 0) {
@@ -293,7 +369,24 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
                         data.set_price(modelItems.get(i).get_price());
                         data.set_name(modelItems.get(i).get_name());
                         data.set_value(modelItems.get(i).get_value());
+                        price = Double.parseDouble(modelItems.get(i).get_price());
+                        value = Double.parseDouble(String.valueOf(modelItems.get(i).get_value()));
+                        qntyNum = price * value;
+                        qntySum += qntyNum;
+                        result = new clsMainActivity().convertNumberDec2(qntySum);
                         arrdataPriv.add(data);
+
+                        double prc = Double.valueOf(modelItems.get(i).get_price());
+                        double itm = (double) modelItems.get(i).get_value();
+                        dataPrev = new tStockInHandDetailData();
+                        dataPrev.set_intId(_clsMainActivity.GenerateGuid());
+                        dataPrev.set_intActive("1");
+                        dataPrev.set_intPrice(modelItems.get(i).get_price());
+                        dataPrev.set_intQty(String.valueOf(modelItems.get(i).get_value()));
+                        dataPrev.set_txtCodeProduct(modelItems.get(i).get_id());
+                        dataPrev.set_txtNameProduct(String.valueOf(modelItems.get(i).get_name()));
+                        dataPrev.set_intTotal(new clsMainActivity().convertNumberDec2(prc * itm));
+                        dataPrevList.add(dataPrev);
                     }
                 }
                 if (edketerangan.getText().toString().equals("")) {
@@ -309,7 +402,7 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
 
                     final TextView _tvNoSO = (TextView) promptView.findViewById(R.id.tvnoSOtbl);
                     final TextView _tvKet = (TextView) promptView.findViewById(R.id.tvkettbl);
-                    _tvNoSO.setText(String.format(": %s", noso));
+                    _tvNoSO.setText(String.format(": %s", tv_noso.getText().toString()));
                     _tvKet.setText(String.format(": %s", edketerangan.getText().toString()));
 
                     arr = new ArrayList<>();
@@ -425,6 +518,7 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
 
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
                     alertDialogBuilder.setView(promptView);
+                    final String intSumAmount = result;
                     alertDialogBuilder
                             .setCancelable(false)
                             .setPositiveButton("Save",
@@ -436,7 +530,7 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
                                             alertDialog.setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
-                                                    saveReso();
+                                                    saveReso(dataPrevList, intSumAmount, arrdataPriv.size());
                                                     viewResoFragment();
                                                 }
                                             });
@@ -471,32 +565,11 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
         }
     }
 
-    private void saveReso() {
-        String nik = null;
-        arrdataPriv = new ArrayList<>();
-        double qntySum = 0;
-        double qntyNum;
-        double value;
-        double price;
-        String result = "0";
+    private void saveReso(List<tStockInHandDetailData> listdatafromPrev,String intSumAmount, int intSumItem) {
+        clsMainBL _clsMainBL = new clsMainBL();
+        SQLiteDatabase _db = _clsMainBL.getDb();
 
-        for (int i = 0; i < modelItems.size(); i++) {
-            if (modelItems.get(i).get_value() > 0) {
-                ModelListview data = new ModelListview();
-                data.set_id(modelItems.get(i).get_id());
-                data.set_name(modelItems.get(i).get_name());
-                data.set_value(modelItems.get(i).get_value());
-                nik = data.set_NIK(String.valueOf(modelItems.get(i).get_NIK()));
-                price = Double.parseDouble(modelItems.get(i).get_price());
-                value = Double.parseDouble(String.valueOf(modelItems.get(i).get_value()));
-                qntyNum = price * value;
-                qntySum += qntyNum;
-                result = new clsMainActivity().convertNumberDec2(qntySum);
-                arrdataPriv.add(data);
-            }
-        }
-
-        tStockInHandHeaderData dt = new tStockInHandHeaderData();
+        tStockInHandHeaderData dttStockInHandHeaderData = new tStockInHandHeaderData();
 
         java.text.DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Calendar cal = Calendar.getInstance();
@@ -506,50 +579,48 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
         visitplanAbsenData _viAbsenData = new visitplanAbsenData();
         _viAbsenData = new clsHelperBL().getDataCheckInActive();
 
-        dt.set_intId(new clsMainActivity().GenerateGuid());
-        dt.set_txtNoSo(tv_noso.getText().toString());
-        dt.set_dtDate(dateFormat.format(cal.getTime()));
-        dt.set_OutletCode(_viAbsenData.get_txtOutletCode());
-        dt.set_OutletName(_viAbsenData.get_txtOutletName());
-        dt.set_txtKeterangan(edketerangan.getText().toString());
-        dt.set_intSumItem(String.valueOf(arrdataPriv.size()));
-        dt.set_intSumAmount(String.valueOf(result));
-        dt.set_UserId(_viAbsenData.get_txtUserId());
-        dt.set_txtRoleId(_viAbsenData.get_txtRoleId());
-        dt.set_intSubmit("0");
-        dt.set_intSync("0");
-        dt.set_txtBranchCode(_viAbsenData.get_txtBranchCode());
-        dt.set_txtBranchName(_viAbsenData.get_txtBranchName());
-        dt.set_intIdAbsenUser(_viAbsenData.get_intId());
-        dt.set_txtNIK(nik);
+        dttStockInHandHeaderData.set_intId(new clsMainActivity().GenerateGuid());
+        dttStockInHandHeaderData.set_txtNoSo(tv_noso.getText().toString());
+        dttStockInHandHeaderData.set_dtDate(dateFormat.format(cal.getTime()));
+        dttStockInHandHeaderData.set_OutletCode(_viAbsenData.get_txtOutletCode());
+        dttStockInHandHeaderData.set_OutletName(_viAbsenData.get_txtOutletName());
+        dttStockInHandHeaderData.set_txtKeterangan(edketerangan.getText().toString());
+        dttStockInHandHeaderData.set_intSumItem(String.valueOf(intSumItem));
+        dttStockInHandHeaderData.set_intSumAmount(String.valueOf(intSumAmount));
+        dttStockInHandHeaderData.set_UserId(_viAbsenData.get_txtUserId());
+        dttStockInHandHeaderData.set_txtRoleId(_viAbsenData.get_txtRoleId());
+        dttStockInHandHeaderData.set_intSubmit("0");
+        dttStockInHandHeaderData.set_intSync("0");
+        dttStockInHandHeaderData.set_txtBranchCode(_viAbsenData.get_txtBranchCode());
+        dttStockInHandHeaderData.set_txtBranchName(_viAbsenData.get_txtBranchName());
+        dttStockInHandHeaderData.set_intIdAbsenUser(_viAbsenData.get_intId());
+        dttStockInHandHeaderData.set_txtNIK(_viAbsenData.get_txtUserId());
 
-        new tStockInHandHeaderBL().SaveData(dt);
+        List<tStockInHandDetailData> tStockInHandDetailDataList = null;
+        if(validViewEdit){
+            dttStockInHandHeaderData.set_intId(dt.get_intId());
+            dttStockInHandHeaderData.set_txtNoSo(dt.get_txtNoSo());
+            tStockInHandDetailDataList = new tStockInHandDetailBL().GetDataByNoSO(dt.get_txtNoSo());
+        }
 
-        clsMainBL _clsMainBL = new clsMainBL();
-
-        SQLiteDatabase _db = _clsMainBL.getDb();
-        for (int i = 0; i < modelItems.size(); i++) {
-            if (modelItems.get(i).get_value() > 0) {
-                double prc = Double.valueOf(modelItems.get(i).get_price());
-                double itm = (double) modelItems.get(i).get_value();
-                tStockInHandDetailData dtDetail = new tStockInHandDetailData();
-                dtDetail.set_intId(_clsMainActivity.GenerateGuid());
-                dtDetail.set_dtDate(dateFormat.format(cal.getTime()));
-                dtDetail.set_intPrice(modelItems.get(i).get_price());
-                dtDetail.set_intQty(String.valueOf(modelItems.get(i).get_value()));
-                dtDetail.set_txtCodeProduct(modelItems.get(i).get_id());
-                dtDetail.set_txtKeterangan(edketerangan.getText().toString());
-                dtDetail.set_txtNameProduct(String.valueOf(modelItems.get(i).get_name()));
-                dtDetail.set_intTotal(new clsMainActivity().convertNumberDec2(prc * itm));
-                dtDetail.set_txtNoSo(tv_noso.getText().toString());
-                dtDetail.set_intActive("1");
-                dtDetail.set_txtNIK(modelItems.get(i).get_NIK());
-                new tStockInHandDetailDA(_db).SaveDatatStockInHandDetailData(_db, dtDetail);
+        if(tStockInHandDetailDataList!=null&&tStockInHandDetailDataList.size()>0){
+            for(tStockInHandDetailData dtDetail : tStockInHandDetailDataList){
+                new tStockInHandDetailDA(_db).deleteContact(_db, dtDetail.get_intId());
             }
+        }
 
+        new tStockInHandHeaderBL().SaveData(dttStockInHandHeaderData);
+
+        for(tStockInHandDetailData data : listdatafromPrev){
+            data.set_txtNoSo(tv_noso.getText().toString());
+            data.set_txtNIK(_viAbsenData.get_txtUserId());
+            data.set_dtDate(dateFormat.format(cal.getTime()));
+            data.set_txtKeterangan(edketerangan.getText().toString());
+            new tStockInHandDetailDA(_db).SaveDatatStockInHandDetailData(_db, data);
         }
 
         _clsMainActivity.showCustomToast(getActivity(), "Saved", true);
+        _db.close();
     }
 
 
@@ -774,7 +845,7 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
             //bikin progres dialognya
             progressDialog = new ProgressDialog(getContext());
             progressDialog.setMessage("Loading Data... Please Wait");
-            progressDialog.setIndeterminate(false); //ukur berapa persen, false maka not do
+            progressDialog.setIndeterminate(true); //ukur berapa persen, false maka not do
             progressDialog.setCancelable(false);
             progressDialog.show();
         }
@@ -785,6 +856,11 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
             //android.os.Debug.waitForDebugger();
 
             List<mEmployeeSalesProductData> employeeSalesProductDataList = new mEmployeeSalesProductBL().getAllDataNotWhere();
+            List<tStockInHandDetailData> tStockInHandDetailDataList = null;
+
+            if(dt!=null&&dt.get_txtNoSo()!=null){
+                tStockInHandDetailDataList = new tStockInHandDetailBL().GetDataByNoSO(dt.get_txtNoSo());
+            }
 
             modelItems = new ArrayList<>();
 
@@ -795,6 +871,13 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
                     dt.set_name(employeeSalesProductDataList.get(i).get_txtProductBrandDetailGramName());
                     dt.set_price((employeeSalesProductDataList.get(i).get_decHJD()));
                     dt.set_NIK(employeeSalesProductDataList.get(i).get_txtNIK());
+                    if(tStockInHandDetailDataList!=null&&tStockInHandDetailDataList.size()>0){
+                        for(tStockInHandDetailData dataSaveDetail : tStockInHandDetailDataList){
+                            if(dt.get_id().equals(dataSaveDetail.get_txtCodeProduct())){
+                                dt.set_value(Integer.valueOf(dataSaveDetail.get_intQty()));
+                            }
+                        }
+                    }
                     modelItems.add(dt);
                 }
             }
@@ -804,7 +887,9 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
 
         @Override
         protected void onPostExecute(ArrayList<ModelListview> s) {
-
+//            footer = ((LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footer_layout, null, false);
+//            listView.addFooterView(footer);
+            Collections.sort(modelItems, ModelListview.StuRollno);
             dataAdapter = new MyAdapter(getContext(), modelItems);
             listView.setAdapter(dataAdapter);
             listView.setTextFilterEnabled(true);
@@ -816,7 +901,75 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
                 public void run() {
                     progressDialog.dismiss();
                 }
-            }, 4000);
+            }, 5000);
         }
+    }
+    private View footer;
+    private boolean moreData = true;
+    private static Timer timer = new Timer();
+
+    private void loadListData(){
+        List<mEmployeeSalesProductData> employeeSalesProductDataList = new mEmployeeSalesProductBL().getAllDataNotWhere();
+        List<tStockInHandDetailData> tStockInHandDetailDataList = null;
+
+        if(dt!=null&&dt.get_txtNoSo()!=null){
+            tStockInHandDetailDataList = new tStockInHandDetailBL().GetDataByNoSO(dt.get_txtNoSo());
+        }
+
+        modelItemsLoadMore = new ArrayList<>();
+
+        if (employeeSalesProductDataList.size() > 0) {
+            for (int i = 0; i < employeeSalesProductDataList.size(); i++) {
+                ModelListview dt = new ModelListview();
+                dt.set_id(employeeSalesProductDataList.get(i).get_txtBrandDetailGramCode());
+                dt.set_name(employeeSalesProductDataList.get(i).get_txtProductBrandDetailGramName());
+                dt.set_price((employeeSalesProductDataList.get(i).get_decHJD()));
+                dt.set_NIK(employeeSalesProductDataList.get(i).get_txtNIK());
+                if(tStockInHandDetailDataList!=null&&tStockInHandDetailDataList.size()>0){
+                    for(tStockInHandDetailData dataSaveDetail : tStockInHandDetailDataList){
+                        if(dt.get_id().equals(dataSaveDetail.get_txtCodeProduct())){
+                            dt.set_value(Integer.valueOf(dataSaveDetail.get_intQty()));
+                        }
+                    }
+                }
+                modelItemsLoadMore.add(dt);
+            }
+        }
+
+        modelItems = new ArrayList<>();
+
+//        int count = modelItemsLoadMore.size()/4;
+
+        for (int i = 0; i < 50; i++) {
+            modelItems.add(modelItemsLoadMore.get(i));
+        }
+
+        footer = ((LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footer_layout, null, false);
+        listView.addFooterView(footer);
+        Collections.sort(modelItems, ModelListview.StuRollno);
+        dataAdapter = new MyAdapter(getContext(), modelItems);
+        listView.setAdapter(dataAdapter);
+        listView.setTextFilterEnabled(true);
+
+        setListViewHeightBasedOnItems(listView);
+
+        timer = new Timer();
+        timer.scheduleAtFixedRate(
+                new TimerTask() {
+                    public void run() {
+                        loadMore(modelItems);
+                    }
+                }, 3000,3000);
+    }
+
+    private void loadMore(List<ModelListview> modelListview){
+        int target = modelListview.size()+50;
+        for(int i = modelListview.size()+1; i < target; i++){
+            modelItems.add(modelItemsLoadMore.get(i));
+        }
+        if(modelItems.size()>modelItemsLoadMore.size()){
+            timer.cancel();
+        }
+        dataAdapter.notifyDataSetChanged();
     }
 }

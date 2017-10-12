@@ -20,6 +20,7 @@ import library.spgmobile.common.tUserLoginData;
 import library.spgmobile.dal.clsHardCode;
 import library.spgmobile.dal.enumConfigData;
 import library.spgmobile.dal.mconfigDA;
+import library.spgmobile.dal.tPlanogramImageDA;
 import library.spgmobile.dal.tSalesProductDetailDA;
 import library.spgmobile.dal.tSalesProductHeaderDA;
 import library.spgmobile.dal.tStockInHandDetailDA;
@@ -36,7 +37,7 @@ public class tStockInHandDetailBL extends clsMainBL {
         //mEmployeeSalesProductDA _mEmployeeSalesProductDA= new mEmployeeSalesProductDA(db);
         tStockInHandDetailDA _tStockInHandDetailDA= new tStockInHandDetailDA(db);
         //List<mEmployeeSalesProductData>ListData=_mEmployeeSalesProductDA.SearchData(db, "", Noso);
-        List<tStockInHandDetailData>ListData=_tStockInHandDetailDA.getDataByNoSO(db,Noso);
+        List<tStockInHandDetailData>ListData=_tStockInHandDetailDA.getSalesProductDetailByHeaderId(db,Noso);
         db.close();
         return ListData;
     }
@@ -128,5 +129,15 @@ public class tStockInHandDetailBL extends clsMainBL {
                 break;
             }
         }
+    }
+    public tStockInHandDetailData getDataById(String id){
+        SQLiteDatabase db=getDb();
+        tStockInHandDetailData dt = new tStockInHandDetailData();
+        dt = new tStockInHandDetailDA(db).getSalesProductDetailById(db, id);
+        return dt;
+    }
+    public void deleteTrId(String id) {
+        SQLiteDatabase _db=getDb();
+        new tStockInHandDetailDA(_db).deleteContact(_db, id);
     }
 }

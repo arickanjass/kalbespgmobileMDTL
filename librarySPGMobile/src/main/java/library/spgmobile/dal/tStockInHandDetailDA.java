@@ -156,6 +156,37 @@ public class tStockInHandDetailDA {
         if (cursor.moveToFirst()) {
             do {
                 tStockInHandDetailData contact = new tStockInHandDetailData();
+                contact.set_intId(String.valueOf(cursor.getString(0)));
+                contact.set_dtDate(cursor.getString(1));
+                contact.set_intPrice(cursor.getString(2));
+                contact.set_intQty(cursor.getString(3));
+                contact.set_txtCodeProduct(cursor.getString(4));
+                contact.set_txtKeterangan(cursor.getString(5));
+                contact.set_txtNameProduct(cursor.getString(6));
+                contact.set_intTotal(cursor.getString(7));
+                contact.set_txtNIK(cursor.getString(8));
+                contact.set_txtNoSo(cursor.getString(9));
+                contact.set_intActive(cursor.getString(10));
+                // Adding contact to list
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        // return contact list
+        return contactList;
+    }
+    public tStockInHandDetailData getSalesProductDetailById(SQLiteDatabase db,String id) {
+        List<tStockInHandDetailData> contactList = new ArrayList<tStockInHandDetailData>();
+        // Select All Query
+        tStockInHandDetailData dt=new tStockInHandDetailData();
+        tStockInHandDetailData contact = new tStockInHandDetailData();
+        String selectQuery = "SELECT  "+dt.Property_All+" FROM " + TABLE_CONTACTS +" Where "+dt.Property_intId+"='"+id+"' AND "+dt.Property_intActive+"=1";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
                 contact.set_intId(String.valueOf(cursor.getString(1)));
                 contact.set_dtDate(cursor.getString(0));
                 contact.set_intPrice(cursor.getString(2));
@@ -173,7 +204,7 @@ public class tStockInHandDetailDA {
         }
         cursor.close();
         // return contact list
-        return contactList;
+        return contact;
     }
     // Getting All Contacts
     public List<tStockInHandDetailData> getAllData(SQLiteDatabase db) {

@@ -1,11 +1,13 @@
 package library.spgmobile.dal;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import library.spgmobile.common.tPlanogramMobileData;
 import library.spgmobile.common.tSalesProductHeaderData;
 import library.spgmobile.common.tStockInHandHeaderData;
 
@@ -212,6 +214,45 @@ public class tStockInHandHeaderDA {
         // Select All Query
         tStockInHandHeaderData dt = new tStockInHandHeaderData();
         String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " ORDER BY txtNoSo DESC";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            contactList = new ArrayList<tStockInHandHeaderData>();
+            do {
+                tStockInHandHeaderData contact = new tStockInHandHeaderData();
+                contact.set_intId(cursor.getString(0));
+                contact.set_txtNoSo(cursor.getString(1));
+                contact.set_dtDate(cursor.getString(2));
+                contact.set_OutletCode(cursor.getString(3));
+                contact.set_OutletName(cursor.getString(4));
+                contact.set_txtKeterangan(cursor.getString(5));
+                contact.set_intSumItem(cursor.getString(6));
+                contact.set_intSumAmount(cursor.getString(7));
+                contact.set_UserId(cursor.getString(8));
+                contact.set_intSubmit(cursor.getString(9));
+                contact.set_intSync(cursor.getString(10));
+                contact.set_txtBranchCode(cursor.getString(11));
+                contact.set_txtBranchName(cursor.getString(12));
+                contact.set_intIdAbsenUser(cursor.getString(13));
+                contact.set_txtNIK(cursor.getString(14));
+                contact.set_txtRoleId(cursor.getString(15));
+
+                // Adding contact to list
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        // return contact list
+        return contactList;
+    }
+
+    public List<tStockInHandHeaderData> getAllDataReport(SQLiteDatabase db) {
+        List<tStockInHandHeaderData> contactList = null;
+        // Select All Query
+        tStockInHandHeaderData dt = new tStockInHandHeaderData();
+        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS  + " WHERE " + dt.Property_intSubmit + " =1 " + " ORDER BY dtDate ASC";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -503,6 +544,45 @@ public class tStockInHandHeaderDA {
         return contactList;
     }
 
+    public List<tStockInHandHeaderData> getAllDataByOutletCodeReport(SQLiteDatabase db, String code) {
+        List<tStockInHandHeaderData> contactList = null;
+        // Select All Query
+        tStockInHandHeaderData dt = new tStockInHandHeaderData();
+//        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_OutletCode + "='" + code + "'";
+        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_OutletCode + "='" + code + "' AND " + dt.Property_intSubmit + "= 1";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            contactList = new ArrayList<tStockInHandHeaderData>();
+            do {
+                tStockInHandHeaderData contact = new tStockInHandHeaderData();
+                contact.set_intId(cursor.getString(0));
+                contact.set_txtNoSo(cursor.getString(1));
+                contact.set_dtDate(cursor.getString(2));
+                contact.set_OutletCode(cursor.getString(3));
+                contact.set_OutletName(cursor.getString(4));
+                contact.set_txtKeterangan(cursor.getString(5));
+                contact.set_intSumItem(cursor.getString(6));
+                contact.set_intSumAmount(cursor.getString(7));
+                contact.set_UserId(cursor.getString(8));
+                contact.set_intSubmit(cursor.getString(9));
+                contact.set_intSync(cursor.getString(10));
+                contact.set_txtBranchCode(cursor.getString(11));
+                contact.set_txtBranchName(cursor.getString(12));
+                contact.set_intIdAbsenUser(cursor.getString(13));
+                contact.set_txtNIK(cursor.getString(14));
+                contact.set_txtRoleId(cursor.getString(15));
+                // Adding contact to list
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        // return contact list
+        return contactList;
+    }
+
     public List<tStockInHandHeaderData> getDataByNoSO(SQLiteDatabase db, String noso) {
         List<tStockInHandHeaderData> contactList = null;
         // Select All Query
@@ -540,6 +620,45 @@ public class tStockInHandHeaderDA {
         cursor.close();
         // return contact list
         return contactList;
+    }
+
+    public tStockInHandHeaderData getDataByNoSOSelectOne(SQLiteDatabase db, String noso) {
+        List<tStockInHandHeaderData> contactList = null;
+        // Select All Query
+        tStockInHandHeaderData dt = new tStockInHandHeaderData();
+        tStockInHandHeaderData contact = new tStockInHandHeaderData();
+//        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_OutletCode + "='" + code + "'";
+        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_txtNoSo + "='" + noso + "'";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            contactList = new ArrayList<tStockInHandHeaderData>();
+            do {
+                contact.set_intId(cursor.getString(0));
+                contact.set_txtNoSo(cursor.getString(1));
+                contact.set_dtDate(cursor.getString(2));
+                contact.set_OutletCode(cursor.getString(3));
+                contact.set_OutletName(cursor.getString(4));
+                contact.set_txtKeterangan(cursor.getString(5));
+                contact.set_intSumItem(cursor.getString(6));
+                contact.set_intSumAmount(cursor.getString(7));
+                contact.set_UserId(cursor.getString(8));
+                contact.set_intSubmit(cursor.getString(9));
+                contact.set_intSync(cursor.getString(10));
+                contact.set_txtBranchCode(cursor.getString(11));
+                contact.set_txtBranchName(cursor.getString(12));
+                contact.set_intIdAbsenUser(cursor.getString(13));
+                contact.set_txtNIK(cursor.getString(14));
+                contact.set_txtRoleId(cursor.getString(15));
+                // Adding contact to list
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        // return contact list
+        return contact;
     }
 
     public List<tStockInHandHeaderData> getAllDataByDateCheckin(SQLiteDatabase db, String date) {
@@ -603,6 +722,17 @@ public class tStockInHandHeaderDA {
         return index;
     }
 
+    public int updateDataSubmit(SQLiteDatabase db, tStockInHandHeaderData data) {
+        tStockInHandHeaderData dt = new tStockInHandHeaderData();
+
+        ContentValues values = new ContentValues();
+        values.put(dt.Property_intSubmit, "1");
+
+        // updating row
+        return db.update(TABLE_CONTACTS, values, dt.Property_intId + " = ? ",
+                new String[] { String.valueOf(data.get_intId()) });
+    }
+
     public List<tStockInHandHeaderData> getLastData(SQLiteDatabase db) {
         List<tStockInHandHeaderData> contactList = null;
         // Select All Query
@@ -639,5 +769,50 @@ public class tStockInHandHeaderDA {
         cursor.close();
         // return contact list
         return contactList;
+    }
+    public List<tStockInHandHeaderData> getAllDataByOutletCodeUnsubmit(SQLiteDatabase db, String code) {
+        List<tStockInHandHeaderData> contactList = new ArrayList<tStockInHandHeaderData>();
+        // Select All Query
+        tStockInHandHeaderData dt = new tStockInHandHeaderData();
+
+//        String selectQuery = "SELECT  " + dt.Property_ALL + " FROM " + TABLE_NAME + " WHERE " + dt.Property_txtSumberData + "='" + code + "'" + " AND " + dt.Property_intSubmit + " ='1' AND bitActive = '1' ORDER BY txtSubmissionId DESC ";
+        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_OutletCode + "='" + code + "'" + " AND intSubmit='0' AND intSync='0' ORDER BY " + dt.Property_txtDate + " DESC ";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                tStockInHandHeaderData contact = new tStockInHandHeaderData();
+                contact.set_intId(cursor.getString(0));
+                contact.set_txtNoSo(cursor.getString(1));
+                contact.set_dtDate(cursor.getString(2));
+                contact.set_OutletCode(cursor.getString(3));
+                contact.set_OutletName(cursor.getString(4));
+                contact.set_txtKeterangan(cursor.getString(5));
+                contact.set_intSumItem(cursor.getString(6));
+                contact.set_intSumAmount(cursor.getString(7));
+                contact.set_UserId(cursor.getString(8));
+                contact.set_intSubmit(cursor.getString(9));
+                contact.set_intSync(cursor.getString(10));
+                contact.set_txtBranchCode(cursor.getString(11));
+                contact.set_txtBranchName(cursor.getString(12));
+                contact.set_intIdAbsenUser(cursor.getString(13));
+                contact.set_txtNIK(cursor.getString(14));
+                contact.set_txtRoleId(cursor.getString(15));
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        // return contact list
+        return contactList;
+    }
+    public int updateDataSubmit(SQLiteDatabase db, tPlanogramMobileData data) {
+        tStockInHandHeaderData dt = new tStockInHandHeaderData();
+
+        ContentValues values = new ContentValues();
+        values.put(dt.Property_intSubmit, "1");
+
+        // updating row
+        return db.update(TABLE_CONTACTS, values, dt.Property_intId + " = ? ",
+                new String[] { String.valueOf(data.get_intId()) });
     }
 }

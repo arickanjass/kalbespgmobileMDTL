@@ -193,7 +193,7 @@ public class FragmentViewPlanogram extends Fragment implements IXListViewListene
 
         final List<tPlanogramMobileData> data = new tPlanogramMobileBL().getAllHeaderByOutletCodeUnsubmit(_viAbsenData.get_txtOutletCode());
 
-        if(data.size()!=0){
+        if(data!=null&&data.size()!=0){
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
             builder.setTitle("Confirm");

@@ -58,6 +58,7 @@ import bl.tAttendanceUserBL;
 import bl.tDisplayPictureBL;
 import bl.tNotificationBL;
 import bl.tPlanogramMobileBL;
+import bl.tStockInHandHeaderBL;
 import bl.tUserLoginBL;
 import bl.tVisitPlanRealisasiBL;
 import come.example.viewbadger.ShortcutBadger;
@@ -69,6 +70,7 @@ import library.spgmobile.common.tAbsenUserData;
 import library.spgmobile.common.tAttendanceUserData;
 import library.spgmobile.common.tNotificationData;
 import library.spgmobile.common.tPlanogramMobileData;
+import library.spgmobile.common.tStockInHandHeaderData;
 import library.spgmobile.common.tUserLoginData;
 import library.spgmobile.common.tVisitPlanRealisasiData;
 import library.spgmobile.common.visitplanAbsenData;
@@ -529,9 +531,18 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
                                         //update data planogram status save
                                         List<tPlanogramMobileData> _tPlanogramMobileData = new tPlanogramMobileBL().getAllHeaderByOutletCodeUnsubmit(dtRealisasi.get_txtOutletCode());
-                                        for(tPlanogramMobileData dttPlanogramMobileData : _tPlanogramMobileData){
-                                            dttPlanogramMobileData.set_intSubmit("1");
-                                            new tPlanogramMobileBL().saveData(dttPlanogramMobileData);
+                                        if(_tPlanogramMobileData!=null&&_tPlanogramMobileData.size()>0){
+                                            for(tPlanogramMobileData dttPlanogramMobileData : _tPlanogramMobileData){
+                                                dttPlanogramMobileData.set_intSubmit("1");
+                                                new tPlanogramMobileBL().saveData(dttPlanogramMobileData);
+                                            }
+                                        }
+
+                                        List<tStockInHandHeaderData> tStockInHandHeaderDataList = new tStockInHandHeaderBL().getAllHeaderByOutletCodeUnsubmit(dtRealisasi.get_txtOutletCode());
+                                        if(tStockInHandHeaderDataList!=null&&tStockInHandHeaderDataList.size()>0){
+                                            for(tStockInHandHeaderData dt : tStockInHandHeaderDataList){
+                                                new tStockInHandHeaderBL().updateDataSubmit(dt);
+                                            }
                                         }
 
                                         finish();

@@ -329,7 +329,7 @@ public class FragmentReporting extends Fragment {
 
             ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
 
-            List<tStockInHandHeaderData> dt_so = new tStockInHandHeaderBL().getAllSalesProductHeaderByOutletCode(outletcode);
+            List<tStockInHandHeaderData> dt_so = new tStockInHandHeaderBL().getAllSalesProductHeaderByOutletCodeReport(outletcode);
             reportList = new ArrayList<>();
 
             if(dt_so != null&&dt_so.size()>0){

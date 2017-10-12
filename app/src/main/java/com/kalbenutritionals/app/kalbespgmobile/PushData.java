@@ -35,6 +35,7 @@ import bl.tAbsenUserBL;
 import bl.tAttendanceUserBL;
 import bl.tCustomerBasedMobileHeaderBL;
 import bl.tPlanogramMobileBL;
+import bl.tStockInHandHeaderBL;
 import bl.tVisitPlanRealisasiBL;
 import library.spgmobile.common.clsPushData;
 import library.spgmobile.common.dataJson;
@@ -45,6 +46,7 @@ import library.spgmobile.common.tLeaveMobileData;
 import library.spgmobile.common.tPlanogramMobileData;
 import library.spgmobile.common.tPurchaseOrderHeaderData;
 import library.spgmobile.common.tSalesProductHeaderData;
+import library.spgmobile.common.tStockInHandHeaderData;
 import library.spgmobile.common.visitplanAbsenData;
 import library.spgmobile.dal.clsHardCode;
 
@@ -107,6 +109,13 @@ public class PushData extends AppCompatActivity {
                 for(tPlanogramMobileData dttPlanogramMobileData : _tPlanogramMobileData){
                     dttPlanogramMobileData.set_intSubmit("1");
                     new tPlanogramMobileBL().saveData(dttPlanogramMobileData);
+                }
+            }
+            //update stock on hand
+            List<tStockInHandHeaderData> tStockInHandHeaderDataList = new tStockInHandHeaderBL().getAllHeaderByOutletCodeUnsubmit(dataAttendance.get_txtOutletCode());
+            if(tStockInHandHeaderDataList!=null&&tStockInHandHeaderDataList.size()>0){
+                for(tStockInHandHeaderData dt : tStockInHandHeaderDataList){
+                    new tStockInHandHeaderBL().updateDataSubmit(dt);
                 }
             }
         }
