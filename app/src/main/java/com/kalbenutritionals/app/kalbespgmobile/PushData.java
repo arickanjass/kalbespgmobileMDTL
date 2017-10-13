@@ -104,7 +104,7 @@ public class PushData extends AppCompatActivity {
         SQLiteDatabase db = new clsMainBL().getDb();
         if(validCheckinActive){
             //update data planogram status save
-            List<tPlanogramMobileData> _tPlanogramMobileData = new tPlanogramMobileBL().getAllHeaderByOutletCodeUnsubmit(dataAttendance.get_txtOutletCode());
+            List<tPlanogramMobileData> _tPlanogramMobileData = new tPlanogramMobileBL().getAllDataSelectImageNotNullByOutletUnsubmit(dataAttendance.get_txtOutletCode());
             if(_tPlanogramMobileData!=null){
                 for(tPlanogramMobileData dttPlanogramMobileData : _tPlanogramMobileData){
                     dttPlanogramMobileData.set_intSubmit("1");

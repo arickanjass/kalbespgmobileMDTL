@@ -58,7 +58,7 @@ public class tPlanogramImageDA {
         Cursor cursor = db.query(TABLE_CONTACTS, new String[] { dt.Property_txtId,
                         dt.Property_txtHeaderId, dt.Property_txtImage, dt.Property_intPosition,
                         dt.Property_txtType}, dt.Property_txtHeaderId + "=?",
-                new String[] { String.valueOf(id) }, null, null, null, null);
+                new String[] { String.valueOf(id) }, null, null, dt.Property_txtType + " desc", null);
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 contactList = new ArrayList<tPlanogramImageData>();

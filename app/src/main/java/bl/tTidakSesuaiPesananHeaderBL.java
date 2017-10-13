@@ -22,6 +22,7 @@ import library.spgmobile.dal.clsHardCode;
 import library.spgmobile.dal.enumConfigData;
 import library.spgmobile.dal.mconfigDA;
 import library.spgmobile.dal.tActivityMobileDA;
+import library.spgmobile.dal.tKemasanRusakHeaderDA;
 import library.spgmobile.dal.tTidakSesuaiPesananHeaderDA;
 import library.spgmobile.dal.tUserLoginDA;
 
@@ -97,5 +98,16 @@ public class tTidakSesuaiPesananHeaderBL extends clsMainBL {
 
         _db.close();
         return dt ;
+    }
+    public int getCounStatusSubmit(String code) {
+        SQLiteDatabase _db = getDb();
+        int count = new tTidakSesuaiPesananHeaderDA(_db).countStatusSubmit(_db, code);
+        return count;
+    }
+
+    public int countPush( String code) {
+        SQLiteDatabase _db = getDb();
+        int count = new tTidakSesuaiPesananHeaderDA(_db).countPush(_db, code);
+        return count;
     }
 }

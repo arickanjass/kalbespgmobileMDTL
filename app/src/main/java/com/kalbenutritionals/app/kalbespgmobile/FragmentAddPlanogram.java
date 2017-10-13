@@ -208,7 +208,7 @@ public class FragmentAddPlanogram extends Fragment implements View.OnClickListen
         m_fillSpinner();
 
         _tPlanogramMobileData = new tPlanogramMobileData();
-        _tPlanogramMobileData = new tPlanogramMobileBL().getDataSave(dtAbsensVisitplan.get_txtOutletCode());
+//        _tPlanogramMobileData = new tPlanogramMobileBL().getDataSave(dtAbsensVisitplan.get_txtOutletCode());
 
         boolean validViewEdit = false;
 
@@ -300,6 +300,15 @@ public class FragmentAddPlanogram extends Fragment implements View.OnClickListen
             spn_category.setSelection(Integer.valueOf(HMcategory.get(_tPlanogramMobileData.get_txtIdCategory()))-1);
         }
 
+//        etDescription.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View view, boolean b) {
+//                if(etDescription.getText().toString().length()>0){
+//                    new clsMainActivity().removeErrorMessage(textInputLayoutDescription);
+//                }
+//            }
+//        });
+
         return v;
     }
 
@@ -319,16 +328,80 @@ public class FragmentAddPlanogram extends Fragment implements View.OnClickListen
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.imageButtonBefore1:
-                captureImageBefore1();
+                if(spn_category.getSelectedItem().toString().equals("Select Category")){
+                    new clsMainActivity().showCustomToast(getContext(), "Please " + spn_category.getSelectedItem().toString() , false);
+                }
+
+                else if(lnlayoutIsValidPattern.getVisibility()==View.VISIBLE&&rg_isValidPattern.getCheckedRadioButtonId()==-1){
+                    new clsMainActivity().showCustomToast(getContext(), "Please Check Is Valid Pattern are not" , false);
+                }
+
+                else if (etDescription.getText().toString().equals("") && etDescription.getText().toString().length() == 0) {
+                    new clsMainActivity().setErrorMessage(getContext(), textInputLayoutDescription, etDescription, "Please give Description");
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        etDescription.setBackground(null);
+                    }
+                } else {
+                    new clsMainActivity().removeErrorMessage(textInputLayoutDescription);
+                    captureImageBefore1();
+                }
                 break;
             case R.id.imageButtonBefore2:
-                captureImageBefore2();
+                if(spn_category.getSelectedItem().toString().equals("Select Category")){
+                    new clsMainActivity().showCustomToast(getContext(), "Please " + spn_category.getSelectedItem().toString() , false);
+                }
+
+                else if(lnlayoutIsValidPattern.getVisibility()==View.VISIBLE&&rg_isValidPattern.getCheckedRadioButtonId()==-1){
+                    new clsMainActivity().showCustomToast(getContext(), "Please Check Is Valid Pattern are not" , false);
+                }
+
+                else if (etDescription.getText().toString().equals("") && etDescription.getText().toString().length() == 0) {
+                    new clsMainActivity().setErrorMessage(getContext(), textInputLayoutDescription, etDescription, "Please give Description");
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        etDescription.setBackground(null);
+                    }
+                } else {
+                    new clsMainActivity().removeErrorMessage(textInputLayoutDescription);
+                    captureImageBefore2();
+                }
                 break;
             case R.id.imageButtonAfter1:
-                captureImageAfter1();
+                if(spn_category.getSelectedItem().toString().equals("Select Category")){
+                    new clsMainActivity().showCustomToast(getContext(), "Please " + spn_category.getSelectedItem().toString() , false);
+                }
+
+                else if(lnlayoutIsValidPattern.getVisibility()==View.VISIBLE&&rg_isValidPattern.getCheckedRadioButtonId()==-1){
+                    new clsMainActivity().showCustomToast(getContext(), "Please Check Is Valid Pattern are not" , false);
+                }
+
+                else if (etDescription.getText().toString().equals("") && etDescription.getText().toString().length() == 0) {
+                    new clsMainActivity().setErrorMessage(getContext(), textInputLayoutDescription, etDescription, "Please give Description");
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        etDescription.setBackground(null);
+                    }
+                } else {
+                    new clsMainActivity().removeErrorMessage(textInputLayoutDescription);
+                    captureImageAfter1();
+                }
                 break;
             case R.id.imageButtonAfter2:
-                captureImageAfter2();
+                if(spn_category.getSelectedItem().toString().equals("Select Category")){
+                    new clsMainActivity().showCustomToast(getContext(), "Please " + spn_category.getSelectedItem().toString() , false);
+                }
+
+                else if(lnlayoutIsValidPattern.getVisibility()==View.VISIBLE&&rg_isValidPattern.getCheckedRadioButtonId()==-1){
+                    new clsMainActivity().showCustomToast(getContext(), "Please Check Is Valid Pattern are not" , false);
+                }
+
+                else if (etDescription.getText().toString().equals("") && etDescription.getText().toString().length() == 0) {
+                    new clsMainActivity().setErrorMessage(getContext(), textInputLayoutDescription, etDescription, "Please give Description");
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        etDescription.setBackground(null);
+                    }
+                } else {
+                    new clsMainActivity().removeErrorMessage(textInputLayoutDescription);
+                    captureImageAfter2();
+                }
                 break;
             case R.id.btnSave:
 
@@ -449,7 +522,7 @@ public class FragmentAddPlanogram extends Fragment implements View.OnClickListen
         _tPlanogramMobileData.set_dtDate(dateFormat.format(cal.getTime()));
 
         _tPlanogramMobileData.set_txtKeterangan(String.valueOf(etDescription.getText()));
-        _tPlanogramMobileData.set_bitActive("1");
+        _tPlanogramMobileData.set_bitActive("0");
         _tPlanogramMobileData.set_intSync("0");
         _tPlanogramMobileData.set_intSubmit("0");
 

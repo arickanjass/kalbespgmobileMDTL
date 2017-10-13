@@ -252,7 +252,7 @@ public class tStockInHandHeaderDA {
         List<tStockInHandHeaderData> contactList = null;
         // Select All Query
         tStockInHandHeaderData dt = new tStockInHandHeaderData();
-        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS  + " WHERE " + dt.Property_intSubmit + " =1 " + " ORDER BY dtDate ASC";
+        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " ORDER BY dtDate ASC";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -469,6 +469,63 @@ public class tStockInHandHeaderDA {
         return contactList;
     }
 
+    //getting count data push
+    public int countHomeAbsenPush(SQLiteDatabase db,  String code) {
+        String selectQuery = "select coalesce(sum(1),0) from [tStockInHandHeader] where OutletCode='" + code + "' and intSubmit=1 and [intSync]=1";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        int count = 0;
+
+        if (cursor.moveToFirst()) {
+            do {
+                count=Integer.valueOf(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        // return contact list
+        return count;
+    }
+    //getting data status submit
+    public int countHomeAbsenByStatusSubmit(SQLiteDatabase db, String code) {
+
+        String selectQuery = "select coalesce(sum(1),0) from [tStockInHandHeader] where OutletCode='" + code + "' and intSubmit=1 and [intSync]=0";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        int count = 0;
+
+        if (cursor.moveToFirst()) {
+            do {
+                count=Integer.valueOf(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        // return contact list
+        return count;
+    }
+    //getting data status save
+    public int countHomeAbsenByStatusSave(SQLiteDatabase db, String code) {
+
+        String selectQuery = "select coalesce(sum(1),0) from [tStockInHandHeader] where OutletCode='" + code + "' and intSubmit=0 and [intSync]=0";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        int count = 0;
+
+        if (cursor.moveToFirst()) {
+            do {
+                count=Integer.valueOf(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        // return contact list
+        return count;
+    }
+
     public List<tStockInHandHeaderData> getAllDataByIntSycAndOutlet(SQLiteDatabase db, String int_sync, String outlet) {
         List<tStockInHandHeaderData> contactList = null;
         // Select All Query
@@ -549,7 +606,7 @@ public class tStockInHandHeaderDA {
         // Select All Query
         tStockInHandHeaderData dt = new tStockInHandHeaderData();
 //        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_OutletCode + "='" + code + "'";
-        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_OutletCode + "='" + code + "' AND " + dt.Property_intSubmit + "= 1";
+        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_OutletCode + "='" + code + "'";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 

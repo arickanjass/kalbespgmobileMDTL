@@ -81,6 +81,17 @@ public class tPlanogramMobileBL extends clsMainBL{
         return dt;
     }
 
+    public List<tPlanogramMobileData> getAllDataSelectImageNotNullByOutletUnsubmit(String code) {
+        SQLiteDatabase _db = getDb();
+        List<tPlanogramMobileData> dt;
+        tPlanogramMobileDA _tPlanogramMobileDA=new tPlanogramMobileDA(db);
+        dt = _tPlanogramMobileDA.getAllDataSelectImageNotNullByOutletUnsubmit(_db, code);
+        if (dt == null) {
+            dt = new ArrayList<>(0);
+        }
+        return dt;
+    }
+
     public void saveData(tPlanogramMobileData _tPlanogramMobileData){
         SQLiteDatabase db=getDb();
         tPlanogramMobileDA _tPlanogramMobileDA=new tPlanogramMobileDA(db);
@@ -91,7 +102,7 @@ public class tPlanogramMobileBL extends clsMainBL{
         tPlanogramMobileDA _tPlanogramMobileDA = new tPlanogramMobileDA(_db);
         List<tPlanogramMobileData> dt;
         if(code.equals("ALLOUTLET")){
-            dt = _tPlanogramMobileDA.getAllData(_db);
+            dt = _tPlanogramMobileDA.getAll(_db);
         } else {
             dt = _tPlanogramMobileDA.getAllDataByOutletCode(_db,code);
         }
@@ -140,6 +151,12 @@ public class tPlanogramMobileBL extends clsMainBL{
     public int countPlanogramHomeAbsenPush( String code) {
         SQLiteDatabase _db = getDb();
         int count = new tPlanogramMobileDA(_db).countPlanogramHomeAbsenPush(_db, code);
+        return count;
+    }
+
+    public int getCountAllStatusSave(String code) {
+        SQLiteDatabase _db = getDb();
+        int count = new tPlanogramMobileDA(_db).countPlanogramHomeAbsenByStatusSave(_db, code);
         return count;
     }
 

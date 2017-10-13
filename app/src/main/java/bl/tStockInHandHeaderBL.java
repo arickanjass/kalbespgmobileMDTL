@@ -96,6 +96,24 @@ public class tStockInHandHeaderBL extends clsMainBL{
         return dt ;
     }
 
+    public int countPlanogramHomeAbsenPush( String code) {
+        SQLiteDatabase _db = getDb();
+        int count = new tStockInHandHeaderDA(_db).countHomeAbsenPush(_db, code);
+        return count;
+    }
+
+    public int getCountAllStatusSave(String code) {
+        SQLiteDatabase _db = getDb();
+        int count = new tStockInHandHeaderDA(_db).countHomeAbsenByStatusSave(_db, code);
+        return count;
+    }
+
+    public int getCountAllPlanogramByStatusSubmit(String code) {
+        SQLiteDatabase _db = getDb();
+        int count = new tStockInHandHeaderDA(_db).countHomeAbsenByStatusSubmit(_db, code);
+        return count;
+    }
+
     public List<tStockInHandHeaderData> getAllSalesProductHeaderByOutletCode(String code){
         SQLiteDatabase _db =getDb();
         List<tStockInHandHeaderData> dt;

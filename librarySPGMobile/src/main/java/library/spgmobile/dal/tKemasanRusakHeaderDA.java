@@ -225,6 +225,44 @@ public class tKemasanRusakHeaderDA {
         cursor.close();
         return contactList;
     }
+    //getting data status submit
+    public int countStatusSubmit(SQLiteDatabase db, String code) {
+
+        String selectQuery = "select coalesce(sum(1),0) from [tKemasanRusakHeader] where OutletCode='" + code + "' and intSubmit=1 and [intSync]=0";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        int count = 0;
+
+        if (cursor.moveToFirst()) {
+            do {
+                count=Integer.valueOf(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        // return contact list
+        return count;
+    }
+
+    //getting count data push
+    public int countPush(SQLiteDatabase db,  String code) {
+        String selectQuery = "select coalesce(sum(1),0) from [tKemasanRusakHeader] where OutletCode='" + code + "' and intSubmit=1 and [intSync]=1";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        int count = 0;
+
+        if (cursor.moveToFirst()) {
+            do {
+                count=Integer.valueOf(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        // return contact list
+        return count;
+    }
     // Getting All Contacts
     public List<tKemasanRusakHeaderData> getAllDataToPushData(SQLiteDatabase db){
         List<tKemasanRusakHeaderData> contactList = null;

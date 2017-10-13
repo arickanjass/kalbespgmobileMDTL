@@ -730,9 +730,9 @@ public class tVisitPlanRealisasiDA {
     }
 
     //getting data status unsubmit
-    public int countOutVisitStatusUnSubmit(SQLiteDatabase db, String code) {
+    public int countOutVisitStatusUnPush(SQLiteDatabase db, String code) {
 
-        String selectQuery = "select coalesce(sum(1),0) from [tVisitplanRealisasi] where txtOutletCode='" + code + "' and intSubmit=0 and [intPush]=0";
+        String selectQuery = "select coalesce(sum(1),0) from [tVisitplanRealisasi] where intSubmit=1 and [intPush]=0";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -750,7 +750,7 @@ public class tVisitPlanRealisasiDA {
     }
     //getting count data push
     public int countOutVisitPush(SQLiteDatabase db,  String code) {
-        String selectQuery = "select coalesce(sum(1),0) from [tVisitplanRealisasi] where txtOutletCode='" + code + "' and intSubmit=1 and [intPush]=1";
+        String selectQuery = "select coalesce(sum(1),0) from [tVisitplanRealisasi] where intSubmit=1 and [intPush]=1";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 

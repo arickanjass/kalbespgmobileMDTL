@@ -191,7 +191,7 @@ public class FragmentViewPlanogram extends Fragment implements IXListViewListene
         visitplanAbsenData _viAbsenData = new visitplanAbsenData();
         _viAbsenData = new clsHelperBL().getDataCheckInActive();
 
-        final List<tPlanogramMobileData> data = new tPlanogramMobileBL().getAllHeaderByOutletCodeUnsubmit(_viAbsenData.get_txtOutletCode());
+        final List<tPlanogramMobileData> data = new tPlanogramMobileBL().getAllDataSelectImageNotNullByOutletUnsubmit(_viAbsenData.get_txtOutletCode());
 
         if(data!=null&&data.size()!=0){
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -368,11 +368,15 @@ public class FragmentViewPlanogram extends Fragment implements IXListViewListene
         File folder = new File(new clsHardCode().txtPathTempData);
         folder.mkdir();
 
+        boolean validSubmitImageBefore = false;
+        boolean validSubmitImageAfter = false;
+
 //        final byte[] imgFile = dt.get(position).get_txtBeforeImg1();
         for (tPlanogramImageData imgDt : dataImage){
             final byte[] imgFile = imgDt.get_txtImage();
             if (imgFile != null) {
                 if (imgDt.get_txtType().equals("AFTER") && imgDt.get_intPosition().equals("1")) {
+                    validSubmitImageAfter = true;
                     mybitmap1 = BitmapFactory.decodeByteArray(imgFile, 0, imgFile.length);
                     Bitmap bitmap = Bitmap.createScaledBitmap(mybitmap1, 150, 150, true);
                     img1.setImageBitmap(bitmap);
@@ -409,6 +413,7 @@ public class FragmentViewPlanogram extends Fragment implements IXListViewListene
             final byte[] imgFile2 = imgDt.get_txtImage();
             if (imgFile2 != null) {
                 if (imgDt.get_txtType().equals("AFTER") && imgDt.get_intPosition().equals("2")) {
+                    validSubmitImageAfter = true;
                     mybitmap2 = BitmapFactory.decodeByteArray(imgFile2, 0, imgFile2.length);
                     Bitmap bitmap = Bitmap.createScaledBitmap(mybitmap2, 150, 150, true);
                     img2.setImageBitmap(bitmap);
@@ -445,6 +450,7 @@ public class FragmentViewPlanogram extends Fragment implements IXListViewListene
             final byte[] imgFile3 = imgDt.get_txtImage();
             if (imgFile3 != null) {
                 if (imgDt.get_txtType().equals("BEFORE") && imgDt.get_intPosition().equals("1")) {
+                    validSubmitImageBefore = true;
                     mybitmap3 = BitmapFactory.decodeByteArray(imgFile3, 0, imgFile3.length);
                     Bitmap bitmap = Bitmap.createScaledBitmap(mybitmap3, 150, 150, true);
                     img3.setImageBitmap(bitmap);
@@ -481,6 +487,7 @@ public class FragmentViewPlanogram extends Fragment implements IXListViewListene
             final byte[] imgFile4 = imgDt.get_txtImage();
             if (imgFile4 != null) {
                 if (imgDt.get_txtType().equals("BEFORE") && imgDt.get_intPosition().equals("2")) {
+                    validSubmitImageBefore = true;
                     mybitmap4 = BitmapFactory.decodeByteArray(imgFile4, 0, imgFile4.length);
                     Bitmap bitmap = Bitmap.createScaledBitmap(mybitmap4, 150, 150, true);
                     img4.setImageBitmap(bitmap);
@@ -532,37 +539,44 @@ public class FragmentViewPlanogram extends Fragment implements IXListViewListene
 
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this.getContext());
         alertDialogBuilder.setView(promptView);
+        final boolean finalValidSubmitImageBefore = validSubmitImageBefore;
+        final boolean finalValidSubmitImageAfter = validSubmitImageAfter;
         alertDialogBuilder
                 .setCancelable(false)
                 .setNeutralButton("Submit", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                        if(finalValidSubmitImageBefore && finalValidSubmitImageAfter){
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
-                        builder.setTitle("Warning");
-                        builder.setMessage("Are you sure to submit ");
+                            builder.setTitle("Warning");
+                            builder.setMessage("Are you sure to submit ");
 
-                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                tPlanogramMobileData data = new tPlanogramMobileData();
-                                data.set_txtIdPlanogram(dt.get(position).get_txtIdPlanogram());
-                                data.set_intSubmit("1");
-                                new tPlanogramMobileBL().updateDataSubmit(data);
-                                dialog.cancel();
-                                loadData();
-                            }
-                        });
+                            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    tPlanogramMobileData data = new tPlanogramMobileData();
+                                    data.set_txtIdPlanogram(dt.get(position).get_txtIdPlanogram());
+                                    data.set_intSubmit("1");
+                                    new tPlanogramMobileBL().updateDataSubmit(data);
+                                    dialog.cancel();
+                                    loadData();
+                                }
+                            });
 
-                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
+                            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
 
-                        AlertDialog alert = builder.create();
-                        alert.show();
+                            AlertDialog alert = builder.create();
+                            alert.show();
+                        } else {
+                            String mess = !finalValidSubmitImageBefore ? "Please take photo Before" : "Please take photo After";
+                            new clsMainActivity().showCustomToast(getContext(), mess, false);
+                        }
                     }
                 })
                 .setNegativeButton("Close", new DialogInterface.OnClickListener() {

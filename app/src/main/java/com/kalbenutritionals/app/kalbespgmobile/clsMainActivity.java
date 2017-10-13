@@ -917,7 +917,8 @@ public class clsMainActivity extends Activity {
     }
 
     public void deleteTempFolder(){
-        File folder = new File(Environment.getExternalStorageDirectory().toString() + "/Android/data/Kalbespgmobile/tempdata");
+//        File folder = new File(Environment.getExternalStorageDirectory().toString() + "/Android/data/Kalbespgmobile/tempdata");
+        File folder = new File(new clsHardCode().txtPathTempData);
         if (folder.isDirectory())
         {
             String[] children = folder.list();

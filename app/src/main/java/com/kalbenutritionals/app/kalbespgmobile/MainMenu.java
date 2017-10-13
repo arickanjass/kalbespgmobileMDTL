@@ -530,7 +530,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                                         new tVisitPlanRealisasiBL().UpdateData(data);
 
                                         //update data planogram status save
-                                        List<tPlanogramMobileData> _tPlanogramMobileData = new tPlanogramMobileBL().getAllHeaderByOutletCodeUnsubmit(dtRealisasi.get_txtOutletCode());
+                                        List<tPlanogramMobileData> _tPlanogramMobileData = new tPlanogramMobileBL().getAllDataSelectImageNotNullByOutletUnsubmit(dtRealisasi.get_txtOutletCode());
                                         if(_tPlanogramMobileData!=null&&_tPlanogramMobileData.size()>0){
                                             for(tPlanogramMobileData dttPlanogramMobileData : _tPlanogramMobileData){
                                                 dttPlanogramMobileData.set_intSubmit("1");

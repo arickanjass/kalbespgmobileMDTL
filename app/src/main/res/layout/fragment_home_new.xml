@@ -270,42 +270,6 @@
                                 android:textSize="11sp" />
                         </LinearLayout>
 
-                        <!--activity add display-->
-
-                        <LinearLayout
-                            android:id="@+id/ll_data_addDisplay"
-                            android:visibility="gone"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:padding="5dp">
-
-                            <com.owater.library.CircleTextView
-                                android:id="@+id/tvTotaladdDisplay"
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:layout_weight="0.25"
-                                android:gravity="center"
-                                android:text="0"
-                                android:textColor="@color/colorAccent"
-                                android:textSize="25dp"
-                                app:ct_backgroundColor="#FFFFFF"
-                                app:ct_border_alpha="0.5"
-                                app:ct_border_color="@color/colorAccent"
-                                app:ct_border_width="10dp"
-                                app:ct_type="shadow_alpha" />
-
-                            <TextView
-                                android:id="@+id/textViewaddDisplay"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="ADD DISPLAY"
-                                android:textSize="11sp" />
-                        </LinearLayout>
-
                         <!--Customer Based-->
 
                         <LinearLayout
@@ -449,10 +413,10 @@
                                 android:textSize="11sp" />
                         </LinearLayout>
 
-                        <!--Quesioner-->
+                        <!--Kemasan rusak-->
 
                         <LinearLayout
-                            android:id="@+id/ll_dataQuesioner"
+                            android:id="@+id/ll_data_kemasanrusak"
                             android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -462,7 +426,7 @@
                             android:padding="5dp">
 
                             <com.owater.library.CircleTextView
-                                android:id="@+id/tvTotalKuesioner"
+                                android:id="@+id/tvTotalkemasanrusak"
                                 android:layout_width="80dp"
                                 android:layout_height="80dp"
                                 android:layout_weight="0.25"
@@ -477,18 +441,18 @@
                                 app:ct_type="shadow_alpha" />
 
                             <TextView
-                                android:id="@+id/textView1234"
+                                android:id="@+id/textViewkemasanrusak"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:text="Quesioner"
+                                android:text="KEMASAN RUSAK"
                                 android:textSize="11sp" />
                         </LinearLayout>
 
-                        <!--Koordinasi outlet-->
+                        <!--over Stock-->
 
                         <LinearLayout
-                            android:id="@+id/ll_dataKoordinasi"
+                            android:id="@+id/ll_data_overStock"
                             android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -498,7 +462,7 @@
                             android:padding="5dp">
 
                             <com.owater.library.CircleTextView
-                                android:id="@+id/tvTotalKoordinasi"
+                                android:id="@+id/tvTotaloverStock"
                                 android:layout_width="80dp"
                                 android:layout_height="80dp"
                                 android:layout_weight="0.25"
@@ -513,11 +477,11 @@
                                 app:ct_type="shadow_alpha" />
 
                             <TextView
-                                android:id="@+id/textView12345"
+                                android:id="@+id/textView1234567810"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:text="Sync Outlet"
+                                android:text="OVER STOCK"
                                 android:textSize="11sp" />
                         </LinearLayout>
 
@@ -593,10 +557,10 @@
                                 android:textSize="11sp" />
                         </LinearLayout>
 
-                        <!--over Stock-->
+                        <!--activity add display-->
 
                         <LinearLayout
-                            android:id="@+id/ll_data_overStock"
+                            android:id="@+id/ll_data_addDisplay"
                             android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -606,7 +570,7 @@
                             android:padding="5dp">
 
                             <com.owater.library.CircleTextView
-                                android:id="@+id/tvTotaloverStock"
+                                android:id="@+id/tvTotaladdDisplay"
                                 android:layout_width="80dp"
                                 android:layout_height="80dp"
                                 android:layout_weight="0.25"
@@ -621,11 +585,119 @@
                                 app:ct_type="shadow_alpha" />
 
                             <TextView
-                                android:id="@+id/textView1234567810"
+                                android:id="@+id/textViewaddDisplay"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:text="OVER STOCK"
+                                android:text="ADD DISPLAY"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                        <!--activity add ll_data_tidaksesuaipesanan-->
+
+                        <LinearLayout
+                            android:id="@+id/ll_data_tidaksesuaipesanan"
+                            android:visibility="gone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <com.owater.library.CircleTextView
+                                android:id="@+id/tvTotaltidaksesuaipesanan"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_weight="0.25"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="25dp"
+                                app:ct_backgroundColor="#FFFFFF"
+                                app:ct_border_alpha="0.5"
+                                app:ct_border_color="@color/colorAccent"
+                                app:ct_border_width="10dp"
+                                app:ct_type="shadow_alpha" />
+
+                            <TextView
+                                android:id="@+id/textViewtidaksesuaipesanan"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="T. SESUAI PESAN"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                        <!--Quesioner-->
+
+                        <LinearLayout
+                            android:id="@+id/ll_dataQuesioner"
+                            android:visibility="gone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <com.owater.library.CircleTextView
+                                android:id="@+id/tvTotalKuesioner"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_weight="0.25"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="25dp"
+                                app:ct_backgroundColor="#FFFFFF"
+                                app:ct_border_alpha="0.5"
+                                app:ct_border_color="@color/colorAccent"
+                                app:ct_border_width="10dp"
+                                app:ct_type="shadow_alpha" />
+
+                            <TextView
+                                android:id="@+id/textView1234"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Quesioner"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+
+                        <!--Koordinasi outlet-->
+
+                        <LinearLayout
+                            android:id="@+id/ll_dataKoordinasi"
+                            android:visibility="gone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <com.owater.library.CircleTextView
+                                android:id="@+id/tvTotalKoordinasi"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_weight="0.25"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="25dp"
+                                app:ct_backgroundColor="#FFFFFF"
+                                app:ct_border_alpha="0.5"
+                                app:ct_border_color="@color/colorAccent"
+                                app:ct_border_width="10dp"
+                                app:ct_type="shadow_alpha" />
+
+                            <TextView
+                                android:id="@+id/textView12345"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Sync Outlet"
                                 android:textSize="11sp" />
                         </LinearLayout>
 
@@ -910,44 +982,6 @@
                                 android:gravity="center"
                                 android:text="" />
                         </TableRow>
-                        <!--table add display-->
-                        <TableRow
-                            android:id="@+id/tr_addDisplay"
-                            android:visibility="gone"
-                            android:background="#f0f0f0"
-                            android:gravity="center_horizontal"
-                            android:padding="5dp">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Add Display" />
-
-                            <TextView
-                                android:id="@+id/tv_addDisplay0"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="" />
-
-                            <TextView
-                                android:id="@+id/tv_addDisplay1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="" />
-
-                            <TextView
-                                android:id="@+id/tv_addDisplay2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="" />
-                        </TableRow>
                         <!--table cunsomer-->
                         <TableRow
                             android:id="@+id/tr_cunsomer"
@@ -1066,6 +1100,46 @@
                                 android:text="" />
                         </TableRow>
 
+                        <!--table k rusak-->
+                        <TableRow
+                            android:id="@+id/tr_kemasanRusak"
+                            android:background="#f0f0f0"
+                            android:visibility="gone"
+                            android:gravity="center_horizontal"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:paddingRight="5dp"
+                                android:text="Kemasan Rusak" />
+
+                            <TextView
+                                android:id="@+id/tv_kemasanRusak0"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tv_kemasanRusak1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tv_kemasanRusak2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+                        </TableRow>
+
                         <!--table over Stock-->
                         <TableRow
                             android:id="@+id/tr_overStock"
@@ -1099,86 +1173,6 @@
 
                             <TextView
                                 android:id="@+id/tv_os2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="" />
-                        </TableRow>
-
-                        <!--table Quesioner-->
-                        <TableRow
-                            android:id="@+id/tr_quesioner"
-                            android:background="#f0f0f0"
-                            android:visibility="gone"
-                            android:gravity="center_horizontal"
-                            android:padding="5dp">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:paddingRight="5dp"
-                                android:text="Quesioner" />
-
-                            <TextView
-                                android:id="@+id/tv_quesioner0"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="" />
-
-                            <TextView
-                                android:id="@+id/tv_quesioner1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="" />
-
-                            <TextView
-                                android:id="@+id/tv_quesioner2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="" />
-                        </TableRow>
-
-                        <!--table koordinasi-->
-                        <TableRow
-                            android:id="@+id/tr_koordinasi"
-                            android:background="#f0f0f0"
-                            android:visibility="gone"
-                            android:gravity="center_horizontal"
-                            android:padding="5dp">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:paddingRight="5dp"
-                                android:text="Koordinasi" />
-
-                            <TextView
-                                android:id="@+id/tv_koordinasi0"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="" />
-
-                            <TextView
-                                android:id="@+id/tv_koordinasi1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="" />
-
-                            <TextView
-                                android:id="@+id/tv_koordinasi2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1259,6 +1253,163 @@
 
                             <TextView
                                 android:id="@+id/tv_StockINhand2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+                        </TableRow>
+
+                        <!--table add display-->
+                        <TableRow
+                            android:id="@+id/tr_addDisplay"
+                            android:visibility="gone"
+                            android:background="#f0f0f0"
+                            android:gravity="center_horizontal"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Add Display" />
+
+                            <TextView
+                                android:id="@+id/tv_addDisplay0"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tv_addDisplay1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tv_addDisplay2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+                        </TableRow>
+                        <!--table tidak sesuai pesanan-->
+                        <TableRow
+                            android:id="@+id/tr_tidaksesuai"
+                            android:visibility="gone"
+                            android:background="#f0f0f0"
+                            android:gravity="center_horizontal"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="T. Sesuai Pesanan" />
+
+                            <TextView
+                                android:id="@+id/tv_tidaksesuai0"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tv_tidaksesuai1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tv_tidaksesuai2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+                        </TableRow>
+
+                        <!--table Quesioner-->
+                        <TableRow
+                            android:id="@+id/tr_quesioner"
+                            android:background="#f0f0f0"
+                            android:visibility="gone"
+                            android:gravity="center_horizontal"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:paddingRight="5dp"
+                                android:text="Quesioner" />
+
+                            <TextView
+                                android:id="@+id/tv_quesioner0"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tv_quesioner1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tv_quesioner2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+                        </TableRow>
+
+                        <!--table koordinasi-->
+                        <TableRow
+                            android:id="@+id/tr_koordinasi"
+                            android:background="#f0f0f0"
+                            android:visibility="gone"
+                            android:gravity="center_horizontal"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:paddingRight="5dp"
+                                android:text="Koordinasi" />
+
+                            <TextView
+                                android:id="@+id/tv_koordinasi0"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tv_koordinasi1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tv_koordinasi2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"

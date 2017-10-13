@@ -154,4 +154,15 @@ public class tKemasanRusakHeaderBL extends clsMainBL{
         _db.close();
         return dtDetail;
     }
+    public int getCounStatusSubmit(String code) {
+        SQLiteDatabase _db = getDb();
+        int count = new tKemasanRusakHeaderDA(_db).countStatusSubmit(_db, code);
+        return count;
+    }
+
+    public int countPush( String code) {
+        SQLiteDatabase _db = getDb();
+        int count = new tKemasanRusakHeaderDA(_db).countPush(_db, code);
+        return count;
+    }
 }

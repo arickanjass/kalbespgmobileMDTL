@@ -360,21 +360,6 @@ public class FragmentAddKemasanRusak extends Fragment implements IXListViewListe
         // set date min today
 //        dp.setMinDate(System.currentTimeMillis() - 1000);
 
-        String qtyProduct = null;
-        qtyProduct = editTextQty.getText().toString();
-
-        boolean validQty = true;
-
-        if (qtyProduct.equals("0") || qtyProduct.equals("00") || qtyProduct.equals("000")) {
-            validQty = false;
-        }
-
-        if(validQty){
-
-        } else{
-
-        }
-
         // muncul dialog
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this.getContext());
         alertDialogBuilder.setView(promptView);
@@ -383,68 +368,6 @@ public class FragmentAddKemasanRusak extends Fragment implements IXListViewListe
                 .setPositiveButton("Save",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                clsMainBL _clsMainBL = new clsMainBL();
-//                                        SQLiteDatabase _db = _clsMainBL.getDb();
-
-                                String qtyProduct = null;
-                                qtyProduct = editTextQty.getText().toString();
-
-                                boolean validQty = true;
-
-                                if (qtyProduct.equals("0") || qtyProduct.equals("00") || qtyProduct.equals("000")) {
-                                    validQty = true;
-                                    qtyProduct = "1";
-                                }
-
-                                if(validQty){
-                                    String selectedOneKNProduct = spnKalbeProduct.getSelectedItem().toString();
-                                    tUserLoginData dtUser = new tUserLoginBL().getUserActive();
-                                    java.text.DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                                    Calendar cal = Calendar.getInstance();
-
-                                    int day = dp.getDayOfMonth();
-                                    int month = dp.getMonth() + 1;
-                                    int year = dp.getYear();
-                                    final String expireDate = year + "-" + month + "-" + day;
-
-                                    String keterangan;
-                                    keterangan = editTextKeterangan.getText().toString();
-
-                                    if (keterangan.length() == 0) {
-                                        keterangan = "";
-                                    }
-
-                                    tKemasanRusakDetailData data = new tKemasanRusakDetailData();
-                                    if (dataDetail.getIntId() != null) {
-                                        data.setIntId(dataDetail.getIntId());
-                                    } else {
-                                        data.setIntId(_clsMainActivity.GenerateGuid());
-                                    }
-
-                                    data.set_txtKemasanRusak(tv_noQuantityStock.getText().toString());
-                                    data.set_dtDate(dateFormat.format(cal.getTime()));
-                                    data.set_txtCodeProduct(HMProduct.get(selectedOneKNProduct));
-                                    data.set_txtKeterangan(keterangan);
-                                    data.setTxtProduct(selectedOneKNProduct);
-                                    data.setTxtExpireDate(expireDate);
-                                    data.setTxtQuantity(qtyProduct);
-                                    data.set_intPrice(HMProduct.get(HMProduct.get(selectedOneKNProduct)));
-
-                                    double prc = Double.valueOf(HMProduct.get(HMProduct.get(selectedOneKNProduct)));
-                                    double itm = Double.valueOf(qtyProduct);
-
-                                    data.set_intTotal(_clsMainActivity.convertNumberDec2(prc * itm));
-                                    data.set_txtNIK(dtUser.get_txtUserId());
-
-                                    new tKemasanRusakDetailBL().saveData(data);
-
-                                    dialog.dismiss();
-                                    TableProduct();
-
-                                    _clsMainActivity.showCustomToast(getActivity(), "Saved", true);
-                                } else {
-                                    _clsMainActivity.showCustomToast(getActivity(), "Quantity Cannot 0", true);
-                                }
                             }
                         })
                 .setNegativeButton("Close", new DialogInterface.OnClickListener() {
@@ -454,6 +377,69 @@ public class FragmentAddKemasanRusak extends Fragment implements IXListViewListe
                 });
         final AlertDialog alertD = alertDialogBuilder.create();
         alertD.show();
+        alertD.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                int qtyProduct = Integer.valueOf(editTextQty.getText().toString());
+
+                boolean validQty = true;
+
+                if (qtyProduct==0 || qtyProduct==00 || qtyProduct==000) {
+                    validQty = false;
+                }
+
+                if(validQty){
+                    if(editTextKeterangan.getText().toString().length()>0){
+                        String selectedOneKNProduct = spnKalbeProduct.getSelectedItem().toString();
+                        tUserLoginData dtUser = new tUserLoginBL().getUserActive();
+                        java.text.DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                        Calendar cal = Calendar.getInstance();
+
+                        int day = dp.getDayOfMonth();
+                        int month = dp.getMonth() + 1;
+                        int year = dp.getYear();
+                        final String expireDate = year + "-" + month + "-" + day;
+
+                        String keterangan;
+                        keterangan = editTextKeterangan.getText().toString();
+
+                        tKemasanRusakDetailData data = new tKemasanRusakDetailData();
+                        if (dataDetail.getIntId() != null) {
+                            data.setIntId(dataDetail.getIntId());
+                        } else {
+                            data.setIntId(_clsMainActivity.GenerateGuid());
+                        }
+
+                        data.set_txtKemasanRusak(tv_noQuantityStock.getText().toString());
+                        data.set_dtDate(dateFormat.format(cal.getTime()));
+                        data.set_txtCodeProduct(HMProduct.get(selectedOneKNProduct));
+                        data.set_txtKeterangan(keterangan);
+                        data.setTxtProduct(selectedOneKNProduct);
+                        data.setTxtExpireDate(expireDate);
+                        data.setTxtQuantity(String.valueOf(qtyProduct));
+                        data.set_intPrice(HMProduct.get(HMProduct.get(selectedOneKNProduct)));
+
+                        double prc = Double.valueOf(HMProduct.get(HMProduct.get(selectedOneKNProduct)));
+                        double itm = Double.valueOf(qtyProduct);
+
+                        data.set_intTotal(_clsMainActivity.convertNumberDec2(prc * itm));
+                        data.set_txtNIK(dtUser.get_txtUserId());
+
+                        new tKemasanRusakDetailBL().saveData(data);
+
+                        alertD.dismiss();
+                        TableProduct();
+
+                        _clsMainActivity.showCustomToast(getActivity(), "Saved", true);
+                    } else {
+                        _clsMainActivity.showCustomToast(getActivity(), "Please fill description....", false);
+                    }
+                } else {
+                    _clsMainActivity.showCustomToast(getActivity(), "Quantity Cannot 0", false);
+                }
+            }
+        });
     }
 
     // put image from camera
