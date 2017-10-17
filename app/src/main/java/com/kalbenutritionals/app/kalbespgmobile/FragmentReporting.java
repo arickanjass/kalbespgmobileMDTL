@@ -2,12 +2,19 @@ package com.kalbenutritionals.app.kalbespgmobile;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,11 +26,24 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
+
+import jxl.Cell;
+import jxl.CellView;
+import jxl.Workbook;
+import jxl.WorkbookSettings;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
 
 import addons.tableview.ReportComparators;
 import addons.tableview.ReportTableDataAdapter;
@@ -58,6 +78,8 @@ import bl.tStockInHandDetailBL;
 import bl.tStockInHandHeaderBL;
 import bl.tTidakSesuaiPesananHeaderBL;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
+import jxl.write.WriteException;
+import jxl.write.biff.RowsExceededException;
 import library.spgmobile.common.KoordinasiOutletData;
 import library.spgmobile.common.ReportTable;
 import library.spgmobile.common.mCountConsumerMTDData;
@@ -94,11 +116,12 @@ public class FragmentReporting extends Fragment {
 
     private SortableReportTableView ReportTableView;
     private Spinner spnTypeReport, spnOutlet;
-    private Button btnHide, btnSearch;
+    private Button btnHide, btnSearch, btnExport;
     private RelativeLayout rlSearch;
     HashMap<String, String> arrOutlet;
 
     String spinnerSelected = null;
+    List<mMenuData> menu;
     View v;
 
     @Override
@@ -110,12 +133,16 @@ public class FragmentReporting extends Fragment {
         spnOutlet = (Spinner) v.findViewById(R.id.spnOutlet);
         btnHide = (Button) v.findViewById(R.id.btnHide);
         btnSearch = (Button) v.findViewById(R.id.btnsearch);
+        btnExport = (Button) v.findViewById(R.id.btnExport);
         rlSearch = (RelativeLayout) v.findViewById(R.id.rlSearch);
+
+        btnExport.setVisibility(View.GONE);
 
         btnHide.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB_MR1)
             @Override
             public void onClick(View v) {
+                btnExport.setVisibility(View.GONE);
                 if(btnHide.getText().equals("Hide")){
                     rlSearch.animate().alpha(0.0f).setListener(new AnimatorListenerAdapter() {
                         @Override
@@ -173,6 +200,20 @@ public class FragmentReporting extends Fragment {
             }
         });
 
+        btnExport.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB_MR1)
+            @Override
+            public void onClick(View v) {
+                if(notificationManager!=null){
+                    notificationManager.cancelAll();
+                }
+                List<tStockInHandHeaderData> dt_so = new tStockInHandHeaderBL().getAllSalesProductHeaderByOutletCodeReport("ALLOUTLET");
+                if(dt_so!=null&&dt_so.size()>0){
+                    generatefileXls(spinnerSelected, dt_so);
+                }
+            }
+        });
+
         List<mEmployeeAreaData> listOutlet = new ArrayList<>();
 
         listOutlet = new mEmployeeAreaBL().GetAllData();
@@ -193,7 +234,7 @@ public class FragmentReporting extends Fragment {
         arrData.addAll(hs);
 
         String intParentID = new mMenuBL().getIntParentID();
-        List<mMenuData> menu = new ArrayList<>();
+        menu = new ArrayList<>();
 
         if(intParentID != null){
             menu = new mMenuBL().getDatabyParentId(intParentID);
@@ -226,7 +267,6 @@ public class FragmentReporting extends Fragment {
 
         return v;
     }
-
     private void generateReport(String spinnerSelected, String outletcode) {
         String[] header;
         SimpleTableHeaderAdapter simpleTableHeaderAdapter;
@@ -360,7 +400,9 @@ public class FragmentReporting extends Fragment {
             } else {
                 new clsMainActivity().showCustomToast(getContext(), "No Data to Show", false);
             }
-
+            if(dt_so!=null&&dt_so.size()>0){
+                btnExport.setVisibility(View.VISIBLE);
+            }
             ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
         } else if (spinnerSelected.contains("Customer Base")){
                 header = new String[7];
@@ -1282,6 +1324,135 @@ public class FragmentReporting extends Fragment {
             return row;
         }
 
+    }
+
+    private void generatefileXls(String fileName, List<tStockInHandHeaderData> _tStockInHandHeaderData){
+        File sd = Environment.getExternalStorageDirectory();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HH:mm:ss");
+        String currentDateandTime = sdf.format(new Date());
+        String csvFile = fileName + "_" + currentDateandTime + ".xls";
+
+        File directory = new File(sd.getAbsolutePath());
+        //create directory if not exist
+        if (!directory.isDirectory()) {
+            directory.mkdirs();
+        }
+        try {
+
+            //file path
+            File file = new File(directory, csvFile);
+//            if(file.exists()){
+//
+//            }
+            WorkbookSettings wbSettings = new WorkbookSettings();
+            wbSettings.setLocale(new Locale("en", "EN"));
+            WritableWorkbook workbook;
+            workbook = Workbook.createWorkbook(file, wbSettings);
+
+
+            if (_tStockInHandHeaderData!=null&&_tStockInHandHeaderData.size()>0) {
+                for(int i=0; i<_tStockInHandHeaderData.size(); i++){
+
+                    String no = _tStockInHandHeaderData.get(i).get_txtNoSo();
+
+                    //Excel sheet name. 0 represents first sheet
+                    WritableSheet sheet = workbook.createSheet(no, i);
+
+                    // column and row header
+                    sheet.addCell(new Label(0, 0, "No"));
+                    sheet.addCell(new Label(0, 1, "Total Produk"));
+                    sheet.addCell(new Label(0, 2, "Qty"));
+                    sheet.addCell(new Label(0, 3, "Outlet"));
+                    sheet.addCell(new Label(0, 4, "Date"));
+
+                    CellView cell0 = sheet.getColumnView(0);
+                    cell0.setAutosize(true);
+                    sheet.setColumnView(0, cell0);
+
+                    String totProd = _tStockInHandHeaderData.get(i).get_intSumItem();
+
+                    List<tStockInHandDetailData> dt_detail = new tStockInHandDetailBL().GetDataByNoSO(_tStockInHandHeaderData.get(i).get_txtNoSo());
+
+                    int total_item = 0;
+
+                    for(int j = 0; j < dt_detail.size(); j++){
+                        total_item = total_item + Integer.parseInt(dt_detail.get(j).get_intQty());
+                    }
+
+                    String totQty = String.valueOf(total_item)+ " pcs";
+                    String outlet = _tStockInHandHeaderData.get(i).get_OutletName();
+                    String date = _tStockInHandHeaderData.get(i).get_dtDate();
+
+                    sheet.addCell(new Label(1, 0, no));
+                    sheet.addCell(new Label(1, 1, totProd));
+                    sheet.addCell(new Label(1, 2, totQty));
+                    sheet.addCell(new Label(1, 3, outlet));
+                    sheet.addCell(new Label(1, 4, date));
+
+                    CellView cellData1 = sheet.getColumnView(1);
+                    cellData1.setAutosize(true);
+                    sheet.setColumnView(1, cellData1);
+
+                    // column and row detail
+                    sheet.addCell(new Label(0, 6, "Name"));
+                    sheet.addCell(new Label(1, 6, "Qty"));
+
+                    int r = 6;
+
+
+                    for(int k = 0; k < dt_detail.size(); k++){
+                        String nameProd = dt_detail.get(k).get_txtNameProduct();
+                        String pcs = dt_detail.get(k).get_intQty();
+                        r = r+1;
+
+                        sheet.addCell(new Label(0, r, nameProd));
+                        sheet.addCell(new Label(1, r, pcs));
+                    }
+
+
+                }
+            }
+
+            //closing cursor
+            workbook.write();
+            workbook.close();
+            new clsMainActivity().showCustomToast(getActivity(), "Data Exported in a Excel Sheet\n" + "Location file in Internal Storage", true);
+            showNotification(file);
+//            Toast.makeText(getActivity(),
+//                    "Data Exported in a Excel Sheet", Toast.LENGTH_SHORT).show();
+        } catch (WriteException e) {
+            e.printStackTrace();
+            new clsMainActivity().showCustomToast(getActivity(), e.toString(), false);
+        } catch (IOException e) {
+            e.printStackTrace();
+            new clsMainActivity().showCustomToast(getActivity(), e.toString(), false);
+        }
+    }
+
+    NotificationManager notificationManager;
+    private NotificationManager mNotifyManager;
+    private NotificationCompat.Builder mBuilder;
+    int nid = 1;
+    private void showNotification(File file){
+        if(file.exists()){
+            Intent intent = new Intent();
+            intent.setAction(android.content.Intent.ACTION_VIEW);
+            intent.setDataAndType(Uri.fromFile(file), "excel/*");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            PendingIntent pIntent = PendingIntent.getActivity(getActivity(), 0, intent, 0);
+
+            Notification noti = new NotificationCompat.Builder(getActivity())
+                    .setContentTitle("Export Successfull...")
+                    .setContentText(file.getName().toString())
+                    .setSmallIcon(R.drawable.ic_xls_file)
+                    .setContentIntent(pIntent).build();
+
+            noti.flags |= Notification.FLAG_AUTO_CANCEL;
+
+            notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(0, noti);
+        }
     }
 
 }

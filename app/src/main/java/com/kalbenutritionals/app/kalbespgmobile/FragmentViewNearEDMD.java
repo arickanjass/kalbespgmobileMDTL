@@ -161,6 +161,8 @@ public class FragmentViewNearEDMD extends Fragment implements IXListViewListener
         tv_status.setTypeface(null, Typeface.BOLD);
 
         final TableRow tr_neared = (TableRow) promptView.findViewById(R.id.tr_neared);
+        final TableRow tr_keterangan = (TableRow) promptView.findViewById(R.id.tr_keterangan);
+        tr_keterangan.setVisibility(View.GONE);
         tr_neared.setVisibility(View.GONE);
 
         if (dt.get(position).get_intSubmit().equals("1")&&dt.get(position).get_intSync().equals("0")){
@@ -528,11 +530,12 @@ public class FragmentViewNearEDMD extends Fragment implements IXListViewListener
             for (int i = 0; i < dt.size(); i++) {
                 swplist = new clsSwipeList();
                 swplist.set_txtTitle(dt.get(i).get_txtQuantityStock());
-                String desc = dt.get(i).get_txtKeterangan();
-                if(desc.length()>20){
-                    desc = dt.get(i).get_txtKeterangan().substring(0,20) + "...";
-                }
-                swplist.set_txtDescription("Description : " + desc);
+                swplist.set_txtDescription(dt.get(i).get_OutletName());
+//                String desc = dt.get(i).get_txtKeterangan();
+//                if(desc.length()>20){
+//                    desc = dt.get(i).get_txtKeterangan().substring(0,20) + "...";
+//                }
+//                swplist.set_txtDescription("Description : " + desc);
                 if (dt.get(i).get_intSubmit().equals("1")&&dt.get(i).get_intSync().equals("0")){
                     swplist.set_txtDescription2("Submit");
                 } else if (dt.get(i).get_intSubmit().equals("1")&&dt.get(i).get_intSync().equals("1")){

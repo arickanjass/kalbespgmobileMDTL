@@ -831,6 +831,7 @@ public class FragmentAddOverStockMD extends Fragment implements IXListViewListen
             swplist.set_txtTitle("Product : " + data.getTxtProduct());
             swplist.set_txtDescription("Total Product : " + data.getTxtQuantity() +" pcs");
             swplist.set_txtDescription2("ED : " + ed);
+            swplist.set_txtDescription3("");
             swipeList.add(swplist);
         }
 

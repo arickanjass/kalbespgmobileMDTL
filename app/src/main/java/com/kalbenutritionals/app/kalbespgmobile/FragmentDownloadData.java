@@ -3444,7 +3444,7 @@ public class FragmentDownloadData extends Fragment {
         @Override
         protected void onPostExecute(JSONArray roledata) {
             if (roledata != null && roledata.size() > 0) {
-                arrData = SaveDatatSalesProductData(roledata);
+                arrData = SaveDatatStockInHandData(roledata);
                 //spnBranch.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
                 loadData();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);

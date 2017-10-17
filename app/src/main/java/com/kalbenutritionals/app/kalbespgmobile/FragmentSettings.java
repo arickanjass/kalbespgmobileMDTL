@@ -7,12 +7,14 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +23,16 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.github.barteksc.pdfviewer.util.FileUtils;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.nio.channels.FileChannel;
 import java.util.Iterator;
 import java.util.List;
 
@@ -41,7 +49,7 @@ public class FragmentSettings extends Fragment {
 
     View v;
 
-    String[] menuList = {"Change Password", "Push Data Error", ""};
+    String[] menuList = {"Change Password", "Push Data Error","Copy DB",""};
     String userName, oldPassword, newPassword = "";
     private PackageInfo pInfo = null;
 
@@ -75,9 +83,12 @@ public class FragmentSettings extends Fragment {
                     ubahPassword();
                 }
                 if (position == 1 && datass.size() == 0) {
-                    new clsMainActivity().showCustomToast(getContext(), "No Error", true);
+                    new clsMainActivity().showCustomToast(getContext(), "No Error", false);
                 } else if (position == 1 && datass.size() > 0) {
                     pushError();
+                }
+                if(position == 2){
+                    copyFile();
                 }
             }
         });
@@ -340,5 +351,38 @@ public class FragmentSettings extends Fragment {
             Dialog.dismiss();
         }
 
+    }
+    public void copyFile()
+    {
+        try
+        {
+            File sd = Environment.getExternalStorageDirectory();
+            File data = Environment.getDataDirectory();
+
+            if (sd.canWrite())
+            {
+                String currentDBPath = new clsHardCode().txtPathApp;
+                String backupDBName = "databaseroot_copy";
+                File currentDB = new File(new clsHardCode().txtDatabaseName);
+                File backupDB = new File(sd, backupDBName);
+
+                if (currentDB.exists()) {
+                    FileChannel src = new FileInputStream(currentDB).getChannel();
+                    FileChannel dst = new FileOutputStream(backupDB).getChannel();
+                    dst.transferFrom(src, 0, src.size());
+                    src.close();
+                    dst.close();
+                    new clsMainActivity().showCustomToast(getContext(), "Successfull...", true);
+                } else {
+                    new clsMainActivity().showCustomToast(getContext(), "File not found...", false);
+                }
+            } else {
+                new clsMainActivity().showCustomToast(getContext(), "Permission not granted...", false);
+            }
+        }
+        catch (Exception e) {
+//            Log.w("Settings Backup", e);
+            new clsMainActivity().showCustomToast(getContext(), e.toString(), false);
+        }
     }
 }

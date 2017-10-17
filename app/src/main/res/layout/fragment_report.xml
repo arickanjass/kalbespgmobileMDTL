@@ -77,6 +77,19 @@
         android:id="@+id/btnHide"
         android:layout_marginLeft="10dp" />
 
+    <Button
+        android:text="Export to Exel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/btnsearch"
+        android:layout_toRightOf="@+id/btnHide"
+        android:layout_toEndOf="@+id/btnHide"
+        android:background="@drawable/btn_download_all"
+        android:textColor="@color/white"
+        android:id="@+id/btnExport"
+        android:visibility="visible"
+        android:layout_marginLeft="10dp" />
+
     <addons.tableview.SortableReportTableView
         android:id="@+id/tableView"
         android:layout_width="match_parent"

@@ -772,6 +772,8 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
         tv_status.setTypeface(null, Typeface.BOLD);
 
         final TableRow tr_neared = (TableRow) promptView.findViewById(R.id.tr_neared);
+        final TableRow tr_keterangan = (TableRow) promptView.findViewById(R.id.tr_keterangan);
+        tr_keterangan.setVisibility(View.GONE);
         tr_neared.setVisibility(View.GONE);
 
         if (dtheader.get(0).get_intSubmit().equals("1")&&dtheader.get(0).get_intSync().equals("0")){

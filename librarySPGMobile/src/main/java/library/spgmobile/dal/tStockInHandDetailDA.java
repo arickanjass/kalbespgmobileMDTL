@@ -148,7 +148,7 @@ public class tStockInHandDetailDA {
         List<tStockInHandDetailData> contactList = new ArrayList<tStockInHandDetailData>();
         // Select All Query
         tStockInHandDetailData dt=new tStockInHandDetailData();
-        String selectQuery = "SELECT  "+dt.Property_All+" FROM " + TABLE_CONTACTS +" Where "+dt.Property_txtNoSo+"='"+txtNoSO+"' AND "+dt.Property_intActive+"=1";
+        String selectQuery = "SELECT  "+dt.Property_All+" FROM " + TABLE_CONTACTS +" Where "+dt.Property_txtNoSo+"='"+txtNoSO+"'";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
