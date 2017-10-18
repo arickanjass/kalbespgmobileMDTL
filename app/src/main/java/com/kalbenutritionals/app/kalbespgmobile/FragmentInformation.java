@@ -668,7 +668,7 @@ public class FragmentInformation extends Fragment implements View.OnClickListene
 //                    if (dtAbsen != null) {
 //                        toolbar.setTitle("View Actvity");
 //                        nv.setCheckedItem(0);
-//                        FragmentViewActivityMD fragmentViewActivityMD = new FragmentViewActivityMD();
+//                        FragmentViewAddDisplay fragmentViewActivityMD = new FragmentViewAddDisplay();
 //                        fragmentTransaction.replace(R.id.frame, fragmentViewActivityMD);
 //                        fragmentTransaction.commit();
 //                    }

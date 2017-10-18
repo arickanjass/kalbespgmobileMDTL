@@ -59,7 +59,7 @@ import library.spgmobile.dal.clsHardCode;
 
 import static com.kalbenutritionals.app.kalbespgmobile.R.id.textView9;
 
-public class FragmentViewActivityMD extends Fragment implements IXListViewListener {
+public class FragmentViewAddDisplay extends Fragment implements IXListViewListener {
 
     private static List<clsSwipeList> swipeList = new ArrayList<clsSwipeList>();
     private AppAdapterViewCusBase mAdapter;

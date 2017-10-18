@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.PowerManager;
@@ -47,6 +48,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -54,6 +56,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -345,7 +348,7 @@ public class Login extends clsMainActivity {
             @Override
             public void onClick(View v) {
                 String strUrl = new mconfigDA(new clsMainBL().getDb()).getData(new clsMainBL().getDb(), enumConfigData.ApiKalbe.getidConfigData()).get_txtValue();
-
+//                copyFile();
                 try {
                     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                     StrictMode.setThreadPolicy(policy);
@@ -1053,5 +1056,38 @@ public class Login extends clsMainActivity {
             Dialog.dismiss();
         }
 
+    }
+    public void copyFile()
+    {
+        try
+        {
+            File sd = Environment.getExternalStorageDirectory();
+            File data = Environment.getDataDirectory();
+
+            if (sd.canWrite())
+            {
+                String currentDBPath = new clsHardCode().txtPathApp;
+                String backupDBName = "databaseroot_copy";
+                File currentDB = new File(new clsHardCode().txtDatabaseName);
+                File backupDB = new File(sd, backupDBName);
+
+                if (currentDB.exists()) {
+                    FileChannel src = new FileInputStream(currentDB).getChannel();
+                    FileChannel dst = new FileOutputStream(backupDB).getChannel();
+                    dst.transferFrom(src, 0, src.size());
+                    src.close();
+                    dst.close();
+                    new clsMainActivity().showCustomToast(getApplicationContext(), "Successfull...", true);
+                } else {
+                    new clsMainActivity().showCustomToast(getApplicationContext(), "File not found...", false);
+                }
+            } else {
+                new clsMainActivity().showCustomToast(getApplicationContext(), "Permission not granted...", false);
+            }
+        }
+        catch (Exception e) {
+//            Log.w("Settings Backup", e);
+            new clsMainActivity().showCustomToast(getApplicationContext(), e.toString(), false);
+        }
     }
 }

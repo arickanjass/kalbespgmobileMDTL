@@ -510,7 +510,7 @@ public class FragmentAddActivityMD extends Fragment implements View.OnClickListe
 
     public void viewActivityFragment(){
         Intent intent = new Intent(getContext(),MainMenu.class);
-        intent.putExtra("key_view", "View Activity MD");
+        intent.putExtra("key_view", "View Add Display");
         getActivity().finish();
         startActivity(intent);
         return;

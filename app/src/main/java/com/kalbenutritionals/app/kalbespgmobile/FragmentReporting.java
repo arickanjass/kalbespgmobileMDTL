@@ -5,7 +5,9 @@ import android.animation.AnimatorListenerAdapter;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -16,6 +18,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -204,12 +207,35 @@ public class FragmentReporting extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB_MR1)
             @Override
             public void onClick(View v) {
-                if(notificationManager!=null){
-                    notificationManager.cancelAll();
-                }
-                List<tStockInHandHeaderData> dt_so = new tStockInHandHeaderBL().getAllSalesProductHeaderByOutletCodeReport("ALLOUTLET");
+                String outletcode = arrOutlet.get(spnOutlet.getSelectedItem().toString());
+                final String outletName = spnOutlet.getSelectedItem().toString();
+                final List<tStockInHandHeaderData> dt_so = new tStockInHandHeaderBL().getAllSalesProductHeaderByOutletCodeReport(outletcode);
                 if(dt_so!=null&&dt_so.size()>0){
-                    generatefileXls(spinnerSelected, dt_so);
+//                    generatefileXls(spinnerSelected, dt_so);
+                    if(!outletName.equals("ALL OUTLET")){
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                        builder.setTitle("Confirm");
+                        builder.setMessage("Hanya akan export Exel data transaksi di Outlet " + outletName + "\n" + "Untuk export semua outlet silahkan pilih 'ALL OUTLET'");
+
+                        builder.setPositiveButton("Lanjutkan", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                generatefileXls(spinnerSelected, outletName, dt_so);
+                            }
+                        });
+
+                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                        AlertDialog alert = builder.create();
+                        alert.show();
+                    } else {
+                        generatefileXls(spinnerSelected, outletName, dt_so);
+                    }
                 }
             }
         });
@@ -1326,11 +1352,11 @@ public class FragmentReporting extends Fragment {
 
     }
 
-    private void generatefileXls(String fileName, List<tStockInHandHeaderData> _tStockInHandHeaderData){
+    private void generatefileXls(String fileName, String outletName, List<tStockInHandHeaderData> _tStockInHandHeaderData){
         File sd = Environment.getExternalStorageDirectory();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         String currentDateandTime = sdf.format(new Date());
-        String csvFile = fileName + "_" + currentDateandTime + ".xls";
+        String csvFile = fileName + "_" + outletName + "_" + currentDateandTime + ".xls";
 
         File directory = new File(sd.getAbsolutePath());
         //create directory if not exist
@@ -1394,7 +1420,7 @@ public class FragmentReporting extends Fragment {
                     sheet.setColumnView(1, cellData1);
 
                     // column and row detail
-                    sheet.addCell(new Label(0, 6, "Name"));
+                    sheet.addCell(new Label(0, 6, "Name Product"));
                     sheet.addCell(new Label(1, 6, "Qty"));
 
                     int r = 6;
@@ -1417,7 +1443,8 @@ public class FragmentReporting extends Fragment {
             workbook.write();
             workbook.close();
             new clsMainActivity().showCustomToast(getActivity(), "Data Exported in a Excel Sheet\n" + "Location file in Internal Storage", true);
-            showNotification(file);
+            showfileExel(file);
+//            showNotification(file);
 //            Toast.makeText(getActivity(),
 //                    "Data Exported in a Excel Sheet", Toast.LENGTH_SHORT).show();
         } catch (WriteException e) {
@@ -1453,6 +1480,48 @@ public class FragmentReporting extends Fragment {
             notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify(0, noti);
         }
+    }
+
+    public void showfileExel(final File file){
+        File sd = Environment.getExternalStorageDirectory();
+
+        File directory = new File(sd.getAbsolutePath());
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+        builder.setTitle("Confirm");
+        builder.setMessage("Data Exported to Internal stroage location: \n" + directory.toString() + "/" + file.getName().toString());
+
+        builder.setPositiveButton("Show", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
+                intent.setDataAndType(Uri.fromFile(file),"application/vnd.ms-excel");
+                try {
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+//                    Toast.makeText(getActivity(),"No Application available to viewExcel", Toast.LENGTH_SHORT).show();
+                    new clsMainActivity().showCustomToast(getActivity(), "No Application available to view Excel\n" + "Please Instal first...", true);
+                    final String appPackageName = "com.google.android.apps.docs.editors.sheets";
+                    try {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                    }
+                    catch (android.content.ActivityNotFoundException anfe) {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + appPackageName)));
+                    }
+                }
+            }
+        });
+
+        builder.setNegativeButton("Later", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
 }
