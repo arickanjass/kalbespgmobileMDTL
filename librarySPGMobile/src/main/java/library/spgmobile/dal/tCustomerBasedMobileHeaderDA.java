@@ -223,7 +223,7 @@ public class tCustomerBasedMobileHeaderDA {
         // Select All Query
         tCustomerBasedMobileHeaderData dt = new tCustomerBasedMobileHeaderData();
 
-        String selectQuery = "SELECT  " + dt.Property_ALL + " FROM " + TABLE_NAME + " WHERE " + dt.Property_bitActive + "='1' AND " + dt.Property_intSync + "='0' ORDER BY txtSubmissionId DESC";
+        String selectQuery = "SELECT  " + dt.Property_ALL + " FROM " + TABLE_NAME + " WHERE " + dt.Property_intSubmit + "='0' AND " + dt.Property_bitActive + "='1' AND " + dt.Property_intSync + "='0' ORDER BY txtSubmissionId DESC";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -269,7 +269,7 @@ public class tCustomerBasedMobileHeaderDA {
         // Select All Query
         tCustomerBasedMobileHeaderData dt = new tCustomerBasedMobileHeaderData();
 
-        String selectQuery = "SELECT  " + dt.Property_ALL + " FROM " + TABLE_NAME + " WHERE " + dt.Property_intSubmit + "='1' ORDER BY txtSubmissionId DESC";
+        String selectQuery = "SELECT  " + dt.Property_ALL + " FROM " + TABLE_NAME + " ORDER BY txtSubmissionId DESC";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -573,7 +573,7 @@ public class tCustomerBasedMobileHeaderDA {
         tCustomerBasedMobileHeaderData dt = new tCustomerBasedMobileHeaderData();
 
 //        String selectQuery = "SELECT  " + dt.Property_ALL + " FROM " + TABLE_NAME + " WHERE " + dt.Property_txtSumberData + "='" + code + "'" + " AND " + dt.Property_intSubmit + " ='1' AND bitActive = '1' ORDER BY txtSubmissionId DESC ";
-        String selectQuery = "SELECT  " + dt.Property_ALL + " FROM " + TABLE_NAME + " WHERE " + dt.Property_txtSumberData + "='" + code + "'" + " AND intSubmit='1' ORDER BY txtSubmissionId DESC ";
+        String selectQuery = "SELECT  " + dt.Property_ALL + " FROM " + TABLE_NAME + " WHERE " + dt.Property_txtSumberData + "='" + code + "'" + " ORDER BY txtSubmissionId DESC ";
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {
@@ -781,7 +781,7 @@ public class tCustomerBasedMobileHeaderDA {
         List<tCustomerBasedMobileHeaderData> contactList = null;
         // Select All Query
         tCustomerBasedMobileHeaderData dt = new tCustomerBasedMobileHeaderData();
-        String selectQuery = "SELECT  " + dt.Property_ALL + " FROM " + TABLE_NAME + " WHERE " + dt.Property_intSubmit + "='0' AND " + dt.Property_intSync + "='0'";
+        String selectQuery = "SELECT  " + dt.Property_ALL + " FROM " + TABLE_NAME + " WHERE " + dt.Property_intSubmit + "='0' AND " + dt.Property_intSync + "='0' AND "+ dt.Property_bitActive + "='1'";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 

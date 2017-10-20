@@ -118,6 +118,15 @@ public class PushData extends AppCompatActivity {
                     new tStockInHandHeaderBL().updateDataSubmit(dt);
                 }
             }
+
+            //update cus based
+            List<tCustomerBasedMobileHeaderData> tCustomerBasedMobileHeaderDatas = new tCustomerBasedMobileHeaderBL().getAllDataToSubmit();
+
+            if(tCustomerBasedMobileHeaderDatas!=null&&tCustomerBasedMobileHeaderDatas.size()>0){
+                for(tCustomerBasedMobileHeaderData data : tCustomerBasedMobileHeaderDatas){
+                    new tCustomerBasedMobileHeaderBL().updateDataSubmit(data);
+                }
+            }
         }
 
         Bundle bundle = new Bundle();

@@ -430,7 +430,7 @@ public class FragmentReporting extends Fragment {
                 btnExport.setVisibility(View.VISIBLE);
             }
             ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
-        } else if (spinnerSelected.contains("Customer Base")){
+        } else if (spinnerSelected.equals("Customer Base SPG")){
                 header = new String[7];
                 header[1] = "Type";
                 header[2] = "Name";
@@ -508,7 +508,7 @@ public class FragmentReporting extends Fragment {
                 }
 
                 ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
-        } else if(spinnerSelected.contains("Customer Base MTD")){
+        } else if(spinnerSelected.equals("Customer Base MTD")){
             header = new String[6];
             header[1] = "Outlet Code";
             header[2] = "Outlet Name";

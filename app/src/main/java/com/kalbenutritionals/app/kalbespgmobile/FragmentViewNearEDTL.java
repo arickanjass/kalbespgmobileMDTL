@@ -103,9 +103,9 @@ public class FragmentViewNearEDTL extends Fragment implements IXListViewListener
                 Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
                 toolbar.setTitle("Add Stock Near ED");
 
-                FragmentAddNearEDTL fragmentAddNearEDTL = new FragmentAddNearEDTL();
+                FragmentAddNearEDMD fragmentAddNearEDMD = new FragmentAddNearEDMD();
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.frame, fragmentAddNearEDTL);
+                fragmentTransaction.replace(R.id.frame, fragmentAddNearEDMD);
                 fragmentTransaction.commit();
             }
         });
@@ -161,10 +161,12 @@ public class FragmentViewNearEDTL extends Fragment implements IXListViewListener
         tv_status.setTypeface(null, Typeface.BOLD);
 
         final TableRow tr_neared = (TableRow) promptView.findViewById(R.id.tr_neared);
+        final TableRow tr_keterangan = (TableRow) promptView.findViewById(R.id.tr_keterangan);
+        tr_keterangan.setVisibility(View.GONE);
         tr_neared.setVisibility(View.GONE);
 
         if (dt.get(position).get_intSubmit().equals("1")&&dt.get(position).get_intSync().equals("0")){
-            tv_status.setText("ubmit");
+            tv_status.setText("submit");
         } else if (dt.get(position).get_intSubmit().equals("1")&&dt.get(position).get_intSync().equals("1")){
             tv_status.setText("Sync");
         }
@@ -179,7 +181,7 @@ public class FragmentViewNearEDTL extends Fragment implements IXListViewListener
 
         TableLayout tl = new TableLayout(getContext());
 
-        String[] colTextHeader = {"Nama", "Qty","ED"};
+        String[] colTextHeader = {"Nama", "Qty", "ED"};
 
         for (String text : colTextHeader) {
             TextView tv = new TextView(getContext());
@@ -228,7 +230,7 @@ public class FragmentViewNearEDTL extends Fragment implements IXListViewListener
             qty.setBackgroundColor(Color.parseColor("#f0f0f0"));
             qty.setTextColor(Color.BLACK);
             qty.setGravity(Gravity.RIGHT);
-            qty.setText(dat.getTxtQuantity());
+            qty.setText(dat.getTxtQuantity() +" pcs");
             tr.addView(qty,params);
 
             TextView price = new TextView(getContext());
@@ -528,11 +530,12 @@ public class FragmentViewNearEDTL extends Fragment implements IXListViewListener
             for (int i = 0; i < dt.size(); i++) {
                 swplist = new clsSwipeList();
                 swplist.set_txtTitle(dt.get(i).get_txtQuantityStock());
-                String desc = dt.get(i).get_txtKeterangan();
-                if(desc.length()>20){
-                    desc = dt.get(i).get_txtKeterangan().substring(0,20) + "...";
-                }
-                swplist.set_txtDescription("Description : " + desc);
+                swplist.set_txtDescription(dt.get(i).get_OutletName());
+//                String desc = dt.get(i).get_txtKeterangan();
+//                if(desc.length()>20){
+//                    desc = dt.get(i).get_txtKeterangan().substring(0,20) + "...";
+//                }
+//                swplist.set_txtDescription("Description : " + desc);
                 if (dt.get(i).get_intSubmit().equals("1")&&dt.get(i).get_intSync().equals("0")){
                     swplist.set_txtDescription2("Submit");
                 } else if (dt.get(i).get_intSubmit().equals("1")&&dt.get(i).get_intSync().equals("1")){

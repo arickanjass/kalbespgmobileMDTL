@@ -35,6 +35,16 @@ public class mCountConsumerMTDBL extends clsMainBL {
         }
         return dt ;
     }
+    public List<mCountConsumerMTDData> getAllmCountConsumerMTDDA(){
+        SQLiteDatabase db =getDb();
+        List<mCountConsumerMTDData> dt;
+        mCountConsumerMTDDA _mCountConsumerMTDDA = new mCountConsumerMTDDA(db);
+        dt=_mCountConsumerMTDDA.getAllDataByOutlet(db);
+        if(dt == null){
+            dt = new ArrayList<>(0);
+        }
+        return dt ;
+    }
 
     public int getCountConsumerMTD(String code) {
         SQLiteDatabase _db = getDb();

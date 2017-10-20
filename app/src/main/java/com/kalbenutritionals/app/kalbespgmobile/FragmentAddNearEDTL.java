@@ -134,6 +134,10 @@ public class FragmentAddNearEDTL extends Fragment implements IXListViewListener 
         before2 = (ImageView) v.findViewById(R.id.imageBefore2);
 //        editTextQty = (EditText) v.findViewById(R.id.editTextQty);
 
+        edKeterangan.setVisibility(View.GONE);
+        TextView tvket = (TextView) v.findViewById(R.id.txtKet_quantity);
+        tvket.setVisibility(View.GONE);
+
         _clsMainActivity = new clsMainActivity();
         dtQuantityData = new tSalesProductQuantityHeaderData();
         txtHDId.setText(String.valueOf(new clsMainActivity().GenerateGuid()));
@@ -160,6 +164,11 @@ public class FragmentAddNearEDTL extends Fragment implements IXListViewListener 
             }
         }
         tv_noQuantityStock.setText(noQuantityStock);
+
+        // add date in txtviewDateQuantity
+//        String timeStamp = new SimpleDateFormat("dd/MM/yyyy",
+//                Locale.getDefault()).format(new Date());
+//        tv_date.setText(timeStamp);
 
         //adding date and outlet di menu add
         TextView txtDate = (TextView) v.findViewById(R.id.txtDateQuantity);
@@ -288,6 +297,7 @@ public class FragmentAddNearEDTL extends Fragment implements IXListViewListener 
 //                } else if (phtBefore1 == null && phtBefore2 == null) {
 //                    _clsMainActivity.showCustomToast(getContext(), "Please take at least 1 photo for before", false);
 //                } else
+
                 if (dtListProduct.size() == 0) {
                     _clsMainActivity.showCustomToast(getContext(), "Please Add least 1 Product...", false);
                 } else {
@@ -298,13 +308,13 @@ public class FragmentAddNearEDTL extends Fragment implements IXListViewListener 
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             save();
-                            savePicture1();
-                            savePicture2();
-                            savePicture3();
-                            savePicture4();
+//                            savePicture1();
+//                            savePicture2();
+//                            savePicture3();
+//                            savePicture4();
                             viewQuantityFragment();
 
-                            _clsMainActivity.showCustomToast(getActivity(), "Saved", true);
+                            _clsMainActivity.showCustomToast(getActivity(), "Submit", true);
                         }
                     });
                     alertDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -354,7 +364,7 @@ public class FragmentAddNearEDTL extends Fragment implements IXListViewListener 
 //        List<tSalesProductQuantityDetailData> dataProduct = null;
 
         List<String> dataProductKalbe = new ArrayList<>();
-        List<mEmployeeSalesProductData> listDataProductKalbe = new mEmployeeSalesProductBL().GetAllData();
+        List<mEmployeeSalesProductData> listDataProductKalbe = new mEmployeeSalesProductBL().getAllDataNotWhere();
 //        modelItems = new ArrayList<>();
 
 //        editTextQty.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -404,7 +414,7 @@ public class FragmentAddNearEDTL extends Fragment implements IXListViewListener 
         }
 
         // set date min today
-        dp.setMinDate(System.currentTimeMillis() - 1000);
+//        dp.setMinDate(System.currentTimeMillis() - 1000);
 
         String qtyProduct = null;
         qtyProduct = editTextQty.getText().toString();
@@ -817,9 +827,11 @@ public class FragmentAddNearEDTL extends Fragment implements IXListViewListener 
 
             String ed = new clsMainActivity().giveFormatDate2(data.getTxtExpireDate());
 
+
             swplist.set_txtTitle("Product : " + data.getTxtProduct());
-            swplist.set_txtDescription("Total Product : " + data.getTxtQuantity());
+            swplist.set_txtDescription("Total Product : " + data.getTxtQuantity() +" pcs");
             swplist.set_txtDescription2("ED : " + ed);
+            swplist.set_txtDescription3("Desc : " + data.get_txtKeterangan());
             swipeList.add(swplist);
         }
 
@@ -891,6 +903,7 @@ public class FragmentAddNearEDTL extends Fragment implements IXListViewListener 
             }
         });
         alertDialog.show();
+
     }
 
     private void save() {

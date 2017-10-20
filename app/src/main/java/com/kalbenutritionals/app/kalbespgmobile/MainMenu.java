@@ -55,6 +55,7 @@ import bl.clsMainBL;
 import bl.mMenuBL;
 import bl.tAbsenUserBL;
 import bl.tAttendanceUserBL;
+import bl.tCustomerBasedMobileHeaderBL;
 import bl.tDisplayPictureBL;
 import bl.tNotificationBL;
 import bl.tPlanogramMobileBL;
@@ -68,6 +69,7 @@ import library.spgmobile.common.clsPushData;
 import library.spgmobile.common.mMenuData;
 import library.spgmobile.common.tAbsenUserData;
 import library.spgmobile.common.tAttendanceUserData;
+import library.spgmobile.common.tCustomerBasedMobileHeaderData;
 import library.spgmobile.common.tNotificationData;
 import library.spgmobile.common.tPlanogramMobileData;
 import library.spgmobile.common.tStockInHandHeaderData;
@@ -420,18 +422,18 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
                         return true;
 
-                    case R.id.POP:
-                        toolbar.setTitle("POP Standard");
-
-                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-                        FragmentPOPAwalTL POP = new FragmentPOPAwalTL();
-                        FragmentTransaction FragmentTransactionPOP = getSupportFragmentManager().beginTransaction();
-                        FragmentTransactionPOP.replace(R.id.frame, POP);
-                        FragmentTransactionPOP.commit();
-                        selectedId = 99;
-
-                        return true;
+//                    case R.id.POP:
+//                        toolbar.setTitle("POP Standard");
+//
+//                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//
+//                        FragmentPOPAwalTL POP = new FragmentPOPAwalTL();
+//                        FragmentTransaction FragmentTransactionPOP = getSupportFragmentManager().beginTransaction();
+//                        FragmentTransactionPOP.replace(R.id.frame, POP);
+//                        FragmentTransactionPOP.commit();
+//                        selectedId = 99;
+//
+//                        return true;
 
 
                     case R.id.historyAbsen:
@@ -851,6 +853,14 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                     listAbsenData.add(dtTabsenData);
                     new tAbsenUserBL().saveData(listAbsenData);
                 }
+
+                List<tCustomerBasedMobileHeaderData> listDataHeader = new tCustomerBasedMobileHeaderBL().getAllDataNonSync();
+
+                for (tCustomerBasedMobileHeaderData dt : listDataHeader) {
+                    dt.set_intSubmit("1");
+                    new tCustomerBasedMobileHeaderBL().saveData(dt);
+                }
+
                 String versionName = "";
                 try {
                     versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;

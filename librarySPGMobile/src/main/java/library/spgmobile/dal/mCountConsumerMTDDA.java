@@ -60,6 +60,33 @@ public class mCountConsumerMTDDA {
         // return contact list
         return contactList;
     }
+
+    public List<mCountConsumerMTDData> getAllDataByOutlet(SQLiteDatabase db) {
+        List<mCountConsumerMTDData> contactList = new ArrayList<mCountConsumerMTDData>();
+        // Select All Query
+        mCountConsumerMTDData dt = new mCountConsumerMTDData();
+        String selectQuery = "SELECT  " + dt.Property_ALL + " FROM "
+                + TABLE_NAME ;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+
+        if (cursor.moveToFirst()) {
+            do {
+                mCountConsumerMTDData contact = new mCountConsumerMTDData();
+                contact.setJumlah(cursor.getString(0));
+                contact.setTxtRegionName(cursor.getString(1));
+                contact.setTxtBranchCode(cursor.getString(2));
+                contact.setTxtBranchName(cursor.getString(3));
+                contact.setTxtOutletCode(cursor.getString(4));
+                contact.setTxtOutletName(cursor.getString(5));
+                // Adding contact to list
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        // return contact list
+        return contactList;
+    }
     public void SaveData(SQLiteDatabase db, mCountConsumerMTDData data) {
         mCountConsumerMTDData dt=new mCountConsumerMTDData();
 
