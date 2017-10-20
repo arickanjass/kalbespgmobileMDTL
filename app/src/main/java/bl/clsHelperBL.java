@@ -58,6 +58,8 @@ import library.spgmobile.common.tLogErrorData;
 import library.spgmobile.common.tNotificationData;
 import library.spgmobile.common.tOverStockDetailData;
 import library.spgmobile.common.tOverStockHeaderData;
+import library.spgmobile.common.tPOPStandardDetailData;
+import library.spgmobile.common.tPOPStandardHeaderData;
 import library.spgmobile.common.tPlanogramImageData;
 import library.spgmobile.common.tPlanogramMobileData;
 import library.spgmobile.common.tPurchaseOrderDetailData;
@@ -84,7 +86,10 @@ import library.spgmobile.dal.clsLogReceiverDetail_mobileDA;
 import library.spgmobile.dal.clsLogReceiverHeader_mobileDA;
 import library.spgmobile.dal.enumConfigData;
 import library.spgmobile.dal.enumCounterData;
+import library.spgmobile.dal.mCategoryPOPStandardDA;
 import library.spgmobile.dal.mCounterNumberDA;
+import library.spgmobile.dal.mReasonPOPStandardDA;
+import library.spgmobile.dal.mTypePOPStandardDA;
 import library.spgmobile.dal.mconfigDA;
 import library.spgmobile.dal.tAbsenUserDA;
 import library.spgmobile.dal.tActivityDA;
@@ -103,6 +108,8 @@ import library.spgmobile.dal.tLeaveMobileDA;
 import library.spgmobile.dal.tLogErrorDA;
 import library.spgmobile.dal.tOverStockDetailDA;
 import library.spgmobile.dal.tOverStockHeaderDA;
+import library.spgmobile.dal.tPOPStandardDetailDA;
+import library.spgmobile.dal.tPOPStandardHeaderDA;
 import library.spgmobile.dal.tPlanogramImageDA;
 import library.spgmobile.dal.tPlanogramMobileDA;
 import library.spgmobile.dal.tPurchaseOrderDetailDA;
@@ -682,6 +689,11 @@ public class clsHelperBL extends clsMainBL {
             tJawabanUserDA _tJawabanUserDA = new tJawabanUserDA(db);
             tHirarkiBISDA _tHirarkiBISDA = new tHirarkiBISDA(db);
             tJawabanUserHeaderDA _tJawabanUserHeaderDA = new tJawabanUserHeaderDA(db);
+            tPOPStandardDetailDA _tPOPStandardDetailDA = new tPOPStandardDetailDA(db);
+            tPOPStandardHeaderDA _tPOPStandardHeaderDA = new tPOPStandardHeaderDA(db);
+            mTypePOPStandardDA _mTypePOPStandardDA = new mTypePOPStandardDA(db);
+            mCategoryPOPStandardDA _mCategoryPOPStandardDA = new mCategoryPOPStandardDA(db);
+            mReasonPOPStandardDA _mReasonPOPStandardDA = new mReasonPOPStandardDA(db);
             tPurchaseOrderHeaderDA _tPurchaseOrderHeaderDA = new tPurchaseOrderHeaderDA(db);
             tSalesProductQuantityHeaderDA _tSalesProductQuantityDA = new tSalesProductQuantityHeaderDA(db);
             tSalesProductQuantityDetailDA _tSalesProductQuantityDetailDA = new tSalesProductQuantityDetailDA(db);
@@ -721,6 +733,8 @@ public class clsHelperBL extends clsMainBL {
             List<tOverStockHeaderData> ListOftOverStockHeader = _tOverStockHeaderDA.getAllDataToPushData(db);
             List<tJawabanUserData> ListOfJawabanUser = _tJawabanUserDA.GetDataToPushAnswer(db);
             List<tJawabanUserHeaderData> ListOfJawabanUserHeader = _tJawabanUserHeaderDA.GetDataToPushAnswer(db);
+            List<tPOPStandardHeaderData> ListOftPOPStandardHeader = _tPOPStandardHeaderDA.GetDataToPush(db);
+            List<tPOPStandardDetailData> ListOftPOPStandarDetail = _tPOPStandardDetailDA.GetDataToPush(db);
             List<tSalesProductQuantityDetailData> ListOfSalesProductQuantityDetail = _tSalesProductQuantityDetailDA.getAllDataToPushData(db, ListOfSalesProductQuantityHeader);
             List<tKemasanRusakHeaderData> ListOftKemasanRusakHeaderData = _tKemasanRusakHeaderDA.getAllDataToPushData(db);
             List<tKemasanRusakDetailData> ListOftKemasanRusakDetailData = _tKemasanRusakDetailDA.getAllDataToPushData(db, ListOftKemasanRusakHeaderData);
@@ -956,6 +970,26 @@ public class clsHelperBL extends clsMainBL {
 
             if (ListOfJawabanUserHeader  != null){
                 dtPush.setListOftJawabanUserHeaderData(ListOfJawabanUserHeader);
+            }
+            if (ListOftPOPStandardHeader != null){
+                dtPush.setListOftPOPStandarHeaderdData(ListOftPOPStandardHeader);
+            }
+            if (ListOftPOPStandarDetail != null){
+                for (tPOPStandardDetailData dttPOPStandardDetailData : ListOftPOPStandarDetail){
+                    if (dttPOPStandardDetailData.get_txtImg1() != null){
+                        clsMappingPushFile mappingPushFile = new clsMappingPushFile();
+                        mappingPushFile.setKey("FUPOPStandard" + dttPOPStandardDetailData.get_intId() + "-1");
+                        mappingPushFile.setEkstension(".jpg");
+                        FileUpload.put(mappingPushFile, dttPOPStandardDetailData.get_txtImg1());
+                    }
+                    if (dttPOPStandardDetailData.get_txtImg2() != null){
+                        clsMappingPushFile mappingPushFile = new clsMappingPushFile();
+                        mappingPushFile.setKey("FUPOPStandard" + dttPOPStandardDetailData.get_intId() + "-2");
+                        mappingPushFile.setEkstension(".jpg");
+                        FileUpload.put(mappingPushFile, dttPOPStandardDetailData.get_txtImg2());
+                    }
+                }
+                dtPush.setListOftPOPStandardDetailData(ListOftPOPStandarDetail);
             }
             if (ListOfPurchaseOrderDetail != null){
                 dtPush.setListOftPurchaseOrderDetailData(ListOfPurchaseOrderDetail);
@@ -1273,6 +1307,21 @@ public class clsHelperBL extends clsMainBL {
             }
         }
 
+        if (validPush && dtJson.getListOftPOPStandarHeaderdData() != null){
+            for (tPOPStandardHeaderData dt : dtJson.getListOftPOPStandarHeaderdData()){
+                tPOPStandardHeaderDA _tPOPStandardHeaderDA = new tPOPStandardHeaderDA(db);
+                dt.set_intSync("1");
+                _tPOPStandardHeaderDA.SaveDatatPOPStandardHeader(db, dt);
+            }
+        }
+
+        if (validPush && dtJson.getListOftPOPStandardDetailData() != null){
+            for (tPOPStandardDetailData dt : dtJson.getListOftPOPStandardDetailData()){
+                tPOPStandardDetailDA _tPOPStandardDetailDA = new tPOPStandardDetailDA(db);
+                dt.set_intSync("1");
+                _tPOPStandardDetailDA.SaveDatatPOPStandardDetail(db, dt);
+            }
+        }
         if (validPush && dtJson.getListOftJawabanUserData() != null){
             for (tJawabanUserData dt : dtJson.getListOftJawabanUserData()){
                 tJawabanUserDA _tJawabanUserDA = new tJawabanUserDA(db);

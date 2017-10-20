@@ -712,6 +712,46 @@
                             android:background="#bfbfbf" />
 
                     </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/ll_dataPOP_Standard"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/tv_POP"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:text="POP Standard"
+                            android:textColor="#000" />
+
+                        <Spinner
+                            android:id="@+id/spnDPOP"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/bg_edtext" />
+
+                        <Button
+                            android:id="@+id/btnPOPStandard"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/btn_on_click"
+                            android:text="Download POP Standard" />
+
+                        <View
+                            android:id="@+id/view171"
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="10dp"
+                            android:background="#bfbfbf" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

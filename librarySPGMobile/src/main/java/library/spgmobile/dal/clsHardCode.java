@@ -24,6 +24,7 @@ public class clsHardCode  {
 	public String txtFolderBrosur=txtPathUserData+"Brosur"+File.separator;
 	public String txtFolderAbsen=txtPathUserData+"Absen"+File.separator;
 	public String txtFolderQuiz=txtPathUserData+"Quiz"+File.separator;
+	public String txtFolderPOPStandard=txtPathUserData+"POPStandard"+File.separator;
 	public String txtFolderActivity=txtPathUserData+"Activity"+File.separator;
 	public String txtFolderPlanogram=txtPathUserData+"Planogram"+File.separator;
 
@@ -89,6 +90,11 @@ public class clsHardCode  {
 	public String txtTable_mTypePertanyaan = "mTypePertanyaan";
 	public String txtTable_mListJawaban = "mListJawaban";
 	public String txtTable_tGroupQuestionMapping = "tGroupQuestionMapping";
+	public String txtTable_tPOPStandardHeader = "tPOPStandardHeader";
+	public String txtTable_tPOPStandardDetail = "tPOPStandardDetail";
+	public String txtTable_mTypePOPStandard = "mTypePOPStandard";
+	public String txtTable_mReasonPOPStandard = "mReasonPOPStandard";
+	public String txtTable_mCategoryPOPStandard = "mCategoryPOPStandard";
 	public String txtTable_tInventorySPGDetail_mobile = "tInventorySPGDetail_mobile";
 	public String txtTable_tInventorySPGHeader_mobile = "tInventorySPGHeader_mobile";
 	public String txtTable_tSalesOrderHeader_mobile = "tSalesOrderHeader_mobile";

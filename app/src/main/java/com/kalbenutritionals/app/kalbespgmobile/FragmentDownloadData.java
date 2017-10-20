@@ -54,6 +54,7 @@ import java.util.Locale;
 import bl.KoordinasiOutletBL;
 import bl.clsHelperBL;
 import bl.clsMainBL;
+import bl.mCategoryPOPStandardBL;
 import bl.mCategoryVisitPlanBL;
 import bl.mDownloadMasterData_mobileBL;
 import bl.mEmployeeAreaBL;
@@ -69,7 +70,9 @@ import bl.mProductBrandHeaderBL;
 import bl.mProductCompetitorBL;
 import bl.mProductPICBL;
 import bl.mProductSPGBL;
+import bl.mReasonPOPStandardBL;
 import bl.mTypeLeaveBL;
+import bl.mTypePOPStandardBL;
 import bl.mTypePertanyaanBL;
 import bl.mTypeSubmissionMobileBL;
 import bl.tAbsenUserBL;
@@ -87,6 +90,8 @@ import bl.tKategoryPlanogramMobileBL;
 import bl.tKemasanRusakHeaderBL;
 import bl.tLeaveMobileBL;
 import bl.tOverStockHeaderBL;
+import bl.tPOPStandardDetailBL;
+import bl.tPOPStandardHeaderBL;
 import bl.tPlanogramMobileBL;
 import bl.tPurchaseOrderHeaderBL;
 import bl.tSalesProductHeaderBL;
@@ -105,6 +110,7 @@ import library.spgmobile.common.clsHelper;
 import library.spgmobile.common.clsPushData;
 import library.spgmobile.common.dataJson;
 import library.spgmobile.common.mCategoryKoordinasiOutletData;
+import library.spgmobile.common.mCategoryPOPStandardData;
 import library.spgmobile.common.mCategoryVisitPlanData;
 import library.spgmobile.common.mCounterNumberData;
 import library.spgmobile.common.mDownloadMasterData_mobileData;
@@ -120,7 +126,9 @@ import library.spgmobile.common.mProductBrandHeaderData;
 import library.spgmobile.common.mProductCompetitorData;
 import library.spgmobile.common.mProductPICData;
 import library.spgmobile.common.mProductSPGData;
+import library.spgmobile.common.mReasonPOPStandardData;
 import library.spgmobile.common.mTypeLeaveMobileData;
+import library.spgmobile.common.mTypePOPStandardData;
 import library.spgmobile.common.mTypePertanyaanData;
 import library.spgmobile.common.mTypeSubmissionMobile;
 import library.spgmobile.common.tAbsenUserData;
@@ -141,6 +149,8 @@ import library.spgmobile.common.tKemasanRusakImageData;
 import library.spgmobile.common.tLeaveMobileData;
 import library.spgmobile.common.tOverStockDetailData;
 import library.spgmobile.common.tOverStockHeaderData;
+import library.spgmobile.common.tPOPStandardDetailData;
+import library.spgmobile.common.tPOPStandardHeaderData;
 import library.spgmobile.common.tPlanogramImageData;
 import library.spgmobile.common.tPlanogramMobileData;
 import library.spgmobile.common.tPurchaseOrderDetailData;
@@ -184,7 +194,7 @@ public class FragmentDownloadData extends Fragment {
     private Spinner spnProduct;
     private Spinner spnLeave;
     private Spinner spnBrand;
-    private Spinner spnReso;
+    private Spinner spnReso, spnPOP;
     private Spinner spnActivity, spnActivityV2, spnStockIH, spnDataOverStock, spnaddDisplay,spnDatatidaksesuaipesanan,spnDatakemasanrusak;
     private Spinner spnCustomerBase;
     private Spinner spnAbsen, spnQuiz, spnSPG;
@@ -195,7 +205,7 @@ public class FragmentDownloadData extends Fragment {
     private LinearLayout ll_brand;
     private LinearLayout ll_type_leave;
     private LinearLayout ll_reso;
-    private LinearLayout ll_data_activity;
+    private LinearLayout ll_data_activity, ll_dataPOP_Standard;
     private LinearLayout ll_data_activityV2;
     private LinearLayout ll_data_customerbased;
     private LinearLayout ll_absen, ll_data_attendance;
@@ -291,7 +301,10 @@ public class FragmentDownloadData extends Fragment {
         Button btnDatakemasanrusak = (Button) v.findViewById(R.id.btnDatakemasanrusak);
         spnDatatidaksesuaipesanan = (Spinner) v.findViewById(R.id.spnDatatidaksesuaipesanan);
         Button btnDatatidaksesuaipesanan = (Button) v.findViewById(R.id.btnDatatidaksesuaipesanan);
+        spnPOP = (Spinner) v.findViewById(R.id.spnDPOP);
+        Button btnPOP = (Button) v.findViewById(R.id.btnPOPStandard);
 
+        ll_dataPOP_Standard = (LinearLayout) v.findViewById(R.id.ll_dataPOP_Standard);
         ll_branch = (LinearLayout) v.findViewById(R.id.ll_branch);
         ll_outlet = (LinearLayout) v.findViewById(R.id.ll_outlet);
         ll_product = (LinearLayout) v.findViewById(R.id.ll_product);
@@ -338,6 +351,15 @@ public class FragmentDownloadData extends Fragment {
         generateLayout();
 
         loadData();
+
+        btnPOP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intProcesscancel = 0;
+                AsyncCallPOPStandard task = new AsyncCallPOPStandard();
+                task.execute();
+            }
+        });
 
         btnDlDataPlanogram.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -632,6 +654,7 @@ public class FragmentDownloadData extends Fragment {
             } else if (txt_id.equals(res.getResourceEntryName(ll_dataQuesioner.getId()))) {
                 ll_dataQuesioner.setVisibility(View.VISIBLE);
                 ll_dataSPG.setVisibility(View.VISIBLE);
+                ll_dataPOP_Standard.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_subtypeactivity.getId()))) {
                 ll_subtypeactivity.setVisibility(View.VISIBLE);
             }
@@ -708,6 +731,9 @@ public class FragmentDownloadData extends Fragment {
         List<tGroupQuestionMappingData> tGroupQuestionMappingDataList = new tGroupQuestionMappingBL().GetAllData();
         List<mKategoriData> kategoriDataList = new mKategoriBL().GetAllData();
         List<tHirarkiBIS> listSPG = new tHirarkiBISBL().GetAllData();
+        List<mTypePOPStandardData> listTypePOP = new mTypePOPStandardBL().GetAllData();
+        List<mReasonPOPStandardData> listReasonPOP = new mReasonPOPStandardBL().GetAllData();
+        List<mCategoryPOPStandardData> listCategoryPOP = new mCategoryPOPStandardBL().GetAllData();
         List<tPurchaseOrderHeaderData> listPurchaseOrderHeaderData = new tPurchaseOrderHeaderBL().getAllPurchaseOrderHeader();
         List<tSalesProductQuantityHeaderData> listQuantityStockHeaderData = new tSalesProductQuantityHeaderBL().getAllSalesQuantityHeader();
         List<tOverStockHeaderData> listOverStockHeaderData = new tOverStockHeaderBL().getAllOverStockHeader();
@@ -723,6 +749,21 @@ public class FragmentDownloadData extends Fragment {
         List<tKategoryPlanogramMobileData> tKategoryPlanogramDataList = new tKategoryPlanogramMobileBL().getAllData();
         List<tKemasanRusakHeaderData> tKemasanRusakHeaderDataList = new tKemasanRusakHeaderBL().getAllHeader();
         List<tTidakSesuaiPesananHeaderData> tTidakSesuaiPesananHeaderDataList = new tTidakSesuaiPesananHeaderBL().getAllData();
+
+        arrData = new ArrayList<>();
+        if (listTypePOP.size() > 0 && listReasonPOP.size()>0 && listCategoryPOP.size() > 0) {
+//            for (tKemasanRusakHeaderData dt : tKemasanRusakHeaderDataList) {
+//                arrData.add(dt.get_txtKemasanRusak());
+//            }
+            arrData.add("POP Standard Ready");
+            spnPOP.setAdapter(new MyAdapter(getContext(), R.layout.custom_spinner, arrData));
+            spnPOP.setEnabled(true);
+        } else {
+            ArrayAdapter<String> adapterspn = new ArrayAdapter<>(getContext(),
+                    android.R.layout.simple_spinner_item, strip);
+            spnPOP.setAdapter(adapterspn);
+            spnPOP.setEnabled(false);
+        }
 
         arrData = new ArrayList<>();
         if (tKemasanRusakHeaderDataList!=null) {
@@ -3122,13 +3163,12 @@ public class FragmentDownloadData extends Fragment {
         return _array;
     }
 
-    private class AsyncCallQuis1 extends AsyncTask<JSONArray, Void, JSONArray> {
+    private class AsyncCallPOPStandard extends AsyncTask<JSONArray, Void, JSONArray> {
         @Override
         protected JSONArray doInBackground(JSONArray... params) {
             JSONArray Json = null;
             try {
-//                Json = new mParentBL().DownlaodDataQuesioner(pInfo.versionName);
-                Json = new mParentBL().DownlaodDataSPGfromTL(pInfo.versionName);
+                Json = new mTypePOPStandardBL().DownlaodDataPOPStandard(pInfo.versionName);
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -3147,10 +3187,9 @@ public class FragmentDownloadData extends Fragment {
         @Override
         protected void onPostExecute(JSONArray jsonArray) {
             if (jsonArray != null && jsonArray.size() > 0) {
-//                arrData = SaveDataQuesioner(jsonArray);
-                arrData = SaveDataSPGFromTL(jsonArray);
+                arrData = SaveDataPOPStandard(jsonArray);
                 loadData();
-//                new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
+                new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
                     onCancelled();
@@ -3164,7 +3203,7 @@ public class FragmentDownloadData extends Fragment {
 
         @Override
         protected void onPreExecute() {
-            Dialog.setMessage("Getting Question");
+            Dialog.setMessage("Getting POP Standard");
             Dialog.setCancelable(false);
 //            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
 //                @Override
@@ -5568,31 +5607,99 @@ public class FragmentDownloadData extends Fragment {
         return _array;
     }
 
-    private List<String> SaveDataSPGFromTL(JSONArray jsonArray) {
+    private List<String> SaveDataPOPStandard(JSONArray jsonArray) {
         List<String> _array;
         APIData dtAPIDATA = new APIData();
         _array = new ArrayList<>();
-        int id = 0;
         for (Object aJsonArray : jsonArray) {
             JSONObject innerObj = (JSONObject) aJsonArray;
-            int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
-            if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
-                tHirarkiBIS _data = new  tHirarkiBIS();
-                id+=1;
-                _data.set_intId(String.valueOf(id));
-                _data.set_txtNik(String.valueOf(innerObj.get("IntNIK")));
-                _data.set_txtName(String.valueOf(innerObj.get("TxtName")));
-                _data.set_txtLOB(String.valueOf(innerObj.get("TxtLOB")));
-                _data.set_intBranchId(String.valueOf(innerObj.get("IntBranchId")));
-                _data.set_txtBranchCode(String.valueOf(innerObj.get("TxtBranchCode")));
-                _data.set_txtBranchName(String.valueOf(innerObj.get("TXtBranchName")));
-                _data.set_intOutletId(String.valueOf(innerObj.get("IntOutletId")));
-                _data.set_txtOutletCode(String.valueOf(innerObj.get("TxtOutletName")));
-                _data.set_txtOutletName(String.valueOf(innerObj.get("TxtOutletCode")));
-                new tHirarkiBISBL().SaveDataSPGFromTL(_data);
-            } else {
-                String error = String.valueOf(innerObj.get(dtAPIDATA.strMessage));
-                new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
+            try {
+                int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
+                if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
+                    JSONArray jsonArray_Type = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListDataTypePOPStandard_mobile")));
+                    for (Object aJsonArray_Type : jsonArray_Type) {
+                        mTypePOPStandardData _data = new mTypePOPStandardData();
+                        JSONObject innerObj_parent = (JSONObject) aJsonArray_Type;
+                        _data.set_intId(String.valueOf(innerObj_parent.get("IntId")));
+                        _data.set_txtType(String.valueOf(innerObj_parent.get("TxtType")));
+                        new mTypePOPStandardBL().SaveData(_data) ;
+                    }
+
+                    JSONArray jsonArray_reason = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListDataReasonPOPStandard_mobile")));
+                    for (Object aJsonArray_reason : jsonArray_reason) {
+                        mReasonPOPStandardData _data = new mReasonPOPStandardData();
+                        JSONObject innerObj_kategori = (JSONObject) aJsonArray_reason;
+                        _data.set_intId(String.valueOf(innerObj_kategori.get("IntId")));
+                        _data.set_txtReason(String.valueOf(innerObj_kategori.get("TxtReason")));
+                        new mReasonPOPStandardBL().SaveData(_data);
+                    }
+
+                    JSONArray jsonArray_kategori = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListDataCategoryPOPStandard_mobile")));
+                    for (Object aJsonArray_kategori : jsonArray_kategori) {
+                        mCategoryPOPStandardData _data = new mCategoryPOPStandardData();
+                        JSONObject innerObj_kategori = (JSONObject) aJsonArray_kategori;
+                        _data.set_intId(String.valueOf(innerObj_kategori.get("IntId")));
+                        _data.set_txtCategoryCode(String.valueOf(innerObj_kategori.get("TxtCategoryCode")));
+                        _data.set_txtCategoryName(String.valueOf(innerObj_kategori.get("TxtCategoryName")));
+                        new mCategoryPOPStandardBL().SaveData(_data);
+                    }
+
+                    JSONArray jsonArray_POPHeader = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListDataPOPStandardHeader_mobile")));
+                    for (Object aJsonArray_POPHeader : jsonArray_POPHeader){
+                        tPOPStandardHeaderData _data = new tPOPStandardHeaderData();
+                        JSONObject innerObj_POPHeader = (JSONObject) aJsonArray_POPHeader;
+                        _data.set_intId(String.valueOf(innerObj_POPHeader.get("IntId")));
+                        _data.set_txtType(String.valueOf(innerObj_POPHeader.get("TxtType")));
+                        _data.set_bolHavePOP(String.valueOf(innerObj_POPHeader.get("BolHavePOP")));
+                        _data.set_txtCategory(String.valueOf(innerObj_POPHeader.get("TxtCategory")));
+                        _data.set_txtReason(String.valueOf(innerObj_POPHeader.get("TxtReason")));
+                        _data.set_intRoleId(String.valueOf(innerObj_POPHeader.get("IntRoleId")));
+                        _data.set_txtUserName(String.valueOf(innerObj_POPHeader.get("TxtUserName")));
+                        _data.set_txtNIK(String.valueOf(innerObj_POPHeader.get("TxtNIK")));
+                        _data.set_txtOutletName(String.valueOf(innerObj_POPHeader.get("TxtOutletName")));
+                        _data.set_txtOutletCode(String.valueOf(innerObj_POPHeader.get("TxtOutletCode")));
+                        _data.set_txtBranchName(String.valueOf(innerObj_POPHeader.get("TxtBranchName")));
+                        _data.set_txtBranchCode(String.valueOf(innerObj_POPHeader.get("TxtBranchCode")));
+                        _data.set_DtDatetime(String.valueOf(innerObj_POPHeader.get("")));
+                        _data.set_intSync("1");
+                        _data.set_intSubmit("1");
+                        new tPOPStandardHeaderBL().SaveData(_data);
+                    }
+
+                    JSONArray jsonArray_POPDetail = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListDataPOPStandardDetail_mobile")));
+                    for (Object aJsonArray_POPDetail : jsonArray_POPDetail){
+                        tPOPStandardDetailData _data = new tPOPStandardDetailData();
+                        JSONObject innerObj_POPDetail = (JSONObject) aJsonArray_POPDetail;
+                        _data.set_intId(String.valueOf(innerObj_POPDetail .get("IntId")));
+                        _data.set_intHeaderId(String.valueOf(innerObj_POPDetail.get("IntHeaderId")));
+                        _data.set_dtDatetime(String.valueOf(innerObj_POPDetail.get("DtDatetime")));
+                        String urlImg1 = String.valueOf(innerObj_POPDetail.get("TxtLinkImg1"));
+                        String urlImg2 = String.valueOf(innerObj_POPDetail.get("TxtLinkImg2"));
+                        byte[] Img1 = null;
+                        byte[] img2 = null;
+                        if (urlImg1 != "null"){
+                            Img1 = getLogoImage(urlImg1);
+                        }
+                        if (urlImg2 != "null"){
+                            img2= getLogoImage(urlImg2);
+                        }
+
+                        if (Img1 != null){
+                            _data.set_txtImg1(Img1);
+                        }
+                        if (img2 != null){
+                            _data.set_txtImg2(img2);
+                        }
+                        _data.set_intSync("1");
+                        _data.set_intSubmit("1");
+                        new tPOPStandardDetailBL().SaveData(_data);
+                    }
+
+                } else {
+                    new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
         }
         return _array;

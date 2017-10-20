@@ -38,6 +38,7 @@ import bl.mDownloadMasterData_mobileBL;
 import bl.tAbsenUserBL;
 import bl.tGroupQuestionMappingBL;
 import bl.tNotificationBL;
+import bl.tPOPStandardHeaderBL;
 import bl.tUserLoginBL;
 import come.example.viewbadger.ShortcutBadger;
 import library.spgmobile.common.APIData;
@@ -57,6 +58,7 @@ import library.spgmobile.common.tKemasanRusakHeaderData;
 import library.spgmobile.common.tLeaveMobileData;
 import library.spgmobile.common.tNotificationData;
 import library.spgmobile.common.tOverStockHeaderData;
+import library.spgmobile.common.tPOPStandardHeaderData;
 import library.spgmobile.common.tPlanogramMobileData;
 import library.spgmobile.common.tPurchaseOrderHeaderData;
 import library.spgmobile.common.tSalesProductHeaderData;
@@ -73,7 +75,7 @@ public class FragmentPushData extends Fragment {
 
     private TableLayout tlSOHeader;
     private TableLayout tlsPOHeader;
-    private TableLayout tlsQuis;
+    private TableLayout tlsQuis ;
     private TableLayout tlSODetail;
     private TableLayout tlActivity;
     private TableLayout tlCustomerBase;
@@ -86,10 +88,12 @@ public class FragmentPushData extends Fragment {
     private TableLayout  tlActivityV2;
     private TableLayout  tlstockIH;
     private TableLayout  tlplanogram;
+    private TableLayout tlsPOP;
     private TableLayout  tl_overStock, tladdDisplay, tl_kemasanrusak, tl_tidaksesuaipesanan;
     private Button btnPush;
     private String myValue;
     private LinearLayout ll_data_tidaksesuaipesanan,ll_data_kemasanrusak,ll_data_addDisplay,ll_data_planogram, ll_data_stockIH,ll_data_activityV2,ll_data_attendance,ll_reso, ll_data_activity, ll_data_customerbased, ll_purchase_order, ll_dataQuantityStock, ll_absen, ll_dataVisitPlan, ll_data_leave, ll_data_koordinasi, ll_dataQuesioner, ll_data_overStock;
+    private LinearLayout ll_dataPOP_Standard;
 
     View v;
 
@@ -126,6 +130,7 @@ public class FragmentPushData extends Fragment {
 
         v = inflater.inflate(R.layout.activity_push_data, container, false);
 
+        tlsPOP = (TableLayout) v.findViewById(R.id.tl_POP_standard);
         tlSOHeader = (TableLayout) v.findViewById(R.id.tlSOHeader);
         tlsPOHeader = (TableLayout)v.findViewById(R.id.tlPO);
         tlsQuis = (TableLayout) v.findViewById(R.id.tl_quiz);
@@ -165,6 +170,7 @@ public class FragmentPushData extends Fragment {
         ll_data_overStock = (LinearLayout) v.findViewById(R.id.ll_data_overStock);
         ll_data_kemasanrusak = (LinearLayout) v.findViewById(R.id.ll_data_kemasanrusak);
         ll_data_tidaksesuaipesanan = (LinearLayout) v.findViewById(R.id.ll_data_tidaksesuaipesanan);
+        ll_dataPOP_Standard = (LinearLayout) v.findViewById(R.id.ll_dataPOP_Standard);
 
         List<mDownloadMasterData_mobileData> mDownloadMasterData_mobileDataList = new ArrayList<>();
 
@@ -196,6 +202,7 @@ public class FragmentPushData extends Fragment {
             }
             else if (txt_id.equals(res.getResourceEntryName(ll_dataQuesioner.getId()))){
                 ll_dataQuesioner.setVisibility(View.VISIBLE);
+                ll_dataPOP_Standard.setVisibility(View.VISIBLE);
             }
             else if (txt_id.equals(res.getResourceEntryName(ll_data_attendance.getId()))){
                 ll_data_attendance.setVisibility(View.VISIBLE);
@@ -278,6 +285,13 @@ public class FragmentPushData extends Fragment {
                 else {
                     initQuis(getContext(), null);
                 }
+
+                if (dtJson.getListOftPOPStandarHeaderdData() != null){
+                    initPOPStandard(getContext(), dtJson.getListOftPOPStandarHeaderdData());
+                }else {
+                    initPOPStandard(getContext(), null);
+                }
+
                 if (dtJson.getListOftVisitPlanRealisasiData() != null) {
                     initVisitPlanRealisasiData(getContext(), dtJson.getListOftVisitPlanRealisasiData());
                 } else {
@@ -1263,6 +1277,74 @@ public class FragmentPushData extends Fragment {
                 tr.addView(answer);
 
                 tlsQuis.addView(tr, index ++);
+            }
+        }
+
+    }
+
+    //table for view pop
+    private void initPOPStandard(Context context, List<tPOPStandardHeaderData> listOftPOPStandardHeaderData) {
+        tlsPOP = (TableLayout) v.findViewById(R.id.tl_POP_standard);
+        tlsPOP.removeAllViews();
+
+        TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1f);
+        params.setMargins(1, 1, 1, 1);
+
+        TableRow tr = new TableRow(getContext());
+
+        String[] colTextHeader = {"No.", "Type POP", "Category"};
+
+        for (String text : colTextHeader) {
+            TextView tv = new TextView(getContext());
+            tv.setTextSize(14);
+            tv.setPadding(10, 10, 10, 10);
+            tv.setText(text);
+            tv.setGravity(Gravity.CENTER);
+            tv.setBackgroundColor(Color.parseColor("#4CAF50"));
+            tv.setTextColor(Color.WHITE);
+            tv.setLayoutParams(params);
+
+            tr.addView(tv);
+        }
+        tlsPOP.addView(tr);
+
+        if(listOftPOPStandardHeaderData!=null){
+            int index = 1;
+            for(tPOPStandardHeaderData dat : listOftPOPStandardHeaderData){
+
+                tr = new TableRow(getContext());
+                TextView tv_no_POP = new TextView(getContext());
+                tv_no_POP.setTextSize(12);
+                tv_no_POP.setPadding(10, 10, 10, 10);
+                tv_no_POP.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                tv_no_POP.setGravity(Gravity.CENTER);
+                tv_no_POP.setTextColor(Color.BLACK);
+                tv_no_POP.setText(String.valueOf(index + "."));
+                tv_no_POP.setLayoutParams(params);
+                tr.addView(tv_no_POP);
+
+                TextView type = new TextView(getContext());
+                type.setTextSize(12);
+                type.setPadding(10, 10, 10, 10);
+                type.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                type.setTextColor(Color.BLACK);
+                type.setGravity(Gravity.CENTER);
+                type.setText(dat.get_txtType());
+                type.setLayoutParams(params);
+                tr.addView(type);
+
+                TextView category = new TextView(getContext());
+                category.setTextSize(12);
+                category.setPadding(10, 10, 10, 10);
+                category.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                category.setTextColor(Color.BLACK);
+                category.setGravity(Gravity.CENTER);
+                category.setText(dat.get_txtCategory());
+                category.setLayoutParams(params);
+
+                tr.addView(category);
+
+                tlsPOP.addView(tr, index ++);
             }
         }
 

@@ -573,6 +573,44 @@ public class dataJson {
                 resJson.put(dttPurchaseOrderHeaderData.Property_ListOftPurchaseOrderHeaderData, new JSONArray(itemsListJquey));
             }
 
+            if (this.getListOftPOPStandarHeaderdData() != null){
+                tPOPStandardHeaderData dttPOPStandardHeaderData = new tPOPStandardHeaderData();
+                itemsListJquey = new ArrayList<JSONObject>();
+                for (tPOPStandardHeaderData data : this.ListOftPOPStandarHeaderdData){
+                    JSONObject item = new JSONObject();
+                    item.put(dttPOPStandardHeaderData.Property_intId, String.valueOf(data.get_intId()));
+                    item.put(dttPOPStandardHeaderData.Property_txtType, String.valueOf(data.get_txtType()));
+                    item.put(dttPOPStandardHeaderData.Property_bolHavePOP, String.valueOf(data.get_bolHavePOP()));
+                    item.put(dttPOPStandardHeaderData.Property_txtCategory, String.valueOf(data.get_txtCategory()));
+                    item.put(dttPOPStandardHeaderData.Property_txtReason, String.valueOf(data.get_txtReason()));
+                    item.put(dttPOPStandardHeaderData.Property_intRoleId, String.valueOf(data.get_intRoleId()));
+                    item.put(dttPOPStandardHeaderData.Property_txtUserName, String.valueOf(data.get_txtUserName()));
+                    item.put(dttPOPStandardHeaderData.Property_txtNIK, String.valueOf(data.get_txtNIK()));
+                    item.put(dttPOPStandardHeaderData.Property_txtOutletName, String.valueOf(data.get_txtOutletName()));
+                    item.put(dttPOPStandardHeaderData.Property_txtOutletCode, String.valueOf(data.get_txtOutletCode()));
+                    item.put(dttPOPStandardHeaderData.Property_txtBranchName, String.valueOf(data.get_txtBranchName()));
+                    item.put(dttPOPStandardHeaderData.Property_txtBranchCode, String.valueOf(data.get_txtBranchCode()));
+                    item.put(dttPOPStandardHeaderData.Property_dtDatetime, String.valueOf(data.get_DtDatetime()));
+                    itemsListJquey.add(item);
+                }
+                resJson.put(dttPOPStandardHeaderData.Property_ListOftPOPStandarHeaderdData, new JSONArray(itemsListJquey));
+            }
+
+            if (this.getListOftPOPStandardDetailData() != null){
+                tPOPStandardDetailData dttPOPStandardDetailData = new tPOPStandardDetailData();
+                itemsListJquey = new ArrayList<JSONObject>();
+                for (tPOPStandardDetailData data : this.getListOftPOPStandardDetailData()){
+                    JSONObject item = new JSONObject();
+                    item.put(dttPOPStandardDetailData.Property_intId, String.valueOf(data.get_intId()));
+                    item.put(dttPOPStandardDetailData.Property_intHeaderId, String.valueOf(data.get_intHeaderId()));
+                    item.put(dttPOPStandardDetailData.Property_txtImg1, String.valueOf(data.get_txtImg1()));
+                    item.put(dttPOPStandardDetailData.Property_txtImg2, String.valueOf(data.get_txtImg2()));
+                    item.put(dttPOPStandardDetailData.Property_dtDatetime, String.valueOf(data.get_dtDatetime()));
+                    itemsListJquey.add(item);
+                }
+                resJson.put(dttPOPStandardDetailData.Property_ListOftPOPStandardDetailData, new JSONArray(itemsListJquey));
+            }
+
             if (this.getListOftJawabanUserHeaderData() != null){
                 tJawabanUserHeaderData dttJawabanUserHeaderData = new tJawabanUserHeaderData();
                 itemsListJquey = new ArrayList<JSONObject>();
@@ -1747,6 +1785,24 @@ public class dataJson {
         ListOftKemasanRusakImageData = listOftKemasanRusakImageData;
     }
 
+    public List<tPOPStandardHeaderData> getListOftPOPStandarHeaderdData() {
+        return ListOftPOPStandarHeaderdData;
+    }
+
+    public void setListOftPOPStandarHeaderdData(List<tPOPStandardHeaderData> listOftPOPStandarHeaderdData) {
+        ListOftPOPStandarHeaderdData = listOftPOPStandarHeaderdData;
+    }
+
+    public List<tPOPStandardDetailData> getListOftPOPStandardDetailData() {
+        return ListOftPOPStandardDetailData;
+    }
+
+    public void setListOftPOPStandardDetailData(List<tPOPStandardDetailData> listOftPOPStandardDetailData) {
+        ListOftPOPStandardDetailData = listOftPOPStandardDetailData;
+    }
+
+    private List<tPOPStandardHeaderData> ListOftPOPStandarHeaderdData;
+    private List<tPOPStandardDetailData> ListOftPOPStandardDetailData;
     private List<tKemasanRusakImageData> ListOftKemasanRusakImageData;
     private List<tPlanogramImageData> ListOftPlanogramImageData;
     private List<tPurchaseOrderHeaderData> ListOftPurchaseOrderHeaderData;

@@ -381,6 +381,28 @@
 
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/ll_dataPOP_Standard"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tvPOP_push"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_medium"
+            android:layout_marginTop="5dp"
+            android:textColor="#000"
+            android:text="POP Standard" />
+
+        <TableLayout
+            android:id="@+id/tl_POP_standard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </TableLayout>
+
+    </LinearLayout>
+    <LinearLayout
         android:id="@+id/ll_data_tidaksesuaipesanan"
         android:orientation="vertical"
         android:visibility="gone"
