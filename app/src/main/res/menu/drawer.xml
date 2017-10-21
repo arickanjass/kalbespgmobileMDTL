@@ -14,11 +14,11 @@
             android:title="Home"
             app:actionLayout="@layout/menu_counter"/>
 
-        <item
-            android:id="@+id/POP"
-            android:title="POP Standard"
-            android:orderInCategory="0"
-            app:actionLayout="@layout/menu_counter"></item>
+        <!--<item-->
+            <!--android:id="@+id/POP"-->
+            <!--android:title="POP Standard"-->
+            <!--android:orderInCategory="0"-->
+            <!--app:actionLayout="@layout/menu_counter"></item>-->
         <!--<item-->
             <!--android:id="@+id/soalkuesioner"-->
             <!--android:orderInCategory="0"-->
