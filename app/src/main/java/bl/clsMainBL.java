@@ -31,6 +31,7 @@ import library.spgmobile.common.tJawabanUserData;
 import library.spgmobile.common.tKemasanRusakHeaderData;
 import library.spgmobile.common.tLeaveMobileData;
 import library.spgmobile.common.tOverStockHeaderData;
+import library.spgmobile.common.tPOPStandardHeaderData;
 import library.spgmobile.common.tPlanogramMobileData;
 import library.spgmobile.common.tPurchaseOrderDetailData;
 import library.spgmobile.common.tPurchaseOrderHeaderData;
@@ -81,6 +82,7 @@ import library.spgmobile.dal.tKategoryPlanogramMobileDA;
 import library.spgmobile.dal.tKemasanRusakHeaderDA;
 import library.spgmobile.dal.tLeaveMobileDA;
 import library.spgmobile.dal.tOverStockHeaderDA;
+import library.spgmobile.dal.tPOPStandardHeaderDA;
 import library.spgmobile.dal.tPlanogramMobileDA;
 import library.spgmobile.dal.tPurchaseOrderDetailDA;
 import library.spgmobile.dal.tPurchaseOrderHeaderDA;
@@ -177,6 +179,7 @@ public class clsMainBL {
 		tPlanogramMobileDA _tPlanogramMobileDA = new tPlanogramMobileDA(db);
 		tActivityMobileDA _tActivityMobileDA = new tActivityMobileDA(db);
 		tJawabanUserDA _tJawabanUserDA = new tJawabanUserDA(db);
+		tPOPStandardHeaderDA _tPOPStandardHeaderDA = new tPOPStandardHeaderDA(db);
 		KoordinasiOutletDA _KoordinasiOutletDA = new KoordinasiOutletDA(db);
 		tTidakSesuaiPesananHeaderDA _tTidakSesuaiPesananHeaderDA = new tTidakSesuaiPesananHeaderDA(db);
 		tAttendanceUserDA _tAttendanceUserDA = new tAttendanceUserDA(db);
@@ -202,6 +205,7 @@ public class clsMainBL {
 			List<tPlanogramMobileData> listtPlanogram = _tPlanogramMobileDA.getAllDataToPushData(db);
 			List<tActivityMobileData> listtActivityMobile = _tActivityMobileDA.getAllDataToPushData(db);
 			List<tJawabanUserData> listJawabanUser = _tJawabanUserDA.GetDataToPushAnswer(db);
+			List<tPOPStandardHeaderData> listPOPStandard = _tPOPStandardHeaderDA.GetDataToPush(db);
 			List<KoordinasiOutletData> listKoordinasiOutlet = _KoordinasiOutletDA.getAllDataToPushData(db);
 			List<tTidakSesuaiPesananHeaderData> listtTidakSesuaiPesananHeaderData = _tTidakSesuaiPesananHeaderDA.getAllDataToPushData(db);
 			List<tAttendanceUserData> listAttendanceUser = _tAttendanceUserDA.getAllDataToPushData(db);
@@ -250,6 +254,9 @@ public class clsMainBL {
 			}
 			if(listJawabanUser != null && dvalid==false){
 				dvalid=true;
+			}
+			if (listPOPStandard != null && dvalid==false){
+				dvalid= true;
 			}
 			if(listKoordinasiOutlet != null && dvalid==false){
 				dvalid=true;
