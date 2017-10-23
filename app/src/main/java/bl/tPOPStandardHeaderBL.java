@@ -2,6 +2,7 @@ package bl;
 
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import library.spgmobile.common.tPOPStandardHeaderData;
@@ -42,4 +43,28 @@ public class tPOPStandardHeaderBL extends clsMainBL {
         return listData;
     }
 
+    public List<tPOPStandardHeaderData> GetDataByOutletCodeReport(String code){
+        SQLiteDatabase _db = getDb();
+        tPOPStandardHeaderDA _tPOPStandardHeaderDA= new tPOPStandardHeaderDA(_db);
+        List<tPOPStandardHeaderData> listData ;
+        if (code.equals("ALLOUTLET")){
+            listData = _tPOPStandardHeaderDA.GetAllData(_db);
+                          } else {
+            listData = _tPOPStandardHeaderDA.GetByOutletCodeReport(_db, code);
+        }
+        if (listData == null){
+            listData = new ArrayList<>(0);
+        }
+        return listData;
+    }
+
+    public List<tPOPStandardHeaderData> GetDataByOutletCodeAndSync(String code, String sync){
+        SQLiteDatabase _db = getDb();
+        tPOPStandardHeaderDA _tPOPStandardHeaderDA = new tPOPStandardHeaderDA(_db);
+        List<tPOPStandardHeaderData> listData = _tPOPStandardHeaderDA.GetByOutletAndSync(_db, code, sync);
+        if (listData == null){
+            listData = new ArrayList<>(0);
+        }
+        return listData;
+    }
 }

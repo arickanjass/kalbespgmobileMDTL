@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Stack;
 
 public class dataJson {
 
@@ -1557,6 +1558,14 @@ public class dataJson {
                 }
             }
 
+            if (this.getDtmTypePOPStandardData() != null){
+                if (this.getDtmTypePOPStandardData().getBoolValid().equals("1")){
+                    mTypePOPStandardData dtConfig = new mTypePOPStandardData();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDtmTypePOPStandardData().getBoolValid()));
+                    resJson.put(dtConfig.Property_ListOfmTypePOPStandard, item1);
+                }
+            }
             if(this.getDttHirarkiBIS()!=null){
                 if(this.getDttHirarkiBIS().getBoolValid().equals("1")){
                     tHirarkiBIS dtConfig = new tHirarkiBIS();
@@ -2239,6 +2248,16 @@ public class dataJson {
 
     private tKemasanRusakHeaderData dttKemasanRusakHeaderData;
     private tTidakSesuaiPesananHeaderData dttTidakSesuaiPesananHeaderData;
+
+    public mTypePOPStandardData getDtmTypePOPStandardData() {
+        return dtmTypePOPStandardData;
+    }
+
+    public void setDtmTypePOPStandardData(mTypePOPStandardData dtmTypePOPStandardData) {
+        this.dtmTypePOPStandardData = dtmTypePOPStandardData;
+    }
+
+    private mTypePOPStandardData dtmTypePOPStandardData;
 
     public List<tAttendanceUserData> getListOftAttendanceUserData() {
         return ListOftAttendanceUserData;

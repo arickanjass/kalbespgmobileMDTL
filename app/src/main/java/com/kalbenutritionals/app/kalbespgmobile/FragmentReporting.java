@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import bl.tPOPStandardHeaderBL;
 import jxl.Cell;
 import jxl.CellView;
 import jxl.Workbook;
@@ -103,6 +104,7 @@ import library.spgmobile.common.tKemasanRusakDetailData;
 import library.spgmobile.common.tKemasanRusakHeaderData;
 import library.spgmobile.common.tOverStockDetailData;
 import library.spgmobile.common.tOverStockHeaderData;
+import library.spgmobile.common.tPOPStandardHeaderData;
 import library.spgmobile.common.tPlanogramMobileData;
 import library.spgmobile.common.tPurchaseOrderDetailData;
 import library.spgmobile.common.tPurchaseOrderHeaderData;
@@ -643,6 +645,56 @@ public class FragmentReporting extends Fragment {
 
             ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
 
+        } else if (spinnerSelected.contains("POP Standard TL")){
+            header = new String[6];
+            header[1] = "No.";
+            header[2] = "Type POP";
+            header[3] = "Category";
+            header[4] = "";
+
+            ReportTableView.setColumnCount(header.length);
+
+            simpleTableHeaderAdapter = new SimpleTableHeaderAdapter(getContext(), header);
+            simpleTableHeaderAdapter.setTextColor(ContextCompat.getColor(getContext(), R.color.table_header_text));
+            simpleTableHeaderAdapter.setTextSize(14);
+            simpleTableHeaderAdapter.setPaddingBottom(20);
+            simpleTableHeaderAdapter.setPaddingTop(20);
+
+            ReportTableView.setColumnComparator(1, ReportComparators.getRepeatComparator());
+            ReportTableView.setColumnComparator(2, ReportComparators.getTypeComparator());
+            ReportTableView.setColumnComparator(3, ReportComparators.getCategoryComparator());
+            ReportTableView.setColumnComparator(4, ReportComparators.getviewDetailComparator());
+
+
+            ReportTableView.setColumnWeight(1, 1);
+            ReportTableView.setColumnWeight(2, 2);
+            ReportTableView.setColumnWeight(3, 2);
+            ReportTableView.setColumnWeight(4, 2);
+
+            ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
+
+            List<tPOPStandardHeaderData> dt_header = new tPOPStandardHeaderBL().GetDataByOutletCodeReport(outletcode);
+            reportList = new ArrayList<>();
+            int iterator = 0;
+            if(dt_header != null&&dt_header.size()>0){
+                for(tPOPStandardHeaderData data : dt_header ){
+                    iterator +=1;
+                    ReportTable rt = new ReportTable();
+
+                    rt.set_report_type("POP Standard TL");
+                    rt.set_type(data.get_txtType());
+                    rt.set_Category(data.get_txtCategory());
+                    rt.set_RepeatQuiz( String.valueOf(iterator));
+                    rt.set_txtOutletName(data.get_txtOutletName());
+                    rt.set_dummy(data.get_intId());
+                    rt.set_view_detail("View Detail");
+                    reportList.add(rt);
+                }
+            } else {
+                new clsMainActivity().showCustomToast(getContext(), "No Data to Show", false);
+            }
+
+            ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
         } else if (spinnerSelected.contains("PO")){
 //            Toast.makeText(getContext(), "PO", Toast.LENGTH_SHORT).show();
             header = new String[6];

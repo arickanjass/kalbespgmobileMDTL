@@ -665,6 +665,40 @@
                                 android:textSize="11sp" />
                         </LinearLayout>
 
+                        <!--POP standard-->
+                        <LinearLayout
+                            android:id="@+id/ll_dataPOP_Standard"
+                            android:visibility="gone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <com.owater.library.CircleTextView
+                                android:id="@+id/tvTotalPOPStandard"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_weight="0.25"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="25dp"
+                                app:ct_backgroundColor="#FFFFFF"
+                                app:ct_border_alpha="0.5"
+                                app:ct_border_color="@color/colorAccent"
+                                app:ct_border_width="10dp"
+                                app:ct_type="shadow_alpha" />
+
+                            <TextView
+                                android:id="@+id/textView999"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="POP Standard"
+                                android:textSize="11sp" />
+                        </LinearLayout>
                         <!--Koordinasi outlet-->
 
                         <LinearLayout
@@ -1377,6 +1411,45 @@
                                 android:text="" />
                         </TableRow>
 
+                        <!--table POP Standard-->
+                        <TableRow
+                            android:id="@+id/tr_pop_standard"
+                            android:background="#f0f0f0"
+                            android:visibility="gone"
+                            android:gravity="center_horizontal"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:paddingRight="5dp"
+                                android:text="POP Standard" />
+
+                            <TextView
+                                android:id="@+id/tv_pop_standard0"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tv_pop_standard1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/tv_pop_standard2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="" />
+                        </TableRow>
                         <!--table koordinasi-->
                         <TableRow
                             android:id="@+id/tr_koordinasi"

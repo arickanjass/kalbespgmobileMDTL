@@ -453,6 +453,9 @@ public class clsHelper {
 		_tJawabanUserHeaderDA.DropTable(db);
 		_tPOPStandardHeaderDA.DropTable(db);
 		_tPOPStandardDetailDA.DropTable(db);
+		_mTypePOPStandardDA.DropTable(db);
+		_mReasonPOPStandardDA.DropTable(db);
+		_mCategoryPOPStandardDA.DropTable(db);
 		_trackingLocationDA.DropTable(db);
 		_KoordinasiOutletDA.DropTable(db);
 		_KoordinasiOutletImageDA.Droptable(db);

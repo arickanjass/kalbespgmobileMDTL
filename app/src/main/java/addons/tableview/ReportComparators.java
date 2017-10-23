@@ -95,6 +95,10 @@ public final class ReportComparators {
         return new answerComparator();
     }
 
+    public static Comparator<ReportTable> getTypeComparator(){
+        return new typeComparator();
+    }
+
     public static Comparator<ReportTable> getRepeatComparator(){
         return new repeatComparator();
     }
@@ -289,6 +293,14 @@ public final class ReportComparators {
         @Override
         public int compare(final ReportTable data1, final ReportTable data2) {
             return data1.get_Answer().compareTo(data2.get_Answer());
+        }
+    }
+
+    private static class typeComparator implements Comparator<ReportTable>{
+
+        @Override
+        public int compare(ReportTable data1, ReportTable data2) {
+            return data1.get_type().compareTo(data2.get_type());
         }
     }
 }

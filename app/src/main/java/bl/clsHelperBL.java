@@ -37,6 +37,7 @@ import library.spgmobile.common.mProductCompetitorData;
 import library.spgmobile.common.mProductPICData;
 import library.spgmobile.common.mProductSPGData;
 import library.spgmobile.common.mTypeLeaveMobileData;
+import library.spgmobile.common.mTypePOPStandardData;
 import library.spgmobile.common.mTypeSubmissionMobile;
 import library.spgmobile.common.mconfigData;
 import library.spgmobile.common.tAbsenUserData;
@@ -1150,6 +1151,7 @@ public class clsHelperBL extends clsMainBL {
             tStockInHandHeaderData dttStockInHandHeaderData = new tStockInHandHeaderData();
             mParentData dtmParentData = new mParentData();
             tHirarkiBIS dttHirarkiBIS = new tHirarkiBIS();
+            mTypePOPStandardData dtmTypePOPStandardData = new mTypePOPStandardData();
             //noQTS
             tSalesProductQuantityHeaderData dttSalesProductQuantityHeaderData = new tSalesProductQuantityHeaderData();
             //noOVS
@@ -1166,6 +1168,7 @@ public class clsHelperBL extends clsMainBL {
             tTidakSesuaiPesananHeaderData dttTidakSesuaiPesananHeaderData = new tTidakSesuaiPesananHeaderData();
 
             //transaction data
+            dtmTypePOPStandardData.setBoolValid("0");
             dttVisitPlanRealisasiData.setBoolValid("0");
             dttAttendanceUserData.setBoolValid("0");
             dttSalesProductHeaderData.setBoolValid("0");
@@ -1206,6 +1209,7 @@ public class clsHelperBL extends clsMainBL {
             dtPush.setDttLeaveMobileData(dttLeaveMobileData);
             dtPush.setDttKemasanRusakHeaderData(dttKemasanRusakHeaderData);
             dtPush.setDttTidakSesuaiPesananHeaderData(dttTidakSesuaiPesananHeaderData);
+            dtPush.setDtmTypePOPStandardData(dtmTypePOPStandardData);
 
         } else {
             dtPush = null;

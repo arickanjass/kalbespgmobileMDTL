@@ -151,6 +151,67 @@ public class tPOPStandardHeaderDA {
         return contactList;
     }
 
+    public List<tPOPStandardHeaderData> GetByOutletCodeReport(SQLiteDatabase db, String code){
+        List<tPOPStandardHeaderData> contactList = new ArrayList<tPOPStandardHeaderData>();
+        tPOPStandardHeaderData dt = new tPOPStandardHeaderData();
+        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " Where " + dt.Property_txtOutletCode + "='" + code + "'";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()){
+            do {
+                tPOPStandardHeaderData contact = new tPOPStandardHeaderData();
+                contact.set_intId(cursor.getString(0));
+                contact.set_txtType(cursor.getString(1));
+                contact.set_bolHavePOP(cursor.getString(2));
+                contact.set_txtCategory(cursor.getString(3));
+                contact.set_txtReason(cursor.getString(4));
+                contact.set_intRoleId(cursor.getString(5));
+                contact.set_txtUserName(cursor.getString(6));
+                contact.set_txtNIK(cursor.getString(7));
+                contact.set_txtOutletCode(cursor.getString(8));
+                contact.set_txtOutletName(cursor.getString(9));
+                contact.set_txtBranchCode(cursor.getString(10));
+                contact.set_txtBranchName(cursor.getString(11));
+                contact.set_DtDatetime(cursor.getString(12));
+                contact.set_intSync(cursor.getString(13));
+                contact.set_intSubmit(cursor.getString(14));
+                contactList.add(contact);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return contactList;
+    }
+
+    public List<tPOPStandardHeaderData> GetByOutletAndSync(SQLiteDatabase db, String code, String sync){
+        List<tPOPStandardHeaderData> contactList = new ArrayList<tPOPStandardHeaderData>();
+        tPOPStandardHeaderData dt = new tPOPStandardHeaderData();
+        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS + " Where " + dt.Property_txtOutletCode + "='" + code + "' AND "
+                + dt.Property_intSync + "='" + sync + "'";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()){
+            do {
+                tPOPStandardHeaderData contact = new tPOPStandardHeaderData();
+                contact.set_intId(cursor.getString(0));
+                contact.set_txtType(cursor.getString(1));
+                contact.set_bolHavePOP(cursor.getString(2));
+                contact.set_txtCategory(cursor.getString(3));
+                contact.set_txtReason(cursor.getString(4));
+                contact.set_intRoleId(cursor.getString(5));
+                contact.set_txtUserName(cursor.getString(6));
+                contact.set_txtNIK(cursor.getString(7));
+                contact.set_txtOutletCode(cursor.getString(8));
+                contact.set_txtOutletName(cursor.getString(9));
+                contact.set_txtBranchCode(cursor.getString(10));
+                contact.set_txtBranchName(cursor.getString(11));
+                contact.set_DtDatetime(cursor.getString(12));
+                contact.set_intSync(cursor.getString(13));
+                contact.set_intSubmit(cursor.getString(14));
+                contactList.add(contact);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return contactList;
+    }
+
     public List<tPOPStandardHeaderData> GetDataToPush(SQLiteDatabase db){
         List<tPOPStandardHeaderData> contactList = null;
         tPOPStandardHeaderData dt = new tPOPStandardHeaderData();
