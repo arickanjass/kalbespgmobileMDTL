@@ -87,6 +87,7 @@ import library.spgmobile.dal.clsLogReceiverDetail_mobileDA;
 import library.spgmobile.dal.clsLogReceiverHeader_mobileDA;
 import library.spgmobile.dal.enumConfigData;
 import library.spgmobile.dal.enumCounterData;
+import library.spgmobile.dal.mCategoryKoordinasiOutletDA;
 import library.spgmobile.dal.mCategoryPOPStandardDA;
 import library.spgmobile.dal.mCounterNumberDA;
 import library.spgmobile.dal.mReasonPOPStandardDA;
@@ -709,6 +710,7 @@ public class clsHelperBL extends clsMainBL {
             tCustomerBasedMobileDetailProductDA _tCustomerBasedMobileDetailProductDA = new tCustomerBasedMobileDetailProductDA(db);
             trackingLocationDA _trackingLocationDA = new trackingLocationDA(db);
             KoordinasiOutletDA _KoordinasiOutletDA = new KoordinasiOutletDA(db);
+            mCategoryKoordinasiOutletDA _mCategoryKoordinasiOutletDA = new mCategoryKoordinasiOutletDA(db);
             KoordinasiOutletImageDA _KoordinasiOutletImageDA = new KoordinasiOutletImageDA(db);
             tTidakSesuaiPesananHeaderDA _tTidakSesuaiPesananHeaderDA = new tTidakSesuaiPesananHeaderDA(db);
             tTidakSesuaiPesananImageDA _tTidakSesuaiPesananImageDA = new tTidakSesuaiPesananImageDA(db);

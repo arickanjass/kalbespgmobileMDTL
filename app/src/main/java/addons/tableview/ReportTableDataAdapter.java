@@ -541,7 +541,7 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
                 } else if (type == "Kemasan Rusak"){
                     viewDetailKemasanRusak(dummy);
                 } else if(type == "POP Standard TL"){
-                    ViewDetailPOPStandard(dummy); 
+                    ViewDetailPOPStandard(dummy);
                 }
 
             }

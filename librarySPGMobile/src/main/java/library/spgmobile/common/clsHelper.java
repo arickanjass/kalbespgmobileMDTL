@@ -35,6 +35,7 @@ import library.spgmobile.dal.clsHardCode;
 import library.spgmobile.dal.clsLogReceiverDetail_mobileDA;
 import library.spgmobile.dal.clsLogReceiverHeader_mobileDA;
 import library.spgmobile.dal.enumConfigData;
+import library.spgmobile.dal.mCategoryKoordinasiOutletDA;
 import library.spgmobile.dal.mCategoryPOPStandardDA;
 import library.spgmobile.dal.mCategoryVisitPlanDA;
 import library.spgmobile.dal.mCountConsumerMTDDA;
@@ -387,6 +388,7 @@ public class clsHelper {
 		mCountConsumerMTDDA _mCountConsumerMTDDA = new mCountConsumerMTDDA(db);
 		tSubTypeActivityDA _tSubTypeActivityDA = new tSubTypeActivityDA(db);
 		tKategoryPlanogramMobileDA _tKategoryPlanogramMobileDA = new tKategoryPlanogramMobileDA(db);
+		mCategoryKoordinasiOutletDA _mCategoryKoordinasiOutletDA = new mCategoryKoordinasiOutletDA(db);
 		tPlanogramMobileDA _tPlanogramMobileDA = new tPlanogramMobileDA(db);
 		tPlanogramImageDA _tPlanogramImageDA = new tPlanogramImageDA(db);
 		tKemasanRusakHeaderDA _tKemasanRusakHeaderDA = new tKemasanRusakHeaderDA(db);
@@ -438,7 +440,7 @@ public class clsHelper {
 		_tPurchaseOrderHeaderDA.DropTable(db);
 		_tPurchaseOrderDetailDA.DropTable(db);
 		_tDeviceInfoUserDA.DropTable(db);
-		_mMenuDA.DropTable(db);
+		_mMenuDA.DropTable(db); 
 		_mCounterNumberDA.DropTable(db);
 		_tAbsenUserDA.DropTable(db);
 		_tAttendanceUserDA.DropTable(db);
@@ -458,6 +460,7 @@ public class clsHelper {
 		_mCategoryPOPStandardDA.DropTable(db);
 		_trackingLocationDA.DropTable(db);
 		_KoordinasiOutletDA.DropTable(db);
+		_mCategoryKoordinasiOutletDA.DropTable(db);
 		_KoordinasiOutletImageDA.Droptable(db);
 		_tPlanogramMobileDA.Droptable(db);
 		_tPlanogramImageDA.Droptable(db);
@@ -495,6 +498,7 @@ public class clsHelper {
 		_mReasonPOPStandardDA = new mReasonPOPStandardDA(db);
 		_trackingLocationDA = new trackingLocationDA(db);
 		_KoordinasiOutletDA = new KoordinasiOutletDA(db);
+		_mCategoryKoordinasiOutletDA = new mCategoryKoordinasiOutletDA(db);
 		_KoordinasiOutletImageDA = new KoordinasiOutletImageDA(db);
 		new mProductSPGDA(db);
 		new mProductPICDA(db);
