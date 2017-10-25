@@ -284,7 +284,12 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
         btnAddQuantity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                popUpAddQuantity(new tSalesProductQuantityDetailData());
+                List<mEmployeeSalesProductData> listDataProductKalbe = new mEmployeeSalesProductBL().getAllDataNotWhere();
+                if(listDataProductKalbe!=null&&listDataProductKalbe.size()>0){
+                    popUpAddQuantity(new tSalesProductQuantityDetailData());
+                } else {
+                    new clsMainActivity().showCustomToast(getActivity(), "Please download product first...", false);
+                }
             }
         });
 

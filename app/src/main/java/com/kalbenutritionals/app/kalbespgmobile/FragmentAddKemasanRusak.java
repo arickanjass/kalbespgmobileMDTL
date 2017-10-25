@@ -242,7 +242,13 @@ public class FragmentAddKemasanRusak extends Fragment implements IXListViewListe
             btnAddQuantity.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    popUpAddQuantity(new tKemasanRusakDetailData());
+//                    popUpAddQuantity(new tKemasanRusakDetailData());
+                    List<mEmployeeSalesProductData> listDataProductKalbe = new mEmployeeSalesProductBL().getAllDataNotWhere();
+                    if(listDataProductKalbe!=null&&listDataProductKalbe.size()>0){
+                        popUpAddQuantity(new tKemasanRusakDetailData());
+                    } else {
+                        new clsMainActivity().showCustomToast(getActivity(), "Please download product first...", false);
+                    }
                 }
             });
 

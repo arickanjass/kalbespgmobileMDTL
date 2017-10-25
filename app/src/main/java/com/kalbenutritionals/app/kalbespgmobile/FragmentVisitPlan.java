@@ -370,6 +370,7 @@ public class FragmentVisitPlan extends Fragment implements ConnectionCallbacks, 
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         Boolean pRes = true;
+                                        Boolean validTagOutlet = true;
                                         new clsMainActivity().removeErrorMessage(textInputLayoutDescriptionVisiPlan);
                                         //validasi foto jika kosong semua
                                         if (pht1 == null && pht2 == null) {
@@ -377,102 +378,211 @@ public class FragmentVisitPlan extends Fragment implements ConnectionCallbacks, 
                                             new clsMainActivity().showCustomToast(getContext(), "Please take at least 1 photo", false);
                                             pRes = false;
                                         }
+//                                        if (pRes) {
+//                                            double latitude = Double.parseDouble(String.valueOf(lblLang.getText()));
+//                                            double longitude = Double.parseDouble(String.valueOf(lblLong.getText()));
+//                                            if (dataDetail.get_txtLatSource().toString().equals("") || dataDetail.get_txtLatSource().toString().equals("null")) {
+//                                                latitudeOutlet = 0.0;
+//                                                longitudeOutlet = 0.0;
+//                                            } else {
+//                                                latitudeOutlet = Double.parseDouble(dataDetail.get_txtLatSource().toString());
+//                                                longitudeOutlet = Double.parseDouble(dataDetail.get_txtLongSource().toString());
+//                                            }
+//
+//                                            Location locationA = new Location("point A");
+//
+//                                            locationA.setLatitude(latitude);
+//                                            locationA.setLongitude(longitude);
+//
+//                                            Location locationB = new Location("point B");
+//
+//                                            locationB.setLatitude(latitudeOutlet);
+//                                            locationB.setLongitude(longitudeOutlet);
+//
+//                                            float distance = locationA.distanceTo(locationB);
+//
+//                                            tUserLoginData checkLocation = new tUserLoginBL().getUserLogin();
+//                                            boolean dValidDistance = false;
+//                                            if (checkLocation.get_txtCheckLocation().equals("0")) {
+//                                                dValidDistance = true;
+//                                            } else if ((int) Math.ceil(distance) <= Integer.valueOf(checkLocation.get_txtCheckLocation())) {
+//                                                dValidDistance = true;
+//                                            }
+////                                            if ((int) Math.ceil(distance) > 100 && checkLocation.get_txtCheckLocation().equals("1")) {
+////                                                _clsMainActivity.showCustomToast(getContext(), "Failed checkin: Your location too far from outlet", false);
+////                                            }
+//                                            if (!dValidDistance) {
+//                                                _clsMainActivity.showCustomToast(getContext(), "Failed checkin: Your location too far from outlet", false);
+//                                            } else {
+//                                                nameBranch = dataDetail.get_txtBranchCode();
+//                                                nameOutlet = dataDetail.get_txtOutletName();
+//                                                branchCode = dataDetail.get_txtBranchCode();
+//                                                outletCode = dataDetail.get_txtOutletCode();
+//                                                idRealisasi = dataDetail.get_txtDataIDRealisasi();
+//
+//                                                tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
+//                                                String idRoleActive = String.valueOf(dataUserActive.get_txtRoleId());
+//
+//                                                tUserLoginData dataLogin = new tUserLoginBL().getUserLogin();
+//                                                String dataTanggalLogin = dataLogin.get_dtLastLogin();
+//
+//                                                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//                                                Calendar cal = Calendar.getInstance();
+//                                                String descReply = etDescReply.getText().toString();
+//                                                _tVisitPlanRealisasiData.set_txtDataIDRealisasi(idRealisasi);
+//                                                _tVisitPlanRealisasiData.set_dtDateRealisasi(dataTanggalLogin);
+//                                                _tVisitPlanRealisasiData.set_dtDateRealisasiDevice(dateFormat.format(cal.getTime()));
+//                                                _tVisitPlanRealisasiData.set_txtDescReply(descReply);
+//                                                _tVisitPlanRealisasiData.set_txtLong(longitude + "");
+//                                                _tVisitPlanRealisasiData.set_txtLat(latitude + "");
+//                                                _tVisitPlanRealisasiData.set_intDistance(distance + "");
+//                                                _tVisitPlanRealisasiData.set_txtRoleId(idRoleActive);
+//                                                _tVisitPlanRealisasiData.set_intSubmit("1");
+//                                                _tVisitPlanRealisasiData.set_txtAcc(lblAcc.getText().toString());
+//                                                List<tDeviceInfoUserData> dataDeviceInfoUser = new tDeviceInfoUserBL().getData(0);
+//                                                String deviceInfo="";
+//                                                if(dataDeviceInfoUser!=null){
+//                                                    deviceInfo = String.valueOf(dataDeviceInfoUser.get(0).get_txtDeviceId());
+//                                                }
+//                                                _tVisitPlanRealisasiData.set_deviceId(deviceInfo);
+//                                                new tVisitPlanRealisasiBL().UpdateData(_tVisitPlanRealisasiData);
+//                                                imgPrevNoImg1.setClickable(false);
+//                                                imgPrevNoImg2.setClickable(false);
+//                                                btnRefreshMaps.setClickable(false);
+//                                                btnRefreshMaps.setVisibility(View.GONE);
+//
+//                                                List<tVisitPlanRealisasiData> data = new tVisitPlanRealisasiBL().getAllData();
+//                                                boolean statusHeader = false;
+//                                                for (tVisitPlanRealisasiData dt : data) {
+//                                                    if (dt.get_intSubmit().toString().equals("1")) {
+//                                                        statusHeader = true;
+//                                                    } else {
+//                                                        statusHeader = false;
+//                                                    }
+//                                                }
+//                                                if (statusHeader) {
+//                                                    tVisitPlanHeader_MobileData dt = new tVisitPlanHeader_MobileData();
+//                                                    dt.set_intSubmit("1");
+//                                                    dt.set_intHeaderId(dataDetail.get_intHeaderID());
+//                                                    new tVisitPlanHeader_MobileBL().UpdateData(dt);
+//                                                }
+//
+//                                                _clsMainActivity.showCustomToast(getContext(), "Saved", true);
+//                                                Intent myIntent = new Intent(getContext(), MainMenu.class);
+//                                                getActivity().finish();
+//                                                startActivity(myIntent);
+//                                            }
+//
+//                                        }
+
                                         if (pRes) {
                                             double latitude = Double.parseDouble(String.valueOf(lblLang.getText()));
                                             double longitude = Double.parseDouble(String.valueOf(lblLong.getText()));
                                             if (dataDetail.get_txtLatSource().toString().equals("") || dataDetail.get_txtLatSource().toString().equals("null")) {
-                                                latitudeOutlet = 0.0;
-                                                longitudeOutlet = 0.0;
-                                            } else {
-                                                latitudeOutlet = Double.parseDouble(dataDetail.get_txtLatSource().toString());
-                                                longitudeOutlet = Double.parseDouble(dataDetail.get_txtLongSource().toString());
+//                                                latitudeOutlet = 0.0;
+//                                                longitudeOutlet = 0.0;
+                                                validTagOutlet = false;
                                             }
-
-                                            Location locationA = new Location("point A");
-
-                                            locationA.setLatitude(latitude);
-                                            locationA.setLongitude(longitude);
-
-                                            Location locationB = new Location("point B");
-
-                                            locationB.setLatitude(latitudeOutlet);
-                                            locationB.setLongitude(longitudeOutlet);
-
-                                            float distance = locationA.distanceTo(locationB);
-
-                                            tUserLoginData checkLocation = new tUserLoginBL().getUserLogin();
-                                            boolean dValidDistance = false;
-                                            if (checkLocation.get_txtCheckLocation().equals("0")) {
-                                                dValidDistance = true;
-                                            } else if ((int) Math.ceil(distance) <= Integer.valueOf(checkLocation.get_txtCheckLocation())) {
-                                                dValidDistance = true;
+                                            if(dataDetail.get_txtLongSource().toString().equals("") || dataDetail.get_txtLongSource().toString().equals("null")){
+                                                validTagOutlet = false;
                                             }
+//                                            else {
+//                                                latitudeOutlet = Double.parseDouble(dataDetail.get_txtLatSource().toString());
+//                                                longitudeOutlet = Double.parseDouble(dataDetail.get_txtLongSource().toString());
+//                                            }
+
+                                            if(validTagOutlet){
+                                                Location locationA = new Location("point A");
+
+                                                locationA.setLatitude(latitude);
+                                                locationA.setLongitude(longitude);
+
+                                                Location locationB = new Location("point B");
+
+                                                locationB.setLatitude(latitudeOutlet);
+                                                locationB.setLongitude(longitudeOutlet);
+
+                                                float distance = locationA.distanceTo(locationB);
+
+                                                tUserLoginData checkLocation = new tUserLoginBL().getUserLogin();
+                                                boolean dValidDistance = false;
+                                                if (checkLocation.get_txtCheckLocation().equals("0")) {
+                                                    dValidDistance = true;
+                                                } else if ((int) Math.ceil(distance) <= Integer.valueOf(checkLocation.get_txtCheckLocation())) {
+                                                    dValidDistance = true;
+                                                }
 //                                            if ((int) Math.ceil(distance) > 100 && checkLocation.get_txtCheckLocation().equals("1")) {
 //                                                _clsMainActivity.showCustomToast(getContext(), "Failed checkin: Your location too far from outlet", false);
 //                                            }
-                                            if (!dValidDistance) {
-                                                _clsMainActivity.showCustomToast(getContext(), "Failed checkin: Your location too far from outlet", false);
-                                            } else {
-                                                nameBranch = dataDetail.get_txtBranchCode();
-                                                nameOutlet = dataDetail.get_txtOutletName();
-                                                branchCode = dataDetail.get_txtBranchCode();
-                                                outletCode = dataDetail.get_txtOutletCode();
-                                                idRealisasi = dataDetail.get_txtDataIDRealisasi();
+                                                if (!dValidDistance) {
+                                                    _clsMainActivity.showCustomToast(getContext(), "Failed checkin: Your location too far from outlet", false);
+                                                } else {
+                                                    nameBranch = dataDetail.get_txtBranchCode();
+                                                    nameOutlet = dataDetail.get_txtOutletName();
+                                                    branchCode = dataDetail.get_txtBranchCode();
+                                                    outletCode = dataDetail.get_txtOutletCode();
+                                                    idRealisasi = dataDetail.get_txtDataIDRealisasi();
 
-                                                tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
-                                                String idRoleActive = String.valueOf(dataUserActive.get_txtRoleId());
+                                                    tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
+                                                    String idRoleActive = String.valueOf(dataUserActive.get_txtRoleId());
 
-                                                tUserLoginData dataLogin = new tUserLoginBL().getUserLogin();
-                                                String dataTanggalLogin = dataLogin.get_dtLastLogin();
+                                                    tUserLoginData dataLogin = new tUserLoginBL().getUserLogin();
+                                                    String dataTanggalLogin = dataLogin.get_dtLastLogin();
 
-                                                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                                                Calendar cal = Calendar.getInstance();
-                                                String descReply = etDescReply.getText().toString();
-                                                _tVisitPlanRealisasiData.set_txtDataIDRealisasi(idRealisasi);
-                                                _tVisitPlanRealisasiData.set_dtDateRealisasi(dataTanggalLogin);
-                                                _tVisitPlanRealisasiData.set_dtDateRealisasiDevice(dateFormat.format(cal.getTime()));
-                                                _tVisitPlanRealisasiData.set_txtDescReply(descReply);
-                                                _tVisitPlanRealisasiData.set_txtLong(longitude + "");
-                                                _tVisitPlanRealisasiData.set_txtLat(latitude + "");
-                                                _tVisitPlanRealisasiData.set_intDistance(distance + "");
-                                                _tVisitPlanRealisasiData.set_txtRoleId(idRoleActive);
-                                                _tVisitPlanRealisasiData.set_intSubmit("1");
-                                                _tVisitPlanRealisasiData.set_txtAcc(lblAcc.getText().toString());
-                                                List<tDeviceInfoUserData> dataDeviceInfoUser = new tDeviceInfoUserBL().getData(0);
-                                                String deviceInfo="";
-                                                if(dataDeviceInfoUser!=null){
-                                                    deviceInfo = String.valueOf(dataDeviceInfoUser.get(0).get_txtDeviceId());
-                                                }
-                                                _tVisitPlanRealisasiData.set_deviceId(deviceInfo);
-                                                new tVisitPlanRealisasiBL().UpdateData(_tVisitPlanRealisasiData);
-                                                imgPrevNoImg1.setClickable(false);
-                                                imgPrevNoImg2.setClickable(false);
-                                                btnRefreshMaps.setClickable(false);
-                                                btnRefreshMaps.setVisibility(View.GONE);
-
-                                                List<tVisitPlanRealisasiData> data = new tVisitPlanRealisasiBL().getAllData();
-                                                boolean statusHeader = false;
-                                                for (tVisitPlanRealisasiData dt : data) {
-                                                    if (dt.get_intSubmit().toString().equals("1")) {
-                                                        statusHeader = true;
-                                                    } else {
-                                                        statusHeader = false;
+                                                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                                    Calendar cal = Calendar.getInstance();
+                                                    String descReply = etDescReply.getText().toString();
+                                                    _tVisitPlanRealisasiData.set_txtDataIDRealisasi(idRealisasi);
+                                                    _tVisitPlanRealisasiData.set_dtDateRealisasi(dataTanggalLogin);
+                                                    _tVisitPlanRealisasiData.set_dtDateRealisasiDevice(dateFormat.format(cal.getTime()));
+                                                    _tVisitPlanRealisasiData.set_txtDescReply(descReply);
+                                                    _tVisitPlanRealisasiData.set_txtLong(longitude + "");
+                                                    _tVisitPlanRealisasiData.set_txtLat(latitude + "");
+                                                    _tVisitPlanRealisasiData.set_intDistance(distance + "");
+                                                    _tVisitPlanRealisasiData.set_txtRoleId(idRoleActive);
+                                                    _tVisitPlanRealisasiData.set_intSubmit("1");
+                                                    _tVisitPlanRealisasiData.set_txtAcc(lblAcc.getText().toString());
+                                                    List<tDeviceInfoUserData> dataDeviceInfoUser = new tDeviceInfoUserBL().getData(0);
+                                                    String deviceInfo="";
+                                                    if(dataDeviceInfoUser!=null){
+                                                        deviceInfo = String.valueOf(dataDeviceInfoUser.get(0).get_txtDeviceId());
                                                     }
-                                                }
-                                                if (statusHeader) {
-                                                    tVisitPlanHeader_MobileData dt = new tVisitPlanHeader_MobileData();
-                                                    dt.set_intSubmit("1");
-                                                    dt.set_intHeaderId(dataDetail.get_intHeaderID());
-                                                    new tVisitPlanHeader_MobileBL().UpdateData(dt);
-                                                }
+                                                    _tVisitPlanRealisasiData.set_deviceId(deviceInfo);
+                                                    new tVisitPlanRealisasiBL().UpdateData(_tVisitPlanRealisasiData);
+                                                    imgPrevNoImg1.setClickable(false);
+                                                    imgPrevNoImg2.setClickable(false);
+                                                    btnRefreshMaps.setClickable(false);
+                                                    btnRefreshMaps.setVisibility(View.GONE);
 
-                                                _clsMainActivity.showCustomToast(getContext(), "Saved", true);
-                                                Intent myIntent = new Intent(getContext(), MainMenu.class);
-                                                getActivity().finish();
-                                                startActivity(myIntent);
+                                                    List<tVisitPlanRealisasiData> data = new tVisitPlanRealisasiBL().getAllData();
+                                                    boolean statusHeader = false;
+                                                    for (tVisitPlanRealisasiData dt : data) {
+                                                        if (dt.get_intSubmit().toString().equals("1")) {
+                                                            statusHeader = true;
+                                                        } else {
+                                                            statusHeader = false;
+                                                        }
+                                                    }
+                                                    if (statusHeader) {
+                                                        tVisitPlanHeader_MobileData dt = new tVisitPlanHeader_MobileData();
+                                                        dt.set_intSubmit("1");
+                                                        dt.set_intHeaderId(dataDetail.get_intHeaderID());
+                                                        new tVisitPlanHeader_MobileBL().UpdateData(dt);
+                                                    }
+
+                                                    _clsMainActivity.showCustomToast(getContext(), "Saved", true);
+                                                    Intent myIntent = new Intent(getContext(), MainMenu.class);
+                                                    getActivity().finish();
+                                                    startActivity(myIntent);
+                                                }
+                                            }
+                                            else {
+                                            _clsMainActivity.showCustomToast(getContext(), "Outlet Location not Found", false);
                                             }
 
-                                        } else {
+                                        }
+
+                                        else {
 //                                            _clsMainActivity.showCustomToast(getContext(), "Please Photo at least 1 photo..", false);
                                         }
                                     }

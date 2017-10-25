@@ -282,7 +282,13 @@ public class FragmentAddOverStockMD extends Fragment implements IXListViewListen
         btnAddQuantity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                popUpAddQuantity(new tOverStockDetailData());
+//                popUpAddQuantity(new tOverStockDetailData());
+                List<mEmployeeSalesProductData> listDataProductKalbe = new mEmployeeSalesProductBL().getAllDataNotWhere();
+                if(listDataProductKalbe!=null&&listDataProductKalbe.size()>0){
+                    popUpAddQuantity(new tOverStockDetailData());
+                } else {
+                    new clsMainActivity().showCustomToast(getActivity(), "Please download product first...", false);
+                }
             }
         });
 

@@ -22,6 +22,7 @@ import library.spgmobile.dal.mTypeLeaveMobileDA;
 import library.spgmobile.dal.mTypeSubmissionMobileDA;
 import library.spgmobile.dal.tAbsenUserDA;
 import library.spgmobile.dal.tAttendanceUserDA;
+import library.spgmobile.dal.tKategoryPlanogramMobileDA;
 import library.spgmobile.dal.tLeaveMobileDA;
 import library.spgmobile.dal.tSalesProductHeaderDA;
 import library.spgmobile.dal.tSubTypeActivityDA;
@@ -95,20 +96,38 @@ public class mMenuBL extends clsMainBL {
 
                 //Untuk visitplan harus pengecekan master data
                 if (data.get_TxtDescription().contains("mnVisitPlanMobile")||data.get_TxtDescription().contains("mnPushDataSPG")||data.get_TxtDescription().contains("mnLeaveMD")) {
-                    _mEmployeeAreaDA = new mEmployeeAreaDA(db);
                     _mEmployeeBranchDA = new mEmployeeBranchDA(db);
+                    _mEmployeeAreaDA = new mEmployeeAreaDA(db);
+                    _mEmployeeSalesProductDA = new mEmployeeSalesProductDA(db);
+                    mProductSPGDA _mProductSPGDA = new mProductSPGDA(db);
+                    mProductPICDA _mProductPICDA = new mProductPICDA(db);
+                    mProductCompetitorDA _mProductCompetitorDA = new mProductCompetitorDA(db);
+                    mTypeSubmissionMobileDA _mTypeSubmissionMobileDA = new mTypeSubmissionMobileDA(db);
                     mTypeLeaveMobileDA _mTypeLeaveMobileDA = new mTypeLeaveMobileDA(db);
-                    if (data.get_TxtDescription().contains("mnVisitPlanMobile") && _mEmployeeBranchDA.getContactsCount(db) > 0) {
+                    tKategoryPlanogramMobileDA _tKategoryPlanogramMobileDA = new tKategoryPlanogramMobileDA(db);
+                    tSubTypeActivityDA _tSubTypeActivityDA = new tSubTypeActivityDA(db);
+                    if (data.get_TxtDescription().contains("mnVisitPlanMobile") &&
+                            _mEmployeeAreaDA.getContactsCount(db) > 0 &&
+                            _mEmployeeBranchDA.getContactsCount(db) > 0 &&
+                            _mEmployeeSalesProductDA.getContactsCount(db) > 0 &&
+                            //_mProductSPGDA.getContactsCount(db) > 0 &&
+                            //_mProductPICDA.getContactsCount(db) > 0 &&
+                            //_mProductCompetitorDA.getContactsCount(db) > 0 &&
+                            //_mTypeSubmissionMobileDA.getContactsCount(db) > 0 &&
+                            _mTypeLeaveMobileDA.getContactsCount(db) > 0 &&
+                            _tKategoryPlanogramMobileDA.getContactsCount(db) > 0 &&
+                            _tSubTypeActivityDA.getContactsCount(db) > 0
+                            ) {
                         int validate = 0;
                         if (listDataLeave.size() == 0) {
                             validate = 1;
-                            List<mEmployeeAreaData> datamEmployeeArea = new mEmployeeAreaBL().GetAllData();
-
-                            for (mEmployeeAreaData dt : datamEmployeeArea) {
-                                if (dt.get_txtLatitude().equals("") || dt.get_txtLatitude() == null || dt.get_txtLatitude().equals("") && dt.get_txtLongitude().equals("") || dt.get_txtLongitude() == null || dt.get_txtLongitude().equals("")) {
-                                    validate = 0;
-                                }
-                            }
+//                            List<mEmployeeAreaData> datamEmployeeArea = new mEmployeeAreaBL().GetAllData();
+//
+//                            for (mEmployeeAreaData dt : datamEmployeeArea) {
+//                                if (dt.get_txtLatitude().equals("") || dt.get_txtLatitude() == null || dt.get_txtLatitude().equals("") && dt.get_txtLongitude().equals("") || dt.get_txtLongitude() == null || dt.get_txtLongitude().equals("")) {
+//                                    validate = 0;
+//                                }
+//                            }
                         }
                         if (validate == 1) {
                             tmpData.add(data);
