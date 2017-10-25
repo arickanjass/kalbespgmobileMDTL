@@ -247,7 +247,7 @@ public class FragmentPOPView extends Fragment implements IXListViewListener{
         }
         statusPOP.setText(sts);
 
-//        File folder = new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata");
+//        File folder = new File(Environment.getExtedernalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata");
         File folder = new File(new clsHardCode().txtPathTempData);
         folder.mkdir();
 

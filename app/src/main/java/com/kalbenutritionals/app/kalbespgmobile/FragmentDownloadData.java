@@ -654,6 +654,7 @@ public class FragmentDownloadData extends Fragment {
             } else if (txt_id.equals(res.getResourceEntryName(ll_dataQuesioner.getId()))) {
                 ll_dataQuesioner.setVisibility(View.VISIBLE);
                 ll_dataSPG.setVisibility(View.VISIBLE);
+            } else if (txt_id.equals(res.getResourceEntryName(ll_dataPOP_Standard.getId()))){
                 ll_dataPOP_Standard.setVisibility(View.VISIBLE);
             } else if (txt_id.equals(res.getResourceEntryName(ll_subtypeactivity.getId()))) {
                 ll_subtypeactivity.setVisibility(View.VISIBLE);
@@ -1602,6 +1603,9 @@ public class FragmentDownloadData extends Fragment {
             if(ll_data_tidaksesuaipesanan !=null && checkVisibility(ll_data_tidaksesuaipesanan)){
                 dtJson.getDtdataJson().getDttTidakSesuaiPesananHeaderData().setBoolValid("1");
             }
+            if (ll_dataPOP_Standard != null && checkVisibility(ll_dataPOP_Standard)){
+                dtJson.getDtdataJson().getDtmTypePOPStandardData().setBoolValid("1");
+            }
             String txtValid = "0";
             String txtMess = "";
             String jsonData = "";
@@ -1813,6 +1817,20 @@ public class FragmentDownloadData extends Fragment {
                                             String pstrMess = String.valueOf(innerObj_header.get("_pstrMessage"));
                                             if(boolValid.equals("1")){
                                                 SaveDataQuesioner(jsonArray_Quesioner);
+                                            } else if(boolValid.equals("0")){
+                                            }
+                                            break;
+                                        }
+                                    }
+
+                                    JSONArray jsonArray_POPStandard = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListOfclsDataPOPStandardAPI")));
+                                    if (jsonArray_POPStandard != null) {
+                                        for (Object aJsonArray_header : jsonArray_POPStandard) {
+                                            JSONObject innerObj_header = (JSONObject) aJsonArray_header;
+                                            String boolValid = String.valueOf(innerObj_header.get("_pboolValid"));
+                                            String pstrMess = String.valueOf(innerObj_header.get("_pstrMessage"));
+                                            if(boolValid.equals("1")){
+                                                SaveDataPOPStandard(jsonArray_POPStandard);
                                             } else if(boolValid.equals("0")){
                                             }
                                             break;

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -16,10 +18,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.daimajia.slider.library.Transformers.BaseTransformer;
 import com.kalbenutritionals.app.kalbespgmobile.FragmentKuesioner;
 import com.kalbenutritionals.app.kalbespgmobile.ReportDetailQuiz;
 import com.kalbenutritionals.app.kalbespgmobile.PdfView;
@@ -27,13 +37,18 @@ import com.kalbenutritionals.app.kalbespgmobile.R;
 import com.kalbenutritionals.app.kalbespgmobile.clsMainActivity;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.List;
 
+import bl.clsHelperBL;
 import bl.tKemasanRusakDetailBL;
 import bl.tKemasanRusakHeaderBL;
 import bl.tOverStockDetailBL;
 import bl.tOverStockHeaderBL;
+import bl.tPOPStandardDetailBL;
+import bl.tPOPStandardHeaderBL;
 import bl.tSalesProductQuantityDetailBL;
 import bl.tSalesProductQuantityHeaderBL;
 import bl.tStockInHandDetailBL;
@@ -44,10 +59,13 @@ import library.spgmobile.common.tKemasanRusakDetailData;
 import library.spgmobile.common.tKemasanRusakHeaderData;
 import library.spgmobile.common.tOverStockDetailData;
 import library.spgmobile.common.tOverStockHeaderData;
+import library.spgmobile.common.tPOPStandardDetailData;
+import library.spgmobile.common.tPOPStandardHeaderData;
 import library.spgmobile.common.tSalesProductQuantityDetailData;
 import library.spgmobile.common.tSalesProductQuantityHeaderData;
 import library.spgmobile.common.tStockInHandDetailData;
 import library.spgmobile.common.tStockInHandHeaderData;
+import library.spgmobile.common.visitplanAbsenData;
 import library.spgmobile.dal.clsHardCode;
 
 
@@ -342,6 +360,26 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
             }
         }
 
+        if(data.get_report_type() == "POP Standard TL"){
+
+            switch (columnIndex) {
+                case 1:
+                    renderedView = renderString(data.get_RepeatQuiz(), "left");
+                    break;
+                case 2:
+                    renderedView = renderString(data.get_type(), "left");
+                    break;
+                case 3:
+                    renderedView =  renderString(data.get_Category(), "left");
+                    break;
+                case 4:
+                    renderedView = renderViewDetailNearEdTl(data.get_view_detail(), data.get_dummy(), data.get_report_type(), "left");
+                    break;
+                default:
+                    break;
+            }
+        }
+
         if(data.get_report_type() == "Kuesioner Detail"){
 
             switch (columnIndex) {
@@ -502,6 +540,8 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
                     viewDetailOverStock(dummy);
                 } else if (type == "Kemasan Rusak"){
                     viewDetailKemasanRusak(dummy);
+                } else if(type == "POP Standard TL"){
+                    ViewDetailPOPStandard(dummy);
                 }
 
             }
@@ -1013,5 +1053,177 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
                 });
         final AlertDialog alertD = alertDialogBuilder.create();
         alertD.show();
+    }
+    private static Bitmap mybitmap1;
+    private static Bitmap mybitmap2;
+    private void ViewDetailPOPStandard(final String dummy){
+        tPOPStandardDetailData data = new tPOPStandardDetailBL().GetDataById(dummy);
+        List<tPOPStandardHeaderData> dt = new tPOPStandardHeaderBL().GetDataById(dummy);
+        LayoutInflater layoutInflater = LayoutInflater.from(this.getContext());
+        final View promptView = layoutInflater.inflate(R.layout.fragment_pop_standard_view_detail, null);
+
+        final LinearLayout lnlayout = (LinearLayout) promptView.findViewById(R.id.ln_pop_view_detail);
+
+        lnlayout.setFocusable(true);
+        lnlayout.setFocusableInTouchMode(true);
+        final TextView statusPOP = (TextView) promptView.findViewById(R.id.etNamaPOP);
+        final TextView etDesc = (TextView) promptView.findViewById(R.id.tvDescPOP);
+        final ImageButton img1 = (ImageButton) promptView.findViewById(R.id.imageButton);
+        final ImageButton img2 = (ImageButton) promptView.findViewById(R.id.imageButton2);
+        final TextView reason = (TextView) promptView.findViewById(R.id.reasondetPOP);
+        final TextView category = (TextView) promptView.findViewById(R.id.etCatPOP);
+        final RelativeLayout rl_reason = (RelativeLayout) promptView.findViewById(R.id.rl_pop);
+        final LinearLayout ln_img = (LinearLayout) promptView.findViewById(R.id.ln_img_pop);
+        final TextView status = (TextView) promptView.findViewById(R.id.textView9POP);
+       final SliderLayout mDemoSlider = (SliderLayout) promptView.findViewById(R.id.sliderPOP);
+
+        //adding outlet name di view
+        final TextView tv_outlet = (TextView) promptView.findViewById(R.id.tv_date);
+        tv_outlet.setVisibility(View.VISIBLE);
+
+        visitplanAbsenData dtAbsensVisitplan = new clsHelperBL().getDataCheckInActive();
+        String outlet = "-";
+
+        if(dtAbsensVisitplan!=null){
+            outlet = dt.get(0).get_txtOutletName();
+            if(dt.get(0).get_txtOutletName().toString().equals("null")){
+                outlet = "No Outlet";
+            }
+        }
+        tv_outlet.setText(outlet);
+
+        String statusText = dt.get(0).get_intSubmit().equals("1") && dt.get(0).get_intSync().equals("1") ? "Sync" : "Submit";
+
+        status.setText("Status : " + statusText);
+        category.setText(dt.get(0).get_txtCategory());
+
+        etDesc.setText("There is " + dt.get(0).get_txtType() + " : ");
+        String sts = "";
+        if (dt.get(0).get_bolHavePOP().equals("1")){
+            sts = "Yes";
+            img1.setEnabled(true);
+            img2.setEnabled(true);
+            mDemoSlider.setVisibility(View.VISIBLE);
+//            ln_img.setVisibility(View.VISIBLE);
+        } else {
+            sts = "No";
+            reason.setText(dt.get(0).get_txtReason());
+            rl_reason.setVisibility(View.VISIBLE);
+        }
+        statusPOP.setText(sts);
+
+//        File folder = new File(Environment.getExtedernalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata");
+        File folder = new File(new clsHardCode().txtPathTempData);
+        folder.mkdir();
+
+        final byte[] imgFile = data.get_txtImg1();
+        if (imgFile != null) {
+            mybitmap1 = BitmapFactory.decodeByteArray(imgFile, 0, imgFile.length);
+            Bitmap bitmap = Bitmap.createScaledBitmap(mybitmap1, 150, 150, true);
+            img1.setImageBitmap(bitmap);
+
+            File file = null;
+            try {
+                file = File.createTempFile("image-", ".jpg", new File(new clsHardCode().txtPathTempData));
+                FileOutputStream out = new FileOutputStream(file);
+                out.write(imgFile);
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            TextSliderView textSliderView = new TextSliderView(getContext());
+            textSliderView
+                    .description(dt.get(0).get_txtType())
+                    .image(file)
+                    .setScaleType(BaseSliderView.ScaleType.Fit)
+                    .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
+                        @Override
+                        public void onSliderClick(BaseSliderView slider) {
+                            new clsMainActivity().zoomImage(mybitmap1, getContext());
+                        }
+                    });
+
+            mDemoSlider.addSlider(textSliderView);
+
+        } else {
+            img1.setVisibility(View.GONE);
+        }
+        final byte[] imgFile2 = data.get_txtImg2();
+        if (imgFile2 != null) {
+            mybitmap2 = BitmapFactory.decodeByteArray(imgFile2, 0, imgFile2.length);
+            Bitmap bitmap = Bitmap.createScaledBitmap(mybitmap2, 150, 150, true);
+            img2.setImageBitmap(bitmap);
+
+            File file = null;
+            try {
+                file = File.createTempFile("image-", ".jpg", new File(new clsHardCode().txtPathTempData));
+                FileOutputStream out = new FileOutputStream(file);
+                out.write(imgFile2);
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            TextSliderView textSliderView = new TextSliderView(getContext());
+            textSliderView
+                    .description(dt.get(0).get_txtType())
+                    .image(file)
+                    .setScaleType(BaseSliderView.ScaleType.Fit)
+                    .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
+                        @Override
+                        public void onSliderClick(BaseSliderView slider) {
+                            new clsMainActivity().zoomImage(mybitmap2, getContext());
+                        }
+                    });
+
+            mDemoSlider.addSlider(textSliderView);
+        } else {
+            img2.setVisibility(View.GONE);
+        }
+
+        if (imgFile == null || imgFile2 == null) {
+            mDemoSlider.stopAutoCycle();
+            mDemoSlider.setPagerTransformer(false, new BaseTransformer() {
+                @Override
+                protected void onTransform(View view, float v) {
+                }
+            });
+        } else {
+            mDemoSlider.stopAutoCycle();
+            mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Default);
+            mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+            mDemoSlider.setCustomAnimation(new DescriptionAnimation());
+            mDemoSlider.setDuration(4000);
+        }
+
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this.getContext());
+        alertDialogBuilder.setView(promptView);
+        alertDialogBuilder
+                .setCancelable(false)
+                .setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        new clsMainActivity().deleteTempFolder();
+                        dialog.cancel();
+                    }
+                });
+        final AlertDialog alertD = alertDialogBuilder.create();
+        alertD.show();
+
+        img1.setClickable(true);
+        img1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new clsMainActivity().zoomImage(mybitmap1, getContext());
+            }
+        });
+
+        img2.setClickable(true);
+        img2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new clsMainActivity().zoomImage(mybitmap2, getContext());
+            }
+        });
     }
 }

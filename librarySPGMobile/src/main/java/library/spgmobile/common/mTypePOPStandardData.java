@@ -4,7 +4,7 @@ package library.spgmobile.common;
  * Created by Dewi Oktaviani on 17/10/2017.
  */
 
-public class mTypePOPStandardData {
+public class mTypePOPStandardData extends APIData{
     public String get_intId() {
         return _intId;
     }

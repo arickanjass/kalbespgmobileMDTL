@@ -202,6 +202,8 @@ public class FragmentPushData extends Fragment {
             }
             else if (txt_id.equals(res.getResourceEntryName(ll_dataQuesioner.getId()))){
                 ll_dataQuesioner.setVisibility(View.VISIBLE);
+            }
+            else if (txt_id.equals(res.getResourceEntryName(ll_dataPOP_Standard.getId()))){
                 ll_dataPOP_Standard.setVisibility(View.VISIBLE);
             }
             else if (txt_id.equals(res.getResourceEntryName(ll_data_attendance.getId()))){
