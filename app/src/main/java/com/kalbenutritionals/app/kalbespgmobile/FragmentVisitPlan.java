@@ -492,6 +492,8 @@ public class FragmentVisitPlan extends Fragment implements ConnectionCallbacks, 
 //                                            }
 
                                             if(validTagOutlet){
+                                                latitudeOutlet = Double.parseDouble(dataDetail.get_txtLatSource().toString());
+                                                longitudeOutlet = Double.parseDouble(dataDetail.get_txtLongSource().toString());
                                                 Location locationA = new Location("point A");
 
                                                 locationA.setLatitude(latitude);
