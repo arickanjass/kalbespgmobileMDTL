@@ -207,7 +207,10 @@ public class mMenuBL extends clsMainBL {
                     if (data.get_TxtDescription().contains("mnAbsenTL")&&
                             _mEmployeeSalesProductDA.getContactsCount(db) > 0 &&
                             _tSubTypeActivityDA.getContactsCount(db) > 0 &&
-                            _mEmployeeBranchDA.getContactsCount(db) > 0) {
+                            _mEmployeeBranchDA.getContactsCount(db) > 0 &&
+                            _mEmployeeAreaDA.getContactsCount(db)>0 &&
+                            _mTypeLeaveMobileDA.getContactsCount(db)>0
+                            ) {
                         if (listDataLeave.size() == 0) {
                             tmpData.add(data);
                         }
