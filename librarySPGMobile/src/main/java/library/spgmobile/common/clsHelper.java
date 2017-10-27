@@ -440,7 +440,7 @@ public class clsHelper {
 		_tPurchaseOrderHeaderDA.DropTable(db);
 		_tPurchaseOrderDetailDA.DropTable(db);
 		_tDeviceInfoUserDA.DropTable(db);
-		_mMenuDA.DropTable(db); 
+		_mMenuDA.DropTable(db);
 		_mCounterNumberDA.DropTable(db);
 		_tAbsenUserDA.DropTable(db);
 		_tAttendanceUserDA.DropTable(db);
