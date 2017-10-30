@@ -36,6 +36,14 @@ public class tJawabanUserBL extends clsMainBL {
         return listData;
     }
 
+    public List<tJawabanUserData> GetDataByHeaderIdOrderBySoalId(String intHeaderId){
+        SQLiteDatabase _db = getDb();
+        tJawabanUserDA _tJawabanUserDA = new tJawabanUserDA(_db);
+        List<tJawabanUserData> listData = _tJawabanUserDA.GetDataByHeaderIdOrderBySoalId(_db, intHeaderId);
+        db.close();
+        return listData;
+    }
+
     public List<tJawabanUserData> GetDataByQuestionId(String intQuestionId, String intHeaderId){
         SQLiteDatabase _db = getDb();
         tJawabanUserDA _tJawabanUserDA = new tJawabanUserDA(_db);

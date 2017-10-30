@@ -1,5 +1,7 @@
 package library.spgmobile.common;
 
+import library.spgmobile.dal.clsHardCode;
+
 /**
  * Created by Dewi Oktaviani on 03/05/2017.
  */
@@ -167,6 +169,8 @@ public class tJawabanUserData {
         this._decBobot = _decBobot;
     }
 
+    private static final String TABLE_CONTACTS = new clsHardCode().txtTable_tJawabanUser;
+
     public String Property_intUserAnswer = "intUserAnswer";
     public String Property_intUserId = "intUserId";
     public String Property_intRoleId = "intRoleId";
@@ -190,6 +194,15 @@ public class tJawabanUserData {
             + "," + Property_intAnswerId + "," + Property_txtValue + "," + Property_ptQuiz + ","
             + Property_txtFileQuiz + "," + Property_decBobot + "," + Property_intSubmit + "," + Property_intSync + ","
             + Property_intHeaderId + "," + Property_dtDate + "," + Property_dtDatetime;
+
+    public String Property_Alls = TABLE_CONTACTS + "." +Property_intUserAnswer + "," + TABLE_CONTACTS + "." + Property_intUserId + ","
+            + TABLE_CONTACTS + "." + Property_intNik + "," + TABLE_CONTACTS + "." + Property_intRoleId + ","
+            + TABLE_CONTACTS + "." + Property_intQuestionId + "," + TABLE_CONTACTS + "." + Property_intTypeQuestionId + ","
+            + TABLE_CONTACTS + "." + Property_bolHaveAnswerList + "," + TABLE_CONTACTS + "." + Property_intAnswerId + ","
+            + TABLE_CONTACTS + "." + Property_txtValue + "," + TABLE_CONTACTS + "." + Property_ptQuiz + ","
+            + TABLE_CONTACTS + "." + Property_txtFileQuiz + "," + TABLE_CONTACTS + "." + Property_decBobot + ","
+            + TABLE_CONTACTS + "." + Property_intSubmit + "," + TABLE_CONTACTS + "." + Property_intSync + ","
+            + TABLE_CONTACTS + "." + Property_intHeaderId + "," + TABLE_CONTACTS + "." + Property_dtDate + "," + TABLE_CONTACTS + "." + Property_dtDatetime;
     public tJawabanUserData(){
         super();
     }
