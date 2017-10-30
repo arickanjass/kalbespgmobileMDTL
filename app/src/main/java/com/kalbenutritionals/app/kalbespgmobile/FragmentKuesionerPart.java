@@ -330,6 +330,7 @@ public class FragmentKuesionerPart extends Fragment {
             tvFile = new TextView(getContext());
             tvFile.setId(linearLayout.getId()*37);
             tvFile.setText("no file choosen");
+            tvFile.setGravity(Gravity.CENTER_HORIZONTAL);
             tvFile.setLayoutParams(layoutParams);
             Button button = new Button(getContext());
             button.setId(linearLayout.getId()*88);

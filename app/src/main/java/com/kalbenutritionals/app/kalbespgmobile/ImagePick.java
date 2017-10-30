@@ -283,16 +283,16 @@ public class ImagePick {
                e.printStackTrace();
             }
             if (txtFileQuiz != null){
-                if (Build.MANUFACTURER.equals("Xiaomi")){
-                    fileName = path.substring(path.lastIndexOf('/')+1, path.length());
-                }else {
+//                if (Build.MANUFACTURER.equals("Xiaomi")){
+//                    fileName = path.substring(path.lastIndexOf('/')+1, path.length());
+//                }else {
                     Cursor returnCursor = context.getContentResolver().query(uri,null, null, null, null);
 
                     int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
                     int sizeIndex = returnCursor.getColumnIndex(OpenableColumns.SIZE);
                     returnCursor.moveToFirst();
                     fileName = returnCursor.getString(nameIndex);
-                }
+//                }
 
             }else {
                 fileName = "";

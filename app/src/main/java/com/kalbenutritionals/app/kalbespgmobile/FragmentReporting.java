@@ -5,12 +5,14 @@ import android.animation.AnimatorListenerAdapter;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -40,6 +42,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import bl.mEmployeeSalesProductBL;
+import bl.mKategoriBL;
+import bl.mListJawabanBL;
+import bl.mPertanyaanBL;
+import bl.tHirarkiBISBL;
 import bl.tPOPStandardHeaderBL;
 import jxl.Cell;
 import jxl.CellView;
@@ -89,15 +96,20 @@ import library.spgmobile.common.ReportTable;
 import library.spgmobile.common.mCountConsumerMTDData;
 import library.spgmobile.common.mDownloadMasterData_mobileData;
 import library.spgmobile.common.mEmployeeAreaData;
+import library.spgmobile.common.mEmployeeSalesProductData;
+import library.spgmobile.common.mKategoriData;
+import library.spgmobile.common.mListJawabanData;
 import library.spgmobile.common.mMenuData;
 import library.spgmobile.common.mPertanyaanData;
 import library.spgmobile.common.mTypeSubmissionMobile;
+import library.spgmobile.common.tAbsenUserData;
 import library.spgmobile.common.tActivityData;
 import library.spgmobile.common.tActivityMobileData;
 import library.spgmobile.common.tCustomerBasedMobileDetailData;
 import library.spgmobile.common.tCustomerBasedMobileDetailProductData;
 import library.spgmobile.common.tCustomerBasedMobileHeaderData;
 import library.spgmobile.common.tGroupQuestionMappingData;
+import library.spgmobile.common.tHirarkiBIS;
 import library.spgmobile.common.tJawabanUserData;
 import library.spgmobile.common.tJawabanUserHeaderData;
 import library.spgmobile.common.tKemasanRusakDetailData;
@@ -126,7 +138,10 @@ public class FragmentReporting extends Fragment {
     HashMap<String, String> arrOutlet;
 
     String spinnerSelected = null;
+    String outlet = null;
+    List<tJawabanUserHeaderData> listQuis= null;
     List<mMenuData> menu;
+    File files = null;
     View v;
 
     @Override
@@ -211,7 +226,11 @@ public class FragmentReporting extends Fragment {
             public void onClick(View v) {
                 String outletcode = arrOutlet.get(spnOutlet.getSelectedItem().toString());
                 final String outletName = spnOutlet.getSelectedItem().toString();
+                tUserLoginData dataUserActive = new tAbsenUserBL().getUserActive();
                 final List<tStockInHandHeaderData> dt_so = new tStockInHandHeaderBL().getAllSalesProductHeaderByOutletCodeReport(outletcode);
+//                final List<tJawabanUserHeaderData> dt_quiz = new tJawabanUserHeaderBL().GetDataByOutletCode(outletcode, dataUserActive.get_dtLastLogin());
+               listQuis = new tJawabanUserHeaderBL().GetDataByOutletCode(outletcode, dataUserActive.get_dtLastLogin());
+                outlet = spnOutlet.getSelectedItem().toString();
                 if(dt_so!=null&&dt_so.size()>0){
 //                    generatefileXls(spinnerSelected, dt_so);
                     if(!outletName.equals("ALL OUTLET")){
@@ -237,6 +256,36 @@ public class FragmentReporting extends Fragment {
                         alert.show();
                     } else {
                         generatefileXls(spinnerSelected, outletName, dt_so);
+                    }
+
+                } else if (listQuis!=null&&listQuis.size()>0){
+                    if(!outletName.equals("ALL OUTLET")){
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                        builder.setTitle("Confirm");
+                        builder.setMessage("Hanya akan export Exel data transaksi di Outlet " + outletName + "\n" + "Untuk export semua outlet silahkan pilih 'ALL OUTLET'");
+
+                        builder.setPositiveButton("Lanjutkan", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+//                                generatefileXlsQuiz(spinnerSelected, outletName, dt_quiz);
+                                AsyncSQuiz task = new AsyncSQuiz();
+                                task.execute();
+                            }
+                        });
+
+                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                        AlertDialog alert = builder.create();
+                        alert.show();
+                    } else {
+//                        generatefileXlsQuiz(spinnerSelected, outletName, dt_quiz);
+                        AsyncSQuiz task = new AsyncSQuiz();
+                        task.execute();
                     }
                 }
             }
@@ -1058,6 +1107,7 @@ public class FragmentReporting extends Fragment {
 //                    rt.set_type(String.valueOf(iterator));
                     rt.set_dateTime(data.get_dtDatetime());
                     reportList.add(rt);
+                    btnExport.setVisibility(View.VISIBLE);
                 }
             } else {
                 new clsMainActivity().showCustomToast(getContext(), "No Data to Show", false);
@@ -1496,6 +1546,185 @@ public class FragmentReporting extends Fragment {
             workbook.close();
             new clsMainActivity().showCustomToast(getActivity(), "Data Exported in a Excel Sheet\n" + "Location file in Internal Storage", true);
             showfileExel(file);
+//            showNotification(file);
+//            Toast.makeText(getActivity(),
+//                    "Data Exported in a Excel Sheet", Toast.LENGTH_SHORT).show();
+        } catch (WriteException e) {
+            e.printStackTrace();
+            new clsMainActivity().showCustomToast(getActivity(), e.toString(), false);
+        } catch (IOException e) {
+            e.printStackTrace();
+            new clsMainActivity().showCustomToast(getActivity(), e.toString(), false);
+        }
+    }
+    private class AsyncSQuiz extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            generatefileXlsQuiz(spinnerSelected, outlet, listQuis);
+            return null;
+        }
+
+        private ProgressDialog Dialog = new ProgressDialog(getActivity());
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+//            new clsMainActivity().showCustomToast(getContext(), "Export Successfull...", true);
+            new clsMainActivity().showCustomToast(getActivity(), "Data Exported in a Excel Sheet\n" + "Location file in Internal Storage", true);
+            showfileExel(files);
+            Dialog.dismiss();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            Dialog.setMessage("Export Your Reporting...");
+            Dialog.setCancelable(false);
+            Dialog.show();
+        }
+    }
+
+    private void generatefileXlsQuiz(String fileName, String outletName, List<tJawabanUserHeaderData> _tJawabanUserHeaderData){
+        File sd = Environment.getExternalStorageDirectory();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        String currentDateandTime = sdf.format(new Date());
+        String csvFile = fileName + "_" + outletName + "_" + currentDateandTime + ".xls";
+        int k = 0;
+        File directory = new File(sd.getAbsolutePath());
+        //create directory if not exist
+        if (!directory.isDirectory()) {
+            directory.mkdirs();
+        }
+        try {
+
+            //file path
+           files = new File(directory, csvFile);
+//            if(file.exists()){
+//
+//            }
+            WorkbookSettings wbSettings = new WorkbookSettings();
+            wbSettings.setLocale(new Locale("en", "EN"));
+            WritableWorkbook workbook;
+            workbook = Workbook.createWorkbook(files, wbSettings);
+
+
+            if (_tJawabanUserHeaderData!=null&&_tJawabanUserHeaderData.size()>0) {
+                for(int i=0; i<_tJawabanUserHeaderData.size(); i++){
+
+                    String name = _tJawabanUserHeaderData.get(i).get_txtUserName();
+                    String outlet = _tJawabanUserHeaderData.get(i).get_txtOutletName();
+                    List<tGroupQuestionMappingData> dt_group = new tGroupQuestionMappingBL().GetDataById(Integer.parseInt(_tJawabanUserHeaderData.get(i).get_intGroupQuestionId()));
+                    String group = dt_group.get(0).get_txtGroupQuestion();
+                    String time = _tJawabanUserHeaderData.get(i).get_dtDatetime();
+                    String no = _tJawabanUserHeaderData.get(i).get_intHeaderId();
+
+                    //Excel sheet name. 0 represents first sheet
+                    WritableSheet sheet = workbook.createSheet(no, i);
+
+                    // column and row header
+                    sheet.addCell(new Label(0, 0, "Name"));
+                    sheet.addCell(new Label(0, 1, "Outlet"));
+                    sheet.addCell(new Label(0, 2, "Group Question"));
+                    sheet.addCell(new Label(0, 3, "Answered At"));
+
+                    List<tJawabanUserData> dataAnswer = new tJawabanUserBL().GetDataByHeaderIdOrderBySoalId(_tJawabanUserHeaderData.get(i).get_intHeaderId());
+                    List<mPertanyaanData> dt_Question  = new mPertanyaanBL().GetDataByQuestionId(dataAnswer.get(0).get_intQuestionId());
+                    mKategoriData kategoriData = new mKategoriBL().GetCategoryById(dt_Question.get(0).get_intCategoryId());
+                    if(kategoriData.get_intParentId().equals("2")) {
+                        sheet.addCell(new Label(0, 4, "Sum"));
+                        sheet.addCell(new Label(0, 5, "Average"));
+                        sheet.addCell(new Label(1, 4, _tJawabanUserHeaderData.get(i).get_intSum()));
+                        sheet.addCell(new Label(1, 5, _tJawabanUserHeaderData.get(i).get_intAverage()));
+                        k = 7;
+                    } else {
+                        k = 5;
+                    }
+                    sheet.addCell(new Label(1, 0, name));
+                    sheet.addCell(new Label(1, 1, outlet));
+                    sheet.addCell(new Label(1, 2, group));
+                    sheet.addCell(new Label(1, 3, time));
+
+                    CellView cell0 = sheet.getColumnView(0);
+                    cell0.setAutosize(true);
+                    sheet.setColumnView(0, cell0);
+
+
+                    CellView cellData1 = sheet.getColumnView(1);
+                    cellData1.setAutosize(true);
+                    sheet.setColumnView(1, cellData1);
+
+                    // column and row detail
+                    sheet.addCell(new Label(0, k, "No Question"));
+                    sheet.addCell(new Label(1, k, "Category"));
+                    sheet.addCell(new Label(2, k, "Question"));
+                    sheet.addCell(new Label(3, k, "Answer"));
+
+                    for(int r = 0; r < dataAnswer.size(); r++){
+                        List<tJawabanUserData> data_Answer = new tJawabanUserBL().GetDataByQuestionId(dataAnswer.get(r).get_intQuestionId(), _tJawabanUserHeaderData.get(i).get_intHeaderId());
+                        List<mPertanyaanData> dtQuestion  = new mPertanyaanBL().GetDataByQuestionId(dataAnswer.get(r).get_intQuestionId());
+                        mKategoriData kategori_Data = new mKategoriBL().GetCategoryById(dtQuestion.get(0).get_intCategoryId());
+                        String noQ = dtQuestion.get(0).get_intSoalId();
+                        String kategori = kategori_Data.get_txtCategoryName();
+                        String question = dtQuestion.get(0).get_txtQuestionDesc();
+                        String answer = "";
+                        if (dataAnswer.get(r).get_intTypeQuestionId().equals("1") || dataAnswer.get(r).get_intTypeQuestionId().equals("2") || dataAnswer.get(r).get_intTypeQuestionId().equals("6")){
+                            String jawab = null;
+                            if (dataAnswer != null && dataAnswer.size()>0){
+                                for (tJawabanUserData dt : data_Answer){
+                                    mListJawabanData answerData = new mListJawabanBL().GetDataById(dt.get_intAnswerId());
+                                    final HashMap<String, String> HMProduct = new HashMap<String, String>();
+                                    List<String> dataJawaban = new ArrayList<>();
+                                    if (answerData.get_txtValue().equals("SPG01")){
+
+                                        List<tHirarkiBIS> listSPG = new tHirarkiBISBL().GetDataByOutlet(_tJawabanUserHeaderData.get(i).get_txtOutletCode());
+                                        if (listSPG.size() > 0) {
+                                            for (tHirarkiBIS dat : listSPG) {
+                                                dataJawaban.add(dat.get_txtNik());
+                                                HMProduct.put(dat.get_txtNik(), dat.get_txtName());
+                                            }
+                                        }
+                                        String jawaban = HMProduct.get(dataAnswer.get(r).get_txtValue());
+                                        answer = jawaban;
+                                    } else if (answerData.get_txtValue().equals("CUS01")){
+                                        List<mEmployeeSalesProductData> listDataProductKalbe = new mEmployeeSalesProductBL().GetAllData();
+                                        if (listDataProductKalbe.size() > 0) {
+                                            for (mEmployeeSalesProductData dat : listDataProductKalbe) {
+                                                dataJawaban.add(dat.get_txtBrandDetailGramCode());
+                                                HMProduct.put(dat.get_txtBrandDetailGramCode(), dat.get_txtProductBrandDetailGramName());
+                                            }
+                                        }
+                                        String jawaban = HMProduct.get(dataAnswer.get(r).get_txtValue());
+                                        answer = jawaban;
+                                    }else {
+                                        if (jawab != null){
+                                            jawab += answerData.get_txtKey() + " ,";
+                                        }else {
+                                            jawab = answerData.get_txtKey() + " ,";
+                                        }
+                                        String jawabFinal = jawab.substring(0, jawab.lastIndexOf(',')).trim();
+                                        answer = jawabFinal;
+                                    }
+                                }
+                            }
+                        } else {
+                            answer = dataAnswer.get(r).get_txtValue();
+                        }
+                        k = k+1;
+
+                        sheet.addCell(new Label(0, k, noQ));
+                        sheet.addCell(new Label(1, k, kategori));
+                        sheet.addCell(new Label(2, k, question));
+                        sheet.addCell(new Label(3, k, answer));
+                    }
+
+
+                }
+            }
+
+            //closing cursor
+            workbook.write();
+            workbook.close();
+//            new clsMainActivity().showCustomToast(getActivity(), "Data Exported in a Excel Sheet\n" + "Location file in Internal Storage", true);
+//            showfileExel(file);
 //            showNotification(file);
 //            Toast.makeText(getActivity(),
 //                    "Data Exported in a Excel Sheet", Toast.LENGTH_SHORT).show();
