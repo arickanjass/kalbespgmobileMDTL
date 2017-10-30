@@ -8,6 +8,7 @@ import java.util.List;
 
 import library.spgmobile.common.mProductPICData;
 import library.spgmobile.common.mProductSPGData;
+import library.spgmobile.common.mUserLOBData;
 
 /**
  * Created by ASUS ZE on 24/03/2017.
@@ -291,6 +292,55 @@ public class mProductPICDA {
     // Getting contacts Count
     public int getContactsCount(SQLiteDatabase db) {
         String countQuery = "SELECT * FROM " + TABLE_CONTACTS;
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int countData = cursor.getCount();
+        cursor.close();
+        // return count
+        return countData;
+    }
+
+    // Getting contacts Count
+    public int getContactsCountByKN(SQLiteDatabase db, List<mUserLOBData>  mUserLOBDataList) {
+        mProductPICData data = new mProductPICData();
+
+        String query = "()";
+
+        if (mUserLOBDataList != null){
+            query = "(";
+            for (int i = 0; i < mUserLOBDataList.size(); i++) {
+                query = query + "'" + mUserLOBDataList.get(i).get_txtLOBName() + "'";
+                query = query + ((i + 1) != mUserLOBDataList.size() ? "," : ")");
+            }
+        }
+
+        String countQuery = "SELECT * FROM " + TABLE_CONTACTS +" WHERE "+data.Property_txtLobName +" IN " + query;
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int countData = cursor.getCount();
+        cursor.close();
+        // return count
+        return countData;
+    }
+
+    //deleteByKN
+    public void deleteContactsCountByKN(SQLiteDatabase db, List<mUserLOBData>  mUserLOBDataList) {
+        mProductPICData data = new mProductPICData();
+
+        String query = "()";
+
+        if (mUserLOBDataList != null){
+            query = "(";
+            for (int i = 0; i < mUserLOBDataList.size(); i++) {
+                query = query + "'" + mUserLOBDataList.get(i).get_txtLOBName() + "'";
+                query = query + ((i + 1) != mUserLOBDataList.size() ? "," : ")");
+            }
+        }
+
+        db.execSQL( "DELETE FROM " + TABLE_CONTACTS +" WHERE "+data.Property_txtLobName +" IN " + query);
+    }
+
+    // Getting contacts Count
+    public int getContactsCountDataSubmissionId(SQLiteDatabase db) {
+        String countQuery = "SELECT * FROM " + TABLE_CONTACTS + " where txtMasterId in('null','')";
         Cursor cursor = db.rawQuery(countQuery, null);
         int countData = cursor.getCount();
         cursor.close();

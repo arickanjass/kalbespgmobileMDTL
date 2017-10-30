@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import library.spgmobile.common.mEmployeeSalesProductData;
+import library.spgmobile.common.mProductPICData;
+import library.spgmobile.common.mUserLOBData;
+import library.spgmobile.common.tSalesProductQuantityDetailData;
+import library.spgmobile.common.tSalesProductQuantityHeaderData;
 
 public class mEmployeeSalesProductDA {
 
@@ -269,4 +273,120 @@ public class mEmployeeSalesProductDA {
 		return countData;
 	}
 
+	public List<mEmployeeSalesProductData> getAllDataByKN(SQLiteDatabase db, List<mUserLOBData> mUserLOBDataList) {
+		List<mEmployeeSalesProductData> contactList = null;
+		// select All Query
+		mEmployeeSalesProductData dt = new mEmployeeSalesProductData();
+
+		String dataLOB = "()";
+
+		if (mUserLOBDataList != null){
+			dataLOB = "(";
+			for (int i = 0; i < mUserLOBDataList.size(); i++) {
+				dataLOB = dataLOB + "'" + mUserLOBDataList.get(i).get_txtLOBName() + "'";
+				dataLOB = dataLOB + ((i + 1) != mUserLOBDataList.size() ? "," : ")");
+			}
+		}
+		String selectQuery = "SELECT "+dt.Property_All+" FROM " + TABLE_CONTACTS +" WHERE "+dt.Property_txtLobName +" IN " + dataLOB;
+
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		// looping through all rows and adding to list
+		if (cursor.moveToFirst()) {
+			contactList = new ArrayList<mEmployeeSalesProductData>();
+			do {
+				mEmployeeSalesProductData contact = new mEmployeeSalesProductData();
+				contact.set_intId(cursor.getString(0));
+				contact.set_decBobot(cursor.getString(1));
+				contact.set_decHJD(cursor.getString(2));
+				contact.set_txtBrandDetailGramCode(cursor.getString(3));
+				contact.set_txtName(cursor.getString(4));
+				contact.set_txtNIK(cursor.getString(5));
+				contact.set_txtProductBrandDetailGramName(cursor.getString(6));
+				contact.set_txtProductDetailCode(cursor.getString(7));
+				contact.set_txtProductDetailName(cursor.getString(8));
+				contact.set_txtLobName(cursor.getString(9));
+				contactList.add(contact);
+			} while (cursor.moveToNext());
+		}
+		cursor.close();
+		return contactList;
+	}
+
+	public List<mEmployeeSalesProductData> deleteAllDataByKN(SQLiteDatabase db, List<mUserLOBData> mUserLOBDataList) {
+		List<mEmployeeSalesProductData> contactList = null;
+		// select All Query
+		mEmployeeSalesProductData dt = new mEmployeeSalesProductData();
+
+		String dataLOB = "()";
+
+		if (mUserLOBDataList != null){
+			dataLOB = "(";
+			for (int i = 0; i < mUserLOBDataList.size(); i++) {
+				dataLOB = dataLOB + "'" + mUserLOBDataList.get(i).get_txtLOBName() + "'";
+				dataLOB = dataLOB + ((i + 1) != mUserLOBDataList.size() ? "," : ")");
+			}
+		}
+		String selectQuery = "DELETE "+ "FROM " + TABLE_CONTACTS +" WHERE "+dt.Property_txtLobName +" IN " + dataLOB;
+
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		// looping through all rows and adding to list
+		if (cursor.moveToFirst()) {
+			contactList = new ArrayList<mEmployeeSalesProductData>();
+			do {
+				mEmployeeSalesProductData contact = new mEmployeeSalesProductData();
+				contact.set_intId(cursor.getString(0));
+				contact.set_decBobot(cursor.getString(1));
+				contact.set_decHJD(cursor.getString(2));
+				contact.set_txtBrandDetailGramCode(cursor.getString(3));
+				contact.set_txtName(cursor.getString(4));
+				contact.set_txtNIK(cursor.getString(5));
+				contact.set_txtProductBrandDetailGramName(cursor.getString(6));
+				contact.set_txtProductDetailCode(cursor.getString(7));
+				contact.set_txtProductDetailName(cursor.getString(8));
+				contact.set_txtLobName(cursor.getString(9));
+				contactList.add(contact);
+			} while (cursor.moveToNext());
+		}
+		cursor.close();
+		return contactList;
+	}
+	// Getting contacts Count
+	public int getContactsCountByKN(SQLiteDatabase db, List<mUserLOBData>  mUserLOBDataList) {
+		mEmployeeSalesProductData data = new mEmployeeSalesProductData();
+
+		String query = "()";
+
+		if (mUserLOBDataList != null){
+			query = "(";
+			for (int i = 0; i < mUserLOBDataList.size(); i++) {
+				query = query + "'" + mUserLOBDataList.get(i).get_txtLOBName() + "'";
+				query = query + ((i + 1) != mUserLOBDataList.size() ? "," : ")");
+			}
+		}
+
+		String countQuery = "SELECT * FROM " + TABLE_CONTACTS +" WHERE "+data.Property_txtLobName +" IN " + query;
+		Cursor cursor = db.rawQuery(countQuery, null);
+		int countData = cursor.getCount();
+		cursor.close();
+		// return count
+		return countData;
+	}
+	//deleteByKN
+	public void deleteContactsCountByKN(SQLiteDatabase db, List<mUserLOBData>  mUserLOBDataList) {
+		mEmployeeSalesProductData data = new mEmployeeSalesProductData();
+
+		String query = "()";
+
+		if (mUserLOBDataList != null){
+			query = "(";
+			for (int i = 0; i < mUserLOBDataList.size(); i++) {
+				query = query + "'" + mUserLOBDataList.get(i).get_txtLOBName() + "'";
+				query = query + ((i + 1) != mUserLOBDataList.size() ? "," : ")");
+			}
+		}
+
+		db.execSQL( "DELETE FROM " + TABLE_CONTACTS +" WHERE "+data.Property_txtLobName +" IN " + query);
+	}
 }

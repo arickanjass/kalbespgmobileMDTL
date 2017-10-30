@@ -12,6 +12,7 @@ import library.spgmobile.common.APIData;
 import library.spgmobile.common.clsHelper;
 import library.spgmobile.common.linkAPI;
 import library.spgmobile.common.mProductSPGData;
+import library.spgmobile.common.mUserLOBData;
 import library.spgmobile.common.tDeviceInfoUserData;
 import library.spgmobile.dal.clsHardCode;
 import library.spgmobile.dal.mProductSPGDA;
@@ -27,6 +28,11 @@ public class mProductSPGBL extends clsMainBL {
         SQLiteDatabase db = getDb();
         mProductSPGDA _mProductSPGDA=new mProductSPGDA(db);
         _mProductSPGDA.DeleteAllDataMConfig(db);
+    }
+    public void deleteAllDataByKN(List<mUserLOBData> mUserLOBDataList) {
+        SQLiteDatabase db = getDb();
+        mProductSPGDA _mProductSPGDA=new mProductSPGDA(db);
+        _mProductSPGDA.deleteContactsCountByKN(db, mUserLOBDataList);
     }
     public void saveData(List<mProductSPGData> Listdata) {
         SQLiteDatabase db = getDb();
@@ -55,6 +61,20 @@ public class mProductSPGBL extends clsMainBL {
         int count = 0;
         mProductSPGDA _mProductSPGDA=new mProductSPGDA(db);
         count = _mProductSPGDA.getContactsCount(db);
+        return count;
+    }
+
+    public int getContactCountByKN(List<mUserLOBData> mUserLOBDataList){
+        int count = 0;
+        mProductSPGDA _mProductSPGDA=new mProductSPGDA(db);
+        count = _mProductSPGDA.getContactsCountByKN(db, mUserLOBDataList);
+        return count;
+    }
+
+    public int getContactCountSubId(){
+        int count = 0;
+        mProductSPGDA _mProductSPGDA=new mProductSPGDA(db);
+        count = _mProductSPGDA.getContactsCountDataSubmissionId(db);
         return count;
     }
 

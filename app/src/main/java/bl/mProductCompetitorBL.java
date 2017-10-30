@@ -12,8 +12,10 @@ import library.spgmobile.common.APIData;
 import library.spgmobile.common.clsHelper;
 import library.spgmobile.common.linkAPI;
 import library.spgmobile.common.mProductCompetitorData;
+import library.spgmobile.common.mUserLOBData;
 import library.spgmobile.common.tDeviceInfoUserData;
 import library.spgmobile.dal.clsHardCode;
+import library.spgmobile.dal.mEmployeeSalesProductDA;
 import library.spgmobile.dal.mProductCompetitorDA;
 import library.spgmobile.dal.mconfigDA;
 import library.spgmobile.dal.tDeviceInfoUserDA;
@@ -28,6 +30,11 @@ public class mProductCompetitorBL extends clsMainBL {
         SQLiteDatabase db = getDb();
         mProductCompetitorDA _mProductCompetitorDA=new mProductCompetitorDA(db);
         _mProductCompetitorDA.DeleteAllDataMConfig(db);
+    }
+    public void deleteAllDataByKN(List<mUserLOBData> mUserLOBDataList) {
+        SQLiteDatabase db = getDb();
+        mProductCompetitorDA _mProductCompetitorDA=new mProductCompetitorDA(db);
+        _mProductCompetitorDA.deleteContactsCountByKN(db, mUserLOBDataList);
     }
     public void saveData(List<mProductCompetitorData> Listdata) {
         SQLiteDatabase db = getDb();
@@ -76,5 +83,10 @@ public class mProductCompetitorBL extends clsMainBL {
         res= _clsHelper.ResultJsonArray(JsonData);
         //String txtParam=
         return res;
+    }
+    public int  getContactsCountByKN(List<mUserLOBData> mUserLOBDataList){
+        SQLiteDatabase db=getDb();
+        mProductCompetitorDA _mProductCompetitorDA=new mProductCompetitorDA(db);
+        return _mProductCompetitorDA.getContactsCountByKN(db, mUserLOBDataList);
     }
 }

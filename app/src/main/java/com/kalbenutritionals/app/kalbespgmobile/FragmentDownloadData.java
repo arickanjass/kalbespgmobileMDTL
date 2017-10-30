@@ -75,6 +75,7 @@ import bl.mTypeLeaveBL;
 import bl.mTypePOPStandardBL;
 import bl.mTypePertanyaanBL;
 import bl.mTypeSubmissionMobileBL;
+import bl.mUserLOBBL;
 import bl.tAbsenUserBL;
 import bl.tActivityBL;
 import bl.tActivityMobileBL;
@@ -131,6 +132,7 @@ import library.spgmobile.common.mTypeLeaveMobileData;
 import library.spgmobile.common.mTypePOPStandardData;
 import library.spgmobile.common.mTypePertanyaanData;
 import library.spgmobile.common.mTypeSubmissionMobile;
+import library.spgmobile.common.mUserLOBData;
 import library.spgmobile.common.tAbsenUserData;
 import library.spgmobile.common.tActivityData;
 import library.spgmobile.common.tActivityMobileData;
@@ -235,11 +237,16 @@ public class FragmentDownloadData extends Fragment {
     private String strMessage = "";
     ProgressBar mProgressBar;
 
+    List<mUserLOBData> mUserLOBDataList;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.activity_download_data, container, false);
         Button btnAllDownload = (Button) v.findViewById(R.id.btnAllDownload);
+
+        mUserLOBDataList = new ArrayList<>();
+        mUserLOBDataList = new mUserLOBBL().GetAllData();
 
         Button btnKordinasiOutlet = (Button) v.findViewById(R.id.btnKordinasiOutlet);
         spnKordinasiOutlet = (Spinner) v.findViewById(R.id.spnKordinasiOutlet);
@@ -1257,241 +1264,241 @@ public class FragmentDownloadData extends Fragment {
         return view.getVisibility() == View.VISIBLE;
     }
 
-    private class AsyncCallDownloadAll extends AsyncTask<JSONArray, Void, List<dataJson>> {
-        @Override
-        protected List<dataJson> doInBackground(JSONArray... params) {
-            //android.os.Debug.waitForDebugger();
-            JSONArray Json;
-            List<dataJson> listDataJson = new ArrayList<>();
-            dataJson dtdataJson = new dataJson();
-            try {
-//                new mPriceInOutletBL().DownloadmPriceInOutlet(pInfo.versionName);
-
-                if (ll_subtypeactivity != null && checkVisibility(ll_subtypeactivity)) {
-                    Json = new tSubTypeActivityBL().DownloadtSubTypeActivity(pInfo.versionName, loginData.get_txtRoleId());
-                    SaveDatatSubTypeActivityData(Json);
-                }
-
-                if (ll_kategoryPlanogram != null && checkVisibility(ll_kategoryPlanogram)) {
-                    Json = new tKategoryPlanogramMobileBL().DownloadKategoryPlanogram(pInfo.versionName, loginData.get_txtRoleId());
-                    SaveDataKategoryPlanogram(Json);
-                }
-
-                if (ll_branch != null && checkVisibility(ll_branch)) {
-                    Json = new mEmployeeBranchBL().DownloadEmployeeBranch2(pInfo.versionName);
-                    SaveDatamEmployeeBranchData(Json);
-                }
-                if (ll_type_leave != null && checkVisibility(ll_type_leave)) {
-                    Json = new mTypeLeaveBL().DownloadTypeLeave2(pInfo.versionName);
-                    SaveDatamTypeLeaveMobileData(Json);
-                }
-                if (ll_product != null && checkVisibility(ll_product)) {
-                    Json = new mEmployeeSalesProductBL().DownloadEmployeeSalesProduct(pInfo.versionName);
-//                    SaveDatamProductBarcodeData(Json);
-                }
-                if (ll_brand != null && checkVisibility(ll_brand)) {
-                    Json = new mProductBrandHeaderBL().DownloadBrandHeader(pInfo.versionName);
-                    SaveDatamProductBrandHeaderData(Json);
-                }
-
-                if (ll_kategoriVisitPlan != null && checkVisibility(ll_kategoriVisitPlan)) {
-                    Json = new mCategoryVisitPlanBL().DownloadCategoryVisitPlanData(pInfo.versionName);
-                    SaveDatamCategoryVisitPlanData(Json);
-                }
-
-                if (ll_dataVisitPlan != null && checkVisibility(ll_dataVisitPlan)) {
-                    Json = new tVisitPlanRealisasiBL().DownloadRealisasiVisitPlan(pInfo.versionName);
-                    SaveDatatTransaksiVisitPlanHeaderData(Json);
-                    SaveDatatTransaksiVisitPlanData(Json);
-                }
-
-                if (ll_data_attendance != null && checkVisibility(ll_data_attendance )){
-                    Json = new tAttendanceUserBL() .DownloadAttendance(pInfo.versionName);
-                    SaveDatatAttendanceUserData(Json);
-                }
-
-                if (ll_outlet != null && checkVisibility(ll_outlet )){
-                    Json = new mEmployeeAreaBL().DownloadEmployeeArea2(pInfo.versionName);
-                    SaveDatamEmployeeAreaData(Json);
-                }
-
-                if (ll_reso != null && checkVisibility(ll_reso)) {
-                    Json = new tSalesProductHeaderBL().DownloadReso(pInfo.versionName);
-                    Iterator i = Json.iterator();
-                    org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
-                    int boolValid = Integer.valueOf(String.valueOf(innerObj.get("_pboolValid")));
-                    if (boolValid == 1) SaveDatatSalesProductData(Json);
-                }
-
-                if (ll_purchase_order != null && checkVisibility(ll_purchase_order)) {
-                    new tPurchaseOrderHeaderBL().DownloadNOPO(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
-                    Json = new tPurchaseOrderHeaderBL().DownloadTransactionPO(pInfo.versionName);
-                    Iterator j = Json.iterator();
-                    org.json.simple.JSONObject innerObj_po = (org.json.simple.JSONObject) j.next();
-                    int boolValid_po = Integer.valueOf(String.valueOf(innerObj_po.get("_pboolValid")));
-                    if (boolValid_po == 1) SaveDatatPurchaseOrderData(Json);
-                }
-
-                if (ll_data_stockIH != null && checkVisibility(ll_data_stockIH)) {
-                    new tStockInHandHeaderBL().DownloadNOSIH(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
-                    Json = new tStockInHandHeaderBL().DownloadSIH(pInfo.versionName);
-                    Iterator j = Json.iterator();
-                    org.json.simple.JSONObject innerObj_po = (org.json.simple.JSONObject) j.next();
-                    int boolValid_po = Integer.valueOf(String.valueOf(innerObj_po.get("_pboolValid")));
-                    if (boolValid_po == 1) SaveDatatStockInHandData(Json);
-                }
-
-                if (ll_dataQuesioner != null && checkVisibility(ll_dataQuesioner)) {
-                    Json = new mParentBL().DownlaodDataQuesioner(pInfo.versionName);
-                    Iterator x = Json.iterator();
-                    org.json.simple.JSONObject innerObj_Quiz = (org.json.simple.JSONObject) x.next();
-                    int boolValid_po = Integer.valueOf(String.valueOf(innerObj_Quiz.get("_pboolValid")));
-                    if (boolValid_po == 1) SaveDataQuesioner(Json);
-
-//                    Json = new mParentBL().DownlaodDataSPGfromTL(pInfo.versionName);
-//                    Iterator y = Json.iterator();
-//                    JSONObject innnerObj_SPGFromTL = (JSONObject) y.next();
-//                    int boolValid_SPG = Integer.valueOf(String.valueOf(innnerObj_SPGFromTL.get("_pboolValid")));
-//                    if (boolValid_SPG == 1) SaveDataSPGFromTL(Json);
-                }
-
-                if (ll_dataQuantityStock != null && checkVisibility(ll_dataQuantityStock)) {
-                    new tSalesProductQuantityHeaderBL().DownloadNOQuantityStock(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
-                    Json = new tSalesProductQuantityHeaderBL().DownloadTransactionQuantityStock(pInfo.versionName);
-                    Iterator k = Json.iterator();
-                    org.json.simple.JSONObject innerObj_quantityStock = (org.json.simple.JSONObject) k.next();
-                    int boolValid_quantityStock = Integer.valueOf(String.valueOf(innerObj_quantityStock.get("_pboolValid")));
-                    if (boolValid_quantityStock == 1) SaveDatatSalesProductQuantityData(Json);
-                }
-
-                if (ll_data_overStock != null && checkVisibility(ll_data_overStock)) {
-                    new tOverStockHeaderBL().DownloadNOOverStock(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
-                    Json = new tOverStockHeaderBL().DownloadTransactionOverStock(pInfo.versionName);
-                    Iterator k = Json.iterator();
-                    org.json.simple.JSONObject innerObj_quantityStock = (org.json.simple.JSONObject) k.next();
-                    int boolValid_overStock = Integer.valueOf(String.valueOf(innerObj_quantityStock.get("_pboolValid")));
-                    if (boolValid_overStock == 1) SaveDatatOverStockData(Json);
-                }
-
-                Json = new trackingLocationBL().DownloadTrackingLocation(pInfo.versionName);
-                Iterator l = Json.iterator();
-                org.json.simple.JSONObject innerObj_trackingLocation = (org.json.simple.JSONObject) l.next();
-                int boolValid_trackingLocation = Integer.valueOf(String.valueOf(innerObj_trackingLocation.get("_pboolValid")));
-                if (boolValid_trackingLocation == 1) SaveDataTrackingLocationData(Json);
-
-                if (ll_dataKordinasiOutlet != null && checkVisibility(ll_dataKordinasiOutlet)) {
-                    Json = new KoordinasiOutletBL().DownloadDataKoordinasiOutlet(pInfo.versionName);
-                    Iterator m = Json.iterator();
-                    org.json.simple.JSONObject innerObj_koordinasiOutlet = (org.json.simple.JSONObject) m.next();
-                    int boolValid_koordinasiOutlet = Integer.valueOf(String.valueOf(innerObj_koordinasiOutlet.get("_pboolValid")));
-                    if (boolValid_koordinasiOutlet == 1) SaveDataKoordinasiOutletData(Json);
-
-                    Json = new KoordinasiOutletBL().DownloadDataCategoryKoordinasiOutlet(pInfo.versionName);
-                    Iterator c = Json.iterator();
-                    org.json.simple.JSONObject innerObj_categoryKoordinasiOutlet = (org.json.simple.JSONObject) c.next();
-                    int boolValid_categoryKoordinasiOutlet = Integer.valueOf(String.valueOf(innerObj_categoryKoordinasiOutlet.get("_pboolValid")));
-                    if (boolValid_categoryKoordinasiOutlet == 1) SaveDataCategoryKoordinasiOutletData(Json);
-                }
-
-                if (ll_data_planogram != null && checkVisibility(ll_data_planogram)) {
-                    Json = new tPlanogramMobileBL().DownloadTransactionPlanogram(pInfo.versionName);
-                    Iterator m = Json.iterator();
-                    org.json.simple.JSONObject innerObj_koordinasiOutlet = (org.json.simple.JSONObject) m.next();
-                    int boolValid_Planogram = Integer.valueOf(String.valueOf(innerObj_koordinasiOutlet.get("_pboolValid")));
-                    if (boolValid_Planogram == 1) SaveDatatPlamogramData(Json);
-                }
-
-                if (ll_data_activity != null && checkVisibility(ll_data_activity)) {
-                    Json = new tActivityBL().DownloadActivity(pInfo.versionName);
-                    SaveDatatActivityData(Json);
-                }
-                if (ll_data_activityV2 != null && checkVisibility(ll_data_activityV2)) {
-                    Json = new tActivityMobileBL().DownloadActivityV2(pInfo.versionName);
-                    SaveDatatActivityDataV2(Json);
-                }
-                if (ll_data_customerbased != null && checkVisibility(ll_data_customerbased)) {
-                    Json = new tCustomerBasedMobileHeaderBL().DownloadCustomerBase(pInfo.versionName);
-                    SaveDatatCustomerBasedData(Json);
-                }
-                if (ll_absen != null && checkVisibility(ll_absen)) {
-                    Json = new tAbsenUserBL().DownloadAbsen(pInfo.versionName);
-                    SaveDatatAbsenUserData(Json);
-                }
-                if (ll_data_leave != null && checkVisibility(ll_data_leave)) {
-                    Json = new tLeaveMobileBL().DownloadDataLeave(pInfo.versionName);
-                    SaveDatatLeaveData(Json);
-                }
-                if (ll_product_competitor != null && checkVisibility(ll_product_competitor)) {
-                    Json = new mProductCompetitorBL().DownloadProdctCompetitor(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
-                    SaveDatammProductCompetitorData(Json);
-                }
-                if (ll_product_spg != null && checkVisibility(ll_product_spg)) {
-                    Json = new mProductSPGBL().DownloadProductSPG(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
-                    SaveDatammProductSPGData(Json);
-                }
-                if (ll_product_pic != null && checkVisibility(ll_product_pic)) {
-                    Json = new mProductPICBL().DownloadProductPIC(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
-                    SaveDatammProductPICData(Json);
-                }
-                if (ll_type_submission != null && checkVisibility(ll_type_submission)) {
-                    Json = new mTypeSubmissionMobileBL().DownloadTypeSubmission(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
-                    SaveDatamTypeSubmissionMobile(Json);
-                }
-
-                dtdataJson.setIntResult("1");
-            } catch (Exception e) {
-                dtdataJson.setIntResult("0");
-                //dtdataJson.setTxtMessage(e.getMessage().toString());
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            listDataJson.add(dtdataJson);
-            return listDataJson;
-        }
-
-        @Override
-        protected void onCancelled() {
-            Dialog.dismiss();
-            new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessCancelRequest, false);
-        }
-
-        private ProgressDialog Dialog = new ProgressDialog(getContext());
-
-        @Override
-        protected void onPostExecute(List<dataJson> listdataJson) {
-            if (listdataJson.get(0).getIntResult().equals("0")) {
-                new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessUnableToConnect, false);
-                Dialog.dismiss();
-
-            } else {
-                loadData();
-                new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
-                Dialog.dismiss();
-                checkingDataTable("ALL");
-            }
-        }
-
-        @Override
-        protected void onPreExecute() {
-            // Make ProgressBar invisible
-            // pg.setVisibility(View.VISIBLE);
-            Dialog.setMessage(new clsHardCode().txtMessGetAllData);
-            Dialog.setCancelable(false);
-//            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//                    intProcesscancel = 1;
+//    private class AsyncCallDownloadAll extends AsyncTask<JSONArray, Void, List<dataJson>> {
+//        @Override
+//        protected List<dataJson> doInBackground(JSONArray... params) {
+//            //android.os.Debug.waitForDebugger();
+//            JSONArray Json;
+//            List<dataJson> listDataJson = new ArrayList<>();
+//            dataJson dtdataJson = new dataJson();
+//            try {
+////                new mPriceInOutletBL().DownloadmPriceInOutlet(pInfo.versionName);
+//
+//                if (ll_subtypeactivity != null && checkVisibility(ll_subtypeactivity)) {
+//                    Json = new tSubTypeActivityBL().DownloadtSubTypeActivity(pInfo.versionName, loginData.get_txtRoleId());
+//                    SaveDatatSubTypeActivityData(Json);
 //                }
-//            });
-            Dialog.show();
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-            Dialog.dismiss();
-        }
-
-    }
+//
+//                if (ll_kategoryPlanogram != null && checkVisibility(ll_kategoryPlanogram)) {
+//                    Json = new tKategoryPlanogramMobileBL().DownloadKategoryPlanogram(pInfo.versionName, loginData.get_txtRoleId());
+//                    SaveDataKategoryPlanogram(Json);
+//                }
+//
+//                if (ll_branch != null && checkVisibility(ll_branch)) {
+//                    Json = new mEmployeeBranchBL().DownloadEmployeeBranch2(pInfo.versionName);
+//                    SaveDatamEmployeeBranchData(Json);
+//                }
+//                if (ll_type_leave != null && checkVisibility(ll_type_leave)) {
+//                    Json = new mTypeLeaveBL().DownloadTypeLeave2(pInfo.versionName);
+//                    SaveDatamTypeLeaveMobileData(Json);
+//                }
+//                if (ll_product != null && checkVisibility(ll_product)) {
+//                    Json = new mEmployeeSalesProductBL().DownloadEmployeeSalesProduct(pInfo.versionName);
+////                    SaveDatamProductBarcodeData(Json);
+//                }
+//                if (ll_brand != null && checkVisibility(ll_brand)) {
+//                    Json = new mProductBrandHeaderBL().DownloadBrandHeader(pInfo.versionName);
+//                    SaveDatamProductBrandHeaderData(Json);
+//                }
+//
+//                if (ll_kategoriVisitPlan != null && checkVisibility(ll_kategoriVisitPlan)) {
+//                    Json = new mCategoryVisitPlanBL().DownloadCategoryVisitPlanData(pInfo.versionName);
+//                    SaveDatamCategoryVisitPlanData(Json);
+//                }
+//
+//                if (ll_dataVisitPlan != null && checkVisibility(ll_dataVisitPlan)) {
+//                    Json = new tVisitPlanRealisasiBL().DownloadRealisasiVisitPlan(pInfo.versionName);
+//                    SaveDatatTransaksiVisitPlanHeaderData(Json);
+//                    SaveDatatTransaksiVisitPlanData(Json);
+//                }
+//
+//                if (ll_data_attendance != null && checkVisibility(ll_data_attendance )){
+//                    Json = new tAttendanceUserBL() .DownloadAttendance(pInfo.versionName);
+//                    SaveDatatAttendanceUserData(Json);
+//                }
+//
+//                if (ll_outlet != null && checkVisibility(ll_outlet )){
+//                    Json = new mEmployeeAreaBL().DownloadEmployeeArea2(pInfo.versionName);
+//                    SaveDatamEmployeeAreaData(Json);
+//                }
+//
+//                if (ll_reso != null && checkVisibility(ll_reso)) {
+//                    Json = new tSalesProductHeaderBL().DownloadReso(pInfo.versionName);
+//                    Iterator i = Json.iterator();
+//                    org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
+//                    int boolValid = Integer.valueOf(String.valueOf(innerObj.get("_pboolValid")));
+//                    if (boolValid == 1) SaveDatatSalesProductData(Json);
+//                }
+//
+//                if (ll_purchase_order != null && checkVisibility(ll_purchase_order)) {
+//                    new tPurchaseOrderHeaderBL().DownloadNOPO(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+//                    Json = new tPurchaseOrderHeaderBL().DownloadTransactionPO(pInfo.versionName);
+//                    Iterator j = Json.iterator();
+//                    org.json.simple.JSONObject innerObj_po = (org.json.simple.JSONObject) j.next();
+//                    int boolValid_po = Integer.valueOf(String.valueOf(innerObj_po.get("_pboolValid")));
+//                    if (boolValid_po == 1) SaveDatatPurchaseOrderData(Json);
+//                }
+//
+//                if (ll_data_stockIH != null && checkVisibility(ll_data_stockIH)) {
+//                    new tStockInHandHeaderBL().DownloadNOSIH(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+//                    Json = new tStockInHandHeaderBL().DownloadSIH(pInfo.versionName);
+//                    Iterator j = Json.iterator();
+//                    org.json.simple.JSONObject innerObj_po = (org.json.simple.JSONObject) j.next();
+//                    int boolValid_po = Integer.valueOf(String.valueOf(innerObj_po.get("_pboolValid")));
+//                    if (boolValid_po == 1) SaveDatatStockInHandData(Json);
+//                }
+//
+//                if (ll_dataQuesioner != null && checkVisibility(ll_dataQuesioner)) {
+//                    Json = new mParentBL().DownlaodDataQuesioner(pInfo.versionName);
+//                    Iterator x = Json.iterator();
+//                    org.json.simple.JSONObject innerObj_Quiz = (org.json.simple.JSONObject) x.next();
+//                    int boolValid_po = Integer.valueOf(String.valueOf(innerObj_Quiz.get("_pboolValid")));
+//                    if (boolValid_po == 1) SaveDataQuesioner(Json);
+//
+////                    Json = new mParentBL().DownlaodDataSPGfromTL(pInfo.versionName);
+////                    Iterator y = Json.iterator();
+////                    JSONObject innnerObj_SPGFromTL = (JSONObject) y.next();
+////                    int boolValid_SPG = Integer.valueOf(String.valueOf(innnerObj_SPGFromTL.get("_pboolValid")));
+////                    if (boolValid_SPG == 1) SaveDataSPGFromTL(Json);
+//                }
+//
+//                if (ll_dataQuantityStock != null && checkVisibility(ll_dataQuantityStock)) {
+//                    new tSalesProductQuantityHeaderBL().DownloadNOQuantityStock(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+//                    Json = new tSalesProductQuantityHeaderBL().DownloadTransactionQuantityStock(pInfo.versionName);
+//                    Iterator k = Json.iterator();
+//                    org.json.simple.JSONObject innerObj_quantityStock = (org.json.simple.JSONObject) k.next();
+//                    int boolValid_quantityStock = Integer.valueOf(String.valueOf(innerObj_quantityStock.get("_pboolValid")));
+//                    if (boolValid_quantityStock == 1) SaveDatatSalesProductQuantityData(Json);
+//                }
+//
+//                if (ll_data_overStock != null && checkVisibility(ll_data_overStock)) {
+//                    new tOverStockHeaderBL().DownloadNOOverStock(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+//                    Json = new tOverStockHeaderBL().DownloadTransactionOverStock(pInfo.versionName);
+//                    Iterator k = Json.iterator();
+//                    org.json.simple.JSONObject innerObj_quantityStock = (org.json.simple.JSONObject) k.next();
+//                    int boolValid_overStock = Integer.valueOf(String.valueOf(innerObj_quantityStock.get("_pboolValid")));
+//                    if (boolValid_overStock == 1) SaveDatatOverStockData(Json);
+//                }
+//
+//                Json = new trackingLocationBL().DownloadTrackingLocation(pInfo.versionName);
+//                Iterator l = Json.iterator();
+//                org.json.simple.JSONObject innerObj_trackingLocation = (org.json.simple.JSONObject) l.next();
+//                int boolValid_trackingLocation = Integer.valueOf(String.valueOf(innerObj_trackingLocation.get("_pboolValid")));
+//                if (boolValid_trackingLocation == 1) SaveDataTrackingLocationData(Json);
+//
+//                if (ll_dataKordinasiOutlet != null && checkVisibility(ll_dataKordinasiOutlet)) {
+//                    Json = new KoordinasiOutletBL().DownloadDataKoordinasiOutlet(pInfo.versionName);
+//                    Iterator m = Json.iterator();
+//                    org.json.simple.JSONObject innerObj_koordinasiOutlet = (org.json.simple.JSONObject) m.next();
+//                    int boolValid_koordinasiOutlet = Integer.valueOf(String.valueOf(innerObj_koordinasiOutlet.get("_pboolValid")));
+//                    if (boolValid_koordinasiOutlet == 1) SaveDataKoordinasiOutletData(Json);
+//
+//                    Json = new KoordinasiOutletBL().DownloadDataCategoryKoordinasiOutlet(pInfo.versionName);
+//                    Iterator c = Json.iterator();
+//                    org.json.simple.JSONObject innerObj_categoryKoordinasiOutlet = (org.json.simple.JSONObject) c.next();
+//                    int boolValid_categoryKoordinasiOutlet = Integer.valueOf(String.valueOf(innerObj_categoryKoordinasiOutlet.get("_pboolValid")));
+//                    if (boolValid_categoryKoordinasiOutlet == 1) SaveDataCategoryKoordinasiOutletData(Json);
+//                }
+//
+//                if (ll_data_planogram != null && checkVisibility(ll_data_planogram)) {
+//                    Json = new tPlanogramMobileBL().DownloadTransactionPlanogram(pInfo.versionName);
+//                    Iterator m = Json.iterator();
+//                    org.json.simple.JSONObject innerObj_koordinasiOutlet = (org.json.simple.JSONObject) m.next();
+//                    int boolValid_Planogram = Integer.valueOf(String.valueOf(innerObj_koordinasiOutlet.get("_pboolValid")));
+//                    if (boolValid_Planogram == 1) SaveDatatPlamogramData(Json);
+//                }
+//
+//                if (ll_data_activity != null && checkVisibility(ll_data_activity)) {
+//                    Json = new tActivityBL().DownloadActivity(pInfo.versionName);
+//                    SaveDatatActivityData(Json);
+//                }
+//                if (ll_data_activityV2 != null && checkVisibility(ll_data_activityV2)) {
+//                    Json = new tActivityMobileBL().DownloadActivityV2(pInfo.versionName);
+//                    SaveDatatActivityDataV2(Json);
+//                }
+//                if (ll_data_customerbased != null && checkVisibility(ll_data_customerbased)) {
+//                    Json = new tCustomerBasedMobileHeaderBL().DownloadCustomerBase(pInfo.versionName);
+//                    SaveDatatCustomerBasedData(Json);
+//                }
+//                if (ll_absen != null && checkVisibility(ll_absen)) {
+//                    Json = new tAbsenUserBL().DownloadAbsen(pInfo.versionName);
+//                    SaveDatatAbsenUserData(Json);
+//                }
+//                if (ll_data_leave != null && checkVisibility(ll_data_leave)) {
+//                    Json = new tLeaveMobileBL().DownloadDataLeave(pInfo.versionName);
+//                    SaveDatatLeaveData(Json);
+//                }
+//                if (ll_product_competitor != null && checkVisibility(ll_product_competitor)) {
+//                    Json = new mProductCompetitorBL().DownloadProdctCompetitor(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+//                    SaveDatammProductCompetitorData(Json);
+//                }
+//                if (ll_product_spg != null && checkVisibility(ll_product_spg)) {
+//                    Json = new mProductSPGBL().DownloadProductSPG(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+//                    SaveDatammProductSPGData(Json);
+//                }
+//                if (ll_product_pic != null && checkVisibility(ll_product_pic)) {
+//                    Json = new mProductPICBL().DownloadProductPIC(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+//                    SaveDatammProductPICData(Json);
+//                }
+//                if (ll_type_submission != null && checkVisibility(ll_type_submission)) {
+//                    Json = new mTypeSubmissionMobileBL().DownloadTypeSubmission(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+//                    SaveDatamTypeSubmissionMobile(Json);
+//                }
+//
+//                dtdataJson.setIntResult("1");
+//            } catch (Exception e) {
+//                dtdataJson.setIntResult("0");
+//                //dtdataJson.setTxtMessage(e.getMessage().toString());
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//            }
+//            listDataJson.add(dtdataJson);
+//            return listDataJson;
+//        }
+//
+//        @Override
+//        protected void onCancelled() {
+//            Dialog.dismiss();
+//            new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessCancelRequest, false);
+//        }
+//
+//        private ProgressDialog Dialog = new ProgressDialog(getContext());
+//
+//        @Override
+//        protected void onPostExecute(List<dataJson> listdataJson) {
+//            if (listdataJson.get(0).getIntResult().equals("0")) {
+//                new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessUnableToConnect, false);
+//                Dialog.dismiss();
+//
+//            } else {
+//                loadData();
+//                new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
+//                Dialog.dismiss();
+//                checkingDataTable("ALL");
+//            }
+//        }
+//
+//        @Override
+//        protected void onPreExecute() {
+//            // Make ProgressBar invisible
+//            // pg.setVisibility(View.VISIBLE);
+//            Dialog.setMessage(new clsHardCode().txtMessGetAllData);
+//            Dialog.setCancelable(false);
+////            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+////                @Override
+////                public void onClick(DialogInterface dialog, int which) {
+////                    intProcesscancel = 1;
+////                }
+////            });
+//            Dialog.show();
+//        }
+//
+//        @Override
+//        protected void onProgressUpdate(Void... values) {
+//            Dialog.dismiss();
+//        }
+//
+//    }
 
 
     String eMessage ="";
@@ -1522,7 +1529,10 @@ public class FragmentDownloadData extends Fragment {
                 dtJson.getDtdataJson().getDtmTypeLeaveMobileData().setBoolValid("1");
             }
             if (ll_product != null && checkVisibility(ll_product)) {
-                dtJson.getDtdataJson().getDtmEmployeeSalesProductData().setBoolValid("1");
+                int count = new mEmployeeSalesProductBL().getContactsCountByKN(mUserLOBDataList);
+                if(count==0){
+                    dtJson.getDtdataJson().getDtmEmployeeSalesProductData().setBoolValid("1");
+                }
             }
             if (ll_brand != null && checkVisibility(ll_brand)) {
                 dtJson.getDtdataJson().getDtmProductBrandHeaderData().setBoolValid("1");
@@ -1531,13 +1541,22 @@ public class FragmentDownloadData extends Fragment {
                 dtJson.getDtdataJson().getDtmCategoryVisitPlanData().setBoolValid("1");
             }
             if (ll_product_competitor != null && checkVisibility(ll_product_competitor)) {
-                dtJson.getDtdataJson().getDtmProductCompetitorData().setBoolValid("1");
+                int count = new mProductCompetitorBL().getContactsCountByKN(mUserLOBDataList);
+                if(count==0){
+                    dtJson.getDtdataJson().getDtmProductCompetitorData().setBoolValid("1");
+                }
             }
             if (ll_product_spg != null && checkVisibility(ll_product_spg)) {
-                dtJson.getDtdataJson().getDtmProductSPGData().setBoolValid("1");
+                int count = new mProductSPGBL().getContactCountByKN(mUserLOBDataList);
+                if(count==0){
+                    dtJson.getDtdataJson().getDtmProductSPGData().setBoolValid("1");
+                }
             }
             if (ll_product_pic != null && checkVisibility(ll_product_pic)) {
-                dtJson.getDtdataJson().getDtmProductPICData().setBoolValid("1");
+                int count = new mProductPICBL().getContactCountByKN(mUserLOBDataList);
+                if(count==0){
+                    dtJson.getDtdataJson().getDtmProductPICData().setBoolValid("1");
+                }
             }
             if (ll_type_submission != null && checkVisibility(ll_type_submission)) {
                 dtJson.getDtdataJson().getDtmTypeSubmissionMobile().setBoolValid("1");
@@ -3302,7 +3321,7 @@ public class FragmentDownloadData extends Fragment {
             JSONArray Json = null;
             try {
 //                Json = new mProductBarcodeBL().DownloadmProductBarcode2(pInfo.versionName);
-                Json = new mEmployeeSalesProductBL().DownloadEmployeeSalesProduct(pInfo.versionName);
+                Json = new mEmployeeSalesProductBL().DownloadEmployeeSalesProduct(pInfo.versionName, mUserLOBDataList);
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -5128,7 +5147,7 @@ public class FragmentDownloadData extends Fragment {
         protected JSONArray doInBackground(JSONArray... params) {
             JSONArray Json = null;
             try {
-                Json = new mProductCompetitorBL().DownloadProdctCompetitor(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+                    Json = new mProductCompetitorBL().DownloadProdctCompetitor(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -5178,6 +5197,7 @@ public class FragmentDownloadData extends Fragment {
         _array = new ArrayList<>();
         Iterator i = jsonArray.iterator();
         List<mProductCompetitorData> _Listdata = new ArrayList<>();
+
         while (i.hasNext()) {
             org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
             int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
@@ -5200,7 +5220,9 @@ public class FragmentDownloadData extends Fragment {
                 break;
             }
         }
-        new mProductCompetitorBL().deleteAllData();
+        if(_Listdata.size()>0){
+            new mProductCompetitorBL().deleteAllDataByKN(mUserLOBDataList);
+        }
         new mProductCompetitorBL().saveData(_Listdata);
         return _array;
     }
@@ -5210,7 +5232,7 @@ public class FragmentDownloadData extends Fragment {
         protected JSONArray doInBackground(JSONArray... params) {
             JSONArray Json = null;
             try {
-                Json = new mProductSPGBL().DownloadProductSPG(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+                    Json = new mProductSPGBL().DownloadProductSPG(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -5260,7 +5282,7 @@ public class FragmentDownloadData extends Fragment {
         _array = new ArrayList<>();
         Iterator i = jsonArray.iterator();
         List<mProductSPGData> _Listdata = new ArrayList<>();
-        new mProductSPGBL().deleteAllData();
+//        new mProductSPGBL().deleteAllData();
         int intsum = new mProductSPGBL().getContactCount();
         while (i.hasNext()) {
             org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
@@ -5288,6 +5310,9 @@ public class FragmentDownloadData extends Fragment {
                 break;
             }
         }
+        if(_Listdata.size()>0){
+            new mProductSPGBL().deleteAllDataByKN(mUserLOBDataList);
+        }
         new mProductSPGBL().saveData(_Listdata);
         return _array;
     }
@@ -5298,7 +5323,7 @@ public class FragmentDownloadData extends Fragment {
 //            android.os.Debug.waitForDebugger();
             JSONArray Json = null;
             try {
-                Json = new mProductPICBL().DownloadProductPIC(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+                    Json = new mProductPICBL().DownloadProductPIC(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -5346,7 +5371,7 @@ public class FragmentDownloadData extends Fragment {
         _array = new ArrayList<>();
         Iterator i = jsonArray.iterator();
         List<mProductPICData> _Listdata = new ArrayList<>();
-        new mProductPICBL().deleteAllData();
+//        new mProductPICBL().deleteAllData();
         int intsum = new mProductPICBL().getContactCount();
         while (i.hasNext()) {
             org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
@@ -5373,6 +5398,9 @@ public class FragmentDownloadData extends Fragment {
                 strMessage = (String) innerObj.get(dtAPIDATA.strMessage);
                 break;
             }
+        }
+        if(_Listdata.size()>0){
+            new mProductPICBL().deleteAllDataByKN(mUserLOBDataList);
         }
         new mProductPICBL().saveData(_Listdata);
         return _array;

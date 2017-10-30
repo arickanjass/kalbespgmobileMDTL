@@ -301,4 +301,13 @@ public class tKemasanRusakHeaderDA {
         // return contact list
         return contactList;
     }
+    // Getting contacts Count
+    public int getContactsCount(SQLiteDatabase db) {
+        String countQuery = "SELECT 1 FROM " + TABLE_CONTACTS;
+        Cursor cursor = db.rawQuery(countQuery, null);
+        // return count
+        int index = cursor.getCount();
+        cursor.close();
+        return index;
+    }
 }

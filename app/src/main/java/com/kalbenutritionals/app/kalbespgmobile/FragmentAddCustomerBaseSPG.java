@@ -59,6 +59,7 @@ import bl.mProductCompetitorBL;
 import bl.mProductPICBL;
 import bl.mProductSPGBL;
 import bl.mTypeSubmissionMobileBL;
+import bl.mUserLOBBL;
 import bl.tCustomerBasedMobileDetailBL;
 import bl.tCustomerBasedMobileDetailProductBL;
 import bl.tCustomerBasedMobileHeaderBL;
@@ -75,6 +76,7 @@ import library.spgmobile.common.mProductCompetitorData;
 import library.spgmobile.common.mProductPICData;
 import library.spgmobile.common.mProductSPGData;
 import library.spgmobile.common.mTypeSubmissionMobile;
+import library.spgmobile.common.mUserLOBData;
 import library.spgmobile.common.tCustomerBasedMobileDetailData;
 import library.spgmobile.common.tCustomerBasedMobileDetailProductData;
 import library.spgmobile.common.tCustomerBasedMobileHeaderData;
@@ -119,11 +121,16 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
     String param = null;
     Date dt_hidden;
 
+    List<mUserLOBData> mUserLOBDataList;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         dtDetail = new ArrayList<>();
         v = inflater.inflate(R.layout.fragment_customerbase_add, container, false);
+
+        mUserLOBDataList = new ArrayList<>();
+        mUserLOBDataList = new mUserLOBBL().GetAllData();
 
         Bundle mBundle = getArguments();
         if (mBundle != null) {
@@ -2094,6 +2101,29 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
             } else if (notelpkantor.length() > 15) {
                 new clsMainActivity().setErrorMessage(getContext(), textInputLayoutTelpKantor, etTelponKantor, "telephone number maximum 15 digits");
                 validate = false;
+            }
+        }
+
+        if(mUserLOBDataList!=null&&mUserLOBDataList.size()>0){
+            if(new mProductPICBL().getContactCountByKN(mUserLOBDataList)==0){
+                new clsMainActivity().showCustomToast(getContext(), "Please re-download Product PIC", false);
+                validate=false;
+            } else if (new mProductPICBL().getContactCountSubId()>0){
+                new clsMainActivity().showCustomToast(getContext(), "Please re-download Product PIC", false);
+                validate=false;
+            }
+
+            if(new mProductSPGBL().getContactCountByKN(mUserLOBDataList)==0){
+                new clsMainActivity().showCustomToast(getContext(), "Please re-download Product SPG", false);
+                validate=false;
+            } else if (new mProductSPGBL().getContactCountSubId()>0){
+                new clsMainActivity().showCustomToast(getContext(), "Please re-download Product SPG", false);
+                validate=false;
+            }
+
+            if(new mProductCompetitorBL().getContactsCountByKN(mUserLOBDataList)==0){
+                new clsMainActivity().showCustomToast(getContext(), "Please re-download Product Competitor", false);
+                validate=false;
             }
         }
 

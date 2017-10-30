@@ -68,6 +68,7 @@ import bl.mCountConsumerMTDBL;
 import bl.mCounterNumberBL;
 import bl.mDownloadMasterData_mobileBL;
 import bl.mMenuBL;
+import bl.mUserLOBBL;
 import bl.mUserRoleBL;
 import bl.tDeviceInfoUserBL;
 import bl.tLogErrorBL;
@@ -78,6 +79,7 @@ import library.spgmobile.common.mCountConsumerMTDData;
 import library.spgmobile.common.mDownloadMasterData_mobileData;
 import library.spgmobile.common.mEmployeeAreaData;
 import library.spgmobile.common.mMenuData;
+import library.spgmobile.common.mUserLOBData;
 import library.spgmobile.common.mUserRoleData;
 import library.spgmobile.common.tLogErrorData;
 import library.spgmobile.common.tUserLoginData;
@@ -548,6 +550,22 @@ public class Login extends clsMainActivity {
                             }
                             new mDownloadMasterData_mobileBL().SaveData(listDatamDownloadData);
                         }
+
+                        JSONArray JsonArrayListLOBSPG = (JSONArray) innerObj.get("ListLOBSPG");
+
+                        int index = new mUserLOBBL().getContactsCount();
+
+                        if(JsonArrayListLOBSPG!=null){
+                            List<mUserLOBData> _mUserLOBDataList = new ArrayList<>();
+                            for(int i = 0 ; i < JsonArrayListLOBSPG.size();i++){
+                                mUserLOBData dt = new mUserLOBData();
+                                dt.set_intId(String.valueOf(index+=1));
+                                dt.set_txtLOBName(String.valueOf(JsonArrayListLOBSPG.get(i)));
+                                _mUserLOBDataList.add(dt);
+                            }
+                            new mUserLOBBL().saveData(_mUserLOBDataList);
+                        }
+
                         if (!isMyServiceRunning(MyServiceNative.class)) {
                             startService(new Intent(Login.this, MyServiceNative.class));
                         }

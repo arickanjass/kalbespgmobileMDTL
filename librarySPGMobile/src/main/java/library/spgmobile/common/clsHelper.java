@@ -61,6 +61,7 @@ import library.spgmobile.dal.mTypeLeaveMobileDA;
 import library.spgmobile.dal.mTypePOPStandardDA;
 import library.spgmobile.dal.mTypePertanyaanDA;
 import library.spgmobile.dal.mTypeSubmissionMobileDA;
+import library.spgmobile.dal.mUserLOBDA;
 import library.spgmobile.dal.mUserRoleDA;
 import library.spgmobile.dal.mconfigDA;
 import library.spgmobile.dal.tAbsenUserDA;
@@ -369,6 +370,7 @@ public class clsHelper {
 		trackingLocationDA _trackingLocationDA = new trackingLocationDA(db);
 		KoordinasiOutletDA _KoordinasiOutletDA = new KoordinasiOutletDA(db);
 		KoordinasiOutletImageDA _KoordinasiOutletImageDA = new KoordinasiOutletImageDA(db);
+		mUserLOBDA _mUserLOBDA = new mUserLOBDA(db);
 
 		tVisitPlanHeader_MobileDA _tVisitPlanHeader_mobileDA = new tVisitPlanHeader_MobileDA(db);
 		tVisitPlanRealisasiDA _tVisitPlanRealisasiDA = new tVisitPlanRealisasiDA(db);
@@ -397,6 +399,7 @@ public class clsHelper {
 		tTidakSesuaiPesananHeaderDA _tTidakSesuaiPesananHeaderDA = new tTidakSesuaiPesananHeaderDA(db);
 		tTidakSesuaiPesananImageDA _tTidakSesuaiPesananImageDA = new tTidakSesuaiPesananImageDA(db);
 
+		_mUserLOBDA.DropTable(db);
 		_tSubTypeActivityDA.Droptable(db);
 		_tKategoryPlanogramMobileDA.Droptable(db);
 		_mMCategoryVisitPlanDA.DropTable(db);
@@ -404,10 +407,10 @@ public class clsHelper {
 		_tVisitPlanRealisasiDA.DropTable(db);
 		//_tDisplayPictureDA.DropTable(db);
 		_mDownloadMasterData_mobileDA.DropTable(db);
-		_mProductSPGDA.DropTable(db);
-		_mProductPICDA.DropTable(db);
+//		_mProductSPGDA.DropTable(db);
+//		_mProductPICDA.DropTable(db);
 		_mCountConsumerMTDDA.DropTable(db);
-		_mProductCompetitorDA.DropTable(db);
+//		_mProductCompetitorDA.DropTable(db);
 		_mTypeSubmissionMobileDA.DropTable(db);
 		_tSalesProductQuantityDA.Droptable(db);
 		_tSalesProductQuantityDetailDA.DropTable(db);
@@ -431,7 +434,7 @@ public class clsHelper {
 		_mEmployeeAreaDA.DropTable(db);
 		_mNotificationDA.DropTable(db);
 		_mEmployeeBranchDA.DropTable(db);
-		_mEmployeeSalesProductDA.DropTable(db);
+//		_mEmployeeSalesProductDA.DropTable(db);
 		_tUserLoginDA.DropTable(db);
 		_tSalesProductHeaderDA.DropTable(db);
 		_tSalesProductDetailDA.DropTable(db);
@@ -440,7 +443,7 @@ public class clsHelper {
 		_tPurchaseOrderHeaderDA.DropTable(db);
 		_tPurchaseOrderDetailDA.DropTable(db);
 		_tDeviceInfoUserDA.DropTable(db);
-		_mMenuDA.DropTable(db); 
+		_mMenuDA.DropTable(db);
 		_mCounterNumberDA.DropTable(db);
 		_tAbsenUserDA.DropTable(db);
 		_tAttendanceUserDA.DropTable(db);
@@ -517,6 +520,7 @@ public class clsHelper {
 		new tKemasanRusakImageDA(db);
 		new tTidakSesuaiPesananHeaderDA(db);
 		new tTidakSesuaiPesananImageDA(db);
+		new mUserLOBDA(db);
 
 		_mPriceInOutletDA=new mPriceInOutletDA(db);
 		_mUserRoleDA=new mUserRoleDA(db);

@@ -6,7 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import library.spgmobile.common.mProductCompetitorData;
 import library.spgmobile.common.mProductSPGData;
+import library.spgmobile.common.mUserLOBData;
 
 /**
  * Created by ASUS ZE on 24/03/2017.
@@ -293,5 +295,53 @@ public class mProductSPGDA {
         cursor.close();
         // return count
         return countData;
+    }
+
+    // Getting contacts Count
+    public int getContactsCountByKN(SQLiteDatabase db, List<mUserLOBData>  mUserLOBDataList) {
+        mProductSPGData data = new mProductSPGData();
+
+        String query = "()";
+
+        if (mUserLOBDataList != null){
+            query = "(";
+            for (int i = 0; i < mUserLOBDataList.size(); i++) {
+                query = query + "'" + mUserLOBDataList.get(i).get_txtLOBName() + "'";
+                query = query + ((i + 1) != mUserLOBDataList.size() ? "," : ")");
+            }
+        }
+
+        String countQuery = "SELECT * FROM " + TABLE_CONTACTS +" WHERE "+data.Property_txtLobName +" IN " + query;
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int countData = cursor.getCount();
+        cursor.close();
+        // return count
+        return countData;
+    }
+
+    // Getting contacts Count
+    public int getContactsCountDataSubmissionId(SQLiteDatabase db) {
+        String countQuery = "SELECT * FROM " + TABLE_CONTACTS + " where txtMasterId in('null','')";
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int countData = cursor.getCount();
+        cursor.close();
+        // return count
+        return countData;
+    }
+
+    public void deleteContactsCountByKN(SQLiteDatabase db, List<mUserLOBData>  mUserLOBDataList) {
+        mProductSPGData data = new mProductSPGData();
+
+        String query = "()";
+
+        if (mUserLOBDataList != null){
+            query = "(";
+            for (int i = 0; i < mUserLOBDataList.size(); i++) {
+                query = query + "'" + mUserLOBDataList.get(i).get_txtLOBName() + "'";
+                query = query + ((i + 1) != mUserLOBDataList.size() ? "," : ")");
+            }
+        }
+
+        db.execSQL( "DELETE FROM " + TABLE_CONTACTS +" WHERE "+data.Property_txtLobName +" IN " + query);
     }
 }

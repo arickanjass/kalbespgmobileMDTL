@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import library.spgmobile.common.mProductCompetitorData;
+import library.spgmobile.common.mProductPICData;
+import library.spgmobile.common.mUserLOBData;
 
 /**
  * Created by Rian Andrivani on 3/8/2017.
@@ -188,5 +190,43 @@ public class mProductCompetitorDA {
         cursor.close();
         // return count
         return countData;
+    }
+
+    // Getting contacts Count
+    public int getContactsCountByKN(SQLiteDatabase db, List<mUserLOBData>  mUserLOBDataList) {
+        mProductCompetitorData data = new mProductCompetitorData();
+
+        String query = "()";
+
+        if (mUserLOBDataList != null){
+            query = "(";
+            for (int i = 0; i < mUserLOBDataList.size(); i++) {
+                query = query + "'" + mUserLOBDataList.get(i).get_txtLOBName() + "'";
+                query = query + ((i + 1) != mUserLOBDataList.size() ? "," : ")");
+            }
+        }
+
+        String countQuery = "SELECT * FROM " + TABLE_CONTACTS +" WHERE "+data.Property_txtLobName +" IN " + query;
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int countData = cursor.getCount();
+        cursor.close();
+        // return count
+        return countData;
+    }
+    //deleteByKN
+    public void deleteContactsCountByKN(SQLiteDatabase db, List<mUserLOBData>  mUserLOBDataList) {
+        mProductCompetitorData data = new mProductCompetitorData();
+
+        String query = "()";
+
+        if (mUserLOBDataList != null){
+            query = "(";
+            for (int i = 0; i < mUserLOBDataList.size(); i++) {
+                query = query + "'" + mUserLOBDataList.get(i).get_txtLOBName() + "'";
+                query = query + ((i + 1) != mUserLOBDataList.size() ? "," : ")");
+            }
+        }
+
+        db.execSQL( "DELETE FROM " + TABLE_CONTACTS +" WHERE "+data.Property_txtLobName +" IN " + query);
     }
 }

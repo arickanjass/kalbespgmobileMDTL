@@ -13,6 +13,7 @@ import library.spgmobile.common.clsHelper;
 import library.spgmobile.common.linkAPI;
 import library.spgmobile.common.mCounterNumberData;
 import library.spgmobile.common.mEmployeeSalesProductData;
+import library.spgmobile.common.mUserLOBData;
 import library.spgmobile.common.mconfigData;
 import library.spgmobile.common.tUserLoginData;
 import library.spgmobile.dal.clsFileAttach_mobileDA;
@@ -25,7 +26,7 @@ import library.spgmobile.dal.mconfigDA;
 import library.spgmobile.dal.tUserLoginDA;
 
 public class mEmployeeSalesProductBL extends clsMainBL{
-	public JSONArray DownloadEmployeeSalesProduct(String versionName) throws Exception{
+	public JSONArray DownloadEmployeeSalesProduct(String versionName, List<mUserLOBData> mUserLOBDataList) throws Exception{
 		//ambil linkapi Database sqllite
 		SQLiteDatabase _db=getDb();
 		tUserLoginDA _tUserLoginDA=new tUserLoginDA(_db);
@@ -55,7 +56,7 @@ public class mEmployeeSalesProductBL extends clsMainBL{
 		Boolean flag=true;
 		String ErrorMess="";
 		mEmployeeSalesProductDA _mEmployeeBranchDA=new mEmployeeSalesProductDA(_db);
-		_mEmployeeBranchDA.DeleteAllDataMConfig(_db);
+		_mEmployeeBranchDA.deleteAllDataByKN(_db,mUserLOBDataList);
 		int intsum= _mEmployeeBranchDA.getContactsCount(_db);
 		while (i.hasNext()) {
 			org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
@@ -139,6 +140,19 @@ public class mEmployeeSalesProductBL extends clsMainBL{
 		SQLiteDatabase db=getDb();
 		mEmployeeSalesProductDA _mEmployeeSalesProductDA= new mEmployeeSalesProductDA(db);
 		return _mEmployeeSalesProductDA.getContactsCount(db);
+	}
+
+	public int  getContactsCountByKN(List<mUserLOBData> mUserLOBDataList){
+		SQLiteDatabase db=getDb();
+		mEmployeeSalesProductDA _mEmployeeSalesProductDA= new mEmployeeSalesProductDA(db);
+		return _mEmployeeSalesProductDA.getContactsCountByKN(db, mUserLOBDataList);
+	}
+
+	public int deleteContactByKN(List<mUserLOBData> mUserLOBDataList){
+		SQLiteDatabase db=getDb();
+		mEmployeeSalesProductDA _mEmployeeSalesProductDA= new mEmployeeSalesProductDA(db);
+		_mEmployeeSalesProductDA.deleteContactsCountByKN(db, mUserLOBDataList);
+		return  _mEmployeeSalesProductDA.getContactsCount(db);
 	}
 
 	public void saveData(mEmployeeSalesProductData data){

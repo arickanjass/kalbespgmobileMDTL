@@ -2,7 +2,7 @@ package library.spgmobile.common;
 
 import java.io.Serializable;
 
-public class clsSwipeList implements Serializable{
+public class clsSwipeList extends APIData implements Serializable{
 
 	private String _txtId;
 	private String _txtTitle;

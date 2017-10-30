@@ -12,6 +12,7 @@ import library.spgmobile.common.APIData;
 import library.spgmobile.common.clsHelper;
 import library.spgmobile.common.linkAPI;
 import library.spgmobile.common.mProductPICData;
+import library.spgmobile.common.mUserLOBData;
 import library.spgmobile.common.tDeviceInfoUserData;
 import library.spgmobile.dal.clsHardCode;
 import library.spgmobile.dal.mProductPICDA;
@@ -27,6 +28,11 @@ public class mProductPICBL extends clsMainBL {
         SQLiteDatabase db = getDb();
         mProductPICDA _mProductPICDA=new mProductPICDA(db);
         _mProductPICDA.DeleteAllDataMConfig(db);
+    }
+    public void deleteAllDataByKN(List<mUserLOBData> mUserLOBDataList) {
+        SQLiteDatabase db = getDb();
+        mProductPICDA _mProductPICDA=new mProductPICDA(db);
+        _mProductPICDA.deleteContactsCountByKN(db, mUserLOBDataList);
     }
     public void saveData(List<mProductPICData> Listdata) {
         SQLiteDatabase db = getDb();
@@ -56,6 +62,20 @@ public class mProductPICBL extends clsMainBL {
         int count = 0;
         mProductPICDA _mProductPICDA=new mProductPICDA(db);
         count = _mProductPICDA.getContactsCount(db);
+        return count;
+    }
+
+    public int getContactCountByKN(List<mUserLOBData> mUserLOBDataList){
+        int count = 0;
+        mProductPICDA _mProductPICDA=new mProductPICDA(db);
+        count = _mProductPICDA.getContactsCountByKN(db, mUserLOBDataList);
+        return count;
+    }
+
+    public int getContactCountSubId(){
+        int count = 0;
+        mProductPICDA _mProductPICDA=new mProductPICDA(db);
+        count = _mProductPICDA.getContactsCountDataSubmissionId(db);
         return count;
     }
 

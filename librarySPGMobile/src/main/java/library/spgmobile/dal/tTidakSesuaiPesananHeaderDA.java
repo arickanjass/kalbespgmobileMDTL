@@ -245,4 +245,14 @@ public class tTidakSesuaiPesananHeaderDA {
         // return contact list
         return count;
     }
+    // Getting contacts Count
+    public int getContactsCount(SQLiteDatabase db) {
+        String countQuery = "SELECT * FROM " + TABLE_CONTACTS;
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int num =cursor.getCount();
+        cursor.close();
+
+        // return count
+        return num;
+    }
 }
