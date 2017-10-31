@@ -60,6 +60,14 @@ public class mProductCompetitorBL extends clsMainBL {
         return ListData;
     }
 
+    public List<mProductCompetitorData> GetListDataByProductKNByKN(String idProductKN, List<mUserLOBData> mUserLOBDataList){
+        SQLiteDatabase db=getDb();
+        mProductCompetitorDA _mProductCompetitorDA=new mProductCompetitorDA(db);
+        List<mProductCompetitorData>ListData=_mProductCompetitorDA.getListDataByProductKNByKN(db, idProductKN, mUserLOBDataList);
+        db.close();
+        return ListData;
+    }
+
     public JSONArray DownloadProdctCompetitor(String versionApp, String txtUserId, String txtEmpId) throws ParseException {
         SQLiteDatabase db=getDb();
         JSONArray res=new JSONArray();

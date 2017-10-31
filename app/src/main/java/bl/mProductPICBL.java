@@ -58,6 +58,14 @@ public class mProductPICBL extends clsMainBL {
         return ListData;
     }
 
+    public List<mProductPICData> GetDataByMasterIdByKN(String masterId, List<mUserLOBData> mUserLOBDataList){
+        SQLiteDatabase db=getDb();
+        mProductPICDA _mProductPICDA=new mProductPICDA(db);
+        List<mProductPICData>ListData=_mProductPICDA.getDataByMasterIdByKN(db, masterId, mUserLOBDataList);
+        db.close();
+        return ListData;
+    }
+
     public int getContactCount(){
         int count = 0;
         mProductPICDA _mProductPICDA=new mProductPICDA(db);

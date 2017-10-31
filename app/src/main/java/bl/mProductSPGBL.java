@@ -57,6 +57,14 @@ public class mProductSPGBL extends clsMainBL {
         return ListData;
     }
 
+    public List<mProductSPGData> GetDataByMasterIdByKN(String masterId, List<mUserLOBData> mUserLOBDataList){
+        SQLiteDatabase db=getDb();
+        mProductSPGDA _mProductSPGDA=new mProductSPGDA(db);
+        List<mProductSPGData>ListData=_mProductSPGDA.getDataByMasterIdByKN(db,masterId, mUserLOBDataList);
+        db.close();
+        return ListData;
+    }
+
     public int getContactCount(){
         int count = 0;
         mProductSPGDA _mProductSPGDA=new mProductSPGDA(db);

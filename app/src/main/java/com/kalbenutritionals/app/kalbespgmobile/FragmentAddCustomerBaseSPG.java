@@ -836,8 +836,8 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
 
         List<String> dataProductKalbe = new ArrayList<>();
         final List<String> dataProductKompetitor = new ArrayList<>();
-        final List<mProductSPGData> mProductSPGDataList = new mProductSPGBL().GetDataByMasterId(HMSubmision.get(HMSubmision.get(spnSubmissionCode.getSelectedItem())));
-        final List<mProductPICData> mProductPICDataList = new mProductPICBL().GetDataByMasterId(HMSubmision.get(HMSubmision.get(spnSubmissionCode.getSelectedItem())));
+        final List<mProductSPGData> mProductSPGDataList = new mProductSPGBL().GetDataByMasterIdByKN(HMSubmision.get(HMSubmision.get(spnSubmissionCode.getSelectedItem())),mUserLOBDataList);
+        final List<mProductPICData> mProductPICDataList = new mProductPICBL().GetDataByMasterIdByKN(HMSubmision.get(HMSubmision.get(spnSubmissionCode.getSelectedItem())), mUserLOBDataList);
 
         if (dataDetail.get_intPIC().equals("1")) {
             if (mProductPICDataList.size() > 0) {
@@ -886,7 +886,7 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
                         txtProductDetailCode = mProductSPGDataList.get(position - 1).get_txtProductDetailCode();
                     }
 
-                    List<mProductCompetitorData> listProductKompetitor = new mProductCompetitorBL().GetListDataByProductKN(txtProductDetailCode);
+                    List<mProductCompetitorData> listProductKompetitor = new mProductCompetitorBL().GetListDataByProductKNByKN(txtProductDetailCode,mUserLOBDataList);
 
                     dataProductKompetitor.add("Select Previous Product");
                     if (listProductKompetitor.size() > 0) {

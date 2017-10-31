@@ -229,4 +229,47 @@ public class mProductCompetitorDA {
 
         db.execSQL( "DELETE FROM " + TABLE_CONTACTS +" WHERE "+data.Property_txtLobName +" IN " + query);
     }
+    public List<mProductCompetitorData> getListDataByProductKNByKN(SQLiteDatabase db, String idProductKN, List<mUserLOBData> mUserLOBDataList) {
+        List<mProductCompetitorData> contactList = new ArrayList<mProductCompetitorData>();
+        // Select All Query
+        mProductCompetitorData dt = new mProductCompetitorData();
+
+        String query = "()";
+
+        if (mUserLOBDataList != null){
+            query = "(";
+            for (int i = 0; i < mUserLOBDataList.size(); i++) {
+                query = query + "'" + mUserLOBDataList.get(i).get_txtLOBName() + "'";
+                query = query + ((i + 1) != mUserLOBDataList.size() ? "," : ")");
+            }
+        }
+
+        String selectQuery = "SELECT * FROM " + TABLE_CONTACTS +" WHERE "+dt.Property_txtLobName +" IN " + query + " AND " + dt.Property_txtProdukKompetitorID + " IS NOT NULL AND " + dt.Property_txtProductDetailCode + "='" + idProductKN + "' ORDER BY "+dt.Property_txtProdukKompetitorID+" ";
+
+//        String selectQuery = "SELECT  " + dt.Property_All + " FROM "
+//                + TABLE_CONTACTS + " WHERE "+ dt.Property_txtProdukKompetitorID + " IS NOT NULL AND " + dt.Property_txtProductDetailCode + "='" + idProductKN + "' ORDER BY "+dt.Property_txtProdukKompetitorID+" ";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+
+        if (cursor.moveToFirst()) {
+            do {
+                mProductCompetitorData contact = new mProductCompetitorData();
+                contact.set_txtID(cursor.getString(0));
+                contact.set_txtProductDetailCode(cursor.getString(1));
+                contact.set_txtLobName(cursor.getString(2));
+                contact.set_GroupProduct(cursor.getString(3));
+                contact.set_txtProdukid(cursor.getString(4));
+                contact.set_txtProdukKompetitorID(cursor.getString(5));
+                contact.set_txtCRMCode(cursor.getString(6));
+                contact.set_txtNIK(cursor.getString(7));
+                contact.set_txtName(cursor.getString(8));
+                // Adding contact to list
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        // return contact list
+        return contactList;
+    }
 }

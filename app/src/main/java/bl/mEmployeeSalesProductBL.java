@@ -121,6 +121,23 @@ public class mEmployeeSalesProductBL extends clsMainBL{
 		db.close();
 		return ListData;
 	}
+
+	public List<mEmployeeSalesProductData> GetAllDataByKN(List<mUserLOBData> mUserLOBDataList){
+		SQLiteDatabase db=getDb();
+		mEmployeeSalesProductDA _mEmployeeSalesProductDA= new mEmployeeSalesProductDA(db);
+		List<mEmployeeSalesProductData>ListData=_mEmployeeSalesProductDA.getAllDataByKNReso(db, mUserLOBDataList);
+		db.close();
+		return ListData;
+	}
+
+	public List<mEmployeeSalesProductData> GetAllDataByKNNotReso(List<mUserLOBData> mUserLOBDataList){
+		SQLiteDatabase db=getDb();
+		mEmployeeSalesProductDA _mEmployeeSalesProductDA= new mEmployeeSalesProductDA(db);
+		List<mEmployeeSalesProductData>ListData=_mEmployeeSalesProductDA.getAllDataByKN(db, mUserLOBDataList);
+		db.close();
+		return ListData;
+	}
+
 	public List<mEmployeeSalesProductData> getAllDataNotWhere(){
 		SQLiteDatabase db=getDb();
 		mEmployeeSalesProductDA _mEmployeeSalesProductDA= new mEmployeeSalesProductDA(db);

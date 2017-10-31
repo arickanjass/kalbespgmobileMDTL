@@ -46,6 +46,7 @@ import bl.clsHelperBL;
 import bl.clsMainBL;
 import bl.mCounterNumberBL;
 import bl.mEmployeeSalesProductBL;
+import bl.mUserLOBBL;
 import bl.tKemasanRusakDetailBL;
 import bl.tKemasanRusakHeaderBL;
 import bl.tKemasanRusakImageBL;
@@ -62,6 +63,7 @@ import library.spgmobile.common.AppAdapter;
 import library.spgmobile.common.clsHelper;
 import library.spgmobile.common.clsSwipeList;
 import library.spgmobile.common.mEmployeeSalesProductData;
+import library.spgmobile.common.mUserLOBData;
 import library.spgmobile.common.tKemasanRusakDetailData;
 import library.spgmobile.common.tKemasanRusakHeaderData;
 import library.spgmobile.common.tKemasanRusakImageData;
@@ -122,6 +124,7 @@ public class FragmentAddKemasanRusak extends Fragment implements IXListViewListe
 
     clsMainActivity _clsMainActivity;
     PullToRefreshSwipeMenuListView mListView;
+    List<mUserLOBData> mUserLOBDataList;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -139,6 +142,9 @@ public class FragmentAddKemasanRusak extends Fragment implements IXListViewListe
         before1 = (ImageView) v.findViewById(R.id.imageBefore1);
         before2 = (ImageView) v.findViewById(R.id.imageBefore2);
 //        editTextQty = (EditText) v.findViewById(R.id.editTextQty);
+
+        mUserLOBDataList = new ArrayList<>();
+        mUserLOBDataList = new mUserLOBBL().GetAllData();
 
         edKeterangan.setVisibility(View.GONE);
         TextView tvket = (TextView) v.findViewById(R.id.txtKet_quantity);
@@ -243,11 +249,11 @@ public class FragmentAddKemasanRusak extends Fragment implements IXListViewListe
                 @Override
                 public void onClick(View view) {
 //                    popUpAddQuantity(new tKemasanRusakDetailData());
-                    List<mEmployeeSalesProductData> listDataProductKalbe = new mEmployeeSalesProductBL().getAllDataNotWhere();
+                    List<mEmployeeSalesProductData> listDataProductKalbe = new mEmployeeSalesProductBL().GetAllDataByKNNotReso(mUserLOBDataList);
                     if(listDataProductKalbe!=null&&listDataProductKalbe.size()>0){
                         popUpAddQuantity(new tKemasanRusakDetailData());
                     } else {
-                        new clsMainActivity().showCustomToast(getActivity(), "Please download product first...", false);
+                        new clsMainActivity().showCustomToast(getActivity(), "Please re-download product first...", false);
                     }
                 }
             });
@@ -322,7 +328,7 @@ public class FragmentAddKemasanRusak extends Fragment implements IXListViewListe
         editTextQty.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxLength)});
 
         List<String> dataProductKalbe = new ArrayList<>();
-        List<mEmployeeSalesProductData> listDataProductKalbe = new mEmployeeSalesProductBL().getAllDataNotWhere();
+        List<mEmployeeSalesProductData> listDataProductKalbe = new mEmployeeSalesProductBL().GetAllDataByKNNotReso(mUserLOBDataList);
 
         // add product to spinner spnProductQuantity
         if (listDataProductKalbe.size() > 0) {

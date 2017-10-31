@@ -57,6 +57,7 @@ import bl.clsHelperBL;
 import bl.clsMainBL;
 import bl.mCounterNumberBL;
 import bl.mEmployeeSalesProductBL;
+import bl.mUserLOBBL;
 import bl.tPlanogramMobileBL;
 import bl.tSalesProductHeaderBL;
 import bl.tStockInHandDetailBL;
@@ -65,6 +66,7 @@ import edu.swu.pulltorefreshswipemenulistview.library.pulltorefresh.interfaces.O
 import library.spgmobile.common.ModelListview;
 import library.spgmobile.common.clsHelper;
 import library.spgmobile.common.mEmployeeSalesProductData;
+import library.spgmobile.common.mUserLOBData;
 import library.spgmobile.common.tPlanogramMobileData;
 import library.spgmobile.common.tStockInHandDetailData;
 import library.spgmobile.common.tStockInHandHeaderData;
@@ -100,6 +102,7 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
     String param = null;
     tStockInHandHeaderData dt;
     boolean validViewEdit = false;
+    List<mUserLOBData> mUserLOBDataList;
 
     @Nullable
     @Override
@@ -119,6 +122,9 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
         edketerangan = (EditText) v.findViewById(R.id.etKeterangan);
         searchProduct = (EditText) v.findViewById(R.id.searchProduct);
         fab = (FloatingActionButton) v.findViewById(R.id.fab);
+
+        mUserLOBDataList = new ArrayList<>();
+        mUserLOBDataList = new mUserLOBBL().GetAllData();
 
         _clsMainActivity = new clsMainActivity();
 
@@ -855,7 +861,7 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
         protected final ArrayList<ModelListview> doInBackground(ArrayList<ModelListview>... params) {
             //android.os.Debug.waitForDebugger();
 
-            List<mEmployeeSalesProductData> employeeSalesProductDataList = new mEmployeeSalesProductBL().getAllDataNotWhere();
+            List<mEmployeeSalesProductData> employeeSalesProductDataList = new mEmployeeSalesProductBL().GetAllDataByKN(mUserLOBDataList);
             List<tStockInHandDetailData> tStockInHandDetailDataList = null;
 
             if(dt!=null&&dt.get_txtNoSo()!=null){
@@ -887,21 +893,25 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
 
         @Override
         protected void onPostExecute(ArrayList<ModelListview> s) {
-//            footer = ((LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footer_layout, null, false);
-//            listView.addFooterView(footer);
-            Collections.sort(modelItems, ModelListview.StuRollno);
-            dataAdapter = new MyAdapter(getContext(), modelItems);
-            listView.setAdapter(dataAdapter);
-            listView.setTextFilterEnabled(true);
 
-            setListViewHeightBasedOnItems(listView);
+            if(modelItems.size()>0){
+                Collections.sort(modelItems, ModelListview.StuRollno);
+                dataAdapter = new MyAdapter(getContext(), modelItems);
+                listView.setAdapter(dataAdapter);
+                listView.setTextFilterEnabled(true);
 
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    progressDialog.dismiss();
-                }
-            }, 5000);
+                setListViewHeightBasedOnItems(listView);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressDialog.dismiss();
+                    }
+                }, 5000);
+            } else {
+                new clsMainActivity().showCustomToast(getContext(),"Please re-donwload Product First",false);
+                progressDialog.dismiss();
+            }
         }
     }
     private View footer;
@@ -909,7 +919,7 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
     private static Timer timer = new Timer();
 
     private void loadListData(){
-        List<mEmployeeSalesProductData> employeeSalesProductDataList = new mEmployeeSalesProductBL().getAllDataNotWhere();
+        List<mEmployeeSalesProductData> employeeSalesProductDataList = new mEmployeeSalesProductBL().GetAllDataByKN(mUserLOBDataList);
         List<tStockInHandDetailData> tStockInHandDetailDataList = null;
 
         if(dt!=null&&dt.get_txtNoSo()!=null){

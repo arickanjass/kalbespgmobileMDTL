@@ -52,10 +52,12 @@ import bl.clsHelperBL;
 import bl.clsMainBL;
 import bl.mCounterNumberBL;
 import bl.mEmployeeSalesProductBL;
+import bl.mUserLOBBL;
 import bl.tSalesProductHeaderBL;
 import library.spgmobile.common.ModelListview;
 import library.spgmobile.common.clsHelper;
 import library.spgmobile.common.mEmployeeSalesProductData;
+import library.spgmobile.common.mUserLOBData;
 import library.spgmobile.common.tSalesProductDetailData;
 import library.spgmobile.common.tSalesProductHeaderData;
 import library.spgmobile.common.visitplanAbsenData;
@@ -79,6 +81,7 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
     View v;
     FloatingActionButton fab;
     clsMainActivity _clsMainActivity;
+    List<mUserLOBData> mUserLOBDataList;
 
     @Nullable
     @Override
@@ -91,6 +94,9 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
         edketerangan = (EditText) v.findViewById(R.id.etKeterangan);
         searchProduct = (EditText) v.findViewById(R.id.searchProduct);
         fab = (FloatingActionButton) v.findViewById(R.id.fab);
+
+        mUserLOBDataList = new ArrayList<>();
+        mUserLOBDataList = new mUserLOBBL().GetAllData();
 
         _clsMainActivity = new clsMainActivity();
 
@@ -753,7 +759,7 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
         protected final ArrayList<ModelListview> doInBackground(ArrayList<ModelListview>... params) {
             //android.os.Debug.waitForDebugger();
 
-            List<mEmployeeSalesProductData> employeeSalesProductDataList = new mEmployeeSalesProductBL().GetAllData();
+            List<mEmployeeSalesProductData> employeeSalesProductDataList = new mEmployeeSalesProductBL().GetAllDataByKN(mUserLOBDataList);
 
             modelItems = new ArrayList<>();
 
@@ -774,18 +780,23 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
         @Override
         protected void onPostExecute(ArrayList<ModelListview> s) {
 
-            dataAdapter = new MyAdapter(getContext(), modelItems);
-            listView.setAdapter(dataAdapter);
-            listView.setTextFilterEnabled(true);
+            if(modelItems.size()>0){
+                dataAdapter = new MyAdapter(getContext(), modelItems);
+                listView.setAdapter(dataAdapter);
+                listView.setTextFilterEnabled(true);
 
-            setListViewHeightBasedOnItems(listView);
+                setListViewHeightBasedOnItems(listView);
 
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    progressDialog.dismiss();
-                }
-            }, 4000);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressDialog.dismiss();
+                    }
+                }, 4000);
+            } else {
+                new clsMainActivity().showCustomToast(getContext(),"Please re-donwload Product First",false);
+                progressDialog.dismiss();
+            }
         }
     }
 }

@@ -394,6 +394,20 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
                         return true;
 
+                    case R.id.pushDataMobile:
+                        toolbar.setTitle("Push Data");
+                        toolbar.setSubtitle(null);
+
+                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+                        FragmentPushData fragmentPushData = new FragmentPushData();
+                        FragmentTransaction fragmentTransactionPushData = getSupportFragmentManager().beginTransaction();
+                        fragmentTransactionPushData.replace(R.id.frame, fragmentPushData);
+                        fragmentTransactionPushData.commit();
+                        selectedId = 99;
+
+                        return true;
+
                     case R.id.home:
                         toolbar.setTitle("Home");
                         toolbar.setSubtitle(null);

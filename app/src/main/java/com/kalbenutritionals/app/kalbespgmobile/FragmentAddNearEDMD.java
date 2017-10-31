@@ -46,6 +46,7 @@ import bl.clsHelperBL;
 import bl.clsMainBL;
 import bl.mCounterNumberBL;
 import bl.mEmployeeSalesProductBL;
+import bl.mUserLOBBL;
 import bl.tOverStockDetailBL;
 import bl.tSalesProductQuantityDetailBL;
 import bl.tSalesProductQuantityHeaderBL;
@@ -60,6 +61,7 @@ import library.spgmobile.common.AppAdapter;
 import library.spgmobile.common.clsHelper;
 import library.spgmobile.common.clsSwipeList;
 import library.spgmobile.common.mEmployeeSalesProductData;
+import library.spgmobile.common.mUserLOBData;
 import library.spgmobile.common.tOverStockDetailData;
 import library.spgmobile.common.tSalesProductQuantityDetailData;
 import library.spgmobile.common.tSalesProductQuantityHeaderData;
@@ -118,6 +120,7 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
 
     clsMainActivity _clsMainActivity;
     PullToRefreshSwipeMenuListView mListView;
+    List<mUserLOBData> mUserLOBDataList;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -135,6 +138,9 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
         before1 = (ImageView) v.findViewById(R.id.imageBefore1);
         before2 = (ImageView) v.findViewById(R.id.imageBefore2);
 //        editTextQty = (EditText) v.findViewById(R.id.editTextQty);
+
+        mUserLOBDataList = new ArrayList<>();
+        mUserLOBDataList = new mUserLOBBL().GetAllData();
 
         edKeterangan.setVisibility(View.GONE);
         TextView tvket = (TextView) v.findViewById(R.id.txtKet_quantity);
@@ -284,11 +290,11 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
         btnAddQuantity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                List<mEmployeeSalesProductData> listDataProductKalbe = new mEmployeeSalesProductBL().getAllDataNotWhere();
+                List<mEmployeeSalesProductData> listDataProductKalbe = new mEmployeeSalesProductBL().GetAllDataByKNNotReso(mUserLOBDataList);
                 if(listDataProductKalbe!=null&&listDataProductKalbe.size()>0){
                     popUpAddQuantity(new tSalesProductQuantityDetailData());
                 } else {
-                    new clsMainActivity().showCustomToast(getActivity(), "Please download product first...", false);
+                    new clsMainActivity().showCustomToast(getActivity(), "Please re-download product first...", false);
                 }
             }
         });
@@ -371,7 +377,7 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
 //        List<tSalesProductQuantityDetailData> dataProduct = null;
 
         List<String> dataProductKalbe = new ArrayList<>();
-        List<mEmployeeSalesProductData> listDataProductKalbe = new mEmployeeSalesProductBL().getAllDataNotWhere();
+        List<mEmployeeSalesProductData> listDataProductKalbe = new mEmployeeSalesProductBL().GetAllDataByKNNotReso(mUserLOBDataList);
 //        modelItems = new ArrayList<>();
 
 //        editTextQty.setOnFocusChangeListener(new View.OnFocusChangeListener() {
