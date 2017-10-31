@@ -62,6 +62,7 @@ public class clsHardCode  {
 	public String txtTable_tErrorLog = "tErrorLog";
 	public String txtTable_tDisplayPicture = "tDisplayPicture";
 	public String txtTable_mTypeLeaveMobile = "mTypeLeaveMobile";
+	public String txtTable_mUserLOB = "mUserLOB";
 	public String txtTable_tLeaveMobile = "tLeaveMobile";
 	public String txtPhotoNotAvailabe = "../styles/css/images/no_image.gif";
 	public String txtTable_mMenu = "mMenu";
@@ -200,6 +201,7 @@ public class clsHardCode  {
 
 	public String txtMessNetworkOffline = "Please Check Your Network!!";
 	public String txtMessGetUserRole = "Getting User Role..";
+	public String txtMessGetUserData = "Getting Data..";
 	public String txtMessGetListPO = "Getting List PO..";
 	public String txtMessGetMItemSalesPackStock = "Getting Stock Outlet";
 	public String txtMessGetProduct = "Getting Product";
@@ -255,6 +257,88 @@ public class clsHardCode  {
 	public String txtTable_KoordinasiOutletImage="KoordinasiOutletImage";
 	public String txtTable_tTidakSesuaiPesananImage="tTidakSesuaiPesananImage";
 	public String txtTable_mCategoryKoordinasiOutlet="mCategoryKoordinasiOutlet";
+
+	//name master donwload data
+	public String ll_type_leave="ll_type_leave";
+	public String ll_branch="ll_branch";
+    public String ll_product="ll_product";
+    public String ll_product_spg="ll_product_spg";
+	public String ll_absen="ll_absen";
+	public String ll_activity="ll_activity";
+	public String ll_brand="ll_brand";
+	public String ll_CategoryKoordinasiOutlet="ll_CategoryKoordinasiOutlet";
+	public String ll_customerbased="ll_customerbased";
+	public String ll_data_activity="ll_data_activity";
+	public String ll_data_activityV2="ll_data_activityV2";
+	public String ll_data_addDisplay="ll_data_addDisplay";
+	public String ll_data_attendance="ll_data_attendance";
+	public String ll_data_customerbased="ll_data_customerbased";
+	public String ll_data_kemasanrusak="ll_data_kemasanrusak";
+	public String ll_data_leave="ll_data_leave";
+	public String ll_data_overStock="ll_data_overStock";
+	public String ll_data_planogram="ll_data_planogram";
+	public String ll_data_reso="ll_data_reso";
+	public String ll_data_stockIH="ll_data_stockIH";
+	public String ll_data_tidaksesuaipesanan="ll_data_tidaksesuaipesanan";
+	public String ll_dataKordinasiOutlet="ll_dataKordinasiOutlet";
+	public String ll_dataPOP_Standard="ll_dataPOP_Standard";
+	public String ll_dataPurchaseOrder="ll_dataPurchaseOrder";
+	public String ll_dataQuantityStock="ll_dataQuantityStock";
+	public String ll_dataQuesioner="ll_dataQuesioner";
+	public String ll_dataTrackingLocationMobile="ll_dataTrackingLocationMobile";
+	public String ll_dataVisitPlan="ll_dataVisitPlan";
+	public String ll_kategoriVisitPlan="ll_kategoriVisitPlan";
+	public String ll_kategoryPlanogram="ll_kategoryPlanogram";
+	public String ll_outlet="ll_outlet";
+	public String ll_product_competitor="ll_product_competitor";
+	public String ll_product_pic="ll_product_pic";
+	public String ll_purchase_order="ll_purchase_order";
+	public String ll_reason_kemasanrusak="ll_reason_kemasanrusak";
+	public String ll_reason_tidaksesuaipesanan="ll_reason_tidaksesuaipesanan";
+	public String ll_reso="ll_reso";
+	public String ll_subtypeactivity="ll_subtypeactivity";
+	public String ll_type_submission="ll_type_submission";
+
+	//name donwload data
+	public String txtName_ll_type_leave="Type Leave";
+    public String txtName_ll_product="Product";
+    public String txtName_ll_product_spg="Product SPG";
+	public String txtName_ll_branch="Branch";
+	public String txtName_ll_absen="Attendance";
+	public String txtName_ll_activity="Activity";
+	public String txtName_ll_brand="Brand";
+	public String txtName_ll_CategoryKoordinasiOutlet="Category Koordinasi Outlet";
+	public String txtName_ll_customerbased="Customerbased";
+	public String txtName_ll_data_activity="Activity";
+	public String txtName_ll_data_activityV2="Activity";
+	public String txtName_ll_data_addDisplay="Add Display";
+	public String txtName_ll_data_attendance="Attendance";
+	public String txtName_ll_data_customerbased="Customerbased";
+	public String txtName_ll_data_kemasanrusak="Kemasan Rusak";
+	public String txtName_ll_data_leave="Leave";
+	public String txtName_ll_data_overStock="Over Stock";
+	public String txtName_ll_data_planogram="Planogram";
+	public String txtName_ll_data_reso="Reso";
+	public String txtName_ll_data_stockIH="Stock on Hand";
+	public String txtName_ll_data_tidaksesuaipesanan="Tidak Sesuai Pesanan";
+	public String txtName_ll_dataKordinasiOutlet="Kordinasi Outlet";
+	public String txtName_ll_dataPOP_Standard="POP Standard";
+	public String txtName_ll_dataPurchaseOrder="Purchase Order";
+	public String txtName_ll_dataQuantityStock="Near ED";
+	public String txtName_ll_dataQuesioner="Quesioner";
+	public String txtName_ll_dataTrackingLocationMobile="Tracking Location Mobile";
+	public String txtName_ll_dataVisitPlan="Visit Plan";
+	public String txtName_ll_kategoriVisitPlan="Kategori VisitPlan";
+	public String txtName_ll_kategoryPlanogram="Kategory Planogram";
+	public String txtName_ll_outlet="Outlet";
+	public String txtName_ll_product_competitor="Product Competitor";
+	public String txtName_ll_product_pic="Product PIC";
+	public String txtName_ll_purchase_order="Purchase Order";
+	public String txtName_ll_reason_kemasanrusak="Reason Kemasan Rusak";
+	public String txtName_ll_reason_tidaksesuaipesanan="Reason Tidak Sesuaipesanan";
+	public String txtName_ll_reso="Reso";
+	public String txtName_ll_subtypeactivity="Sub Type Activity";
+	public String txtName_ll_type_submission="Type Submission";
 
 	public String dtDateTimeNow(){
 		Date date = new Date();
