@@ -2438,7 +2438,7 @@ public class FragmentReporting extends Fragment {
                                     WritableCellFormat cellFormat = new WritableCellFormat();
                                     cellFormat.setVerticalAlignment(VerticalAlignment.CENTRE);
                                     cellFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
-                                    
+
                                     WritableFont cellFont = new WritableFont(WritableFont.TIMES, 10,WritableFont.BOLD);
                                     WritableCellFormat formatFont = new WritableCellFormat(cellFont);
                                     formatFont.setBorder(Border.ALL, BorderLineStyle.THIN);
