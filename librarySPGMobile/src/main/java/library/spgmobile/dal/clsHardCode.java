@@ -11,14 +11,14 @@ import library.spgmobile.common.tUserLoginData;
 
 public class clsHardCode  {
 	/* path visible */
-//	public String txtPathApp= Environment.getExternalStorageDirectory()+File.separator+"data"+File.separator+"data"+File.separator+"Kalbespgmobile"+File.separator+"app_database"+File.separator;
-//	public String txtPathTempData = Environment.getExternalStorageDirectory() + File.separator + "data" + File.separator + "data" + File.separator + "Kalbespgmobile" + File.separator + "tempdata" + File.separator;
-//	public String txtPathUserData= Environment.getExternalStorageDirectory()+File.separator+"data"+File.separator+"data"+File.separator+"Kalbespgmobile"+File.separator+"user_data"+File.separator;
+	public String txtPathApp= Environment.getExternalStorageDirectory()+File.separator+"data"+File.separator+"data"+File.separator+"Kalbespgmobile"+File.separator+"app_database"+File.separator;
+	public String txtPathTempData = Environment.getExternalStorageDirectory() + File.separator + "data" + File.separator + "data" + File.separator + "Kalbespgmobile" + File.separator + "tempdata" + File.separator;
+	public String txtPathUserData= Environment.getExternalStorageDirectory()+File.separator+"data"+File.separator+"data"+File.separator+"Kalbespgmobile"+File.separator+"user_data"+File.separator;
 
 	/* path root */ //"data/data/com.kalbenutritionals.app.kalbespgmobile/databases/";
-	public String txtPathApp= "data"+File.separator+"data"+File.separator+"com.kalbenutritionals.app.kalbespgmobile"+File.separator+"databases"+File.separator;
-	public String txtPathTempData = Environment.getExternalStorageDirectory() + File.separator + "Android" + File.separator + "data" + File.separator + "com.kalbenutritionals.app.kalbespgmobile" + File.separator + "tempdata" + File.separator;
-	public String txtPathUserData= Environment.getExternalStorageDirectory() + File.separator + "Android" + File.separator + "data" + File.separator + "com.kalbenutritionals.app.kalbespgmobile" + File.separator + "user_data" + File.separator;
+//	public String txtPathApp= "data"+File.separator+"data"+File.separator+"com.kalbenutritionals.app.kalbespgmobile"+File.separator+"databases"+File.separator;
+//	public String txtPathTempData = Environment.getExternalStorageDirectory() + File.separator + "Android" + File.separator + "data" + File.separator + "com.kalbenutritionals.app.kalbespgmobile" + File.separator + "tempdata" + File.separator;
+//	public String txtPathUserData= Environment.getExternalStorageDirectory() + File.separator + "Android" + File.separator + "data" + File.separator + "com.kalbenutritionals.app.kalbespgmobile" + File.separator + "user_data" + File.separator;
 
 	public String txtFolderNotification=txtPathUserData+"Notification"+File.separator;
 	public String txtFolderBrosur=txtPathUserData+"Brosur"+File.separator;
@@ -51,6 +51,7 @@ public class clsHardCode  {
 	public String txtTable_mGeolocationOutletSPG = "mGeolocationOutletSPG";
 	public String txtTable_mUserRole = "mUserRole";
 	public String txtTable_mDownloadMasterData_mobile = "mDownloadMasterData_mobile";
+	public String txtTable_tLogDonwload = "tLogDonwload";
 	public String txtTable_mUserCabang = "mUserCabang";
 	public String txtTable_mEmployeeSalesProduct = "mEmployeeSalesProduct";
 	public String txtTable_tSubTypeActivity="tSubTypeActivity";

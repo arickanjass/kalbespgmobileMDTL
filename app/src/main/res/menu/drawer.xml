@@ -66,6 +66,12 @@
             android:orderInCategory="2"
             android:title="Checkout" />
 
+        <!--<item-->
+            <!--android:id="@+id/downloadDataMobile"-->
+            <!--android:checked="false"-->
+            <!--android:orderInCategory="2"-->
+            <!--android:title="Download Data" />-->
+
         <item
             android:id="@+id/pushDataMobile"
             android:checked="false"

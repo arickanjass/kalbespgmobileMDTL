@@ -90,6 +90,7 @@ import bl.tJawabanUserHeaderBL;
 import bl.tKategoryPlanogramMobileBL;
 import bl.tKemasanRusakHeaderBL;
 import bl.tLeaveMobileBL;
+import bl.tLogDownloadBL;
 import bl.tOverStockHeaderBL;
 import bl.tPOPStandardDetailBL;
 import bl.tPOPStandardHeaderBL;
@@ -149,6 +150,7 @@ import library.spgmobile.common.tKemasanRusakDetailData;
 import library.spgmobile.common.tKemasanRusakHeaderData;
 import library.spgmobile.common.tKemasanRusakImageData;
 import library.spgmobile.common.tLeaveMobileData;
+import library.spgmobile.common.tLogDownloadData;
 import library.spgmobile.common.tOverStockDetailData;
 import library.spgmobile.common.tOverStockHeaderData;
 import library.spgmobile.common.tPOPStandardDetailData;
@@ -171,20 +173,50 @@ import library.spgmobile.common.tUserLoginData;
 import library.spgmobile.common.tVisitPlanHeader_MobileData;
 import library.spgmobile.common.tVisitPlanRealisasiData;
 import library.spgmobile.common.trackingLocationData;
+import library.spgmobile.dal.KoordinasiOutletDA;
 import library.spgmobile.dal.KoordinasiOutletImageDA;
 import library.spgmobile.dal.clsHardCode;
 import library.spgmobile.dal.enumCounterData;
+import library.spgmobile.dal.mCategoryKoordinasiOutletDA;
+import library.spgmobile.dal.mCategoryVisitPlanDA;
 import library.spgmobile.dal.mCounterNumberDA;
+import library.spgmobile.dal.mEmployeeAreaDA;
+import library.spgmobile.dal.mEmployeeBranchDA;
+import library.spgmobile.dal.mEmployeeSalesProductDA;
+import library.spgmobile.dal.mProductBrandHeaderDA;
+import library.spgmobile.dal.mProductCompetitorDA;
+import library.spgmobile.dal.mProductPICDA;
+import library.spgmobile.dal.mProductSPGDA;
+import library.spgmobile.dal.mTypeLeaveMobileDA;
+import library.spgmobile.dal.mTypeSubmissionMobileDA;
+import library.spgmobile.dal.tAbsenUserDA;
+import library.spgmobile.dal.tActivityDA;
+import library.spgmobile.dal.tActivityMobileDA;
+import library.spgmobile.dal.tCustomerBasedMobileHeaderDA;
+import library.spgmobile.dal.tHirarkiBISDA;
+import library.spgmobile.dal.tKategoryPlanogramMobileDA;
 import library.spgmobile.dal.tKemasanRusakDetailDA;
+import library.spgmobile.dal.tKemasanRusakHeaderDA;
 import library.spgmobile.dal.tKemasanRusakImageDA;
+import library.spgmobile.dal.tLeaveMobileDA;
 import library.spgmobile.dal.tOverStockDetailDA;
+import library.spgmobile.dal.tOverStockHeaderDA;
+import library.spgmobile.dal.tPOPStandardHeaderDA;
 import library.spgmobile.dal.tPlanogramImageDA;
+import library.spgmobile.dal.tPlanogramMobileDA;
 import library.spgmobile.dal.tPurchaseOrderDetailDA;
+import library.spgmobile.dal.tPurchaseOrderHeaderDA;
 import library.spgmobile.dal.tSalesProductDetailDA;
+import library.spgmobile.dal.tSalesProductHeaderDA;
 import library.spgmobile.dal.tSalesProductQuantityDetailDA;
+import library.spgmobile.dal.tSalesProductQuantityHeaderDA;
 import library.spgmobile.dal.tSalesProductQuantityImageDA;
 import library.spgmobile.dal.tStockInHandDetailDA;
+import library.spgmobile.dal.tStockInHandHeaderDA;
+import library.spgmobile.dal.tSubTypeActivityDA;
+import library.spgmobile.dal.tTidakSesuaiPesananHeaderDA;
 import library.spgmobile.dal.tTidakSesuaiPesananImageDA;
+import library.spgmobile.dal.tVisitPlanRealisasiDA;
 
 public class FragmentDownloadData extends Fragment {
     View v;
@@ -238,6 +270,40 @@ public class FragmentDownloadData extends Fragment {
     ProgressBar mProgressBar;
 
     List<mUserLOBData> mUserLOBDataList;
+
+    private TextView txtBranch, txtBranchLastDownload;
+    private TextView txtOutlet, txtOutletLastDownload;
+    private TextView textView7, textView7LastDownload;
+    private TextView txtProduct, txtProductLastDownload;
+    private TextView txtVwProductSPGCusBase, txtProductSPGCusBaseLastDownload;
+    private TextView txtVwProductPICCusBase, txtProductPICCusBaseLastDownload;
+    private TextView txtVwProductComp, txtProductCompLastDownload;
+    private TextView txtVwTypeSubm, txtTypeSubmLastDownload;
+    private TextView txtVwLeave, txtLeaveLastDownload;
+    private TextView txtCategoryKoordinasi, txtCategoryKoordinasiLastDownload;
+    private TextView txtVwVisitPlan, txtVisitPlanLastDownload;
+    private TextView txtsubTypeActivity, txtsubTypeActivityLastDownload;
+    private TextView txtkategoryPlanogram, txtkategoryPlanogramLastDownload;
+    private TextView tv_SPG, txtSPGLastDownload;
+    private TextView tv_quis, txtquisLastDownload;
+    private TextView tv_POP, txtPOPLastDownload;
+    private TextView txtTrVisitPlan, txtTrVisitPlanLastDownload;
+    private TextView txtVwAbsen, txtAbsenLastDownload;
+    private TextView txtVwAbsenFPE, txtAbsenFPELastDownload;
+    private TextView txtVwDataLeave, txtDataLeaveLastDownload;
+    private TextView txtVwReso, txtResoLastDownload;
+    private TextView txtVwstockIH, txtstockIHLastDownload;
+    private TextView txtVwActivity, txtActivityLastDownload;
+    private TextView txtVwActivityV2, txtActivityV2LastDownload;
+    private TextView txtVwaddDisplayV2, txtaddDisplayV2LastDownload;
+    private TextView txtVwCustomerBase, txtCustomerBaseLastDownload;
+    private TextView txtTrPO, txtTrPOLastDownload;
+    private TextView txtTrQuantityStock, txtTrQuantityStockLastDownload;
+    private TextView txtTrPlanogram, txtPlanogramLastDownload;
+    private TextView txtVwKordinasiOutlet, txtKordinasiOutletLastDownload;
+    private TextView txtVwDataOverStock, txtOverStockLastDownload;
+    private TextView txtVwDatakemasanrusak, txtkemasanrusakLastDownload;
+    private TextView txtVwDatatidaksesuaipesanan, txttidaksesuaipesananLastDownload;
 
     @Nullable
     @Override
@@ -345,6 +411,76 @@ public class FragmentDownloadData extends Fragment {
         ll_data_kemasanrusak = (LinearLayout) v.findViewById(R.id.ll_data_kemasanrusak);
         ll_data_tidaksesuaipesanan = (LinearLayout) v.findViewById(R.id.ll_data_tidaksesuaipesanan);
 
+        txtBranch = (TextView) v.findViewById(R.id.txtBranch);
+        txtBranchLastDownload = (TextView) v.findViewById(R.id.txtBranchLastDownload);
+        txtOutlet = (TextView) v.findViewById(R.id.txtOutlet);
+        txtOutletLastDownload = (TextView) v.findViewById(R.id.txtOutletLastDownload);
+        textView7 = (TextView) v.findViewById(R.id.textView7);
+        textView7LastDownload = (TextView) v.findViewById(R.id.textView7LastDownload);
+        txtProduct = (TextView) v.findViewById(R.id.txtProduct);
+        txtProductLastDownload = (TextView) v.findViewById(R.id.txtProductLastDownload);
+        txtVwProductSPGCusBase = (TextView) v.findViewById(R.id.txtVwProductSPGCusBase);
+        txtProductSPGCusBaseLastDownload = (TextView) v.findViewById(R.id.txtProductSPGCusBaseLastDownload);
+        txtVwProductPICCusBase = (TextView) v.findViewById(R.id.txtVwProductPICCusBase);
+        txtProductPICCusBaseLastDownload = (TextView) v.findViewById(R.id.txtProductPICCusBaseLastDownload);
+        txtVwProductComp = (TextView) v.findViewById(R.id.txtVwProductComp);
+        txtProductCompLastDownload = (TextView) v.findViewById(R.id.txtProductCompLastDownload);
+        txtVwTypeSubm = (TextView) v.findViewById(R.id.txtVwTypeSubm);
+        txtTypeSubmLastDownload = (TextView) v.findViewById(R.id.txtTypeSubmLastDownload);
+        txtVwLeave = (TextView) v.findViewById(R.id.txtVwLeave);
+        txtLeaveLastDownload = (TextView) v.findViewById(R.id.txtLeaveLastDownload);
+        txtCategoryKoordinasi = (TextView) v.findViewById(R.id.txtCategoryKoordinasi);
+        txtCategoryKoordinasiLastDownload = (TextView) v.findViewById(R.id.txtCategoryKoordinasiLastDownload);
+        txtVwVisitPlan = (TextView) v.findViewById(R.id.txtVwVisitPlan);
+        txtVisitPlanLastDownload = (TextView) v.findViewById(R.id.txtVisitPlanLastDownload);
+        txtsubTypeActivity = (TextView) v.findViewById(R.id.txtsubTypeActivity);
+        txtsubTypeActivityLastDownload = (TextView) v.findViewById(R.id.txtsubTypeActivityLastDownload);
+        txtkategoryPlanogram = (TextView) v.findViewById(R.id.txtkategoryPlanogram);
+        txtkategoryPlanogramLastDownload = (TextView) v.findViewById(R.id.txtkategoryPlanogramLastDownload);
+        tv_SPG = (TextView) v.findViewById(R.id.tv_SPG);
+        txtSPGLastDownload = (TextView) v.findViewById(R.id.txtSPGLastDownload);
+        tv_quis = (TextView) v.findViewById(R.id.tv_quis);
+        txtquisLastDownload = (TextView) v.findViewById(R.id.txtquisLastDownload);
+        tv_POP = (TextView) v.findViewById(R.id.tv_POP);
+        txtPOPLastDownload = (TextView) v.findViewById(R.id.txtPOPLastDownload);
+        txtTrVisitPlan = (TextView) v.findViewById(R.id.txtTrVisitPlan);
+        txtTrVisitPlanLastDownload = (TextView) v.findViewById(R.id.txtTrVisitPlanLastDownload);
+        txtVwAbsen = (TextView) v.findViewById(R.id.txtVwAbsen);
+        txtAbsenLastDownload = (TextView) v.findViewById(R.id.txtAbsenLastDownload);
+        txtVwAbsenFPE = (TextView) v.findViewById(R.id.txtVwAbsenFPE);
+        txtAbsenFPELastDownload = (TextView) v.findViewById(R.id.txtAbsenFPELastDownload);
+        txtVwDataLeave = (TextView) v.findViewById(R.id.txtVwDataLeave);
+        txtDataLeaveLastDownload = (TextView) v.findViewById(R.id.txtDataLeaveLastDownload);
+        txtVwReso = (TextView) v.findViewById(R.id.txtVwReso);
+        txtResoLastDownload = (TextView) v.findViewById(R.id.txtResoLastDownload);
+        txtVwstockIH = (TextView) v.findViewById(R.id.txtVwstockIH);
+        txtstockIHLastDownload = (TextView) v.findViewById(R.id.txtstockIHLastDownload);
+        txtVwActivity = (TextView) v.findViewById(R.id.txtVwActivity);
+        txtActivityLastDownload = (TextView) v.findViewById(R.id.txtActivityLastDownload);
+        txtVwActivityV2 = (TextView) v.findViewById(R.id.txtVwActivityV2);
+        txtActivityV2LastDownload = (TextView) v.findViewById(R.id.txtActivityV2LastDownload);
+        txtVwaddDisplayV2 = (TextView) v.findViewById(R.id.txtVwaddDisplayV2);
+        txtaddDisplayV2LastDownload = (TextView) v.findViewById(R.id.txtaddDisplayV2LastDownload);
+        txtVwCustomerBase = (TextView) v.findViewById(R.id.txtVwCustomerBase);
+        txtCustomerBaseLastDownload = (TextView) v.findViewById(R.id.txtCustomerBaseLastDownload);
+        txtTrPO = (TextView) v.findViewById(R.id.txtTrPO);
+        txtTrPOLastDownload = (TextView) v.findViewById(R.id.txtTrPOLastDownload);
+        txtTrQuantityStock = (TextView) v.findViewById(R.id.txtTrQuantityStock);
+        txtTrQuantityStockLastDownload = (TextView) v.findViewById(R.id.txtTrQuantityStockLastDownload);
+        txtTrPlanogram = (TextView) v.findViewById(R.id.txtTrPlanogram);
+        txtPlanogramLastDownload = (TextView) v.findViewById(R.id.txtPlanogramLastDownload);
+        txtVwKordinasiOutlet = (TextView) v.findViewById(R.id.txtVwKordinasiOutlet);
+        txtKordinasiOutletLastDownload = (TextView) v.findViewById(R.id.txtKordinasiOutletLastDownload);
+        txtVwDataOverStock = (TextView) v.findViewById(R.id.txtVwDataOverStock);
+        txtOverStockLastDownload = (TextView) v.findViewById(R.id.txtOverStockLastDownload);
+        txtVwDatakemasanrusak = (TextView) v.findViewById(R.id.txtVwDatakemasanrusak);
+        txtkemasanrusakLastDownload = (TextView) v.findViewById(R.id.txtkemasanrusakLastDownload);
+        txtVwDatatidaksesuaipesanan = (TextView) v.findViewById(R.id.txtVwDatatidaksesuaipesanan);
+        txttidaksesuaipesananLastDownload = (TextView) v.findViewById(R.id.txttidaksesuaipesananLastDownload);
+        tv_quis = (TextView) v.findViewById(R.id.tv_quis);
+        txtquisLastDownload = (TextView) v.findViewById(R.id.txtquisLastDownload);
+
+
         spnVisitPlan = (Spinner) v.findViewById(R.id.spnVisitPlan);
         spnTrVisitPlan = (Spinner) v.findViewById(R.id.spnTrVisitPlan);
 
@@ -358,6 +494,8 @@ public class FragmentDownloadData extends Fragment {
         generateLayout();
 
         loadData();
+
+        setViewTextLastDownload();
 
         btnPOP.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -627,15 +765,18 @@ public class FragmentDownloadData extends Fragment {
         return v;
     }
 
+    private Resources res;
     private void generateLayout() {
         List<mDownloadMasterData_mobileData> mDownloadMasterData_mobileDataList;
 
         mDownloadMasterData_mobileDataList = new mDownloadMasterData_mobileBL().GetAllData();
 
-        Resources res = getResources();
+        res = getResources();
 
         for(int i = 0; i < mDownloadMasterData_mobileDataList.size(); i++){
             String txt_id = mDownloadMasterData_mobileDataList.get(i).get_txtMasterData().replaceAll(" ", "");
+
+            SQLiteDatabase db = new clsMainBL().getDb();
 
             //show master data
             if (txt_id.equals(res.getResourceEntryName(ll_branch.getId()))) {
@@ -1501,7 +1642,12 @@ public class FragmentDownloadData extends Fragment {
 //    }
 
 
-    String eMessage ="";
+    private String eMessage ="";
+    private String pstrArgumet = "";
+    private boolean validDownloadProduct = false;
+    private boolean validDownloadProductComp = false;
+    private boolean validDownloadProductPIC = false;
+    private boolean validDownloadProductSPG = false;
     private class AsyncCallDownloadAllBundleData extends AsyncTask<JSONArray, Void, List<dataJson>> {
         @Override
         protected List<dataJson> doInBackground(JSONArray... params) {
@@ -1532,6 +1678,7 @@ public class FragmentDownloadData extends Fragment {
                 int count = new mEmployeeSalesProductBL().getContactsCountByKN(mUserLOBDataList);
                 if(count==0){
                     dtJson.getDtdataJson().getDtmEmployeeSalesProductData().setBoolValid("1");
+                    validDownloadProduct = true;
                 }
             }
             if (ll_brand != null && checkVisibility(ll_brand)) {
@@ -1544,18 +1691,21 @@ public class FragmentDownloadData extends Fragment {
                 int count = new mProductCompetitorBL().getContactsCountByKN(mUserLOBDataList);
                 if(count==0){
                     dtJson.getDtdataJson().getDtmProductCompetitorData().setBoolValid("1");
+                    validDownloadProductComp = true;
                 }
             }
             if (ll_product_spg != null && checkVisibility(ll_product_spg)) {
                 int count = new mProductSPGBL().getContactCountByKN(mUserLOBDataList);
                 if(count==0){
                     dtJson.getDtdataJson().getDtmProductSPGData().setBoolValid("1");
+                    validDownloadProductSPG = true;
                 }
             }
             if (ll_product_pic != null && checkVisibility(ll_product_pic)) {
                 int count = new mProductPICBL().getContactCountByKN(mUserLOBDataList);
                 if(count==0){
                     dtJson.getDtdataJson().getDtmProductPICData().setBoolValid("1");
+                    validDownloadProductPIC = true;
                 }
             }
             if (ll_type_submission != null && checkVisibility(ll_type_submission)) {
@@ -1642,6 +1792,8 @@ public class FragmentDownloadData extends Fragment {
                         org.json.simple.JSONObject innerObjTop = (org.json.simple.JSONObject) i.next();
                         txtValid = String.valueOf(innerObjTop.get("_pboolValid"));
                         txtMess = String.valueOf(innerObjTop.get("_pstrMessage"));
+                        pstrArgumet = String.valueOf(innerObjTop.get(new APIData().strArgument));
+
                         if (txtValid.equals("1")) {
                             for (Object aJsonArray : JsonArrayResult) {
                                 JSONObject innerObj = (JSONObject) aJsonArray;
@@ -2210,10 +2362,12 @@ public class FragmentDownloadData extends Fragment {
 
             } else if(listdataJson.get(0).getIntResult().equals("1")){
                 loadData();
+//                setViewTextLastDownload();
                 new clsMainActivity().showCustomToast(getContext(), listdataJson.get(0).getTxtMessage(), true);
                 Dialog.dismiss();
                 checkingDataTable("ALL");
             }
+            saveLastDownload(pstrArgumet);
         }
 
         @Override
@@ -2230,6 +2384,387 @@ public class FragmentDownloadData extends Fragment {
 
     }
 
+    private void saveLastDownload(String pstrArgumet) {
+        if(!pstrArgumet.equals("")){
+            //master
+            if (ll_subtypeactivity != null && checkVisibility(ll_subtypeactivity)) {
+                saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_subtypeactivity.getId()).toString());
+            }
+            if (ll_kategoryPlanogram != null && checkVisibility(ll_kategoryPlanogram)) {
+                saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_kategoryPlanogram.getId()).toString());
+            }
+            if (ll_outlet != null && checkVisibility(ll_outlet )){
+                saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_outlet.getId()).toString());
+            }
+            if (ll_branch != null && checkVisibility(ll_branch)) {
+                saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_branch.getId()).toString());
+            }
+            if (ll_type_leave != null && checkVisibility(ll_type_leave)) {
+                saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_type_leave.getId()).toString());
+            }
+            if (ll_product != null && checkVisibility(ll_product) && validDownloadProduct) {
+                saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_product.getId()).toString());
+            }
+            if (ll_brand != null && checkVisibility(ll_brand)) {
+                saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_brand.getId()).toString());
+            }
+            if (ll_kategoriVisitPlan != null && checkVisibility(ll_kategoriVisitPlan)) {
+                saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_kategoriVisitPlan.getId()).toString());
+            }
+            if (ll_product_competitor != null && checkVisibility(ll_product_competitor)&&validDownloadProductComp) {
+                saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_product_competitor.getId()).toString());
+            }
+            if (ll_product_spg != null && checkVisibility(ll_product_spg)&&validDownloadProductSPG) {
+                saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_product_spg.getId()).toString());
+            }
+            if (ll_product_pic != null && checkVisibility(ll_product_pic)&&validDownloadProductPIC) {
+                saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_product_pic.getId()).toString());
+            }
+            if (ll_type_submission != null && checkVisibility(ll_type_submission)) {
+                saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_type_submission.getId()).toString());
+            }
+            if (ll_dataCategoryKordinasiOutlet != null && checkVisibility(ll_dataCategoryKordinasiOutlet)) {
+                saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_dataCategoryKordinasiOutlet.getId()).toString());
+            }
+            if (ll_dataQuesioner != null && checkVisibility(ll_dataQuesioner)) {
+                saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_dataQuesioner.getId()).toString());
+            }
+            //transaksi
+            if (ll_dataVisitPlan != null && checkVisibility(ll_dataVisitPlan)) {
+                saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_dataVisitPlan.getId()).toString());
+            }
+            if (ll_data_attendance != null && checkVisibility(ll_data_attendance )){
+                saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_data_attendance.getId()).toString());
+            }
+            if (ll_reso != null && checkVisibility(ll_reso)) {
+                saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_reso.getId()).toString());
+            }
+            if (ll_purchase_order != null && checkVisibility(ll_purchase_order)) {
+                saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_purchase_order.getId()).toString());
+            }
+            if (ll_data_stockIH != null && checkVisibility(ll_data_stockIH)) {
+                saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_data_stockIH.getId()).toString());
+            }
+            if (ll_dataQuantityStock != null && checkVisibility(ll_dataQuantityStock)) {
+                saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_dataQuantityStock.getId()).toString());
+            }
+            if (ll_data_overStock != null && checkVisibility(ll_data_overStock)) {
+                saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_data_overStock.getId()).toString());
+            }
+            if (ll_dataKordinasiOutlet != null && checkVisibility(ll_dataKordinasiOutlet)) {
+                saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_dataKordinasiOutlet.getId()).toString());
+            }
+            if (ll_data_planogram != null && checkVisibility(ll_data_planogram)) {
+                saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_data_planogram.getId()).toString());
+            }
+            if (ll_data_activity != null && checkVisibility(ll_data_activity)) {
+                saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_data_activity.getId()).toString());
+            }
+            if (ll_data_activityV2 != null && checkVisibility(ll_data_activityV2)) {
+                saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_data_activityV2.getId()).toString());
+            }
+            if (ll_data_addDisplay != null && checkVisibility(ll_data_addDisplay)) {
+                saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_data_addDisplay.getId()).toString());
+            }
+            if (ll_data_customerbased != null && checkVisibility(ll_data_customerbased)) {
+                saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_data_customerbased.getId()).toString());
+            }
+            if (ll_absen != null && checkVisibility(ll_absen)) {
+                saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_absen.getId()).toString());
+            }
+            if (ll_data_leave != null && checkVisibility(ll_data_leave)) {
+                saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_data_leave.getId()).toString());
+            }
+            if(ll_data_kemasanrusak !=null && checkVisibility(ll_data_kemasanrusak)){
+                saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_data_kemasanrusak.getId()).toString());
+            }
+            if(ll_data_tidaksesuaipesanan !=null && checkVisibility(ll_data_tidaksesuaipesanan)){
+                saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_data_tidaksesuaipesanan.getId()).toString());
+            }
+            if (ll_dataPOP_Standard != null && checkVisibility(ll_dataPOP_Standard)){
+                saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_dataPOP_Standard.getId()).toString());
+            }
+
+            setViewTextLastDownload();
+        }
+    }
+
+    private void setViewTextLastDownload() {
+        SQLiteDatabase db = new clsMainBL().getDb();
+        String pstrArgument ="";
+        clsMainActivity _clsMainActivity = new clsMainActivity();
+        //master
+        if (ll_subtypeactivity != null && checkVisibility(ll_subtypeactivity)) {
+            txtsubTypeActivity.setText("Sub Type Activity ("+String.valueOf(new tSubTypeActivityDA(db).getContactsCount(db))+")");
+            tLogDownloadData _tLogDownloadData;
+            _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_subtypeactivity.getId()).toString());
+            if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
+                txtsubTypeActivityLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+            }
+        }
+        if (ll_kategoryPlanogram != null && checkVisibility(ll_kategoryPlanogram)) {
+            txtkategoryPlanogram.setText("Category Planogram ("+String.valueOf(new tKategoryPlanogramMobileDA(db).getContactsCount(db))+")");
+            tLogDownloadData _tLogDownloadData;
+            _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_kategoryPlanogram.getId()).toString());
+            if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
+                txtkategoryPlanogramLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+            }
+        }
+        if (ll_outlet != null && checkVisibility(ll_outlet )){
+            txtOutlet.setText("Outlet ("+String.valueOf(new mEmployeeAreaDA(db).getContactsCount(db))+")");
+            tLogDownloadData _tLogDownloadData;
+            _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_outlet.getId()).toString());
+            if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
+                txtOutletLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+            }
+        }
+        if (ll_branch != null && checkVisibility(ll_branch)) {
+            txtBranch.setText("Branch ("+String.valueOf(new mEmployeeBranchDA(db).getContactsCount(db))+")");
+            tLogDownloadData _tLogDownloadData;
+            _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_branch.getId()).toString());
+            if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
+                txtBranchLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+            }
+        }
+        if (ll_type_leave != null && checkVisibility(ll_type_leave)) {
+            txtVwLeave.setText("Type Leave ("+String.valueOf(new mTypeLeaveMobileDA(db).getContactsCount(db))+")");
+            tLogDownloadData _tLogDownloadData;
+            _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_type_leave.getId()).toString());
+            if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
+                txtLeaveLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+            }
+        }
+        if (ll_product != null && checkVisibility(ll_product)) {
+            txtProduct.setText("Product ("+String.valueOf(new mEmployeeSalesProductDA(db).getContactsCountByKN(db, mUserLOBDataList))+")");
+            tLogDownloadData _tLogDownloadData;
+            _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_product.getId()).toString());
+            if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
+                txtProductLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+            }
+        }
+        if (ll_brand != null && checkVisibility(ll_brand)) {
+            textView7.setText("Brand ("+String.valueOf(new mProductBrandHeaderDA(db).getContactsCount(db))+")");
+            tLogDownloadData _tLogDownloadData;
+            _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_brand.getId()).toString());
+            if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
+                textView7LastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+            }
+        }
+        if (ll_kategoriVisitPlan != null && checkVisibility(ll_kategoriVisitPlan)) {
+            txtVwVisitPlan.setText("Kategori visit plan ("+String.valueOf(new mCategoryVisitPlanDA(db).getContactsCount(db))+")");
+            tLogDownloadData _tLogDownloadData;
+            _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_kategoriVisitPlan.getId()).toString());
+            if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
+                txtVisitPlanLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+            }
+        }
+        if (ll_product_competitor != null && checkVisibility(ll_product_competitor)) {
+            txtVwProductComp.setText("Product Competitor ("+String.valueOf(new mProductCompetitorDA(db).getContactsCountByKN(db, mUserLOBDataList))+")");
+            tLogDownloadData _tLogDownloadData;
+            _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_product_competitor.getId()).toString());
+            if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
+                txtProductCompLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+            }
+        }
+        if (ll_product_spg != null && checkVisibility(ll_product_spg)) {
+            txtVwProductSPGCusBase.setText("Product SPG CustomerBased ("+String.valueOf(new mProductSPGDA(db).getContactsCountByKN(db, mUserLOBDataList))+")");
+            tLogDownloadData _tLogDownloadData;
+            _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_product_spg.getId()).toString());
+            if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
+                txtProductSPGCusBaseLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+            }
+        }
+        if (ll_product_pic != null && checkVisibility(ll_product_pic)) {
+            txtVwProductPICCusBase.setText("Product PIC CustomerBased ("+String.valueOf(new mProductPICDA(db).getContactsCountByKN(db, mUserLOBDataList))+")");
+            tLogDownloadData _tLogDownloadData;
+            _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_product_pic.getId()).toString());
+            if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
+                txtProductPICCusBaseLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+            }
+        }
+        if (ll_type_submission != null && checkVisibility(ll_type_submission)) {
+            txtVwTypeSubm.setText("Type Submission ("+String.valueOf(new mTypeSubmissionMobileDA(db).getContactsCount(db))+")");
+            tLogDownloadData _tLogDownloadData;
+            _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_type_submission.getId()).toString());
+            if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
+                txtTypeSubmLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+            }
+        }
+        if (ll_dataCategoryKordinasiOutlet != null && checkVisibility(ll_dataCategoryKordinasiOutlet)) {
+            txtCategoryKoordinasi.setText("Kategori Koordinasi Outlet ("+String.valueOf(new mCategoryKoordinasiOutletDA(db).getContactsCount(db))+")");
+            tLogDownloadData _tLogDownloadData;
+            _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_dataCategoryKordinasiOutlet.getId()).toString());
+            if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
+                txtCategoryKoordinasiLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+            }
+        }
+        if (ll_dataQuesioner != null && checkVisibility(ll_dataQuesioner)) {
+            tv_SPG.setText("List SPG ("+String.valueOf(new tHirarkiBISDA(db).getContactsCount(db))+")");
+            tLogDownloadData _tLogDownloadData;
+            _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_dataQuesioner.getId()).toString());
+            if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
+                txtSPGLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+                txtquisLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+            }
+        }
+        //transaksi
+        if (ll_dataVisitPlan != null && checkVisibility(ll_dataVisitPlan)) {
+            txtTrVisitPlan.setText("Transaksi visit plan ("+String.valueOf(new tVisitPlanRealisasiDA(db).getContactsCount(db))+")");
+            tLogDownloadData _tLogDownloadData;
+            _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_dataVisitPlan.getId()).toString());
+            if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
+                txtTrVisitPlanLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+            }
+        }
+        if (ll_data_attendance != null && checkVisibility(ll_data_attendance )){
+            txtVwAbsenFPE.setText("Attendance FPE ("+String.valueOf(new tAbsenUserDA(db).getContactsCount(db))+")");
+            tLogDownloadData _tLogDownloadData;
+            _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_data_attendance.getId()).toString());
+            if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
+                txtAbsenFPELastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+            }
+        }
+        if (ll_reso != null && checkVisibility(ll_reso)) {
+            txtVwReso.setText("Reso ("+String.valueOf(new tSalesProductHeaderDA(db).getContactsCount(db))+")");
+            tLogDownloadData _tLogDownloadData;
+            _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_reso.getId()).toString());
+            if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
+                txtResoLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+            }
+        }
+        if (ll_purchase_order != null && checkVisibility(ll_purchase_order)) {
+            txtTrPO.setText("Purchase Order ("+String.valueOf(new tPurchaseOrderHeaderDA(db).getContactCountPO(db))+")");
+            tLogDownloadData _tLogDownloadData;
+            _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_purchase_order.getId()).toString());
+            if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
+                txtTrPOLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+            }
+        }
+        if (ll_data_stockIH != null && checkVisibility(ll_data_stockIH)) {
+            txtVwstockIH.setText("Stock On Hand ("+String.valueOf(new tStockInHandHeaderDA(db).getContactsCount(db))+")");
+            tLogDownloadData _tLogDownloadData;
+            _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_data_stockIH.getId()).toString());
+            if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
+                txtstockIHLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+            }
+        }
+        if (ll_dataQuantityStock != null && checkVisibility(ll_dataQuantityStock)) {
+            txtTrQuantityStock.setText("Near ED ("+String.valueOf(new tSalesProductQuantityHeaderDA(db).getContactsCount(db))+")");
+            tLogDownloadData _tLogDownloadData;
+            _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_dataQuantityStock.getId()).toString());
+            if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
+                txtTrQuantityStockLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+            }
+        }
+        if (ll_data_overStock != null && checkVisibility(ll_data_overStock)) {
+            txtVwDataOverStock.setText("Over Stock ("+String.valueOf(new tOverStockHeaderDA(db).getContactsCount(db))+")");
+            tLogDownloadData _tLogDownloadData;
+            _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_data_overStock.getId()).toString());
+            if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
+                txtOverStockLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+            }
+        }
+        if (ll_dataKordinasiOutlet != null && checkVisibility(ll_dataKordinasiOutlet)) {
+            txtVwKordinasiOutlet.setText("Koordinasi Outlet ("+String.valueOf(new KoordinasiOutletDA(db).getContactsCount(db))+")");
+            tLogDownloadData _tLogDownloadData;
+            _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_dataKordinasiOutlet.getId()).toString());
+            if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
+                txtKordinasiOutletLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+            }
+        }
+        if (ll_data_planogram != null && checkVisibility(ll_data_planogram)) {
+            txtTrPlanogram.setText("Planogram ("+String.valueOf(new tPlanogramMobileDA(db).getContactsCount(db))+")");
+            tLogDownloadData _tLogDownloadData;
+            _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_data_planogram.getId()).toString());
+            if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
+                txtPlanogramLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+            }
+        }
+        if (ll_data_activity != null && checkVisibility(ll_data_activity)) {
+            txtVwActivity.setText("Activity ("+String.valueOf(new tActivityDA(db).getContactsCount(db))+")");
+            tLogDownloadData _tLogDownloadData;
+            _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_data_activity.getId()).toString());
+            if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
+                txtActivityLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+            }
+        }
+        if (ll_data_activityV2 != null && checkVisibility(ll_data_activityV2)) {
+            txtVwActivityV2.setText("Activity ("+String.valueOf(new tActivityMobileDA(db).getContactsCount(db))+")");
+            tLogDownloadData _tLogDownloadData;
+            _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_data_activityV2.getId()).toString());
+            if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
+                txtActivityV2LastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+            }
+        }
+        if (ll_data_addDisplay != null && checkVisibility(ll_data_addDisplay)) {
+            txtVwaddDisplayV2.setText("Additional Display ("+String.valueOf(new tActivityMobileDA(db).getContactsCount(db))+")");
+            tLogDownloadData _tLogDownloadData;
+            _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_data_addDisplay.getId()).toString());
+            if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
+                txtaddDisplayV2LastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+            }
+        }
+        if (ll_data_customerbased != null && checkVisibility(ll_data_customerbased)) {
+            txtVwCustomerBase.setText("Customer base ("+String.valueOf(new tCustomerBasedMobileHeaderDA(db).getContactsCount(db))+")");
+            tLogDownloadData _tLogDownloadData;
+            _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_data_customerbased.getId()).toString());
+            if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
+                txtCustomerBaseLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+            }
+        }
+        if (ll_absen != null && checkVisibility(ll_absen)) {
+            txtVwAbsen.setText("Absen ("+String.valueOf(new tAbsenUserDA(db).getContactsCount(db))+")");
+            tLogDownloadData _tLogDownloadData;
+            _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_absen.getId()).toString());
+            if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
+                txtAbsenLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+            }
+        }
+        if (ll_data_leave != null && checkVisibility(ll_data_leave)) {
+            txtVwDataLeave.setText("Leave ("+String.valueOf(new tLeaveMobileDA(db).getContactsCount(db))+")");
+            tLogDownloadData _tLogDownloadData;
+            _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_data_leave.getId()).toString());
+            if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
+                txtDataLeaveLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+            }
+        }
+        if(ll_data_kemasanrusak !=null && checkVisibility(ll_data_kemasanrusak)){
+            txtVwDatakemasanrusak.setText("Kemasan Rusak ("+String.valueOf(new tKemasanRusakHeaderDA(db).getContactsCount(db))+")");
+            tLogDownloadData _tLogDownloadData;
+            _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_data_kemasanrusak.getId()).toString());
+            if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
+                txtkemasanrusakLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+            }
+        }
+        if(ll_data_tidaksesuaipesanan !=null && checkVisibility(ll_data_tidaksesuaipesanan)){
+            txtVwDatatidaksesuaipesanan.setText("Tidak Sesuai Pesanan ("+String.valueOf(new tTidakSesuaiPesananHeaderDA(db).getContactsCount(db))+")");
+            tLogDownloadData _tLogDownloadData;
+            _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_data_tidaksesuaipesanan.getId()).toString());
+            if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
+                txttidaksesuaipesananLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+            }
+        }
+        if (ll_dataPOP_Standard != null && checkVisibility(ll_dataPOP_Standard)){
+            tv_POP.setText("POP Standard ("+String.valueOf(new tPOPStandardHeaderDA(db).getContactsCount(db))+")");
+            tLogDownloadData _tLogDownloadData;
+            _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_dataPOP_Standard.getId()).toString());
+            if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
+                txtPOPLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+            }
+        }
+    }
+
+    private void saveDatatLogDownloadData(String pstrArgumet, String s) {
+        tLogDownloadData _tLogDownloadData = new tLogDownloadData();
+        List<tLogDownloadData> tLogDownloadDataList = new ArrayList<>();
+
+        _tLogDownloadData.set_txtModuleName(s);
+        _tLogDownloadData.set_dtLastDownload(pstrArgumet);
+
+        tLogDownloadDataList.add(_tLogDownloadData);
+        new tLogDownloadBL().SaveData(tLogDownloadDataList);
+    }
+
     private List<String> SaveDatamCategoryVisitPlanData(JSONArray JData) {
         List<String> _array;
         APIData dtAPIDATA = new APIData();
@@ -2239,6 +2774,17 @@ public class FragmentDownloadData extends Fragment {
         while (i.hasNext()) {
             org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
             int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
+
+            String pstrArgumet = String.valueOf(innerObj.get(new APIData().getStrArgument()));
+            tLogDownloadData _tLogDownloadData = new tLogDownloadData();
+            List<tLogDownloadData> tLogDownloadDataList = new ArrayList<>();
+
+            _tLogDownloadData.set_txtModuleName(res.getResourceEntryName(ll_kategoriVisitPlan.getId()).toString());
+            _tLogDownloadData.set_dtLastDownload(pstrArgumet);
+
+            tLogDownloadDataList.add(_tLogDownloadData);
+            new tLogDownloadBL().SaveData(tLogDownloadDataList);
+
             if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
                 mCategoryVisitPlanData _data = new mCategoryVisitPlanData();
                 _data.setIntCategoryVisitPlan((String) innerObj.get("intCategoryVisitPlan"));
@@ -2439,6 +2985,17 @@ public class FragmentDownloadData extends Fragment {
         while (i.hasNext()) {
             org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
             int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
+
+            String pstrArgumet = String.valueOf(innerObj.get(dtAPIDATA.getStrArgument()));
+            tLogDownloadData _tLogDownloadData = new tLogDownloadData();
+            List<tLogDownloadData> tLogDownloadDataList = new ArrayList<>();
+
+            _tLogDownloadData.set_txtModuleName(res.getResourceEntryName(ll_branch.getId()).toString());
+            _tLogDownloadData.set_dtLastDownload(pstrArgumet);
+
+            tLogDownloadDataList.add(_tLogDownloadData);
+            new tLogDownloadBL().SaveData(tLogDownloadDataList);
+
             if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
                 mEmployeeBranchData _data = new mEmployeeBranchData();
 
@@ -2467,6 +3024,17 @@ public class FragmentDownloadData extends Fragment {
             JSONObject innerObj = (JSONObject) aJData;
 
             try {
+
+                String pstrArgumet = String.valueOf(innerObj.get(new APIData().getStrArgument()));
+                tLogDownloadData _tLogDownloadData = new tLogDownloadData();
+                List<tLogDownloadData> tLogDownloadDataList = new ArrayList<>();
+
+                _tLogDownloadData.set_txtModuleName(res.getResourceEntryName(ll_reso.getId()).toString());
+                _tLogDownloadData.set_dtLastDownload(pstrArgumet);
+
+                tLogDownloadDataList.add(_tLogDownloadData);
+                new tLogDownloadBL().SaveData(tLogDownloadDataList);
+
                 JSONArray JsonArray_header = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListDatatSalesProductHeader_mobile")));
                 if (JsonArray_header != null) {
 
@@ -2527,6 +3095,17 @@ public class FragmentDownloadData extends Fragment {
             JSONObject innerObj = (JSONObject) aJData;
 
             try {
+
+                String pstrArgumet = String.valueOf(innerObj.get(new APIData().getStrArgument()));
+                tLogDownloadData _tLogDownloadData = new tLogDownloadData();
+                List<tLogDownloadData> tLogDownloadDataList = new ArrayList<>();
+
+                _tLogDownloadData.set_txtModuleName(res.getResourceEntryName(ll_data_stockIH.getId()).toString());
+                _tLogDownloadData.set_dtLastDownload(pstrArgumet);
+
+                tLogDownloadDataList.add(_tLogDownloadData);
+                new tLogDownloadBL().SaveData(tLogDownloadDataList);
+
                 JSONArray JsonArray_header = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListDatatStockInHandHeader_mobile")));
                 if (JsonArray_header != null) {
 
@@ -2588,6 +3167,16 @@ public class FragmentDownloadData extends Fragment {
         while (i.hasNext()) {
             org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
 
+            String pstrArgumet = String.valueOf(innerObj.get(new APIData().getStrArgument()));
+            tLogDownloadData _tLogDownloadData = new tLogDownloadData();
+            List<tLogDownloadData> tLogDownloadDataList = new ArrayList<>();
+
+            _tLogDownloadData.set_txtModuleName(res.getResourceEntryName(ll_data_activity.getId()).toString());
+            _tLogDownloadData.set_dtLastDownload(pstrArgumet);
+
+            tLogDownloadDataList.add(_tLogDownloadData);
+            new tLogDownloadBL().SaveData(tLogDownloadDataList);
+
             tActivityData _data = new tActivityData();
             _data.set_dtActivity(String.valueOf(innerObj.get("DtActivity")));
             _data.set_intActive(String.valueOf(innerObj.get("IntActive")));
@@ -2634,6 +3223,24 @@ public class FragmentDownloadData extends Fragment {
         List<tActivityMobileData> ListdataActivity = new ArrayList<>();
         while (i.hasNext()) {
             org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
+
+            String pstrArgumet = String.valueOf(innerObj.get(new APIData().getStrArgument()));
+            tLogDownloadData _tLogDownloadData = new tLogDownloadData();
+            List<tLogDownloadData> tLogDownloadDataList = new ArrayList<>();
+
+            _tLogDownloadData.set_txtModuleName(res.getResourceEntryName(ll_data_activityV2.getId()).toString());
+            _tLogDownloadData.set_dtLastDownload(pstrArgumet);
+
+            tLogDownloadDataList.add(_tLogDownloadData);
+
+            _tLogDownloadData = new tLogDownloadData();
+
+            _tLogDownloadData.set_txtModuleName(res.getResourceEntryName(ll_data_addDisplay.getId()).toString());
+            _tLogDownloadData.set_dtLastDownload(pstrArgumet);
+
+            tLogDownloadDataList.add(_tLogDownloadData);
+
+            new tLogDownloadBL().SaveData(tLogDownloadDataList);
 
             tActivityMobileData _data = new tActivityMobileData();
             _data.set_dtActivity(String.valueOf(innerObj.get("DtActivity")));
@@ -2687,6 +3294,17 @@ public class FragmentDownloadData extends Fragment {
             org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
             tSubTypeActivityData _data = new tSubTypeActivityData();
             String txtValid = String.valueOf(innerObj.get("_pboolValid"));
+
+            String pstrArgumet = String.valueOf(innerObj.get(new APIData().getStrArgument()));
+            tLogDownloadData _tLogDownloadData = new tLogDownloadData();
+            List<tLogDownloadData> tLogDownloadDataList = new ArrayList<>();
+
+            _tLogDownloadData.set_txtModuleName(res.getResourceEntryName(ll_subtypeactivity.getId()).toString());
+            _tLogDownloadData.set_dtLastDownload(pstrArgumet);
+
+            tLogDownloadDataList.add(_tLogDownloadData);
+            new tLogDownloadBL().SaveData(tLogDownloadDataList);
+
             if (txtValid.equals("1")) {
                 _data.set_bitActive(String.valueOf(innerObj.get("BitActive")));
                 _data.set_txtType(String.valueOf(innerObj.get("TxtType")));
@@ -2715,6 +3333,17 @@ public class FragmentDownloadData extends Fragment {
             org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
             tKategoryPlanogramMobileData _data = new tKategoryPlanogramMobileData();
             String txtValid = String.valueOf(innerObj.get("_pboolValid"));
+
+            String pstrArgumet = String.valueOf(innerObj.get(new APIData().getStrArgument()));
+            tLogDownloadData _tLogDownloadData = new tLogDownloadData();
+            List<tLogDownloadData> tLogDownloadDataList = new ArrayList<>();
+
+            _tLogDownloadData.set_txtModuleName(res.getResourceEntryName(ll_kategoryPlanogram.getId()).toString());
+            _tLogDownloadData.set_dtLastDownload(pstrArgumet);
+
+            tLogDownloadDataList.add(_tLogDownloadData);
+            new tLogDownloadBL().SaveData(tLogDownloadDataList);
+
             if (txtValid.equals("1")) {
                 _data.set_bitActive(String.valueOf(innerObj.get("BitActive")));
                 _data.set_txtName(String.valueOf(innerObj.get("TxtName")));
@@ -2741,6 +3370,16 @@ public class FragmentDownloadData extends Fragment {
         List<tAbsenUserData> ListdataAbsen = new ArrayList<>();
         while (i.hasNext()) {
             org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
+
+            String pstrArgumet = String.valueOf(innerObj.get(new APIData().getStrArgument()));
+            tLogDownloadData _tLogDownloadData = new tLogDownloadData();
+            List<tLogDownloadData> tLogDownloadDataList = new ArrayList<>();
+
+            _tLogDownloadData.set_txtModuleName(res.getResourceEntryName(ll_absen.getId()).toString());
+            _tLogDownloadData.set_dtLastDownload(pstrArgumet);
+
+            tLogDownloadDataList.add(_tLogDownloadData);
+            new tLogDownloadBL().SaveData(tLogDownloadDataList);
 
             int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
             if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
@@ -2794,6 +3433,16 @@ public class FragmentDownloadData extends Fragment {
         while (i.hasNext()) {
             org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
 
+            String pstrArgumet = String.valueOf(innerObj.get(new APIData().getStrArgument()));
+            tLogDownloadData _tLogDownloadData = new tLogDownloadData();
+            List<tLogDownloadData> tLogDownloadDataList = new ArrayList<>();
+
+            _tLogDownloadData.set_txtModuleName(res.getResourceEntryName(ll_data_attendance.getId()).toString());
+            _tLogDownloadData.set_dtLastDownload(pstrArgumet);
+
+            tLogDownloadDataList.add(_tLogDownloadData);
+            new tLogDownloadBL().SaveData(tLogDownloadDataList);
+
             int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
             if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
                 tAttendanceUserData _data = new tAttendanceUserData();
@@ -2845,6 +3494,16 @@ public class FragmentDownloadData extends Fragment {
         List<tLeaveMobileData> ListdataLeave = new ArrayList<>();
         while (i.hasNext()) {
             org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
+
+            String pstrArgumet = String.valueOf(innerObj.get(new APIData().getStrArgument()));
+            tLogDownloadData _tLogDownloadData = new tLogDownloadData();
+            List<tLogDownloadData> tLogDownloadDataList = new ArrayList<>();
+
+            _tLogDownloadData.set_txtModuleName(res.getResourceEntryName(ll_data_leave.getId()).toString());
+            _tLogDownloadData.set_dtLastDownload(pstrArgumet);
+
+            tLogDownloadDataList.add(_tLogDownloadData);
+            new tLogDownloadBL().SaveData(tLogDownloadDataList);
 
             int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
             if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
@@ -2976,6 +3635,17 @@ public class FragmentDownloadData extends Fragment {
             JSONObject innerObj = (JSONObject) aJData;
 
             try {
+
+                String pstrArgumet = String.valueOf(innerObj.get(new APIData().getStrArgument()));
+                tLogDownloadData _tLogDownloadData = new tLogDownloadData();
+                List<tLogDownloadData> tLogDownloadDataList = new ArrayList<>();
+
+                _tLogDownloadData.set_txtModuleName(res.getResourceEntryName(ll_data_customerbased.getId()).toString());
+                _tLogDownloadData.set_dtLastDownload(pstrArgumet);
+
+                tLogDownloadDataList.add(_tLogDownloadData);
+                new tLogDownloadBL().SaveData(tLogDownloadDataList);
+
                 JSONArray JsonArray_header = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListDatatCustomerBasedHeader_mobile")));
                 if (JsonArray_header != null) {
 
@@ -3226,6 +3896,7 @@ public class FragmentDownloadData extends Fragment {
             if (jsonArray != null && jsonArray.size() > 0) {
                 arrData = SaveDataPOPStandard(jsonArray);
                 loadData();
+                setViewTextLastDownload();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -3284,6 +3955,7 @@ public class FragmentDownloadData extends Fragment {
                 arrData = SaveDataQuesioner(jsonArray);
 //                arrData = SaveDataSPGFromTL(jsonArray);
                 loadData();
+                setViewTextLastDownload();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -3321,7 +3993,7 @@ public class FragmentDownloadData extends Fragment {
             JSONArray Json = null;
             try {
 //                Json = new mProductBarcodeBL().DownloadmProductBarcode2(pInfo.versionName);
-                Json = new mEmployeeSalesProductBL().DownloadEmployeeSalesProduct(pInfo.versionName, mUserLOBDataList);
+                Json = new mEmployeeSalesProductBL().DownloadEmployeeSalesProduct(pInfo.versionName, mUserLOBDataList, res.getResourceEntryName(ll_product.getId()).toString());
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -3341,6 +4013,7 @@ public class FragmentDownloadData extends Fragment {
         protected void onPostExecute(JSONArray roledata) {
             if (roledata != null && roledata.size() > 0) {
                 loadData();
+                setViewTextLastDownload();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -3380,7 +4053,7 @@ public class FragmentDownloadData extends Fragment {
         protected JSONArray doInBackground(JSONArray... params) {
             JSONArray Json = null;
             try {
-                Json = new mProductBrandHeaderBL().DownloadBrandHeader(pInfo.versionName);
+                Json = new mProductBrandHeaderBL().DownloadBrandHeader(pInfo.versionName, res.getResourceEntryName(ll_brand.getId()).toString());
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -3400,6 +4073,7 @@ public class FragmentDownloadData extends Fragment {
         protected void onPostExecute(JSONArray roledata) {
             if (roledata != null && roledata.size() > 0) {
                 loadData();
+                setViewTextLastDownload();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -3461,6 +4135,7 @@ public class FragmentDownloadData extends Fragment {
                 arrData = SaveDatatSalesProductData(roledata);
                 //spnBranch.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
                 loadData();
+                setViewTextLastDownload();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -3523,6 +4198,7 @@ public class FragmentDownloadData extends Fragment {
                 arrData = SaveDatatStockInHandData(roledata);
                 //spnBranch.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
                 loadData();
+                setViewTextLastDownload();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -3585,6 +4261,7 @@ public class FragmentDownloadData extends Fragment {
                 arrData = SaveDatatActivityData(roledata);
                 //spnBranch.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
                 loadData();
+                setViewTextLastDownload();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -3647,6 +4324,7 @@ public class FragmentDownloadData extends Fragment {
                 arrData = SaveDatatActivityDataV2(roledata);
                 //spnBranch.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
                 loadData();
+                setViewTextLastDownload();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -3709,6 +4387,7 @@ public class FragmentDownloadData extends Fragment {
                 arrData = SaveDatatActivityDataV2(roledata);
                 //spnBranch.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
                 loadData();
+                setViewTextLastDownload();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -3771,6 +4450,7 @@ public class FragmentDownloadData extends Fragment {
                 arrData = SaveDatatCustomerBasedData(roledata);
                 //spnBranch.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
                 loadData();
+                setViewTextLastDownload();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -3832,6 +4512,7 @@ public class FragmentDownloadData extends Fragment {
                 arrData = SaveDatatAbsenUserData(roledata);
                 //spnBranch.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
                 loadData();
+                setViewTextLastDownload();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -3893,6 +4574,7 @@ public class FragmentDownloadData extends Fragment {
             if (roledata != null && roledata.size() > 0) {
                 arrData = SaveDatatAttendanceUserData(roledata);
                 loadData();
+                setViewTextLastDownload();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -3960,6 +4642,7 @@ public class FragmentDownloadData extends Fragment {
             if (jsonArray != null && jsonArray.size() > 0) {
                 arrData = SaveDatatPurchaseOrderData(jsonArray);
                 loadData();
+                setViewTextLastDownload();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -4013,6 +4696,7 @@ public class FragmentDownloadData extends Fragment {
             if (jsonArray != null && jsonArray.size() > 0) {
                 arrData = SaveDatatOverStockData(jsonArray);
                 loadData();
+                setViewTextLastDownload();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -4073,6 +4757,7 @@ public class FragmentDownloadData extends Fragment {
             if (jsonArray != null && jsonArray.size() > 0) {
                 arrData = SaveDatatSalesProductQuantityData(jsonArray);
                 loadData();
+                setViewTextLastDownload();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -4133,6 +4818,7 @@ public class FragmentDownloadData extends Fragment {
             if (jsonArray != null && jsonArray.size() > 0) {
                 arrData = SaveDatatKemasanRusakData(jsonArray);
                 loadData();
+                setViewTextLastDownload();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -4185,6 +4871,7 @@ public class FragmentDownloadData extends Fragment {
             if (jsonArray != null && jsonArray.size() > 0) {
                 arrData = SaveDatatPlamogramData(jsonArray);
                 loadData();
+                setViewTextLastDownload();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -4287,6 +4974,7 @@ public class FragmentDownloadData extends Fragment {
             if (jsonArray != null && jsonArray.size() > 0) {
                 arrData = SaveDataTidakSesuaiPesanan(jsonArray);
                 loadData();
+                setViewTextLastDownload();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -4345,6 +5033,7 @@ public class FragmentDownloadData extends Fragment {
             if (jsonArray != null && jsonArray.size() > 0) {
                 arrData = SaveDataKoordinasiOutletData(jsonArray);
                 loadData();
+                setViewTextLastDownload();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -4397,6 +5086,7 @@ public class FragmentDownloadData extends Fragment {
             if (jsonArray != null && jsonArray.size() > 0) {
                 arrData = SaveDataCategoryKoordinasiOutletData(jsonArray);
                 loadData();
+                setViewTextLastDownload();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -4443,6 +5133,7 @@ public class FragmentDownloadData extends Fragment {
             if (roledata != null && roledata.size() > 0) {
                 arrData = SaveDatatLeaveData(roledata);
                 loadData();
+                setViewTextLastDownload();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -4486,6 +5177,17 @@ public class FragmentDownloadData extends Fragment {
         while (i.hasNext()) {
             org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
             int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
+
+            String pstrArgumet = String.valueOf(innerObj.get(new APIData().getStrArgument()));
+            tLogDownloadData _tLogDownloadData = new tLogDownloadData();
+            List<tLogDownloadData> tLogDownloadDataList = new ArrayList<>();
+
+            _tLogDownloadData.set_txtModuleName(res.getResourceEntryName(ll_outlet.getId()).toString());
+            _tLogDownloadData.set_dtLastDownload(pstrArgumet);
+
+            tLogDownloadDataList.add(_tLogDownloadData);
+            new tLogDownloadBL().SaveData(tLogDownloadDataList);
+
             if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
 //                String latitude = (String) innerObj.get("txtLatitude");
 //                String longitude = (String) innerObj.get("txtLongitude");
@@ -4565,6 +5267,7 @@ public class FragmentDownloadData extends Fragment {
             if (roledata != null && roledata.size() > 0) {
                 arrData = SaveDatamEmployeeAreaData(roledata);
                 loadData();
+                setViewTextLastDownload();
                 //spnOutlet.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
@@ -4630,6 +5333,7 @@ public class FragmentDownloadData extends Fragment {
                 arrData = SaveDatamEmployeeBranchData(roledata);
                 //spnBranch.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
                 loadData();
+                setViewTextLastDownload();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -4695,6 +5399,7 @@ public class FragmentDownloadData extends Fragment {
                 arrData = SaveDatamCategoryVisitPlanData(roledata);
                 //spnBranch.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
                 loadData();
+                setViewTextLastDownload();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -4757,6 +5462,7 @@ public class FragmentDownloadData extends Fragment {
                 arrData = SaveDatatSubTypeActivityData(roledata);
                 //spnBranch.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
                 loadData();
+                setViewTextLastDownload();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -4818,6 +5524,7 @@ public class FragmentDownloadData extends Fragment {
                 arrData = SaveDataKategoryPlanogram(roledata);
                 //spnBranch.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
                 loadData();
+                setViewTextLastDownload();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -4882,6 +5589,7 @@ public class FragmentDownloadData extends Fragment {
                 //spnBranch.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
                 SaveDatatTransaksiVisitPlanHeaderData(roledata);
                 loadData();
+                setViewTextLastDownload();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -5067,6 +5775,17 @@ public class FragmentDownloadData extends Fragment {
         while (i.hasNext()) {
             org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
             int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
+
+            String pstrArgumet = String.valueOf(innerObj.get(new APIData().getStrArgument()));
+            tLogDownloadData _tLogDownloadData = new tLogDownloadData();
+            List<tLogDownloadData> tLogDownloadDataList = new ArrayList<>();
+
+            _tLogDownloadData.set_txtModuleName(res.getResourceEntryName(ll_type_leave.getId()).toString());
+            _tLogDownloadData.set_dtLastDownload(pstrArgumet);
+
+            tLogDownloadDataList.add(_tLogDownloadData);
+            new tLogDownloadBL().SaveData(tLogDownloadDataList);
+
             if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
                 mTypeLeaveMobileData _data = new mTypeLeaveMobileData();
                 _data.set_intTipeLeave(String.valueOf(innerObj.get("IntTipeLeave")));
@@ -5108,6 +5827,7 @@ public class FragmentDownloadData extends Fragment {
                 arrData = SaveDatamTypeLeaveMobileData(roledata);
                 //spnLeave.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
                 loadData();
+                setViewTextLastDownload();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -5168,6 +5888,7 @@ public class FragmentDownloadData extends Fragment {
                 arrData = SaveDatammProductCompetitorData(jsonArray);
                 //spnLeave.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
                 loadData();
+                setViewTextLastDownload();
                 new clsMainActivity().showCustomToast(getContext(), strMessage, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -5200,6 +5921,17 @@ public class FragmentDownloadData extends Fragment {
 
         while (i.hasNext()) {
             org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
+
+            String pstrArgumet = String.valueOf(innerObj.get(new APIData().getStrArgument()));
+            tLogDownloadData _tLogDownloadData = new tLogDownloadData();
+            List<tLogDownloadData> tLogDownloadDataList = new ArrayList<>();
+
+            _tLogDownloadData.set_txtModuleName(res.getResourceEntryName(ll_product_competitor.getId()).toString());
+            _tLogDownloadData.set_dtLastDownload(pstrArgumet);
+
+            tLogDownloadDataList.add(_tLogDownloadData);
+            new tLogDownloadBL().SaveData(tLogDownloadDataList);
+
             int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
             if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
                 strMessage = (String) innerObj.get(dtAPIDATA.strMessage);
@@ -5253,6 +5985,7 @@ public class FragmentDownloadData extends Fragment {
                 arrData = SaveDatammProductSPGData(jsonArray);
                 //spnLeave.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
                 loadData();
+                setViewTextLastDownload();
                 new clsMainActivity().showCustomToast(getContext(), strMessage, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -5286,6 +6019,17 @@ public class FragmentDownloadData extends Fragment {
         int intsum = new mProductSPGBL().getContactCount();
         while (i.hasNext()) {
             org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
+
+            String pstrArgumet = String.valueOf(innerObj.get(new APIData().getStrArgument()));
+            tLogDownloadData _tLogDownloadData = new tLogDownloadData();
+            List<tLogDownloadData> tLogDownloadDataList = new ArrayList<>();
+
+            _tLogDownloadData.set_txtModuleName(res.getResourceEntryName(ll_product_spg.getId()).toString());
+            _tLogDownloadData.set_dtLastDownload(pstrArgumet);
+
+            tLogDownloadDataList.add(_tLogDownloadData);
+            new tLogDownloadBL().SaveData(tLogDownloadDataList);
+
             int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
             if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
                 strMessage = (String) innerObj.get(dtAPIDATA.strMessage);
@@ -5344,6 +6088,7 @@ public class FragmentDownloadData extends Fragment {
                 arrData = SaveDatammProductPICData(jsonArray);
                 //spnLeave.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
                 loadData();
+                setViewTextLastDownload();
                 new clsMainActivity().showCustomToast(getContext(), strMessage, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -5375,6 +6120,17 @@ public class FragmentDownloadData extends Fragment {
         int intsum = new mProductPICBL().getContactCount();
         while (i.hasNext()) {
             org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
+
+            String pstrArgumet = String.valueOf(innerObj.get(new APIData().getStrArgument()));
+            tLogDownloadData _tLogDownloadData = new tLogDownloadData();
+            List<tLogDownloadData> tLogDownloadDataList = new ArrayList<>();
+
+            _tLogDownloadData.set_txtModuleName(res.getResourceEntryName(ll_product_pic.getId()).toString());
+            _tLogDownloadData.set_dtLastDownload(pstrArgumet);
+
+            tLogDownloadDataList.add(_tLogDownloadData);
+            new tLogDownloadBL().SaveData(tLogDownloadDataList);
+
             int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
             if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
                 strMessage = (String) innerObj.get(dtAPIDATA.strMessage);
@@ -5431,6 +6187,7 @@ public class FragmentDownloadData extends Fragment {
             if (jsonArray != null && jsonArray.size() > 0) {
                 arrData = SaveDatamTypeSubmissionMobile(jsonArray);
                 loadData();
+                setViewTextLastDownload();
                 new clsMainActivity().showCustomToast(getContext(), strMessage, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -5461,6 +6218,17 @@ public class FragmentDownloadData extends Fragment {
         List<mTypeSubmissionMobile> _Listdata = new ArrayList<>();
         while (i.hasNext()) {
             org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
+
+            String pstrArgumet = String.valueOf(innerObj.get(new APIData().getStrArgument()));
+            tLogDownloadData _tLogDownloadData = new tLogDownloadData();
+            List<tLogDownloadData> tLogDownloadDataList = new ArrayList<>();
+
+            _tLogDownloadData.set_txtModuleName(res.getResourceEntryName(ll_type_submission.getId()).toString());
+            _tLogDownloadData.set_dtLastDownload(pstrArgumet);
+
+            tLogDownloadDataList.add(_tLogDownloadData);
+            new tLogDownloadBL().SaveData(tLogDownloadDataList);
+
             int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
             if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
                 strMessage = (String) innerObj.get(dtAPIDATA.strMessage);
@@ -5488,6 +6256,15 @@ public class FragmentDownloadData extends Fragment {
         for (Object aJsonArray : jsonArray) {
             JSONObject innerObj = (JSONObject) aJsonArray;
             try {
+                String pstrArgumet = String.valueOf(innerObj.get(new APIData().getStrArgument()));
+                tLogDownloadData _tLogDownloadData = new tLogDownloadData();
+                List<tLogDownloadData> tLogDownloadDataList = new ArrayList<>();
+
+                _tLogDownloadData.set_txtModuleName(res.getResourceEntryName(ll_dataQuesioner.getId()).toString());
+                _tLogDownloadData.set_dtLastDownload(pstrArgumet);
+
+                tLogDownloadDataList.add(_tLogDownloadData);
+                new tLogDownloadBL().SaveData(tLogDownloadDataList);
                 int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
                 if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
                     new tGroupQuestionMappingBL().deleteAllDatatGroupQuestionMapping();
@@ -5661,6 +6438,16 @@ public class FragmentDownloadData extends Fragment {
             JSONObject innerObj = (JSONObject) aJsonArray;
             try {
                 int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
+                String pstrArgumet = String.valueOf(innerObj.get(dtAPIDATA.getStrArgument()));
+                tLogDownloadData _tLogDownloadData = new tLogDownloadData();
+                List<tLogDownloadData> tLogDownloadDataList = new ArrayList<>();
+
+                _tLogDownloadData.set_txtModuleName(res.getResourceEntryName(ll_dataPOP_Standard.getId()).toString());
+                _tLogDownloadData.set_dtLastDownload(pstrArgumet);
+
+                tLogDownloadDataList.add(_tLogDownloadData);
+                new tLogDownloadBL().SaveData(tLogDownloadDataList);
+
                 if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
                     JSONArray jsonArray_Type = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListDataTypePOPStandard_mobile")));
                     for (Object aJsonArray_Type : jsonArray_Type) {
@@ -5758,6 +6545,16 @@ public class FragmentDownloadData extends Fragment {
         for (Object aJsonArray : jsonArray) {
             JSONObject innerObj = (JSONObject) aJsonArray;
             try {
+                String pstrArgumet = String.valueOf(innerObj.get(new APIData().getStrArgument()));
+                tLogDownloadData _tLogDownloadData = new tLogDownloadData();
+                List<tLogDownloadData> tLogDownloadDataList = new ArrayList<>();
+
+                _tLogDownloadData.set_txtModuleName(res.getResourceEntryName(ll_purchase_order.getId()).toString());
+                _tLogDownloadData.set_dtLastDownload(pstrArgumet);
+
+                tLogDownloadDataList.add(_tLogDownloadData);
+                new tLogDownloadBL().SaveData(tLogDownloadDataList);
+
                 JSONArray jsonArray_header = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListDatatPurchaseOrderHeader_mobile")));
                 if (jsonArray_header != null) {
                     for (Object aJsonArray_header : jsonArray_header) {
@@ -5817,6 +6614,16 @@ public class FragmentDownloadData extends Fragment {
         for (Object aJsonArray : jsonArray) {
             JSONObject innerObj = (JSONObject) aJsonArray;
             try {
+                String pstrArgumet = String.valueOf(innerObj.get(new APIData().getStrArgument()));
+                tLogDownloadData _tLogDownloadData = new tLogDownloadData();
+                List<tLogDownloadData> tLogDownloadDataList = new ArrayList<>();
+
+                _tLogDownloadData.set_txtModuleName(res.getResourceEntryName(ll_data_overStock.getId()).toString());
+                _tLogDownloadData.set_dtLastDownload(pstrArgumet);
+
+                tLogDownloadDataList.add(_tLogDownloadData);
+                new tLogDownloadBL().SaveData(tLogDownloadDataList);
+
                 JSONArray jsonArray_header = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListtOverStockHeader_mobile")));
                 if (jsonArray_header != null) {
                     for (Object aJsonArray_header : jsonArray_header) {
@@ -5878,6 +6685,16 @@ public class FragmentDownloadData extends Fragment {
         for (Object aJsonArray : jsonArray) {
             JSONObject innerObj = (JSONObject) aJsonArray;
             try {
+                String pstrArgumet = String.valueOf(innerObj.get(new APIData().getStrArgument()));
+                tLogDownloadData _tLogDownloadData = new tLogDownloadData();
+                List<tLogDownloadData> tLogDownloadDataList = new ArrayList<>();
+
+                _tLogDownloadData.set_txtModuleName(res.getResourceEntryName(ll_dataQuantityStock.getId()).toString());
+                _tLogDownloadData.set_dtLastDownload(pstrArgumet);
+
+                tLogDownloadDataList.add(_tLogDownloadData);
+                new tLogDownloadBL().SaveData(tLogDownloadDataList);
+
                 JSONArray jsonArray_header = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListtSalesProductQuantityHeader_mobile")));
                 if (jsonArray_header != null) {
                     for (Object aJsonArray_header : jsonArray_header) {
@@ -5964,6 +6781,16 @@ public class FragmentDownloadData extends Fragment {
         for (Object aJsonArray : jsonArray) {
             JSONObject innerObj = (JSONObject) aJsonArray;
             try {
+                String pstrArgumet = String.valueOf(innerObj.get(new APIData().getStrArgument()));
+                tLogDownloadData _tLogDownloadData = new tLogDownloadData();
+                List<tLogDownloadData> tLogDownloadDataList = new ArrayList<>();
+
+                _tLogDownloadData.set_txtModuleName(res.getResourceEntryName(ll_data_kemasanrusak.getId()).toString());
+                _tLogDownloadData.set_dtLastDownload(pstrArgumet);
+
+                tLogDownloadDataList.add(_tLogDownloadData);
+                new tLogDownloadBL().SaveData(tLogDownloadDataList);
+
                 JSONArray jsonArray_header = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListtKemasanRusakHeader_mobile")));
                 if (jsonArray_header != null) {
                     for (Object aJsonArray_header : jsonArray_header) {
@@ -6050,6 +6877,16 @@ public class FragmentDownloadData extends Fragment {
         for (Object aJsonArray : jsonArray) {
             JSONObject innerObj = (JSONObject) aJsonArray;
             try {
+                String pstrArgumet = String.valueOf(innerObj.get(new APIData().getStrArgument()));
+                tLogDownloadData _tLogDownloadData = new tLogDownloadData();
+                List<tLogDownloadData> tLogDownloadDataList = new ArrayList<>();
+
+                _tLogDownloadData.set_txtModuleName(res.getResourceEntryName(ll_data_planogram.getId()).toString());
+                _tLogDownloadData.set_dtLastDownload(pstrArgumet);
+
+                tLogDownloadDataList.add(_tLogDownloadData);
+                new tLogDownloadBL().SaveData(tLogDownloadDataList);
+
                 JSONArray jsonArray_header = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListtPlanogram_mobile")));
                 if (jsonArray_header != null) {
                     for (Object aJsonArray_header : jsonArray_header) {
@@ -6148,6 +6985,17 @@ public class FragmentDownloadData extends Fragment {
         for (Object aJsonArray : jsonArray) {
             JSONObject innerObj = (JSONObject) aJsonArray;
             try {
+
+                String pstrArgumet = String.valueOf(innerObj.get(new APIData().getStrArgument()));
+                tLogDownloadData _tLogDownloadData = new tLogDownloadData();
+                List<tLogDownloadData> tLogDownloadDataList = new ArrayList<>();
+
+                _tLogDownloadData.set_txtModuleName(res.getResourceEntryName(ll_dataKordinasiOutlet.getId()).toString());
+                _tLogDownloadData.set_dtLastDownload(pstrArgumet);
+
+                tLogDownloadDataList.add(_tLogDownloadData);
+                new tLogDownloadBL().SaveData(tLogDownloadDataList);
+
                 JSONArray jsonArray_header = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListKoordinasiOutlet_mobile")));
                 if (jsonArray_header != null) {
                     for (Object aJsonArray_header : jsonArray_header) {
@@ -6208,6 +7056,17 @@ public class FragmentDownloadData extends Fragment {
         for (Object aJsonArray : jsonArray) {
             JSONObject innerObj = (JSONObject) aJsonArray;
             try {
+
+                String pstrArgumet = String.valueOf(innerObj.get(new APIData().getStrArgument()));
+                tLogDownloadData _tLogDownloadData = new tLogDownloadData();
+                List<tLogDownloadData> tLogDownloadDataList = new ArrayList<>();
+
+                _tLogDownloadData.set_txtModuleName(res.getResourceEntryName(ll_data_tidaksesuaipesanan.getId()).toString());
+                _tLogDownloadData.set_dtLastDownload(pstrArgumet);
+
+                tLogDownloadDataList.add(_tLogDownloadData);
+                new tLogDownloadBL().SaveData(tLogDownloadDataList);
+
                 JSONArray jsonArray_header = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListtTidakSesuaiPesananOutlet_mobile")));
                 if (jsonArray_header != null) {
                     for (Object aJsonArray_header : jsonArray_header) {
@@ -6268,6 +7127,17 @@ public class FragmentDownloadData extends Fragment {
         for (Object aJsonArray : jsonArray) {
             JSONObject innerObj = (JSONObject) aJsonArray;
             try {
+
+                String pstrArgumet = String.valueOf(innerObj.get(new APIData().getStrArgument()));
+                tLogDownloadData _tLogDownloadData = new tLogDownloadData();
+                List<tLogDownloadData> tLogDownloadDataList = new ArrayList<>();
+
+                _tLogDownloadData.set_txtModuleName(res.getResourceEntryName(ll_dataCategoryKordinasiOutlet.getId()).toString());
+                _tLogDownloadData.set_dtLastDownload(pstrArgumet);
+
+                tLogDownloadDataList.add(_tLogDownloadData);
+                new tLogDownloadBL().SaveData(tLogDownloadDataList);
+
                 JSONArray jsonArray_header = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListCategoryKoordinasiOutlet_mobile")));
                 if (jsonArray_header != null) {
                     for (Object aJsonArray_header : jsonArray_header) {

@@ -421,6 +421,25 @@ public class clsMainActivity extends Activity {
         return txtDate;
     }
 
+    public String giveFormatDateWithTime(String DateYYMMDD) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+        DateFormat formatYY = new SimpleDateFormat("yyyy");
+        DateFormat formatMM = new SimpleDateFormat("MM");
+        DateFormat formatDD = new SimpleDateFormat("dd");
+        String txtDate = "";
+        try {
+            Date dtdate = (Date) dateFormat.parse(DateYYMMDD);
+            int year = Integer.valueOf(formatYY.format(dtdate));
+            int month = Integer.valueOf(formatMM.format(dtdate));
+            int day = Integer.valueOf(formatDD.format(dtdate));
+            txtDate = String.valueOf(day) + "/" + String.valueOf(month) + "/" + String.valueOf(year);
+        } catch (ParseException e) {
+            txtDate = DateYYMMDD;
+        }
+
+        return txtDate;
+    }
+
     public String giveFormatDate2(String DateYYMMDD) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         DateFormat formatYY = new SimpleDateFormat("yyyy");

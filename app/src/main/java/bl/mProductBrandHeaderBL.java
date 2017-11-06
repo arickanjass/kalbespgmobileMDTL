@@ -14,6 +14,7 @@ import library.spgmobile.common.linkAPI;
 import library.spgmobile.common.mEmployeeSalesProductData;
 import library.spgmobile.common.mProductBrandHeaderData;
 import library.spgmobile.common.mconfigData;
+import library.spgmobile.common.tLogDownloadData;
 import library.spgmobile.common.tUserLoginData;
 import library.spgmobile.dal.clsHardCode;
 import library.spgmobile.dal.enumConfigData;
@@ -23,7 +24,7 @@ import library.spgmobile.dal.mconfigDA;
 import library.spgmobile.dal.tUserLoginDA;
 
 public class mProductBrandHeaderBL extends clsMainBL{
-	public JSONArray DownloadBrandHeader(String versionName) throws Exception{
+	public JSONArray DownloadBrandHeader(String versionName, String ll_brand) throws Exception{
 		//ambil linkapi Database sqllite
 		SQLiteDatabase _db=getDb();
 		tUserLoginDA _tUserLoginDA=new tUserLoginDA(_db);
@@ -58,6 +59,17 @@ public class mProductBrandHeaderBL extends clsMainBL{
 		while (i.hasNext()) {
 			org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
 			int boolValid= Integer.valueOf(String.valueOf( innerObj.get(dtAPIDATA.boolValid)));
+
+			String pstrArgumet = String.valueOf(innerObj.get(new APIData().getStrArgument()));
+			tLogDownloadData _tLogDownloadData = new tLogDownloadData();
+			List<tLogDownloadData> tLogDownloadDataList = new ArrayList<>();
+
+			_tLogDownloadData.set_txtModuleName(ll_brand);
+			_tLogDownloadData.set_dtLastDownload(pstrArgumet);
+
+			tLogDownloadDataList.add(_tLogDownloadData);
+			new tLogDownloadBL().SaveData(tLogDownloadDataList);
+
 			if(boolValid == Integer.valueOf(new clsHardCode().intSuccess)){				
 				intsum+=1;
 				mProductBrandHeaderData _data =new mProductBrandHeaderData();

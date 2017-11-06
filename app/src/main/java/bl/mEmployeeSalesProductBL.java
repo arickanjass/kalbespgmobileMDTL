@@ -1,9 +1,13 @@
 package bl;
 
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.LinearLayout;
+
+import com.bumptech.glide.load.engine.Resource;
 
 import org.json.simple.JSONArray;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,6 +19,7 @@ import library.spgmobile.common.mCounterNumberData;
 import library.spgmobile.common.mEmployeeSalesProductData;
 import library.spgmobile.common.mUserLOBData;
 import library.spgmobile.common.mconfigData;
+import library.spgmobile.common.tLogDownloadData;
 import library.spgmobile.common.tUserLoginData;
 import library.spgmobile.dal.clsFileAttach_mobileDA;
 import library.spgmobile.dal.clsHardCode;
@@ -26,7 +31,7 @@ import library.spgmobile.dal.mconfigDA;
 import library.spgmobile.dal.tUserLoginDA;
 
 public class mEmployeeSalesProductBL extends clsMainBL{
-	public JSONArray DownloadEmployeeSalesProduct(String versionName, List<mUserLOBData> mUserLOBDataList) throws Exception{
+	public JSONArray DownloadEmployeeSalesProduct(String versionName, List<mUserLOBData> mUserLOBDataList, String ll_product) throws Exception{
 		//ambil linkapi Database sqllite
 		SQLiteDatabase _db=getDb();
 		tUserLoginDA _tUserLoginDA=new tUserLoginDA(_db);
@@ -61,6 +66,17 @@ public class mEmployeeSalesProductBL extends clsMainBL{
 		while (i.hasNext()) {
 			org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
 			int boolValid= Integer.valueOf(String.valueOf( innerObj.get(dtAPIDATA.boolValid)));
+
+			String pstrArgumet = String.valueOf(innerObj.get(new APIData().getStrArgument()));
+			tLogDownloadData _tLogDownloadData = new tLogDownloadData();
+			List<tLogDownloadData> tLogDownloadDataList = new ArrayList<>();
+
+			_tLogDownloadData.set_txtModuleName(ll_product);
+			_tLogDownloadData.set_dtLastDownload(pstrArgumet);
+
+			tLogDownloadDataList.add(_tLogDownloadData);
+			new tLogDownloadBL().SaveData(tLogDownloadDataList);
+
 			if(boolValid == Integer.valueOf(new clsHardCode().intSuccess)){
 				intsum+=1;
 				mEmployeeSalesProductData _data =new mEmployeeSalesProductData();
