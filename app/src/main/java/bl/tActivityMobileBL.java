@@ -122,6 +122,13 @@ public class tActivityMobileBL extends clsMainBL{
         return count;
     }
 
+    public List<tActivityMobileData> getAllOutletCode(String outletname){
+        SQLiteDatabase db=getDb();
+        tActivityMobileDA _tActivityDA=new tActivityMobileDA(db);
+        List<tActivityMobileData> listData=_tActivityDA.getAllOutletCode(db, outletname);
+        return listData;
+    }
+
     public int getCountAllActivityV2ByStatusSubmit(String code) {
         SQLiteDatabase _db = getDb();
         int count = new tActivityMobileDA(_db).countActivityV2HomeAbsenByStatusSubmit(_db, code);

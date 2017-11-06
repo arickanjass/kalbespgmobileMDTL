@@ -257,6 +257,36 @@ public class tActivityDA {
 				return contactList;
 			}
 
+	public List<tActivityData> getAllOutlet(SQLiteDatabase db, String outletName) {
+		List<tActivityData> contactList = new ArrayList<tActivityData>();
+		// Select All Query
+		tActivityData dt=new tActivityData();
+		String selectQuery;
+		if (outletName == "ALL OUTLET"){
+			selectQuery= "SELECT  "+ dt.Property_txtOutletCode + "," + dt.Property_txtOutletName +" FROM " + TABLE_CONTACTS;
+		}else {
+			selectQuery= "SELECT  " +dt.Property_txtOutletCode + "," + dt.Property_txtOutletName
+					+" FROM " + TABLE_CONTACTS + " WHERE txtOutletName='" + outletName +"'";
+		}
+
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		// looping through all rows and adding to list
+		if (cursor.moveToFirst()) {
+			do {
+				tActivityData contact = new tActivityData();
+				contact.set_txtOutletCode(cursor.getString(0));
+				contact.set_txtOutletName(cursor.getString(1));
+
+				// Adding contact to list
+				contactList.add(contact);
+			} while (cursor.moveToNext());
+		}
+		cursor.close();
+		// return contact list
+		return contactList;
+	}
+
 	public List<tActivityData> getAllDataByOutletCode(SQLiteDatabase db, String outletcode) {
 		List<tActivityData> contactList = new ArrayList<tActivityData>();
 		// Select All Query

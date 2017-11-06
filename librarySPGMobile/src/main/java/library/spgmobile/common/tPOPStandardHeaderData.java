@@ -157,6 +157,8 @@ public class tPOPStandardHeaderData {
     public String Property_dtDatetime = "dtDatetime";
     public String Property_intSubmit = "intSubmit";
     public String Property_intSync = "intSync";
+    public String Property_type = Property_txtType + "," + Property_txtBranchName + "," + Property_txtOutletName + ","
+            + Property_txtOutletCode + "," + Property_txtUserName;
     public String Property_All = Property_intId + "," + Property_txtType + "," + Property_bolHavePOP + "," + Property_txtCategory + ","
             + Property_txtReason + "," + Property_intRoleId + "," + Property_txtUserName + "," + Property_txtNIK + ","
             + Property_txtOutletCode + "," + Property_txtOutletName + "," + Property_txtBranchCode + "," + Property_txtBranchName

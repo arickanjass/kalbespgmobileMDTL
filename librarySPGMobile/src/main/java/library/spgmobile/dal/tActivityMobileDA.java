@@ -314,6 +314,7 @@ public class tActivityMobileDA {
         return contactList;
     }
 
+
     public List<tActivityMobileData> getAllDataByOutletCode(SQLiteDatabase db, String outletcode) {
         List<tActivityMobileData> contactList = new ArrayList<tActivityMobileData>();
         // Select All Query
@@ -344,6 +345,36 @@ public class tActivityMobileDA {
                 contact.set_txtTypeActivity(cursor.getString(15));
                 contact.set_intSubTypeActivity(cursor.getString(16));
                 contact.set_intIsValid(cursor.getString(17));
+                // Adding contact to list
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        // return contact list
+        return contactList;
+    }
+
+    public List<tActivityMobileData> getAllOutletCode(SQLiteDatabase db, String outletname) {
+        List<tActivityMobileData> contactList = new ArrayList<tActivityMobileData>();
+        // Select All Query
+        tActivityMobileData dt=new tActivityMobileData();
+        String selectQuery;
+        if (outletname == "ALL OUTLET"){
+            selectQuery = "SELECT  "+dt.Property_txtOutletCode+ "," + dt.Property_txtOutletName +
+                    " FROM " + TABLE_CONTACTS;
+        } else {
+            selectQuery = "SELECT  "+dt.Property_txtOutletCode+ "," + dt.Property_txtOutletName +
+                    " FROM " + TABLE_CONTACTS + " WHERE txtOutletName='" + outletname +"'";
+        }
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                tActivityMobileData contact = new tActivityMobileData();
+                contact.set_txtOutletCode(cursor.getString(0));
+                contact.set_txtOutletName(cursor.getString(1));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());

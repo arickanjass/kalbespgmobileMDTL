@@ -181,6 +181,62 @@ public class tPOPStandardHeaderDA {
         return contactList;
     }
 
+    public List<tPOPStandardHeaderData> GetAllOutlet(SQLiteDatabase db){
+        List<tPOPStandardHeaderData> contactList = new ArrayList<tPOPStandardHeaderData>();
+        tPOPStandardHeaderData dt = new tPOPStandardHeaderData();
+        String selectQuery = "Select " + dt.Property_txtOutletName + "," + dt.Property_txtOutletCode + " FROM " + TABLE_CONTACTS + " GROUP BY " + dt.Property_txtOutletName + "," + dt.Property_txtOutletCode;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()){
+            do {
+                tPOPStandardHeaderData contact = new tPOPStandardHeaderData();
+                contact.set_txtOutletName(cursor.getString(0));
+                contact.set_txtOutletCode(cursor.getString(1));
+                contactList.add(contact);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return contactList;
+    }
+
+    public List<tPOPStandardHeaderData> GetTypePOPByOutlet(SQLiteDatabase db, String outletName){
+        List<tPOPStandardHeaderData> contactList = new ArrayList<tPOPStandardHeaderData>();
+        tPOPStandardHeaderData dt = new tPOPStandardHeaderData();
+        String selectQuery = "Select " + dt.Property_type + " FROM " + TABLE_CONTACTS + " Where " + dt.Property_txtOutletName +
+                "='" + outletName + "' GROUP BY " + dt.Property_txtType;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()){
+            do {
+                tPOPStandardHeaderData contact = new tPOPStandardHeaderData();
+                contact.set_txtType(cursor.getString(0));
+                contact.set_txtBranchName(cursor.getString(1));
+                contact.set_txtOutletName(cursor.getString(2));
+                contact.set_txtOutletCode(cursor.getString(3));
+                contact.set_txtUserName(cursor.getString(4));
+                contactList.add(contact);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return contactList;
+    }
+
+    public List<tPOPStandardHeaderData> GetAllOutletbyName(SQLiteDatabase db, String code){
+        List<tPOPStandardHeaderData> contactList = new ArrayList<tPOPStandardHeaderData>();
+        tPOPStandardHeaderData dt = new tPOPStandardHeaderData();
+        String selectQuery = "Select " + dt.Property_txtOutletName + "," + dt.Property_txtOutletCode + " FROM " + TABLE_CONTACTS + " Where " + dt.Property_txtOutletName + "='" +
+                code + "' GROUP BY " + dt.Property_txtOutletName;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()){
+            do {
+                tPOPStandardHeaderData contact = new tPOPStandardHeaderData();
+                contact.set_txtOutletName(cursor.getString(0));
+                contact.set_txtOutletCode(cursor.getString(1));
+                contactList.add(contact);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return contactList;
+    }
+
     public List<tPOPStandardHeaderData> GetByOutletAndSync(SQLiteDatabase db, String code, String sync){
         List<tPOPStandardHeaderData> contactList = new ArrayList<tPOPStandardHeaderData>();
         tPOPStandardHeaderData dt = new tPOPStandardHeaderData();

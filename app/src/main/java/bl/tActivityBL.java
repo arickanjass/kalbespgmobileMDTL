@@ -95,6 +95,13 @@ public class tActivityBL extends clsMainBL{
 		return listData;
 	}
 
+	public List<tActivityData> getAllOutlet(String outletName){
+		SQLiteDatabase db=getDb();
+		tActivityDA _tActivityDA=new tActivityDA(db);
+		List<tActivityData> listData=_tActivityDA.getAllOutlet(db, outletName);
+		return listData;
+	}
+
 	public List<tActivityData> getAllDataByOutletCode(String outletcode){
 		SQLiteDatabase _db = getDb();
 		tActivityDA _tActivityDA=new tActivityDA(db);

@@ -43,6 +43,13 @@ public class tPOPStandardHeaderBL extends clsMainBL {
         return listData;
     }
 
+    public List<tPOPStandardHeaderData> GetTypePOPByOutlet(String outletName){
+        SQLiteDatabase _db = getDb();
+        tPOPStandardHeaderDA _tPOPStandardHeaderDA = new tPOPStandardHeaderDA(_db);
+        List<tPOPStandardHeaderData> listData = _tPOPStandardHeaderDA.GetTypePOPByOutlet(_db, outletName);
+        return listData;
+    }
+
     public List<tPOPStandardHeaderData> GetDataByOutletCodeReport(String code){
         SQLiteDatabase _db = getDb();
         tPOPStandardHeaderDA _tPOPStandardHeaderDA= new tPOPStandardHeaderDA(_db);
@@ -51,6 +58,21 @@ public class tPOPStandardHeaderBL extends clsMainBL {
             listData = _tPOPStandardHeaderDA.GetAllData(_db);
                           } else {
             listData = _tPOPStandardHeaderDA.GetByOutletCodeReport(_db, code);
+        }
+        if (listData == null){
+            listData = new ArrayList<>(0);
+        }
+        return listData;
+    }
+
+    public List<tPOPStandardHeaderData> GetOutletCodeReport(String code){
+        SQLiteDatabase _db = getDb();
+        tPOPStandardHeaderDA _tPOPStandardHeaderDA= new tPOPStandardHeaderDA(_db);
+        List<tPOPStandardHeaderData> listData ;
+        if (code.equals("ALL OUTLET")){
+            listData = _tPOPStandardHeaderDA.GetAllOutlet(_db);
+        } else {
+            listData = _tPOPStandardHeaderDA.GetAllOutletbyName(_db, code);
         }
         if (listData == null){
             listData = new ArrayList<>(0);
