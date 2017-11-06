@@ -394,6 +394,20 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
                         return true;
 
+//                    case R.id.downloadDataMobile:
+//                        toolbar.setTitle("Download Data");
+//                        toolbar.setSubtitle(null);
+//
+//                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//
+//                        FragmentDownloadData fragmentDownloadData = new FragmentDownloadData();
+//                        FragmentTransaction fragmentTransactionDownloadData = getSupportFragmentManager().beginTransaction();
+//                        fragmentTransactionDownloadData.replace(R.id.frame, fragmentDownloadData);
+//                        fragmentTransactionDownloadData.commit();
+//                        selectedId = 99;
+//
+//                        return true;
+
                     case R.id.pushDataMobile:
                         toolbar.setTitle("Push Data");
                         toolbar.setSubtitle(null);

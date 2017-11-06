@@ -50,14 +50,30 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/txtBranch"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="15dp"
-                        android:text="Branch"
-                        android:textColor="#000" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/txtBranch"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Branch"
+                            android:textColor="#000" />
+                        <TextView
+                            android:id="@+id/txtBranchLastDownload"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Last Download"
+                            android:textColor="@color/colorPrimary" />
+
+                    </LinearLayout>
 
                     <Spinner
                         android:id="@+id/spnType"
@@ -93,15 +109,30 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/txtOutlet"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/view1"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Outlet"
-                        android:textColor="#000" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/txtOutlet"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Outlet"
+                            android:textColor="#000" />
+                        <TextView
+                            android:id="@+id/txtOutletLastDownload"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Last Download"
+                            android:textColor="@color/colorPrimary" />
+
+                    </LinearLayout>
 
                     <Spinner
                         android:id="@+id/spnOutlet"
@@ -138,14 +169,30 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/textView7"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Brand"
-                        android:textColor="#000" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/textView7"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Brand"
+                            android:textColor="#000" />
+                        <TextView
+                            android:id="@+id/textView7LastDownload"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Last Download"
+                            android:textColor="@color/colorPrimary" />
+
+                    </LinearLayout>
 
                     <Spinner
                         android:id="@+id/spnBrand"
@@ -182,15 +229,30 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/txtProduct"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/view2"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Product"
-                        android:textColor="#000" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/txtProduct"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Product"
+                            android:textColor="#000" />
+                        <TextView
+                            android:id="@+id/txtProductLastDownload"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Last Download"
+                            android:textColor="@color/colorPrimary" />
+
+                    </LinearLayout>
 
                     <Spinner
                         android:id="@+id/spnProduct"
@@ -227,15 +289,30 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/txtVwProductSPGCusBase"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/view912"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Product SPG CustomerBased"
-                        android:textColor="#000" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/txtVwProductSPGCusBase"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Product SPG CustomerBased"
+                            android:textColor="#000" />
+                        <TextView
+                            android:id="@+id/txtProductSPGCusBaseLastDownload"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Last Download"
+                            android:textColor="@color/colorPrimary" />
+
+                    </LinearLayout>
 
                     <Spinner
                         android:id="@+id/spnProdSPGCusBase"
@@ -272,15 +349,30 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/txtVwProductPICCusBase"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/view913"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Product PIC CustomerBased"
-                        android:textColor="#000" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/txtVwProductPICCusBase"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Product PIC CustomerBased"
+                            android:textColor="#000" />
+                        <TextView
+                            android:id="@+id/txtProductPICCusBaseLastDownload"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Last Download"
+                            android:textColor="@color/colorPrimary" />
+
+                    </LinearLayout>
 
                     <Spinner
                         android:id="@+id/spnProdPICCusBase"
@@ -317,15 +409,30 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/txtVwProductComp"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/view9"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Product Competitor"
-                        android:textColor="#000" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/txtVwProductComp"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Product Competitor"
+                            android:textColor="#000" />
+                        <TextView
+                            android:id="@+id/txtProductCompLastDownload"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Last Download"
+                            android:textColor="@color/colorPrimary" />
+
+                    </LinearLayout>
 
                     <Spinner
                         android:id="@+id/spnProdComp"
@@ -362,15 +469,30 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/txtVwTypeSubm"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/view9"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Type Submission"
-                        android:textColor="#000" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/txtVwTypeSubm"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Type Submission"
+                            android:textColor="#000" />
+                        <TextView
+                            android:id="@+id/txtTypeSubmLastDownload"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Last Download"
+                            android:textColor="@color/colorPrimary" />
+
+                    </LinearLayout>
 
                     <Spinner
                         android:id="@+id/spnTypeSubm"
@@ -408,15 +530,30 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/txtVwLeave"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/view9"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Type Leave"
-                        android:textColor="#000" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/txtVwLeave"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Type Leave"
+                            android:textColor="#000" />
+                        <TextView
+                            android:id="@+id/txtLeaveLastDownload"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Last Download"
+                            android:textColor="@color/colorPrimary" />
+
+                    </LinearLayout>
 
                     <Spinner
                         android:id="@+id/spnLeave"
@@ -445,6 +582,8 @@
                         android:layout_marginTop="10dp"
                         android:background="#bfbfbf" />
 
+                </LinearLayout>
+
                     <LinearLayout
                         android:id="@+id/ll_CategoryKoordinasiOutlet"
                         android:layout_width="fill_parent"
@@ -452,15 +591,30 @@
                         android:orientation="vertical"
                         android:visibility="gone">
 
-                        <TextView
-                            android:id="@+id/txtCategoryKoordinasi"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/viewVisitPlan"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:text="Kategori Koordinasi Outlet"
-                            android:textColor="#000" />
+                            android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/txtCategoryKoordinasi"
+                                android:layout_weight="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="15dp"
+                                android:text="Kategori Koordinasi Outlet"
+                                android:textColor="#000" />
+                            <TextView
+                                android:id="@+id/txtCategoryKoordinasiLastDownload"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="15dp"
+                                android:text="Last Download"
+                                android:textColor="@color/colorPrimary" />
+
+                        </LinearLayout>
 
                         <Spinner
                             android:id="@+id/spnCategoryKoordinasiOutlet"
@@ -489,13 +643,13 @@
 
                     </LinearLayout>
 
-                    <View
-                        android:id="@+id/view10"
-                        android:layout_width="fill_parent"
-                        android:layout_height="1dp"
-                        android:layout_below="@+id/ll_CategoryKoordinasiOutlet"
-                        android:layout_marginTop="10dp"
-                        android:background="#bfbfbf" />
+                    <!--<View-->
+                        <!--android:id="@+id/view10"-->
+                        <!--android:layout_width="fill_parent"-->
+                        <!--android:layout_height="1dp"-->
+                        <!--android:layout_below="@+id/ll_CategoryKoordinasiOutlet"-->
+                        <!--android:layout_marginTop="10dp"-->
+                        <!--android:background="#bfbfbf" />-->
 
                     <LinearLayout
                         android:id="@+id/ll_kategoriVisitPlan"
@@ -504,15 +658,30 @@
                         android:orientation="vertical"
                         android:visibility="gone">
 
-                        <TextView
-                            android:id="@+id/txtVwVisitPlan"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/viewVisitPlan"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:text="Kategori visit plan"
-                            android:textColor="#000" />
+                            android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/txtVwVisitPlan"
+                                android:layout_weight="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="15dp"
+                                android:text="Kategori visit plan"
+                                android:textColor="#000" />
+                            <TextView
+                                android:id="@+id/txtVisitPlanLastDownload"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="15dp"
+                                android:text="Last Download"
+                                android:textColor="@color/colorPrimary" />
+
+                        </LinearLayout>
 
                         <Spinner
                             android:id="@+id/spnVisitPlan"
@@ -548,15 +717,30 @@
                         android:orientation="vertical"
                         android:visibility="gone">
 
-                        <TextView
-                            android:id="@+id/txtsubTypeActivity"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/view2"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:text="Sub Type Activity"
-                            android:textColor="#000" />
+                            android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/txtsubTypeActivity"
+                                android:layout_weight="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="15dp"
+                                android:text="Sub Type Activity"
+                                android:textColor="#000" />
+                            <TextView
+                                android:id="@+id/txtsubTypeActivityLastDownload"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="15dp"
+                                android:text="Last Download"
+                                android:textColor="@color/colorPrimary" />
+
+                        </LinearLayout>
 
                         <Spinner
                             android:id="@+id/spnSubTypeActivity"
@@ -593,15 +777,30 @@
                         android:orientation="vertical"
                         android:visibility="gone">
 
-                        <TextView
-                            android:id="@+id/txtkategoryPlanogram"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/view2"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:text="Category Planogram"
-                            android:textColor="#000" />
+                            android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/txtkategoryPlanogram"
+                                android:layout_weight="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="15dp"
+                                android:text="Category Planogram"
+                                android:textColor="#000" />
+                            <TextView
+                                android:id="@+id/txtkategoryPlanogramLastDownload"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="15dp"
+                                android:text="Last Download"
+                                android:textColor="@color/colorPrimary" />
+
+                        </LinearLayout>
 
                         <Spinner
                             android:id="@+id/spnkategoryPlanogram"
@@ -638,14 +837,30 @@
                         android:orientation="vertical"
                         android:visibility="gone">
 
-                        <TextView
-                            android:id="@+id/tv_SPG"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:text="List SPG"
-                            android:textColor="#000" />
+                            android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/tv_SPG"
+                                android:layout_weight="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="15dp"
+                                android:text="List SPG"
+                                android:textColor="#000" />
+                            <TextView
+                                android:id="@+id/txtSPGLastDownload"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="15dp"
+                                android:text="Last Download"
+                                android:textColor="@color/colorPrimary" />
+
+                        </LinearLayout>
 
                         <Spinner
                             android:id="@+id/spnSPG"
@@ -679,14 +894,30 @@
                         android:orientation="vertical"
                         android:visibility="gone">
 
-                        <TextView
-                            android:id="@+id/tv_quis"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:text="Quesioner"
-                            android:textColor="#000" />
+                            android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/tv_quis"
+                                android:layout_weight="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="15dp"
+                                android:text="Quesioner"
+                                android:textColor="#000" />
+                            <TextView
+                                android:id="@+id/txtquisLastDownload"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="15dp"
+                                android:text="Last Download"
+                                android:textColor="@color/colorPrimary" />
+
+                        </LinearLayout>
 
                         <Spinner
                             android:id="@+id/spnQuiz"
@@ -719,14 +950,30 @@
                         android:orientation="vertical"
                         android:visibility="gone">
 
-                        <TextView
-                            android:id="@+id/tv_POP"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="10dp"
-                            android:text="POP Standard"
-                            android:textColor="#000" />
+                            android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/tv_POP"
+                                android:layout_weight="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="15dp"
+                                android:text="POP Standard"
+                                android:textColor="#000" />
+                            <TextView
+                                android:id="@+id/txtPOPLastDownload"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="15dp"
+                                android:text="Last Download"
+                                android:textColor="@color/colorPrimary" />
+
+                        </LinearLayout>
 
                         <Spinner
                             android:id="@+id/spnDPOP"
@@ -752,8 +999,6 @@
                             android:background="#bfbfbf" />
 
                     </LinearLayout>
-
-                </LinearLayout>
 
             </LinearLayout>
 
@@ -787,14 +1032,30 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/txtTrVisitPlan"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Transaksi visit plan"
-                        android:textColor="#000" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/txtTrVisitPlan"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Transaksi visit plan"
+                            android:textColor="#000" />
+                        <TextView
+                            android:id="@+id/txtTrVisitPlanLastDownload"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Last Download"
+                            android:textColor="@color/colorPrimary" />
+
+                    </LinearLayout>
 
                     <Spinner
                         android:id="@+id/spnTrVisitPlan"
@@ -829,14 +1090,30 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/txtVwAbsen"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Absen"
-                        android:textColor="#000" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/txtVwAbsen"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Absen"
+                            android:textColor="#000" />
+                        <TextView
+                            android:id="@+id/txtAbsenLastDownload"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Last Download"
+                            android:textColor="@color/colorPrimary" />
+
+                    </LinearLayout>
 
                     <Spinner
                         android:id="@+id/spnAbsen"
@@ -870,14 +1147,30 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/txtVwAbsenFPE"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Attendance FPE"
-                        android:textColor="#000" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/txtVwAbsenFPE"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Attendance FPE"
+                            android:textColor="#000" />
+                        <TextView
+                            android:id="@+id/txtAbsenFPELastDownload"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Last Download"
+                            android:textColor="@color/colorPrimary" />
+
+                    </LinearLayout>
 
                     <Spinner
                         android:id="@+id/spnAttendanceFpe"
@@ -911,14 +1204,30 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/txtVwDataLeave"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Leave"
-                        android:textColor="#000" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/txtVwDataLeave"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Leave"
+                            android:textColor="#000" />
+                        <TextView
+                            android:id="@+id/txtDataLeaveLastDownload"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Last Download"
+                            android:textColor="@color/colorPrimary" />
+
+                    </LinearLayout>
 
                     <Spinner
                         android:id="@+id/spnDataLeave"
@@ -952,15 +1261,30 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/txtVwReso"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/viewKordinasiOutlet"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Reso"
-                        android:textColor="#000" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/txtVwReso"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Reso"
+                            android:textColor="#000" />
+                        <TextView
+                            android:id="@+id/txtResoLastDownload"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Last Download"
+                            android:textColor="@color/colorPrimary" />
+
+                    </LinearLayout>
 
                     <Spinner
                         android:id="@+id/spnReso"
@@ -994,15 +1318,30 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/txtVwstockIH"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/viewKordinasiOutlet"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Stock On Hand"
-                        android:textColor="#000" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/txtVwstockIH"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Stock On Hand"
+                            android:textColor="#000" />
+                        <TextView
+                            android:id="@+id/txtstockIHLastDownload"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Last Download"
+                            android:textColor="@color/colorPrimary" />
+
+                    </LinearLayout>
 
                     <Spinner
                         android:id="@+id/spnStockIH"
@@ -1036,14 +1375,30 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/txtVwActivity"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Activity"
-                        android:textColor="#000" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/txtVwActivity"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Activity"
+                            android:textColor="#000" />
+                        <TextView
+                            android:id="@+id/txtActivityLastDownload"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Last Download"
+                            android:textColor="@color/colorPrimary" />
+
+                    </LinearLayout>
 
                     <Spinner
                         android:id="@+id/spnActivity"
@@ -1077,14 +1432,30 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/txtVwActivityV2"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Activity MDTL"
-                        android:textColor="#000" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/txtVwActivityV2"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Activity MDTL"
+                            android:textColor="#000" />
+                        <TextView
+                            android:id="@+id/txtActivityV2LastDownload"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Last Download"
+                            android:textColor="@color/colorPrimary" />
+
+                    </LinearLayout>
 
                     <Spinner
                         android:id="@+id/spnActivityV2"
@@ -1118,14 +1489,30 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/txtVwaddDisplayV2"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Additional Display"
-                        android:textColor="#000" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/txtVwaddDisplayV2"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Additional Display"
+                            android:textColor="#000" />
+                        <TextView
+                            android:id="@+id/txtaddDisplayV2LastDownload"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Last Download"
+                            android:textColor="@color/colorPrimary" />
+
+                    </LinearLayout>
 
                     <Spinner
                         android:id="@+id/spnaddDisplay"
@@ -1159,14 +1546,30 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/txtVwCustomerBase"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Customer base"
-                        android:textColor="#000" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/txtVwCustomerBase"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Customer base"
+                            android:textColor="#000" />
+                        <TextView
+                            android:id="@+id/txtCustomerBaseLastDownload"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Last Download"
+                            android:textColor="@color/colorPrimary" />
+
+                    </LinearLayout>
 
                     <Spinner
                         android:id="@+id/spnCustomerBase"
@@ -1200,14 +1603,30 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/txtTrPO"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Purchase Order"
-                        android:textColor="#000" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/txtTrPO"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Purchase Order"
+                            android:textColor="#000" />
+                        <TextView
+                            android:id="@+id/txtTrPOLastDownload"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Last Download"
+                            android:textColor="@color/colorPrimary" />
+
+                    </LinearLayout>
 
                     <Spinner
                         android:id="@+id/spnDataPO"
@@ -1241,14 +1660,30 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/txtTrQuantityStock"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Near ED"
-                        android:textColor="#000" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/txtTrQuantityStock"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Near ED"
+                            android:textColor="#000" />
+                        <TextView
+                            android:id="@+id/txtTrQuantityStockLastDownload"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Last Download"
+                            android:textColor="@color/colorPrimary" />
+
+                    </LinearLayout>
 
                     <Spinner
                         android:id="@+id/spnDataQuantityStock"
@@ -1282,14 +1717,30 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/txtTrPlanogram"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Planogram"
-                        android:textColor="#000" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/txtTrPlanogram"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Planogram"
+                            android:textColor="#000" />
+                        <TextView
+                            android:id="@+id/txtPlanogramLastDownload"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Last Download"
+                            android:textColor="@color/colorPrimary" />
+
+                    </LinearLayout>
 
                     <Spinner
                         android:id="@+id/spnDataPlanogram"
@@ -1323,15 +1774,30 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/txtVwKordinasiOutlet"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/view10"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Koordinasi Outlet"
-                        android:textColor="#000" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/txtVwKordinasiOutlet"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Koordinasi Outlet"
+                            android:textColor="#000" />
+                        <TextView
+                            android:id="@+id/txtKordinasiOutletLastDownload"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Last Download"
+                            android:textColor="@color/colorPrimary" />
+
+                    </LinearLayout>
 
                     <Spinner
                         android:id="@+id/spnKordinasiOutlet"
@@ -1370,15 +1836,30 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/txtVwDataOverStock"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/view10"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Over Stock"
-                        android:textColor="#000" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/txtVwDataOverStock"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Over Stock"
+                            android:textColor="#000" />
+                        <TextView
+                            android:id="@+id/txtOverStockLastDownload"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Last Download"
+                            android:textColor="@color/colorPrimary" />
+
+                    </LinearLayout>
 
                     <Spinner
                         android:id="@+id/spnDataOverStock"
@@ -1417,15 +1898,30 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/txtVwDatakemasanrusak"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/view10"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Kemasan Rusak"
-                        android:textColor="#000" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/txtVwDatakemasanrusak"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Kemasan Rusak"
+                            android:textColor="#000" />
+                        <TextView
+                            android:id="@+id/txtkemasanrusakLastDownload"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Last Download"
+                            android:textColor="@color/colorPrimary" />
+
+                    </LinearLayout>
 
                     <Spinner
                         android:id="@+id/spnDatakemasanrusak"
@@ -1464,15 +1960,30 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/txtVwDatatidaksesuaipesanan"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/view10"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Tidak Sesuai Pesanan Outlet"
-                        android:textColor="#000" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/txtVwDatatidaksesuaipesanan"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Tidak Sesuai Pesanan"
+                            android:textColor="#000" />
+                        <TextView
+                            android:id="@+id/txttidaksesuaipesananLastDownload"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Last Download"
+                            android:textColor="@color/colorPrimary" />
+
+                    </LinearLayout>
 
                     <Spinner
                         android:id="@+id/spnDatatidaksesuaipesanan"

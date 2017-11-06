@@ -81,6 +81,7 @@ import library.spgmobile.dal.tKemasanRusakDetailDA;
 import library.spgmobile.dal.tKemasanRusakHeaderDA;
 import library.spgmobile.dal.tKemasanRusakImageDA;
 import library.spgmobile.dal.tLeaveMobileDA;
+import library.spgmobile.dal.tLogDownloadDA;
 import library.spgmobile.dal.tNotificationDA;
 import library.spgmobile.dal.tOverStockDetailDA;
 import library.spgmobile.dal.tOverStockHeaderDA;
@@ -371,6 +372,7 @@ public class clsHelper {
 		KoordinasiOutletDA _KoordinasiOutletDA = new KoordinasiOutletDA(db);
 		KoordinasiOutletImageDA _KoordinasiOutletImageDA = new KoordinasiOutletImageDA(db);
 		mUserLOBDA _mUserLOBDA = new mUserLOBDA(db);
+		tLogDownloadDA _tLogDownloadDA = new tLogDownloadDA(db);
 
 		tVisitPlanHeader_MobileDA _tVisitPlanHeader_mobileDA = new tVisitPlanHeader_MobileDA(db);
 		tVisitPlanRealisasiDA _tVisitPlanRealisasiDA = new tVisitPlanRealisasiDA(db);
@@ -521,6 +523,7 @@ public class clsHelper {
 		new tTidakSesuaiPesananHeaderDA(db);
 		new tTidakSesuaiPesananImageDA(db);
 		new mUserLOBDA(db);
+		new tLogDownloadDA(db);
 
 		_mPriceInOutletDA=new mPriceInOutletDA(db);
 		_mUserRoleDA=new mUserRoleDA(db);
