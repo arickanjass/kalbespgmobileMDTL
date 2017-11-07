@@ -1,5 +1,6 @@
 package library.spgmobile.dal;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -28,11 +29,14 @@ public class mParentDA {
     //insert value
     public void SaveDatamParent(SQLiteDatabase db, mParentData data){
         mParentData dt = new mParentData();
-        db.execSQL("INSERT OR REPLACE into " + TABLE_CONTACTS + " ("
-                + dt.Property_intParentId + ","
-                + dt.Property_txtParentName + ") " + "values('"
-                + String.valueOf(data.get_intParentId()) + "','"
-                + String.valueOf(data.get_txtParentName()) + "')");
+        ContentValues cv = new ContentValues();
+        cv.put(dt.Property_intParentId, String.valueOf(data.get_intParentId()));
+        cv.put(dt.Property_txtParentName, String.valueOf(data.get_txtParentName()));
+        if (data.get_intParentId() == null){
+            db.insert(TABLE_CONTACTS, null, cv);
+        } else {
+            db.replace(TABLE_CONTACTS, null, cv);
+        }
     }
     public void DeleteAllDatamParent(SQLiteDatabase db){
         db.execSQL("DELETE FROM " + TABLE_CONTACTS);

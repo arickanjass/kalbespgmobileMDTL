@@ -1,5 +1,6 @@
 package library.spgmobile.dal;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -30,23 +31,20 @@ public class mPertanyaanDA {
     }
     public void SaveDatamPertanyaan(SQLiteDatabase db, mPertanyaanData data){
         mPertanyaanData dt = new mPertanyaanData();
-        db.execSQL("INSERT OR REPLACE into " + TABLE_CONTACTS + " ("
-                + dt.Property_intQuestionId + ","
-                + dt.Property_intSoalId + ","
-                + dt.Property_intCategoryId + ","
-                + dt.Property_txtQuestionDesc + ","
-                + dt.Property_intTypeQuestionId + ","
-                + dt.Property_decBobot + ","
-                + dt.Property_bolHaveAnswerList + ","
-                + dt.Property_inttGroupQuestionMapping + ") " + "values('"
-                + String.valueOf(data.get_intQuestionId()) + "','"
-                + String.valueOf(data.get_intSoalId()) + "','"
-                + String.valueOf(data.get_intCategoryId()) + "','"
-                + String.valueOf(data.get_txtQuestionDesc()) + "','"
-                + String.valueOf(data.get_intTypeQuestionId()) + "','"
-                + String.valueOf(data.get_decBobot()) + "','"
-                + String.valueOf(data.get_bolHaveAnswerList()) + "','"
-                + String.valueOf(data.get_inttGroupQuestionMapping()) + "')");
+        ContentValues cv = new ContentValues();
+        cv.put(dt.Property_intQuestionId, String.valueOf(data.get_intQuestionId()));
+        cv.put(dt.Property_intSoalId, String.valueOf(data.get_intSoalId()));
+        cv.put(dt.Property_intCategoryId, String.valueOf(data.get_intCategoryId()));
+        cv.put(dt.Property_txtQuestionDesc, String.valueOf(data.get_txtQuestionDesc()));
+        cv.put(dt.Property_intTypeQuestionId, String.valueOf(data.get_intTypeQuestionId()));
+        cv.put(dt.Property_decBobot, String.valueOf(data.get_decBobot()));
+        cv.put(dt.Property_bolHaveAnswerList, String.valueOf(data.get_bolHaveAnswerList()));
+        cv.put(dt.Property_inttGroupQuestionMapping, String.valueOf(data.get_inttGroupQuestionMapping()));
+        if (data.get_intQuestionId() == null){
+            db.insert(TABLE_CONTACTS, null, cv);
+        } else {
+            db.replace(TABLE_CONTACTS, null, cv);
+        }
     }
     public void DeleteAllDatamPertanyaan(SQLiteDatabase db){
         db.execSQL("DELETE FROM " + TABLE_CONTACTS);

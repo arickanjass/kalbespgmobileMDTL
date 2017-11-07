@@ -1,5 +1,6 @@
 package library.spgmobile.dal;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -25,13 +26,15 @@ public class mKategoriDA {
     }
     public void SaveDatamKategori(SQLiteDatabase db, mKategoriData data){
         mKategoriData dt = new mKategoriData();
-        db.execSQL("INSERT OR REPLACE into " + TABLE_CONTACTS + " ("
-                + dt.Property_intCategoryId + ","
-                + dt.Property_intParentId + ","
-                + dt.Property_txtCategoryName + ") "+ "values('"
-                + String.valueOf(data.get_intCategoryId()) + "','"
-                + String.valueOf(data.get_intParentId()) + "','"
-                + String.valueOf(data.get_txtCategoryName()) + "')");
+        ContentValues cv = new ContentValues();
+        cv.put(dt.Property_intCategoryId, String.valueOf(data.get_intCategoryId()));
+        cv.put(dt.Property_intParentId, String.valueOf(data.get_intParentId()));
+        cv.put(dt.Property_txtCategoryName, String.valueOf(data.get_txtCategoryName()));
+        if (data.get_intCategoryId() == null){
+            db.insert(TABLE_CONTACTS, null, cv);
+        } else {
+            db.replace(TABLE_CONTACTS, null, cv);
+        }
     }
     public void DeleteAllDatamKategori(SQLiteDatabase db){
         db.execSQL("DELETE FROM " + TABLE_CONTACTS);

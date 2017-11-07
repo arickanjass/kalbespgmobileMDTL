@@ -32,31 +32,24 @@ public class tHirarkiBISDA {
     public void DropTable(SQLiteDatabase db){
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTACTS);
     }
-    public void SaveDatatJawabanUser(SQLiteDatabase db, tHirarkiBIS data){
+    public void SaveData(SQLiteDatabase db, tHirarkiBIS data){
         tHirarkiBIS dt = new tHirarkiBIS();
         ContentValues cv = new ContentValues();
-        db.execSQL("INSERT OR REPLACE into " + TABLE_CONTACTS + " ("
-                + dt.Property_intId
-                + "," + dt.Property_txtNik
-                + "," + dt.Property_txtName
-                + "," + dt.Property_txtLOB
-                + "," + dt.Property_intBranchId
-                + "," + dt.Property_txtBranchCode
-                + "," + dt.Property_txtBranchName
-                + "," + dt.Property_intOutletId
-                + "," + dt.Property_txtOutletCode
-                + "," + dt.Property_txtOutletName
-                + ") " + "values('"
-                + String.valueOf(data.get_intId()) + "','"
-                + String.valueOf(data.get_txtNik()) + "','"
-                + String.valueOf(data.get_txtName()) + "','"
-                + String.valueOf(data.get_txtLOB()) + "','"
-                + String.valueOf(data.get_intBranchId()) + "','"
-                + String.valueOf(data.get_txtBranchCode()) + "','"
-                + String.valueOf(data.get_txtBranchName()) + "','"
-                + String.valueOf(data.get_intOutletId()) + "','"
-                + String.valueOf(data.get_txtOutletCode()) + "','"
-                + String.valueOf(data.get_txtOutletName()) + "')");
+        cv.put(dt.Property_intId, String.valueOf(data.get_intId()));
+        cv.put(dt.Property_txtNik, String.valueOf(data.get_txtNik()));
+        cv.put(dt.Property_txtName, String.valueOf(data.get_txtName()));
+        cv.put(dt.Property_txtLOB, String.valueOf(data.get_txtLOB()));
+        cv.put(dt.Property_intBranchId, String.valueOf(data.get_intBranchId()));
+        cv.put(dt.Property_txtBranchCode, String.valueOf(data.get_txtBranchCode()));
+        cv.put(dt.Property_txtBranchName, String.valueOf(data.get_txtBranchName()));
+        cv.put(dt.Property_intOutletId, String.valueOf(data.get_intOutletId()));
+        cv.put(dt.Property_txtOutletCode, String.valueOf(data.get_txtOutletCode()));
+        cv.put(dt.Property_txtOutletName, String.valueOf(data.get_txtOutletName()));
+        if (data.get_intId() == null){
+            db.insert(TABLE_CONTACTS, null, cv);
+        } else {
+            db.replace(TABLE_CONTACTS, null, cv);
+        }
     }
     public void DeleteAllDatatHirarkiBIS(SQLiteDatabase db){
         db.execSQL("DELETE FROM " + TABLE_CONTACTS);

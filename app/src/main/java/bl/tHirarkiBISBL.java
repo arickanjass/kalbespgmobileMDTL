@@ -17,7 +17,7 @@ public class tHirarkiBISBL extends clsMainBL {
     public void SaveDataSPGFromTL(tHirarkiBIS dt){
         SQLiteDatabase _db = getDb();
         tHirarkiBISDA _tHirarkiBISDA = new tHirarkiBISDA(_db);
-        _tHirarkiBISDA.SaveDatatJawabanUser(_db, dt);
+        _tHirarkiBISDA.SaveData(_db, dt);
     }
     public void DeletetHirarkiBIS(){
         SQLiteDatabase _db = getDb();

@@ -1,5 +1,6 @@
 package library.spgmobile.dal;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -25,11 +26,19 @@ public class mTypePertanyaanDA {
     }
     public void SaveDatamTypePertanyaan(SQLiteDatabase db, mTypePertanyaanData data){
         mTypePertanyaanData dt = new mTypePertanyaanData();
-        db.execSQL("INSERT OR REPLACE into " + TABLE_CONTACTS + " ("
-                + dt.Property_intTypeQuestionId + ","
-                + dt.Property_txtTypeQuestion + ") " + "values('"
-                + String.valueOf(data.get_intTypeQuestionId()) + "','"
-                + String.valueOf(data.get_txtTypeQuestion()) + "')");
+        ContentValues cv = new ContentValues();;
+        cv.put(dt.Property_intTypeQuestionId, String.valueOf(data.get_intTypeQuestionId()));
+        cv.put(dt.Property_txtTypeQuestion, String.valueOf(data.get_txtTypeQuestion()));
+        if (data.get_intTypeQuestionId() == null){
+            db.insert(TABLE_CONTACTS, null, cv);
+        } else {
+            db.replace(TABLE_CONTACTS, null, cv);
+        }
+//        db.execSQL("INSERT OR REPLACE into " + TABLE_CONTACTS + " ("
+//                + dt.Property_intTypeQuestionId + ","
+//                + dt.Property_txtTypeQuestion + ") " + "values('"
+//                + String.valueOf(data.get_intTypeQuestionId()) + "','"
+//                + String.valueOf(data.get_txtTypeQuestion()) + "')");
     }
     public void DeleteAllDatamTypePertanyaan(SQLiteDatabase db){
         db.execSQL("DELETE FROM " + TABLE_CONTACTS);

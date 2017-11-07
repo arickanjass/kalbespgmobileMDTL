@@ -78,7 +78,7 @@
         android:layout_marginLeft="10dp" />
 
     <Button
-        android:text="Export to Exel"
+        android:text="Export to Excel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/btnsearch"

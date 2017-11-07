@@ -1,5 +1,6 @@
 package library.spgmobile.dal;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -27,17 +28,17 @@ public class mListJawabanDA {
     }
     public void SaveDatamListJawaban(SQLiteDatabase db, mListJawabanData data){
         mListJawabanData dt = new mListJawabanData();
-        db.execSQL("INSERT OR REPLACE into " + TABLE_CONTACTS + " ("
-                + dt.Property_intListAnswerId + ","
-                + dt.Property_intQuestionId + ","
-                + dt.Property_intTypeQuestionId + ","
-                + dt.Property_txtKey + ","
-                + dt.Property_txtValue + ") " + "values('"
-                + String.valueOf(data.get_intListAnswerId()) + "','"
-                + String.valueOf(data.get_intQuestionId()) + "','"
-                + String.valueOf(data.get_intTypeQuestionId()) + "','"
-                + String.valueOf(data.get_txtKey()) + "','"
-                + String.valueOf(data.get_txtValue()) + "')");
+        ContentValues cv = new ContentValues();
+        cv.put(dt.Property_intListAnswerId, String.valueOf(data.get_intListAnswerId()));
+        cv.put(dt.Property_intQuestionId, String.valueOf(data.get_intQuestionId()));
+        cv.put(dt.Property_intTypeQuestionId, String.valueOf(data.get_intTypeQuestionId()));
+        cv.put(dt.Property_txtKey, String.valueOf(data.get_txtKey()));
+        cv.put(dt.Property_txtValue, String.valueOf(data.get_txtValue()));
+        if (data.get_intListAnswerId() == null){
+            db.insert(TABLE_CONTACTS, null, cv);
+        } else {
+            db.replace(TABLE_CONTACTS, null, cv);
+        }
     }
     public void DeleteAllDatamListJawaban(SQLiteDatabase db){
         db.execSQL("DELETE FROM " + TABLE_CONTACTS);

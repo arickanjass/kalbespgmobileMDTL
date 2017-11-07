@@ -1,5 +1,6 @@
 package library.spgmobile.dal;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -34,19 +35,18 @@ public class tGroupQuestionMappingDA {
     //insert value
     public void SaveDatatGroupQuestionMapping(SQLiteDatabase db, tGroupQuestionMappingData data){
         tGroupQuestionMappingData dt = new tGroupQuestionMappingData();
-        db.execSQL("INSERT OR REPLACE into " + TABLE_CONTACTS + " ("
-            + dt.Property_intId + ","
-            + dt.Property_txtGroupQuestion + ","
-            + dt.Property_intRoleId + ","
-            + dt.Property_txtRepeatQuestion  + ","
-            + dt.Property_dtStart + ","
-            + dt.Property_dtEnd + ") " + "values('"
-            + String.valueOf(data.get_intId()) + "','"
-            + String.valueOf(data.get_txtGroupQuestion()) + "','"
-            + String.valueOf(data.get_intRoleId()) + "','"
-            + String.valueOf(data.get_txtRepeatQuestion()) + "','"
-            + String.valueOf(data.get_dtStart()) + "','"
-            + String.valueOf(data.get_dtEnd()) + "')");
+        ContentValues cv = new ContentValues();
+        cv.put(dt.Property_intId, String.valueOf(data.get_intId()));
+        cv.put(dt.Property_txtGroupQuestion, String.valueOf(data.get_txtGroupQuestion()));
+        cv.put(dt.Property_intRoleId, String.valueOf(data.get_intRoleId()));
+        cv.put(dt.Property_txtRepeatQuestion, String.valueOf(data.get_txtRepeatQuestion()));
+        cv.put(dt.Property_dtStart, String.valueOf(data.get_dtStart()));
+        cv.put(dt.Property_dtEnd, String.valueOf(data.get_dtEnd()));
+        if (data.get_intId() == null){
+            db.insert(TABLE_CONTACTS, null, cv);
+        } else {
+            db.replace(TABLE_CONTACTS, null, cv);
+        }
     }
     public void DeleteAllDatatGroupQuestionMapping(SQLiteDatabase db){
         db.execSQL("DELETE FROM " + TABLE_CONTACTS);
