@@ -53,7 +53,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
                         <TextView
                             android:id="@+id/txtBranch"
                             android:layout_weight="1"
@@ -69,7 +69,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginTop="15dp"
                             android:text="Last Download"
                             android:textColor="@color/colorPrimary" />
 
@@ -112,7 +111,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
                         <TextView
                             android:id="@+id/txtOutlet"
                             android:layout_weight="1"
@@ -128,7 +127,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginTop="15dp"
                             android:text="Last Download"
                             android:textColor="@color/colorPrimary" />
 
@@ -172,7 +170,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
                         <TextView
                             android:id="@+id/textView7"
                             android:layout_weight="1"
@@ -188,7 +186,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginTop="15dp"
                             android:text="Last Download"
                             android:textColor="@color/colorPrimary" />
 
@@ -232,7 +229,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
                         <TextView
                             android:id="@+id/txtProduct"
                             android:layout_weight="1"
@@ -248,7 +245,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginTop="15dp"
                             android:text="Last Download"
                             android:textColor="@color/colorPrimary" />
 
@@ -292,7 +288,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
                         <TextView
                             android:id="@+id/txtVwProductSPGCusBase"
                             android:layout_weight="1"
@@ -308,7 +304,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginTop="15dp"
                             android:text="Last Download"
                             android:textColor="@color/colorPrimary" />
 
@@ -352,7 +347,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
                         <TextView
                             android:id="@+id/txtVwProductPICCusBase"
                             android:layout_weight="1"
@@ -368,7 +363,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginTop="15dp"
                             android:text="Last Download"
                             android:textColor="@color/colorPrimary" />
 
@@ -412,7 +406,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
                         <TextView
                             android:id="@+id/txtVwProductComp"
                             android:layout_weight="1"
@@ -428,7 +422,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginTop="15dp"
                             android:text="Last Download"
                             android:textColor="@color/colorPrimary" />
 
@@ -472,7 +465,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
                         <TextView
                             android:id="@+id/txtVwTypeSubm"
                             android:layout_weight="1"
@@ -488,7 +481,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginTop="15dp"
                             android:text="Last Download"
                             android:textColor="@color/colorPrimary" />
 
@@ -533,7 +525,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
                         <TextView
                             android:id="@+id/txtVwLeave"
                             android:layout_weight="1"
@@ -549,7 +541,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginTop="15dp"
                             android:text="Last Download"
                             android:textColor="@color/colorPrimary" />
 
@@ -594,7 +585,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
                             <TextView
                                 android:id="@+id/txtCategoryKoordinasi"
                                 android:layout_weight="1"
@@ -610,7 +601,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:layout_marginLeft="10dp"
-                                android:layout_marginTop="15dp"
                                 android:text="Last Download"
                                 android:textColor="@color/colorPrimary" />
 
@@ -661,7 +651,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
                             <TextView
                                 android:id="@+id/txtVwVisitPlan"
                                 android:layout_weight="1"
@@ -677,7 +667,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:layout_marginLeft="10dp"
-                                android:layout_marginTop="15dp"
                                 android:text="Last Download"
                                 android:textColor="@color/colorPrimary" />
 
@@ -720,7 +709,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
                             <TextView
                                 android:id="@+id/txtsubTypeActivity"
                                 android:layout_weight="1"
@@ -736,7 +725,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:layout_marginLeft="10dp"
-                                android:layout_marginTop="15dp"
                                 android:text="Last Download"
                                 android:textColor="@color/colorPrimary" />
 
@@ -780,7 +768,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
                             <TextView
                                 android:id="@+id/txtkategoryPlanogram"
                                 android:layout_weight="1"
@@ -796,7 +784,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:layout_marginLeft="10dp"
-                                android:layout_marginTop="15dp"
                                 android:text="Last Download"
                                 android:textColor="@color/colorPrimary" />
 
@@ -840,7 +827,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
                             <TextView
                                 android:id="@+id/tv_SPG"
                                 android:layout_weight="1"
@@ -856,7 +843,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:layout_marginLeft="10dp"
-                                android:layout_marginTop="15dp"
                                 android:text="Last Download"
                                 android:textColor="@color/colorPrimary" />
 
@@ -897,7 +883,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
                             <TextView
                                 android:id="@+id/tv_quis"
                                 android:layout_weight="1"
@@ -913,7 +899,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:layout_marginLeft="10dp"
-                                android:layout_marginTop="15dp"
                                 android:text="Last Download"
                                 android:textColor="@color/colorPrimary" />
 
@@ -953,7 +938,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
                             <TextView
                                 android:id="@+id/tv_POP"
                                 android:layout_weight="1"
@@ -969,7 +954,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:layout_marginLeft="10dp"
-                                android:layout_marginTop="15dp"
                                 android:text="Last Download"
                                 android:textColor="@color/colorPrimary" />
 
@@ -1035,7 +1019,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
                         <TextView
                             android:id="@+id/txtTrVisitPlan"
                             android:layout_weight="1"
@@ -1051,7 +1035,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginTop="15dp"
                             android:text="Last Download"
                             android:textColor="@color/colorPrimary" />
 
@@ -1093,7 +1076,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
                         <TextView
                             android:id="@+id/txtVwAbsen"
                             android:layout_weight="1"
@@ -1109,7 +1092,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginTop="15dp"
                             android:text="Last Download"
                             android:textColor="@color/colorPrimary" />
 
@@ -1150,7 +1132,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
                         <TextView
                             android:id="@+id/txtVwAbsenFPE"
                             android:layout_weight="1"
@@ -1166,7 +1148,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginTop="15dp"
                             android:text="Last Download"
                             android:textColor="@color/colorPrimary" />
 
@@ -1207,7 +1188,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
                         <TextView
                             android:id="@+id/txtVwDataLeave"
                             android:layout_weight="1"
@@ -1223,7 +1204,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginTop="15dp"
                             android:text="Last Download"
                             android:textColor="@color/colorPrimary" />
 
@@ -1264,7 +1244,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
                         <TextView
                             android:id="@+id/txtVwReso"
                             android:layout_weight="1"
@@ -1280,7 +1260,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginTop="15dp"
                             android:text="Last Download"
                             android:textColor="@color/colorPrimary" />
 
@@ -1321,7 +1300,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
                         <TextView
                             android:id="@+id/txtVwstockIH"
                             android:layout_weight="1"
@@ -1337,7 +1316,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginTop="15dp"
                             android:text="Last Download"
                             android:textColor="@color/colorPrimary" />
 
@@ -1378,7 +1356,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
                         <TextView
                             android:id="@+id/txtVwActivity"
                             android:layout_weight="1"
@@ -1394,7 +1372,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginTop="15dp"
                             android:text="Last Download"
                             android:textColor="@color/colorPrimary" />
 
@@ -1435,7 +1412,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
                         <TextView
                             android:id="@+id/txtVwActivityV2"
                             android:layout_weight="1"
@@ -1451,7 +1428,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginTop="15dp"
                             android:text="Last Download"
                             android:textColor="@color/colorPrimary" />
 
@@ -1492,7 +1468,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
                         <TextView
                             android:id="@+id/txtVwaddDisplayV2"
                             android:layout_weight="1"
@@ -1508,7 +1484,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginTop="15dp"
                             android:text="Last Download"
                             android:textColor="@color/colorPrimary" />
 
@@ -1549,7 +1524,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
                         <TextView
                             android:id="@+id/txtVwCustomerBase"
                             android:layout_weight="1"
@@ -1565,7 +1540,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginTop="15dp"
                             android:text="Last Download"
                             android:textColor="@color/colorPrimary" />
 
@@ -1606,7 +1580,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
                         <TextView
                             android:id="@+id/txtTrPO"
                             android:layout_weight="1"
@@ -1622,7 +1596,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginTop="15dp"
                             android:text="Last Download"
                             android:textColor="@color/colorPrimary" />
 
@@ -1663,7 +1636,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
                         <TextView
                             android:id="@+id/txtTrQuantityStock"
                             android:layout_weight="1"
@@ -1679,7 +1652,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginTop="15dp"
                             android:text="Last Download"
                             android:textColor="@color/colorPrimary" />
 
@@ -1720,7 +1692,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
                         <TextView
                             android:id="@+id/txtTrPlanogram"
                             android:layout_weight="1"
@@ -1736,7 +1708,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginTop="15dp"
                             android:text="Last Download"
                             android:textColor="@color/colorPrimary" />
 
@@ -1777,7 +1748,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
                         <TextView
                             android:id="@+id/txtVwKordinasiOutlet"
                             android:layout_weight="1"
@@ -1793,7 +1764,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginTop="15dp"
                             android:text="Last Download"
                             android:textColor="@color/colorPrimary" />
 
@@ -1839,7 +1809,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
                         <TextView
                             android:id="@+id/txtVwDataOverStock"
                             android:layout_weight="1"
@@ -1855,7 +1825,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginTop="15dp"
                             android:text="Last Download"
                             android:textColor="@color/colorPrimary" />
 
@@ -1901,7 +1870,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
                         <TextView
                             android:id="@+id/txtVwDatakemasanrusak"
                             android:layout_weight="1"
@@ -1917,7 +1886,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginTop="15dp"
                             android:text="Last Download"
                             android:textColor="@color/colorPrimary" />
 
@@ -1963,7 +1931,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
                         <TextView
                             android:id="@+id/txtVwDatatidaksesuaipesanan"
                             android:layout_weight="1"
@@ -1979,7 +1947,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginTop="15dp"
                             android:text="Last Download"
                             android:textColor="@color/colorPrimary" />
 

@@ -2499,7 +2499,7 @@ public class FragmentDownloadData extends Fragment {
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_subtypeactivity.getId()).toString());
             if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
-                txtsubTypeActivityLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+                txtsubTypeActivityLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
             }
         }
         if (ll_kategoryPlanogram != null && checkVisibility(ll_kategoryPlanogram)) {
@@ -2507,7 +2507,7 @@ public class FragmentDownloadData extends Fragment {
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_kategoryPlanogram.getId()).toString());
             if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
-                txtkategoryPlanogramLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+                txtkategoryPlanogramLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
             }
         }
         if (ll_outlet != null && checkVisibility(ll_outlet )){
@@ -2515,7 +2515,7 @@ public class FragmentDownloadData extends Fragment {
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_outlet.getId()).toString());
             if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
-                txtOutletLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+                txtOutletLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
             }
         }
         if (ll_branch != null && checkVisibility(ll_branch)) {
@@ -2523,7 +2523,7 @@ public class FragmentDownloadData extends Fragment {
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_branch.getId()).toString());
             if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
-                txtBranchLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+                txtBranchLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
             }
         }
         if (ll_type_leave != null && checkVisibility(ll_type_leave)) {
@@ -2531,7 +2531,7 @@ public class FragmentDownloadData extends Fragment {
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_type_leave.getId()).toString());
             if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
-                txtLeaveLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+                txtLeaveLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
             }
         }
         if (ll_product != null && checkVisibility(ll_product)) {
@@ -2539,7 +2539,7 @@ public class FragmentDownloadData extends Fragment {
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_product.getId()).toString());
             if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
-                txtProductLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+                txtProductLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
             }
         }
         if (ll_brand != null && checkVisibility(ll_brand)) {
@@ -2547,7 +2547,7 @@ public class FragmentDownloadData extends Fragment {
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_brand.getId()).toString());
             if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
-                textView7LastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+                textView7LastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
             }
         }
         if (ll_kategoriVisitPlan != null && checkVisibility(ll_kategoriVisitPlan)) {
@@ -2555,7 +2555,7 @@ public class FragmentDownloadData extends Fragment {
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_kategoriVisitPlan.getId()).toString());
             if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
-                txtVisitPlanLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+                txtVisitPlanLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
             }
         }
         if (ll_product_competitor != null && checkVisibility(ll_product_competitor)) {
@@ -2563,7 +2563,7 @@ public class FragmentDownloadData extends Fragment {
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_product_competitor.getId()).toString());
             if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
-                txtProductCompLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+                txtProductCompLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
             }
         }
         if (ll_product_spg != null && checkVisibility(ll_product_spg)) {
@@ -2571,7 +2571,7 @@ public class FragmentDownloadData extends Fragment {
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_product_spg.getId()).toString());
             if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
-                txtProductSPGCusBaseLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+                txtProductSPGCusBaseLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
             }
         }
         if (ll_product_pic != null && checkVisibility(ll_product_pic)) {
@@ -2579,7 +2579,7 @@ public class FragmentDownloadData extends Fragment {
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_product_pic.getId()).toString());
             if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
-                txtProductPICCusBaseLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+                txtProductPICCusBaseLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
             }
         }
         if (ll_type_submission != null && checkVisibility(ll_type_submission)) {
@@ -2587,7 +2587,7 @@ public class FragmentDownloadData extends Fragment {
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_type_submission.getId()).toString());
             if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
-                txtTypeSubmLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+                txtTypeSubmLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
             }
         }
         if (ll_dataCategoryKordinasiOutlet != null && checkVisibility(ll_dataCategoryKordinasiOutlet)) {
@@ -2595,7 +2595,7 @@ public class FragmentDownloadData extends Fragment {
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_dataCategoryKordinasiOutlet.getId()).toString());
             if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
-                txtCategoryKoordinasiLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+                txtCategoryKoordinasiLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
             }
         }
         if (ll_dataQuesioner != null && checkVisibility(ll_dataQuesioner)) {
@@ -2603,8 +2603,8 @@ public class FragmentDownloadData extends Fragment {
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_dataQuesioner.getId()).toString());
             if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
-                txtSPGLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
-                txtquisLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+                txtSPGLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
+                txtquisLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
             }
         }
         //transaksi
@@ -2613,7 +2613,7 @@ public class FragmentDownloadData extends Fragment {
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_dataVisitPlan.getId()).toString());
             if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
-                txtTrVisitPlanLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+                txtTrVisitPlanLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
             }
         }
         if (ll_data_attendance != null && checkVisibility(ll_data_attendance )){
@@ -2621,7 +2621,7 @@ public class FragmentDownloadData extends Fragment {
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_data_attendance.getId()).toString());
             if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
-                txtAbsenFPELastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+                txtAbsenFPELastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
             }
         }
         if (ll_reso != null && checkVisibility(ll_reso)) {
@@ -2629,7 +2629,7 @@ public class FragmentDownloadData extends Fragment {
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_reso.getId()).toString());
             if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
-                txtResoLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+                txtResoLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
             }
         }
         if (ll_purchase_order != null && checkVisibility(ll_purchase_order)) {
@@ -2637,7 +2637,7 @@ public class FragmentDownloadData extends Fragment {
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_purchase_order.getId()).toString());
             if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
-                txtTrPOLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+                txtTrPOLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
             }
         }
         if (ll_data_stockIH != null && checkVisibility(ll_data_stockIH)) {
@@ -2645,7 +2645,7 @@ public class FragmentDownloadData extends Fragment {
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_data_stockIH.getId()).toString());
             if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
-                txtstockIHLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+                txtstockIHLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
             }
         }
         if (ll_dataQuantityStock != null && checkVisibility(ll_dataQuantityStock)) {
@@ -2653,7 +2653,7 @@ public class FragmentDownloadData extends Fragment {
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_dataQuantityStock.getId()).toString());
             if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
-                txtTrQuantityStockLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+                txtTrQuantityStockLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
             }
         }
         if (ll_data_overStock != null && checkVisibility(ll_data_overStock)) {
@@ -2661,7 +2661,7 @@ public class FragmentDownloadData extends Fragment {
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_data_overStock.getId()).toString());
             if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
-                txtOverStockLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+                txtOverStockLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
             }
         }
         if (ll_dataKordinasiOutlet != null && checkVisibility(ll_dataKordinasiOutlet)) {
@@ -2669,7 +2669,7 @@ public class FragmentDownloadData extends Fragment {
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_dataKordinasiOutlet.getId()).toString());
             if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
-                txtKordinasiOutletLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+                txtKordinasiOutletLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
             }
         }
         if (ll_data_planogram != null && checkVisibility(ll_data_planogram)) {
@@ -2677,7 +2677,7 @@ public class FragmentDownloadData extends Fragment {
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_data_planogram.getId()).toString());
             if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
-                txtPlanogramLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+                txtPlanogramLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
             }
         }
         if (ll_data_activity != null && checkVisibility(ll_data_activity)) {
@@ -2685,7 +2685,7 @@ public class FragmentDownloadData extends Fragment {
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_data_activity.getId()).toString());
             if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
-                txtActivityLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+                txtActivityLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
             }
         }
         if (ll_data_activityV2 != null && checkVisibility(ll_data_activityV2)) {
@@ -2693,7 +2693,7 @@ public class FragmentDownloadData extends Fragment {
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_data_activityV2.getId()).toString());
             if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
-                txtActivityV2LastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+                txtActivityV2LastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
             }
         }
         if (ll_data_addDisplay != null && checkVisibility(ll_data_addDisplay)) {
@@ -2701,7 +2701,7 @@ public class FragmentDownloadData extends Fragment {
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_data_addDisplay.getId()).toString());
             if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
-                txtaddDisplayV2LastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+                txtaddDisplayV2LastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
             }
         }
         if (ll_data_customerbased != null && checkVisibility(ll_data_customerbased)) {
@@ -2709,7 +2709,7 @@ public class FragmentDownloadData extends Fragment {
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_data_customerbased.getId()).toString());
             if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
-                txtCustomerBaseLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+                txtCustomerBaseLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
             }
         }
         if (ll_absen != null && checkVisibility(ll_absen)) {
@@ -2717,7 +2717,7 @@ public class FragmentDownloadData extends Fragment {
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_absen.getId()).toString());
             if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
-                txtAbsenLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+                txtAbsenLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
             }
         }
         if (ll_data_leave != null && checkVisibility(ll_data_leave)) {
@@ -2725,7 +2725,7 @@ public class FragmentDownloadData extends Fragment {
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_data_leave.getId()).toString());
             if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
-                txtDataLeaveLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+                txtDataLeaveLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
             }
         }
         if(ll_data_kemasanrusak !=null && checkVisibility(ll_data_kemasanrusak)){
@@ -2733,7 +2733,7 @@ public class FragmentDownloadData extends Fragment {
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_data_kemasanrusak.getId()).toString());
             if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
-                txtkemasanrusakLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+                txtkemasanrusakLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
             }
         }
         if(ll_data_tidaksesuaipesanan !=null && checkVisibility(ll_data_tidaksesuaipesanan)){
@@ -2741,7 +2741,7 @@ public class FragmentDownloadData extends Fragment {
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_data_tidaksesuaipesanan.getId()).toString());
             if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
-                txttidaksesuaipesananLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+                txttidaksesuaipesananLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
             }
         }
         if (ll_dataPOP_Standard != null && checkVisibility(ll_dataPOP_Standard)){
@@ -2749,7 +2749,7 @@ public class FragmentDownloadData extends Fragment {
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_dataPOP_Standard.getId()).toString());
             if(_tLogDownloadData!=null&&_tLogDownloadData.get_dtLastDownload().toString()!="null"){
-                txtPOPLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDate(_tLogDownloadData.get_dtLastDownload().toString()));
+                txtPOPLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
             }
         }
     }
@@ -2869,28 +2869,28 @@ public class FragmentDownloadData extends Fragment {
             org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
             int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
             if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
-                            tVisitPlanRealisasiData _data = new tVisitPlanRealisasiData();
-                            _data.set_txtDataIDRealisasi((String) innerObj.get("txtDataIdRealisasi"));
-                            _data.set_intCategoryVisitPlan((String) innerObj.get("intCategoryVisitPlan"));
-                            _data.set_intDetailID((String) innerObj.get("intDetailId"));
-                            _data.set_intHeaderID((String) innerObj.get("intHeaderId"));
-                            _data.set_intUserID((String) innerObj.get("intUserId"));
-                            _data.set_txtOutletCode((String) innerObj.get("txtOutletCode"));
-                            _data.set_txtOutletName((String) innerObj.get("txtOutletName"));
-                            _data.set_txtBranchCode((String) innerObj.get("txtBranchCode"));
-                            _data.set_txtBranchName((String) innerObj.get("txtBranchName"));
-                            _data.set_dtDate((String) innerObj.get("dtDate"));
-                            _data.set_intBobot((String) innerObj.get("intBobot"));
-                            _data.set_txtDesc((String) innerObj.get("txtDesc"));
-                            _data.set_bitActive((String) innerObj.get("bitActive"));
-                            _data.set_txtLongSource((String) innerObj.get("txtLong"));
-                            _data.set_txtLatSource((String) innerObj.get("txtLat"));
-                            _data.set_txtAcc((String) innerObj.get("txtAcc"));
-                            _data.set_intSubmit("0");
-                            _data.set_intPush("0");
-                            _data.set_intCheckout("0");
-                            _array.add(_data.get_txtOutletName() + "-" + _data.get_txtDesc());
-                            _Listdata.add(_data);
+                tVisitPlanRealisasiData _data = new tVisitPlanRealisasiData();
+                _data.set_txtDataIDRealisasi((String) innerObj.get("txtDataIdRealisasi"));
+                _data.set_intCategoryVisitPlan((String) innerObj.get("intCategoryVisitPlan"));
+                _data.set_intDetailID((String) innerObj.get("intDetailId"));
+                _data.set_intHeaderID((String) innerObj.get("intHeaderId"));
+                _data.set_intUserID((String) innerObj.get("intUserId"));
+                _data.set_txtOutletCode((String) innerObj.get("txtOutletCode"));
+                _data.set_txtOutletName((String) innerObj.get("txtOutletName"));
+                _data.set_txtBranchCode((String) innerObj.get("txtBranchCode"));
+                _data.set_txtBranchName((String) innerObj.get("txtBranchName"));
+                _data.set_dtDate((String) innerObj.get("dtDate"));
+                _data.set_intBobot((String) innerObj.get("intBobot"));
+                _data.set_txtDesc((String) innerObj.get("txtDesc"));
+                _data.set_bitActive((String) innerObj.get("bitActive"));
+                _data.set_txtLongSource((String) innerObj.get("txtLong"));
+                _data.set_txtLatSource((String) innerObj.get("txtLat"));
+                _data.set_txtAcc((String) innerObj.get("txtAcc"));
+                _data.set_intSubmit("0");
+                _data.set_intPush("0");
+                _data.set_intCheckout("0");
+                _array.add(_data.get_txtOutletName() + "-" + _data.get_txtDesc());
+                _Listdata.add(_data);
             }
         }
         new tVisitPlanRealisasiBL().downloadData(_Listdata);
@@ -2955,22 +2955,22 @@ public class FragmentDownloadData extends Fragment {
             org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
             int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
             if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
-                            tVisitPlanHeader_MobileData _data = new tVisitPlanHeader_MobileData();
-                            _data.set_intHeaderId((String) innerObj.get("intHeaderId"));
-                            _data.set_txtUserId((String) innerObj.get("txtUserId"));
-                            _data.set_txtPeriode((String) innerObj.get("txtPeriode"));
-                            _data.set_txtGuidUnplan((String) innerObj.get("txtGuidIdUnplan"));
-                            _data.set_intUnplan((String) innerObj.get("intUnplan"));
-                            _data.set_txtBranchCode((String) innerObj.get("txtBranchCode"));
-                            _data.set_bitActive((String) innerObj.get("bitActive"));
-                            _data.set_dtStart((String) innerObj.get("dtStart"));
-                            _data.set_dtEnd((String) innerObj.get("dtEnd"));
-                            _data.set_intSumBobot((String) innerObj.get("intSumBobot"));
-                            _data.set_intRealisasi((String) innerObj.get("intRealisasi"));
+                tVisitPlanHeader_MobileData _data = new tVisitPlanHeader_MobileData();
+                _data.set_intHeaderId((String) innerObj.get("intHeaderId"));
+                _data.set_txtUserId((String) innerObj.get("txtUserId"));
+                _data.set_txtPeriode((String) innerObj.get("txtPeriode"));
+                _data.set_txtGuidUnplan((String) innerObj.get("txtGuidIdUnplan"));
+                _data.set_intUnplan((String) innerObj.get("intUnplan"));
+                _data.set_txtBranchCode((String) innerObj.get("txtBranchCode"));
+                _data.set_bitActive((String) innerObj.get("bitActive"));
+                _data.set_dtStart((String) innerObj.get("dtStart"));
+                _data.set_dtEnd((String) innerObj.get("dtEnd"));
+                _data.set_intSumBobot((String) innerObj.get("intSumBobot"));
+                _data.set_intRealisasi((String) innerObj.get("intRealisasi"));
 //                            _array.add(_data.get_txtOutletName()+"-"+_data.get_txtDesc());
-                            _data.set_intSubmit("0");
-                            _data.set_intPush("0");
-                            _Listdata.add(_data);
+                _data.set_intSubmit("0");
+                _data.set_intPush("0");
+                _Listdata.add(_data);
             }
         }
         new tVisitPlanHeader_MobileBL().saveData(_Listdata);
@@ -5867,7 +5867,7 @@ public class FragmentDownloadData extends Fragment {
         protected JSONArray doInBackground(JSONArray... params) {
             JSONArray Json = null;
             try {
-                    Json = new mProductCompetitorBL().DownloadProdctCompetitor(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+                Json = new mProductCompetitorBL().DownloadProdctCompetitor(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -5964,7 +5964,7 @@ public class FragmentDownloadData extends Fragment {
         protected JSONArray doInBackground(JSONArray... params) {
             JSONArray Json = null;
             try {
-                    Json = new mProductSPGBL().DownloadProductSPG(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+                Json = new mProductSPGBL().DownloadProductSPG(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -6067,7 +6067,7 @@ public class FragmentDownloadData extends Fragment {
 //            android.os.Debug.waitForDebugger();
             JSONArray Json = null;
             try {
-                    Json = new mProductPICBL().DownloadProductPIC(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+                Json = new mProductPICBL().DownloadProductPIC(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
             } catch (Exception e) {
                 e.printStackTrace();
             }

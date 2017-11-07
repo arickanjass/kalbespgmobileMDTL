@@ -394,19 +394,19 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 
                         return true;
 
-//                    case R.id.downloadDataMobile:
-//                        toolbar.setTitle("Download Data");
-//                        toolbar.setSubtitle(null);
-//
-//                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-//
-//                        FragmentDownloadData fragmentDownloadData = new FragmentDownloadData();
-//                        FragmentTransaction fragmentTransactionDownloadData = getSupportFragmentManager().beginTransaction();
-//                        fragmentTransactionDownloadData.replace(R.id.frame, fragmentDownloadData);
-//                        fragmentTransactionDownloadData.commit();
-//                        selectedId = 99;
-//
-//                        return true;
+                    case R.id.downloadDataMobile:
+                        toolbar.setTitle("Download Data");
+                        toolbar.setSubtitle(null);
+
+                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+                        FragmentDownloadData fragmentDownloadData = new FragmentDownloadData();
+                        FragmentTransaction fragmentTransactionDownloadData = getSupportFragmentManager().beginTransaction();
+                        fragmentTransactionDownloadData.replace(R.id.frame, fragmentDownloadData);
+                        fragmentTransactionDownloadData.commit();
+                        selectedId = 99;
+
+                        return true;
 
                     case R.id.pushDataMobile:
                         toolbar.setTitle("Push Data");
@@ -907,6 +907,18 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                             } else {
                                 Jresult = new clsHelperBL().callPushDataReturnJson(versionName, dtJson.getDtdataJson().txtJSON().toString(), null);
                             }
+                        }
+                        if (dtJson.getDtdataJson().getListOftVisitPlanRealisasiData() != null) {
+//                            List<tVisitPlanRealisasiData> listAbsen = dtJson.getDtdataJson().getListOftVisitPlanRealisasiData();
+                            Jresult = new clsHelperBL().callPushDataReturnJson(versionName, dtJson.getDtdataJson().txtJSON().toString(), dtJson.getFileUpload());
+                        }
+                        if (dtJson.getDtdataJson().getListOftAttendanceUserData() != null) {
+                            List<tAttendanceUserData> listAbsen = dtJson.getDtdataJson().getListOftAttendanceUserData();
+                            if (listAbsen.get(0).get_txtAbsen().equals("0")) {
+                                Jresult = new clsHelperBL().callPushDataReturnJson(versionName, dtJson.getDtdataJson().txtJSON().toString(), dtJson.getFileUpload());
+                            } else {
+                                Jresult = new clsHelperBL().callPushDataReturnJson(versionName, dtJson.getDtdataJson().txtJSON().toString(), null);
+                            }
 //                            new clsHelperBL().saveDataPush(dtJson.getDtdataJson(), Jresult);
                         }
                     } catch (Exception e) {
@@ -936,7 +948,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                     e2.printStackTrace();
                 }
 
-                Json = new tUserLoginBL().Logout(pInfo.versionName);
+//                Json = new tUserLoginBL().Logout(pInfo.versionName);
                 if(validPush){
                     Json = new tUserLoginBL().Logout(pInfo.versionName);
                 } else if (Jresult==null){

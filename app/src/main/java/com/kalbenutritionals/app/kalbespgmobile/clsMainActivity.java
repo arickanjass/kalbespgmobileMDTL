@@ -422,21 +422,22 @@ public class clsMainActivity extends Activity {
     }
 
     public String giveFormatDateWithTime(String DateYYMMDD) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
         DateFormat formatYY = new SimpleDateFormat("yyyy");
         DateFormat formatMM = new SimpleDateFormat("MM");
         DateFormat formatDD = new SimpleDateFormat("dd");
+        SimpleDateFormat formathhmm = new SimpleDateFormat("HH:mma");
         String txtDate = "";
         try {
             Date dtdate = (Date) dateFormat.parse(DateYYMMDD);
+            Date timeObj = (Date) dateFormat.parse(DateYYMMDD);
             int year = Integer.valueOf(formatYY.format(dtdate));
             int month = Integer.valueOf(formatMM.format(dtdate));
             int day = Integer.valueOf(formatDD.format(dtdate));
-            txtDate = String.valueOf(day) + "/" + String.valueOf(month) + "/" + String.valueOf(year);
+            txtDate = String.valueOf(day) + "/" + String.valueOf(month) + "/" + String.valueOf(year) + " - " + formathhmm.format(timeObj);
         } catch (ParseException e) {
             txtDate = DateYYMMDD;
         }
-
         return txtDate;
     }
 
