@@ -1,9 +1,6 @@
 package bl;
 
 import android.database.sqlite.SQLiteDatabase;
-import android.widget.LinearLayout;
-
-import com.bumptech.glide.load.engine.Resource;
 
 import org.json.simple.JSONArray;
 
