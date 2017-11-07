@@ -6300,8 +6300,8 @@ public class FragmentDownloadData extends Fragment {
                         _data.set_txtGroupQuestion(String.valueOf(innerObj_GroupQuestion.get("TxtQuestionGroupName")));
                         _data.set_intRoleId(String.valueOf(innerObj_GroupQuestion.get("TxtRoleName")));
                         _data.set_txtRepeatQuestion(String.valueOf(innerObj_GroupQuestion.get("TxtRepeatQuestion")));
-                        _data.set_dtStart(String.valueOf(innerObj_GroupQuestion.get("DtDateEnd")));
-                        _data.set_dtEnd(String.valueOf(innerObj_GroupQuestion.get("DtDateStart")));
+                        _data.set_dtStart(String.valueOf(innerObj_GroupQuestion.get("DtDateStart")));
+                        _data.set_dtEnd(String.valueOf(innerObj_GroupQuestion.get("DtDateEnd")));
                         new tGroupQuestionMappingBL().saveDatatGroupQuestionMapping(_data);
                     }
 
