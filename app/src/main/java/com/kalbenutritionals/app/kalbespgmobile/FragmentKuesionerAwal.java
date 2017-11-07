@@ -1,6 +1,8 @@
 package com.kalbenutritionals.app.kalbespgmobile;
 
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -64,8 +66,14 @@ public class FragmentKuesionerAwal extends Fragment {
             Button btn = new Button(getContext());
             btn.setId(Integer.parseInt(groupQuestionMappingDataList.get(i).get_intId()));
             final int id_ = btn.getId();
+            params.setMargins(0, 0, 0, 10); 
+            btn.setLayoutParams(params);
             btn.setText(groupQuestionMappingDataList.get(i).get_txtGroupQuestion());
-//            btn.setBackgroundColor(Color.rgb(70, 80, 90));
+            btn.setPadding(15, 10, 15, 10);
+            btn.setTextSize(14);
+            btn.setTypeface(btn.getTypeface(), Typeface.BOLD);
+            btn.setTextColor(Color.BLACK);
+            btn.setBackgroundResource(R.drawable.bg_edtext);
             lnBtn.addView(btn, params);
             btn2 = ((Button) v.findViewById(id_));
             listButton.add(btn2);
