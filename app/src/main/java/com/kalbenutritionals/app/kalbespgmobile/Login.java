@@ -1,5 +1,6 @@
 package com.kalbenutritionals.app.kalbespgmobile;
 
+import android.Manifest;
 import android.app.ActivityManager;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -21,6 +22,7 @@ import android.os.PowerManager;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.telephony.TelephonyManager;
@@ -156,7 +158,20 @@ public class Login extends clsMainActivity {
         }
 
         TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        String imeiNumber = tm.getDeviceId();
+        String imeiNumber = "";
+        if (tm != null) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            imeiNumber = tm.getDeviceId().toString();
+        }
         llContentWarning = (LinearLayout) findViewById(R.id.llContentWarning);
         llContent = (LinearLayout) findViewById(R.id.llContent);
         tvWarning = (TextView) findViewById(R.id.tvWarning);
@@ -191,8 +206,6 @@ public class Login extends clsMainActivity {
 
         txtLoginEmail.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
 
-//        AsyncCallAppVesion task1 = new AsyncCallAppVesion();
-//        task1.execute();
         txtLoginPassword.setOnTouchListener(new DrawableClickListener.RightDrawableClickListener(txtLoginPassword) {
             public boolean onDrawableClick() {
                 if (intSet == 1) {
@@ -350,7 +363,6 @@ public class Login extends clsMainActivity {
             @Override
             public void onClick(View v) {
                 String strUrl = new mconfigDA(new clsMainBL().getDb()).getData(new clsMainBL().getDb(), enumConfigData.ApiKalbe.getidConfigData()).get_txtValue();
-//                copyFile();
                 try {
                     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                     StrictMode.setThreadPolicy(policy);
@@ -1074,38 +1086,5 @@ public class Login extends clsMainActivity {
             Dialog.dismiss();
         }
 
-    }
-    public void copyFile()
-    {
-        try
-        {
-            File sd = Environment.getExternalStorageDirectory();
-            File data = Environment.getDataDirectory();
-
-            if (sd.canWrite())
-            {
-                String currentDBPath = new clsHardCode().txtPathApp;
-                String backupDBName = "databaseroot_copy";
-                File currentDB = new File(new clsHardCode().txtDatabaseName);
-                File backupDB = new File(sd, backupDBName);
-
-                if (currentDB.exists()) {
-                    FileChannel src = new FileInputStream(currentDB).getChannel();
-                    FileChannel dst = new FileOutputStream(backupDB).getChannel();
-                    dst.transferFrom(src, 0, src.size());
-                    src.close();
-                    dst.close();
-                    new clsMainActivity().showCustomToast(getApplicationContext(), "Successfull...", true);
-                } else {
-                    new clsMainActivity().showCustomToast(getApplicationContext(), "File not found...", false);
-                }
-            } else {
-                new clsMainActivity().showCustomToast(getApplicationContext(), "Permission not granted...", false);
-            }
-        }
-        catch (Exception e) {
-//            Log.w("Settings Backup", e);
-            new clsMainActivity().showCustomToast(getApplicationContext(), e.toString(), false);
-        }
     }
 }

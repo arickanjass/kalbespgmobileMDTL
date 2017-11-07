@@ -551,9 +551,10 @@ public class clsHelper {
 		_tNotificationDA=new tNotificationDA(db);
 		clsHardCode clsdthc=new clsHardCode();
 		clsHelper _clsHelper=new clsHelper();
+		mconfigDA _mconfigDA = new mconfigDA(db);
+
 		File dir = new File(clsdthc.txtPathUserData);
 		_clsHelper.DeleteRecursive(dir);
-		mconfigDA _mconfigDA = new mconfigDA(db);
 		int sumdata = _mconfigDA.getContactsCount(db);
 		if (sumdata == 0) {
 			_mconfigDA.InsertDefaultMconfig(db);
