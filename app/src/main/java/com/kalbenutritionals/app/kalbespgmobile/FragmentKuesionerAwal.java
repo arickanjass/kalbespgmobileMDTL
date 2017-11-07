@@ -66,9 +66,9 @@ public class FragmentKuesionerAwal extends Fragment {
             Button btn = new Button(getContext());
             btn.setId(Integer.parseInt(groupQuestionMappingDataList.get(i).get_intId()));
             final int id_ = btn.getId();
-            params.setMargins(0, 0, 0, 10); 
+            params.setMargins(0, 0, 0, 10);
             btn.setLayoutParams(params);
-            btn.setText(groupQuestionMappingDataList.get(i).get_txtGroupQuestion());
+            btn.setText(groupQuestionMappingDataList.get(i).get_txtGroupQuestion().toUpperCase());
             btn.setPadding(15, 10, 15, 10);
             btn.setTextSize(14);
             btn.setTypeface(btn.getTypeface(), Typeface.BOLD);

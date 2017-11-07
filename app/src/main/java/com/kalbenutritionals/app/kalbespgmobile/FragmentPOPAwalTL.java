@@ -41,7 +41,7 @@ public class FragmentPOPAwalTL extends Fragment {
                 params.setMargins(0, 0, 0, 10);
                 button.setLayoutParams(params);
                 button.setId(Integer.parseInt(listType.get(i).get_intId()));
-                button.setText(listType.get(i).get_txtType());
+                button.setText(listType.get(i).get_txtType().toUpperCase());
                 button.setPadding(15, 10, 15, 10);
                 button.setTextSize(14);
                 button.setTypeface(button.getTypeface(), Typeface.BOLD);
