@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import library.spgmobile.common.tKemasanRusakHeaderData;
 import library.spgmobile.common.tOverStockHeaderData;
 import library.spgmobile.common.tSalesProductQuantityHeaderData;
 
@@ -206,7 +207,18 @@ public class tOverStockHeaderDA {
         // return contact list
         return count;
     }
-
+    public int getAllCheckPushData(SQLiteDatabase db) {
+        List<tOverStockHeaderData> contactList = null;
+        // Select All Query
+        tOverStockHeaderData dt = new tOverStockHeaderData();
+        String selectQuery = "SELECT  1 FROM "
+                + TABLE_CONTACTS +" WHERE " +dt.Property_intSubmit +" ='1' And "+dt.Property_intSync+"=0" ;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // return count
+        int index = cursor.getCount();
+        cursor.close();
+        return index;
+    }
     // Getting All Contacts
     public List<tOverStockHeaderData> getAllDataToPushData(SQLiteDatabase db){
         List<tOverStockHeaderData> contactList = null;

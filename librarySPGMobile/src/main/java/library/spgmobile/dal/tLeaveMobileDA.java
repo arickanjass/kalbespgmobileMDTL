@@ -156,6 +156,18 @@ public class tLeaveMobileDA {
 		// return contact list
 		return contactList;
 	}
+	public int getAllCheckPushData(SQLiteDatabase db) {
+		List<tLeaveMobileData> contactList = null;
+		// Select All Query
+		tLeaveMobileData dt = new tLeaveMobileData();
+		String selectQuery = "SELECT  1 FROM "
+				+ TABLE_CONTACTS +" WHERE " +dt.Property_intLeaveIdSync +" ='0' And "+dt.Property_intSubmit+"=1" ;
+		Cursor cursor = db.rawQuery(selectQuery, null);
+		// return count
+		int index = cursor.getCount();
+		cursor.close();
+		return index;
+	}
 	// Getting All Contacts
 	public List<tLeaveMobileData> getAllData(SQLiteDatabase db) {
 		List<tLeaveMobileData> contactList = new ArrayList<tLeaveMobileData>();

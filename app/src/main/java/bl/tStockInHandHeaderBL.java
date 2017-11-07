@@ -329,6 +329,16 @@ public class tStockInHandHeaderBL extends clsMainBL{
         }
         return dt;
     }
+    public List<tStockInHandHeaderData> getAllHeaderUnsubmit() {
+        SQLiteDatabase _db = getDb();
+        List<tStockInHandHeaderData> dt;
+        tStockInHandHeaderDA _tStockInHandHeaderDA = new tStockInHandHeaderDA(_db);
+        dt = _tStockInHandHeaderDA.getAllDataUnsubmit(_db);
+        if (dt == null) {
+            dt = new ArrayList<>(0);
+        }
+        return dt;
+    }
     public void updateDataSubmit(tPlanogramMobileData dt) {
         SQLiteDatabase _db = getDb();
         tStockInHandHeaderDA _tStockInHandHeaderDA = new tStockInHandHeaderDA(_db);

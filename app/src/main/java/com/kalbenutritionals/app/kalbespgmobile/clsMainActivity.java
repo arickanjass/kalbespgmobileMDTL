@@ -426,7 +426,7 @@ public class clsMainActivity extends Activity {
         DateFormat formatYY = new SimpleDateFormat("yyyy");
         DateFormat formatMM = new SimpleDateFormat("MM");
         DateFormat formatDD = new SimpleDateFormat("dd");
-        SimpleDateFormat formathhmm = new SimpleDateFormat("HH:mma");
+        SimpleDateFormat formathhmm = new SimpleDateFormat("HH:mm a");
         String txtDate = "";
         try {
             Date dtdate = (Date) dateFormat.parse(DateYYMMDD);

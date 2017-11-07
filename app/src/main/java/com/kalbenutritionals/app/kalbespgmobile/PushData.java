@@ -104,7 +104,7 @@ public class PushData extends AppCompatActivity {
         SQLiteDatabase db = new clsMainBL().getDb();
         if(validCheckinActive){
             //update data planogram status save
-            List<tPlanogramMobileData> _tPlanogramMobileData = new tPlanogramMobileBL().getAllDataSelectImageNotNullByOutletUnsubmit(dataAttendance.get_txtOutletCode());
+            List<tPlanogramMobileData> _tPlanogramMobileData = new tPlanogramMobileBL().getAllDataSelectImageNotNullUnsubmit();
             if(_tPlanogramMobileData!=null){
                 for(tPlanogramMobileData dttPlanogramMobileData : _tPlanogramMobileData){
                     dttPlanogramMobileData.set_intSubmit("1");
@@ -112,7 +112,7 @@ public class PushData extends AppCompatActivity {
                 }
             }
             //update stock on hand
-            List<tStockInHandHeaderData> tStockInHandHeaderDataList = new tStockInHandHeaderBL().getAllHeaderByOutletCodeUnsubmit(dataAttendance.get_txtOutletCode());
+            List<tStockInHandHeaderData> tStockInHandHeaderDataList = new tStockInHandHeaderBL().getAllHeaderUnsubmit();
             if(tStockInHandHeaderDataList!=null&&tStockInHandHeaderDataList.size()>0){
                 for(tStockInHandHeaderData dt : tStockInHandHeaderDataList){
                     new tStockInHandHeaderBL().updateDataSubmit(dt);

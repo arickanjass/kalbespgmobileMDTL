@@ -10,6 +10,7 @@ import java.util.List;
 import library.spgmobile.common.tPlanogramMobileData;
 import library.spgmobile.common.tSalesProductHeaderData;
 import library.spgmobile.common.tStockInHandHeaderData;
+import library.spgmobile.common.tVisitPlanRealisasiData;
 
 /**
  * Created by aan.junianto on 23/08/2017.
@@ -158,7 +159,19 @@ public class tStockInHandHeaderDA {
     }
 
     // Getting All Contacts
-    public int getAllCheckToPushData(SQLiteDatabase db) {
+    public int getAllCheckToPushDataSave(SQLiteDatabase db) {
+        // Select All Query
+        tStockInHandHeaderData dt = new tStockInHandHeaderData();
+        String selectQuery = "SELECT 1 FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intSubmit + "=0 AND " + dt.Property_intSync + "=0";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // return count
+        int index = cursor.getCount();
+        cursor.close();
+        return index;
+        // return contact list
+    }
+    public int getAllCheckToPushDataSubmit(SQLiteDatabase db) {
         // Select All Query
         tStockInHandHeaderData dt = new tStockInHandHeaderData();
         String selectQuery = "SELECT 1 FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intSubmit + "=1 AND " + dt.Property_intSync + "=0";
@@ -827,6 +840,18 @@ public class tStockInHandHeaderDA {
         // return contact list
         return contactList;
     }
+    public int getAllCheckPushData(SQLiteDatabase db) {
+        List<tStockInHandHeaderData> contactList = null;
+        // Select All Query
+        tStockInHandHeaderData dt = new tStockInHandHeaderData();
+        String selectQuery = "SELECT  1 FROM "
+                + TABLE_CONTACTS +" WHERE " +dt.Property_intSubmit +" ='0' And "+dt.Property_intSync+"=1" ;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // return count
+        int index = cursor.getCount();
+        cursor.close();
+        return index;
+    }
     public List<tStockInHandHeaderData> getAllDataByOutletCodeUnsubmit(SQLiteDatabase db, String code) {
         List<tStockInHandHeaderData> contactList = new ArrayList<tStockInHandHeaderData>();
         // Select All Query
@@ -834,6 +859,41 @@ public class tStockInHandHeaderDA {
 
 //        String selectQuery = "SELECT  " + dt.Property_ALL + " FROM " + TABLE_NAME + " WHERE " + dt.Property_txtSumberData + "='" + code + "'" + " AND " + dt.Property_intSubmit + " ='1' AND bitActive = '1' ORDER BY txtSubmissionId DESC ";
         String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_OutletCode + "='" + code + "'" + " AND intSubmit='0' AND intSync='0' ORDER BY " + dt.Property_txtDate + " DESC ";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                tStockInHandHeaderData contact = new tStockInHandHeaderData();
+                contact.set_intId(cursor.getString(0));
+                contact.set_txtNoSo(cursor.getString(1));
+                contact.set_dtDate(cursor.getString(2));
+                contact.set_OutletCode(cursor.getString(3));
+                contact.set_OutletName(cursor.getString(4));
+                contact.set_txtKeterangan(cursor.getString(5));
+                contact.set_intSumItem(cursor.getString(6));
+                contact.set_intSumAmount(cursor.getString(7));
+                contact.set_UserId(cursor.getString(8));
+                contact.set_intSubmit(cursor.getString(9));
+                contact.set_intSync(cursor.getString(10));
+                contact.set_txtBranchCode(cursor.getString(11));
+                contact.set_txtBranchName(cursor.getString(12));
+                contact.set_intIdAbsenUser(cursor.getString(13));
+                contact.set_txtNIK(cursor.getString(14));
+                contact.set_txtRoleId(cursor.getString(15));
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        // return contact list
+        return contactList;
+    }
+    public List<tStockInHandHeaderData> getAllDataUnsubmit(SQLiteDatabase db) {
+        List<tStockInHandHeaderData> contactList = new ArrayList<tStockInHandHeaderData>();
+        // Select All Query
+        tStockInHandHeaderData dt = new tStockInHandHeaderData();
+
+//        String selectQuery = "SELECT  " + dt.Property_ALL + " FROM " + TABLE_NAME + " WHERE " + dt.Property_txtSumberData + "='" + code + "'" + " AND " + dt.Property_intSubmit + " ='1' AND bitActive = '1' ORDER BY txtSubmissionId DESC ";
+        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE intSubmit='0' AND intSync='0' ORDER BY " + dt.Property_txtDate + " DESC ";
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {

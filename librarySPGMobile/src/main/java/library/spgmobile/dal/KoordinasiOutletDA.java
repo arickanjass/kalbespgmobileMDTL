@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import library.spgmobile.common.KoordinasiOutletData;
+import library.spgmobile.common.tPOPStandardHeaderData;
 
 /**
  * Created by Rian Andrivani on 6/6/2017.
@@ -182,7 +183,18 @@ public class KoordinasiOutletDA {
         cursor.close();
         return contactList;
     }
-
+    public int getAllCheckPushData(SQLiteDatabase db) {
+        List<KoordinasiOutletData> contactList = null;
+        // Select All Query
+        KoordinasiOutletData dt = new KoordinasiOutletData();
+        String selectQuery = "SELECT  1 FROM "
+                + TABLE_CONTACTS +" WHERE " +dt.Property_intSubmit +" ='1' And "+dt.Property_intSync+"=0" ;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // return count
+        int index = cursor.getCount();
+        cursor.close();
+        return index;
+    }
     // Getting All Contacts
     public List<KoordinasiOutletData> getAllDataToPushData(SQLiteDatabase db){
         List<KoordinasiOutletData> contactList = null;

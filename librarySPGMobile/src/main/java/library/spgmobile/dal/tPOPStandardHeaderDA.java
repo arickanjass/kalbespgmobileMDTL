@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import library.spgmobile.common.tJawabanUserData;
 import library.spgmobile.common.tPOPStandardHeaderData;
 
 /**
@@ -266,6 +267,19 @@ public class tPOPStandardHeaderDA {
         }
         cursor.close();
         return contactList;
+    }
+
+    public int getAllCheckPushData(SQLiteDatabase db) {
+        List<tPOPStandardHeaderData> contactList = null;
+        // Select All Query
+        tPOPStandardHeaderData dt = new tPOPStandardHeaderData();
+        String selectQuery = "SELECT  1 FROM "
+                + TABLE_CONTACTS +" WHERE " +dt.Property_intSubmit +" ='1' And "+dt.Property_intSync+"=0" ;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // return count
+        int index = cursor.getCount();
+        cursor.close();
+        return index;
     }
 
     public List<tPOPStandardHeaderData> GetDataToPush(SQLiteDatabase db){

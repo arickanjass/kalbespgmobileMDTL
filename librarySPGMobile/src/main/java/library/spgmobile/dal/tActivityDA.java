@@ -513,6 +513,19 @@ public class tActivityDA {
 				// return contact list
 				return contactList;
 			}
+	public int getAllCheckToPushData(SQLiteDatabase db) {
+
+		// Select All Query
+		tActivityData dt=new tActivityData();
+		String selectQuery = "SELECT  1 FROM " + TABLE_CONTACTS +" WHERE "+dt.Property_intSubmit+"='1' AND "+dt.Property_intIdSyn+"='0'";
+
+		Cursor cursor = db.rawQuery(selectQuery, null);
+		// return count
+		int index = cursor.getCount();
+		cursor.close();
+		return index;
+		// return contact list
+	}
 			// Getting All Contacts
 			public List<tActivityData> getAllDataToPushData(SQLiteDatabase db) {
 				List<tActivityData> contactList = null;

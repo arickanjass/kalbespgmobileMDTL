@@ -10,6 +10,7 @@ import java.util.List;
 import library.spgmobile.common.tActivityData;
 import library.spgmobile.common.tActivityMobileData;
 import library.spgmobile.common.tCustomerBasedMobileHeaderData;
+import library.spgmobile.common.tSalesProductQuantityHeaderData;
 
 /**
  * Created by rhezaTesar on 7/19/2017.
@@ -585,6 +586,18 @@ public class tActivityMobileDA {
         cursor.close();
         // return contact list
         return contactList;
+    }
+    public int getAllCheckPushData(SQLiteDatabase db) {
+        List<tActivityMobileData> contactList = null;
+        // Select All Query
+        tActivityMobileData dt = new tActivityMobileData();
+        String selectQuery = "SELECT  1 FROM "
+                + TABLE_CONTACTS +" WHERE " +dt.Property_intSubmit +" ='1' And "+dt.Property_intIdSyn+"=0" ;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // return count
+        int index = cursor.getCount();
+        cursor.close();
+        return index;
     }
     // Getting All Contacts
     public List<tActivityMobileData> getAllDataToPushData(SQLiteDatabase db) {

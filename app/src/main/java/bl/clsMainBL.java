@@ -171,7 +171,6 @@ public class clsMainBL {
     	tAbsenUserDA _tAbsenUserDA=new tAbsenUserDA(db);
     	tLeaveMobileDA _tLeaveMobileDA=new tLeaveMobileDA(db);
 		tVisitPlanRealisasiDA _tVisitPlanRealisasiDA = new tVisitPlanRealisasiDA(db);
-
 		tStockInHandHeaderDA _tStockInHandHeaderDA = new tStockInHandHeaderDA(db);
 		tSalesProductQuantityHeaderDA _tSalesProductQuantityHeaderDA = new tSalesProductQuantityHeaderDA(db);
 		tKemasanRusakHeaderDA _tKemasanRusakHeaderDA = new tKemasanRusakHeaderDA(db);
@@ -183,89 +182,115 @@ public class clsMainBL {
 		KoordinasiOutletDA _KoordinasiOutletDA = new KoordinasiOutletDA(db);
 		tTidakSesuaiPesananHeaderDA _tTidakSesuaiPesananHeaderDA = new tTidakSesuaiPesananHeaderDA(db);
 		tAttendanceUserDA _tAttendanceUserDA = new tAttendanceUserDA(db);
-
     	mMenuDA _mMenuDA=new mMenuDA(db);
+		tCustomerBasedMobileHeaderDA _TCustomerBasedMobileHeaderDA = new tCustomerBasedMobileHeaderDA(db);
+
     	clsStatusMenuStart _clsStatusMenuStart =new clsStatusMenuStart();
+
     	if(_tUserLoginDA.CheckLoginNow(db)){
-    		List<tUserLoginData> listData=_tUserLoginDA.getUserLoginNow(db);
     		_clsStatusMenuStart.set_intStatus(enumStatusMenuStart.UserActiveLogin);
     	}else{
+
     		Boolean dvalid=false;
-    		List<tSalesProductHeaderData> listDataPush= _tSalesProductHeaderDA.getAllDataToPushData(db);
+
+			//trans spg
+			int countDataPushSalesProductHeader = _tSalesProductHeaderDA.getAllCheckToPushData(db);
+			int countDataPushActivity = _tActivityDA.getAllCheckToPushData(db);
+			int countDataPushCustomerBased = _TCustomerBasedMobileHeaderDA.getAllCheckPushData(db);
+			int counDataSaveCustomerBased = _TCustomerBasedMobileHeaderDA.getAllDataSave(db);
+
+			//trans md
+			int listVisitplan = _tVisitPlanRealisasiDA.getAllCheckPushData(db);
+			int listStockInHandSave = _tStockInHandHeaderDA.getAllCheckToPushDataSave(db);
+			int listStockInHandSubmit = _tStockInHandHeaderDA.getAllCheckToPushDataSubmit(db);
+			int listtKemasanRusakHeaderData = _tKemasanRusakHeaderDA.getAllCheckPushData(db);
+			int listtOverStockHeader = _tOverStockHeaderDA.getAllCheckPushData(db);
+			int listtPlanogramSave = _tPlanogramMobileDA.getAllCheckPushDataSave(db);
+			int listtPlanogramSubmit = _tPlanogramMobileDA.getAllCheckPushDataSubmit(db);
+			int listtTidakSesuaiPesananHeaderData = _tTidakSesuaiPesananHeaderDA.getAllCheckPushData(db);
+
+			//trans tl
+			int listJawabanUser = _tJawabanUserDA.getAllCheckPushData(db);
+			int listPOPStandard = _tPOPStandardHeaderDA.getAllCheckPushData(db);
+			int listKoordinasiOutlet = _KoordinasiOutletDA.getAllCheckPushData(db);
+
+			//trans fpe
+			int listAttendanceUser = _tAttendanceUserDA.getAllCheckPushData(db);
+
+			//trans spg dan tl
+			int countDataPushAbsenUser = _tAbsenUserDA.getAllCheckToPushData(db);
+
+			//trans md dan tl
+			int listtSalesProductQuantity = _tSalesProductQuantityHeaderDA.getAllCheckPushData(db);
+			int listtActivityMobile = _tActivityMobileDA.getAllCheckPushData(db);
+
 			int listPODataPush = _tPurchaseOrderHeaderDA.getAllCheckToPushData(db);
-    		List<tActivityData> listtActivityDataPush= _tActivityDA.getAllDataToPushData(db);
-    		List<tAbsenUserData> listtAbsenUserDataPush= _tAbsenUserDA.getAllDataToPushData(db);
-    		List<tLeaveMobileData> listTLeave= _tLeaveMobileDA.getAllDataPushData(db);
-			List<tVisitPlanRealisasiData> listVisitplan = _tVisitPlanRealisasiDA.getPushData(db);
 
-			List<tStockInHandHeaderData> listStockInHand = _tStockInHandHeaderDA.getAllDataToPushData(db);
-			List<tSalesProductQuantityHeaderData> listtSalesProductQuantity = _tSalesProductQuantityHeaderDA.getAllDataToPushData(db);
-			List<tKemasanRusakHeaderData> listtKemasanRusakHeaderData = _tKemasanRusakHeaderDA.getAllDataToPushData(db);
-			List<tOverStockHeaderData> listtOverStockHeader = _tOverStockHeaderDA.getAllDataToPushData(db);
-			List<tPlanogramMobileData> listtPlanogram = _tPlanogramMobileDA.getAllDataToPushData(db);
-			List<tActivityMobileData> listtActivityMobile = _tActivityMobileDA.getAllDataToPushData(db);
-			List<tJawabanUserData> listJawabanUser = _tJawabanUserDA.GetDataToPushAnswer(db);
-			List<tPOPStandardHeaderData> listPOPStandard = _tPOPStandardHeaderDA.GetDataToPush(db);
-			List<KoordinasiOutletData> listKoordinasiOutlet = _KoordinasiOutletDA.getAllDataToPushData(db);
-			List<tTidakSesuaiPesananHeaderData> listtTidakSesuaiPesananHeaderData = _tTidakSesuaiPesananHeaderDA.getAllDataToPushData(db);
-			List<tAttendanceUserData> listAttendanceUser = _tAttendanceUserDA.getAllDataToPushData(db);
+			// trans spg,md,dan tl
+			int countDataPushLeave = _tLeaveMobileDA.getAllCheckPushData(db);
 
-    		if(listDataPush != null && dvalid==false){
-    			dvalid=true;
-    		}
-			if(listPODataPush > 0 && dvalid==false){
-				dvalid=true;
+			if (countDataPushAbsenUser > 0 && dvalid == false) {
+				dvalid = true;
 			}
-			if(listVisitplan != null && dvalid==false){
-				dvalid=true;
+			if (countDataPushSalesProductHeader > 0 && dvalid == false) {
+				dvalid = true;
 			}
-//			if (listPODataPush != null && dvalid == false){
-//				dvalid = true;
-//			}
-    		if(listtActivityDataPush != null && dvalid==false){
-    			dvalid=true;
-    		}
-    		if(listtAbsenUserDataPush != null && dvalid==false){
-    			dvalid=true;
-    		}
-    		if(listTLeave != null && dvalid==false){
-    			dvalid=true;
-    		}
-    		if(listDataPush != null && dvalid==false){
-    			dvalid=true;
-    		}
-			if(listStockInHand != null && dvalid==false){
-				dvalid=true;
+			if (countDataPushActivity > 0 && dvalid == false) {
+				dvalid = true;
 			}
-			if(listtSalesProductQuantity != null && dvalid==false){
-				dvalid=true;
+			if (countDataPushCustomerBased > 0 && dvalid == false) {
+				dvalid = true;
 			}
-			if(listtKemasanRusakHeaderData != null && dvalid==false){
-				dvalid=true;
+			if (counDataSaveCustomerBased > 0 && dvalid == false) {
+				dvalid = true;
 			}
-			if(listtOverStockHeader != null && dvalid==false){
-				dvalid=true;
+			if (listVisitplan > 0 && dvalid == false) {
+				dvalid = true;
 			}
-			if(listtPlanogram != null && dvalid==false){
-				dvalid=true;
+			if (listStockInHandSave > 0 && dvalid == false) {
+				dvalid = true;
 			}
-			if(listtActivityMobile != null && dvalid==false){
-				dvalid=true;
+			if (listStockInHandSubmit > 0 && dvalid == false) {
+				dvalid = true;
 			}
-			if(listJawabanUser != null && dvalid==false){
-				dvalid=true;
+			if (listtKemasanRusakHeaderData > 0 && dvalid == false) {
+				dvalid = true;
 			}
-			if (listPOPStandard != null && dvalid==false){
-				dvalid= true;
+			if (listtOverStockHeader > 0 && dvalid == false) {
+				dvalid = true;
 			}
-			if(listKoordinasiOutlet != null && dvalid==false){
-				dvalid=true;
+			if (listtPlanogramSave > 0 && dvalid == false) {
+				dvalid = true;
 			}
-			if(listtTidakSesuaiPesananHeaderData != null && dvalid==false){
-				dvalid=true;
+			if (listtPlanogramSubmit > 0 && dvalid == false) {
+				dvalid = true;
 			}
-			if(listAttendanceUser != null && dvalid==false){
-				dvalid=true;
+			if (listtTidakSesuaiPesananHeaderData > 0 && dvalid == false) {
+				dvalid = true;
+			}
+			if (listJawabanUser > 0 && dvalid == false) {
+				dvalid = true;
+			}
+			if (listPOPStandard > 0 && dvalid == false) {
+				dvalid = true;
+			}
+			if (listKoordinasiOutlet > 0 && dvalid == false) {
+				dvalid = true;
+			}
+			if (listAttendanceUser > 0 && dvalid == false) {
+				dvalid = true;
+			}
+			if (listtSalesProductQuantity > 0 && dvalid == false) {
+				dvalid = true;
+			}
+			if (listtActivityMobile > 0 && dvalid == false) {
+				dvalid = true;
+			}
+			if (listPODataPush > 0 && dvalid == false) {
+				dvalid = true;
+			}
+			if (countDataPushLeave > 0 && dvalid == false) {
+				dvalid = true;
 			}
     		if(dvalid){
     			mMenuData listMenuData= _mMenuDA.getDataByName(db, "mnUploadDataMobile");

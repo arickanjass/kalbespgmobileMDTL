@@ -9,6 +9,7 @@ import java.util.List;
 
 import library.spgmobile.common.tKemasanRusakHeaderData;
 import library.spgmobile.common.tSalesProductQuantityHeaderData;
+import library.spgmobile.common.tVisitPlanRealisasiData;
 
 /**
  * Created by aan.junianto on 10/10/2017.
@@ -262,6 +263,18 @@ public class tKemasanRusakHeaderDA {
         cursor.close();
         // return contact list
         return count;
+    }
+    public int getAllCheckPushData(SQLiteDatabase db) {
+        List<tKemasanRusakHeaderData> contactList = null;
+        // Select All Query
+        tKemasanRusakHeaderData dt = new tKemasanRusakHeaderData();
+        String selectQuery = "SELECT  1 FROM "
+                + TABLE_CONTACTS +" WHERE " +dt.Property_intSubmit +" ='1' And "+dt.Property_intSync+"=0" ;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // return count
+        int index = cursor.getCount();
+        cursor.close();
+        return index;
     }
     // Getting All Contacts
     public List<tKemasanRusakHeaderData> getAllDataToPushData(SQLiteDatabase db){

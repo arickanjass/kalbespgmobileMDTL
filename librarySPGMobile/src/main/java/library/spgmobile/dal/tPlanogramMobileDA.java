@@ -9,6 +9,7 @@ import java.util.List;
 
 import library.spgmobile.common.tActivityData;
 import library.spgmobile.common.tCustomerBasedMobileHeaderData;
+import library.spgmobile.common.tOverStockHeaderData;
 import library.spgmobile.common.tPlanogramImageData;
 import library.spgmobile.common.tPlanogramMobileData;
 import library.spgmobile.common.tSalesProductQuantityHeaderData;
@@ -334,7 +335,6 @@ public class tPlanogramMobileDA {
         // return contact list
         return count;
     }
-
     // Getting All Contacts
     public List<tPlanogramMobileData> getAllDataToPushData(SQLiteDatabase db){
         List<tPlanogramMobileData> contactList = null;
@@ -435,6 +435,83 @@ public class tPlanogramMobileDA {
                 "inner JOIN tPlanogramImage b ON b.txtHeaderId = a.txtIdPlanogram and b.txtType='BEFORE'\n" +
                 "inner JOIN tPlanogramImage c ON c.txtHeaderId = a.txtIdPlanogram and c.txtType='AFTER'" +
                 " WHERE " + dt.Property_intSubmit + "=0 AND " + dt.Property_intSync + "=0 AND "  + dt.Property_OutletCode  + "='" + code + "'";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            contactList = new ArrayList<tPlanogramMobileData>();
+            do {
+                tPlanogramMobileData contact = new tPlanogramMobileData();
+                contact.set_intId(cursor.getString(0));
+                contact.set_txtIdPlanogram(cursor.getString(1));
+                contact.set_txtNIK(cursor.getString(2));
+                contact.set_txtKeterangan(cursor.getString(3));
+                contact.set_dtDate(cursor.getString(4));
+                contact.set_OutletCode(cursor.getString(5));
+                contact.set_OutletName(cursor.getString(6));
+                contact.set_UserId(cursor.getString(7));
+                contact.set_intSubmit(cursor.getString(8));
+                contact.set_intSync(cursor.getString(9));
+                contact.set_bitActive(cursor.getString(10));
+                contact.set_txtBranchCode(cursor.getString(11));
+                contact.set_txtBranchName(cursor.getString(12));
+                contact.set_intIdAbsenUser(cursor.getString(13));
+                contact.set_txtRoleId(cursor.getString(14));
+                contact.set_txtBeforeImg1(cursor.getBlob(15));
+                contact.set_txtBeforeImg2(cursor.getBlob(16));
+                contact.set_txtAfterImg1(cursor.getBlob(17));
+                contact.set_txtAfterImg2(cursor.getBlob(18));
+                contact.set_txtDeviceId(cursor.getString(19));
+                contact.set_txtIdCategory(cursor.getString(20));
+                contact.set_txtCategoryName(cursor.getString(21));
+                contact.set_intIsValid(cursor.getString(22));
+                // Adding contact to list
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return contactList;
+    }
+    public int getAllCheckPushDataSave(SQLiteDatabase db) {
+        List<tPlanogramMobileData> contactList = null;
+        // Select All Query
+        tPlanogramMobileData dt = new tPlanogramMobileData();
+
+        String selectQuery = "SELECT 1 FROM " + TABLE_CONTACTS+" a " +
+                "inner JOIN tPlanogramImage b ON b.txtHeaderId = a.txtIdPlanogram and b.txtType='BEFORE'\n" +
+                "inner JOIN tPlanogramImage c ON c.txtHeaderId = a.txtIdPlanogram and c.txtType='AFTER'" +
+                " WHERE " + dt.Property_intSubmit + "=0 AND " + dt.Property_intSync + "=0";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // return count
+        int index = cursor.getCount();
+        cursor.close();
+        return index;
+    }
+    public int getAllCheckPushDataSubmit(SQLiteDatabase db) {
+        List<tPlanogramMobileData> contactList = null;
+        // Select All Query
+        tPlanogramMobileData dt = new tPlanogramMobileData();
+
+        String selectQuery = "SELECT 1 FROM " + TABLE_CONTACTS+" a " +
+                "inner JOIN tPlanogramImage b ON b.txtHeaderId = a.txtIdPlanogram and b.txtType='BEFORE'\n" +
+                "inner JOIN tPlanogramImage c ON c.txtHeaderId = a.txtIdPlanogram and c.txtType='AFTER'" +
+                " WHERE " + dt.Property_intSubmit + "=1 AND " + dt.Property_intSync + "=0";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // return count
+        int index = cursor.getCount();
+        cursor.close();
+        return index;
+    }
+    public List<tPlanogramMobileData> getAllDataSelectImageNotNullUnsubmit(SQLiteDatabase db){
+        List<tPlanogramMobileData> contactList = null;
+        tPlanogramMobileData dt = new tPlanogramMobileData();
+
+        String selectQuery = "SELECT DISTINCT "+dt.Property_All+" FROM " + TABLE_CONTACTS+" a " +
+                "inner JOIN tPlanogramImage b ON b.txtHeaderId = a.txtIdPlanogram and b.txtType='BEFORE'\n" +
+                "inner JOIN tPlanogramImage c ON c.txtHeaderId = a.txtIdPlanogram and c.txtType='AFTER'" +
+                " WHERE " + dt.Property_intSubmit + "=0 AND " + dt.Property_intSync + "=0";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 

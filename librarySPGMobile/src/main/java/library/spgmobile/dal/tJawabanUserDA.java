@@ -9,6 +9,7 @@ import java.util.List;
 
 import library.spgmobile.common.mPertanyaanData;
 import library.spgmobile.common.tJawabanUserData;
+import library.spgmobile.common.tTidakSesuaiPesananHeaderData;
 
 
 /**
@@ -200,6 +201,19 @@ public class tJawabanUserDA {
         }
         cursor.close();
         return contactList;
+    }
+
+    public int getAllCheckPushData(SQLiteDatabase db) {
+        List<tJawabanUserData> contactList = null;
+        // Select All Query
+        tJawabanUserData dt = new tJawabanUserData();
+        String selectQuery = "SELECT  1 FROM "
+                + TABLE_CONTACTS +" WHERE " +dt.Property_intSubmit +" ='1' And "+dt.Property_intSync+"=0" ;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // return count
+        int index = cursor.getCount();
+        cursor.close();
+        return index;
     }
 
     public List<tJawabanUserData> GetDataToPushAnswer(SQLiteDatabase db){

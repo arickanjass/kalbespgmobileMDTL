@@ -9,6 +9,7 @@ import java.util.List;
 
 import library.spgmobile.common.KoordinasiOutletData;
 import library.spgmobile.common.tActivityMobileData;
+import library.spgmobile.common.tOverStockHeaderData;
 import library.spgmobile.common.tTidakSesuaiPesananHeaderData;
 
 /**
@@ -172,6 +173,18 @@ public class tTidakSesuaiPesananHeaderDA {
         }
         cursor.close();
         return contactList;
+    }
+    public int getAllCheckPushData(SQLiteDatabase db) {
+        List<tTidakSesuaiPesananHeaderData> contactList = null;
+        // Select All Query
+        tTidakSesuaiPesananHeaderData dt = new tTidakSesuaiPesananHeaderData();
+        String selectQuery = "SELECT  1 FROM "
+                + TABLE_CONTACTS +" WHERE " +dt.Property_intSubmit +" ='1' And "+dt.Property_intSync+"=0" ;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // return count
+        int index = cursor.getCount();
+        cursor.close();
+        return index;
     }
     public List<tTidakSesuaiPesananHeaderData> getAllDataToPushData(SQLiteDatabase db){
         List<tTidakSesuaiPesananHeaderData> contactList = null;

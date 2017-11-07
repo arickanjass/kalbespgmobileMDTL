@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import library.spgmobile.common.tAttendanceUserData;
 import library.spgmobile.common.tSalesProductQuantityHeaderData;
 
 /**
@@ -205,7 +206,18 @@ public class tSalesProductQuantityHeaderDA {
         // return contact list
         return count;
     }
-
+    public int getAllCheckPushData(SQLiteDatabase db) {
+        List<tSalesProductQuantityHeaderData> contactList = null;
+        // Select All Query
+        tSalesProductQuantityHeaderData dt = new tSalesProductQuantityHeaderData();
+        String selectQuery = "SELECT  1 FROM "
+                + TABLE_CONTACTS +" WHERE " +dt.Property_intSubmit +" ='1' And "+dt.Property_intSync+"=0" ;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // return count
+        int index = cursor.getCount();
+        cursor.close();
+        return index;
+    }
     // Getting All Contacts
     public List<tSalesProductQuantityHeaderData> getAllDataToPushData(SQLiteDatabase db){
         List<tSalesProductQuantityHeaderData> contactList = null;

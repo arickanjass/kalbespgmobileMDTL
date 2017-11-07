@@ -92,6 +92,17 @@ public class tPlanogramMobileBL extends clsMainBL{
         return dt;
     }
 
+    public List<tPlanogramMobileData> getAllDataSelectImageNotNullUnsubmit() {
+        SQLiteDatabase _db = getDb();
+        List<tPlanogramMobileData> dt;
+        tPlanogramMobileDA _tPlanogramMobileDA=new tPlanogramMobileDA(db);
+        dt = _tPlanogramMobileDA.getAllDataSelectImageNotNullUnsubmit(_db);
+        if (dt == null) {
+            dt = new ArrayList<>(0);
+        }
+        return dt;
+    }
+
     public void saveData(tPlanogramMobileData _tPlanogramMobileData){
         SQLiteDatabase db=getDb();
         tPlanogramMobileDA _tPlanogramMobileDA=new tPlanogramMobileDA(db);

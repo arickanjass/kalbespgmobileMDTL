@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import library.spgmobile.common.tAbsenUserData;
+import library.spgmobile.common.tLeaveMobileData;
 import library.spgmobile.common.tVisitPlanRealisasiData;
 
 /**
@@ -337,6 +338,19 @@ public class tVisitPlanRealisasiDA {
         cursor.close();
         // return contact list
         return contactList;
+    }
+
+    public int getAllCheckPushData(SQLiteDatabase db) {
+        List<tVisitPlanRealisasiData> contactList = null;
+        // Select All Query
+        tVisitPlanRealisasiData dt = new tVisitPlanRealisasiData();
+        String selectQuery = "SELECT  1 FROM "
+                + TABLE_CONTACTS +" WHERE " +dt.Property_intPush +" ='0' And "+dt.Property_intSubmit+"=1" ;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // return count
+        int index = cursor.getCount();
+        cursor.close();
+        return index;
     }
 
     public List<tVisitPlanRealisasiData> getAllDataActiveOrderByDate(SQLiteDatabase db) {
