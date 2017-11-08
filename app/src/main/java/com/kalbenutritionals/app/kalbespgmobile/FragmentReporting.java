@@ -2798,13 +2798,12 @@ public class FragmentReporting extends Fragment {
             if (listActivity!=null&&listActivity.size()>0){
              for (int x = 0; x<listActivity.size(); x++){
                  String outlet = listActivity.get(x).get_txtOutletName();
-
                  //Excel sheet name. 0 represents first sheet
-                 WritableSheet sheet = workbook.createSheet(outlet, x);
+                 WritableSheet sheet = workbook.createSheet(outlet, 0);
 
                  // column and row header
                  sheet.addCell(new Label(0, 0, "Branch"));
-                 sheet.addCell(new Label(0, 1, "Oulet"));
+                 sheet.addCell(new Label(0, 1, "Outlet"));
                  sheet.addCell(new Label(0, 2, "Name"));
                  sheet.addCell(new Label(0, 3, "Date"));
 
@@ -2821,7 +2820,7 @@ public class FragmentReporting extends Fragment {
                  sheet.addCell(new Label(3, 5, "Image 1", formatFont));
                  sheet.addCell(new Label(4, 5, "Image 2", formatFont));
 
-                 for (int z = 0; z <= 4; z++){
+                 for (int z = 0; z <= 5; z++){
                      CellView cellData2 = sheet.getColumnView(z);
                      cellData2.setAutosize(true);
                      sheet.setColumnView(z, cellData2);
@@ -2854,7 +2853,6 @@ public class FragmentReporting extends Fragment {
                              sheet.setRowView(k, heightInPoints);
                          }
 
-
                              sheet.addCell(new Label(0, k, flag, cellFormat));
                              sheet.addCell(new Label(1, k, typeActivity, cellFormat));
                              sheet.addCell(new Label(2, k, desc, cellFormat));
@@ -2868,13 +2866,12 @@ public class FragmentReporting extends Fragment {
             if (list_Act!=null&&list_Act.size()>0){
                 for (int i = 0; i < list_Act.size(); i++){
                     String outlet = list_Act.get(i).get_txtOutletName();
-
                     //Excel sheet name. 0 represents first sheet
-                    WritableSheet sheet = workbook.createSheet(outlet, i);
+                    WritableSheet sheet = workbook.createSheet(outlet, 0);
 
                     // column and row header
                     sheet.addCell(new Label(0, 0, "Branch"));
-                    sheet.addCell(new Label(0, 1, "Oulet"));
+                    sheet.addCell(new Label(0, 1, "Outlet"));
                     sheet.addCell(new Label(0, 2, "Name"));
                     sheet.addCell(new Label(0, 3, "Date"));
 
@@ -2926,7 +2923,7 @@ public class FragmentReporting extends Fragment {
                             sheet.addCell(new Label(1, k, desc, cellFormat));
                             k++;
                         }
-                    }
+                    } 
                 }
             }
             //closing cursor
