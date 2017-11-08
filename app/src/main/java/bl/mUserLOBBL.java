@@ -22,18 +22,22 @@ public class mUserLOBBL extends clsMainBL {
         for(mUserLOBData data:Listdata){
             _mUserLOBDA.SaveData(db, data);
         }
+        db.close();
     }
 
     public List<mUserLOBData> GetAllData(){
         SQLiteDatabase db=getDb();
         mUserLOBDA _mUserLOBDA=new mUserLOBDA(db);
         List<mUserLOBData> listData = _mUserLOBDA.getAllData(db);
+        db.close();
         return listData;
     }
 
     public int  getContactsCount(){
         SQLiteDatabase db=getDb();
         mUserLOBDA _mUserLOBDA=new mUserLOBDA(db);
-        return _mUserLOBDA.getContactsCount(db);
+        int intCount=_mUserLOBDA.getContactsCount(db);
+        db.close();
+        return intCount;
     }
 }

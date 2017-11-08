@@ -14,7 +14,7 @@ import library.spgmobile.dal.tSalesProductQuantityDetailDA;
  */
 
 public class tOverStockDetailBL extends clsMainBL {
-    SQLiteDatabase db;
+    //SQLiteDatabase db;
 
     public List<tOverStockDetailData> GetDataNoOverStock(String Noso){
         SQLiteDatabase db=getDb();

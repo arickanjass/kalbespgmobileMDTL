@@ -50,7 +50,7 @@ public class tStockInHandDetailBL extends clsMainBL {
         mconfigDA _mconfigDA =new mconfigDA(_db);
         tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
         String strVal2="";
-        mconfigData dataAPI = _mconfigDA.getData(db, enumConfigData.ApiKalbe.getidConfigData());
+        mconfigData dataAPI = _mconfigDA.getData(_db, enumConfigData.ApiKalbe.getidConfigData());
         strVal2 = dataAPI.get_txtValue();
         if (dataAPI.get_txtValue() == "") {
             strVal2 = dataAPI.get_txtDefaultValue();
@@ -74,7 +74,7 @@ public class tStockInHandDetailBL extends clsMainBL {
         Iterator i = JsonArray.iterator();
         Boolean flag=true;
         String ErrorMess="";
-        Long intData= _tStockInHandDetailDA.getContactsCount(db);
+        Long intData= _tStockInHandDetailDA.getContactsCount(_db);
         while (i.hasNext()) {
             org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
             int boolValid= Integer.valueOf(String.valueOf( innerObj.get(dtAPIDATA.boolValid)));
@@ -85,8 +85,8 @@ public class tStockInHandDetailBL extends clsMainBL {
                 Iterator iHeader = JsonArrayHeader.iterator();
                 while (iHeader.hasNext()) {
                     org.json.simple.JSONObject innerDetailObj = (org.json.simple.JSONObject) iHeader.next();
-                    _tStockInHandHeaderDA.deleteContact(db, String.valueOf(innerDetailObj.get("TxtNoSO")));
-                    _tStockInHandDetailDA.deleteByNOSO(db, String.valueOf(innerDetailObj.get("TxtNoSO")));
+                    _tStockInHandHeaderDA.deleteContact(_db, String.valueOf(innerDetailObj.get("TxtNoSO")));
+                    _tStockInHandDetailDA.deleteByNOSO(_db, String.valueOf(innerDetailObj.get("TxtNoSO")));
                     tStockInHandHeaderData _data =new tStockInHandHeaderData();
                     _data.set_dtDate(dateFormat.format(cal.getTime()));
                     _data.set_intId(String.valueOf(innerDetailObj.get("TxtNoSO")));
@@ -102,7 +102,7 @@ public class tStockInHandDetailBL extends clsMainBL {
                     _data.set_txtKeterangan(String.valueOf(innerDetailObj.get("TxtKeterangan")));
                     _data.set_txtNIK((String) _dataUserLogin.get_TxtEmpId());
                     _data.set_UserId((String) _dataUserLogin.get_txtUserId());
-                    _tStockInHandHeaderDA.SaveDatatStockInHandHeaderData(db, _data);;
+                    _tStockInHandHeaderDA.SaveDatatStockInHandHeaderData(_db, _data);;
                 }
                 while (iDetail.hasNext()) {
                     intData+=1;
@@ -120,7 +120,7 @@ public class tStockInHandDetailBL extends clsMainBL {
                     _data.set_intActive("1");
                     _data.set_txtNIK(_dataUserLogin.get_TxtEmpId());
                     _data.set_intTotal((String) innerDetailObj.get("IntTotal"));
-                    _tStockInHandDetailDA.SaveDatatStockInHandDetailData(db, _data);
+                    _tStockInHandDetailDA.SaveDatatStockInHandDetailData(_db, _data);
                 }
 
             }else{
@@ -129,15 +129,18 @@ public class tStockInHandDetailBL extends clsMainBL {
                 break;
             }
         }
+        _db.close();
     }
     public tStockInHandDetailData getDataById(String id){
         SQLiteDatabase db=getDb();
         tStockInHandDetailData dt = new tStockInHandDetailData();
         dt = new tStockInHandDetailDA(db).getSalesProductDetailById(db, id);
+        db.close();
         return dt;
     }
     public void deleteTrId(String id) {
         SQLiteDatabase _db=getDb();
         new tStockInHandDetailDA(_db).deleteContact(_db, id);
+        _db.close();
     }
 }

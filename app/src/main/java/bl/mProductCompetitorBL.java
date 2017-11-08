@@ -30,11 +30,13 @@ public class mProductCompetitorBL extends clsMainBL {
         SQLiteDatabase db = getDb();
         mProductCompetitorDA _mProductCompetitorDA=new mProductCompetitorDA(db);
         _mProductCompetitorDA.DeleteAllDataMConfig(db);
+        db.close();
     }
     public void deleteAllDataByKN(List<mUserLOBData> mUserLOBDataList) {
         SQLiteDatabase db = getDb();
         mProductCompetitorDA _mProductCompetitorDA=new mProductCompetitorDA(db);
         _mProductCompetitorDA.deleteContactsCountByKN(db, mUserLOBDataList);
+        db.close();
     }
     public void saveData(List<mProductCompetitorData> Listdata) {
         SQLiteDatabase db = getDb();
@@ -42,6 +44,7 @@ public class mProductCompetitorBL extends clsMainBL {
         for (mProductCompetitorData data : Listdata) {
             _mProductCompetitorDA.SaveDataMConfig(db, data);
         }
+        db.close();
     }
 
     public List<mProductCompetitorData> GetAllData(){
@@ -90,11 +93,14 @@ public class mProductCompetitorBL extends clsMainBL {
         String JsonData= _clsHelper.pushtData(strLinkAPI, String.valueOf(resJson), Integer.valueOf(getBackGroundServiceOnline()));
         res= _clsHelper.ResultJsonArray(JsonData);
         //String txtParam=
+        db.close();
         return res;
     }
     public int  getContactsCountByKN(List<mUserLOBData> mUserLOBDataList){
         SQLiteDatabase db=getDb();
         mProductCompetitorDA _mProductCompetitorDA=new mProductCompetitorDA(db);
-        return _mProductCompetitorDA.getContactsCountByKN(db, mUserLOBDataList);
+        int intcount=_mProductCompetitorDA.getContactsCountByKN(db, mUserLOBDataList);
+        db.close();
+        return intcount;
     }
 }

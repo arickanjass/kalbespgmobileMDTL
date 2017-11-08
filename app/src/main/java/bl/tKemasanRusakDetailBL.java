@@ -23,7 +23,7 @@ public class tKemasanRusakDetailBL extends clsMainBL {
     }
     public void saveData(tKemasanRusakDetailData dt) {
         SQLiteDatabase _db = getDb();
-        tKemasanRusakDetailDA _tKemasanRusakDetailDA = new tKemasanRusakDetailDA(db);
+        tKemasanRusakDetailDA _tKemasanRusakDetailDA = new tKemasanRusakDetailDA(_db);
         _tKemasanRusakDetailDA.SaveData(_db, dt);
         _db.close();
     }

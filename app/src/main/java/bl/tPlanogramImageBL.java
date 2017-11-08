@@ -15,7 +15,7 @@ import library.spgmobile.dal.tSalesProductQuantityImageDA;
  */
 
 public class tPlanogramImageBL extends clsMainBL {
-    SQLiteDatabase db = getDb();
+    //SQLiteDatabase db = getDb();
 
     public void SaveData(List<tPlanogramImageData> ListData) {
         SQLiteDatabase _db = getDb();
@@ -23,7 +23,7 @@ public class tPlanogramImageBL extends clsMainBL {
         for (tPlanogramImageData data:ListData){
             _tPlanogramImageDA.SaveDataImage(_db, data);
         }
-        db.close();
+        _db.close();
     }
 
     public List<tPlanogramImageData> getDataHeaderId(String id) {
@@ -37,5 +37,6 @@ public class tPlanogramImageBL extends clsMainBL {
     public void deleteTrId(String id) {
         SQLiteDatabase _db=getDb();
         new tPlanogramImageDA(_db).deleteByID(_db, id);
+        _db.close();
     }
 }

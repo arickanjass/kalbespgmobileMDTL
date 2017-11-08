@@ -12,7 +12,7 @@ import library.spgmobile.dal.tSalesProductQuantityImageDA;
  */
 
 public class tSalesProductQuantityImageBL extends clsMainBL{
-    SQLiteDatabase db = getDb();
+    //SQLiteDatabase db = getDb();
 
     public void SaveData(List<tSalesProductQuantityImageData> ListData) {
         SQLiteDatabase _db = getDb();
@@ -20,7 +20,7 @@ public class tSalesProductQuantityImageBL extends clsMainBL{
         for (tSalesProductQuantityImageData data:ListData){
             _tSalesProductQuantityImageDA.SaveDataImage(_db, data);
         }
-        db.close();
+        _db.close();
     }
 
     public List<tSalesProductQuantityImageData> getDataHeaderId(String id) {

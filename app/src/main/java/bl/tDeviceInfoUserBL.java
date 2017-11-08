@@ -22,8 +22,10 @@ public class tDeviceInfoUserBL extends clsMainBL {
 		data.set_txtImei(imeiNumber);
 		data.set_txtVersion(System.getProperty("os.version"));
         _tDeviceInfoUserDA.SaveDatatDeviceInfoUserData(db, data);
+		db.close();
 	}
 	public List<tDeviceInfoUserData> getData(int id){
+		SQLiteDatabase db=getDb();
 		List<tDeviceInfoUserData> listData=new ArrayList<tDeviceInfoUserData>();
 		tDeviceInfoUserDA _tDeviceInfoUserDA=new tDeviceInfoUserDA(db);
 		if(id == 0){
@@ -33,6 +35,7 @@ public class tDeviceInfoUserBL extends clsMainBL {
 			data=_tDeviceInfoUserDA.getData(db, id);
 			listData.add(data);
 		}
+		db.close();
 		return listData;
 	}
 }

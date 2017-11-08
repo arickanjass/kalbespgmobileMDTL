@@ -33,13 +33,13 @@ public class tActivityMobileBL extends clsMainBL{
         mconfigDA _mconfigDA = new mconfigDA(_db);
 
         String strVal2 = "";
-        mconfigData dataAPI = _mconfigDA.getData(db, enumConfigData.ApiKalbe.getidConfigData());
+        mconfigData dataAPI = _mconfigDA.getData(_db, enumConfigData.ApiKalbe.getidConfigData());
         strVal2 = dataAPI.get_txtValue();
         if (dataAPI.get_txtValue() == "") {
             strVal2 = dataAPI.get_txtDefaultValue();
         }
         //ambil version dari webservices
-        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(db, 1);
+        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
         clsHelper _help = new clsHelper();
         linkAPI dtlinkAPI = new linkAPI();
 //		String txtMethod = "GetActivity";
@@ -67,7 +67,7 @@ public class tActivityMobileBL extends clsMainBL{
 
         tActivityMobileDA _tActivityDA = new tActivityMobileDA(_db);
         List<tActivityMobileData> dt = _tActivityDA.getAllData(_db);
-
+        _db.close();
         return dt.size();
     }
 
@@ -77,12 +77,14 @@ public class tActivityMobileBL extends clsMainBL{
         for(tActivityMobileData data:Listdata){
             _tActivityDA.SaveDatatActivityData (db, data);
         }
+        db.close();
     }
 
     public List<tActivityMobileData> getDataNew(){
         SQLiteDatabase db=getDb();
         tActivityMobileDA _tActivityDA=new tActivityMobileDA(db);
         List<tActivityMobileData> listData=_tActivityDA.getAllDataNew(db);
+        db.close();
         return listData;
     }
 
@@ -97,12 +99,13 @@ public class tActivityMobileBL extends clsMainBL{
         SQLiteDatabase db=getDb();
         tActivityMobileDA _tActivityDA=new tActivityMobileDA(db);
         List<tActivityMobileData> listData=_tActivityDA.getAllData(db);
+        db.close();
         return listData;
     }
 
     public List<tActivityMobileData> getAllDataByOutletCode(String outletcode){
         SQLiteDatabase _db = getDb();
-        tActivityMobileDA _tActivityDA=new tActivityMobileDA(db);
+        tActivityMobileDA _tActivityDA=new tActivityMobileDA(_db);
         List<tActivityMobileData> dt;
         if(outletcode.equals("ALLOUTLET")){
             dt = _tActivityDA.getAllData(_db);
@@ -113,12 +116,14 @@ public class tActivityMobileBL extends clsMainBL{
         if(dt == null){
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt;
     }
 
     public int countAcivityV2HomeAbsenPush( String code) {
         SQLiteDatabase _db = getDb();
         int count = new tActivityMobileDA(_db).countActivityHomeAbsenPush(_db, code);
+        _db.close();
         return count;
     }
 
@@ -126,12 +131,14 @@ public class tActivityMobileBL extends clsMainBL{
         SQLiteDatabase db=getDb();
         tActivityMobileDA _tActivityDA=new tActivityMobileDA(db);
         List<tActivityMobileData> listData=_tActivityDA.getAllOutletCode(db, outletname);
+        db.close();
         return listData;
     }
 
     public int getCountAllActivityV2ByStatusSubmit(String code) {
         SQLiteDatabase _db = getDb();
         int count = new tActivityMobileDA(_db).countActivityV2HomeAbsenByStatusSubmit(_db, code);
+        _db.close();
         return count;
     }
 
@@ -142,6 +149,7 @@ public class tActivityMobileBL extends clsMainBL{
         if(dt == null){
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt ;
     }
 
@@ -152,6 +160,7 @@ public class tActivityMobileBL extends clsMainBL{
         if(dt == null){
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt ;
     }
 }

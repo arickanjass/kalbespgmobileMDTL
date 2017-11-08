@@ -31,13 +31,13 @@ public class mProductBrandHeaderBL extends clsMainBL{
 		mconfigDA _mconfigDA =new mconfigDA(_db);
 
 		String strVal2="";
-		mconfigData dataAPI = _mconfigDA.getData(db,enumConfigData.ApiKalbe.getidConfigData());
+		mconfigData dataAPI = _mconfigDA.getData(_db,enumConfigData.ApiKalbe.getidConfigData());
 		strVal2 = dataAPI.get_txtValue();
 		if (dataAPI.get_txtValue() == "") {
 			strVal2 = dataAPI.get_txtDefaultValue();
 		}
 		//ambil version dari webservices
-		tUserLoginData _dataUserLogin = _tUserLoginDA.getData(db, 1);
+		tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
 		clsHelper _help =new clsHelper();
 		linkAPI dtlinkAPI=new linkAPI();
 		String txtMethod="GetDatamProductBrandHeader";
@@ -78,13 +78,14 @@ public class mProductBrandHeaderBL extends clsMainBL{
 				_data.set_txtAliasName((String) innerObj.get("TxtAliasName"));
 				_data.set_txtProductBrandCode((String) innerObj.get("TxtProductBrandCode"));
 				_data.set_txtProductBrandName((String) innerObj.get("TxtProductBrandName"));
-				_mProductBrandHeaderDA.SaveDataMConfig(db, _data);
+				_mProductBrandHeaderDA.SaveDataMConfig(_db, _data);
 			}else{
 				flag=false;
 				ErrorMess=(String) innerObj.get(dtAPIDATA.strMessage);
 				break;
 			}
 		}
+		_db.close();
 		return JsonArray;
 	}
 
@@ -107,24 +108,29 @@ public class mProductBrandHeaderBL extends clsMainBL{
             dt=_mProductBrandHeaderDA.getData(db, String.valueOf(idBrand));
             ListData.add(dt);
         }
+		db.close();
         return ListData;
     }
 
 	public int  getContactsCount(){
 		SQLiteDatabase db=getDb();
 		mProductBrandHeaderDA _mProductBrandHeaderDA=new mProductBrandHeaderDA(db);
-		return _mProductBrandHeaderDA.getContactsCount(db);
+		int intCount=_mProductBrandHeaderDA.getContactsCount(db);
+		db.close();
+		return intCount;
 	}
 
 	public void saveData(mProductBrandHeaderData data){
 		SQLiteDatabase db=getDb();
 		mProductBrandHeaderDA _mProductBrandHeaderDA=new mProductBrandHeaderDA(db);
 		_mProductBrandHeaderDA.SaveDataMConfig(db, data);
+		db.close();
 	}
 
 	public void DeleteAllData(){
 		SQLiteDatabase db=getDb();
 		mProductBrandHeaderDA _mProductBrandHeaderDA=new mProductBrandHeaderDA(db);
 		_mProductBrandHeaderDA.DeleteAllDataMConfig(db);
+		db.close();
 	}
 }

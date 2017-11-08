@@ -12,7 +12,7 @@ import library.spgmobile.dal.tSalesProductQuantityDetailDA;
  */
 
 public class tSalesProductQuantityDetailBL extends clsMainBL{
-    SQLiteDatabase db;
+    //SQLiteDatabase db;
 
     public List<tSalesProductQuantityDetailData> GetDataNoQuantityStock(String Noso){
         SQLiteDatabase db=getDb();

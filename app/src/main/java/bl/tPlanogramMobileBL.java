@@ -39,6 +39,7 @@ public class tPlanogramMobileBL extends clsMainBL{
         SQLiteDatabase db=getDb();
         tPlanogramMobileDA _tPlanogramMobileDA=new tPlanogramMobileDA(db);
         tPlanogramMobileData listData=_tPlanogramMobileDA.getAllDataByBitActive(db);
+        db.close();
         return listData;
     }
     public void saveDataList(List<tPlanogramMobileData> Listdata){
@@ -47,59 +48,66 @@ public class tPlanogramMobileBL extends clsMainBL{
         for(tPlanogramMobileData data:Listdata){
             _tPlanogramMobileDA.SaveDataPlanogram(db, data);
         }
+        db.close();
     }
 
     public tPlanogramMobileData getDataSave(String code){
+        SQLiteDatabase db=getDb();
         tPlanogramMobileData _TPlanogramMobileData = new tPlanogramMobileData();
 
         tPlanogramMobileDA _tPlanogramMobileDA=new tPlanogramMobileDA(db);
 
         _TPlanogramMobileData = _tPlanogramMobileDA.getDataSave(db, code);
-
+        db.close();
         return  _TPlanogramMobileData;
     }
 
     public void deleteTrId(String id) {
         SQLiteDatabase _db=getDb();
         new tPlanogramMobileDA(_db).deleteByID(_db, id);
+        _db.close();
     }
 
     public tPlanogramMobileData getDataById(String id) {
         SQLiteDatabase _db = getDb();
         tPlanogramMobileData dt = new tPlanogramMobileDA(_db).getAllDataById(_db, id);
+        _db.close();
         return dt;
     }
 
     public List<tPlanogramMobileData> getAllHeaderByOutletCodeUnsubmit(String code) {
         SQLiteDatabase _db = getDb();
         List<tPlanogramMobileData> dt;
-        tPlanogramMobileDA _tPlanogramMobileDA=new tPlanogramMobileDA(db);
+        tPlanogramMobileDA _tPlanogramMobileDA=new tPlanogramMobileDA(_db);
         dt = _tPlanogramMobileDA.getAllDataByOutletCodeUnsubmit(_db, code);
         if (dt == null) {
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt;
     }
 
     public List<tPlanogramMobileData> getAllDataSelectImageNotNullByOutletUnsubmit(String code) {
         SQLiteDatabase _db = getDb();
         List<tPlanogramMobileData> dt;
-        tPlanogramMobileDA _tPlanogramMobileDA=new tPlanogramMobileDA(db);
+        tPlanogramMobileDA _tPlanogramMobileDA=new tPlanogramMobileDA(_db);
         dt = _tPlanogramMobileDA.getAllDataSelectImageNotNullByOutletUnsubmit(_db, code);
         if (dt == null) {
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt;
     }
 
     public List<tPlanogramMobileData> getAllDataSelectImageNotNullUnsubmit() {
         SQLiteDatabase _db = getDb();
         List<tPlanogramMobileData> dt;
-        tPlanogramMobileDA _tPlanogramMobileDA=new tPlanogramMobileDA(db);
+        tPlanogramMobileDA _tPlanogramMobileDA=new tPlanogramMobileDA(_db);
         dt = _tPlanogramMobileDA.getAllDataSelectImageNotNullUnsubmit(_db);
         if (dt == null) {
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt;
     }
 
@@ -107,6 +115,7 @@ public class tPlanogramMobileBL extends clsMainBL{
         SQLiteDatabase db=getDb();
         tPlanogramMobileDA _tPlanogramMobileDA=new tPlanogramMobileDA(db);
         _tPlanogramMobileDA.SaveDataPlanogram(db, _tPlanogramMobileData);
+        db.close();
     }
     public List<tPlanogramMobileData> getAllPlanogramByOutletCode(String code){
         SQLiteDatabase _db = getDb();
@@ -121,6 +130,7 @@ public class tPlanogramMobileBL extends clsMainBL{
         if(dt == null){
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt ;
     }
     public List<tPlanogramMobileData> getAllData(){
@@ -134,7 +144,7 @@ public class tPlanogramMobileBL extends clsMainBL{
         tUserLoginDA _tUserLoginDA = new tUserLoginDA(_db);
         mconfigDA _mconfigDA = new mconfigDA(_db);
         String strVAl2 = "";
-        mconfigData dataApi = _mconfigDA.getData(db, enumConfigData.ApiKalbe.getidConfigData());
+        mconfigData dataApi = _mconfigDA.getData(_db, enumConfigData.ApiKalbe.getidConfigData());
         strVAl2 = dataApi.get_txtValue();
         if (dataApi.get_txtValue() == ""){
             strVAl2 = dataApi.get_txtDefaultValue();
@@ -143,7 +153,7 @@ public class tPlanogramMobileBL extends clsMainBL{
         Date date = new Date();
         String dateNow = dateFormat.format(date);
 
-        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(db, 1);
+        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
         clsHelper _help = new clsHelper();
         linkAPI dtLinkAPI = new linkAPI();
         String txtMethod = "GetDataTransactionPlanogram";
@@ -162,24 +172,28 @@ public class tPlanogramMobileBL extends clsMainBL{
     public int countPlanogramHomeAbsenPush( String code) {
         SQLiteDatabase _db = getDb();
         int count = new tPlanogramMobileDA(_db).countPlanogramHomeAbsenPush(_db, code);
+        _db.close();
         return count;
     }
 
     public int getCountAllStatusSave(String code) {
         SQLiteDatabase _db = getDb();
         int count = new tPlanogramMobileDA(_db).countPlanogramHomeAbsenByStatusSave(_db, code);
+        _db.close();
         return count;
     }
 
     public int getCountAllPlanogramByStatusSubmit(String code) {
         SQLiteDatabase _db = getDb();
         int count = new tPlanogramMobileDA(_db).countPlanogramHomeAbsenByStatusSubmit(_db, code);
+        _db.close();
         return count;
     }
     public void updateDataSubmit(tPlanogramMobileData dt) {
         SQLiteDatabase _db = getDb();
         tPlanogramMobileDA _tPlanogramMobileDA = new tPlanogramMobileDA(_db);
         _tPlanogramMobileDA.updateDataSubmit(_db, dt);
+        _db.close();
     }
     public List<tPlanogramMobileData> getAllHeaderByOutletCodeForView(String code) {
         SQLiteDatabase _db = getDb();
@@ -189,6 +203,7 @@ public class tPlanogramMobileBL extends clsMainBL{
         if (dt == null) {
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt;
     }
 }

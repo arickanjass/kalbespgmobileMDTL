@@ -19,12 +19,14 @@ public class clsLogReceiverHeader_mobileBL extends clsMainBL {
         for(clsLogReceiverHeader_mobile data:Listdata){
             _clsLogReceiverHeader_mobileDA.SaveDataMConfig(db, data);
         }
+        db.close();
     }
 
     public int getContactsCountStatus(tNotificationData data){
         SQLiteDatabase db=getDb();
         clsLogReceiverHeader_mobileDA _clsLogReceiverHeader_mobileDA=new clsLogReceiverHeader_mobileDA(db);
         int num = _clsLogReceiverHeader_mobileDA.getContactsCountStatus(db, data.get_guiID());
+        db.close();
         return num;
     }
 }

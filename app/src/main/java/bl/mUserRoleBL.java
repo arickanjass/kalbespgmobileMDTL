@@ -59,6 +59,7 @@ public class mUserRoleBL extends clsMainBL{
 				Listdata.add(_data);
 			}
 		}
+		db.close();
 		return Listdata;
 	}
 
@@ -163,6 +164,7 @@ public class mUserRoleBL extends clsMainBL{
 
 			}
 		}
+		db.close();
 		return Listdata;
 	}
 }

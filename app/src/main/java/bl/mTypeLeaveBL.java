@@ -24,12 +24,14 @@ public class mTypeLeaveBL extends clsMainBL{
 		for(mTypeLeaveMobileData data:Listdata){
 			_mTypeLeaveMobileDA.SaveData(db, data);	
 		}
+		db.close();
 	}
 	
 	public List<mTypeLeaveMobileData> GetAllData(){
 		SQLiteDatabase db=getDb();
 		mTypeLeaveMobileDA _TypeLeaveMobileDA = new mTypeLeaveMobileDA(db);
 		List<mTypeLeaveMobileData> listData = _TypeLeaveMobileDA.getAllData(db);
+		db.close();
 		return listData;
 	}
 
@@ -37,13 +39,16 @@ public class mTypeLeaveBL extends clsMainBL{
 		SQLiteDatabase db=getDb();
 		mTypeLeaveMobileDA _TypeLeaveMobileDA = new mTypeLeaveMobileDA(db);
 		mTypeLeaveMobileData listData = _TypeLeaveMobileDA.getData(db, id);
+		db.close();
 		return listData;
 	}
 
 	public int  getContactsCount(){
 		SQLiteDatabase db=getDb();
 		mTypeLeaveMobileDA _mTypeLeaveMobileDA=new mTypeLeaveMobileDA(db);
-		return _mTypeLeaveMobileDA.getContactsCount(db);
+		int intCount=_mTypeLeaveMobileDA.getContactsCount(db);
+		db.close();
+		return intCount;
 	}
 	
 	public org.json.simple.JSONArray DownloadTypeLeave2(String versionName) throws Exception{
@@ -70,6 +75,7 @@ public class mTypeLeaveBL extends clsMainBL{
 		String strLinkAPI= dtlinkAPI.QueryString(strVal2);
 		String JsonData= _help.ResultJsonData(_help.getHTML(strLinkAPI));
 		org.json.simple.JSONArray JsonArray= _help.ResultJsonArray(JsonData);
+		_db.close();
 		return JsonArray;
 	}
 

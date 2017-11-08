@@ -35,13 +35,13 @@ public class mEmployeeSalesProductBL extends clsMainBL{
 		mconfigDA _mconfigDA =new mconfigDA(_db);
 
 		String strVal2="";
-		mconfigData dataAPI = _mconfigDA.getData(db,enumConfigData.ApiKalbe.getidConfigData());
+		mconfigData dataAPI = _mconfigDA.getData(_db,enumConfigData.ApiKalbe.getidConfigData());
 		strVal2 = dataAPI.get_txtValue();
 		if (dataAPI.get_txtValue() == "") {
 			strVal2 = dataAPI.get_txtDefaultValue();
 		}
 		//ambil version dari webservices
-		tUserLoginData _dataUserLogin = _tUserLoginDA.getData(db, 1);
+		tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
 		clsHelper _help =new clsHelper();
 		linkAPI dtlinkAPI=new linkAPI();
 		String txtMethod="GetDatavw_SalesInsentive_EmployeeSalesProductDetail";
@@ -88,7 +88,7 @@ public class mEmployeeSalesProductBL extends clsMainBL{
 				_data.set_txtProductDetailCode((String) innerObj.get("TxtProductDetailCode"));
 				_data.set_txtProductDetailName((String) innerObj.get("TxtProductDetailName"));
 				_data.set_txtLobName((String) innerObj.get("TxtLobName"));
-				_mEmployeeBranchDA.SaveDataMConfig(db, _data);
+				_mEmployeeBranchDA.SaveDataMConfig(_db, _data);
 			}else{
 				flag=false;
 				ErrorMess=(String) innerObj.get(dtAPIDATA.strMessage);
@@ -116,7 +116,7 @@ public class mEmployeeSalesProductBL extends clsMainBL{
 				_data.set_txtDeskripsi((String) innerObj.get("_pstrMethodRequest"));
 				_data.set_txtName((String) innerObj.get("_pstrMethodRequest"));
 				_data.set_txtValue((String) innerObj.get("_pstrArgument"));
-				_mCounterNumberDA.SaveDataMConfig(db, _data);
+				_mCounterNumberDA.SaveDataMConfig(_db, _data);
 			}else{
 				flag=false;
 				ErrorMess=(String) innerObj.get(dtAPIDATA.strMessage);
@@ -169,13 +169,17 @@ public class mEmployeeSalesProductBL extends clsMainBL{
 	public int  getContactsCount(){
 		SQLiteDatabase db=getDb();
 		mEmployeeSalesProductDA _mEmployeeSalesProductDA= new mEmployeeSalesProductDA(db);
-		return _mEmployeeSalesProductDA.getContactsCount(db);
+		int intcount=_mEmployeeSalesProductDA.getContactsCount(db);
+		db.close();
+		return intcount;
 	}
 
 	public int  getContactsCountByKN(List<mUserLOBData> mUserLOBDataList){
 		SQLiteDatabase db=getDb();
 		mEmployeeSalesProductDA _mEmployeeSalesProductDA= new mEmployeeSalesProductDA(db);
-		return _mEmployeeSalesProductDA.getContactsCountByKN(db, mUserLOBDataList);
+		int intcount=_mEmployeeSalesProductDA.getContactsCountByKN(db, mUserLOBDataList);
+		db.close();
+		return intcount;
 	}
 
 	public int deleteContactByKN(List<mUserLOBData> mUserLOBDataList){
@@ -189,10 +193,12 @@ public class mEmployeeSalesProductBL extends clsMainBL{
 		SQLiteDatabase db=getDb();
 		mEmployeeSalesProductDA _mEmployeeSalesProductDA= new mEmployeeSalesProductDA(db);
 		_mEmployeeSalesProductDA.SaveDataMConfig(db, data);
+		db.close();
 	}
 	public void DeleteAllData(){
 		SQLiteDatabase db=getDb();
 		mEmployeeSalesProductDA _mEmployeeSalesProductDA= new mEmployeeSalesProductDA(db);
 		_mEmployeeSalesProductDA.DeleteAllDataMConfig(db);
+		db.close();
 	}
 }

@@ -25,7 +25,7 @@ import library.spgmobile.dal.trackingLocationDA;
  */
 
 public class trackingLocationBL extends clsMainBL {
-    SQLiteDatabase db = getDb();
+    //SQLiteDatabase db = getDb();
 
     public void SaveDataLocation(List<trackingLocationData> ListData) {
         SQLiteDatabase _db = getDb();
@@ -33,21 +33,21 @@ public class trackingLocationBL extends clsMainBL {
         for (trackingLocationData data:ListData){
             _trackingLocationDA.SaveDataTrackingLocation(_db, data);
         }
-        db.close();
+        _db.close();
     }
 
     public void SaveDataTrackingLocation(trackingLocationData dt) {
         SQLiteDatabase _db = getDb();
         trackingLocationDA _trackingLocationDA = new trackingLocationDA(_db);
         _trackingLocationDA.SaveDataDownloadTrackingLocation(_db, dt);
-        db.close();
+        _db.close();
     }
 
     public List<trackingLocationData> getAllDataTrackingLocation() {
         SQLiteDatabase _db = getDb();
         trackingLocationDA _trackingLocationDA = new trackingLocationDA(_db);
         List<trackingLocationData> dt = _trackingLocationDA.getAllData(_db);
-        db.close();
+        _db.close();
         return dt;
     }
 
@@ -55,7 +55,7 @@ public class trackingLocationBL extends clsMainBL {
         SQLiteDatabase _db = getDb();
         trackingLocationDA _trackingLocationDA = new trackingLocationDA(_db);
         List<trackingLocationData> dt = _trackingLocationDA.getAllLastData(_db);
-        db.close();
+        _db.close();
         return dt;
     }
 
@@ -64,7 +64,7 @@ public class trackingLocationBL extends clsMainBL {
         tUserLoginDA _tUserLoginDA = new tUserLoginDA(_db);
         mconfigDA _mconfigDA = new mconfigDA(_db);
         String strVAl2 = "";
-        mconfigData dataApi = _mconfigDA.getData(db, enumConfigData.ApiKalbe.getidConfigData());
+        mconfigData dataApi = _mconfigDA.getData(_db, enumConfigData.ApiKalbe.getidConfigData());
         strVAl2 = dataApi.get_txtValue();
         if (dataApi.get_txtValue() == ""){
             strVAl2 = dataApi.get_txtDefaultValue();
@@ -73,7 +73,7 @@ public class trackingLocationBL extends clsMainBL {
         Date date = new Date();
         String dateNow = dateFormat.format(date);
 
-        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(db, 1);
+        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
         clsHelper _help = new clsHelper();
         linkAPI dtLinkAPI = new linkAPI();
         String txtMethod = "GetDataTrackingLocation";
@@ -93,6 +93,8 @@ public class trackingLocationBL extends clsMainBL {
     public int getContactCount() {
         SQLiteDatabase db = getDb();
         trackingLocationDA _trackingLocationDA = new trackingLocationDA(db);
-        return _trackingLocationDA.getContactsCount(db);
+        int intCount=_trackingLocationDA.getContactsCount(db);
+        db.close();
+        return intCount;
     }
 }

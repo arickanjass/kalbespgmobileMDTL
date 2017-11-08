@@ -12,24 +12,27 @@ import library.spgmobile.dal.mListJawabanDA;
  */
 
 public class mListJawabanBL extends clsMainBL {
-    SQLiteDatabase db = getDb();
+    //SQLiteDatabase db = getDb();
 
     public void SaveData(mListJawabanData dt){
         SQLiteDatabase _db = getDb();
         mListJawabanDA _mListJawabanDA = new mListJawabanDA(_db);
         _mListJawabanDA.SaveDatamListJawaban(_db, dt);
+        _db.close();
     }
 
     public List<mListJawabanData> GetAllData(){
         SQLiteDatabase _db = getDb();
         mListJawabanDA _mListJawabanDA = new mListJawabanDA(_db);
         List<mListJawabanData> dt = _mListJawabanDA.GetAllData(_db);
+        _db.close();
         return dt;
     }
     public List<mListJawabanData> GetDataByTypeQuestion(String typeId, String qId){
         SQLiteDatabase _db = getDb();
         mListJawabanDA _mListJawabanDA = new mListJawabanDA(_db);
         List<mListJawabanData> dt = _mListJawabanDA.GetDataByTypeQuestion(_db, typeId, qId);
+        _db.close();
         return dt;
     }
 
@@ -37,6 +40,7 @@ public class mListJawabanBL extends clsMainBL {
         SQLiteDatabase _db = getDb();
         mListJawabanDA _mListJawabanDA = new mListJawabanDA(_db);
         mListJawabanData dt = _mListJawabanDA.GetDataById(_db, intId);
+        _db.close();
         return dt;
     }
 
@@ -44,5 +48,6 @@ public class mListJawabanBL extends clsMainBL {
         SQLiteDatabase _db = getDb();
         mListJawabanDA _mListJawabanDA = new mListJawabanDA(_db);
         _mListJawabanDA.DeleteAllDatamListJawaban(_db) ;
+        _db.close();
     }
 }

@@ -42,6 +42,7 @@ public class tUserLoginBL extends clsMainBL{
 		clsHelper _clsHelper=new clsHelper();
 		String JsonData= _clsHelper.pushtData(strLinkAPI, "", Integer.valueOf(getBackGroundServiceOnline()));
 		res= _clsHelper.ResultJsonArray(JsonData);
+		db.close();
 		//String txtParam=
 		return res;
 	}
@@ -68,6 +69,7 @@ public class tUserLoginBL extends clsMainBL{
 		String JsonData= _clsHelper.pushtData(strLinkAPI, "", Integer.valueOf(getBackGroundServiceOnline()));
 		res= _clsHelper.ResultJsonArray(JsonData);
 		//String txtParam=
+		db.close();
 		return res;
 	}
 
@@ -99,6 +101,7 @@ public class tUserLoginBL extends clsMainBL{
 		String JsonData= _clsHelper.pushtData(strLinkAPI, String.valueOf(resJson), Integer.valueOf(getBackGroundServiceOnline()));
 		res= _clsHelper.ResultJsonArray(JsonData);
 		//String txtParam=
+		db.close();
         return res;
 	}
 	public JSONArray LoginNew(String txtUserName,String txtPass, String intRoleId,String txtOutletCode, String txtOutletName, String txtBranchCode, String versionApp) throws ParseException{
@@ -139,6 +142,7 @@ public class tUserLoginBL extends clsMainBL{
 		String JsonData= _clsHelper.pushtData(strLinkAPI, String.valueOf(resJson), Integer.valueOf(getBackGroundServiceOnline()));
 		res= _clsHelper.ResultJsonArray(JsonData);
 		//String txtParam=
+		db.close();
 		return res;
 	}
 
@@ -162,6 +166,7 @@ public class tUserLoginBL extends clsMainBL{
 		String JsonData= _clsHelper.pushtData(strLinkAPI, String.valueOf(resJson), Integer.valueOf(getBackGroundServiceOnline()));
 		res= _clsHelper.ResultJsonArray(JsonData);
 		//String txtParam=
+		db.close();
 		return res;
 	}
 
@@ -187,6 +192,7 @@ public class tUserLoginBL extends clsMainBL{
 		String JsonData= _clsHelper.pushtData(strLinkAPI, String.valueOf(resJson), Integer.valueOf(getBackGroundServiceOnline()));
 		res= _clsHelper.ResultJsonArray(JsonData);
 		//String txtParam=
+		db.close();
 		return res;
 	}
 
@@ -194,15 +200,20 @@ public class tUserLoginBL extends clsMainBL{
 		SQLiteDatabase db=getDb();
 		tUserLoginDA _tUserLoginDA=new tUserLoginDA(db);
 		_tUserLoginDA.SaveDatatUserLoginData(db, data);
+		db.close();
 	}
 
     public tUserLoginData getUserLogin(){
         SQLiteDatabase db=getDb();
-        return new tUserLoginDA(db).getData(db, 1);
+		tUserLoginData dt=new tUserLoginDA(db).getData(db, 1);
+		db.close();
+        return dt;
     }
 
 	public tUserLoginData getUserLoginByUserId(String id){
 		SQLiteDatabase db=getDb();
-		return new tUserLoginDA(db).getDataByUserId(db, id);
+		tUserLoginData dt=new tUserLoginDA(db).getDataByUserId(db, id);
+		db.close();
+		return dt;
 	}
 }

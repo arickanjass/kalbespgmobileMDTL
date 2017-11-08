@@ -19,30 +19,37 @@ public class clsFileAttach_mobileBL extends clsMainBL {
         for(clsFileAttach_mobile data:Listdata){
             _clsFileAttach_mobileDA.SaveDataMConfig(db, data);
         }
+        db.close();
     }
 
     public int  getContactsCount(){
         SQLiteDatabase db=getDb();
         clsFileAttach_mobileDA _clsFileAttach_mobileDA=new clsFileAttach_mobileDA(db);
-        return _clsFileAttach_mobileDA.getContactsCount(db);
+        int intCount=_clsFileAttach_mobileDA.getContactsCount(db);
+        db.close();
+        return intCount;
     }
 
     public List<clsFileAttach_mobile> GetAllData(){
         SQLiteDatabase db=getDb();
         clsFileAttach_mobileDA _clsFileAttach_mobileDA=new clsFileAttach_mobileDA(db);
-        return _clsFileAttach_mobileDA.getAllData(db);
+        List<clsFileAttach_mobile> listData=_clsFileAttach_mobileDA.getAllData(db);
+        db.close();
+        return listData;
     }
 
     public clsFileAttach_mobile getData(String id){
         clsFileAttach_mobile data=new clsFileAttach_mobile();
         clsFileAttach_mobileDA _clsFileAttach_mobileDA=new clsFileAttach_mobileDA(db);
             data=_clsFileAttach_mobileDA.getData(db, id);
+        db.close();
         return data;
     }
     public List<clsFileAttach_mobile> getDataByIdHeader(String id){
         List<clsFileAttach_mobile> listData = new ArrayList<>();
         clsFileAttach_mobileDA _clsFileAttach_mobileDA=new clsFileAttach_mobileDA(db);
         listData=_clsFileAttach_mobileDA.getDataByIdHeader(db, id);
+        db.close();
         return listData;
     }
 }

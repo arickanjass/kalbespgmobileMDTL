@@ -13,23 +13,24 @@ import library.spgmobile.dal.tHirarkiBISDA;
  */
 
 public class tHirarkiBISBL extends clsMainBL {
-    SQLiteDatabase db = getDb();
+    //SQLiteDatabase db = getDb();
     public void SaveDataSPGFromTL(tHirarkiBIS dt){
         SQLiteDatabase _db = getDb();
         tHirarkiBISDA _tHirarkiBISDA = new tHirarkiBISDA(_db);
         _tHirarkiBISDA.SaveData(_db, dt);
+        _db.close();
     }
     public void DeletetHirarkiBIS(){
         SQLiteDatabase _db = getDb();
         tHirarkiBISDA _tHirarkiBISDA = new tHirarkiBISDA(_db);
         _tHirarkiBISDA.DeleteAllDatatHirarkiBIS(_db);
-
+        _db.close();
     }
     public List<tHirarkiBIS> GetDataByOutlet(String txtOutlet){
         SQLiteDatabase _db = getDb();
         tHirarkiBISDA _tHirarkiBISDA = new tHirarkiBISDA(_db);
         List<tHirarkiBIS> listData = _tHirarkiBISDA.GetDataByOutlet(_db,txtOutlet);
-        db.close();
+        _db.close();
         return listData;
     }
 
@@ -37,7 +38,7 @@ public class tHirarkiBISBL extends clsMainBL {
         SQLiteDatabase _db = getDb();
         tHirarkiBISDA _tHirarkiBISDA = new tHirarkiBISDA(_db);
         List<tHirarkiBIS> listData = _tHirarkiBISDA.GetDataByOutletspinner(_db,txtOutlet, questionId);
-        db.close();
+        _db.close();
         return listData;
     }
 
@@ -45,7 +46,7 @@ public class tHirarkiBISBL extends clsMainBL {
         SQLiteDatabase _db = getDb();
         tHirarkiBISDA _tHirarkiBISDA = new tHirarkiBISDA(_db);
         List<tHirarkiBIS> listData = _tHirarkiBISDA.GetAllData(_db);
-        db.close();
+        _db.close();
         return listData;
     }
 }

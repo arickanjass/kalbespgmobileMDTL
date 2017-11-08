@@ -12,18 +12,20 @@ import library.spgmobile.dal.mKategoriDA;
  */
 
 public class mKategoriBL extends clsMainBL {
-    SQLiteDatabase db = getDb();
+    //SQLiteDatabase db = getDb();
 
     public void SaveData(mKategoriData dt){
         SQLiteDatabase _db = getDb();
-        mKategoriDA _mKategoriDA = new mKategoriDA(db);
+        mKategoriDA _mKategoriDA = new mKategoriDA(_db);
         _mKategoriDA.SaveDatamKategori(_db, dt);
+        _db.close();
     }
 
     public List<mKategoriData> GetAllData(){
         SQLiteDatabase _db = getDb();
         mKategoriDA _mKategoriDA = new mKategoriDA(_db);
         List<mKategoriData> dt = _mKategoriDA.GetAllData(_db);
+        _db.close();
         return dt;
     }
 
@@ -31,12 +33,14 @@ public class mKategoriBL extends clsMainBL {
         SQLiteDatabase _db = getDb();
         mKategoriDA _mKategoriDA = new mKategoriDA(_db);
         mKategoriData dt = _mKategoriDA.GetCategoryById(_db, intId);
+        _db.close();
         return dt;
     }
 
     public void DeletemKategori(){
         SQLiteDatabase _db = getDb();
-        mKategoriDA _mKategoriDA = new mKategoriDA(db);
+        mKategoriDA _mKategoriDA = new mKategoriDA(_db);
         _mKategoriDA.DeleteAllDatamKategori(_db) ;
+        _db.close();
     }
 }

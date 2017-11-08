@@ -14,15 +14,15 @@ import library.spgmobile.dal.tSalesProductQuantityImageDA;
  */
 
 public class tKemasanRusakImageBL extends clsMainBL {
-    SQLiteDatabase db = getDb();
+    //SQLiteDatabase db = getDb();
 
     public void SaveData(List<tKemasanRusakImageData> ListData) {
         SQLiteDatabase _db = getDb();
-        tKemasanRusakImageDA _tKemasanRusakImageDA = new tKemasanRusakImageDA(db);
+        tKemasanRusakImageDA _tKemasanRusakImageDA = new tKemasanRusakImageDA(_db);
         for (tKemasanRusakImageData data:ListData){
             _tKemasanRusakImageDA.SaveDataImage(_db, data);
         }
-        db.close();
+        _db.close();
     }
     public List<tKemasanRusakImageData> getDataByHeaderId(String id) {
         SQLiteDatabase db=getDb();

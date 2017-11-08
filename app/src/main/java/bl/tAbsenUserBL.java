@@ -28,6 +28,7 @@ public class tAbsenUserBL extends clsMainBL {
 		for(tAbsenUserData data:Listdata){
 			_tAbsenUserDA.SaveDatatAbsenUserData(db, data);	
 		}
+		db.close();
 	}
 
     public void saveDataDownload(List<tAbsenUserData> Listdata){
@@ -36,6 +37,7 @@ public class tAbsenUserBL extends clsMainBL {
         for(tAbsenUserData data:Listdata){
             _tAbsenUserDA.saveAbsenDownload(db, data);
         }
+		db.close();
     }
 
 	public List<tAbsenUserData> GetData(String IdAbsen){
@@ -49,6 +51,7 @@ public class tAbsenUserBL extends clsMainBL {
 			dt=_tAbsenUserDA.getData(db, Integer.valueOf(IdAbsen));
 			ListData.add(dt);
 		}
+		db.close();
 		return ListData;
 	}
 	public tAbsenUserData getDataCheckInActive(){
@@ -56,6 +59,7 @@ public class tAbsenUserBL extends clsMainBL {
 		tAbsenUserDA _tAbsenUserDA=new tAbsenUserDA(db);
 		tAbsenUserData dt=new tAbsenUserData();
 		dt=_tAbsenUserDA.getDataCheckInActive(db);
+		db.close();
 		return dt;
 	}
 	public List<tAbsenUserData>  getAllDataToPushData(){
@@ -63,6 +67,7 @@ public class tAbsenUserBL extends clsMainBL {
 		tAbsenUserDA _tAbsenUserDA=new tAbsenUserDA(db);
 		List<tAbsenUserData> ListData=new ArrayList<tAbsenUserData>();
 		ListData=_tAbsenUserDA.getAllDataToPushData(db);
+		db.close();
 		return ListData;
 	}
 
@@ -71,6 +76,7 @@ public class tAbsenUserBL extends clsMainBL {
 		tAbsenUserDA _tAbsenUserDA=new tAbsenUserDA(db);
 		List<tAbsenUserData> ListData=new ArrayList<tAbsenUserData>();
 		ListData=_tAbsenUserDA.getAllDataActive(db);
+		db.close();
 		return ListData;
 	}
 
@@ -79,18 +85,22 @@ public class tAbsenUserBL extends clsMainBL {
 		tAbsenUserDA _tAbsenUserDA=new tAbsenUserDA(db);
 		List<tAbsenUserData> ListData=new ArrayList<tAbsenUserData>();
 		ListData=_tAbsenUserDA.getAllDataActiveOrderByDate(db);
+		db.close();
 		return ListData;
 	}
 
 	public int  getContactsCount(){
 		SQLiteDatabase db=getDb();
 		tAbsenUserDA _tAbsenUserDA=new tAbsenUserDA(db);
-		return _tAbsenUserDA.getContactsCount(db);
+		int intCount=_tAbsenUserDA.getContactsCount(db);
+		db.close();
+		return intCount;
 	}
 	public void  getContactsCount(String IdData){
 		SQLiteDatabase db=getDb();
 		tAbsenUserDA _tAbsenUserDA=new tAbsenUserDA(db);
 		_tAbsenUserDA.SaveDataSubmit(db,IdData);
+		db.close();
 	}
 
 	public JSONArray DownloadAbsen(String versionName) throws Exception {
@@ -99,13 +109,13 @@ public class tAbsenUserBL extends clsMainBL {
 		mconfigDA _mconfigDA = new mconfigDA(_db);
 
 		String strVal2 = "";
-		mconfigData dataAPI = _mconfigDA.getData(db, enumConfigData.ApiKalbe.getidConfigData());
+		mconfigData dataAPI = _mconfigDA.getData(_db, enumConfigData.ApiKalbe.getidConfigData());
 		strVal2 = dataAPI.get_txtValue();
 		if (dataAPI.get_txtValue() == "") {
 			strVal2 = dataAPI.get_txtDefaultValue();
 		}
 		//ambil version dari webservices
-		tUserLoginData _dataUserLogin = _tUserLoginDA.getData(db, 1);
+		tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
 		clsHelper _help = new clsHelper();
 		linkAPI dtlinkAPI = new linkAPI();
 		String txtMethod = "GetDatatAbsenUser_mobile";

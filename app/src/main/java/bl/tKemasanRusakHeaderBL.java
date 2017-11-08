@@ -49,7 +49,7 @@ public class tKemasanRusakHeaderBL extends clsMainBL{
         tUserLoginDA _tUserLoginDA = new tUserLoginDA(_db);
         mconfigDA _mconfigDA = new mconfigDA(_db);
         String strVAl2 = "";
-        mconfigData dataApi = _mconfigDA.getData(db, enumConfigData.ApiKalbe.getidConfigData());
+        mconfigData dataApi = _mconfigDA.getData(_db, enumConfigData.ApiKalbe.getidConfigData());
         strVAl2 = dataApi.get_txtValue();
         if (dataApi.get_txtValue() == ""){
             strVAl2 = dataApi.get_txtDefaultValue();
@@ -58,7 +58,7 @@ public class tKemasanRusakHeaderBL extends clsMainBL{
         Date date = new Date();
         String dateNow = dateFormat.format(date);
 
-        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(db, 1);
+        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
         clsHelper _help = new clsHelper();
         linkAPI dtLinkAPI = new linkAPI();
         String txtMethod = "GetDataTransactionKemasanRusak";
@@ -108,7 +108,7 @@ public class tKemasanRusakHeaderBL extends clsMainBL{
                 data.set_txtDeskripsi((String) innerObj.get("_pstrMethodRequest"));
                 data.set_txtName((String) innerObj.get("_pstrMethodRequest"));
                 data.set_txtValue((String) innerObj.get("_pstrArgument"));
-                _mCounterNumberDA.SaveDataMConfig(db, data);
+                _mCounterNumberDA.SaveDataMConfig(_db, data);
             } else {
                 flag = false;
                 ErrorMess = (String) innerObj.get(dtAPIDATA.strMessage);
@@ -139,6 +139,7 @@ public class tKemasanRusakHeaderBL extends clsMainBL{
         if(dt == null){
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt ;
     }
     public List<tKemasanRusakHeaderData> getLastData() {
@@ -157,12 +158,14 @@ public class tKemasanRusakHeaderBL extends clsMainBL{
     public int getCounStatusSubmit(String code) {
         SQLiteDatabase _db = getDb();
         int count = new tKemasanRusakHeaderDA(_db).countStatusSubmit(_db, code);
+        _db.close();
         return count;
     }
 
     public int countPush( String code) {
         SQLiteDatabase _db = getDb();
         int count = new tKemasanRusakHeaderDA(_db).countPush(_db, code);
+        _db.close();
         return count;
     }
 }

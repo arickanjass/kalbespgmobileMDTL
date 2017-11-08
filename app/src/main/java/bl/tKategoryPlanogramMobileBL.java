@@ -59,6 +59,7 @@ public class tKategoryPlanogramMobileBL extends clsMainBL {
         if(dtDetail == null){
             dtDetail = new ArrayList<>();
         }
+        _db.close();
         return dtDetail;
     }
 
@@ -68,7 +69,7 @@ public class tKategoryPlanogramMobileBL extends clsMainBL {
         mconfigDA _mconfigDA =new mconfigDA(_db);
 
         String strVal2="";
-        mconfigData dataAPI = _mconfigDA.getData(db, enumConfigData.ApiKalbe.getidConfigData());
+        mconfigData dataAPI = _mconfigDA.getData(_db, enumConfigData.ApiKalbe.getidConfigData());
         strVal2 = dataAPI.get_txtValue();
         if (dataAPI.get_txtValue() == "") {
             strVal2 = dataAPI.get_txtDefaultValue();
@@ -79,7 +80,7 @@ public class tKategoryPlanogramMobileBL extends clsMainBL {
         String datenow = dateFormat.format(date);
 
         //ambil version dari webservices
-        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(db, 1);
+        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
         clsHelper _help =new clsHelper();
         linkAPI dtlinkAPI=new linkAPI();
         String txtMethod="getDatatKategoryPlanogram";

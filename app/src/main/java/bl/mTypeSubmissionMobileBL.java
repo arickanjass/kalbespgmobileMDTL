@@ -30,11 +30,13 @@ public class mTypeSubmissionMobileBL extends clsMainBL {
         for (mTypeSubmissionMobile data : Listdata) {
             _mTypeSubmissionMobileDA.SaveDataMConfig(db, data);
         }
+        db.close();
     }
     public mTypeSubmissionMobile getDataBySubmissionCode(String submissionCode) {
         SQLiteDatabase db = getDb();
         mTypeSubmissionMobileDA _mTypeSubmissionMobileDA = new mTypeSubmissionMobileDA(db);
         mTypeSubmissionMobile typeSubmissionMobile = _mTypeSubmissionMobileDA.getDataForReporting(db, submissionCode);
+        db.close();
         return  typeSubmissionMobile;
     }
 
@@ -80,6 +82,7 @@ public class mTypeSubmissionMobileBL extends clsMainBL {
         clsHelper _clsHelper = new clsHelper();
         String JsonData = _clsHelper.pushtData(strLinkAPI, String.valueOf(resJson), Integer.valueOf(getBackGroundServiceOnline()));
         res = _clsHelper.ResultJsonArray(JsonData);
+        db.close();
         //String txtParam=
         return res;
     }

@@ -28,11 +28,13 @@ public class mProductPICBL extends clsMainBL {
         SQLiteDatabase db = getDb();
         mProductPICDA _mProductPICDA=new mProductPICDA(db);
         _mProductPICDA.DeleteAllDataMConfig(db);
+        db.close();
     }
     public void deleteAllDataByKN(List<mUserLOBData> mUserLOBDataList) {
         SQLiteDatabase db = getDb();
         mProductPICDA _mProductPICDA=new mProductPICDA(db);
         _mProductPICDA.deleteContactsCountByKN(db, mUserLOBDataList);
+        db.close();
     }
     public void saveData(List<mProductPICData> Listdata) {
         SQLiteDatabase db = getDb();
@@ -40,6 +42,7 @@ public class mProductPICBL extends clsMainBL {
         for (mProductPICData data : Listdata) {
             _mProductPICDA.SaveDataMConfig(db, data);
         }
+        db.close();
     }
 
     public List<mProductPICData> GetAllData(){
@@ -68,22 +71,28 @@ public class mProductPICBL extends clsMainBL {
 
     public int getContactCount(){
         int count = 0;
+        SQLiteDatabase db=getDb();
         mProductPICDA _mProductPICDA=new mProductPICDA(db);
         count = _mProductPICDA.getContactsCount(db);
+        db.close();
         return count;
     }
 
     public int getContactCountByKN(List<mUserLOBData> mUserLOBDataList){
         int count = 0;
+        SQLiteDatabase db=getDb();
         mProductPICDA _mProductPICDA=new mProductPICDA(db);
         count = _mProductPICDA.getContactsCountByKN(db, mUserLOBDataList);
+        db.close();
         return count;
     }
 
     public int getContactCountSubId(){
         int count = 0;
+        SQLiteDatabase db=getDb();
         mProductPICDA _mProductPICDA=new mProductPICDA(db);
         count = _mProductPICDA.getContactsCountDataSubmissionId(db);
+        db.close();
         return count;
     }
 
@@ -106,6 +115,7 @@ public class mProductPICBL extends clsMainBL {
         clsHelper _clsHelper=new clsHelper();
         String JsonData= _clsHelper.pushtData(strLinkAPI, String.valueOf(resJson), Integer.valueOf(getBackGroundServiceOnline()));
         res= _clsHelper.ResultJsonArray(JsonData);
+        db.close();
         //String txtParam=
         return res;
     }

@@ -12,19 +12,19 @@ import library.spgmobile.dal.tJawabanUserDA;
  */
 
 public class tJawabanUserBL extends clsMainBL {
-    SQLiteDatabase db = getDb();
+    //SQLiteDatabase db = getDb();
 
     public void SaveDatatJawabanUser(tJawabanUserData dt){
         SQLiteDatabase _db = getDb();
         tJawabanUserDA _tJawabanUserDA = new tJawabanUserDA(_db);
         _tJawabanUserDA.SaveDatatJawabanUser(_db, dt);
-
+        _db.close();
     }
     public List<tJawabanUserData> GetAllData(){
         SQLiteDatabase _db = getDb();
         tJawabanUserDA _tJawabanUserDA = new tJawabanUserDA(_db);
         List<tJawabanUserData> listData = _tJawabanUserDA.GetAllData(_db);
-        db.close();
+        _db.close();
         return listData;
     }
 
@@ -32,7 +32,7 @@ public class tJawabanUserBL extends clsMainBL {
         SQLiteDatabase _db = getDb();
         tJawabanUserDA _tJawabanUserDA = new tJawabanUserDA(_db);
         List<tJawabanUserData> listData = _tJawabanUserDA.GetDataByHeaderId(_db, intHeaderId);
-        db.close();
+        _db.close();
         return listData;
     }
 
@@ -40,7 +40,7 @@ public class tJawabanUserBL extends clsMainBL {
         SQLiteDatabase _db = getDb();
         tJawabanUserDA _tJawabanUserDA = new tJawabanUserDA(_db);
         List<tJawabanUserData> listData = _tJawabanUserDA.GetDataByHeaderIdOrderBySoalId(_db, intHeaderId);
-        db.close();
+        _db.close();
         return listData;
     }
 
@@ -48,7 +48,7 @@ public class tJawabanUserBL extends clsMainBL {
         SQLiteDatabase _db = getDb();
         tJawabanUserDA _tJawabanUserDA = new tJawabanUserDA(_db);
         List<tJawabanUserData> listData = _tJawabanUserDA.GetDataByQuestionId(_db,intQuestionId, intHeaderId);
-        db.close();
+        _db.close();
         return listData;
     }
 }

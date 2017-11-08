@@ -40,12 +40,13 @@ import library.spgmobile.dal.tUserLoginDA;
  */
 
 public class tStockInHandHeaderBL extends clsMainBL{
-    SQLiteDatabase db=getDb();
+    //SQLiteDatabase db=getDb();
 
     public void SaveData(tStockInHandHeaderData dt){
         SQLiteDatabase _db =getDb();
         tStockInHandHeaderDA _tStockInHandHeaderDA = new tStockInHandHeaderDA(_db);
         _tStockInHandHeaderDA.SaveDatatStockInHandHeaderData(_db, dt);
+        _db.close();
     }
     //    public List<tCustomerBaseData> getAllCustomerBase(){
 //        SQLiteDatabase _db=getDb();
@@ -59,6 +60,7 @@ public class tStockInHandHeaderBL extends clsMainBL{
         SQLiteDatabase _db =getDb();
         tStockInHandHeaderDA _tStockInHandHeaderDA = new tStockInHandHeaderDA(_db);
         List<tStockInHandHeaderData> dt = _tStockInHandHeaderDA.getAllData(_db);
+        _db.close();
         return dt ;
     }
 
@@ -66,6 +68,7 @@ public class tStockInHandHeaderBL extends clsMainBL{
         SQLiteDatabase _db =getDb();
         tStockInHandHeaderDA _tStockInHandHeaderDA = new tStockInHandHeaderDA(_db);
         List<tStockInHandHeaderData> dt = _tStockInHandHeaderDA.getAllDataByOutletCode(_db, outletcode);
+        _db.close();
         return dt ;
     }
 
@@ -73,6 +76,7 @@ public class tStockInHandHeaderBL extends clsMainBL{
         SQLiteDatabase _db =getDb();
         tStockInHandHeaderDA _tStockInHandHeaderDA = new tStockInHandHeaderDA(_db);
         List<tStockInHandHeaderData> dt = _tStockInHandHeaderDA.getLastData(_db);
+        _db.close();
         return dt ;
     }
 
@@ -83,6 +87,7 @@ public class tStockInHandHeaderBL extends clsMainBL{
         if(dt == null){
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt ;
     }
 
@@ -93,24 +98,28 @@ public class tStockInHandHeaderBL extends clsMainBL{
         if(dt == null){
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt ;
     }
 
     public int countPlanogramHomeAbsenPush( String code) {
         SQLiteDatabase _db = getDb();
         int count = new tStockInHandHeaderDA(_db).countHomeAbsenPush(_db, code);
+        _db.close();
         return count;
     }
 
     public int getCountAllStatusSave(String code) {
         SQLiteDatabase _db = getDb();
         int count = new tStockInHandHeaderDA(_db).countHomeAbsenByStatusSave(_db, code);
+        _db.close();
         return count;
     }
 
     public int getCountAllPlanogramByStatusSubmit(String code) {
         SQLiteDatabase _db = getDb();
         int count = new tStockInHandHeaderDA(_db).countHomeAbsenByStatusSubmit(_db, code);
+        _db.close();
         return count;
     }
 
@@ -127,6 +136,7 @@ public class tStockInHandHeaderBL extends clsMainBL{
         if(dt == null){
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt ;
     }
 
@@ -143,6 +153,7 @@ public class tStockInHandHeaderBL extends clsMainBL{
         if(dt == null){
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt ;
     }
 
@@ -153,6 +164,7 @@ public class tStockInHandHeaderBL extends clsMainBL{
         if(dt == null){
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt ;
     }
 
@@ -163,6 +175,7 @@ public class tStockInHandHeaderBL extends clsMainBL{
         if(dt == null){
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt ;
     }
 
@@ -170,6 +183,7 @@ public class tStockInHandHeaderBL extends clsMainBL{
         SQLiteDatabase _db =getDb();
         tStockInHandHeaderDA _tStockInHandHeaderDA = new tStockInHandHeaderDA(_db);
         tStockInHandHeaderData dt = _tStockInHandHeaderDA.getDataByNoSOSelectOne(_db,noso);
+        _db.close();
         return dt ;
     }
 
@@ -180,6 +194,7 @@ public class tStockInHandHeaderBL extends clsMainBL{
         if(dt == null){
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt ;
     }
 
@@ -201,7 +216,7 @@ public class tStockInHandHeaderBL extends clsMainBL{
         String txtNoSoCode = new mCounterNumberBL().getData(enumCounterData.NoDataSO);
 
         List<tStockInHandHeaderData> dttas = getLastData();
-
+        _db.close();
         String noSO = null;
 
 //        if (dttas == null || dttas.size() == 0) {
@@ -233,7 +248,7 @@ public class tStockInHandHeaderBL extends clsMainBL{
         mconfigDA _mconfigDA =new mconfigDA(_db);
 
         String strVal2="";
-        mconfigData dataAPI = _mconfigDA.getData(db, enumConfigData.ApiKalbe.getidConfigData());
+        mconfigData dataAPI = _mconfigDA.getData(_db, enumConfigData.ApiKalbe.getidConfigData());
         strVal2 = dataAPI.get_txtValue();
         if (dataAPI.get_txtValue() == "") {
             strVal2 = dataAPI.get_txtDefaultValue();
@@ -244,7 +259,7 @@ public class tStockInHandHeaderBL extends clsMainBL{
         String datenow = dateFormat.format(date);
 
         //ambil version dari webservices
-        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(db, 1);
+        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
         clsHelper _help =new clsHelper();
         linkAPI dtlinkAPI=new linkAPI();
         String txtMethod="GetDataTransactionStockInHand";
@@ -298,7 +313,7 @@ public class tStockInHandHeaderBL extends clsMainBL{
                 data.set_txtDeskripsi((String) innerObj.get("_pstrMethodRequest"));
                 data.set_txtName((String) innerObj.get("_pstrMethodRequest"));
                 data.set_txtValue((String) innerObj.get("_pstrArgument"));
-                _mCounterNumberDA.SaveDataMConfig(db, data);
+                _mCounterNumberDA.SaveDataMConfig(_db, data);
             } else {
                 flag = false;
                 ErrorMess = (String) innerObj.get(dtAPIDATA.strMessage);
@@ -313,6 +328,7 @@ public class tStockInHandHeaderBL extends clsMainBL{
         SQLiteDatabase _db = getDb();
         tStockInHandHeaderDA _tStockInHandHeaderDA = new tStockInHandHeaderDA(_db);
         _tStockInHandHeaderDA.updateDataSubmit(_db, dt);
+        _db.close();
     }
 
     public void deleteTrId(String id) {
@@ -327,6 +343,7 @@ public class tStockInHandHeaderBL extends clsMainBL{
         if (dt == null) {
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt;
     }
     public List<tStockInHandHeaderData> getAllHeaderUnsubmit() {
@@ -337,11 +354,13 @@ public class tStockInHandHeaderBL extends clsMainBL{
         if (dt == null) {
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt;
     }
     public void updateDataSubmit(tPlanogramMobileData dt) {
         SQLiteDatabase _db = getDb();
         tStockInHandHeaderDA _tStockInHandHeaderDA = new tStockInHandHeaderDA(_db);
         _tStockInHandHeaderDA.updateDataSubmit(_db, dt);
+        _db.close();
     }
 }

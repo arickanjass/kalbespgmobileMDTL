@@ -47,7 +47,7 @@ public class tPurchaseOrderDetailBL extends clsMainBL {
         mconfigDA _mconfigDA = new mconfigDA(_db);
         tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
         String strVal2 = "";
-        mconfigData dataAPI = _mconfigDA.getData(db, enumConfigData.ApiKalbe.getidConfigData());
+        mconfigData dataAPI = _mconfigDA.getData(_db, enumConfigData.ApiKalbe.getidConfigData());
         strVal2 = dataAPI.get_txtValue();
         if (dataAPI.get_txtValue() == ""){
             strVal2 = dataAPI.get_txtDefaultValue();
@@ -68,7 +68,7 @@ public class tPurchaseOrderDetailBL extends clsMainBL {
         Iterator i = jsonArray.iterator();
         Boolean flag = true;
         String ErrorMessage = " ";
-        Long intData = _tPurchaseOrderDetailDa.getContactsCountPO(db);
+        Long intData = _tPurchaseOrderDetailDa.getContactsCountPO(_db);
         while (i.hasNext()){
             JSONObject innerDetailObj = (JSONObject)i.next();
             int boolValid = Integer.valueOf(String.valueOf(innerDetailObj.get(dtAPIDATA.boolValid)));
@@ -79,8 +79,8 @@ public class tPurchaseOrderDetailBL extends clsMainBL {
                 Iterator iHeader = JsonArrayHeader.iterator();
                 while (iHeader.hasNext()){
                     JSONObject InnerDetailObj = (JSONObject)iHeader.next();
-                    _tPurchaseOrderHeaderDA.deleteContactPO(db, String.valueOf(innerDetailObj.get("TxtNoOrder")));
-                    _tPurchaseOrderDetailDa.deleteByNoOrder(db, String.valueOf(innerDetailObj.get("TxtNoOrder")));
+                    _tPurchaseOrderHeaderDA.deleteContactPO(_db, String.valueOf(innerDetailObj.get("TxtNoOrder")));
+                    _tPurchaseOrderDetailDa.deleteByNoOrder(_db, String.valueOf(innerDetailObj.get("TxtNoOrder")));
                     tPurchaseOrderHeaderData _data = new tPurchaseOrderHeaderData();
                     _data.set_dtDate(dateFormat.format(calendar.getTime()));
                     _data.set_intId(String.valueOf(innerDetailObj.get("TxtNoOrder")));
@@ -96,7 +96,7 @@ public class tPurchaseOrderDetailBL extends clsMainBL {
                     _data.set_txtKeterangan(String.valueOf(innerDetailObj.get("TxtKeterangan")));
                     _data.set_txtNIK((String) _dataUserLogin.get_TxtEmpId());
                     _data.set_UserId((String) _dataUserLogin.get_txtUserId());
-                    _tPurchaseOrderHeaderDA.SaveDatatPurchaseOrderHeaderData(db, _data);
+                    _tPurchaseOrderHeaderDA.SaveDatatPurchaseOrderHeaderData(_db, _data);
                 }
                 while (iDetail.hasNext()){
                     intData +=1;
@@ -114,7 +114,7 @@ public class tPurchaseOrderDetailBL extends clsMainBL {
                     _data.set_intActive("1");
                     _data.set_txtNIK(_dataUserLogin.get_TxtEmpId());
                     _data.set_intTotal((String) innerDetailObject.get("IntTotal"));
-                    _tPurchaseOrderDetailDa.SaveDatatPurchaseOrderDetailData(db, _data);
+                    _tPurchaseOrderDetailDa.SaveDatatPurchaseOrderDetailData(_db, _data);
                 }
             }else {
                 flag = false;
@@ -122,6 +122,7 @@ public class tPurchaseOrderDetailBL extends clsMainBL {
                 break;
             }
         }
+        _db.close();
     }
 
 

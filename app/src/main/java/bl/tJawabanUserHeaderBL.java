@@ -14,19 +14,19 @@ import library.spgmobile.dal.tJawabanUserHeaderDA;
 
 public class tJawabanUserHeaderBL extends clsMainBL {
 
-    SQLiteDatabase db = getDb();
+    //SQLiteDatabase db = getDb();
 
     public void SaveDatatJawabanHeaderUser(tJawabanUserHeaderData dt){
         SQLiteDatabase _db = getDb();
         tJawabanUserHeaderDA _tJawabanUserDA = new tJawabanUserHeaderDA(_db);
         _tJawabanUserDA.SaveDatatJawabanUserHeader(_db, dt);
-
+        _db.close();
     }
     public List<tJawabanUserHeaderData> GetAllData(){
         SQLiteDatabase _db = getDb();
         tJawabanUserHeaderDA _tJawabanUserDA = new tJawabanUserHeaderDA(_db);
         List<tJawabanUserHeaderData> listData = _tJawabanUserDA.GetAllDatas(_db);
-        db.close();
+        _db.close();
         return listData;
     }
 
@@ -42,6 +42,7 @@ public class tJawabanUserHeaderBL extends clsMainBL {
         if (listData == null){
             listData = new ArrayList<>(0);
         }
+        _db.close();
         return listData;
     }
 
@@ -52,6 +53,7 @@ public class tJawabanUserHeaderBL extends clsMainBL {
         if (listData == null){
             listData = new ArrayList<>(0);
         }
+        _db.close();
         return listData;
     }
 
@@ -59,7 +61,7 @@ public class tJawabanUserHeaderBL extends clsMainBL {
         SQLiteDatabase _db = getDb();
         tJawabanUserHeaderDA _tJawabanUserDA = new tJawabanUserHeaderDA(_db);
         List<tJawabanUserHeaderData> listData = _tJawabanUserDA.GetLastBeforeSaveDetail(_db);
-        db.close();
+        _db.close();
         return listData;
     }
 
@@ -68,6 +70,7 @@ public class tJawabanUserHeaderBL extends clsMainBL {
         tJawabanUserHeaderDA _tJawabanUserHeaderDA = new tJawabanUserHeaderDA(db);
         tJawabanUserHeaderData dt= new tJawabanUserHeaderData();
         dt=_tJawabanUserHeaderDA.GetDataByHeaderId(db,intHeaderId);
+        db.close();
         return dt;
     }
 }

@@ -25,18 +25,20 @@ import library.spgmobile.dal.tUserLoginDA;
  */
 
 public class mTypePOPStandardBL extends clsMainBL {
-    SQLiteDatabase db = getDb();
+    //SQLiteDatabase db = getDb();
 
     public void SaveData (mTypePOPStandardData dt){
         SQLiteDatabase _db = getDb();
         mTypePOPStandardDA _mTypePOPStandardDA = new mTypePOPStandardDA(_db);
         _mTypePOPStandardDA.SaveDatamTypePOPStandard(_db, dt);
+        _db.close();
     }
 
     public List<mTypePOPStandardData> GetAllData(){
         SQLiteDatabase _db = getDb();
         mTypePOPStandardDA _mTypePOPStandardDA = new mTypePOPStandardDA(_db);
         List<mTypePOPStandardData> dt = _mTypePOPStandardDA.GetAllData(_db);
+        _db.close();
         return dt;
     }
     public JSONArray DownlaodDataPOPStandard(String versionName) throws Exception{
@@ -44,7 +46,7 @@ public class mTypePOPStandardBL extends clsMainBL {
         tUserLoginDA _tUserLoginDA = new tUserLoginDA(_db);
         mconfigDA _mconfigDA = new mconfigDA(_db);
         String strVal2 = "";
-        mconfigData dataApi = _mconfigDA .getData(db, enumConfigData.ApiKalbe.getidConfigData());
+        mconfigData dataApi = _mconfigDA .getData(_db, enumConfigData.ApiKalbe.getidConfigData());
         strVal2 = dataApi.get_txtValue();
         if (dataApi.get_txtValue() == ""){
             strVal2 = dataApi.get_txtDefaultValue();
@@ -53,7 +55,7 @@ public class mTypePOPStandardBL extends clsMainBL {
         Date date = new Date();
         String dateNow = dateFormat.format(date);
 
-        tUserLoginData _tUserLoginData = _tUserLoginDA.getData(db, 1);
+        tUserLoginData _tUserLoginData = _tUserLoginDA.getData(_db, 1);
         clsHelper _help = new clsHelper();
         linkAPI dtLinkAPI = new linkAPI();
         String txtMethod = "GetDataPOPStandard_mobile";

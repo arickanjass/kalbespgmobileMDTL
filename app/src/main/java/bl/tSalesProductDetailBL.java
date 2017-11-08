@@ -41,7 +41,7 @@ public class tSalesProductDetailBL extends clsMainBL {
 		mconfigDA _mconfigDA =new mconfigDA(_db);
 		tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
 		String strVal2="";
-		mconfigData dataAPI = _mconfigDA.getData(db,enumConfigData.ApiKalbe.getidConfigData());
+		mconfigData dataAPI = _mconfigDA.getData(_db,enumConfigData.ApiKalbe.getidConfigData());
 		strVal2 = dataAPI.get_txtValue();
 		if (dataAPI.get_txtValue() == "") {
 			strVal2 = dataAPI.get_txtDefaultValue();
@@ -65,7 +65,7 @@ public class tSalesProductDetailBL extends clsMainBL {
 		Iterator i = JsonArray.iterator();
 		Boolean flag=true;
 		String ErrorMess="";
-		Long intData= _tSalesProductDetailDA.getContactsCount(db);
+		Long intData= _tSalesProductDetailDA.getContactsCount(_db);
 		while (i.hasNext()) {
 			org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
 			int boolValid= Integer.valueOf(String.valueOf( innerObj.get(dtAPIDATA.boolValid)));
@@ -76,8 +76,8 @@ public class tSalesProductDetailBL extends clsMainBL {
 				Iterator iHeader = JsonArrayHeader.iterator();
 				while (iHeader.hasNext()) {
 					org.json.simple.JSONObject innerDetailObj = (org.json.simple.JSONObject) iHeader.next();
-					_tSalesProductHeaderDA.deleteContact(db, String.valueOf(innerDetailObj.get("TxtNoSO")));
-					_tSalesProductDetailDA.deleteByNOSO(db, String.valueOf(innerDetailObj.get("TxtNoSO")));
+					_tSalesProductHeaderDA.deleteContact(_db, String.valueOf(innerDetailObj.get("TxtNoSO")));
+					_tSalesProductDetailDA.deleteByNOSO(_db, String.valueOf(innerDetailObj.get("TxtNoSO")));
 					tSalesProductHeaderData _data =new tSalesProductHeaderData();
 					_data.set_dtDate(dateFormat.format(cal.getTime()));
 					_data.set_intId(String.valueOf(innerDetailObj.get("TxtNoSO")));
@@ -93,7 +93,7 @@ public class tSalesProductDetailBL extends clsMainBL {
 					_data.set_txtKeterangan(String.valueOf(innerDetailObj.get("TxtKeterangan")));
 					_data.set_txtNIK((String) _dataUserLogin.get_TxtEmpId());
 					_data.set_UserId((String) _dataUserLogin.get_txtUserId());
-					_tSalesProductHeaderDA.SaveDatatSalesProductHeaderData(db, _data);;
+					_tSalesProductHeaderDA.SaveDatatSalesProductHeaderData(_db, _data);;
 				}
 				while (iDetail.hasNext()) {
 					intData+=1;
@@ -111,7 +111,7 @@ public class tSalesProductDetailBL extends clsMainBL {
 					_data.set_intActive("1");
 					_data.set_txtNIK(_dataUserLogin.get_TxtEmpId());
 					_data.set_intTotal((String) innerDetailObj.get("IntTotal"));
-					_tSalesProductDetailDA.SaveDatatSalesProductDetailData(db, _data);
+					_tSalesProductDetailDA.SaveDatatSalesProductDetailData(_db, _data);
 				}
 				
 			}else{
@@ -120,5 +120,6 @@ public class tSalesProductDetailBL extends clsMainBL {
 				break;
 			}
 		}
+		_db.close();
 	}
 }

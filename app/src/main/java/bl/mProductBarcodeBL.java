@@ -26,41 +26,53 @@ public class mProductBarcodeBL extends clsMainBL {
 		for(mProductBarcodeData data:Listdata){
 			_mProductBarcodeDA.SaveDatamProductBarcodeData(db, data);	
 		}
+		db.close();
 	}
 	public List<mProductBarcodeData> GetAllData(){
 		SQLiteDatabase db=getDb();
 		mProductBarcodeDA _mProductBarcodeDA=new mProductBarcodeDA(db);
-		return _mProductBarcodeDA.getAllData(db);
+		List<mProductBarcodeData> listDAta=_mProductBarcodeDA.getAllData(db);
+		db.close();
+		return listDAta;
 	}
 	public mProductBarcodeData getData(String Id){
 		SQLiteDatabase db=getDb();
 		mProductBarcodeDA _mProductBarcodeDA=new mProductBarcodeDA(db);
-		return _mProductBarcodeDA.getData(db, Id);
+		mProductBarcodeData dt=_mProductBarcodeDA.getData(db, Id);
+		db.close();
+		return dt;
 	}
 	public List<mProductBarcodeData> GetAllDataByProductCode(String Id){
 		SQLiteDatabase db=getDb();
 		mProductBarcodeDA _mProductBarcodeDA=new mProductBarcodeDA(db);
-		return _mProductBarcodeDA.getAllDataByProductCode(db, Id);
+		List<mProductBarcodeData> listData=_mProductBarcodeDA.getAllDataByProductCode(db, Id);
+		db.close();
+		return listData;
 	}
 	public List<mProductBarcodeData> getAllDataByBarcode(String Id){
 		SQLiteDatabase db=getDb();
 		mProductBarcodeDA _mProductBarcodeDA=new mProductBarcodeDA(db);
-		return _mProductBarcodeDA.getAllDataByBarcode(db, Id);
+		List<mProductBarcodeData> listData=_mProductBarcodeDA.getAllDataByBarcode(db, Id);
+		db.close();
+		return listData;
 		
 	}
 	public List<mProductBarcodeData> GetAllDataWithTypeAndSearch(String Type,String txtSearch){
 		SQLiteDatabase db=getDb();
 		mProductBarcodeDA _mProductBarcodeDA=new mProductBarcodeDA(db);
 		if(Type.contains("1.")){
-			return _mProductBarcodeDA.getAllDataByProductName(db, txtSearch);	
+			List<mProductBarcodeData> tmp=_mProductBarcodeDA.getAllDataByProductName(db, txtSearch);
+			db.close();
+			return 	tmp;
 		}else{
 			List<mProductBarcodeData> tmp=_mProductBarcodeDA.getAllDataByProductCode(db, txtSearch);
 			if(tmp==null){
 				tmp=new ArrayList<mProductBarcodeData>();
 			}
+			db.close();
 			return tmp;
 		}
-		
+
 	}
 	public void DownloadmProductBarcode(String versionName) throws Exception{
 		//ambil linkapi Database sqllite
@@ -112,7 +124,7 @@ public class mProductBarcodeBL extends clsMainBL {
 				break;
 			}
 		}
-		
+		_db.close();
 	}
 	public org.json.simple.JSONArray DownloadmProductBarcode2(String versionName) throws Exception{
 		//ambil linkapi Database sqllite
@@ -127,7 +139,7 @@ public class mProductBarcodeBL extends clsMainBL {
 			strVal2 = dataAPI.get_txtDefaultValue();
 		}
 		//ambil version dari webservices
-		tUserLoginData _dataUserLogin = _tUserLoginDA.getData(db, 1);
+		tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
 		clsHelper _help =new clsHelper();
 		linkAPI dtlinkAPI=new linkAPI();
 		String txtMethod="GetDatavw_SalesInsentive_EmployeeSalesProductDetail";
@@ -138,7 +150,7 @@ public class mProductBarcodeBL extends clsMainBL {
 		String strLinkAPI= dtlinkAPI.QueryString(strVal2);
 		String JsonData= _help.ResultJsonData(_help.getHTML(strLinkAPI));
 		org.json.simple.JSONArray JsonArray= _help.ResultJsonArray(JsonData);
-
+		_db.close();
 		return JsonArray;
 	}
 }

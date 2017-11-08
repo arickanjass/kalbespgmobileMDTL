@@ -31,9 +31,11 @@ public class tLeaveMobileBL extends clsMainBL {
         for (tLeaveMobileData data : Listdata) {
             _tLeaveMobileDA.SaveDataMConfig(db, data);
         }
+        db.close();
     }
 
     public List<tLeaveMobileData> getData(String id) {
+        SQLiteDatabase db = getDb();
         List<tLeaveMobileData> listData = new ArrayList<tLeaveMobileData>();
         tLeaveMobileDA _tLeaveMobileDA = new tLeaveMobileDA(db);
         if (id.equals("")) {
@@ -43,13 +45,16 @@ public class tLeaveMobileBL extends clsMainBL {
             data = _tLeaveMobileDA.getData(db, id);
             listData.add(data);
         }
+        db.close();
         return listData;
     }
 
     public List<tLeaveMobileData> GetAllData(){
         SQLiteDatabase db=getDb();
         tLeaveMobileDA _tLeaveMobileDA = new tLeaveMobileDA(db);
-        return _tLeaveMobileDA.getAllData(db);
+        List<tLeaveMobileData> listData=_tLeaveMobileDA.getAllData(db);
+        db.close();
+        return listData;
     }
 
     public List<tLeaveMobileData> getAllDataToPushData() {
@@ -57,12 +62,14 @@ public class tLeaveMobileBL extends clsMainBL {
         tLeaveMobileDA _tLeaveMobileDA = new tLeaveMobileDA(db);
         List<tLeaveMobileData> ListData = new ArrayList<tLeaveMobileData>();
         ListData = _tLeaveMobileDA.getAllDataPushData(db);
+        db.close();
         return ListData;
     }
 
     public int getContactsCount() {
         SQLiteDatabase db = getDb();
         tLeaveMobileDA _tLeaveMobileDA = new tLeaveMobileDA(db);
+        db.close();
         return _tLeaveMobileDA.getContactsCount(db);
     }
 
@@ -72,7 +79,7 @@ public class tLeaveMobileBL extends clsMainBL {
         mconfigDA _mconfigDA = new mconfigDA(_db);
 
         String strVal2 = "";
-        mconfigData dataAPI = _mconfigDA.getData(db, enumConfigData.ApiKalbe.getidConfigData());
+        mconfigData dataAPI = _mconfigDA.getData(_db, enumConfigData.ApiKalbe.getidConfigData());
         strVal2 = dataAPI.get_txtValue();
         if (dataAPI.get_txtValue() == "") {
             strVal2 = dataAPI.get_txtDefaultValue();
@@ -83,7 +90,7 @@ public class tLeaveMobileBL extends clsMainBL {
         String datenow = dateFormat.format(date);
 
         //ambil version dari webservices
-        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(db, 1);
+        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
         clsHelper _help = new clsHelper();
         linkAPI dtlinkAPI = new linkAPI();
         String txtMethod = "GetDatatLeaveMobile";

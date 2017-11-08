@@ -33,6 +33,7 @@ public class mCountConsumerMTDBL extends clsMainBL {
         if(dt == null){
             dt = new ArrayList<>(0);
         }
+        db.close();
         return dt ;
     }
     public List<mCountConsumerMTDData> getAllmCountConsumerMTDDA(){
@@ -43,12 +44,14 @@ public class mCountConsumerMTDBL extends clsMainBL {
         if(dt == null){
             dt = new ArrayList<>(0);
         }
+        db.close();
         return dt ;
     }
 
     public int getCountConsumerMTD(String code) {
         SQLiteDatabase _db = getDb();
         int count = new mCountConsumerMTDDA(_db).countCustomerBaseHomeAbsen(_db, code);
+        _db.close();
         return count;
     }
 }

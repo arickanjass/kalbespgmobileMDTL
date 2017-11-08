@@ -57,6 +57,7 @@ public class mEmployeeAreaBL extends clsMainBL{
 				new mEmployeeAreaDA(db).deleteContact(db, Integer.parseInt(dt.get(i).get_intID()));
 			}
 		}
+		db.close();
 	}
 	public JSONArray DownloadEmployeeArea2(String versionName) throws Exception{
 		SQLiteDatabase _db=getDb();
@@ -64,13 +65,13 @@ public class mEmployeeAreaBL extends clsMainBL{
 		mconfigDA _mconfigDA =new mconfigDA(_db);
 
 		String strVal2="";
-		mconfigData dataAPI = _mconfigDA.getData(db,enumConfigData.ApiKalbe.getidConfigData());
+		mconfigData dataAPI = _mconfigDA.getData(_db,enumConfigData.ApiKalbe.getidConfigData());
 		strVal2 = dataAPI.get_txtValue();
 		if (dataAPI.get_txtValue() == "") {
 			strVal2 = dataAPI.get_txtDefaultValue();
 		}
 		//ambil version dari webservices
-		tUserLoginData _dataUserLogin = _tUserLoginDA.getData(db, 1);
+		tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
 		clsHelper _help =new clsHelper();
 		linkAPI dtlinkAPI=new linkAPI();
 		String txtMethod="GetDatavw_SalesInsentive_EmployeeArea";
@@ -99,13 +100,13 @@ public class mEmployeeAreaBL extends clsMainBL{
 		mconfigDA _mconfigDA =new mconfigDA(_db);
 		
 		String strVal2="";
-		mconfigData dataAPI = _mconfigDA.getData(db,enumConfigData.ApiKalbe.getidConfigData());
+		mconfigData dataAPI = _mconfigDA.getData(_db,enumConfigData.ApiKalbe.getidConfigData());
 		strVal2 = dataAPI.get_txtValue();
 		if (dataAPI.get_txtValue() == "") {
 			strVal2 = dataAPI.get_txtDefaultValue();
 		}
 		//ambil version dari webservices
-		tUserLoginData _dataUserLogin = _tUserLoginDA.getData(db, 1);
+		tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
 		clsHelper _help =new clsHelper();
 		linkAPI dtlinkAPI=new linkAPI();
 		String txtMethod="GetDatavw_SalesInsentive_EmployeeArea";
@@ -145,7 +146,7 @@ public class mEmployeeAreaBL extends clsMainBL{
 				_data.set_txtRayonCode((String) innerObj.get("TxtRayonCode"));
 				_data.set_txtRayonName((String) innerObj.get("TxtRayonName"));
 				_data.set_txtRegionName((String) innerObj.get("TxtRegionName"));
-				_mEmployeeAreaData.SaveDataMConfig(db, _data);
+				_mEmployeeAreaData.SaveDataMConfig(_db, _data);
 				
 			}else{
 				flag=false;

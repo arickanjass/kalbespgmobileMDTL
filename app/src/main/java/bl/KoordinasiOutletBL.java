@@ -28,22 +28,25 @@ import library.spgmobile.dal.tUserLoginDA;
  */
 
 public class KoordinasiOutletBL extends clsMainBL {
-    SQLiteDatabase db = getDb();
+    //SQLiteDatabase db = getDb();
 
     public void SaveDataKoordinasiOutlet(KoordinasiOutletData dt) {
         SQLiteDatabase _db = getDb();
         KoordinasiOutletDA _KoordinasiOutletDA = new KoordinasiOutletDA(_db);
         _KoordinasiOutletDA.SaveDataKoordinasiOutlet(_db, dt);
-        db.close();
+        _db.close();
     }
 
     public int getContactCount() {
         SQLiteDatabase db = getDb();
         KoordinasiOutletDA _KoordinasiOutletDA = new KoordinasiOutletDA(db);
-        return _KoordinasiOutletDA.getContactsCount(db);
+        int intCount=_KoordinasiOutletDA.getContactsCount(db);
+        db.close();
+        return intCount;
     }
 
     public List<KoordinasiOutletData> getData(String id) {
+        SQLiteDatabase db = getDb();
         List<KoordinasiOutletData> listData = new ArrayList<KoordinasiOutletData>();
         KoordinasiOutletDA _KoordinasiOutletDA = new KoordinasiOutletDA(db);
         if (id.equals("")){
@@ -53,11 +56,12 @@ public class KoordinasiOutletBL extends clsMainBL {
             data = _KoordinasiOutletDA.getData(db, id);
             listData.add(data);
         }
+        db.close();
         return listData;
     }
     public List<KoordinasiOutletData> getAllDataByOutletCodeandSync(String outletcode){
         SQLiteDatabase _db = getDb();
-        KoordinasiOutletDA _KoordinasiOutletDA=new KoordinasiOutletDA(db);
+        KoordinasiOutletDA _KoordinasiOutletDA=new KoordinasiOutletDA(_db);
         List<KoordinasiOutletData> dt;
         if(outletcode.equals("ALLOUTLET")){
             dt = _KoordinasiOutletDA.getAllData(_db);
@@ -68,6 +72,7 @@ public class KoordinasiOutletBL extends clsMainBL {
         if(dt == null){
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt;
     }
     public List<KoordinasiOutletData> getAllDataByOutletCode(String code){
@@ -99,7 +104,7 @@ public class KoordinasiOutletBL extends clsMainBL {
         SQLiteDatabase _db = getDb();
         mCategoryKoordinasiOutletDA _KoordinasiOutletDA = new mCategoryKoordinasiOutletDA(_db);
         _KoordinasiOutletDA.SaveDataCategoryKoordinasiOutlet(_db, dt);
-        db.close();
+        _db.close();
     }
 
     public org.json.simple.JSONArray DownloadDataKoordinasiOutlet(String versionName) throws Exception{
@@ -107,7 +112,7 @@ public class KoordinasiOutletBL extends clsMainBL {
         tUserLoginDA _tUserLoginDA = new tUserLoginDA(_db);
         mconfigDA _mconfigDA = new mconfigDA(_db);
         String strVAl2 = "";
-        mconfigData dataApi = _mconfigDA.getData(db, enumConfigData.ApiKalbe.getidConfigData());
+        mconfigData dataApi = _mconfigDA.getData(_db, enumConfigData.ApiKalbe.getidConfigData());
         strVAl2 = dataApi.get_txtValue();
         if (dataApi.get_txtValue() == ""){
             strVAl2 = dataApi.get_txtDefaultValue();
@@ -116,7 +121,7 @@ public class KoordinasiOutletBL extends clsMainBL {
         Date date = new Date();
         String dateNow = dateFormat.format(date);
 
-        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(db, 1);
+        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
         clsHelper _help = new clsHelper();
         linkAPI dtLinkAPI = new linkAPI();
         String txtMethod = "GetDataKoordinasiOutlet";
@@ -137,7 +142,7 @@ public class KoordinasiOutletBL extends clsMainBL {
         tUserLoginDA _tUserLoginDA = new tUserLoginDA(_db);
         mconfigDA _mconfigDA = new mconfigDA(_db);
         String strVAl2 = "";
-        mconfigData dataApi = _mconfigDA.getData(db, enumConfigData.ApiKalbe.getidConfigData());
+        mconfigData dataApi = _mconfigDA.getData(_db, enumConfigData.ApiKalbe.getidConfigData());
         strVAl2 = dataApi.get_txtValue();
         if (dataApi.get_txtValue() == ""){
             strVAl2 = dataApi.get_txtDefaultValue();
@@ -146,7 +151,7 @@ public class KoordinasiOutletBL extends clsMainBL {
 //        Date date = new Date();
 //        String dateNow = dateFormat.format(date);
 
-        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(db, 1);
+        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
         clsHelper _help = new clsHelper();
         linkAPI dtLinkAPI = new linkAPI();
         String txtMethod = "GetCategoryKoordinasiOutlet_mobile";

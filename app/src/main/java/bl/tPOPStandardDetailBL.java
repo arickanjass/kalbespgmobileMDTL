@@ -12,18 +12,20 @@ import library.spgmobile.dal.tPOPStandardDetailDA;
  */
 
 public class tPOPStandardDetailBL extends clsMainBL {
-    SQLiteDatabase db = getDb();
+    //SQLiteDatabase db = getDb();
 
     public void SaveData (tPOPStandardDetailData dt){
         SQLiteDatabase _db = getDb();
         tPOPStandardDetailDA _tPOPStandardDetailDA = new tPOPStandardDetailDA (_db);
         _tPOPStandardDetailDA.SaveDatatPOPStandardDetail(_db, dt);
+        _db.close();
     }
 
     public tPOPStandardDetailData GetDataById(String intId){
         SQLiteDatabase _db = getDb();
         tPOPStandardDetailDA _tPOPStandardDetailDA = new tPOPStandardDetailDA(_db);
         tPOPStandardDetailData listData = _tPOPStandardDetailDA.GetDataByHeaderId(_db, intId);
+        _db.close();
         return listData;
     }
 }

@@ -75,24 +75,28 @@ public class tVisitPlanRealisasiBL extends clsMainBL{
         tVisitPlanRealisasiDA _tVisitPlanRealisasiDA=new tVisitPlanRealisasiDA(db);
         List<tVisitPlanRealisasiData> ListData=new ArrayList<tVisitPlanRealisasiData>();
         ListData=_tVisitPlanRealisasiDA.getAllDataActiveOrderByDate(db);
+        db.close();
         return ListData;
     }
     public List<tVisitPlanRealisasiData> getAllData(){
         SQLiteDatabase db=getDb();
         tVisitPlanRealisasiDA _tActivityDA=new tVisitPlanRealisasiDA(db);
         List<tVisitPlanRealisasiData> listData=_tActivityDA.getAllData(db);
+        db.close();
         return listData;
     }
     public List<tVisitPlanRealisasiData> getAllDataByIntSubmit(String intSubmit){
         SQLiteDatabase db=getDb();
         tVisitPlanRealisasiDA _tActivityDA=new tVisitPlanRealisasiDA(db);
         List<tVisitPlanRealisasiData> listData=_tActivityDA.getAllDataByIntSubmit(db, intSubmit);
+        db.close();
         return listData;
     }
     public tVisitPlanRealisasiData getDataByIdOutlet(String id){
         SQLiteDatabase db=getDb();
         tVisitPlanRealisasiDA _tActivityDA=new tVisitPlanRealisasiDA(db);
         tVisitPlanRealisasiData listData=_tActivityDA.getDataByDataIDOutlet(db,id);
+        db.close();
         return listData;
     }
 
@@ -107,13 +111,13 @@ public class tVisitPlanRealisasiBL extends clsMainBL{
         tUserLoginDA _tUserLoginDA = new tUserLoginDA(_db);
         mconfigDA _mconfigDA = new mconfigDA(_db);
         String strVal2 = "";
-        mconfigData dataAPI = _mconfigDA.getData(db, enumConfigData.ApiKalbe.getidConfigData());
+        mconfigData dataAPI = _mconfigDA.getData(_db, enumConfigData.ApiKalbe.getidConfigData());
         strVal2 = dataAPI.get_txtValue();
         if (dataAPI.get_txtValue() == "") {
             strVal2 = dataAPI.get_txtDefaultValue();
         }
         //ambil version dari webservices
-        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(db, 1);
+        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
         clsHelper _help = new clsHelper();
         linkAPI dtlinkAPI = new linkAPI();
         String txtMethod = "GetDatatTransaksiRealisasiVisitPlan";
@@ -144,17 +148,20 @@ public class tVisitPlanRealisasiBL extends clsMainBL{
     public int getCountOutVisitStatusSubmit(String code) {
         SQLiteDatabase _db = getDb();
         int count = new tVisitPlanRealisasiDA(_db).countOutVisitStatusSubmit(_db, code);
+        _db.close();
         return count;
     }
 
     public int getCountOutVisitStatusUnPush(String code) {
         SQLiteDatabase _db = getDb();
         int count = new tVisitPlanRealisasiDA(_db).countOutVisitStatusUnPush(_db, code);
+        _db.close();
         return count;
     }
     public int countOutVisitPush( String code) {
         SQLiteDatabase _db = getDb();
         int count = new tVisitPlanRealisasiDA(_db).countOutVisitPush(_db, code);
+        _db.close();
         return count;
     }
 }

@@ -28,12 +28,13 @@ import library.spgmobile.dal.tUserLoginDA;
  * Created by ASUS ZE on 14/07/2016.
  */
 public class tSalesProductHeaderBL extends clsMainBL {
-    SQLiteDatabase db=getDb();
+    //SQLiteDatabase db=getDb();
 
     public void SaveData(tSalesProductHeaderData dt){
         SQLiteDatabase _db =getDb();
         tSalesProductHeaderDA _tSalesProductDA = new tSalesProductHeaderDA(_db);
         _tSalesProductDA.SaveDatatSalesProductHeaderData(_db, dt);
+        _db.close();
     }
     //    public List<tCustomerBaseData> getAllCustomerBase(){
 //        SQLiteDatabase _db=getDb();
@@ -47,6 +48,7 @@ public class tSalesProductHeaderBL extends clsMainBL {
         SQLiteDatabase _db =getDb();
         tSalesProductHeaderDA _tSalesProductHeaderDA = new tSalesProductHeaderDA(_db);
         List<tSalesProductHeaderData> dt = _tSalesProductHeaderDA.getAllData(_db);
+        _db.close();
         return dt ;
     }
 
@@ -54,6 +56,7 @@ public class tSalesProductHeaderBL extends clsMainBL {
         SQLiteDatabase _db =getDb();
         tSalesProductHeaderDA _tSalesProductHeaderDA = new tSalesProductHeaderDA(_db);
         List<tSalesProductHeaderData> dt = _tSalesProductHeaderDA.getAllDataByOutletCode(_db, outletcode);
+        _db.close();
         return dt ;
     }
 
@@ -61,6 +64,7 @@ public class tSalesProductHeaderBL extends clsMainBL {
         SQLiteDatabase _db =getDb();
         tSalesProductHeaderDA _tSalesProductHeaderDA = new tSalesProductHeaderDA(_db);
         List<tSalesProductHeaderData> dt = _tSalesProductHeaderDA.getLastData(_db);
+        _db.close();
         return dt ;
     }
 
@@ -71,6 +75,7 @@ public class tSalesProductHeaderBL extends clsMainBL {
         if(dt == null){
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt ;
     }
 
@@ -81,6 +86,7 @@ public class tSalesProductHeaderBL extends clsMainBL {
         if(dt == null){
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt ;
     }
 
@@ -97,6 +103,7 @@ public class tSalesProductHeaderBL extends clsMainBL {
         if(dt == null){
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt ;
     }
 
@@ -107,6 +114,7 @@ public class tSalesProductHeaderBL extends clsMainBL {
         if(dt == null){
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt ;
     }
 
@@ -117,6 +125,7 @@ public class tSalesProductHeaderBL extends clsMainBL {
         if(dt == null){
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt ;
     }
 
@@ -127,6 +136,7 @@ public class tSalesProductHeaderBL extends clsMainBL {
         if(dt == null){
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt ;
     }
 
@@ -148,7 +158,7 @@ public class tSalesProductHeaderBL extends clsMainBL {
         String txtNoSoCode = new mCounterNumberBL().getData(enumCounterData.NoDataSO);
 
         List<tSalesProductHeaderData> dttas = getLastData();
-
+        _db.close();
         String noSO = null;
 
 //        if (dttas == null || dttas.size() == 0) {
@@ -180,7 +190,7 @@ public class tSalesProductHeaderBL extends clsMainBL {
         mconfigDA _mconfigDA =new mconfigDA(_db);
 
         String strVal2="";
-        mconfigData dataAPI = _mconfigDA.getData(db,enumConfigData.ApiKalbe.getidConfigData());
+        mconfigData dataAPI = _mconfigDA.getData(_db,enumConfigData.ApiKalbe.getidConfigData());
         strVal2 = dataAPI.get_txtValue();
         if (dataAPI.get_txtValue() == "") {
             strVal2 = dataAPI.get_txtDefaultValue();
@@ -191,7 +201,7 @@ public class tSalesProductHeaderBL extends clsMainBL {
         String datenow = dateFormat.format(date);
 
         //ambil version dari webservices
-        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(db, 1);
+        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
         clsHelper _help =new clsHelper();
         linkAPI dtlinkAPI=new linkAPI();
         String txtMethod="GetDataTransactionReso";

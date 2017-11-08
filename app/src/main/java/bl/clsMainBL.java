@@ -127,13 +127,14 @@ import library.spgmobile.dal.tVisitPlanRealisasiDA;
 import library.spgmobile.dal.trackingLocationDA;
 
 public class clsMainBL {
-	SQLiteDatabase db;
+
 	public clsMainBL() {
 		super();
-		this.db = getDb();
+		//SQLiteDatabase db;
+		//db = getDb();
 	}
-	
 	public SQLiteDatabase getDb() {
+		SQLiteDatabase db;
 		clsHardCode _clsHardCode;
 		clsHelper _clsHelper=new clsHelper();
 		_clsHardCode =new clsHardCode();
@@ -143,31 +144,36 @@ public class clsMainBL {
 		return db;
 	}
 	public String getLinkAPI(){
-		this.db = getDb();
+		SQLiteDatabase db;
+		db = getDb();
 		String txtLinkAPI=new mconfigDA(db).getLinkAPIData(db);
-		this.db.close();
+		db.close();
 		return txtLinkAPI;
 	}
 	public String getTypeMobile(){
-		this.db = getDb();
+		SQLiteDatabase db;
+		db = getDb();
 		String txtLinkAPI=new mconfigDA(db).getTypeMobile(db);
-		this.db.close();
+		db.close();
 		return txtLinkAPI;
 	}
 	public String getLIVE(){
-		this.db = getDb();
+		SQLiteDatabase db;
+		db = getDb();
 		String txtLinkAPI=new mconfigDA(db).getLIVE(db);
-		this.db.close();
+		db.close();
 		return txtLinkAPI;
 	}
 	public String getBackGroundServiceOnline(){
-		this.db = getDb();
+		SQLiteDatabase db;
+		db = getDb();
 		String valueBackGroundServiceOnline=new mconfigDA(db).getBackGroundServiceOnlineData(db);
-		this.db.close();
+		db.close();
 		return valueBackGroundServiceOnline;
 	}
 	public tUserLoginData getUserActive() {
-		this.db = getDb();
+		SQLiteDatabase db;
+		db = getDb();
 		List<tUserLoginData> listData= new ArrayList<>();
 		tUserLoginData data = new tUserLoginData();
 		tUserLoginDA _tUserLoginDA=new tUserLoginDA(db);
@@ -191,7 +197,8 @@ public class clsMainBL {
 		return _DeviceUuidFactory.getDeviceUuid().toString();
 	 }
 	public clsStatusMenuStart checkUserActive() throws ParseException{
-		this.db = getDb();
+		SQLiteDatabase db;
+		db = getDb();
 		tSalesProductHeaderDA _tSalesProductHeaderDA=new tSalesProductHeaderDA(db);
 		tPurchaseOrderHeaderDA _tPurchaseOrderHeaderDA = new tPurchaseOrderHeaderDA(db);
 		tUserLoginDA _tUserLoginDA=new tUserLoginDA(db);
@@ -388,7 +395,7 @@ public class clsMainBL {
         		_clsStatusMenuStart.set_intStatus(enumStatusMenuStart.FormLogin);
     		}
     	}
-    	this.db.close();
+    	db.close();
     	return _clsStatusMenuStart;
 	}
 
@@ -397,7 +404,8 @@ public class clsMainBL {
 		String tmpvalue ="0";
 
 //        List<trackingLocationData> listtrackingLocationData = new trackingLocationBL().getAllDataTrackingLocation();
-
+		SQLiteDatabase db;
+		db=getDb();
 		if(txtMasterData.equals(clsEnumDownloadData.ll_kategoriVisitPlan.name())){
 			value = new mCategoryVisitPlanDA(db).getContactsCount(db);
 		}
@@ -498,7 +506,7 @@ public class clsMainBL {
 		if(txtMasterData.equals(clsEnumDownloadData.ll_kategoryPlanogram.name())){
 			value = new tKategoryPlanogramMobileDA(db).getContactsCount(db);
 		}
-
+		db.close();
 		return String.valueOf(value);
 	}
 

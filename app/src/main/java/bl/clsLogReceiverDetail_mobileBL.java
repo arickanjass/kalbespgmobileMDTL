@@ -19,12 +19,14 @@ public class clsLogReceiverDetail_mobileBL extends clsMainBL {
         for(clsLogReceiverDetail_mobile data:Listdata){
             _clsLogReceiverDetail_mobileDA.SaveDataMConfig(db, data);
         }
+        db.close();
     }
 
     public int getContactsCountStatus(clsFileAttach_mobile data){
         SQLiteDatabase db=getDb();
         clsLogReceiverDetail_mobileDA _clsLogReceiverDetail_mobileDA=new clsLogReceiverDetail_mobileDA(db);
         int num = _clsLogReceiverDetail_mobileDA.getContactsCountStatus(db, data.get_txtIDFile());
+        db.close();
         return num;
     }
 }

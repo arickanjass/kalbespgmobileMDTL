@@ -27,7 +27,7 @@ import library.spgmobile.dal.tUserLoginDA;
  */
 
 public class mParentBL extends clsMainBL{
-    SQLiteDatabase db = getDb();
+    //SQLiteDatabase db = getDb();
 
     public void SaveDatamParent(mParentData dt){
         SQLiteDatabase _db = getDb();
@@ -39,7 +39,7 @@ public class mParentBL extends clsMainBL{
         SQLiteDatabase _db = getDb();
         mParentDA _mParentDA = new mParentDA(_db);
         List<mParentData> listData = _mParentDA.GetAllData(_db);
-        db.close();
+        _db.close();
         return listData;
     }
 
@@ -47,7 +47,7 @@ public class mParentBL extends clsMainBL{
         SQLiteDatabase _db = getDb();
         mParentDA _mParentDA = new mParentDA(_db);
         _mParentDA.DeleteAllDatamParent(_db);
-
+        _db.close();
     }
 
     public JSONArray DownlaodDataQuesioner(String versionName) throws Exception{
@@ -55,7 +55,7 @@ public class mParentBL extends clsMainBL{
         tUserLoginDA _tUserLoginDA = new tUserLoginDA(_db);
         mconfigDA _mconfigDA = new mconfigDA(_db);
         String strVal2 = "";
-        mconfigData dataApi = _mconfigDA .getData(db, enumConfigData.ApiKalbe.getidConfigData());
+        mconfigData dataApi = _mconfigDA .getData(_db, enumConfigData.ApiKalbe.getidConfigData());
         strVal2 = dataApi.get_txtValue();
         if (dataApi.get_txtValue() == ""){
             strVal2 = dataApi.get_txtDefaultValue();
@@ -64,7 +64,7 @@ public class mParentBL extends clsMainBL{
         Date date = new Date();
         String dateNow = dateFormat.format(date);
 
-        tUserLoginData _tUserLoginData = _tUserLoginDA.getData(db, 1);
+        tUserLoginData _tUserLoginData = _tUserLoginDA.getData(_db, 1);
         clsHelper _help = new clsHelper();
         linkAPI dtLinkAPI = new linkAPI();
         String txtMethod = "GetDataQuesioner_mobile";
@@ -84,13 +84,13 @@ public class mParentBL extends clsMainBL{
         tUserLoginDA _tUserLoginDA = new tUserLoginDA(_db);
         mconfigDA _mconfigDA = new mconfigDA(_db);
         String strVal2 = "";
-        mconfigData dataApi = _mconfigDA .getData(db, enumConfigData.ApiKalbe.getidConfigData());
+        mconfigData dataApi = _mconfigDA .getData(_db, enumConfigData.ApiKalbe.getidConfigData());
         strVal2 = dataApi.get_txtValue();
         if (dataApi.get_txtValue() == ""){
             strVal2 = dataApi.get_txtDefaultValue();
         }
 
-        tUserLoginData _tUserLoginData = _tUserLoginDA.getData(db, 1);
+        tUserLoginData _tUserLoginData = _tUserLoginDA.getData(_db, 1);
         clsHelper _help = new clsHelper();
         linkAPI dtLinkAPI = new linkAPI();
         String txtMethod = "GetDataSPGFromTL_mobile";

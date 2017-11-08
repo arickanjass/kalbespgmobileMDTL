@@ -43,7 +43,7 @@ public class tTidakSesuaiPesananHeaderBL extends clsMainBL {
         tUserLoginDA _tUserLoginDA = new tUserLoginDA(_db);
         mconfigDA _mconfigDA = new mconfigDA(_db);
         String strVAl2 = "";
-        mconfigData dataApi = _mconfigDA.getData(db, enumConfigData.ApiKalbe.getidConfigData());
+        mconfigData dataApi = _mconfigDA.getData(_db, enumConfigData.ApiKalbe.getidConfigData());
         strVAl2 = dataApi.get_txtValue();
         if (dataApi.get_txtValue() == ""){
             strVAl2 = dataApi.get_txtDefaultValue();
@@ -52,7 +52,7 @@ public class tTidakSesuaiPesananHeaderBL extends clsMainBL {
         Date date = new Date();
         String dateNow = dateFormat.format(date);
 
-        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(db, 1);
+        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
         clsHelper _help = new clsHelper();
         linkAPI dtLinkAPI = new linkAPI();
         String txtMethod = "GetDataTidakSesuaiPesanan";
@@ -73,7 +73,7 @@ public class tTidakSesuaiPesananHeaderBL extends clsMainBL {
         SQLiteDatabase _db = getDb();
         tTidakSesuaiPesananHeaderDA _tTidakSesuaiPesananHeaderDA = new tTidakSesuaiPesananHeaderDA(_db);
         _tTidakSesuaiPesananHeaderDA.SaveData(_db, dt);
-        db.close();
+        _db.close();
     }
 
     public List<tTidakSesuaiPesananHeaderData> getAllDataByOutletCodeReport(String outletcode){
@@ -89,6 +89,7 @@ public class tTidakSesuaiPesananHeaderBL extends clsMainBL {
         if(dt == null){
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt;
     }
     public List<tTidakSesuaiPesananHeaderData> getAllDataByOutletCode(String code){
@@ -102,12 +103,14 @@ public class tTidakSesuaiPesananHeaderBL extends clsMainBL {
     public int getCounStatusSubmit(String code) {
         SQLiteDatabase _db = getDb();
         int count = new tTidakSesuaiPesananHeaderDA(_db).countStatusSubmit(_db, code);
+        _db.close();
         return count;
     }
 
     public int countPush( String code) {
         SQLiteDatabase _db = getDb();
         int count = new tTidakSesuaiPesananHeaderDA(_db).countPush(_db, code);
+        _db.close();
         return count;
     }
 }

@@ -17,15 +17,15 @@ import library.spgmobile.dal.tTidakSesuaiPesananImageDA;
 
 public class tTidakSesuaiPesananImageBL extends clsMainBL{
 
-    SQLiteDatabase db = getDb();
+    //SQLiteDatabase db = getDb();
 
     public void SaveDataImage(List<tTidakSesuaiPesananImageData> ListData) {
         SQLiteDatabase _db = getDb();
-        tTidakSesuaiPesananImageDA _tTidakSesuaiPesananImageDA = new tTidakSesuaiPesananImageDA(db);
+        tTidakSesuaiPesananImageDA _tTidakSesuaiPesananImageDA = new tTidakSesuaiPesananImageDA(_db);
         for (tTidakSesuaiPesananImageData data:ListData){
             _tTidakSesuaiPesananImageDA.SaveDataImage(_db,data);
         }
-        db.close();
+        _db.close();
     }
 
     public List<tTidakSesuaiPesananImageData> getDataByHeaderId(String id) {

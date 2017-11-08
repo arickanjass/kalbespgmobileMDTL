@@ -12,7 +12,7 @@ import library.spgmobile.dal.KoordinasiOutletImageDA;
  */
 
 public class KoordinasiOutletImageBL extends clsMainBL {
-    SQLiteDatabase db = getDb();
+    //SQLiteDatabase db = getDb();
 
     public void SaveDataImage(List<KoordinasiOutletImageData> ListData) {
         SQLiteDatabase _db = getDb();
@@ -20,7 +20,7 @@ public class KoordinasiOutletImageBL extends clsMainBL {
         for (KoordinasiOutletImageData data:ListData){
             _KoordinasiOutletImageDA.SaveDataImage(_db,data);
         }
-        db.close();
+        _db.close();
     }
 
     public List<KoordinasiOutletImageData> getDataHeaderId(String id) {

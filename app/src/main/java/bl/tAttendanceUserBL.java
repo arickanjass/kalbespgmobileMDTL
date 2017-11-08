@@ -30,24 +30,29 @@ public class tAttendanceUserBL extends clsMainBL {
         SQLiteDatabase db=getDb();
         tAttendanceUserDA _tAttendanceUserDA=new tAttendanceUserDA(db);
         _tAttendanceUserDA.SaveDatatAbsenUserData(db, data);
+        db.close();
     }
     public tAttendanceUserData getDataCheckInActive(){
         SQLiteDatabase db=getDb();
         tAttendanceUserDA _tAttendanceUserDA=new tAttendanceUserDA(db);
         tAttendanceUserData dt=new tAttendanceUserData();
         dt=_tAttendanceUserDA.getDataCheckInActive(db);
+        db.close();
         return dt;
     }
     public int  getContactsCount(){
         SQLiteDatabase db=getDb();
         tAttendanceUserDA _tAttendanceUserDA=new tAttendanceUserDA(db);
-        return _tAttendanceUserDA.getContactsCount(db);
+        int intCount=_tAttendanceUserDA.getContactsCount(db);
+        db.close();
+        return intCount;
     }
     public List<tAttendanceUserData> getAllDataActive(){
         SQLiteDatabase db=getDb();
         tAttendanceUserDA _tAttendanceUserDA=new tAttendanceUserDA(db);
         List<tAttendanceUserData> ListData=new ArrayList<tAttendanceUserData>();
         ListData=_tAttendanceUserDA.getAllDataActive(db);
+        db.close();
         return ListData;
     }
     public JSONArray DownloadAttendance(String versionName) throws Exception {
@@ -56,13 +61,13 @@ public class tAttendanceUserBL extends clsMainBL {
         mconfigDA _mconfigDA = new mconfigDA(_db);
 
         String strVal2 = "";
-        mconfigData dataAPI = _mconfigDA.getData(db, enumConfigData.ApiKalbe.getidConfigData());
+        mconfigData dataAPI = _mconfigDA.getData(_db, enumConfigData.ApiKalbe.getidConfigData());
         strVal2 = dataAPI.get_txtValue();
         if (dataAPI.get_txtValue() == "") {
             strVal2 = dataAPI.get_txtDefaultValue();
         }
         //ambil version dari webservices
-        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(db, 1);
+        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
         clsHelper _help = new clsHelper();
         linkAPI dtlinkAPI = new linkAPI();
         String txtMethod = "GetDataAttendanceFPE_mobile";

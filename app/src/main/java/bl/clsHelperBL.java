@@ -143,8 +143,10 @@ public class clsHelperBL extends clsMainBL {
         db.close();
     }
     public void InsertDefaultMconfig() {
-        mconfigDA _mconfigDA = new mconfigDA(db);
-        _mconfigDA.InsertDefaultMconfig(db);
+        SQLiteDatabase _db = getDb();
+        mconfigDA _mconfigDA = new mconfigDA(_db);
+        _mconfigDA.InsertDefaultMconfig(_db);
+        _db.close();
     }
     public visitplanAbsenData getDataCheckInActive(){
         SQLiteDatabase db=getDb();
@@ -242,6 +244,7 @@ public class clsHelperBL extends clsMainBL {
         } else{
             dataReturn = null;
         }
+        db.close();
         return dataReturn;
     }
 
@@ -377,14 +380,14 @@ public class clsHelperBL extends clsMainBL {
                 }
             }
         }
-
+        db.close();
         return dataReturn;
     }
 
     public void DownloadData(String versionName) throws ParseException {
         SQLiteDatabase _db = getDb();
         tUserLoginDA _tUserLoginDA = new tUserLoginDA(_db);
-        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(db, 1);
+        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
         JSONObject resJson = new JSONObject();
         resJson.put("User", _dataUserLogin.get_txtUserId());
         resJson.put("txtBranchCode", "");
@@ -392,7 +395,7 @@ public class clsHelperBL extends clsMainBL {
         resJson.put("txtDeviceId", _dataUserLogin.get_txtDeviceId());
         mconfigDA _mconfigDA = new mconfigDA(_db);
         String strVal2 = "";
-        mconfigData dataAPI = _mconfigDA.getData(db, enumConfigData.ApiKalbe.getidConfigData());
+        mconfigData dataAPI = _mconfigDA.getData(_db, enumConfigData.ApiKalbe.getidConfigData());
         strVal2 = dataAPI.get_txtValue();
         if (dataAPI.get_txtValue() == "") {
             strVal2 = dataAPI.get_txtDefaultValue();
@@ -415,6 +418,7 @@ public class clsHelperBL extends clsMainBL {
         Boolean flag = true;
         String ErrorMess = "";
         clsHelper _clsHelper = new clsHelper();
+        _db.close();
     }
     public clsPushData pushDataError() {
         clsPushData dtclsPushData = new clsPushData();
@@ -450,7 +454,7 @@ public class clsHelperBL extends clsMainBL {
 //        dtlinkAPI.set_txtVesion(versionName);
         String strVal2 = "";
         mconfigDA _mconfigDA = new mconfigDA(_db);
-        mconfigData dataAPI = _mconfigDA.getData(db, enumConfigData.ApiKalbe.getidConfigData());
+        mconfigData dataAPI = _mconfigDA.getData(_db, enumConfigData.ApiKalbe.getidConfigData());
         strVal2 = dataAPI.get_txtValue();
         if (dataAPI.get_txtValue() == "") {
             strVal2 = dataAPI.get_txtDefaultValue();
@@ -501,7 +505,7 @@ public class clsHelperBL extends clsMainBL {
         dtlinkAPI.set_txtVesion(versionName);
         String strVal2 = "";
         mconfigDA _mconfigDA = new mconfigDA(_db);
-        mconfigData dataAPI = _mconfigDA.getData(db, enumConfigData.ApiKalbe.getidConfigData());
+        mconfigData dataAPI = _mconfigDA.getData(_db, enumConfigData.ApiKalbe.getidConfigData());
         strVal2 = dataAPI.get_txtValue();
         if (dataAPI.get_txtValue() == "") {
             strVal2 = dataAPI.get_txtDefaultValue();
@@ -551,7 +555,7 @@ public class clsHelperBL extends clsMainBL {
         dtlinkAPI.set_txtVesion(versionName);
         String strVal2 = "";
         mconfigDA _mconfigDA = new mconfigDA(_db);
-        mconfigData dataAPI = _mconfigDA.getData(db, enumConfigData.ApiKalbe.getidConfigData());
+        mconfigData dataAPI = _mconfigDA.getData(_db, enumConfigData.ApiKalbe.getidConfigData());
         strVal2 = dataAPI.get_txtValue();
         if (dataAPI.get_txtValue() == "") {
             strVal2 = dataAPI.get_txtDefaultValue();
@@ -560,7 +564,7 @@ public class clsHelperBL extends clsMainBL {
         String strLinkAPI = dtlinkAPI.QueryString(strVal2);
         String JsonData = _help.pushtData(strLinkAPI, strJson, Integer.valueOf(getBackGroundServiceOnline()));
         //String JsonData= _help.ResultJsonData(_help.getHTML(strLinkAPI));
-
+        _db.close();
         return JsonData;
     }
 
@@ -577,7 +581,7 @@ public class clsHelperBL extends clsMainBL {
         dtlinkAPI.set_txtVesion(versionName);
         String strVal2 = "";
         mconfigDA _mconfigDA = new mconfigDA(_db);
-        mconfigData dataAPI = _mconfigDA.getData(db, enumConfigData.ApiKalbe.getidConfigData());
+        mconfigData dataAPI = _mconfigDA.getData(_db, enumConfigData.ApiKalbe.getidConfigData());
         strVal2 = dataAPI.get_txtValue();
         if (dataAPI.get_txtValue() == "") {
             strVal2 = dataAPI.get_txtDefaultValue();
@@ -615,7 +619,7 @@ public class clsHelperBL extends clsMainBL {
         dtlinkAPI.set_txtVesion(versionName);
         String strVal2 = "";
         mconfigDA _mconfigDA = new mconfigDA(_db);
-        mconfigData dataAPI = _mconfigDA.getData(db, enumConfigData.ApiKalbe.getidConfigData());
+        mconfigData dataAPI = _mconfigDA.getData(_db, enumConfigData.ApiKalbe.getidConfigData());
         strVal2 = dataAPI.get_txtValue();
         if (dataAPI.get_txtValue() == "") {
             strVal2 = dataAPI.get_txtDefaultValue();

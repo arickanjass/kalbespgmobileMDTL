@@ -37,18 +37,20 @@ import library.spgmobile.dal.tUserLoginDA;
  */
 
 public class tPurchaseOrderHeaderBL extends clsMainBL {
-    SQLiteDatabase db = getDb();
+    //SQLiteDatabase db = getDb();
 
     public void SaveData (tPurchaseOrderHeaderData dt){
         SQLiteDatabase _db = getDb();
         tPurchaseOrderHeaderDA _tPurchaseOrderHeaderDA = new tPurchaseOrderHeaderDA(_db);
         _tPurchaseOrderHeaderDA.SaveDatatPurchaseOrderHeaderData(_db, dt);
+        _db.close();
     }
 
     public List<tPurchaseOrderHeaderData> getAllPurchaseOrderHeader() {
         SQLiteDatabase _db = getDb();
         tPurchaseOrderHeaderDA _tPurchaseOrderHeaderDA = new tPurchaseOrderHeaderDA(_db);
         List<tPurchaseOrderHeaderData> dt = _tPurchaseOrderHeaderDA.getAllData(_db);
+        _db.close();
         return dt;
     }
 
@@ -56,6 +58,7 @@ public class tPurchaseOrderHeaderBL extends clsMainBL {
         SQLiteDatabase _db = getDb();
         tPurchaseOrderHeaderDA _tPurchaseOrderHeaderDA = new tPurchaseOrderHeaderDA(_db);
         List<tPurchaseOrderHeaderData> dt = _tPurchaseOrderHeaderDA.getAllDataByOutletCode(_db, outletCode);
+        _db.close();
         return dt;
     }
 
@@ -63,6 +66,7 @@ public class tPurchaseOrderHeaderBL extends clsMainBL {
         SQLiteDatabase _db = getDb();
         tPurchaseOrderHeaderDA _tPurchaseOrderHeaderDA = new tPurchaseOrderHeaderDA(_db);
         List<tPurchaseOrderHeaderData> dt = _tPurchaseOrderHeaderDA.getLastDataPO(_db);
+        _db.close();
         return dt;
     }
 
@@ -73,6 +77,7 @@ public class tPurchaseOrderHeaderBL extends clsMainBL {
         if (dt == null){
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt;
     }
 
@@ -83,18 +88,21 @@ public class tPurchaseOrderHeaderBL extends clsMainBL {
         if (dt == null){
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt;
     }
 
     public int getCountPOStatusSubmit(String code) {
         SQLiteDatabase _db = getDb();
         int count = new tPurchaseOrderHeaderDA(_db).countPOStatusSubmit(_db, code);
+        _db.close();
         return count;
     }
 
     public int countPoPush( String code) {
         SQLiteDatabase _db = getDb();
         int count = new tPurchaseOrderHeaderDA(_db).countPoPush(_db, code);
+        _db.close();
         return count;
     }
 
@@ -111,6 +119,7 @@ public class tPurchaseOrderHeaderBL extends clsMainBL {
         if(dt == null){
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt;
     }
 
@@ -121,6 +130,7 @@ public class tPurchaseOrderHeaderBL extends clsMainBL {
         if (dt == null){
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt;
     }
 
@@ -131,6 +141,7 @@ public class tPurchaseOrderHeaderBL extends clsMainBL {
         if (dt == null){
             dt = new ArrayList<>(0);
         }
+        _db.close();
         return dt;
     }
 
@@ -147,6 +158,7 @@ public class tPurchaseOrderHeaderBL extends clsMainBL {
         String txtNoPOCode = new mCounterNumberBL().getData(enumCounterData.NoPurchaseOrder);
         List<tPurchaseOrderHeaderData> dttas = getLastData();
         String noPO = null;
+        _db.close();
     }
 
     public JSONArray DownloadNOPO(String versionName, String txtUserId, String txtEmpId) throws ParseException{
@@ -182,7 +194,7 @@ public class tPurchaseOrderHeaderBL extends clsMainBL {
                 data.set_txtDeskripsi((String) innerObj.get("_pstrMethodRequest"));
                 data.set_txtName((String) innerObj.get("_pstrMethodRequest"));
                 data.set_txtValue((String) innerObj.get("_pstrArgument"));
-                _mCounterNumberDA.SaveDataMConfig(db, data);
+                _mCounterNumberDA.SaveDataMConfig(_db, data);
             } else {
                 flag = false;
                 ErrorMess = (String) innerObj.get(dtAPIDATA.strMessage);
@@ -198,7 +210,7 @@ public class tPurchaseOrderHeaderBL extends clsMainBL {
         tUserLoginDA _tUserLoginDA = new tUserLoginDA(_db);
         mconfigDA _mconfigDA = new mconfigDA(_db);
         String strVAl2 = "";
-        mconfigData dataApi = _mconfigDA.getData(db, enumConfigData.ApiKalbe.getidConfigData());
+        mconfigData dataApi = _mconfigDA.getData(_db, enumConfigData.ApiKalbe.getidConfigData());
         strVAl2 = dataApi.get_txtValue();
         if (dataApi.get_txtValue() == ""){
             strVAl2 = dataApi.get_txtDefaultValue();
@@ -207,7 +219,7 @@ public class tPurchaseOrderHeaderBL extends clsMainBL {
         Date date = new Date();
         String dateNow = dateFormat.format(date);
 
-        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(db, 1);
+        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
         clsHelper _help = new clsHelper();
         linkAPI dtLinkAPI = new linkAPI();
         String txtMethod = "GetDataTransactionPurchaseOrder"; 

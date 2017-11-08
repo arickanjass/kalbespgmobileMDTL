@@ -26,31 +26,42 @@ public class mPriceInOutletBL extends clsMainBL {
 		for(mPriceInOutletData data:Listdata){
 			_mPriceInOutletDA.SaveData(db, data);	
 		}
+		db.close();
 	}
 	public List<mPriceInOutletData> GetAllData(){
 		SQLiteDatabase db=getDb();
 		mPriceInOutletDA _mPriceInOutletDA=new mPriceInOutletDA(db);
-		return _mPriceInOutletDA.getAllData(db);
+		List<mPriceInOutletData> listdata=_mPriceInOutletDA.getAllData(db);
+		db.close();
+		return listdata;
 	}
 	public mPriceInOutletData getData(String Id){
 		SQLiteDatabase db=getDb();
 		mPriceInOutletDA _mPriceInOutletDA=new mPriceInOutletDA(db);
-		return _mPriceInOutletDA.getData(db, Id);
+		mPriceInOutletData dt =_mPriceInOutletDA.getData(db, Id);
+		db.close();
+		return dt;
 	}
 	public List<mPriceInOutletData> GetAllDataByProductCode(String Id){
 		SQLiteDatabase db=getDb();
 		mPriceInOutletDA _mPriceInOutletDA=new mPriceInOutletDA(db);
-		return _mPriceInOutletDA.getDataByintProductCode(db, Id);
+		List<mPriceInOutletData> listData=_mPriceInOutletDA.getDataByintProductCode(db, Id);
+		db.close();
+		return listData;
 	}
 	public List<mPriceInOutletData> getAllDataByCabId(String Id){
 		SQLiteDatabase db=getDb();
 		mPriceInOutletDA _mPriceInOutletDA=new mPriceInOutletDA(db);
-		return _mPriceInOutletDA.getDataAreaByCabId(db, Id);
+		List<mPriceInOutletData> listData=_mPriceInOutletDA.getDataAreaByCabId(db, Id);
+		db.close();
+		return listData;
 	}
 	public List<mPriceInOutletData> getAllDataBytxtOutletCodeByIntProductCode(String txtOutletCode,String intProductCode){
 		SQLiteDatabase db=getDb();
 		mPriceInOutletDA _mPriceInOutletDA=new mPriceInOutletDA(db);
-		return _mPriceInOutletDA.getDataBytxtOutletCodeByintProductCode(db, txtOutletCode, intProductCode);
+		List<mPriceInOutletData> listData=_mPriceInOutletDA.getDataBytxtOutletCodeByintProductCode(db, txtOutletCode, intProductCode);
+		db.close();
+		return listData;
 	}
 	
 	public void DownloadmPriceInOutlet(String versionName) throws Exception{
@@ -107,7 +118,7 @@ public class mPriceInOutletBL extends clsMainBL {
 				break;
 			}
 		}
-		
+		_db.close();
 	}
 	public org.json.simple.JSONArray DownloadmPriceInOutlet2(String versionName) throws Exception{
 		//ambil linkapi Database sqllite
@@ -136,6 +147,7 @@ public class mPriceInOutletBL extends clsMainBL {
 		String strLinkAPI= dtlinkAPI.QueryString(strVal2);
 		String JsonData= _help.pushtData(strLinkAPI,String.valueOf(resJson), Integer.valueOf(getBackGroundServiceOnline()));
 		org.json.simple.JSONArray JsonArray= _help.ResultJsonArray(JsonData);
+		_db.close();
 		return JsonArray;
 	}
 }

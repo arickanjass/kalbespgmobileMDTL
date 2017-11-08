@@ -12,18 +12,20 @@ import library.spgmobile.dal.mTypePertanyaanDA;
  */
 
 public class mTypePertanyaanBL extends clsMainBL{
-    SQLiteDatabase db = getDb();
+    //SQLiteDatabase db = getDb();
 
     public void SaveData (mTypePertanyaanData dt){
         SQLiteDatabase _db = getDb();
         mTypePertanyaanDA _mTypePertanyaanDA = new mTypePertanyaanDA(_db);
         _mTypePertanyaanDA.SaveDatamTypePertanyaan(_db, dt);
+        _db.close();
     }
 
     public List<mTypePertanyaanData> GetAllData(){
         SQLiteDatabase _db = getDb();
         mTypePertanyaanDA _mTypePertanyaanDA = new mTypePertanyaanDA(_db);
         List<mTypePertanyaanData> dt = _mTypePertanyaanDA.GetAllData(_db);
+        _db.close();
         return dt;
     }
 
@@ -31,5 +33,6 @@ public class mTypePertanyaanBL extends clsMainBL{
         SQLiteDatabase _db = getDb();
         mTypePertanyaanDA _mTypePertanyaanDA = new mTypePertanyaanDA(_db);
         _mTypePertanyaanDA.DeleteAllDatamTypePertanyaan(_db);
+        _db.close();
     }
 }

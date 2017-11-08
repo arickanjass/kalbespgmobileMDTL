@@ -12,18 +12,20 @@ import library.spgmobile.dal.mPertanyaanDA;
  */
 
 public class mPertanyaanBL extends clsMainBL {
-    SQLiteDatabase db = getDb();
+    //SQLiteDatabase db = getDb();
 
     public void SaveData(mPertanyaanData dt){
         SQLiteDatabase _db = getDb();
         mPertanyaanDA _mPertanyaanDA = new mPertanyaanDA(_db);
         _mPertanyaanDA.SaveDatamPertanyaan(_db, dt);
+        _db.close();
     }
 
     public List<mPertanyaanData> GetAllData(){
         SQLiteDatabase _db = getDb();
-        mPertanyaanDA _mPertanyaanDA = new mPertanyaanDA(db);
+        mPertanyaanDA _mPertanyaanDA = new mPertanyaanDA(_db);
         List<mPertanyaanData> dt = _mPertanyaanDA.GetAllData(_db);
+        _db.close();
         return dt;
     }
 
@@ -31,6 +33,7 @@ public class mPertanyaanBL extends clsMainBL {
         SQLiteDatabase _db = getDb();
         mPertanyaanDA _mPertanyaanDA = new mPertanyaanDA(_db);
         List<mPertanyaanData> dt = _mPertanyaanDA.GetDataBYGroupQuestion(_db,groupId);
+        _db.close();
         return dt;
     }
 
@@ -38,6 +41,7 @@ public class mPertanyaanBL extends clsMainBL {
         SQLiteDatabase _db = getDb();
         mPertanyaanDA _mPertanyaanDA = new mPertanyaanDA(_db);
         List<mPertanyaanData> dt = _mPertanyaanDA.GetDataBYGroupQuestionCheck(_db,groupId);
+        _db.close();
         return dt;
     }
 
@@ -45,6 +49,7 @@ public class mPertanyaanBL extends clsMainBL {
         SQLiteDatabase _db = getDb();
         mPertanyaanDA _mPertanyaanDA = new mPertanyaanDA(_db);
         List<mPertanyaanData> dt = _mPertanyaanDA.GetDataBYGroupQuestionCheckId(_db,groupId);
+        _db.close();
         return dt;
     }
 
@@ -52,6 +57,7 @@ public class mPertanyaanBL extends clsMainBL {
         SQLiteDatabase _db = getDb();
         mPertanyaanDA _mPertanyaanDA = new mPertanyaanDA(_db);
         List<mPertanyaanData> dt = _mPertanyaanDA.GetDataByQuestionId(_db, intId);
+        _db.close();
         return dt;
     }
 
@@ -59,11 +65,13 @@ public class mPertanyaanBL extends clsMainBL {
         SQLiteDatabase _db = getDb();
         mPertanyaanDA _mPertanyaanDA = new mPertanyaanDA(_db);
         List<mPertanyaanData> dt = _mPertanyaanDA.GetDataByCategoryInAndByGroupId(_db, groupId, categoryId);
+        _db.close();
         return dt;
     }
     public void DeletemPertanyaan(){
         SQLiteDatabase _db = getDb();
         mPertanyaanDA _mPertanyaanDA = new mPertanyaanDA(_db);
         _mPertanyaanDA.DeleteAllDatamPertanyaan(_db) ;
+        _db.close();
     }
 }

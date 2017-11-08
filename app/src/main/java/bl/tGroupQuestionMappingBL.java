@@ -13,18 +13,20 @@ import library.spgmobile.dal.tGroupQuestionMappingDA;
  */
 
 public class tGroupQuestionMappingBL extends clsMainBL{
-    SQLiteDatabase db = getDb();
+    //SQLiteDatabase db = getDb();
 
     public void saveDatatGroupQuestionMapping(tGroupQuestionMappingData dt){
         SQLiteDatabase _db = getDb();
         tGroupQuestionMappingDA _tGroupQuestionMappingDA = new tGroupQuestionMappingDA(_db);
         _tGroupQuestionMappingDA.SaveDatatGroupQuestionMapping(_db, dt);
+        _db.close();
     }
 
     public List<tGroupQuestionMappingData> GetAllData(){
         SQLiteDatabase _db = getDb();
         tGroupQuestionMappingDA _tGroupQuestionMappingDA = new tGroupQuestionMappingDA(_db);
         List<tGroupQuestionMappingData> listData = _tGroupQuestionMappingDA.GetAllData(_db);
+        _db.close();
         return listData;
     }
 
@@ -32,6 +34,7 @@ public class tGroupQuestionMappingBL extends clsMainBL{
         SQLiteDatabase _db = getDb();
         tGroupQuestionMappingDA _tGroupQuestionMappingDA = new tGroupQuestionMappingDA(_db);
         List<tGroupQuestionMappingData> listData = _tGroupQuestionMappingDA.GetDataById(_db, intId);
+        _db.close();
         return listData;
     }
 
@@ -39,6 +42,7 @@ public class tGroupQuestionMappingBL extends clsMainBL{
         SQLiteDatabase _db = getDb();
         tGroupQuestionMappingDA _tGroupQuestionMappingDA = new tGroupQuestionMappingDA(_db);
         List<tGroupQuestionMappingData> listData = _tGroupQuestionMappingDA.GetDataByIdActive(_db, groupId);
+        _db.close();
         return listData;
     }
 
@@ -46,6 +50,7 @@ public class tGroupQuestionMappingBL extends clsMainBL{
         SQLiteDatabase _db = getDb();
         tGroupQuestionMappingDA _tGroupQuestionMappingDA = new tGroupQuestionMappingDA(_db);
         List<mPertanyaanData> listData = _tGroupQuestionMappingDA.GetDataByQstId(_db, intQuestionId);
+        _db.close();
         return listData;
     }
 
@@ -53,5 +58,6 @@ public class tGroupQuestionMappingBL extends clsMainBL{
         SQLiteDatabase _db = getDb();
         tGroupQuestionMappingDA _tGroupQuestionMappingDA = new tGroupQuestionMappingDA(_db);
         _tGroupQuestionMappingDA.DeleteAllDatatGroupQuestionMapping(_db);
+        _db.close();
     }
 }

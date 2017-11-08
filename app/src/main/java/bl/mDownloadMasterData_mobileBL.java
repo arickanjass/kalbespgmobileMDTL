@@ -34,6 +34,7 @@ public class mDownloadMasterData_mobileBL extends clsMainBL {
         SQLiteDatabase db = getDb();
         mDownloadMasterData_mobileDA _mDownloadMasterData_mobileDA=new mDownloadMasterData_mobileDA(db);
         _mDownloadMasterData_mobileDA.DeleteAllDataMConfig(db);
+        db.close();
     }
     public List<mDownloadMasterData_mobileData> GetAllData(){
         SQLiteDatabase db=getDb();
@@ -51,8 +52,10 @@ public class mDownloadMasterData_mobileBL extends clsMainBL {
     }
     public int getContactCount(){
         int count = 0;
+        SQLiteDatabase db=getDb();
         mDownloadMasterData_mobileDA _mDownloadMasterData_mobileDA=new mDownloadMasterData_mobileDA(db);
         count = _mDownloadMasterData_mobileDA.getContactsCount(db);
+        db.close();
         return count;
     }
 
@@ -89,6 +92,7 @@ public class mDownloadMasterData_mobileBL extends clsMainBL {
         clsHelper _clsHelper=new clsHelper();
         String JsonData= _clsHelper.pushtData(strLinkAPI, String.valueOf(resJson), Integer.valueOf(getBackGroundServiceOnline()));
         res= _clsHelper.ResultJsonArray(JsonData);
+        db.close();
         //String txtParam=
         return res;
     }
@@ -119,5 +123,6 @@ public class mDownloadMasterData_mobileBL extends clsMainBL {
         String strLinkAPI= dtlinkAPI.QueryString(strVal2);
         String JsonData= _help.pushtData(strLinkAPI,String.valueOf(resJson), Integer.valueOf(getBackGroundServiceOnline()));
         org.json.simple.JSONArray JsonArray= _help.ResultJsonArray(JsonData);
+        _db.close();
     }
 }

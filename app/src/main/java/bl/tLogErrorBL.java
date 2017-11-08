@@ -15,16 +15,18 @@ import library.spgmobile.dal.tLogErrorDA;
  */
 
 public class tLogErrorBL extends clsMainBL {
-    SQLiteDatabase db;
+    //SQLiteDatabase db;
     public void saveData(tLogErrorData dt){
        SQLiteDatabase _db = getDb();
         tLogErrorDA _tLogErrorDA = new tLogErrorDA(_db);
         _tLogErrorDA.SaveLogData(_db, dt);
+        _db.close();
     }
 
     public List<tLogErrorData> getAllData(){
         SQLiteDatabase _db = getDb();
         List<tLogErrorData> dt = new tLogErrorDA(_db).getAllData(_db);
+        _db.close();
         return dt;
     }
     public List<String> deleteFileLogFromDevice(){
@@ -39,7 +41,7 @@ public class tLogErrorBL extends clsMainBL {
             // Do your stuff
         }
         new tLogErrorDA(_db).DeleteAllData(_db);
-
+        _db.close();
         return  listFileName;
     }
     public List<String> getFileLogFromDevice(){
@@ -67,11 +69,13 @@ public class tLogErrorBL extends clsMainBL {
             }
             new tLogErrorDA(_db).DeleteAllData(_db);
         }
+        _db.close();
         return  listFileName;
     }
 
     public void deleteData(tLogErrorData dt){
         SQLiteDatabase _db=getDb();
         new tLogErrorDA(_db).DeleteAllData(_db);
+        _db.close();
     }
 }

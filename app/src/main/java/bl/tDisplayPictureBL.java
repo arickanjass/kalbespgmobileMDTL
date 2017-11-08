@@ -18,12 +18,14 @@ public class tDisplayPictureBL extends clsMainBL{
         for(tDisplayPictureData data:Listdata){
             _tDisplayPictureDA.SaveData(db, data);
         }
+        db.close();
     }
 
     public tDisplayPictureData getData(){
         SQLiteDatabase db=getDb();
         tDisplayPictureDA _tDisplayPictureDA = new tDisplayPictureDA(db);
         tDisplayPictureData data=_tDisplayPictureDA.getData(db);
+        db.close();
         return data;
     }
 }

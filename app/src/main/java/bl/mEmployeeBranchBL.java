@@ -42,13 +42,13 @@ public class mEmployeeBranchBL extends clsMainBL {
 		mconfigDA _mconfigDA =new mconfigDA(_db);
 
 		String strVal2="";
-		mconfigData dataAPI = _mconfigDA.getData(db,enumConfigData.ApiKalbe.getidConfigData());
+		mconfigData dataAPI = _mconfigDA.getData(_db,enumConfigData.ApiKalbe.getidConfigData());
 		strVal2 = dataAPI.get_txtValue();
 		if (dataAPI.get_txtValue() == "") {
 			strVal2 = dataAPI.get_txtDefaultValue();
 		}
 		//ambil version dari webservices
-		tUserLoginData _dataUserLogin = _tUserLoginDA.getData(db, 1);
+		tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
 		clsHelper _help =new clsHelper();
 		linkAPI dtlinkAPI=new linkAPI();
 		String txtMethod="GetDatavw_SalesInsentive_EmployeeBranch";
@@ -60,6 +60,7 @@ public class mEmployeeBranchBL extends clsMainBL {
 		String JsonData= _help.ResultJsonData(_help.getHTML(strLinkAPI));
 		org.json.simple.JSONArray JsonArray= _help.ResultJsonArray(JsonData);
 		APIData dtAPIDATA=new APIData();
+		_db.close();
 		return JsonArray;
 	}
 
@@ -70,13 +71,13 @@ public class mEmployeeBranchBL extends clsMainBL {
 		mconfigDA _mconfigDA =new mconfigDA(_db);
 		
 		String strVal2="";
-		mconfigData dataAPI = _mconfigDA.getData(db,enumConfigData.ApiKalbe.getidConfigData());
+		mconfigData dataAPI = _mconfigDA.getData(_db,enumConfigData.ApiKalbe.getidConfigData());
 		strVal2 = dataAPI.get_txtValue();
 		if (dataAPI.get_txtValue() == "") {
 			strVal2 = dataAPI.get_txtDefaultValue();
 		}
 		//ambil version dari webservices
-		tUserLoginData _dataUserLogin = _tUserLoginDA.getData(db, 1);
+		tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
 		clsHelper _help =new clsHelper();
 		linkAPI dtlinkAPI=new linkAPI();
 		String txtMethod="GetDatavw_SalesInsentive_EmployeeBranch";
@@ -110,7 +111,7 @@ public class mEmployeeBranchBL extends clsMainBL {
 				_data.set_txtBranchName((String) innerObj.get("TxtBranchName"));
 				_data.set_txtNIK((String) innerObj.get("TxtNIK"));
 				_data.set_txtName((String) innerObj.get("TxtName"));
-				_mEmployeeBranchDA.SaveDataMConfig(db, _data);
+				_mEmployeeBranchDA.SaveDataMConfig(_db, _data);
 			}else{
 				flag=false;
 				ErrorMess=(String) innerObj.get(dtAPIDATA.strMessage);

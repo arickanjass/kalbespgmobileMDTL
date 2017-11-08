@@ -28,13 +28,13 @@ public class tActivityBL extends clsMainBL{
 		mconfigDA _mconfigDA = new mconfigDA(_db);
 
 		String strVal2 = "";
-		mconfigData dataAPI = _mconfigDA.getData(db, enumConfigData.ApiKalbe.getidConfigData());
+		mconfigData dataAPI = _mconfigDA.getData(_db, enumConfigData.ApiKalbe.getidConfigData());
 		strVal2 = dataAPI.get_txtValue();
 		if (dataAPI.get_txtValue() == "") {
 			strVal2 = dataAPI.get_txtDefaultValue();
 		}
 		//ambil version dari webservices
-		tUserLoginData _dataUserLogin = _tUserLoginDA.getData(db, 1);
+		tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
 		clsHelper _help = new clsHelper();
 		linkAPI dtlinkAPI = new linkAPI();
 //		String txtMethod = "GetActivity";
@@ -62,7 +62,7 @@ public class tActivityBL extends clsMainBL{
 
 		tActivityDA _tActivityDA = new tActivityDA(_db);
 		List<tActivityData> dt = _tActivityDA.getAllData(_db);
-
+		_db.close();
 		return dt.size();
 	}
 
@@ -72,12 +72,14 @@ public class tActivityBL extends clsMainBL{
 		for(tActivityData data:Listdata){
 			_tActivityDA.SaveDatatActivityData(db, data);
 		}
+		db.close();
 	}
 
 	public List<tActivityData> getDataNew(){
 		SQLiteDatabase db=getDb();
 		tActivityDA _tActivityDA=new tActivityDA(db);
 		List<tActivityData> listData=_tActivityDA.getAllDataNew(db);
+		db.close();
 		return listData;
 	}
 
@@ -85,6 +87,7 @@ public class tActivityBL extends clsMainBL{
 		SQLiteDatabase db=getDb();
 		tActivityDA _tActivityDA=new tActivityDA(db);
 		tActivityData listData=_tActivityDA.getAllDataByBitActive(db);
+		db.close();
 		return listData;
 	}
 
@@ -92,6 +95,7 @@ public class tActivityBL extends clsMainBL{
 		SQLiteDatabase db=getDb();
 		tActivityDA _tActivityDA=new tActivityDA(db);
 		List<tActivityData> listData=_tActivityDA.getAllData(db);
+		db.close();
 		return listData;
 	}
 
@@ -99,12 +103,13 @@ public class tActivityBL extends clsMainBL{
 		SQLiteDatabase db=getDb();
 		tActivityDA _tActivityDA=new tActivityDA(db);
 		List<tActivityData> listData=_tActivityDA.getAllOutlet(db, outletName);
+		db.close();
 		return listData;
 	}
 
 	public List<tActivityData> getAllDataByOutletCode(String outletcode){
 		SQLiteDatabase _db = getDb();
-		tActivityDA _tActivityDA=new tActivityDA(db);
+		tActivityDA _tActivityDA=new tActivityDA(_db);
 		List<tActivityData> dt;
 		if(outletcode.equals("ALLOUTLET")){
 			dt = _tActivityDA.getAllData(_db);
@@ -115,6 +120,7 @@ public class tActivityBL extends clsMainBL{
 		if(dt == null){
 			dt = new ArrayList<>(0);
 		}
+		_db.close();
 		return dt;
 	}
 
