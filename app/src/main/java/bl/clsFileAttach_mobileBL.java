@@ -39,6 +39,7 @@ public class clsFileAttach_mobileBL extends clsMainBL {
     }
 
     public clsFileAttach_mobile getData(String id){
+        SQLiteDatabase db=getDb();
         clsFileAttach_mobile data=new clsFileAttach_mobile();
         clsFileAttach_mobileDA _clsFileAttach_mobileDA=new clsFileAttach_mobileDA(db);
             data=_clsFileAttach_mobileDA.getData(db, id);
@@ -46,6 +47,7 @@ public class clsFileAttach_mobileBL extends clsMainBL {
         return data;
     }
     public List<clsFileAttach_mobile> getDataByIdHeader(String id){
+        SQLiteDatabase db=getDb();
         List<clsFileAttach_mobile> listData = new ArrayList<>();
         clsFileAttach_mobileDA _clsFileAttach_mobileDA=new clsFileAttach_mobileDA(db);
         listData=_clsFileAttach_mobileDA.getDataByIdHeader(db, id);
