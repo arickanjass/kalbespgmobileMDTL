@@ -2923,7 +2923,7 @@ public class FragmentReporting extends Fragment {
                             sheet.addCell(new Label(1, k, desc, cellFormat));
                             k++;
                         }
-                    } 
+                    }
                 }
             }
             //closing cursor

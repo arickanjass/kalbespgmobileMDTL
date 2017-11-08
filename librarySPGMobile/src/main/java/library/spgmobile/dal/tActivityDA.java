@@ -263,10 +263,12 @@ public class tActivityDA {
 		tActivityData dt=new tActivityData();
 		String selectQuery;
 		if (outletName == "ALL OUTLET"){
-			selectQuery= "SELECT  "+ dt.Property_txtOutletCode + "," + dt.Property_txtOutletName +" FROM " + TABLE_CONTACTS;
+			selectQuery= "SELECT  "+ dt.Property_txtOutletCode + "," + dt.Property_txtOutletName +" FROM " + TABLE_CONTACTS + " group by "
+			+ dt.Property_txtOutletCode;
 		}else {
 			selectQuery= "SELECT  " +dt.Property_txtOutletCode + "," + dt.Property_txtOutletName
-					+" FROM " + TABLE_CONTACTS + " WHERE txtOutletName='" + outletName +"'";
+					+" FROM " + TABLE_CONTACTS + " WHERE txtOutletName='" + outletName +"' group by "
+					+ dt.Property_txtOutletCode;
 		}
 
 		Cursor cursor = db.rawQuery(selectQuery, null);
