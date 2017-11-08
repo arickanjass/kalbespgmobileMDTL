@@ -2332,7 +2332,7 @@ public class FragmentReporting extends Fragment {
                                         String jawabFinal = jawab.substring(0, jawab.lastIndexOf(',')).trim();
                                         answer = jawabFinal;
                                     }
-                                } 
+                                }
                             }
                         }else {
                             answer = dataAnswer.get(r).get_txtValue();
@@ -2568,16 +2568,16 @@ public class FragmentReporting extends Fragment {
 
                     String totQty = String.valueOf(total_item)+ " pcs";
                     String outlet = _tStockInHandHeaderData.get(i).get_OutletName();
+                    tUserLoginData dataUserActive = new tAbsenUserBL().getUserActive();
                     DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                    SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+                    SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                     Date date = null;
                     try {
-                        date = sdfDate.parse(_tStockInHandHeaderData.get(i).get_dtDate());
+                        date = sdfDate.parse(dataUserActive.get_dtLastLogin());
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
                     String dateNow = dateFormat.format(date);
-
                     sheet.addCell(new Label(1, 0, no));
                     sheet.addCell(new Label(1, 1, totProd));
                     sheet.addCell(new Label(1, 2, totQty));
@@ -2677,16 +2677,18 @@ public class FragmentReporting extends Fragment {
 
                     String totQty = String.valueOf(total_item)+ " pcs";
                     String outlet = _tSalesProductQuantityHeaderData.get(i).get_OutletName();
+
+                    tUserLoginData dataUserActive = new tAbsenUserBL().getUserActive();
                     DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                    SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
-                    SimpleDateFormat sdfDated = new SimpleDateFormat("yyyy/MM/dd");
+                    SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                     Date date = null;
                     try {
-                        date = sdfDate.parse(_tSalesProductQuantityHeaderData.get(i).get_dtDate());
+                        date = sdfDate.parse(dataUserActive.get_dtLastLogin());
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
                     String dateNow = dateFormat.format(date);
+                    SimpleDateFormat sdfDated = new SimpleDateFormat("yyyy/MM/dd");
 
                     sheet.addCell(new Label(1, 0, no));
                     sheet.addCell(new Label(1, 1, totProd));
@@ -2972,7 +2974,6 @@ public class FragmentReporting extends Fragment {
             String branch = dataUserActive.get_txtCab();
             String name = dataUserActive.get_txtUserName();
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            Date time = new Date();
             SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             Date date = null;
             try {
