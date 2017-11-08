@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <ScrollView
+    <HorizontalScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <!--<HorizontalScrollView-->
-        <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
         <LinearLayout
             android:id="@+id/ll0"
-            android:layout_gravity="center"
             android:gravity="center_vertical|center_horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -149,5 +147,5 @@
     </TableLayout>
         </LinearLayout>
         </LinearLayout>
-    <!--</HorizontalScrollView>-->
-</ScrollView>
+    </ScrollView>
+</HorizontalScrollView>
