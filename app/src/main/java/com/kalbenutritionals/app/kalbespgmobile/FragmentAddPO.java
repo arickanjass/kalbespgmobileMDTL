@@ -462,6 +462,7 @@ TextView tv_tgl, tv_noPO;
         }
 
         _clsMainActivity.showCustomToast(getActivity(), "Saved", true);
+        _db.close();
     }
 
     public class MyAdapter extends BaseAdapter implements Filterable {

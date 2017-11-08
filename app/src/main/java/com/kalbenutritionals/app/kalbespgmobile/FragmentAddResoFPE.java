@@ -544,6 +544,7 @@ public class FragmentAddResoFPE extends Fragment implements View.OnClickListener
         }
 
         _clsMainActivity.showCustomToast(getActivity(), "Submited", true);
+        _db.close();
     }
 
 

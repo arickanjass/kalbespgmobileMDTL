@@ -525,6 +525,7 @@ public class FragmentAddResoSPG extends Fragment implements View.OnClickListener
         }
 
         _clsMainActivity.showCustomToast(getActivity(), "Saved", true);
+        _db.close();
     }
 
 

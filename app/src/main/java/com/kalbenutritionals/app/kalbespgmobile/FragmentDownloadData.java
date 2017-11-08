@@ -2335,6 +2335,7 @@ public class FragmentDownloadData extends Fragment {
 
                 dtdataJson.setIntResult(txtValid);
                 dtdataJson.setTxtMessage(txtMess);
+                _db.close();
             } catch (Exception e) {
                 dtdataJson.setIntResult("0");
                 dtdataJson.setTxtMessage(e.toString() + "\n" + jsonData);
@@ -2752,6 +2753,7 @@ public class FragmentDownloadData extends Fragment {
                 txtPOPLastDownload.setText("Last Download : "+_clsMainActivity.giveFormatDateWithTime(_tLogDownloadData.get_dtLastDownload().toString()));
             }
         }
+        db.close();
     }
 
     private void saveDatatLogDownloadData(String pstrArgumet, String s) {
@@ -3077,6 +3079,7 @@ public class FragmentDownloadData extends Fragment {
                         _data.set_intId(String.valueOf(innerObj_detail.get("TxtDataId")));
                         new tSalesProductDetailDA(_db).SaveDatatSalesProductDetailData(_db, _data);
                     }
+                    _db.close();
                 } else {
                     new clsMainActivity().showCustomToast(getContext(), "Data not found", false);
                 }
@@ -3148,6 +3151,7 @@ public class FragmentDownloadData extends Fragment {
                         _data.set_intId(String.valueOf(innerObj_detail.get("TxtDataId")));
                         new tStockInHandDetailDA(_db).SaveDatatStockInHandDetailData(_db, _data);
                     }
+                    _db.close();
                 } else {
                     new clsMainActivity().showCustomToast(getContext(), "Data not found", false);
                 }
@@ -4072,6 +4076,7 @@ public class FragmentDownloadData extends Fragment {
         @Override
         protected void onPostExecute(JSONArray roledata) {
             if (roledata != null && roledata.size() > 0) {
+                new clsMainActivity().showCustomToast(getContext(), "Saving Data", true);
                 loadData();
                 setViewTextLastDownload();
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
@@ -5265,6 +5270,8 @@ public class FragmentDownloadData extends Fragment {
         @Override
         protected void onPostExecute(JSONArray roledata) {
             if (roledata != null && roledata.size() > 0) {
+                Dialog.setMessage("Saving Data");
+                new clsMainActivity().showCustomToast(getContext(), "Saving Data", true);
                 arrData = SaveDatamEmployeeAreaData(roledata);
                 loadData();
                 setViewTextLastDownload();
@@ -5330,6 +5337,8 @@ public class FragmentDownloadData extends Fragment {
         protected void onPostExecute(JSONArray roledata) {
 
             if (roledata != null && roledata.size() > 0) {
+                Dialog.setTitle("Saving Data");
+                new clsMainActivity().showCustomToast(getContext(), "Saving Data", true);
                 arrData = SaveDatamEmployeeBranchData(roledata);
                 //spnBranch.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
                 loadData();
@@ -6598,6 +6607,7 @@ public class FragmentDownloadData extends Fragment {
                         _data.set_intActive(String.valueOf(innerObj_detail.get("BitActive")));
                         new tPurchaseOrderDetailDA(_db).SaveDatatPurchaseOrderDetailData(_db, _data);
                     }
+                    _db.close();
                 } else {
                     new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
                 }
@@ -6668,6 +6678,7 @@ public class FragmentDownloadData extends Fragment {
                         _data.set_txtNIK(String.valueOf(innerObj_detail.get("TxtUserId")));
                         new tOverStockDetailDA(_db).SaveDatatOverStockDetailData(_db, _data);
                     }
+                    _db.close();
                 } else {
 //                    new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
                     _array.add("Data Near ED Not Found");
@@ -6739,6 +6750,7 @@ public class FragmentDownloadData extends Fragment {
                         _data.set_txtNIK(String.valueOf(innerObj_detail.get("TxtUserId")));
                         new tSalesProductQuantityDetailDA(_db).SaveDatatSalesProductQuantityDetailData(_db, _data);
                     }
+                    _db.close();
 
                     JSONArray jsonArray_Image = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListtSalesProductQuantityImage_mobile")));
                     if(jsonArray_Image!=null){
@@ -6763,6 +6775,7 @@ public class FragmentDownloadData extends Fragment {
 
                             new tSalesProductQuantityImageDA(_db_image).SaveDataImage(_db_image, _data);
                         }
+                        _db_image.close();
                     }
                 } else {
 //                    new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
@@ -6835,6 +6848,7 @@ public class FragmentDownloadData extends Fragment {
                         _data.set_txtNIK(String.valueOf(innerObj_detail.get("TxtUserId")));
                         new tKemasanRusakDetailDA(_db).SaveData(_db, _data);
                     }
+                    _db.close();
 
                     JSONArray jsonArray_Image = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListtKemasanRusakImage_mobile")));
                     if(jsonArray_Image!=null){
@@ -6859,6 +6873,7 @@ public class FragmentDownloadData extends Fragment {
 
                             new tKemasanRusakImageDA(_db_image).SaveDataImage(_db_image, _data);
                         }
+                        _db_image.close();
                     }
                 } else {
 //                    new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
@@ -6932,6 +6947,7 @@ public class FragmentDownloadData extends Fragment {
 
                         new tPlanogramImageDA(_db_image).SaveDataImage(_db_image, _data);
                     }
+                    _db_image.close();
                 } else {
 //                    new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
                     _array.add("Data Planogram Not Found");
@@ -7040,6 +7056,7 @@ public class FragmentDownloadData extends Fragment {
 
                         new KoordinasiOutletImageDA(_db_image).SaveDataImage(_db_image, _data);
                     }
+                    _db_image.close();
                 } else {
 //                    new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
                     _array.add("Data Koordinasi Outlet not Found");
@@ -7111,6 +7128,7 @@ public class FragmentDownloadData extends Fragment {
 
                         new tTidakSesuaiPesananImageDA(_db_image).SaveDataImage(_db_image, _data);
                     }
+                    _db_image.close();
                 } else {
 //                    new clsMainActivity().showCustomToast(getContext(), "Data Not Found", false);
                     _array.add("Data not Found");

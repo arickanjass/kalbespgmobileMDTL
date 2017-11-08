@@ -755,6 +755,7 @@ public class Login extends clsMainActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+                db.close();
             } else {
                 showCustomToast(Login.this, clsHardcode.txtMessNetworkOffline, false);
             }

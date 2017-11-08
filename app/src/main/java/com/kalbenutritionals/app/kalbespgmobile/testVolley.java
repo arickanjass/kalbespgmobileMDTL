@@ -119,7 +119,7 @@ public class testVolley extends Activity implements View.OnClickListener {
                 resJson.put("txtBranchCode", null);
 
                 params.put("Params", String.valueOf(resJson));
-
+                db.close();
                 return params;
             }
         };
