@@ -2091,7 +2091,7 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
             }
         }
 
-        if (firstNotelpkantor != null && !firstNotelpkantor.equals("0")) {
+        if (firstNotelpkantor != null && !firstNotelpkantor.equals("0") ) {
             new clsMainActivity().setErrorMessage(getContext(), textInputLayoutTelpKantor, etTelponKantor, "Telephone number beginning with the digits 0");
             validate = false;
         } else if (firstNotelpkantor != null && firstNotelpkantor.equals("0")) {
@@ -2103,25 +2103,34 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
                 validate = false;
             }
         }
-
-        if(mUserLOBDataList!=null&&mUserLOBDataList.size()>0){
+        if(etCustomerBasedNo.getText().toString().equals("")){
+            new clsMainActivity().showCustomToast(getContext(), "Your Submission Empty", false);
+            validate=false;
+        }
+        if(mUserLOBDataList!=null&&mUserLOBDataList.size()>0 && validate){
+            List<mProductPICData> dast=new mProductPICBL().GetAllData();
             if(new mProductPICBL().getContactCountByKN(mUserLOBDataList)==0){
                 new clsMainActivity().showCustomToast(getContext(), "Please re-download Product PIC", false);
                 validate=false;
-            } else if (new mProductPICBL().getContactCountSubId()>0){
+            }
+            /*
+            else if (new mProductPICBL().getContactCountSubId()>0 && validate){
                 new clsMainActivity().showCustomToast(getContext(), "Please re-download Product PIC", false);
                 validate=false;
             }
-
-            if(new mProductSPGBL().getContactCountByKN(mUserLOBDataList)==0){
-                new clsMainActivity().showCustomToast(getContext(), "Please re-download Product SPG", false);
-                validate=false;
-            } else if (new mProductSPGBL().getContactCountSubId()>0){
+            */
+            if(new mProductSPGBL().getContactCountByKN(mUserLOBDataList)==0 && validate){
                 new clsMainActivity().showCustomToast(getContext(), "Please re-download Product SPG", false);
                 validate=false;
             }
+            /*
+            else if (new mProductSPGBL().getContactCountSubId()>0){
+                new clsMainActivity().showCustomToast(getContext(), "Please re-download Product SPG", false);
+                validate=false;
+            }
+            */
 
-            if(new mProductCompetitorBL().getContactsCountByKN(mUserLOBDataList)==0){
+            if(new mProductCompetitorBL().getContactsCountByKN(mUserLOBDataList)==0 && validate){
                 new clsMainActivity().showCustomToast(getContext(), "Please re-download Product Competitor", false);
                 validate=false;
             }

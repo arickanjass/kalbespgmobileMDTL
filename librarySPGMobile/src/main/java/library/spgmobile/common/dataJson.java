@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -253,6 +254,20 @@ public class dataJson {
         JSONObject resJson = new JSONObject();
         Collection<JSONObject> itemsListJquey = new ArrayList<JSONObject>();
         try {
+            if(this.getListOftErrorLogData() != null){
+                tLogErrorData _tLogErrorData = new tLogErrorData();
+                for (tLogErrorData data : this.getListOftErrorLogData()){
+                    JSONObject item1 = new JSONObject();
+                    item1.put(_tLogErrorData.Property_intLogId, String.valueOf(data.get_intLogId()));
+                    item1.put(_tLogErrorData.Property_txtUserId, String.valueOf(data.get_TxtUserId()));
+                    item1.put(_tLogErrorData.Property_txtRoleId, String.valueOf(data.get_txtRoleId()));
+                    item1.put(_tLogErrorData.Property_txtRoleName, String.valueOf(data.get_txtRoleName()));
+                    item1.put(_tLogErrorData.Property_txtDeviceId, String.valueOf(data.get_txtDeviceId()));
+                    item1.put(_tLogErrorData.Property_txtFileName, String.valueOf(data.get_txtFileName()));
+                    itemsListJquey.add(item1);
+                }
+                resJson.put(_tLogErrorData.Property_ListLogError, new JSONArray(itemsListJquey));
+            }
             if (this.getListDatamConfig() != null) {
                 mconfigData dtConfig = new mconfigData();
                 for (mconfigData data : this.getListDatamConfig()) {

@@ -31,6 +31,7 @@ public class tLogErrorBL extends clsMainBL {
     }
     public List<String> deleteFileLogFromDevice(){
         SQLiteDatabase _db = getDb();
+        new tLogErrorDA(_db).DeleteAllData(_db);
         List<String> listFileName =new ArrayList<>();
         File yourDir = new File(new clsHardCode().txtPathApp);
         for (File f : yourDir.listFiles()) {
