@@ -185,10 +185,22 @@ public class FragmentKuesionerPart extends Fragment {
             setListViewHeightBasedOnItems(listView);
             llMain.addView(listView);
         } else if (typeJawaban == 3) {
+            DisplayMetrics displayMetrics = new DisplayMetrics();
+            getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+            int width = displayMetrics.widthPixels-40;
+            int heigth = displayMetrics.heightPixels/3;
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width, heigth);
+            layoutParams.gravity = Gravity.CENTER_HORIZONTAL;
             final EditText etTest = new EditText(getContext());
             etTest.setText("");
             etTest.setHint("Please fill...");
             etTest.setId(noSoal);
+            etTest.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+            etTest.setSingleLine(false);
+//            etTest.setEms(10); 
+            etTest.setGravity(Gravity.TOP);
+            etTest.setBackgroundResource(R.drawable.bg_edtext);
+            etTest.setLayoutParams(layoutParams);
             llMain.addView(etTest);
             final EditText editText = (EditText)v.findViewById(etTest.getId());
             InputFilter filter = new InputFilter() {
