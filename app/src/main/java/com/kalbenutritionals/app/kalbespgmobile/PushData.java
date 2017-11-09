@@ -89,7 +89,7 @@ public class PushData extends AppCompatActivity {
         boolean validCheckinActive = false;
 
         if (dataAttendance != null && dataAttendance.getType().equals("visitPlan")){
-            new tVisitPlanRealisasiBL().checkOutSystem(dataAttendance.get_intId(),dateFormat.format(cal.getTime()));
+            new tVisitPlanRealisasiBL().checkOutSystem(dataAttendance.get_txtId(),dateFormat.format(cal.getTime()));
             validCheckinActive = true;
         } else if (dataAttendance != null && dataAttendance.getType().equals("absen")){
             String dtime = new clsMainActivity().getYesterdayDateString();
