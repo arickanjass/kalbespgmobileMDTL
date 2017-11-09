@@ -313,6 +313,7 @@ public class clsMainBL {
 
 			//trans spg dan tl
 			int countDataPushAbsenUser = _tAbsenUserDA.getAllCheckToPushData(db);
+			int countDataPushAbsenUserUnsubmit = _tAbsenUserDA.getAllCheckToPushDataUnsubmit(db);
 
 			//trans md dan tl
 			int listtSalesProductQuantity = _tSalesProductQuantityHeaderDA.getAllCheckPushData(db);
@@ -324,6 +325,9 @@ public class clsMainBL {
 			int countDataPushLeave = _tLeaveMobileDA.getAllCheckPushData(db);
 
 			if (countDataPushAbsenUser > 0 && dvalid == false) {
+				dvalid = true;
+			}
+			if (countDataPushAbsenUserUnsubmit > 0 && dvalid == false) {
 				dvalid = true;
 			}
 			if (countDataPushSalesProductHeader > 0 && dvalid == false) {

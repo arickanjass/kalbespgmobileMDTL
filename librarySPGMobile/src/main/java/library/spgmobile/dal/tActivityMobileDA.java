@@ -362,10 +362,10 @@ public class tActivityMobileDA {
         String selectQuery;
         if (outletname == "ALL OUTLET"){
             selectQuery = "SELECT  "+dt.Property_txtOutletCode+ "," + dt.Property_txtOutletName +
-                    " FROM " + TABLE_CONTACTS;
+                    " FROM " + TABLE_CONTACTS + " group by " + dt.Property_txtOutletCode;
         } else {
             selectQuery = "SELECT  "+dt.Property_txtOutletCode+ "," + dt.Property_txtOutletName +
-                    " FROM " + TABLE_CONTACTS + " WHERE txtOutletName='" + outletname +"'";
+                    " FROM " + TABLE_CONTACTS + " WHERE txtOutletName='" + outletname +"' group by " + dt.Property_txtOutletCode;
         }
 
         Cursor cursor = db.rawQuery(selectQuery, null);

@@ -260,7 +260,7 @@ public class FragmentKuesionerPart extends Fragment {
             getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
             int height = displayMetrics.heightPixels/4;
             double width = displayMetrics.widthPixels/(2.5);
-            int w = (int) width; 
+            int w = (int) width;
             LinearLayout.LayoutParams layoutParamImg = new LinearLayout.LayoutParams(w,height);
             layoutParams.gravity = Gravity.CENTER;
             layoutParams.topMargin = 20;
@@ -402,7 +402,6 @@ public class FragmentKuesionerPart extends Fragment {
             linearLayout.addView(dateView);
             linearLayout.addView(imageView);
             llMain.addView(linearLayout);
-//            llMain.addView(dateView);
         }
 
         return v;
@@ -522,10 +521,8 @@ public class FragmentKuesionerPart extends Fragment {
                         }
                     } else if (resultCode == 0) {
                         _clsMainActivity.showCustomToast(getContext(), "User canceled photo", false);
-//                    imageView.setBackgroundResource(R.drawable.profile);
                     } else {
                         _clsMainActivity.showCustomToast(getContext(), "Something error", false);
-//                    imageView.setBackgroundResource(R.drawable.profile);
                     }
                 break;
             case PICK_FILE_ID:

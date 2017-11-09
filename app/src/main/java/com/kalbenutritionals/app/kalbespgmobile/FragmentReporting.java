@@ -2266,6 +2266,7 @@ public class FragmentReporting extends Fragment {
                     sheet.addCell(new Label(1, 3, time));
 
                     WritableCellFormat cellFormat = new WritableCellFormat();
+                    cellFormat.setWrap(true);
                     cellFormat.setVerticalAlignment(VerticalAlignment.CENTRE);
                     cellFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
 
@@ -2280,7 +2281,7 @@ public class FragmentReporting extends Fragment {
                     sheet.addCell(new Label(2, k, "Question", formatFont));
                     sheet.addCell(new Label(3, k, "Answer", formatFont));
 
-                    for (int z = 0; z <= 2; z++){
+                    for (int z = 0; z <= 3; z++){
                         CellView cellData2 = sheet.getColumnView(z);
                         cellData2.setAutosize(true);
                         sheet.setColumnView(z, cellData2);
@@ -2344,9 +2345,8 @@ public class FragmentReporting extends Fragment {
                         if (dataAnswer.get(r).get_intTypeQuestionId().equals("7")){
                             WritableImage img1 = new WritableImage(3, k,1, 1, dataAnswer.get(r).get_ptQuiz());
                             sheet.addImage(img1);
-                            CellView cellData4 = sheet.getRowView(k);
                             int heightInPoints = 38*20;
-                            cellData4.setAutosize(true);
+                            sheet.setColumnView(3, heightInPoints);
                             sheet.setRowView(k, heightInPoints);
                         } else {
                             sheet.addCell(new Label(3, k, answer, cellFormat));
@@ -2436,6 +2436,7 @@ public class FragmentReporting extends Fragment {
 
 
                                     WritableCellFormat cellFormat = new WritableCellFormat();
+                                    cellFormat.setWrap(true);
                                     cellFormat.setVerticalAlignment(VerticalAlignment.CENTRE);
                                     cellFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
 
@@ -2567,16 +2568,16 @@ public class FragmentReporting extends Fragment {
 
                     String totQty = String.valueOf(total_item)+ " pcs";
                     String outlet = _tStockInHandHeaderData.get(i).get_OutletName();
+                    tUserLoginData dataUserActive = new tAbsenUserBL().getUserActive();
                     DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                    SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+                    SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                     Date date = null;
                     try {
-                        date = sdfDate.parse(_tStockInHandHeaderData.get(i).get_dtDate());
+                        date = sdfDate.parse(dataUserActive.get_dtLastLogin());
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
                     String dateNow = dateFormat.format(date);
-
                     sheet.addCell(new Label(1, 0, no));
                     sheet.addCell(new Label(1, 1, totProd));
                     sheet.addCell(new Label(1, 2, totQty));
@@ -2584,6 +2585,7 @@ public class FragmentReporting extends Fragment {
                     sheet.addCell(new Label(1, 4, dateNow));
 
                     WritableCellFormat cellFormat = new WritableCellFormat();
+                    cellFormat.setWrap(true);
                     cellFormat.setVerticalAlignment(VerticalAlignment.CENTRE);
                     cellFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
 
@@ -2675,16 +2677,18 @@ public class FragmentReporting extends Fragment {
 
                     String totQty = String.valueOf(total_item)+ " pcs";
                     String outlet = _tSalesProductQuantityHeaderData.get(i).get_OutletName();
+
+                    tUserLoginData dataUserActive = new tAbsenUserBL().getUserActive();
                     DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                    SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
-                    SimpleDateFormat sdfDated = new SimpleDateFormat("yyyy/MM/dd");
+                    SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                     Date date = null;
                     try {
-                        date = sdfDate.parse(_tSalesProductQuantityHeaderData.get(i).get_dtDate());
+                        date = sdfDate.parse(dataUserActive.get_dtLastLogin());
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
                     String dateNow = dateFormat.format(date);
+                    SimpleDateFormat sdfDated = new SimpleDateFormat("yyyy/MM/dd");
 
                     sheet.addCell(new Label(1, 0, no));
                     sheet.addCell(new Label(1, 1, totProd));
@@ -2693,6 +2697,7 @@ public class FragmentReporting extends Fragment {
                     sheet.addCell(new Label(1, 4, dateNow));
 
                     WritableCellFormat cellFormat = new WritableCellFormat();
+                    cellFormat.setWrap(true);
                     cellFormat.setVerticalAlignment(VerticalAlignment.CENTRE);
                     cellFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
 
@@ -2767,6 +2772,7 @@ public class FragmentReporting extends Fragment {
             workbook = Workbook.createWorkbook(files, wbSettings);
 
             WritableCellFormat cellFormat = new WritableCellFormat();
+            cellFormat.setWrap(true);
             cellFormat.setVerticalAlignment(VerticalAlignment.CENTRE);
             cellFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
 
@@ -2792,13 +2798,12 @@ public class FragmentReporting extends Fragment {
             if (listActivity!=null&&listActivity.size()>0){
              for (int x = 0; x<listActivity.size(); x++){
                  String outlet = listActivity.get(x).get_txtOutletName();
-
                  //Excel sheet name. 0 represents first sheet
-                 WritableSheet sheet = workbook.createSheet(outlet, x);
+                 WritableSheet sheet = workbook.createSheet(outlet, 0);
 
                  // column and row header
                  sheet.addCell(new Label(0, 0, "Branch"));
-                 sheet.addCell(new Label(0, 1, "Oulet"));
+                 sheet.addCell(new Label(0, 1, "Outlet"));
                  sheet.addCell(new Label(0, 2, "Name"));
                  sheet.addCell(new Label(0, 3, "Date"));
 
@@ -2815,7 +2820,7 @@ public class FragmentReporting extends Fragment {
                  sheet.addCell(new Label(3, 5, "Image 1", formatFont));
                  sheet.addCell(new Label(4, 5, "Image 2", formatFont));
 
-                 for (int z = 0; z <= 4; z++){
+                 for (int z = 0; z <= 5; z++){
                      CellView cellData2 = sheet.getColumnView(z);
                      cellData2.setAutosize(true);
                      sheet.setColumnView(z, cellData2);
@@ -2848,7 +2853,6 @@ public class FragmentReporting extends Fragment {
                              sheet.setRowView(k, heightInPoints);
                          }
 
-
                              sheet.addCell(new Label(0, k, flag, cellFormat));
                              sheet.addCell(new Label(1, k, typeActivity, cellFormat));
                              sheet.addCell(new Label(2, k, desc, cellFormat));
@@ -2862,13 +2866,12 @@ public class FragmentReporting extends Fragment {
             if (list_Act!=null&&list_Act.size()>0){
                 for (int i = 0; i < list_Act.size(); i++){
                     String outlet = list_Act.get(i).get_txtOutletName();
-
                     //Excel sheet name. 0 represents first sheet
-                    WritableSheet sheet = workbook.createSheet(outlet, i);
+                    WritableSheet sheet = workbook.createSheet(outlet, 0);
 
                     // column and row header
                     sheet.addCell(new Label(0, 0, "Branch"));
-                    sheet.addCell(new Label(0, 1, "Oulet"));
+                    sheet.addCell(new Label(0, 1, "Outlet"));
                     sheet.addCell(new Label(0, 2, "Name"));
                     sheet.addCell(new Label(0, 3, "Date"));
 
@@ -2876,6 +2879,11 @@ public class FragmentReporting extends Fragment {
                     sheet.addCell(new Label(1, 1, outlet));
                     sheet.addCell(new Label(1, 2, name));
                     sheet.addCell(new Label(1, 3, dateNow));
+                    for (int z = 0; z <=3; z++){
+                        CellView cellData2 = sheet.getColumnView(z);
+                        cellData2.setAutosize(true);
+                        sheet.setColumnView(z, cellData2);
+                    }
 
                     int k = 6;
 
@@ -2884,12 +2892,6 @@ public class FragmentReporting extends Fragment {
                     sheet.addCell(new Label(1, 5, "Description", formatFont));
                     sheet.addCell(new Label(2, 5, "Image 1", formatFont));
                     sheet.addCell(new Label(3, 5, "Image 2", formatFont));
-
-                    for (int z = 0; z <=3; z++){
-                        CellView cellData2 = sheet.getColumnView(z);
-                        cellData2.setAutosize(true);
-                        sheet.setColumnView(z, cellData2);
-                    }
 
                    List<tActivityData> detail = new tActivityBL().getAllDataByOutletCode(list_Act.get(i).get_txtOutletCode());
                     if (detail!=null&&detail.size()>0) {
@@ -2969,7 +2971,6 @@ public class FragmentReporting extends Fragment {
             String branch = dataUserActive.get_txtCab();
             String name = dataUserActive.get_txtUserName();
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            Date time = new Date();
             SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             Date date = null;
             try {
@@ -2984,6 +2985,7 @@ public class FragmentReporting extends Fragment {
             sheet.addCell(new Label(1, 2, dateNow));
 
             WritableCellFormat cellFormat = new WritableCellFormat();
+            cellFormat.setWrap(true);
             cellFormat.setVerticalAlignment(VerticalAlignment.CENTRE);
             cellFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
 
@@ -3135,6 +3137,7 @@ public class FragmentReporting extends Fragment {
                     sheet.addCell(new Label(1, 5, sumItem));
 
                     WritableCellFormat cellFormat = new WritableCellFormat();
+                    cellFormat.setWrap(true);
                     cellFormat.setVerticalAlignment(VerticalAlignment.CENTRE);
                     cellFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
 
@@ -3248,6 +3251,7 @@ public class FragmentReporting extends Fragment {
             sheet.addCell(new Label(1, 2, dateNow));
 
             WritableCellFormat cellFormat = new WritableCellFormat();
+            cellFormat.setWrap(true);
             cellFormat.setVerticalAlignment(VerticalAlignment.CENTRE);
             cellFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
 
@@ -3367,6 +3371,7 @@ public class FragmentReporting extends Fragment {
             sheet.addCell(new Label(1, 2, dateNow));
 
             WritableCellFormat cellFormat = new WritableCellFormat();
+            cellFormat.setWrap(true);
             cellFormat.setVerticalAlignment(VerticalAlignment.CENTRE);
             cellFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
 
@@ -3509,6 +3514,7 @@ public class FragmentReporting extends Fragment {
                     }
 
                     WritableCellFormat cellFormat = new WritableCellFormat();
+                    cellFormat.setWrap(true);
                     cellFormat.setVerticalAlignment(VerticalAlignment.CENTRE);
                     cellFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
 
@@ -3640,6 +3646,7 @@ public class FragmentReporting extends Fragment {
                     sheet.addCell(new Label(1, 6, description));
 
                     WritableCellFormat cellFormat = new WritableCellFormat();
+                    cellFormat.setWrap(true);
                     cellFormat.setVerticalAlignment(VerticalAlignment.CENTRE);
                     cellFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
 
@@ -3758,6 +3765,7 @@ public class FragmentReporting extends Fragment {
             int k = 4;
 
             WritableCellFormat cellFormat = new WritableCellFormat();
+            cellFormat.setWrap(true);
             cellFormat.setVerticalAlignment(VerticalAlignment.CENTRE);
             cellFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
 
@@ -3901,6 +3909,7 @@ public class FragmentReporting extends Fragment {
             sheet.addCell(new Label(1, 2, dateNow));
             int k = 4;
             WritableCellFormat cellFormat = new WritableCellFormat();
+            cellFormat.setWrap(true);
             cellFormat.setVerticalAlignment(VerticalAlignment.CENTRE);
             cellFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
 

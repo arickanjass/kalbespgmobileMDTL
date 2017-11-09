@@ -251,7 +251,7 @@ public class FragmentAddKoordinasi extends Fragment implements View.OnClickListe
         KoordinasiOutletImageBL _KoordinasiOutletImageBL = new KoordinasiOutletImageBL();
         List<KoordinasiOutletData> listData = _KoordinasiOutletBL.getData("");
         List<KoordinasiOutletImageData> listImage = _KoordinasiOutletImageBL.getDataHeaderId("");
-
+        m_fillSpinner();
         if (dt != null) {
 
 
@@ -263,6 +263,9 @@ public class FragmentAddKoordinasi extends Fragment implements View.OnClickListe
             keterangan.setText(dt.get(0).get_txtKeterangan());
             keterangan.setTextColor(Color.BLACK);
             keterangan.setEnabled(false);
+            String kategori = dt.get(0).get_txtCategory();
+            int position = new MyAdapter(getActivity(), R.layout.custom_spinner, arrCategoryKoordinasi).getPosition(kategori);
+            spnKategori.setSelection(position);
             image1.setEnabled(false);
             image2.setEnabled(false);
 
@@ -274,7 +277,6 @@ public class FragmentAddKoordinasi extends Fragment implements View.OnClickListe
             viewImage();
             btnSave.setVisibility(View.INVISIBLE);
         }
-        m_fillSpinner();
 
         return view;
     }
