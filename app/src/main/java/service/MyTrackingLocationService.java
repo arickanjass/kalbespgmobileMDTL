@@ -173,6 +173,8 @@ public class MyTrackingLocationService extends Service implements GoogleApiClien
                         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, UPDATE_INTERVAL, 0, this);
                         mLastLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                     }
+                } else if(mLastLocation==null) {
+                    new clsMainActivity().showCustomToast(getApplicationContext(), "GPS not found", false);
                 } else {
                     new clsMainActivity().showCustomToast(getApplicationContext(), "Please check your connection", false);
                 }
