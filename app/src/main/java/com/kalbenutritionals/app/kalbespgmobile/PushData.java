@@ -85,18 +85,19 @@ public class PushData extends AppCompatActivity {
         visitplanAbsenData dataAttendance = new clsHelperBL().getDataCheckInActive();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -1);
         boolean validCheckinActive = false;
 
         if (dataAttendance != null && dataAttendance.getType().equals("visitPlan")){
             new tVisitPlanRealisasiBL().checkOutSystem(dataAttendance.get_intId(),dateFormat.format(cal.getTime()));
             validCheckinActive = true;
         } else if (dataAttendance != null && dataAttendance.getType().equals("absen")){
-            String dtime = new clsMainActivity().FormatDateDB();
-            new tAbsenUserBL().checkOutSystem(dataAttendance.get_intId(), dtime);
+            String dtime = new clsMainActivity().getYesterdayDateString();
+            new tAbsenUserBL().checkOutSystem(dataAttendance.get_txtId(), dtime);
             validCheckinActive = true;
 
         } else if (dataAttendance != null && dataAttendance.getType().equals("absenFPE")){
-            String dtime = new clsMainActivity().FormatDateDB();
+            String dtime = new clsMainActivity().getYesterdayDateString();
             new tAttendanceUserBL().checkOutSystem(dataAttendance.get_txtId(), dtime);
             validCheckinActive = true;
         }

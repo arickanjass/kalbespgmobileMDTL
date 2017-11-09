@@ -382,6 +382,13 @@ public class clsMainActivity extends Activity {
         return sdf.format(cal.getTime());
     }
 
+    public String getYesterdayDateString() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -1);
+        return dateFormat.format(cal.getTime());
+    }
+
     public String giveFormatDateTime(String dateYYMMDD) {
 
         String date = dateYYMMDD;
@@ -422,22 +429,23 @@ public class clsMainActivity extends Activity {
     }
 
     public String giveFormatDateWithTime(String DateYYMMDD) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm");
         DateFormat formatYY = new SimpleDateFormat("yyyy");
         DateFormat formatMM = new SimpleDateFormat("MM");
         DateFormat formatDD = new SimpleDateFormat("dd");
-        SimpleDateFormat formathhmm = new SimpleDateFormat("HH:mm a");
+        SimpleDateFormat formathhmm = new SimpleDateFormat("hh:mm");
         String txtDate = "";
         try {
             Date dtdate = (Date) dateFormat.parse(DateYYMMDD);
-            Date timeObj = (Date) dateFormat.parse(DateYYMMDD);
+            Date timeObj = (Date) dateFormat.parse(String.valueOf(formathhmm));
             int year = Integer.valueOf(formatYY.format(dtdate));
             int month = Integer.valueOf(formatMM.format(dtdate));
             int day = Integer.valueOf(formatDD.format(dtdate));
-            txtDate = String.valueOf(day) + "/" + String.valueOf(month) + "/" + String.valueOf(year) + " - " + formathhmm.format(timeObj);
+            txtDate = String.valueOf(day) + "/" + String.valueOf(month) + "/" + String.valueOf(year) + " " + new SimpleDateFormat("K:mm").format(timeObj);
         } catch (ParseException e) {
             txtDate = DateYYMMDD;
         }
+
         return txtDate;
     }
 

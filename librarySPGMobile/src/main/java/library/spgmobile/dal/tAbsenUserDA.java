@@ -381,6 +381,19 @@ public class tAbsenUserDA {
 		return index;
 	}
 
+	public int getAllCheckToPushDataUnsubmit(SQLiteDatabase db) {
+
+		// Select All Query
+		tAbsenUserData dt = new tAbsenUserData();
+		String selectQuery = "SELECT  1 FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intSync + "=0 And " + dt.Property_intSubmit + "=0";
+
+		Cursor cursor = db.rawQuery(selectQuery, null);
+		// return count
+		int index = cursor.getCount();
+		cursor.close();
+		return index;
+	}
+
 	public List<tAbsenUserData> getAllDataActive(SQLiteDatabase db) {
 		List<tAbsenUserData> contactList = null;
 		// Select All Query
