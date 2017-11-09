@@ -197,11 +197,11 @@ public class FragmentKuesionerPart extends Fragment {
             etTest.setId(noSoal);
             etTest.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
             etTest.setSingleLine(false);
-//            etTest.setEms(10); 
+//            etTest.setEms(10);
             etTest.setGravity(Gravity.TOP);
             etTest.setBackgroundResource(R.drawable.bg_edtext);
             etTest.setLayoutParams(layoutParams);
-            llMain.addView(etTest);
+            llMain.addView(etTest); 
             final EditText editText = (EditText)v.findViewById(etTest.getId());
             InputFilter filter = new InputFilter() {
                 boolean canEnterSpace = false;
