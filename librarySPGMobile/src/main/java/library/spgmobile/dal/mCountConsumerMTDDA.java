@@ -40,8 +40,15 @@ public class mCountConsumerMTDDA {
         mCountConsumerMTDData dt = new mCountConsumerMTDData();
 //        String selectQuery = "SELECT  " + dt.Property_ALL + " FROM "
 //                + TABLE_NAME +" WHERE " + dt.Property_txtOutletCode +" = " + (txtOutletCode=="" ? dt.Property_txtOutletCode : txtOutletCode);
-        String selectQuery = "SELECT  " + dt.Property_ALL + " FROM "
-                + TABLE_NAME +" WHERE " + dt.Property_txtOutletCode +" ='" + txtOutletCode + "'";
+        String selectQuery;
+        if (txtOutletCode==""){
+            selectQuery = "SELECT  " + dt.Property_ALL + " FROM "
+                    + TABLE_NAME;
+        }else {
+            selectQuery = "SELECT  " + dt.Property_ALL + " FROM "
+                    + TABLE_NAME +" WHERE " + dt.Property_txtOutletCode +" ='" + txtOutletCode + "'";
+        }
+
         Cursor cursor = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
 
