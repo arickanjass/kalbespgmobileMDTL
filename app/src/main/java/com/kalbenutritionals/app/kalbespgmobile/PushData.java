@@ -82,53 +82,53 @@ public class PushData extends AppCompatActivity {
         toolbar.setTitle("Push Data");
         setSupportActionBar(toolbar);
 
-        visitplanAbsenData dataAttendance = new clsHelperBL().getDataCheckInActive();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, -1);
-        boolean validCheckinActive = false;
-
-        if (dataAttendance != null && dataAttendance.getType().equals("visitPlan")){
-            new tVisitPlanRealisasiBL().checkOutSystem(dataAttendance.get_txtId(),dateFormat.format(cal.getTime()));
-            validCheckinActive = true;
-        } else if (dataAttendance != null && dataAttendance.getType().equals("absen")){
-            String dtime = new clsMainActivity().getYesterdayDateString();
-            new tAbsenUserBL().checkOutSystem(dataAttendance.get_txtId(), dtime);
-            validCheckinActive = true;
-
-        } else if (dataAttendance != null && dataAttendance.getType().equals("absenFPE")){
-            String dtime = new clsMainActivity().getYesterdayDateString();
-            new tAttendanceUserBL().checkOutSystem(dataAttendance.get_txtId(), dtime);
-            validCheckinActive = true;
-        }
-
-        SQLiteDatabase db = new clsMainBL().getDb();
-        if(validCheckinActive){
-            //update data planogram status save
-            List<tPlanogramMobileData> _tPlanogramMobileData = new tPlanogramMobileBL().getAllDataSelectImageNotNullUnsubmit();
-            if(_tPlanogramMobileData!=null){
-                for(tPlanogramMobileData dttPlanogramMobileData : _tPlanogramMobileData){
-                    dttPlanogramMobileData.set_intSubmit("1");
-                    new tPlanogramMobileBL().saveData(dttPlanogramMobileData);
-                }
-            }
-            //update stock on hand
-            List<tStockInHandHeaderData> tStockInHandHeaderDataList = new tStockInHandHeaderBL().getAllHeaderUnsubmit();
-            if(tStockInHandHeaderDataList!=null&&tStockInHandHeaderDataList.size()>0){
-                for(tStockInHandHeaderData dt : tStockInHandHeaderDataList){
-                    new tStockInHandHeaderBL().updateDataSubmit(dt);
-                }
-            }
-
-            //update cus based
-            List<tCustomerBasedMobileHeaderData> tCustomerBasedMobileHeaderDatas = new tCustomerBasedMobileHeaderBL().getAllDataToSubmit();
-
-            if(tCustomerBasedMobileHeaderDatas!=null&&tCustomerBasedMobileHeaderDatas.size()>0){
-                for(tCustomerBasedMobileHeaderData data : tCustomerBasedMobileHeaderDatas){
-                    new tCustomerBasedMobileHeaderBL().updateDataSubmit(data);
-                }
-            }
-        }
+//        visitplanAbsenData dataAttendance = new clsHelperBL().getDataCheckInActive();
+//        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        Calendar cal = Calendar.getInstance();
+//        cal.add(Calendar.DATE, -1);
+//        boolean validCheckinActive = false;
+//
+//        if (dataAttendance != null && dataAttendance.getType().equals("visitPlan")){
+//            new tVisitPlanRealisasiBL().checkOutSystem(dataAttendance.get_txtId(),dateFormat.format(cal.getTime()));
+//            validCheckinActive = true;
+//        } else if (dataAttendance != null && dataAttendance.getType().equals("absen")){
+//            String dtime = new clsMainActivity().getYesterdayDateString();
+//            new tAbsenUserBL().checkOutSystem(dataAttendance.get_txtId(), dtime);
+//            validCheckinActive = true;
+//
+//        } else if (dataAttendance != null && dataAttendance.getType().equals("absenFPE")){
+//            String dtime = new clsMainActivity().getYesterdayDateString();
+//            new tAttendanceUserBL().checkOutSystem(dataAttendance.get_txtId(), dtime);
+//            validCheckinActive = true;
+//        }
+//
+//        SQLiteDatabase db = new clsMainBL().getDb();
+//        if(validCheckinActive){
+//            //update data planogram status save
+//            List<tPlanogramMobileData> _tPlanogramMobileData = new tPlanogramMobileBL().getAllDataSelectImageNotNullUnsubmit();
+//            if(_tPlanogramMobileData!=null){
+//                for(tPlanogramMobileData dttPlanogramMobileData : _tPlanogramMobileData){
+//                    dttPlanogramMobileData.set_intSubmit("1");
+//                    new tPlanogramMobileBL().saveData(dttPlanogramMobileData);
+//                }
+//            }
+//            //update stock on hand
+//            List<tStockInHandHeaderData> tStockInHandHeaderDataList = new tStockInHandHeaderBL().getAllHeaderUnsubmit();
+//            if(tStockInHandHeaderDataList!=null&&tStockInHandHeaderDataList.size()>0){
+//                for(tStockInHandHeaderData dt : tStockInHandHeaderDataList){
+//                    new tStockInHandHeaderBL().updateDataSubmit(dt);
+//                }
+//            }
+//
+//            //update cus based
+//            List<tCustomerBasedMobileHeaderData> tCustomerBasedMobileHeaderDatas = new tCustomerBasedMobileHeaderBL().getAllDataToSubmit();
+//
+//            if(tCustomerBasedMobileHeaderDatas!=null&&tCustomerBasedMobileHeaderDatas.size()>0){
+//                for(tCustomerBasedMobileHeaderData data : tCustomerBasedMobileHeaderDatas){
+//                    new tCustomerBasedMobileHeaderBL().updateDataSubmit(data);
+//                }
+//            }
+//        }
 
         Bundle bundle = new Bundle();
         String myMessage = "notMainMenu";

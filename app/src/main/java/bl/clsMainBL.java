@@ -3,11 +3,16 @@ package bl;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.kalbenutritionals.app.kalbespgmobile.clsMainActivity;
+
 import org.json.simple.JSONObject;
 
 import java.io.File;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -26,6 +31,7 @@ import library.spgmobile.common.tAbsenUserData;
 import library.spgmobile.common.tActivityData;
 import library.spgmobile.common.tActivityMobileData;
 import library.spgmobile.common.tAttendanceUserData;
+import library.spgmobile.common.tCustomerBasedMobileHeaderData;
 import library.spgmobile.common.tHirarkiBIS;
 import library.spgmobile.common.tJawabanUserData;
 import library.spgmobile.common.tKemasanRusakHeaderData;
@@ -45,6 +51,7 @@ import library.spgmobile.common.tTidakSesuaiPesananHeaderData;
 import library.spgmobile.common.tUserLoginData;
 import library.spgmobile.common.tVisitPlanRealisasiData;
 import library.spgmobile.common.trackingLocationData;
+import library.spgmobile.common.visitplanAbsenData;
 import library.spgmobile.dal.KoordinasiOutletDA;
 import library.spgmobile.dal.KoordinasiOutletImageDA;
 import library.spgmobile.dal.clsEnumDownloadData;
@@ -287,19 +294,66 @@ public class clsMainBL {
 
     		Boolean dvalid=false;
 
+			visitplanAbsenData dataAttendance = new clsHelperBL().getDataCheckInActive();
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.DATE, -1);
+			boolean validCheckinActive = false;
+
+			if (dataAttendance != null && dataAttendance.getType().equals("visitPlan")){
+				new tVisitPlanRealisasiBL().checkOutSystem(dataAttendance.get_txtId(),dateFormat.format(cal.getTime()));
+				validCheckinActive = true;
+			} else if (dataAttendance != null && dataAttendance.getType().equals("absen")){
+				String dtime = new clsMainActivity().getYesterdayDateString();
+				new tAbsenUserBL().checkOutSystem(dataAttendance.get_txtId(), dtime);
+				validCheckinActive = true;
+
+			} else if (dataAttendance != null && dataAttendance.getType().equals("absenFPE")){
+				String dtime = new clsMainActivity().getYesterdayDateString();
+				new tAttendanceUserBL().checkOutSystem(dataAttendance.get_txtId(), dtime);
+				validCheckinActive = true;
+			}
+
+			if(validCheckinActive){
+				//update data planogram status save
+				List<tPlanogramMobileData> _tPlanogramMobileData = new tPlanogramMobileBL().getAllDataSelectImageNotNullUnsubmit();
+				if(_tPlanogramMobileData!=null){
+					for(tPlanogramMobileData dttPlanogramMobileData : _tPlanogramMobileData){
+						dttPlanogramMobileData.set_intSubmit("1");
+						new tPlanogramMobileBL().saveData(dttPlanogramMobileData);
+					}
+				}
+				//update stock on hand
+				List<tStockInHandHeaderData> tStockInHandHeaderDataList = new tStockInHandHeaderBL().getAllHeaderUnsubmit();
+				if(tStockInHandHeaderDataList!=null&&tStockInHandHeaderDataList.size()>0){
+					for(tStockInHandHeaderData dt : tStockInHandHeaderDataList){
+						new tStockInHandHeaderBL().updateDataSubmit(dt);
+					}
+				}
+
+				//update cus based
+				List<tCustomerBasedMobileHeaderData> tCustomerBasedMobileHeaderDatas = new tCustomerBasedMobileHeaderBL().getAllDataToSubmit();
+
+				if(tCustomerBasedMobileHeaderDatas!=null&&tCustomerBasedMobileHeaderDatas.size()>0){
+					for(tCustomerBasedMobileHeaderData data : tCustomerBasedMobileHeaderDatas){
+						new tCustomerBasedMobileHeaderBL().updateDataSubmit(data);
+					}
+				}
+			}
+
 			//trans spg
 			int countDataPushSalesProductHeader = _tSalesProductHeaderDA.getAllCheckToPushData(db);
 			int countDataPushActivity = _tActivityDA.getAllCheckToPushData(db);
 			int countDataPushCustomerBased = _TCustomerBasedMobileHeaderDA.getAllCheckPushData(db);
-			int counDataSaveCustomerBased = _TCustomerBasedMobileHeaderDA.getAllDataSave(db);
+//			int counDataSaveCustomerBased = _TCustomerBasedMobileHeaderDA.getAllDataSave(db);
 
 			//trans md
 			int listVisitplan = _tVisitPlanRealisasiDA.getAllCheckPushData(db);
-			int listStockInHandSave = _tStockInHandHeaderDA.getAllCheckToPushDataSave(db);
+//			int listStockInHandSave = _tStockInHandHeaderDA.getAllCheckToPushDataSave(db);
 			int listStockInHandSubmit = _tStockInHandHeaderDA.getAllCheckToPushDataSubmit(db);
 			int listtKemasanRusakHeaderData = _tKemasanRusakHeaderDA.getAllCheckPushData(db);
 			int listtOverStockHeader = _tOverStockHeaderDA.getAllCheckPushData(db);
-			int listtPlanogramSave = _tPlanogramMobileDA.getAllCheckPushDataSave(db);
+//			int listtPlanogramSave = _tPlanogramMobileDA.getAllCheckPushDataSave(db);
 			int listtPlanogramSubmit = _tPlanogramMobileDA.getAllCheckPushDataSubmit(db);
 			int listtTidakSesuaiPesananHeaderData = _tTidakSesuaiPesananHeaderDA.getAllCheckPushData(db);
 
@@ -313,7 +367,7 @@ public class clsMainBL {
 
 			//trans spg dan tl
 			int countDataPushAbsenUser = _tAbsenUserDA.getAllCheckToPushData(db);
-			int countDataPushAbsenUserUnsubmit = _tAbsenUserDA.getAllCheckToPushDataUnsubmit(db);
+//			int countDataPushAbsenUserUnsubmit = _tAbsenUserDA.getAllCheckToPushDataUnsubmit(db);
 
 			//trans md dan tl
 			int listtSalesProductQuantity = _tSalesProductQuantityHeaderDA.getAllCheckPushData(db);
@@ -327,9 +381,9 @@ public class clsMainBL {
 			if (countDataPushAbsenUser > 0 && dvalid == false) {
 				dvalid = true;
 			}
-			if (countDataPushAbsenUserUnsubmit > 0 && dvalid == false) {
-				dvalid = true;
-			}
+//			if (countDataPushAbsenUserUnsubmit > 0 && dvalid == false) {
+//				dvalid = true;
+//			}
 			if (countDataPushSalesProductHeader > 0 && dvalid == false) {
 				dvalid = true;
 			}
@@ -339,15 +393,15 @@ public class clsMainBL {
 			if (countDataPushCustomerBased > 0 && dvalid == false) {
 				dvalid = true;
 			}
-			if (counDataSaveCustomerBased > 0 && dvalid == false) {
-				dvalid = true;
-			}
+//			if (counDataSaveCustomerBased > 0 && dvalid == false) {
+//				dvalid = true;
+//			}
 			if (listVisitplan > 0 && dvalid == false) {
 				dvalid = true;
 			}
-			if (listStockInHandSave > 0 && dvalid == false) {
-				dvalid = true;
-			}
+//			if (listStockInHandSave > 0 && dvalid == false) {
+//				dvalid = true;
+//			}
 			if (listStockInHandSubmit > 0 && dvalid == false) {
 				dvalid = true;
 			}
@@ -357,9 +411,9 @@ public class clsMainBL {
 			if (listtOverStockHeader > 0 && dvalid == false) {
 				dvalid = true;
 			}
-			if (listtPlanogramSave > 0 && dvalid == false) {
-				dvalid = true;
-			}
+//			if (listtPlanogramSave > 0 && dvalid == false) {
+//				dvalid = true;
+//			}
 			if (listtPlanogramSubmit > 0 && dvalid == false) {
 				dvalid = true;
 			}
