@@ -138,28 +138,28 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
         }
 
         if(data.get_report_type() == "Customer Base"){
-	        switch (columnIndex) {
-	            case 1:
-	                renderedView = renderString(data.get_no_cb(), "left");
-	                break;
-	            case 2:
-	                renderedView = renderString(data.get_customer_name(), "left");
-	                break;
-	            case 3:
-	            	renderedView = renderString(data.get_no_tlp(), "right");
-	            	break;
-                case 4:
-                    renderedView = renderString(data.get_pic(), "left");
+            switch (columnIndex) {
+                case 1:
+                    renderedView = renderString(data.get_no_cb(), "left");
                     break;
-                case 5:
+                case 2:
+                    renderedView = renderString(data.get_customer_name(), "left");
+                    break;
+                case 3:
+                    renderedView = renderString(data.get_no_tlp(), "right");
+                    break;
+                case 4:
                     renderedView = renderString(data.get_total_member(), "right");
                     break;
+                case 5:
+                    renderedView = renderString(data.get_total_product(), "right");
+                    break;
                 case 6:
-                    renderedView = renderString(data.get_total_product(),"right");
+                    renderedView = renderString(data.get_total_item(),"right");
                     break;
                 default:
                     break;
-	        }
+            }
         }
 
         if(data.get_report_type() == "Activity"){
