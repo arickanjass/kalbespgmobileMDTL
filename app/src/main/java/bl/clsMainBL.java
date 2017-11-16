@@ -300,17 +300,22 @@ public class clsMainBL {
 			cal.add(Calendar.DATE, -1);
 			boolean validCheckinActive = false;
 
+			DateFormat dateFormatAbsen = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Calendar calAbsen = Calendar.getInstance();
+			calAbsen.add(Calendar.DATE, -1);
+			String dateAbsenCheckout = dateFormatAbsen.format(calAbsen.getTime());
+
 			if (dataAttendance != null && dataAttendance.getType().equals("visitPlan")){
 				new tVisitPlanRealisasiBL().checkOutSystem(dataAttendance.get_txtId(),dateFormat.format(cal.getTime()));
 				validCheckinActive = true;
 			} else if (dataAttendance != null && dataAttendance.getType().equals("absen")){
-				String dtime = new clsMainActivity().getYesterdayDateString();
-				new tAbsenUserBL().checkOutSystem(dataAttendance.get_txtId(), dtime);
+//				String dtime = new clsMainActivity().getYesterdayDateString();
+				new tAbsenUserBL().checkOutSystem(dataAttendance.get_txtId(), dateAbsenCheckout);
 				validCheckinActive = true;
 
 			} else if (dataAttendance != null && dataAttendance.getType().equals("absenFPE")){
-				String dtime = new clsMainActivity().getYesterdayDateString();
-				new tAttendanceUserBL().checkOutSystem(dataAttendance.get_txtId(), dtime);
+//				String dtime = new clsMainActivity().getYesterdayDateString();
+				new tAttendanceUserBL().checkOutSystem(dataAttendance.get_txtId(), dateAbsenCheckout);
 				validCheckinActive = true;
 			}
 
