@@ -69,7 +69,9 @@ public class tLeaveMobileBL extends clsMainBL {
     public int getContactsCount() {
         SQLiteDatabase db = getDb();
         tLeaveMobileDA _tLeaveMobileDA = new tLeaveMobileDA(db);
-        return _tLeaveMobileDA.getContactsCount(db);
+        int count = _tLeaveMobileDA.getContactsCount(db);
+        db.close();
+        return count;
     }
 
     public JSONArray DownloadDataLeave(String versionName) throws Exception {

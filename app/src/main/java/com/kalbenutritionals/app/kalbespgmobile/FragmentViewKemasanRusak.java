@@ -218,7 +218,7 @@ public class FragmentViewKemasanRusak extends Fragment implements IXListViewList
 
             TextView product = new TextView(getContext());
             product.setTextSize(12);
-            product.setWidth(600);
+            product.setWidth(400);
             product.setPadding(10, 10, 10, 10);
             product.setBackgroundColor(Color.parseColor("#f0f0f0"));
             product.setTextColor(Color.BLACK);
