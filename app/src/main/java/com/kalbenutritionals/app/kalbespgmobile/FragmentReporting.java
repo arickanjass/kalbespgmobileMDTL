@@ -3163,9 +3163,9 @@ public class FragmentReporting extends Fragment {
                             k++;
                             String product = detail.get(x).get_txtNameProduct();
                             String desc = detail.get(x).get_txtKeterangan();
-                            String price = detail.get(x).get_intPrice();
+                            String price = "Rp. " + convertNumberDec(Double.valueOf(detail.get(x).get_intPrice()));
                             String qty = detail.get(x).get_intQty();
-                            String total = detail.get(x).get_intTotal();
+                            String total = "Rp. " + convertNumberDec(Double.valueOf(detail.get(x).get_intTotal()));
                             totalQty += Integer.parseInt(qty);
 
                             sheet.addCell(new Label(0, k, String.valueOf(x+1), cellFormat));
