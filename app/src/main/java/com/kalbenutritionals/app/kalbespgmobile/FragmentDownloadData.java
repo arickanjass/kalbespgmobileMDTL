@@ -6355,21 +6355,23 @@ public class FragmentDownloadData extends Fragment {
 
                     JSONArray jsonArray_listSPG = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListDataSpGFromTl_mobile")));
                     int id = 0;
-                    for (Object aJsonArray_listSPG : jsonArray_listSPG) {
-                        JSONObject innerObj_listSPG = (JSONObject) aJsonArray_listSPG;
-                        tHirarkiBIS _data = new  tHirarkiBIS();
-                        id+=1;
-                        _data.set_intId(String.valueOf(id));
-                        _data.set_txtNik(String.valueOf(innerObj_listSPG .get("IntNIK")));
-                        _data.set_txtName(String.valueOf(innerObj_listSPG.get("TxtName")));
-                        _data.set_txtLOB(String.valueOf(innerObj_listSPG.get("TxtLOB")));
-                        _data.set_intBranchId(String.valueOf(innerObj_listSPG.get("IntBranchId")));
-                        _data.set_txtBranchCode(String.valueOf(innerObj_listSPG.get("TxtBranchCode")));
-                        _data.set_txtBranchName(String.valueOf(innerObj_listSPG.get("TXtBranchName")));
-                        _data.set_intOutletId(String.valueOf(innerObj_listSPG.get("IntOutletId")));
-                        _data.set_txtOutletCode(String.valueOf(innerObj_listSPG.get("TxtOutletName")));
-                        _data.set_txtOutletName(String.valueOf(innerObj_listSPG.get("TxtOutletCode")));
-                        new tHirarkiBISBL().SaveDataSPGFromTL(_data);
+                    if (jsonArray_listSPG!=null){
+                        for (Object aJsonArray_listSPG : jsonArray_listSPG) {
+                            JSONObject innerObj_listSPG = (JSONObject) aJsonArray_listSPG;
+                            tHirarkiBIS _data = new  tHirarkiBIS();
+                            id+=1;
+                            _data.set_intId(String.valueOf(id));
+                            _data.set_txtNik(String.valueOf(innerObj_listSPG .get("IntNIK")));
+                            _data.set_txtName(String.valueOf(innerObj_listSPG.get("TxtName")));
+                            _data.set_txtLOB(String.valueOf(innerObj_listSPG.get("TxtLOB")));
+                            _data.set_intBranchId(String.valueOf(innerObj_listSPG.get("IntBranchId")));
+                            _data.set_txtBranchCode(String.valueOf(innerObj_listSPG.get("TxtBranchCode")));
+                            _data.set_txtBranchName(String.valueOf(innerObj_listSPG.get("TXtBranchName")));
+                            _data.set_intOutletId(String.valueOf(innerObj_listSPG.get("IntOutletId")));
+                            _data.set_txtOutletCode(String.valueOf(innerObj_listSPG.get("TxtOutletName")));
+                            _data.set_txtOutletName(String.valueOf(innerObj_listSPG.get("TxtOutletCode")));
+                            new tHirarkiBISBL().SaveDataSPGFromTL(_data);
+                        }
                     }
 
                     JSONArray jsonArray_jawabanSPG = new clsHelper() .ResultJsonArray(String.valueOf(innerObj.get("ListtJawabanSPG_mobile")));
