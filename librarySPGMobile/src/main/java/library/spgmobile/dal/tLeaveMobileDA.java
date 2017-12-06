@@ -243,7 +243,6 @@ public class tLeaveMobileDA {
 		Cursor cursor = db.rawQuery(countQuery, null);
 		int countData = cursor.getCount();
 		cursor.close();
-		
 		// return count
 		return countData;
 	}

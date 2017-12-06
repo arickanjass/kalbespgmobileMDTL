@@ -9,6 +9,7 @@ import library.spgmobile.common.mEmployeeAreaData;
 import library.spgmobile.common.mMenuData;
 import library.spgmobile.common.tLeaveMobileData;
 import library.spgmobile.common.tVisitPlanRealisasiData;
+import library.spgmobile.dal.mCategoryPOPStandardDA;
 import library.spgmobile.dal.mEmployeeAreaDA;
 import library.spgmobile.dal.mEmployeeBranchDA;
 import library.spgmobile.dal.mEmployeeSalesProductDA;
@@ -18,7 +19,9 @@ import library.spgmobile.dal.mProductBrandHeaderDA;
 import library.spgmobile.dal.mProductCompetitorDA;
 import library.spgmobile.dal.mProductPICDA;
 import library.spgmobile.dal.mProductSPGDA;
+import library.spgmobile.dal.mReasonPOPStandardDA;
 import library.spgmobile.dal.mTypeLeaveMobileDA;
+import library.spgmobile.dal.mTypePOPStandardDA;
 import library.spgmobile.dal.mTypeSubmissionMobileDA;
 import library.spgmobile.dal.tAbsenUserDA;
 import library.spgmobile.dal.tAttendanceUserDA;
@@ -203,13 +206,19 @@ public class mMenuBL extends clsMainBL {
                     mTypeSubmissionMobileDA _mTypeSubmissionMobileDA = new mTypeSubmissionMobileDA(db);
                     mTypeLeaveMobileDA _mTypeLeaveMobileDA = new mTypeLeaveMobileDA(db);
                     tSubTypeActivityDA _tSubTypeActivityDA = new tSubTypeActivityDA(db);
+                    mTypePOPStandardDA _mTypePOPStandardDA = new mTypePOPStandardDA(db);
+                    mReasonPOPStandardDA _mReasonPOPStandardDA = new mReasonPOPStandardDA(db);
+                    mCategoryPOPStandardDA _mCategoryPOPStandardDA = new mCategoryPOPStandardDA(db);
 
                     if (data.get_TxtDescription().contains("mnAbsenTL")&&
                             _mEmployeeSalesProductDA.getContactsCount(db) > 0 &&
                             _tSubTypeActivityDA.getContactsCount(db) > 0 &&
                             _mEmployeeBranchDA.getContactsCount(db) > 0 &&
                             _mEmployeeAreaDA.getContactsCount(db)>0 &&
-                            _mTypeLeaveMobileDA.getContactsCount(db)>0
+                            _mTypeLeaveMobileDA.getContactsCount(db)>0 &&
+                            _mTypePOPStandardDA.getContactsCount(db)>0 &&
+                            _mReasonPOPStandardDA.getContactsCount(db)>0 &&
+                            _mCategoryPOPStandardDA.getContactsCount(db) >0
                             ) {
                         if (listDataLeave.size() == 0) {
                             tmpData.add(data);

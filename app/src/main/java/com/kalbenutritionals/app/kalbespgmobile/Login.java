@@ -689,32 +689,32 @@ public class Login extends clsMainActivity {
                                 Listdata.add(_data);
                             }
 
-                            org.json.simple.JSONArray JsonArray_outlet = _clsHelper.ResultJsonArray(String.valueOf(innerObj.get("Listvw_SalesInsentive_EmployeeAreaData")));
-                            if(JsonArray_outlet!=null){
-
-                                for (Object aJsonArray_outlet : JsonArray_outlet) {
-                                    JSONObject innerObj_detail = (JSONObject) aJsonArray_outlet;
-                                    mEmployeeAreaData _data = new mEmployeeAreaData();
-                                    int index = _mEmployeeAreaDA.getContactsCount(db) + 1;
-                                    _data.set_intID(String.valueOf(index));
-                                    _data.set_intBranchId(String.valueOf(innerObj_detail.get("IntBranchId")));
-                                    _data.set_intChannelId(String.valueOf(innerObj_detail.get("IntChannelId")));
-                                    _data.set_intEmployeeId(String.valueOf(innerObj_detail.get("IntEmployeeId")));
-                                    _data.set_intOutletId(String.valueOf(innerObj_detail.get("IntOutletId")));
-                                    _data.set_intRayonId(String.valueOf(innerObj_detail.get("IntRayonId")));
-                                    _data.set_intRegionId(String.valueOf(innerObj_detail.get("IntRegionId")));
-                                    _data.set_txtBranchCode(String.valueOf(innerObj_detail.get("TxtBranchCode")));
-                                    _data.set_txtBranchName(String.valueOf(innerObj_detail.get("TxtBranchName")));
-                                    _data.set_txtName(String.valueOf(innerObj_detail.get("TxtName")));
-                                    _data.set_txtNIK(String.valueOf(innerObj_detail.get("TxtNIK")));
-                                    _data.set_txtOutletCode(String.valueOf(innerObj_detail.get("TxtOutletCode")));
-                                    _data.set_txtOutletName(String.valueOf(innerObj_detail.get("TxtOutletName")));
-                                    _data.set_txtRayonCode(String.valueOf(innerObj_detail.get("TxtRayonCode")));
-                                    _data.set_txtRayonName(String.valueOf(innerObj_detail.get("TxtRayonName")));
-                                    _data.set_txtRegionName(String.valueOf(innerObj_detail.get("TxtRegionName")));
-                                    //_mEmployeeAreaDA.SaveDataMConfig(db, _data);
-                                }
-                            }
+//                            org.json.simple.JSONArray JsonArray_outlet = _clsHelper.ResultJsonArray(String.valueOf(innerObj.get("Listvw_SalesInsentive_EmployeeAreaData")));
+//                            if(JsonArray_outlet!=null){
+//
+//                                for (Object aJsonArray_outlet : JsonArray_outlet) {
+//                                    JSONObject innerObj_detail = (JSONObject) aJsonArray_outlet;
+//                                    mEmployeeAreaData _data = new mEmployeeAreaData();
+//                                    int index = _mEmployeeAreaDA.getContactsCount(db) + 1;
+//                                    _data.set_intID(String.valueOf(index));
+//                                    _data.set_intBranchId(String.valueOf(innerObj_detail.get("IntBranchId")));
+//                                    _data.set_intChannelId(String.valueOf(innerObj_detail.get("IntChannelId")));
+//                                    _data.set_intEmployeeId(String.valueOf(innerObj_detail.get("IntEmployeeId")));
+//                                    _data.set_intOutletId(String.valueOf(innerObj_detail.get("IntOutletId")));
+//                                    _data.set_intRayonId(String.valueOf(innerObj_detail.get("IntRayonId")));
+//                                    _data.set_intRegionId(String.valueOf(innerObj_detail.get("IntRegionId")));
+//                                    _data.set_txtBranchCode(String.valueOf(innerObj_detail.get("TxtBranchCode")));
+//                                    _data.set_txtBranchName(String.valueOf(innerObj_detail.get("TxtBranchName")));
+//                                    _data.set_txtName(String.valueOf(innerObj_detail.get("TxtName")));
+//                                    _data.set_txtNIK(String.valueOf(innerObj_detail.get("TxtNIK")));
+//                                    _data.set_txtOutletCode(String.valueOf(innerObj_detail.get("TxtOutletCode")));
+//                                    _data.set_txtOutletName(String.valueOf(innerObj_detail.get("TxtOutletName")));
+//                                    _data.set_txtRayonCode(String.valueOf(innerObj_detail.get("TxtRayonCode")));
+//                                    _data.set_txtRayonName(String.valueOf(innerObj_detail.get("TxtRayonName")));
+//                                    _data.set_txtRegionName(String.valueOf(innerObj_detail.get("TxtRegionName")));
+//                                    //_mEmployeeAreaDA.SaveDataMConfig(db, _data);
+//                                }
+//                            }
 
 
                             if (Listdata.size() > 0) {
