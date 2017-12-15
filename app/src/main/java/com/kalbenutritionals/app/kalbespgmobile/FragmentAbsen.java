@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
@@ -13,12 +14,14 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -49,7 +52,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -426,7 +431,7 @@ public class FragmentAbsen extends Fragment implements ConnectionCallbacks, OnCo
                                                     Calendar cal = Calendar.getInstance();
                                                     datatAbsenUserData.set_dtDateCheckIn(dateFormat.format(cal.getTime()));
                                                     datatAbsenUserData.set_intId(String.valueOf(IdAbsen));
-                                                    datatAbsenUserData.set_intSubmit("0");
+                                                    datatAbsenUserData.set_intSubmit("1");
                                                     datatAbsenUserData.set_intSync("0");
                                                     datatAbsenUserData.set_txtAbsen("0");
                                                     datatAbsenUserData.set_txtBranchCode(HMbranch.get(nameBranch));
@@ -633,7 +638,13 @@ public class FragmentAbsen extends Fragment implements ConnectionCallbacks, OnCo
     }
 
     private Uri getOutputMediaFileUri() {
-        return Uri.fromFile(getOutputMediaFile());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) { //use this if Lollipop_Mr1 (API 22) or above
+            return FileProvider.getUriForFile(getActivity(), getActivity().getPackageName()+".provider", getOutputMediaFile());
+        } else {
+            return Uri.fromFile(getOutputMediaFile());
+        }
+
+//        return Uri.fromFile(getOutputMediaFile());
     }
 
     private File getOutputMediaFile() {
@@ -674,11 +685,14 @@ public class FragmentAbsen extends Fragment implements ConnectionCallbacks, OnCo
             if (resultCode == -1) {
                 try {
 
-                    Bitmap bitmap;
-                    BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-                    String uri = uriImage.getPath();
+                    Bitmap bitmap = null;
 
-                    bitmap = BitmapFactory.decodeFile(uri, bitmapOptions);
+                    try {
+                        InputStream ims =  getActivity().getContentResolver().openInputStream(uriImage);
+                        bitmap = BitmapFactory.decodeStream(ims);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
 
                     previewCapturedImage1(bitmap);
 
@@ -695,11 +709,20 @@ public class FragmentAbsen extends Fragment implements ConnectionCallbacks, OnCo
             if (resultCode == -1) {
                 try {
 
-                    Bitmap bitmap;
-                    BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-                    String uri = uriImage.getPath();
+//                    Bitmap bitmap;
+//                    BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+//                    String uri = uriImage.getPath();
+//
+//                    bitmap = BitmapFactory.decodeFile(uri, bitmapOptions);
 
-                    bitmap = BitmapFactory.decodeFile(uri, bitmapOptions);
+                    Bitmap bitmap = null;
+
+                    try {
+                        InputStream ims =  getActivity().getContentResolver().openInputStream(uriImage);
+                        bitmap = BitmapFactory.decodeStream(ims);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
 
                     previewCapturedImage2(bitmap);
 

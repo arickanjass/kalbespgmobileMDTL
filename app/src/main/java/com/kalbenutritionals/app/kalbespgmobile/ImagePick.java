@@ -19,6 +19,7 @@ import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -95,11 +96,11 @@ public class ImagePick {
         }
         return list;
     }
-    public static Uri getPathForPickImage(String uri){
+    public static Uri getPathForPickImage(String uri, Context context){
         if (uri.length() > 0){
             path = Uri.parse(uri);
         }else {
-            path = getOutputMediaFileUri();
+            path = getOutputMediaFileUri(context);
         }
         return path;
     }
@@ -120,8 +121,13 @@ public class ImagePick {
         }
         return path;
     }
-    private static Uri getOutputMediaFileUri() {
-        return Uri.fromFile(getOutputMediaFile());
+    private static Uri getOutputMediaFileUri(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) { //use this if Lollipop_Mr1 (API 22) or above
+            return FileProvider.getUriForFile(context, context.getPackageName()+".provider", getOutputMediaFile());
+        } else {
+            return Uri.fromFile(getOutputMediaFile());
+        }
+//        return Uri.fromFile(getOutputMediaFile());
     }
 
     private static File getOutputMediaFile() {
@@ -362,7 +368,15 @@ public class ImagePick {
 //            bm = getImageResized(context, selectedImage);
 //            int rotation = getRotation(context, selectedImage, isCamera);
 //            bm = rotate(bm, rotation);
-              bm = BitmapFactory.decodeFile(selectedImage, bitmapOptions);}
+//              bm = BitmapFactory.decodeFile(selectedImage, bitmapOptions);
+
+            try {
+                InputStream ims =  context.getContentResolver().openInputStream(uriImage);
+                bm = BitmapFactory.decodeStream(ims);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
         return bm;
     }
     public static String getImagePath(){

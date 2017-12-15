@@ -31,6 +31,7 @@ import java.util.Map;
 
 import adapter.AppAdapterViewCusBase;
 import bl.clsHelperBL;
+import bl.mCounterNumberBL;
 import bl.tSalesProductDetailBL;
 import bl.tSalesProductHeaderBL;
 import edu.swu.pulltorefreshswipemenulistview.library.PullToRefreshSwipeMenuListView;
@@ -42,6 +43,7 @@ import library.spgmobile.common.clsSwipeList;
 import library.spgmobile.common.tSalesProductDetailData;
 import library.spgmobile.common.tSalesProductHeaderData;
 import library.spgmobile.common.visitplanAbsenData;
+import library.spgmobile.dal.enumCounterData;
 
 /**
  * Created by ASUS ZE on 26/07/2016.
@@ -70,13 +72,18 @@ public class FragmentViewResoSPG extends Fragment implements IXListViewListener 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-                toolbar.setTitle("Add Reso");
+                String noso = new mCounterNumberBL().getData(enumCounterData.NoDataSO);
+                if(!noso.equals("")){
+                    Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+                    toolbar.setTitle("Add Reso");
 
-                FragmentAddResoSPG fragmentAddResoSPG = new FragmentAddResoSPG();
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.frame, fragmentAddResoSPG);
-                fragmentTransaction.commit();
+                    FragmentAddResoSPG fragmentAddResoSPG = new FragmentAddResoSPG();
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.frame, fragmentAddResoSPG);
+                    fragmentTransaction.commit();
+                } else {
+                    new clsMainActivity().showCustomToast(getActivity(),"Please Download Product First", false);
+                }
             }
         });
         final PullToRefreshSwipeMenuListView swipeMenuList = (PullToRefreshSwipeMenuListView) v.findViewById(R.id.SwipelistView);

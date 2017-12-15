@@ -286,7 +286,7 @@ public class FragmentKuesionerPart extends Fragment {
                 @Override
                 public void onClick(View v) {
                     String path = tvImg.getText().toString();
-                    ImagePick.getPathForPickImage(path);
+                    ImagePick.getPathForPickImage(path, getActivity());
                     Intent imagePick = ImagePick.getPickImageIntent(getContext());
                     startActivityForResult(imagePick, PICK_IMAGE_ID);
                 }

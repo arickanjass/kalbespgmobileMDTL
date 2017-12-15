@@ -634,7 +634,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                                             datatAbsenUserData.set_dtDateCheckOut(_clsMainActivity.FormatDateDB());
                                             datatAbsenUserData.set_intSubmit("1");
                                             datatAbsenUserData.set_intSync("0");
-                                            datatAbsenUserData.set_txtAbsen("0");
+//                                            datatAbsenUserData.set_txtAbsen("0");
                                             absenUserDatas.add(datatAbsenUserData);
                                             new tAbsenUserBL().saveData(absenUserDatas);
 

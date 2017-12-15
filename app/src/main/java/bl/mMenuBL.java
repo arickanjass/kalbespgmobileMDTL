@@ -167,10 +167,10 @@ public class mMenuBL extends clsMainBL {
                     if (data.get_TxtDescription().contains("mnAbsenSPG")&&
                             _mEmployeeAreaDA.getContactsCount(db) > 0 &&
                             _mEmployeeBranchDA.getContactsCount(db) > 0 &&
-                            _mEmployeeSalesProductDA.getContactsCount(db) > 0 &&
-                            _mProductSPGDA.getContactsCount(db) > 0 &&
-                            _mProductPICDA.getContactsCount(db) > 0 &&
-                            _mProductCompetitorDA.getContactsCount(db) > 0 &&
+//                            _mEmployeeSalesProductDA.getContactsCount(db) > 0 &&
+//                            _mProductSPGDA.getContactsCount(db) > 0 &&
+//                            _mProductPICDA.getContactsCount(db) > 0 &&
+//                            _mProductCompetitorDA.getContactsCount(db) > 0 &&
                             _mTypeSubmissionMobileDA.getContactsCount(db) > 0 &&
                             _mTypeLeaveMobileDA.getContactsCount(db) > 0
                             ) {

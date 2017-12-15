@@ -27,7 +27,10 @@ public class mCounterNumberBL extends clsMainBL {
 		SQLiteDatabase db=getDb();
 		mCounterNumberDA _mCounterNumberDA=new mCounterNumberDA(db);
 		mCounterNumberData dtmCounterNumberData=_mCounterNumberDA.getData(db, dt.getidCounterData());
-		String Value=dtmCounterNumberData.get_txtValue();
+		String Value = "";
+		if(dtmCounterNumberData!=null){
+			Value=dtmCounterNumberData.get_txtValue();
+		}
 		db.close();
 		return Value;
 	}

@@ -241,7 +241,7 @@ public class tAbsenUserDA {
 	public tAbsenUserData 	getDataCheckInActive(SQLiteDatabase db) {
 		// Select All Query
 		tAbsenUserData dt=new tAbsenUserData();
-		String selectQuery = "SELECT  "+dt.Property_All+" FROM " + TABLE_CONTACTS +" Where "+dt.Property_dtDateCheckOut+" in ('null','') AND intSubmit='0' AND sync='0' ";
+		String selectQuery = "SELECT  "+dt.Property_All+" FROM " + TABLE_CONTACTS +" Where "+dt.Property_dtDateCheckOut+" in ('null','') AND intSubmit='1'";
 
 		Cursor cursor = db.rawQuery(selectQuery, null);
 		tAbsenUserData contact = null;
@@ -566,7 +566,7 @@ public class tAbsenUserDA {
 		values.put(dt.Property_dtDateCheckOut, dTime);
 		values.put(dt.Property_intSubmit, "1");
 		values.put(dt.Property_intSync, "0");
-		values.put(dt.Property_txtAbsen, "0");
+//		values.put(dt.Property_txtAbsen, "0");
 		// updating row
 		return db.update(TABLE_CONTACTS, values, dt.Property_intId + " = ? ",
 				new String[] { String.valueOf(id) });

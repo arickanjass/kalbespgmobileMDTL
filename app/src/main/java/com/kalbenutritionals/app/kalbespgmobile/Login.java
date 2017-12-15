@@ -75,9 +75,11 @@ import bl.mUserRoleBL;
 import bl.tDeviceInfoUserBL;
 import bl.tLogErrorBL;
 import bl.tUserLoginBL;
+import bl.trackingLocationBL;
 import library.spgmobile.common.APIData;
 import library.spgmobile.common.clsHelper;
 import library.spgmobile.common.mCountConsumerMTDData;
+import library.spgmobile.common.mCounterNumberData;
 import library.spgmobile.common.mDownloadMasterData_mobileData;
 import library.spgmobile.common.mEmployeeAreaData;
 import library.spgmobile.common.mMenuData;
@@ -85,14 +87,18 @@ import library.spgmobile.common.mUserLOBData;
 import library.spgmobile.common.mUserRoleData;
 import library.spgmobile.common.tLogErrorData;
 import library.spgmobile.common.tUserLoginData;
+import library.spgmobile.common.trackingLocationData;
 import library.spgmobile.dal.clsHardCode;
 import library.spgmobile.dal.enumConfigData;
+import library.spgmobile.dal.enumCounterData;
+import library.spgmobile.dal.mCounterNumberDA;
 import library.spgmobile.dal.mEmployeeAreaDA;
 import library.spgmobile.dal.mUserRoleDA;
 import library.spgmobile.dal.mconfigDA;
 import service.MyServiceNative;
 import service.MyTrackingLocationService;
 
+import static android.support.v4.content.FileProvider.getUriForFile;
 import static junit.framework.Assert.assertEquals;
 
 public class Login extends clsMainActivity {
@@ -188,7 +194,7 @@ public class Login extends clsMainActivity {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     intProcesscancel = 0;
-                    txtEmail1 = txtLoginEmail.getText().toString();
+                    txtEmail1 = txtLoginEmail.getText().toString().replaceAll("\u00A0", "");
                     txtPassword1 = txtLoginPassword.getText().toString();
                     if (!txtEmail1.equals("")) {
                         AsyncCallRole task = new AsyncCallRole();
@@ -295,6 +301,7 @@ public class Login extends clsMainActivity {
                 Intent pushError = new Intent(Login.this, ActivityPushError.class);
                 pushError.putExtra("status", 0);
                 startActivity(pushError);
+                finish();
 //                pushError();
             }
         });
@@ -496,6 +503,52 @@ public class Login extends clsMainActivity {
                         _tUserLoginData.set_txtSubmissionID((String) innerObj.get("TxtSubmissonId"));
                         _tUserLoginData.set_txtCheckLocation((String) innerObj.get("IntRadius"));
 
+                        //update aan
+                        mCounterNumberData _data =new mCounterNumberData();
+                        SQLiteDatabase _db = new clsMainBL().getDb();
+                        mCounterNumberDA _mCounterNumberDA = new mCounterNumberDA(_db);
+
+                        _data.set_intId(enumCounterData.NoDataSO.getidCounterData());
+                        _data.set_txtDeskripsi((String) innerObj.get("_pstrMethodRequest"));
+                        _data.set_txtName((String) innerObj.get("_pstrMethodRequest"));
+                        _data.set_txtValue((String) innerObj.get("txtNoSo"));
+                        _mCounterNumberDA.SaveDataMConfig(_db, _data);
+
+                        _data = new mCounterNumberData();
+                        _data.set_intId(enumCounterData.NoPurchaseOrder.getidCounterData());
+                        _data.set_txtDeskripsi((String) innerObj.get("_pstrMethodRequest"));
+                        _data.set_txtName((String) innerObj.get("_pstrMethodRequest"));
+                        _data.set_txtValue((String) innerObj.get("txtNoPo"));
+                        _mCounterNumberDA.SaveDataMConfig(_db, _data);
+
+                        _data = new mCounterNumberData();
+                        _data.set_intId(enumCounterData.NoSIH.getidCounterData());
+                        _data.set_txtDeskripsi((String) innerObj.get("_pstrMethodRequest"));
+                        _data.set_txtName((String) innerObj.get("_pstrMethodRequest"));
+                        _data.set_txtValue((String) innerObj.get("txtNoSOH"));
+                        _mCounterNumberDA.SaveDataMConfig(_db, _data);
+
+                        _data = new mCounterNumberData();
+                        _data.set_intId(enumCounterData.NoQuantityStock.getidCounterData());
+                        _data.set_txtDeskripsi((String) innerObj.get("_pstrMethodRequest"));
+                        _data.set_txtName((String) innerObj.get("_pstrMethodRequest"));
+                        _data.set_txtValue((String) innerObj.get("txtNoQTS"));
+                        _mCounterNumberDA.SaveDataMConfig(_db, _data);
+
+                        _data = new mCounterNumberData();
+                        _data.set_intId(enumCounterData.NoKRS.getidCounterData());
+                        _data.set_txtDeskripsi((String) innerObj.get("_pstrMethodRequest"));
+                        _data.set_txtName((String) innerObj.get("_pstrMethodRequest"));
+                        _data.set_txtValue((String) innerObj.get("txtNoKRS"));
+                        _mCounterNumberDA.SaveDataMConfig(_db, _data);
+
+                        _data = new mCounterNumberData();
+                        _data.set_intId(enumCounterData.NoOS.getidCounterData());
+                        _data.set_txtDeskripsi((String) innerObj.get("_pstrMethodRequest"));
+                        _data.set_txtName((String) innerObj.get("_pstrMethodRequest"));
+                        _data.set_txtValue((String) innerObj.get("txtNoOVS"));
+                        _mCounterNumberDA.SaveDataMConfig(_db, _data);
+
                         String TxtSubmissonId = (String) innerObj.get("TxtSubmissonId");
                         if (TxtSubmissonId.equals("") || TxtSubmissonId == null) {
                             showCustomToast(Login.this, new clsHardCode().txtMessDataSubmissionIdNotFound, false);
@@ -560,6 +613,32 @@ public class Login extends clsMainActivity {
                                 listDatamDownloadData.add(data);
                             }
                             new mDownloadMasterData_mobileBL().SaveData(listDatamDownloadData);
+                        }
+
+                        JSONArray JsonArraytrackingLocation_mobile = (JSONArray) innerObj.get("ListOftrackingLocation_mobile");
+
+                        if(JsonArraytrackingLocation_mobile != null){
+                            Iterator iJsonArraytrackingLocation_mobile = JsonArraytrackingLocation_mobile.iterator();
+                            while (iJsonArraytrackingLocation_mobile.hasNext()) {
+                                JSONObject innerObjDetail = (JSONObject) iJsonArraytrackingLocation_mobile.next();
+                                trackingLocationData data = new trackingLocationData();
+                                data.set_intId(String.valueOf(innerObjDetail.get("IntId")));
+                                data.set_txtLongitude(String.valueOf(innerObjDetail.get("TxtLongitude")));
+                                data.set_txtLatitude(String.valueOf(innerObjDetail.get("TxtLatitude")));
+                                data.set_txtAccuracy(String.valueOf(innerObjDetail.get("TxtAccuracy")));
+                                data.set_txtTime(String.valueOf(innerObjDetail.get("Time")));
+                                data.set_txtUserId(String.valueOf(innerObjDetail.get("TxtUserId")));
+                                data.set_txtUsername(String.valueOf(innerObjDetail.get("TxtUsername")));
+                                data.set_txtRoleId(String.valueOf(innerObjDetail.get("TxtRoleId")));
+                                data.set_txtDeviceId(String.valueOf(innerObjDetail.get("TxtDeviceId")));
+                                data.set_txtBranchCode(String.valueOf(innerObjDetail.get("TxtBranchCode")));
+                                data.set_txtOutletCode(String.valueOf(innerObjDetail.get("TxtOutletCode")));
+                                data.set_txtNIK(String.valueOf(innerObjDetail.get("TxtNIK")));
+                                data.set_intSequence(String.valueOf(innerObjDetail.get("IntSequence")));
+                                data.set_intSubmit("1");
+                                data.set_intSync("1");
+                                new trackingLocationBL().SaveDataTrackingLocation(data);
+                            }
                         }
 
                         JSONArray JsonArrayListLOBSPG = (JSONArray) innerObj.get("ListLOBSPG");
@@ -633,7 +712,7 @@ public class Login extends clsMainActivity {
 //            android.os.Debug.waitForDebugger();
             JSONArray roledata = new JSONArray();
             try {
-                roledata = new mUserRoleBL().getRoleAndOutletReturnJSON(txtEmail1, pInfo.versionName, getApplicationContext());
+                roledata = new mUserRoleBL().getRoleAndOutletReturnJSON(txtEmail1.trim(), pInfo.versionName, getApplicationContext());
 
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -850,6 +929,7 @@ public class Login extends clsMainActivity {
                         llContent.setVisibility(View.VISIBLE);
                         if (pInfo.versionName.equals(innerObj.get("TxtVersion").toString())) {
                             resUpdate = false;
+//                            txtLink = String.valueOf(innerObj.get("TxtLinkApp"));
                         } else {
                             resUpdate = true;
                             txtLink = String.valueOf(innerObj.get("TxtLinkApp"));
@@ -1003,20 +1083,44 @@ public class Login extends clsMainActivity {
                 showToast(context, "Download error: " + result);
             else {
                 showToast(context, "File downloaded");
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                String txtPath = new clsHardCode().txtPathUserData + "kalbespgmobile.apk";
-                intent.setDataAndType(Uri.fromFile(new File(txtPath)), "application/vnd.android.package-archive");
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Intent intentFinal = null;
 
-                if (Build.VERSION.SDK_INT >= 24) {
-                    intent.setDataAndType(FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", new File(txtPath)), "application/vnd.android.package-archive");
-                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
+                        String txtPath = new clsHardCode().txtPathUserData + "kalbespgmobile.apk";
+                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+                        File file = new File(txtPath);
+                        Uri uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", file);
+                        intent.setData(uri);
+
+                        intentFinal = intent;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 } else {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    String txtPath = new clsHardCode().txtPathUserData + "kalbespgmobile.apk";
                     intent.setDataAndType(Uri.fromFile(new File(txtPath)), "application/vnd.android.package-archive");
-                }
-                //intent.setDataAndType(Uri.fromFile(new File(txtPath)), "application/vnd.android.package-archive");
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-                startActivity(intent);
+                    if (Build.VERSION.SDK_INT >= 24) {
+                        intent.setDataAndType(getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", new File(txtPath)), "application/vnd.android.package-archive");
+                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    } else {
+                        intent.setDataAndType(Uri.fromFile(new File(txtPath)), "application/vnd.android.package-archive");
+                    }
+                    intentFinal = intent;
+                }
+
+                //intent.setDataAndType(Uri.fromFile(new File(txtPath)), "application/vnd.android.package-archive");
+                if(intentFinal!=null){
+                    startActivity(intentFinal);
+                } else {
+                    showToast(context, "Failed to Install");
+                }
             }
         }
     }

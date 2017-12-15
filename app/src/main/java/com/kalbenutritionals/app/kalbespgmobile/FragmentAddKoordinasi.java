@@ -8,11 +8,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.FileProvider;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.util.Log;
@@ -32,6 +34,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -348,11 +351,21 @@ public class FragmentAddKoordinasi extends Fragment implements View.OnClickListe
         if (requestCode == CAMERA_REQUEST) {
             if (resultCode == -1) {
                 try {
-                    Bitmap bitmap;
-                    BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-                    String uri = uriImage.getPath().toString();
 
-                    bitmap = BitmapFactory.decodeFile(uri, bitmapOptions);
+                    Bitmap bitmap = null;
+
+                    try {
+                        InputStream ims =  getActivity().getContentResolver().openInputStream(uriImage);
+                        bitmap = BitmapFactory.decodeStream(ims);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+
+//                    Bitmap bitmap;
+//                    BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+//                    String uri = uriImage.getPath().toString();
+//
+//                    bitmap = BitmapFactory.decodeFile(uri, bitmapOptions);
 
                     previewCaptureImage1(bitmap);
                 } catch (Exception e) {
@@ -374,11 +387,21 @@ public class FragmentAddKoordinasi extends Fragment implements View.OnClickListe
         } else if (requestCode == CAMERA_REQUEST2) {
             if (resultCode == -1) {
                 try {
-                    Bitmap bitmap;
-                    BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-                    String uri = uriImage.getPath().toString();
 
-                    bitmap = BitmapFactory.decodeFile(uri, bitmapOptions);
+                    Bitmap bitmap = null;
+
+                    try {
+                        InputStream ims =  getActivity().getContentResolver().openInputStream(uriImage);
+                        bitmap = BitmapFactory.decodeStream(ims);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+
+//                    Bitmap bitmap;
+//                    BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+//                    String uri = uriImage.getPath().toString();
+//
+//                    bitmap = BitmapFactory.decodeFile(uri, bitmapOptions);
 
                     previewCaptureImage2(bitmap);
                 } catch (Exception e) {
@@ -473,7 +496,12 @@ public class FragmentAddKoordinasi extends Fragment implements View.OnClickListe
     }
 
     private Uri getOutputMediaFileUri() {
-        return Uri.fromFile(getOutputMediaFile());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) { //use this if Lollipop_Mr1 (API 22) or above
+            return FileProvider.getUriForFile(getActivity(), getActivity().getPackageName()+".provider", getOutputMediaFile());
+        } else {
+            return Uri.fromFile(getOutputMediaFile());
+        }
+//        return Uri.fromFile(getOutputMediaFile());
     }
 
     private File getOutputMediaFile() {

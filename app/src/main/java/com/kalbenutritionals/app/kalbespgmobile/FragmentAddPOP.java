@@ -8,11 +8,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
@@ -31,7 +33,9 @@ import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -296,7 +300,12 @@ public class FragmentAddPOP extends Fragment {
     }
     //get location file to save tmp
     private Uri getOutputMediaFileUri() {
-        return Uri.fromFile(getOutputMediaFile());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) { //use this if Lollipop_Mr1 (API 22) or above
+            return FileProvider.getUriForFile(getActivity(), getActivity().getPackageName()+".provider", getOutputMediaFile());
+        } else {
+            return Uri.fromFile(getOutputMediaFile());
+        }
+//        return Uri.fromFile(getOutputMediaFile());
     }
     //create path file
     private static final String IMAGE_DIRECTORY_NAME = "Image POP Standard";
@@ -325,11 +334,20 @@ public class FragmentAddPOP extends Fragment {
             if (resultCode == -1) {
                 try {
 
-                    Bitmap bitmap;
-                    BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-                    String uri = uriImage.getPath();
+//                    Bitmap bitmap;
+//                    BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+//                    String uri = uriImage.getPath();
+//
+//                    bitmap = BitmapFactory.decodeFile(uri, bitmapOptions);
 
-                    bitmap = BitmapFactory.decodeFile(uri, bitmapOptions);
+                    Bitmap bitmap = null;
+
+                    try {
+                        InputStream ims =  getActivity().getContentResolver().openInputStream(uriImage);
+                        bitmap = BitmapFactory.decodeStream(ims);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
 
                     previewImageViewCamera1(bitmap);
 
@@ -343,11 +361,20 @@ public class FragmentAddPOP extends Fragment {
             if (resultCode == -1) {
                 try {
 
-                    Bitmap bitmap;
-                    BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-                    String uri = uriImage.getPath();
+//                    Bitmap bitmap;
+//                    BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+//                    String uri = uriImage.getPath();
+//
+//                    bitmap = BitmapFactory.decodeFile(uri, bitmapOptions);
 
-                    bitmap = BitmapFactory.decodeFile(uri, bitmapOptions);
+                    Bitmap bitmap = null;
+
+                    try {
+                        InputStream ims =  getActivity().getContentResolver().openInputStream(uriImage);
+                        bitmap = BitmapFactory.decodeStream(ims);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
 
                     previewImageViewCamera2(bitmap);
 

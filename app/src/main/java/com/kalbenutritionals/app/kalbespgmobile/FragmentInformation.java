@@ -275,7 +275,14 @@ public class FragmentInformation extends Fragment implements View.OnClickListene
             }
         }
 
-        tUserLoginData dt = new tUserLoginBL().getUserActive();
+        tUserLoginData dt = new tUserLoginData();
+
+        try {
+            dt = new tUserLoginBL().getUserActive();
+        } catch (Exception e){
+            String ef = e.toString();
+        }
+
 //        final tAbsenUserData dtAbsen = new tAbsenUserBL().getDataCheckInActive();
         final visitplanAbsenData dtAbsen = new clsHelperBL().getDataCheckInActive();
         List<tLeaveMobileData> dtLeave = new tLeaveMobileBL().getData("");

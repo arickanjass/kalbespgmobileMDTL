@@ -14,10 +14,13 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.FileProvider;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -1162,5 +1165,12 @@ public class clsMainActivity extends Activity {
 
         return creator;
 
+    }
+    public Uri getOutputMediaFileUri(Context context, File file) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) { //use this if Lollipop_Mr1 (API 22) or above
+            return FileProvider.getUriForFile(context, context.getPackageName()+".provider", file);
+        } else {
+            return Uri.fromFile(file);
+        }
     }
 }
