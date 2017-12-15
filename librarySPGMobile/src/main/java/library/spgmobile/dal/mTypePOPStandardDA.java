@@ -19,7 +19,8 @@ public class mTypePOPStandardDA {
     public mTypePOPStandardDA(SQLiteDatabase db){
         mTypePOPStandardData dt = new mTypePOPStandardData();
         String CREATE_CONTACTS_TABLE = "CREATE TABLE IF NOT EXISTS "
-                + TABLE_CONTACTS + "( " + dt.Property_intId + " TEXT PRIMARY KEY," + dt.Property_txtType + " TEXT NULL)";
+                + TABLE_CONTACTS + "( " + dt.Property_intId + " TEXT PRIMARY KEY," + dt.Property_txtType + " TEXT NULL,"
+                + dt.Property_intFlagMandatori + " TEXT NULL)";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
     //drop table
@@ -32,6 +33,7 @@ public class mTypePOPStandardDA {
         ContentValues cv = new ContentValues();
         cv.put(dt.Property_intId, String.valueOf(data.get_intId()));
         cv.put(dt.Property_txtType, String.valueOf(data.get_txtType()));
+        cv.put(dt.Property_intFlagMandatori, String.valueOf(data.get_intFlagMandatori()));
         if (data.get_intId() == null){
             db.insert(TABLE_CONTACTS, null, cv);
         }else {
@@ -51,6 +53,7 @@ public class mTypePOPStandardDA {
                 mTypePOPStandardData contact = new mTypePOPStandardData();
                 contact.set_intId(cursor.getString(0));
                 contact.set_txtType(cursor.getString(1));
+                contact.set_intFlagMandatori(cursor.getString(2));
                 contactList.add(contact);
             }while (cursor.moveToNext());
         }

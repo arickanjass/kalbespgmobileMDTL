@@ -79,7 +79,7 @@ public class FragmentAddPOP extends Fragment {
     tUserLoginData dataUserActive;
     tAbsenUserData dataOutletCheckIn;
     Toolbar toolbar;
-    String name;
+    String [] bundleType;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -99,9 +99,9 @@ public class FragmentAddPOP extends Fragment {
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            name = bundle.getString("Key_POPId");
+            bundleType = bundle.getStringArray("Key_POPId");
         }
-        toolbar.setSubtitle(name);
+        toolbar.setSubtitle(bundleType[0]);
 
         dataUserActive = new tAbsenUserBL().getUserActive();
         dataOutletCheckIn = new tAbsenUserBL().getDataCheckInActive();
@@ -186,12 +186,16 @@ public class FragmentAddPOP extends Fragment {
            // new clsMainActivity().showCustomToast(getContext(), "Please Select Category", false);
         }else if (cbPOP.isChecked()){
             if (imgPhoto1==null && imgPhoto2==null){
-                msg = "Please Photo at least 1 photo";
+                if (bundleType[1].equals("1")){
+                    msg = "Please Photo at least 1 photo";
+                } else {
+                    msg="";
+                }
                 //new clsMainActivity().showCustomToast(getContext(), "Please Photo at least 1 photo", false);
             }
         }else if (!cbPOP.isChecked()){
             if (spnReason.getSelectedItem().equals("-- Select Reason --")){
-                msg = "Please Select Reason If You Have no " + name;
+                msg = "Please Select Reason If You Have no " + bundleType[0];
                         //new clsMainActivity().showCustomToast(getContext(), "Please Photo at least 1 photo", false);
             }
         }
@@ -212,7 +216,7 @@ public class FragmentAddPOP extends Fragment {
         String dateNow = dateFormat.format(date);
         tPOPStandardHeaderData dt = new tPOPStandardHeaderData();
         dt.set_intId(ImagePick.GenerateGuid());
-        dt.set_txtType(name);
+        dt.set_txtType(bundleType[0]);
         if (cbPOP.isChecked()){
             dt.set_bolHavePOP("1");
             dt.set_txtReason(null);
@@ -238,8 +242,8 @@ public class FragmentAddPOP extends Fragment {
         _data.set_intId(ImagePick.GenerateGuid());
         _data.set_intHeaderId(header.get_intId());
         if (cbPOP.isChecked()){
-            _data.set_txtImg1(imgPhoto1);
-            _data.set_txtImg2(imgPhoto2);
+                _data.set_txtImg1(imgPhoto1);
+                _data.set_txtImg2(imgPhoto2);
         }else {
             _data.set_txtImg1(null);
             _data.set_txtImg2(null);
@@ -256,7 +260,7 @@ public class FragmentAddPOP extends Fragment {
         new clsMainActivity().showCustomToast(getContext(), "Saved", true);
         Bundle bundle = new Bundle();
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        bundle.putString("Key_POPId", name);
+        bundle.putStringArray("Key_POPId", bundleType);
         FragmentPOPView fragmentPOPView = new FragmentPOPView();
         fragmentPOPView.setArguments(bundle);
         FragmentTransaction fragmentTransactionPOPView = getFragmentManager().beginTransaction();

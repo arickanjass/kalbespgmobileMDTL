@@ -72,7 +72,7 @@ public class FragmentPOPView extends Fragment implements IXListViewListener{
     View v;
     FloatingActionButton fab;
     Toolbar toolbar;
-    String name;
+    String [] bundleType;
     private static List<clsSwipeList> swipeList = new ArrayList<clsSwipeList>();
     private AppAdapterViewCusBase mAdapter;
     private PullToRefreshSwipeMenuListView mListView;
@@ -93,15 +93,15 @@ public class FragmentPOPView extends Fragment implements IXListViewListener{
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            name = bundle.getString("Key_POPId");
+            bundleType = bundle.getStringArray("Key_POPId");
         }
-        toolbar.setSubtitle(name);
+        toolbar.setSubtitle(bundleType[0]);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                bundle.putString("Key_POPId", name);
+                bundle.putStringArray("Key_POPId", bundleType);
                 FragmentAddPOP fragmentAddPOP = new FragmentAddPOP();
                 fragmentAddPOP.setArguments(bundle);
                 FragmentTransaction fragmentTransactionPOP = getFragmentManager().beginTransaction();
@@ -116,7 +116,7 @@ public class FragmentPOPView extends Fragment implements IXListViewListener{
     private void loadData(){
         clsSwipeList swplist;
         dataOutletCheckIn = new tAbsenUserBL().getDataCheckInActive();
-        dt  = new tPOPStandardHeaderBL().GetDataByOutletCode(dataOutletCheckIn.get_txtOutletCode(), name);
+        dt  = new tPOPStandardHeaderBL().GetDataByOutletCode(dataOutletCheckIn.get_txtOutletCode(), bundleType[0]);
 
         swipeList.clear();
 

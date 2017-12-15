@@ -6466,6 +6466,7 @@ public class FragmentDownloadData extends Fragment {
                         JSONObject innerObj_parent = (JSONObject) aJsonArray_Type;
                         _data.set_intId(String.valueOf(innerObj_parent.get("IntId")));
                         _data.set_txtType(String.valueOf(innerObj_parent.get("TxtType")));
+                        _data.set_intFlagMandatori(String.valueOf(innerObj_parent.get("IntFlagMandatori")));
                         new mTypePOPStandardBL().SaveData(_data) ;
                     }
 

@@ -50,6 +50,8 @@ public class FragmentPOPAwalTL extends Fragment {
                 ln.addView(button);
                 final int _id  = button.getId();
                 final String name = listType.get(i).get_txtType();
+                final String flag = listType.get(i).get_intFlagMandatori();
+                final String [] bundleType = {name, flag};
                 Button btn = (Button) v.findViewById(_id);
                 listButton.add(btn);
                 listButton.get(i).setOnClickListener(new View.OnClickListener() {
@@ -57,7 +59,8 @@ public class FragmentPOPAwalTL extends Fragment {
                     public void onClick(View v) {
                         Bundle bundle = new Bundle();
                         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                        bundle.putString("Key_POPId", name);
+                        bundle.putStringArray("Key_POPId", bundleType);
+//                        bundle.putString("Key_POPId", name);
                         FragmentPOPView fragmentPOPView = new FragmentPOPView();
                         fragmentPOPView.setArguments(bundle);
                         FragmentTransaction fragmentTransactionPOP = getFragmentManager().beginTransaction();
