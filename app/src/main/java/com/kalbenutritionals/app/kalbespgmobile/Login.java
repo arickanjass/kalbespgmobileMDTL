@@ -928,8 +928,8 @@ public class Login extends clsMainActivity {
                     if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
                         llContent.setVisibility(View.VISIBLE);
                         if (pInfo.versionName.equals(innerObj.get("TxtVersion").toString())) {
-                            resUpdate = true;
-                            txtLink = String.valueOf(innerObj.get("TxtLinkApp"));
+                            resUpdate = false;
+//                            txtLink = String.valueOf(innerObj.get("TxtLinkApp"));
                         } else {
                             resUpdate = true;
                             txtLink = String.valueOf(innerObj.get("TxtLinkApp"));

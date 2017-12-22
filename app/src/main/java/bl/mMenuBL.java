@@ -45,6 +45,14 @@ public class mMenuBL extends clsMainBL {
         db.close();
     }
 
+    public List<mMenuData> GetAllData() {
+        SQLiteDatabase db = getDb();
+        mMenuDA _mMenuDA = new mMenuDA(db);
+        List<mMenuData> dt = _mMenuDA.getAllData(db);
+        db.close();
+        return dt;
+    }
+
     public mMenuData getMenuDataByMenuName(String menuName) {
         SQLiteDatabase db = getDb();
         mMenuDA _mMenuDA = new mMenuDA(db);

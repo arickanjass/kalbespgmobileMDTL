@@ -1,6 +1,7 @@
 package bl;
 
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -38,6 +39,29 @@ public class tKategoryPlanogramMobileBL extends clsMainBL {
         }
         db.close();
     }
+
+    public void saveDataCustomExec(List<tKategoryPlanogramMobileData> Listdata) {
+        SQLiteDatabase db = getDb();
+        String sql = "insert into "+ new clsHardCode().txtTable_tKategoryPlanogram + " (intKategoryPlanogram, txtType, txtName, bitActive, intIsCheckValid) values (?, ?, ?, ?, ?);";
+
+        db.beginTransaction();
+        SQLiteStatement stmt = db.compileStatement(sql);
+
+        for (int i = 0; i < Listdata.size(); i++) {
+            stmt.bindString(1, Listdata.get(i).get_intKategoryPlanogram());
+            stmt.bindString(2, Listdata.get(i).get_txtType());
+            stmt.bindString(3, Listdata.get(i).get_txtName());
+            stmt.bindString(4, Listdata.get(i).get_bitActive());
+            stmt.bindString(5, Listdata.get(i).get_intIsCheckValid());
+
+            stmt.executeInsert();
+            stmt.clearBindings();
+        }
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
+    }
+
     public List<tKategoryPlanogramMobileData> getAllData(){
         SQLiteDatabase _db = getDb();
         List<tKategoryPlanogramMobileData> dtDetail = new tKategoryPlanogramMobileDA(_db).getAll(_db);

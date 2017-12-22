@@ -1,12 +1,18 @@
 package bl;
 
+import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
+
+import com.kalbenutritionals.app.kalbespgmobile.mProductCompTempData;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import library.spgmobile.common.APIData;
 import library.spgmobile.common.clsHelper;
@@ -45,6 +51,32 @@ public class mProductCompetitorBL extends clsMainBL {
             _mProductCompetitorDA.SaveDataMConfig(db, data);
         }
         db.close();
+    }
+
+    public void saveDataCustomExec(List<mProductCompTempData> Listdata) {
+        SQLiteDatabase db = getDb();
+        String sql = "insert into "+ new clsHardCode().txtTable_mProductCompetitorData + " (txtID, txtProductDetailCode, txtLobName, GroupProduct, txtProdukid, txtProdukKompetitorID, txtCRMCode, txtNIK, txtName) values (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+
+        db.beginTransaction();
+        SQLiteStatement stmt = db.compileStatement(sql);
+
+        for (int i = 0; i < Listdata.size(); i++) {
+            stmt.bindString(1, new clsHelper().GenerateGuid());
+            stmt.bindString(2, Listdata.get(i).getTxtProductDetailCode());
+            stmt.bindString(3, Listdata.get(i).getTxtLobName());
+            stmt.bindString(4, Listdata.get(i).getTxtGroupProduct());
+            stmt.bindString(5, Listdata.get(i).getTxtProdukid());
+            stmt.bindString(6, Listdata.get(i).getTxtProdukKompetitorID());
+            stmt.bindString(7, Listdata.get(i).getTxtBranchCRMCode());
+            stmt.bindString(8, Listdata.get(i).getTxtNIK());
+            stmt.bindString(9, Listdata.get(i).getTxtName());
+            
+            stmt.executeInsert();
+            stmt.clearBindings();
+        }
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
     }
 
     public List<mProductCompetitorData> GetAllData(){
@@ -96,6 +128,22 @@ public class mProductCompetitorBL extends clsMainBL {
         db.close();
         return res;
     }
+
+    public String DownloadProdctCompetitorEnhance(String versionApp, String txtUserId, String txtEmpId) throws ParseException {
+        JSONObject resJson = new JSONObject();
+        resJson.put("TxtNIK", txtEmpId);
+        resJson.put("TxtLobName", "");
+        resJson.put("TxtProductDetailCode", "");
+        linkAPI dtlinkAPI=new linkAPI();
+        dtlinkAPI.set_txtMethod("GetDatavw_SalesInsentive_EmployeeSalesProductCompetitor");
+        dtlinkAPI.set_txtParam("");
+        dtlinkAPI.set_txtToken(new clsHardCode().txtTokenAPI);
+        dtlinkAPI.set_txtVesion(versionApp);
+        String strLinkAPI= dtlinkAPI.QueryString(getLinkAPI());
+        clsHelper _clsHelper=new clsHelper();
+        return _clsHelper.pushtData(strLinkAPI, String.valueOf(resJson), Integer.valueOf(getBackGroundServiceOnline()));
+    }
+
     public int  getContactsCountByKN(List<mUserLOBData> mUserLOBDataList){
         SQLiteDatabase db=getDb();
         mProductCompetitorDA _mProductCompetitorDA=new mProductCompetitorDA(db);

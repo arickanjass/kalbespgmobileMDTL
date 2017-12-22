@@ -1,6 +1,9 @@
 package bl;
 
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
+
+import com.kalbenutritionals.app.kalbespgmobile.mProductCompTempData;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -38,6 +41,28 @@ public class tSubTypeActivityBL extends clsMainBL{
         }
         db.close();
     }
+
+    public void saveDataCustomExec(List<tSubTypeActivityData> Listdata) {
+        SQLiteDatabase db = getDb();
+        String sql = "insert into "+ new clsHardCode().txtTable_tSubTypeActivity + " (intSubTypeActivity, txtType, txtName, bitActive) values (?, ?, ?, ?);";
+
+        db.beginTransaction();
+        SQLiteStatement stmt = db.compileStatement(sql);
+
+        for (int i = 0; i < Listdata.size(); i++) {
+            stmt.bindString(1, Listdata.get(i).get_intSubTypeActivity());
+            stmt.bindString(2, Listdata.get(i).get_txtType());
+            stmt.bindString(3, Listdata.get(i).get_txtName());
+            stmt.bindString(4, Listdata.get(i).get_bitActive());
+
+            stmt.executeInsert();
+            stmt.clearBindings();
+        }
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
+    }
+
     public List<tSubTypeActivityData> getAllData(){
         SQLiteDatabase _db = getDb();
         List<tSubTypeActivityData> dtDetail = new tSubTypeActivityDA(_db).getAll(_db);

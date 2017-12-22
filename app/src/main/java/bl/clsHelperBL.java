@@ -1,11 +1,20 @@
 package bl;
 
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Environment;
+import android.widget.Toast;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Writer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -563,7 +572,68 @@ public class clsHelperBL extends clsMainBL {
         dataAPI = _mconfigDA.getData(_db, enumConfigData.BackGroundServiceOnline.getidConfigData());
         String strLinkAPI = dtlinkAPI.QueryString(strVal2);
         String JsonData = _help.pushtData(strLinkAPI, strJson, Integer.valueOf(getBackGroundServiceOnline()));
-        //String JsonData= _help.ResultJsonData(_help.getHTML(strLinkAPI));
+        _db.close();
+        return JsonData;
+    }
+
+    public org.json.simple.JSONArray SQLiteGenerateRequest(String versionName) throws Exception {
+        SQLiteDatabase _db = getDb();
+        Boolean flag = true;
+        String ErrorMess = "";
+        String txtMethod = "SQLiteGenerator";
+        linkAPI dtlinkAPI = new linkAPI();
+        clsHelper _help = new clsHelper();
+        dtlinkAPI = new linkAPI();
+        dtlinkAPI.set_txtMethod(txtMethod);
+        tUserLoginDA _tUserLoginDA = new tUserLoginDA(_db);
+        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
+        dtlinkAPI.set_txtParam(_dataUserLogin.get_TxtEmpId() + "|" + _dataUserLogin.get_txtRoleId() + "||");
+        dtlinkAPI.set_txtToken(new clsHardCode().txtTokenAPI);
+        dtlinkAPI.set_txtVesion(versionName);
+        String strVal2 = "";
+        mconfigDA _mconfigDA = new mconfigDA(_db);
+        mconfigData dataAPI = _mconfigDA.getData(_db, enumConfigData.ApiKalbe.getidConfigData());
+        strVal2 = dataAPI.get_txtValue();
+        if (dataAPI.get_txtValue() == "") {
+            strVal2 = dataAPI.get_txtDefaultValue();
+        }
+        dataAPI = _mconfigDA.getData(_db, enumConfigData.BackGroundServiceOnline.getidConfigData());
+        String strLinkAPI = dtlinkAPI.QueryString(strVal2);
+        String JsonData = _help.pushtData(strLinkAPI, "", Integer.valueOf(getBackGroundServiceOnline()));
+        org.json.simple.JSONArray JsonArray = _help.ResultJsonArray(JsonData);
+        APIData dtAPIDATA = new APIData();
+        Iterator i = JsonArray.iterator();
+        _db.close();
+        return JsonArray;
+    }
+
+    public String DownloadEmployeeAreaEnhance(String versionName) throws Exception {
+        SQLiteDatabase _db = getDb();
+        tUserLoginDA _tUserLoginDA = new tUserLoginDA(_db);
+        mconfigDA _mconfigDA = new mconfigDA(_db);
+
+        String strVal2 = "";
+        mconfigData dataAPI = _mconfigDA.getData(_db, enumConfigData.ApiKalbe.getidConfigData());
+        strVal2 = dataAPI.get_txtValue();
+        if (dataAPI.get_txtValue() == "") {
+            strVal2 = dataAPI.get_txtDefaultValue();
+        }
+        //ambil version dari webservices
+        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
+        clsHelper _help = new clsHelper();
+        linkAPI dtlinkAPI = new linkAPI();
+        String txtMethod = "DownloadAllDataMobileEnhance";
+        JSONObject resJson = new JSONObject();
+        resJson.put("txtNIK", _dataUserLogin.get_TxtEmpId());
+        resJson.put("txtRoleId", _dataUserLogin.get_txtRoleId());
+        dtlinkAPI.set_txtMethod(txtMethod);
+        dtlinkAPI.set_txtParam(_dataUserLogin.get_TxtEmpId() + "|||");
+        dtlinkAPI.set_txtToken(new clsHardCode().txtTokenAPI);
+        dtlinkAPI.set_txtVesion(versionName);
+
+        String strLinkAPI = dtlinkAPI.QueryString(strVal2);
+        String JsonData = _help.pushtData(strLinkAPI, String.valueOf(resJson), Integer.valueOf(getBackGroundServiceOnline()));
+
         _db.close();
         return JsonData;
     }

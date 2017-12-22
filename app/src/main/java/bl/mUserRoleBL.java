@@ -18,9 +18,11 @@ import library.spgmobile.common.APIData;
 import library.spgmobile.common.clsHelper;
 import library.spgmobile.common.linkAPI;
 import library.spgmobile.common.mEmployeeAreaData;
+import library.spgmobile.common.mMenuData;
 import library.spgmobile.common.mUserRoleData;
 import library.spgmobile.dal.clsHardCode;
 import library.spgmobile.dal.mEmployeeAreaDA;
+import library.spgmobile.dal.mMenuDA;
 import library.spgmobile.dal.mUserRoleDA;
 
 public class mUserRoleBL extends clsMainBL{
@@ -166,5 +168,13 @@ public class mUserRoleBL extends clsMainBL{
 		}
 		db.close();
 		return Listdata;
+	}
+
+	public List<mUserRoleData> getAllData() throws ParseException{
+        SQLiteDatabase db = getDb();
+        mUserRoleDA _mMenuDA = new mUserRoleDA(db);
+        List<mUserRoleData> dt = _mMenuDA.getAllData(db);
+        db.close();
+        return dt;
 	}
 }

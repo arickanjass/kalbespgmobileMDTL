@@ -58,8 +58,6 @@ public class mEmployeeBranchDA {
 	}
 	public void DeleteAllDataMConfig(SQLiteDatabase db) {
 		db.execSQL("DELETE FROM " + TABLE_CONTACTS );
-		// db.insert(TABLE_CONTACTS, null, values);
-		// db.close(); // Closing database connection
 	}
 	// Getting single contact
 	public mEmployeeBranchData getData(SQLiteDatabase db, int id) {
