@@ -928,8 +928,8 @@ public class Login extends clsMainActivity {
                     if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
                         llContent.setVisibility(View.VISIBLE);
                         if (pInfo.versionName.equals(innerObj.get("TxtVersion").toString())) {
-                            resUpdate = false;
-//                            txtLink = String.valueOf(innerObj.get("TxtLinkApp"));
+                            resUpdate = true;
+                            txtLink = String.valueOf(innerObj.get("TxtLinkApp"));
                         } else {
                             resUpdate = true;
                             txtLink = String.valueOf(innerObj.get("TxtLinkApp"));
@@ -1082,10 +1082,8 @@ public class Login extends clsMainActivity {
             if (result != null)
                 showToast(context, "Download error: " + result);
             else {
-                showToast(context, "File downloaded");
-                Intent intentFinal = null;
-
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    showToast(context, "File downloaded");
                     try {
                         Intent intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
                         String txtPath = new clsHardCode().txtPathUserData + "kalbespgmobile.apk";
@@ -1095,31 +1093,26 @@ public class Login extends clsMainActivity {
                         Uri uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", file);
                         intent.setData(uri);
 
-                        intentFinal = intent;
+                        startActivity(intent);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 } else {
+                    showToast(context, "File downloaded");
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     String txtPath = new clsHardCode().txtPathUserData + "kalbespgmobile.apk";
                     intent.setDataAndType(Uri.fromFile(new File(txtPath)), "application/vnd.android.package-archive");
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
                     if (Build.VERSION.SDK_INT >= 24) {
-                        intent.setDataAndType(getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", new File(txtPath)), "application/vnd.android.package-archive");
+                        intent.setDataAndType(FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", new File(txtPath)), "application/vnd.android.package-archive");
                         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     } else {
                         intent.setDataAndType(Uri.fromFile(new File(txtPath)), "application/vnd.android.package-archive");
                     }
-                    intentFinal = intent;
-                }
+                    //intent.setDataAndType(Uri.fromFile(new File(txtPath)), "application/vnd.android.package-archive");
 
-                //intent.setDataAndType(Uri.fromFile(new File(txtPath)), "application/vnd.android.package-archive");
-                if(intentFinal!=null){
-                    startActivity(intentFinal);
-                } else {
-                    showToast(context, "Failed to Install");
+                    startActivity(intent);
                 }
             }
         }
