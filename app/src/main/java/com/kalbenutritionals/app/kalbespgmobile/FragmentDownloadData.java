@@ -4373,7 +4373,7 @@ public class FragmentDownloadData extends Fragment {
         protected void onPreExecute() {
             // Make ProgressBar invisible
             // pg.setVisibility(View.VISIBLE);
-            Dialog.setMessage("Getting Activity MDTL");
+            Dialog.setMessage("Getting Aktivitas Promosi");
             Dialog.setCancelable(false);
 //            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
 //                @Override
