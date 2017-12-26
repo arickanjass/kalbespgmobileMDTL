@@ -60,7 +60,7 @@ public class ReportDetailQuiz extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         if (getSupportActionBar() != null){
-            getSupportActionBar().setTitle("Report Detail Quesioner");
+            getSupportActionBar().setTitle("Report Detail Pfc. Tim");
 
         }
         ActionBar actionBar = getSupportActionBar();

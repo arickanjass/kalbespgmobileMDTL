@@ -2,6 +2,7 @@ package com.kalbenutritionals.app.kalbespgmobile;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -605,6 +606,7 @@ public class FragmentKuesioner extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             new clsMainActivity().showCustomToast(getContext(), "Saved", true);
+            toolbar.setTitle("View Performance Tim");
             FragmentKuesionerAwal fragmentKuesionerAwal = new FragmentKuesionerAwal();
             FragmentTransaction fragmentTransactionkuesionerAwal = getFragmentManager().beginTransaction();
             fragmentTransactionkuesionerAwal.replace(R.id.frame, fragmentKuesionerAwal);

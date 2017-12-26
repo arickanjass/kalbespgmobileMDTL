@@ -103,9 +103,9 @@ public class FragmentViewNearEDTL extends Fragment implements IXListViewListener
                 Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
                 toolbar.setTitle("Add Stock Near ED");
 
-                FragmentAddNearEDMD fragmentAddNearEDMD = new FragmentAddNearEDMD();
+                FragmentAddNearEDTL fragmentAddNearEDTL = new FragmentAddNearEDTL();
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.frame, fragmentAddNearEDMD);
+                fragmentTransaction.replace(R.id.frame, fragmentAddNearEDTL);
                 fragmentTransaction.commit();
             }
         });

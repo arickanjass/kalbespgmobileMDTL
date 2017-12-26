@@ -541,7 +541,7 @@ public class FragmentAddActivityTL  extends Fragment implements View.OnClickList
 
     public void viewActivityFragment(){
         Intent intent = new Intent(getContext(),MainMenu.class);
-        intent.putExtra("key_view", "View Activity TL");
+        intent.putExtra("key_view", "View Aktivitas Promosi");
         getActivity().finish();
         startActivity(intent);
         return;

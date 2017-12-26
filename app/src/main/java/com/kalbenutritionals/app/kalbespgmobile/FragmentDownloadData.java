@@ -2715,7 +2715,7 @@ public class FragmentDownloadData extends Fragment {
             }
         }
         if (ll_data_activityV2 != null && checkVisibility(ll_data_activityV2)) {
-            txtVwActivityV2.setText("Activity (" + String.valueOf(new tActivityMobileDA(db).getContactsCount(db)) + ")");
+            txtVwActivityV2.setText("Aktivitas Promosi (" + String.valueOf(new tActivityMobileDA(db).getContactsCount(db)) + ")");
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_data_activityV2.getId()).toString());
             if (_tLogDownloadData != null && _tLogDownloadData.get_dtLastDownload().toString() != "null") {
