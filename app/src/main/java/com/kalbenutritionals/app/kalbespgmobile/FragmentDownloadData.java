@@ -148,6 +148,7 @@ import library.spgmobile.common.mTypePertanyaanData;
 import library.spgmobile.common.mTypeSubmissionMobile;
 import library.spgmobile.common.mUserLOBData;
 import library.spgmobile.common.mUserRoleData;
+import library.spgmobile.common.mconfigData;
 import library.spgmobile.common.tAbsenUserData;
 import library.spgmobile.common.tActivityData;
 import library.spgmobile.common.tActivityMobileData;
@@ -206,6 +207,7 @@ import library.spgmobile.dal.mProductSPGDA;
 import library.spgmobile.dal.mTypeLeaveMobileDA;
 import library.spgmobile.dal.mTypeSubmissionMobileDA;
 import library.spgmobile.dal.mUserRoleDA;
+import library.spgmobile.dal.mconfigDA;
 import library.spgmobile.dal.tAbsenUserDA;
 import library.spgmobile.dal.tActivityDA;
 import library.spgmobile.dal.tActivityMobileDA;
@@ -1665,7 +1667,6 @@ public class FragmentDownloadData extends Fragment {
 //
 //    }
 
-
     private String eMessage = "";
     private String pstrArgumet = "";
     private boolean validDownloadProduct = false;
@@ -2095,7 +2096,7 @@ public class FragmentDownloadData extends Fragment {
                                             _mCounterNumberDA.SaveDataMConfig(_db, _data);
 
                                             if (boolValid.equals("1")) {
-                                                SaveDatatSalesProductData(jsonArray_Reso);
+                                                SaveDatatSalesProductData(jsonArray_Reso, 0);
                                             } else if (boolValid.equals("0")) {
                                             }
                                             break;
@@ -3043,15 +3044,12 @@ public class FragmentDownloadData extends Fragment {
         return _array;
     }
 
-
-    private List<String> SaveDatatSalesProductData(JSONArray JData) {
+    private List<String> SaveDatatSalesProductData(JSONArray JData, int intSource) {
         List<String> _array;
         _array = new ArrayList<>();
         for (Object aJData : JData) {
             JSONObject innerObj = (JSONObject) aJData;
-
             try {
-
                 String pstrArgumet = String.valueOf(innerObj.get(new APIData().getStrArgument()));
                 tLogDownloadData _tLogDownloadData = new tLogDownloadData();
                 List<tLogDownloadData> tLogDownloadDataList = new ArrayList<>();
@@ -3106,7 +3104,10 @@ public class FragmentDownloadData extends Fragment {
                     }
                     _db.close();
                 } else {
-                    new clsMainActivity().showCustomToast(getContext(), "Data not found", false);
+                    //Jika dari button single
+                    if(intSource == 1){
+                        new clsMainActivity().showCustomToast(getContext(), "Data not found", false);
+                    }
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -4163,7 +4164,7 @@ public class FragmentDownloadData extends Fragment {
         @Override
         protected void onPostExecute(JSONArray roledata) {
             if (roledata != null && roledata.size() > 0) {
-                arrData = SaveDatatSalesProductData(roledata);
+                arrData = SaveDatatSalesProductData(roledata, 1);
                 //spnBranch.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
                 loadData();
                 setViewTextLastDownload();
@@ -7262,7 +7263,7 @@ public class FragmentDownloadData extends Fragment {
         protected void onPreExecute() {
             // Make ProgressBar invisible
             // pg.setVisibility(View.VISIBLE);
-            Dialog.setMessage("Generating Data");
+            Dialog.setMessage("Generating Data\nAbout 1 - 5 minutes");
             Dialog.setCancelable(false);
 //            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
 //                @Override
@@ -7306,7 +7307,7 @@ public class FragmentDownloadData extends Fragment {
                 List<mUserRoleData> _dataUserRoleData = new mUserRoleBL().getAllData();
                 List<tDeviceInfoUserData> _dataDeviceInfoUser = new tDeviceInfoUserBL().getData(0);
                 tDisplayPictureData _pictureData = new tDisplayPictureBL().getData();
-
+                List<mconfigData> _mConfigData = new mconfigDA(_db).getAllData(_db);
                 _db.close();
 
                 URL url = new URL(sUrl[0]);
@@ -7388,6 +7389,10 @@ public class FragmentDownloadData extends Fragment {
 
                 new tDisplayPictureBL().saveData(dataProfile);
 
+                for (mconfigData dt : _mConfigData) {
+                    new mconfigDA(_db).SaveDataMConfig(_db, dt);
+                }
+
                 _db.close();
 
             } catch (Exception e) {
@@ -7438,10 +7443,79 @@ public class FragmentDownloadData extends Fragment {
                 Toast.makeText(context, "Download error: " + result, Toast.LENGTH_LONG).show();
             else {
                 Toast.makeText(context, "File downloaded", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getContext(), MainMenu.class);
-                startActivity(intent);
-                getActivity().finish();
             }
+
+            AsyncCallDownloadTransaction task = new AsyncCallDownloadTransaction();
+            task.execute();
+//            Intent intent = new Intent(getContext(), MainMenu.class);
+//            startActivity(intent);
+//            getActivity().finish();
+        }
+    }
+
+    private class AsyncCallDownloadTransaction extends AsyncTask<JSONArray, Void, JSONArray> {
+        @Override
+        protected JSONArray doInBackground(JSONArray... params) {
+            JSONArray Json = null;
+            try {
+                Json = new tSalesProductHeaderBL().DownloadReso(pInfo.versionName);
+                arrData = SaveDatatSalesProductData(Json, 0);
+
+                Json = new tActivityBL().DownloadActivity(pInfo.versionName);
+                arrData = SaveDatatActivityData(Json);
+
+                Json = new tCustomerBasedMobileHeaderBL().DownloadCustomerBase(pInfo.versionName);
+                arrData = SaveDatatCustomerBasedData(Json);
+
+                Json = new tAbsenUserBL().DownloadAbsen(pInfo.versionName);
+                arrData = SaveDatatAbsenUserData(Json);
+
+                Json = new tLeaveMobileBL().DownloadDataLeave(pInfo.versionName);
+                arrData = SaveDatatLeaveData(Json);
+
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return Json;
+        }
+
+        private ProgressDialog Dialog = new ProgressDialog(getContext());
+
+        @Override
+        protected void onCancelled() {
+            Dialog.dismiss();
+            new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessCancelRequest, false);
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray roledata) {
+            new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
+
+            Intent intent = new Intent(getContext(), MainMenu.class);
+            startActivity(intent);
+            getActivity().finish();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            // Make ProgressBar invisible
+            // pg.setVisibility(View.VISIBLE);
+            Dialog.setMessage("Geting today transaction");
+            Dialog.setCancelable(false);
+//            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    intProcesscancel = 1;
+//                }
+//            });
+            Dialog.show();
+        }
+
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            Dialog.dismiss();
         }
     }
 }
