@@ -3927,6 +3927,7 @@ public class FragmentDownloadData extends Fragment {
                 arrData = SaveDataPOPStandard(jsonArray);
                 loadData();
                 setViewTextLastDownload();
+                checkingDataTable("");
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -3935,7 +3936,6 @@ public class FragmentDownloadData extends Fragment {
                     new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
                 }
             }
-            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -3987,6 +3987,7 @@ public class FragmentDownloadData extends Fragment {
 //                arrData = SaveDataSPGFromTL(jsonArray);
                 loadData();
                 setViewTextLastDownload();
+                checkingDataTable("");
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -3995,7 +3996,6 @@ public class FragmentDownloadData extends Fragment {
                     new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
                 }
             }
-            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -4045,6 +4045,7 @@ public class FragmentDownloadData extends Fragment {
             if (roledata != null && roledata.size() > 0) {
                 loadData();
                 setViewTextLastDownload();
+                checkingDataTable("");
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -4054,7 +4055,6 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -4106,6 +4106,7 @@ public class FragmentDownloadData extends Fragment {
                 new clsMainActivity().showCustomToast(getContext(), "Saving Data", true);
                 loadData();
                 setViewTextLastDownload();
+                checkingDataTable("");
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -4115,7 +4116,6 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -4177,7 +4177,7 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable("");
+//            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -4240,7 +4240,7 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable("");
+//            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -4303,7 +4303,7 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable("");
+//            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -4366,7 +4366,7 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable("");
+//            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -4429,7 +4429,7 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable("");
+//            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -4491,7 +4491,7 @@ public class FragmentDownloadData extends Fragment {
                     new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
                 }
             }
-            checkingDataTable("");
+//            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -4545,6 +4545,7 @@ public class FragmentDownloadData extends Fragment {
                 //spnBranch.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
                 loadData();
                 setViewTextLastDownload();
+                checkingDataTable("");
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -4554,7 +4555,6 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -4607,6 +4607,7 @@ public class FragmentDownloadData extends Fragment {
                 arrData = SaveDatatAttendanceUserData(roledata);
                 loadData();
                 setViewTextLastDownload();
+                checkingDataTable("");
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -4616,7 +4617,6 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -4683,7 +4683,7 @@ public class FragmentDownloadData extends Fragment {
                     new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
                 }
             }
-            checkingDataTable("");
+//            checkingDataTable("");
             dialog.dismiss();
         }
 
@@ -4737,7 +4737,7 @@ public class FragmentDownloadData extends Fragment {
                     new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
                 }
             }
-            checkingDataTable("");
+//            checkingDataTable("");
             dialog.dismiss();
         }
 
@@ -4798,7 +4798,7 @@ public class FragmentDownloadData extends Fragment {
                     new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
                 }
             }
-            checkingDataTable("");
+//            checkingDataTable("");
             dialog.dismiss();
         }
 
@@ -4859,7 +4859,7 @@ public class FragmentDownloadData extends Fragment {
                     new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
                 }
             }
-            checkingDataTable("");
+//            checkingDataTable("");
             dialog.dismiss();
         }
 
@@ -4904,6 +4904,7 @@ public class FragmentDownloadData extends Fragment {
                 arrData = SaveDatatPlamogramData(jsonArray);
                 loadData();
                 setViewTextLastDownload();
+                checkingDataTable("");
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -4912,7 +4913,6 @@ public class FragmentDownloadData extends Fragment {
                     new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
                 }
             }
-            checkingDataTable("");
             dialog.dismiss();
         }
 
@@ -4956,7 +4956,7 @@ public class FragmentDownloadData extends Fragment {
                     new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
                 }
             }
-            checkingDataTable("");
+//            checkingDataTable("");
             dialog.dismiss();
         }
 
@@ -5007,6 +5007,7 @@ public class FragmentDownloadData extends Fragment {
                 arrData = SaveDataTidakSesuaiPesanan(jsonArray);
                 loadData();
                 setViewTextLastDownload();
+//                checkingDataTable("");
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -5015,7 +5016,6 @@ public class FragmentDownloadData extends Fragment {
                     new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
                 }
             }
-            checkingDataTable("");
             dialog.dismiss();
         }
 
@@ -5066,6 +5066,7 @@ public class FragmentDownloadData extends Fragment {
                 arrData = SaveDataKoordinasiOutletData(jsonArray);
                 loadData();
                 setViewTextLastDownload();
+//                checkingDataTable("");
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -5074,7 +5075,6 @@ public class FragmentDownloadData extends Fragment {
                     new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
                 }
             }
-            checkingDataTable("");
             dialog.dismiss();
         }
 
@@ -5119,6 +5119,7 @@ public class FragmentDownloadData extends Fragment {
                 arrData = SaveDataCategoryKoordinasiOutletData(jsonArray);
                 loadData();
                 setViewTextLastDownload();
+                checkingDataTable("");
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -5127,7 +5128,6 @@ public class FragmentDownloadData extends Fragment {
                     new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessDataNotFound, false);
                 }
             }
-            checkingDataTable("");
             dialog.dismiss();
         }
 
@@ -5175,7 +5175,7 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable("");
+//            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -5302,6 +5302,7 @@ public class FragmentDownloadData extends Fragment {
                 arrData = SaveDatamEmployeeAreaData(roledata);
                 loadData();
                 setViewTextLastDownload();
+                checkingDataTable("");
                 //spnOutlet.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
@@ -5312,7 +5313,6 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -5370,6 +5370,7 @@ public class FragmentDownloadData extends Fragment {
                 //spnBranch.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
                 loadData();
                 setViewTextLastDownload();
+                checkingDataTable("");
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -5379,7 +5380,6 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -5436,6 +5436,7 @@ public class FragmentDownloadData extends Fragment {
                 //spnBranch.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
                 loadData();
                 setViewTextLastDownload();
+                checkingDataTable("");
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -5445,7 +5446,6 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -5499,6 +5499,7 @@ public class FragmentDownloadData extends Fragment {
                 //spnBranch.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
                 loadData();
                 setViewTextLastDownload();
+                checkingDataTable("");
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -5508,7 +5509,6 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -5561,6 +5561,7 @@ public class FragmentDownloadData extends Fragment {
                 //spnBranch.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
                 loadData();
                 setViewTextLastDownload();
+                checkingDataTable("");
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -5570,7 +5571,6 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -5626,6 +5626,7 @@ public class FragmentDownloadData extends Fragment {
                 SaveDatatTransaksiVisitPlanHeaderData(roledata);
                 loadData();
                 setViewTextLastDownload();
+                checkingDataTable("");
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -5635,7 +5636,6 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -5723,74 +5723,144 @@ public class FragmentDownloadData extends Fragment {
 //        if(validate==1){
 //            goToMainMenu();
 //        }
-        if (flag.equals("ALL")) {
-            boolean validToMainMenu = true;
+        if(flag.equals("ALL")){
+            boolean validToMainMenu=true;
 
-            if (ll_branch.getVisibility() == View.VISIBLE) {
-                if (mEmployeeBranchDataList.size() == 0) {
-                    validToMainMenu = false;
+            if(ll_branch.getVisibility()==View.VISIBLE){
+                if(mEmployeeBranchDataList.size() == 0){
+                    validToMainMenu=false;
                 }
             }
-            if (ll_outlet.getVisibility() == View.VISIBLE) {
-                if (mEmployeeAreaDataList.size() == 0) {
-                    validToMainMenu = false;
+            if(ll_outlet.getVisibility()==View.VISIBLE){
+                if(mEmployeeAreaDataList.size() == 0){
+                    validToMainMenu=false;
                 }
             }
-            if (ll_product.getVisibility() == View.VISIBLE) {
-                if (employeeSalesProductDataList.size() == 0) {
-                    validToMainMenu = false;
+//            if(ll_product.getVisibility()==View.VISIBLE){
+//                if(employeeSalesProductDataList.size() == 0){
+//                    validToMainMenu=false;
+//                }
+//            }
+            if(ll_brand.getVisibility()==View.VISIBLE){
+                if(mProductBrandHeaderDataList.size() == 0){
+                    validToMainMenu=false;
                 }
             }
-            if (ll_brand.getVisibility() == View.VISIBLE) {
-                if (mProductBrandHeaderDataList.size() == 0) {
-                    validToMainMenu = false;
+            if(ll_type_leave.getVisibility()==View.VISIBLE){
+                if(mTypeLeaveMobileDataList.size() == 0){
+                    validToMainMenu=false;
                 }
             }
-            if (ll_type_leave.getVisibility() == View.VISIBLE) {
-                if (mTypeLeaveMobileDataList.size() == 0) {
-                    validToMainMenu = false;
+//            if(ll_product_spg.getVisibility()==View.VISIBLE){
+//                if(mProductSPGDataList.size() == 0){
+//                    validToMainMenu=false;
+//                }
+//            }
+//            if(ll_product_pic.getVisibility()==View.VISIBLE){
+//                if(mProductPICDataList.size() == 0){
+//                    validToMainMenu=false;
+//                }
+////            }
+//            if(ll_product_competitor.getVisibility()==View.VISIBLE){
+//                if(mProductCompetitorDataList.size() == 0){
+//                    validToMainMenu=false;
+//                }
+//            }
+            if(ll_type_submission.getVisibility()==View.VISIBLE){
+                if(mTypeSubmissionMobileList.size() == 0){
+                    validToMainMenu=false;
                 }
             }
-            if (ll_product_spg.getVisibility() == View.VISIBLE) {
-                if (mProductSPGDataList.size() == 0) {
-                    validToMainMenu = false;
+            if(ll_subtypeactivity.getVisibility()==View.VISIBLE){
+                if(tSubTypeActivityDataList.size() == 0){
+                    validToMainMenu=false;
                 }
             }
-            if (ll_product_pic.getVisibility() == View.VISIBLE) {
-                if (mProductPICDataList.size() == 0) {
-                    validToMainMenu = false;
+            if(ll_kategoryPlanogram.getVisibility()==View.VISIBLE){
+                if(tKategoryPlanogramMobileDataList.size() == 0){
+                    validToMainMenu=false;
                 }
             }
-            if (ll_product_competitor.getVisibility() == View.VISIBLE) {
-                if (mProductCompetitorDataList.size() == 0) {
-                    validToMainMenu = false;
-                }
-            }
-            if (ll_type_submission.getVisibility() == View.VISIBLE) {
-                if (mTypeSubmissionMobileList.size() == 0) {
-                    validToMainMenu = false;
-                }
-            }
-            if (ll_subtypeactivity.getVisibility() == View.VISIBLE) {
-                if (tSubTypeActivityDataList.size() == 0) {
-                    validToMainMenu = false;
-                }
-            }
-            if (ll_kategoryPlanogram.getVisibility() == View.VISIBLE) {
-                if (tKategoryPlanogramMobileDataList.size() == 0) {
-                    validToMainMenu = false;
-                }
-            }
-            if (ll_reso.getVisibility() == View.VISIBLE) {
-
-            }
-            if (ll_dataQuantityStock.getVisibility() == View.VISIBLE) {
+            if(ll_reso.getVisibility()==View.VISIBLE){
 
             }
-            if (ll_data_stockIH.getVisibility() == View.VISIBLE) {
+            if(ll_dataQuantityStock.getVisibility()==View.VISIBLE){
 
             }
-            if (validToMainMenu) {
+            if(ll_data_stockIH.getVisibility()==View.VISIBLE){
+
+            }
+            if(validToMainMenu){
+                goToMainMenu();
+            }
+        } else {
+            boolean validToMainMenu=true;
+
+            if(ll_branch.getVisibility()==View.VISIBLE){
+                if(mEmployeeBranchDataList.size() == 0){
+                    validToMainMenu=false;
+                }
+            }
+            if(ll_outlet.getVisibility()==View.VISIBLE){
+                if(mEmployeeAreaDataList.size() == 0){
+                    validToMainMenu=false;
+                }
+            }
+//            if(ll_product.getVisibility()==View.VISIBLE){
+//                if(employeeSalesProductDataList.size() == 0){
+//                    validToMainMenu=false;
+//                }
+//            }
+            if(ll_brand.getVisibility()==View.VISIBLE){
+                if(mProductBrandHeaderDataList.size() == 0){
+                    validToMainMenu=false;
+                }
+            }
+            if(ll_type_leave.getVisibility()==View.VISIBLE){
+                if(mTypeLeaveMobileDataList.size() == 0){
+                    validToMainMenu=false;
+                }
+            }
+//            if(ll_product_spg.getVisibility()==View.VISIBLE){
+//                if(mProductSPGDataList.size() == 0){
+//                    validToMainMenu=false;
+//                }
+//            }
+//            if(ll_product_pic.getVisibility()==View.VISIBLE){
+//                if(mProductPICDataList.size() == 0){
+//                    validToMainMenu=false;
+//                }
+//            }
+//            if(ll_product_competitor.getVisibility()==View.VISIBLE){
+//                if(mProductCompetitorDataList.size() == 0){
+//                    validToMainMenu=false;
+//                }
+//            }
+            if(ll_type_submission.getVisibility()==View.VISIBLE){
+                if(mTypeSubmissionMobileList.size() == 0){
+                    validToMainMenu=false;
+                }
+            }
+            if(ll_subtypeactivity.getVisibility()==View.VISIBLE){
+                if(tSubTypeActivityDataList.size() == 0){
+                    validToMainMenu=false;
+                }
+            }
+            if(ll_kategoryPlanogram.getVisibility()==View.VISIBLE){
+                if(tKategoryPlanogramMobileDataList.size() == 0){
+                    validToMainMenu=false;
+                }
+            }
+            if(ll_reso.getVisibility()==View.VISIBLE){
+
+            }
+            if(ll_dataQuantityStock.getVisibility()==View.VISIBLE){
+
+            }
+            if(ll_data_stockIH.getVisibility()==View.VISIBLE){
+
+            }
+            if(validToMainMenu){
                 goToMainMenu();
             }
         }
@@ -5864,6 +5934,7 @@ public class FragmentDownloadData extends Fragment {
                 //spnLeave.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
                 loadData();
                 setViewTextLastDownload();
+                checkingDataTable("");
                 new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessSuccessDownload, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -5873,7 +5944,6 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -5925,6 +5995,7 @@ public class FragmentDownloadData extends Fragment {
                 //spnLeave.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
                 loadData();
                 setViewTextLastDownload();
+                checkingDataTable("");
                 new clsMainActivity().showCustomToast(getContext(), strMessage, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -5934,7 +6005,6 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -6022,6 +6092,7 @@ public class FragmentDownloadData extends Fragment {
                 //spnLeave.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
                 loadData();
                 setViewTextLastDownload();
+                checkingDataTable("");
                 new clsMainActivity().showCustomToast(getContext(), strMessage, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -6031,7 +6102,6 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -6125,6 +6195,7 @@ public class FragmentDownloadData extends Fragment {
                 //spnLeave.setAdapter(new MyAdapter(getApplicationContext(), R.layout.custom_spinner, arrData));
                 loadData();
                 setViewTextLastDownload();
+                checkingDataTable("");
                 new clsMainActivity().showCustomToast(getContext(), strMessage, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -6134,7 +6205,6 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -6224,6 +6294,7 @@ public class FragmentDownloadData extends Fragment {
                 arrData = SaveDatamTypeSubmissionMobile(jsonArray);
                 loadData();
                 setViewTextLastDownload();
+                checkingDataTable("");
                 new clsMainActivity().showCustomToast(getContext(), strMessage, true);
             } else {
                 if (intProcesscancel == 1) {
@@ -6233,7 +6304,6 @@ public class FragmentDownloadData extends Fragment {
                 }
 
             }
-            checkingDataTable("");
             Dialog.dismiss();
         }
 
@@ -7255,7 +7325,7 @@ public class FragmentDownloadData extends Fragment {
                     }
                 });
             }
-            checkingDataTable("");
+//            checkingDataTable("");
             Dialog.dismiss();
         }
 

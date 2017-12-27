@@ -682,6 +682,9 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
                 holder.code = (EditText) convertView.findViewById(R.id.editTextQty);
 //                holder.code.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
 
+                int maxLengthofEditText = 4;
+                holder.code.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxLengthofEditText)});
+
                 convertView.setTag(holder);
 
                 final ViewHolder finalHolder = holder;
