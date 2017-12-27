@@ -99,6 +99,8 @@ public class FragmentPOPView extends Fragment implements IXListViewListener{
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+                toolbar.setTitle("Add POP Standard TL");
                 Bundle bundle = new Bundle();
                 getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                 bundle.putStringArray("Key_POPId", bundleType);

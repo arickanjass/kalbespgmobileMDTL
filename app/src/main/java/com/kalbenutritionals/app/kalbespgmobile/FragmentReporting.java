@@ -946,7 +946,7 @@ public class FragmentReporting extends Fragment {
 
             ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
 
-        } else if (spinnerSelected.contains("Actvity")||spinnerSelected.contains("Activity")||spinnerSelected.contains("Additional Display")){
+        } else if (spinnerSelected.contains("Actvity")||spinnerSelected.contains("Activity")||spinnerSelected.contains("Additional Display")||spinnerSelected.contains("Aktivitas")){
 //            Toast.makeText(getContext(), "Actvity", Toast.LENGTH_SHORT).show();
             header = new String[6];
             header[1] = "Outlet";
@@ -1400,7 +1400,7 @@ public class FragmentReporting extends Fragment {
             ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
 
             ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
-        } else if (spinnerSelected.contains("Kuesioner")){
+        } else if (spinnerSelected.contains("Performance ")){
             header = new String[6];
             header[1] = "No.";
             header[2] = "Group Question";

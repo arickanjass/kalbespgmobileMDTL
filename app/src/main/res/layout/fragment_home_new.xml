@@ -267,7 +267,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:text="ACTIVITY"
+                                android:text="AKT PROMOSI"
                                 android:textSize="11sp" />
                         </LinearLayout>
 
@@ -662,7 +662,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:text="Quesioner"
+                                android:text="PFC. TIM"
                                 android:textSize="11sp" />
                         </LinearLayout>
 
@@ -697,7 +697,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:text="POP Standard"
+                                android:text="POP STANDARD"
                                 android:textSize="11sp" />
                         </LinearLayout>
                         <!--Koordinasi outlet-->
@@ -991,7 +991,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Activity" />
+                                android:text="Akt Promosi" />
 
                             <TextView
                                 android:id="@+id/tv_actV20"
@@ -1385,7 +1385,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:paddingRight="5dp"
-                                android:text="Quesioner" />
+                                android:text="Pfc. Tim" />
 
                             <TextView
                                 android:id="@+id/tv_quesioner0"

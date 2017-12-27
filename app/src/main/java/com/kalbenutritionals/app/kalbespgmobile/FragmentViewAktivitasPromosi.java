@@ -61,7 +61,7 @@ import static com.kalbenutritionals.app.kalbespgmobile.R.id.textView9;
  * Created by aan.junianto on 24/08/2017.
  */
 
-public class FragmentViewActivityTL  extends Fragment implements IXListViewListener {
+public class FragmentViewAktivitasPromosi extends Fragment implements IXListViewListener {
     private static List<clsSwipeList> swipeList = new ArrayList<clsSwipeList>();
     private AppAdapterViewCusBase mAdapter;
     private PullToRefreshSwipeMenuListView mListView;
@@ -88,7 +88,7 @@ public class FragmentViewActivityTL  extends Fragment implements IXListViewListe
             @Override
             public void onClick(View v) {
                 Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-                toolbar.setTitle("Add Activity");
+                toolbar.setTitle("Add Aktivitas Promosi");
 
                 FragmentAddActivityTL fragmentAddActivityTL = new FragmentAddActivityTL();
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();

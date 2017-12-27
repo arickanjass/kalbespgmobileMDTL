@@ -261,6 +261,7 @@ public class FragmentAddPOP extends Fragment {
         Bundle bundle = new Bundle();
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         bundle.putStringArray("Key_POPId", bundleType);
+        toolbar.setTitle("View POP Standard TL");
         FragmentPOPView fragmentPOPView = new FragmentPOPView();
         fragmentPOPView.setArguments(bundle);
         FragmentTransaction fragmentTransactionPOPView = getFragmentManager().beginTransaction();

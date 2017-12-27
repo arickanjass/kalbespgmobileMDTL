@@ -83,7 +83,7 @@
             android:textSize="@dimen/text_size_medium"
             android:layout_marginTop="5dp"
             android:textColor="#000"
-            android:text="Add Display" />
+            android:text="Aktivitas Promosi" />
 
         <TableLayout
             android:id="@+id/tlActivityV2"
@@ -438,7 +438,7 @@
             android:textSize="@dimen/text_size_medium"
             android:layout_marginTop="5dp"
             android:textColor="#000"
-            android:text="Quesioner" />
+            android:text="Performance Tim" />
 
         <TableLayout
             android:id="@+id/tl_quiz"

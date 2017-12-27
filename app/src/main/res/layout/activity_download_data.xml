@@ -891,7 +891,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginTop="15dp"
-                                android:text="Quesioner"
+                                android:text="Performance Tim"
                                 android:textColor="#000" />
                             <TextView
                                 android:id="@+id/txtquisLastDownload"
@@ -918,7 +918,7 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="5dp"
                             android:background="@drawable/btn_on_click"
-                            android:text="Download Quesioner" />
+                            android:text="Download Performance Tim" />
 
                         <View
                             android:id="@+id/view17"
@@ -1420,7 +1420,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="15dp"
-                            android:text="Activity MDTL"
+                            android:text="Aktivitas Promosi"
                             android:textColor="#000" />
                         <TextView
                             android:id="@+id/txtActivityV2LastDownload"
@@ -1447,7 +1447,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="5dp"
                         android:background="@drawable/btn_on_click"
-                        android:text="Download Activity MDTL" />
+                        android:text="Download Aktivitas Promosi" />
 
                     <View
                         android:id="@+id/view11V2"
