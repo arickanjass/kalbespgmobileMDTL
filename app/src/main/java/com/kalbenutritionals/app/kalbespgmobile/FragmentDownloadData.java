@@ -3179,7 +3179,7 @@ public class FragmentDownloadData extends Fragment {
                     }
                     _db.close();
                 } else {
-                    new clsMainActivity().showCustomToast(getContext(), "Data not found", false);
+//                    new clsMainActivity().showCustomToast(getContext(), "Data not found", false);
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -7458,21 +7458,55 @@ public class FragmentDownloadData extends Fragment {
         protected JSONArray doInBackground(JSONArray... params) {
             JSONArray Json = null;
             try {
-                Json = new tSalesProductHeaderBL().DownloadReso(pInfo.versionName);
-                arrData = SaveDatatSalesProductData(Json, 0);
+                if(loginData.get_txtRoleName().equals("SPG Mobile V2")){
+                    Json = new tSalesProductHeaderBL().DownloadReso(pInfo.versionName);
+                    arrData = SaveDatatSalesProductData(Json, 0);
 
-                Json = new tActivityBL().DownloadActivity(pInfo.versionName);
-                arrData = SaveDatatActivityData(Json);
+                    Json = new tActivityBL().DownloadActivity(pInfo.versionName);
+                    arrData = SaveDatatActivityData(Json);
 
-                Json = new tCustomerBasedMobileHeaderBL().DownloadCustomerBase(pInfo.versionName);
-                arrData = SaveDatatCustomerBasedData(Json);
+                    Json = new tCustomerBasedMobileHeaderBL().DownloadCustomerBase(pInfo.versionName);
+                    arrData = SaveDatatCustomerBasedData(Json);
 
-                Json = new tAbsenUserBL().DownloadAbsen(pInfo.versionName);
-                arrData = SaveDatatAbsenUserData(Json);
+                    Json = new tAbsenUserBL().DownloadAbsen(pInfo.versionName);
+                    arrData = SaveDatatAbsenUserData(Json);
 
-                Json = new tLeaveMobileBL().DownloadDataLeave(pInfo.versionName);
-                arrData = SaveDatatLeaveData(Json);
+                    Json = new tLeaveMobileBL().DownloadDataLeave(pInfo.versionName);
+                    arrData = SaveDatatLeaveData(Json);
+                }
+                else if(loginData.get_txtRoleName().equals("MD Mobile")){
+                    Json = new tVisitPlanRealisasiBL().DownloadRealisasiVisitPlan(pInfo.versionName);
+                    SaveDatatTransaksiVisitPlanData(Json);
+                    SaveDatatTransaksiVisitPlanHeaderData(Json);
 
+                    Json = new tLeaveMobileBL().DownloadDataLeave(pInfo.versionName);
+                    arrData = SaveDatatLeaveData(Json);
+
+                    Json = new tStockInHandHeaderBL().DownloadSIH(pInfo.versionName);
+                    new tStockInHandHeaderBL().DownloadNOSIH(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+                    arrData = SaveDatatStockInHandData(Json);
+
+                    Json = new tActivityMobileBL().DownloadActivityV2(pInfo.versionName);
+                    arrData = SaveDatatActivityDataV2(Json);
+
+                    Json = new tSalesProductQuantityHeaderBL().DownloadTransactionQuantityStock(pInfo.versionName);
+                    new tSalesProductQuantityHeaderBL().DownloadNOQuantityStock(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+                    arrData = SaveDatatSalesProductQuantityData(Json);
+
+                    Json = new tPlanogramMobileBL().DownloadTransactionPlanogram(pInfo.versionName);
+                    arrData = SaveDatatPlamogramData(Json);
+
+                    Json = new tOverStockHeaderBL().DownloadTransactionOverStock(pInfo.versionName);
+                    new tOverStockHeaderBL().DownloadNOOverStock(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+                    arrData = SaveDatatOverStockData(Json);
+
+                    Json = new tKemasanRusakHeaderBL().DownloadTransactionKemasanRusak(pInfo.versionName);
+                    new tKemasanRusakHeaderBL().DownloadNOKemasanRusak(pInfo.versionName, loginData.get_txtUserId(), loginData.get_TxtEmpId());
+                    arrData = SaveDatatKemasanRusakData(Json);
+
+                    Json = new tTidakSesuaiPesananHeaderBL().DownloadDataTidakSesuaiPesanan(pInfo.versionName);
+                    arrData = SaveDataTidakSesuaiPesanan(Json);
+                }
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
