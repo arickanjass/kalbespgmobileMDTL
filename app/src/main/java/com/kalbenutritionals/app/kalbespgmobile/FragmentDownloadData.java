@@ -2436,7 +2436,7 @@ public class FragmentDownloadData extends Fragment {
             if (ll_type_leave != null && checkVisibility(ll_type_leave)) {
                 saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_type_leave.getId()).toString());
             }
-            if (ll_product != null && checkVisibility(ll_product) && validDownloadProduct) {
+            if (ll_product != null && checkVisibility(ll_product)) {
                 saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_product.getId()).toString());
             }
             if (ll_brand != null && checkVisibility(ll_brand)) {
@@ -2445,13 +2445,13 @@ public class FragmentDownloadData extends Fragment {
             if (ll_kategoriVisitPlan != null && checkVisibility(ll_kategoriVisitPlan)) {
                 saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_kategoriVisitPlan.getId()).toString());
             }
-            if (ll_product_competitor != null && checkVisibility(ll_product_competitor) && validDownloadProductComp) {
+            if (ll_product_competitor != null && checkVisibility(ll_product_competitor)) {
                 saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_product_competitor.getId()).toString());
             }
-            if (ll_product_spg != null && checkVisibility(ll_product_spg) && validDownloadProductSPG) {
+            if (ll_product_spg != null && checkVisibility(ll_product_spg)) {
                 saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_product_spg.getId()).toString());
             }
-            if (ll_product_pic != null && checkVisibility(ll_product_pic) && validDownloadProductPIC) {
+            if (ll_product_pic != null && checkVisibility(ll_product_pic)) {
                 saveDatatLogDownloadData(pstrArgumet, res.getResourceEntryName(ll_product_pic.getId()).toString());
             }
             if (ll_type_submission != null && checkVisibility(ll_type_submission)) {
@@ -7316,6 +7316,7 @@ public class FragmentDownloadData extends Fragment {
                 while (i.hasNext()) {
                     org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
                     txtLink = String.valueOf(innerObj.get("txtLink"));
+                    pstrArgumet = String.valueOf(innerObj.get(new APIData().strArgument));
                 }
                 Dialog.dismiss();
                 mProgressDialog = new ProgressDialog(getContext());
@@ -7660,6 +7661,11 @@ public class FragmentDownloadData extends Fragment {
                         getActivity().startService(serviceIntentMyTrackingLocationService);
                     }
 
+                File file = new File("/sdcard/db_new_mobile.db3");
+                    if(file.exists()){
+                        file.delete();
+                    }
+
             }
 
 
@@ -7676,6 +7682,7 @@ public class FragmentDownloadData extends Fragment {
                     getClass().getName());
             mWakeLock.acquire();
             mProgressDialog.show();
+            mProgressDialog.setCancelable(false);
         }
 
         @Override
@@ -7696,6 +7703,8 @@ public class FragmentDownloadData extends Fragment {
             else {
                 Toast.makeText(context, "File downloaded", Toast.LENGTH_SHORT).show();
             }
+
+            saveLastDownload(pstrArgumet);
 
             AsyncCallDownloadTransaction task = new AsyncCallDownloadTransaction();
             task.execute();
