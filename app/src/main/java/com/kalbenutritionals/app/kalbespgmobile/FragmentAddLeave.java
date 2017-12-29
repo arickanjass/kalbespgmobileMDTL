@@ -126,6 +126,7 @@ public class FragmentAddLeave extends Fragment implements View.OnClickListener {
                                                 new tLeaveMobileBL().saveData(leaveUserdatas);
                                                 Intent nextScreen = new Intent(getContext(), MainMenu.class);
                                                 startActivity(nextScreen);
+                                                getActivity().finish();
                                 }
                             })
                             .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
