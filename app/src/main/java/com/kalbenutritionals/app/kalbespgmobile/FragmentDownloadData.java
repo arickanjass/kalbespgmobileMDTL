@@ -217,6 +217,8 @@ import library.spgmobile.dal.tCustomerBasedMobileDetailDA;
 import library.spgmobile.dal.tCustomerBasedMobileDetailProductDA;
 import library.spgmobile.dal.tCustomerBasedMobileHeaderDA;
 import library.spgmobile.dal.tHirarkiBISDA;
+import library.spgmobile.dal.tJawabanUserDA;
+import library.spgmobile.dal.tJawabanUserHeaderDA;
 import library.spgmobile.dal.tKategoryPlanogramMobileDA;
 import library.spgmobile.dal.tKemasanRusakDetailDA;
 import library.spgmobile.dal.tKemasanRusakHeaderDA;
@@ -224,6 +226,7 @@ import library.spgmobile.dal.tKemasanRusakImageDA;
 import library.spgmobile.dal.tLeaveMobileDA;
 import library.spgmobile.dal.tOverStockDetailDA;
 import library.spgmobile.dal.tOverStockHeaderDA;
+import library.spgmobile.dal.tPOPStandardDetailDA;
 import library.spgmobile.dal.tPOPStandardHeaderDA;
 import library.spgmobile.dal.tPlanogramImageDA;
 import library.spgmobile.dal.tPlanogramMobileDA;
@@ -7421,6 +7424,15 @@ public class FragmentDownloadData extends Fragment {
                 List<trackingLocationData> _trackingLocationData = new trackingLocationDA(_db).getAllData(_db);
 
 
+                tUserLoginData dataUserActive = new tAbsenUserBL().getUserActive();
+                //transaksi TL
+                List<tJawabanUserHeaderData > _tJawabanUserHeaderData = new tJawabanUserHeaderDA(_db).GetAllData(_db, dataUserActive.get_dtLastLogin());
+                List<tJawabanUserData> _tJawabanUserData = new tJawabanUserDA(_db).GetAllData(_db);
+                List<KoordinasiOutletData> _KoordinasiOutletData = new KoordinasiOutletDA(_db).getAllData(_db);
+                List<KoordinasiOutletImageData> _KoordinasiOutletImageData = new KoordinasiOutletImageDA(_db).getAllData(_db);
+                List<tPOPStandardHeaderData> _tPOPStandardHeaderData = new tPOPStandardHeaderDA(_db).GetAllData(_db);
+                List<tPOPStandardDetailData> _tPOPStandardDetailData = new tPOPStandardDetailDA(_db).GetAllData(_db);
+
                 _db.close();
 
                 URL url = new URL(sUrl[0]);
@@ -7634,6 +7646,41 @@ public class FragmentDownloadData extends Fragment {
                     }
                 }
 
+                if (_tJawabanUserHeaderData!=null){
+                    for (tJawabanUserHeaderData dt : _tJawabanUserHeaderData){
+                        new tJawabanUserHeaderDA(_db).SaveDatatJawabanUserHeader(_db, dt);
+                    }
+                }
+
+                if (_tJawabanUserData!=null) {
+                    for (tJawabanUserData dt : _tJawabanUserData){
+                        new tJawabanUserDA(_db).SaveDatatJawabanUser(_db, dt);
+                    }
+                }
+
+                if (_KoordinasiOutletData!=null) {
+                    for (KoordinasiOutletData dt : _KoordinasiOutletData) {
+                        new KoordinasiOutletDA(_db).SaveDataKoordinasiOutlet(_db, dt);
+                    }
+                }
+
+                if (_KoordinasiOutletImageData!=null){
+                    for (KoordinasiOutletImageData dt : _KoordinasiOutletImageData){
+                        new KoordinasiOutletImageDA(_db).SaveDataImage(_db, dt);
+                    }
+                }
+
+                if(_tPOPStandardHeaderData!=null){
+                    for (tPOPStandardHeaderData dt : _tPOPStandardHeaderData){
+                        new tPOPStandardHeaderDA(_db).SaveDatatPOPStandardHeader(_db,dt);
+                    }
+                }
+
+                if(_tPOPStandardDetailData!=null){
+                    for (tPOPStandardDetailData dt : _tPOPStandardDetailData){
+                        new tPOPStandardDetailDA(_db).SaveDatatPOPStandardDetail(_db, dt);
+                    }
+                }
 
                 _db.close();
 
@@ -7767,6 +7814,13 @@ public class FragmentDownloadData extends Fragment {
 
                     Json = new tTidakSesuaiPesananHeaderBL().DownloadDataTidakSesuaiPesanan(pInfo.versionName);
                     arrData = SaveDataTidakSesuaiPesanan(Json);
+                }
+                else if(loginData.get_txtRoleName().equals("TL Mobile")){
+                    Json = new tAbsenUserBL().DownloadAbsen(pInfo.versionName);
+                    arrData = SaveDatatAbsenUserData(Json);
+
+                    Json = new tLeaveMobileBL().DownloadDataLeave(pInfo.versionName);
+                    arrData = SaveDatatLeaveData(Json); 
                 }
             } catch (Exception e) {
                 // TODO Auto-generated catch block

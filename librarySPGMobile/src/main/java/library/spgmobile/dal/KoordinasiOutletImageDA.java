@@ -74,6 +74,27 @@ public class KoordinasiOutletImageDA {
         return contactList;
     }
 
+    public List<KoordinasiOutletImageData> getAllData(SQLiteDatabase db) {
+        List<KoordinasiOutletImageData> contactList = new ArrayList<KoordinasiOutletImageData>();
+        KoordinasiOutletImageData dt = new KoordinasiOutletImageData();
+        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS ;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    KoordinasiOutletImageData contact = new KoordinasiOutletImageData();
+                    contact.set_txtId(String.valueOf(cursor.getString(0)));
+                    contact.set_txtHeaderId(cursor.getString(1));
+                    contact.set_txtImage(cursor.getBlob(2));
+                    contact.set_intPosition(cursor.getString(3));
+                    contactList.add(contact);
+                } while (cursor.moveToNext());
+            }
+        }
+        cursor.close();
+        return contactList;
+    }
+
     public List<KoordinasiOutletImageData> getAllDataToPushData(SQLiteDatabase db, List<KoordinasiOutletData> ListOfKoordinasiOutlet){
         List<KoordinasiOutletImageData> contactList = null;
         KoordinasiOutletImageData dt = new KoordinasiOutletImageData();
