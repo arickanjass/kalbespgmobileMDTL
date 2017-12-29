@@ -280,6 +280,37 @@ public class tSalesProductQuantityDetailDA {
         return contactList;
     }
 
+    public List<tSalesProductQuantityDetailData> getAllDataNew(SQLiteDatabase db) {
+        List<tSalesProductQuantityDetailData> contactList = new ArrayList<tSalesProductQuantityDetailData>();
+        // select All Query
+        tSalesProductQuantityDetailData dt = new tSalesProductQuantityDetailData();
+        String selectQuery = "SELECT  "+dt.Property_All+" FROM " + TABLE_CONTACTS;
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                tSalesProductQuantityDetailData contact = new tSalesProductQuantityDetailData();
+                contact.setIntId(String.valueOf(cursor.getString(0)));
+                contact.set_dtDate(cursor.getString(1));
+                contact.set_txtCodeProduct(cursor.getString(2));
+                contact.set_txtKeterangan(cursor.getString(3));
+                contact.setTxtProduct(cursor.getString(4));
+                contact.setTxtExpireDate(cursor.getString(5));
+                contact.setTxtQuantity(cursor.getString(6));
+                contact.set_txtQuantityStock(cursor.getString(7));
+                contact.set_intPrice(cursor.getString(8));
+                contact.set_intTotal(cursor.getString(9));
+                contact.set_intActive(cursor.getString(10));
+                contact.set_txtNIK(cursor.getString(11));
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return contactList;
+    }
+
     public void DeleteAllDAta(SQLiteDatabase db) {
         // Drop older table if existed
         db.execSQL("DELETE FROM " + TABLE_CONTACTS);

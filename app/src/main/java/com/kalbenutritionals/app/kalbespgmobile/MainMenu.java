@@ -905,7 +905,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                             if (listAbsen.get(0).get_txtAbsen().equals("0")) {
                                 Jresult = new clsHelperBL().callPushDataReturnJson(versionName, dtJson.getDtdataJson().txtJSON().toString(), dtJson.getFileUpload());
                             } else {
-                                Jresult = new clsHelperBL().callPushDataReturnJson(versionName, dtJson.getDtdataJson().txtJSON().toString(), null);
+                                Jresult = new clsHelperBL().callPushDataReturnJson(versionName, dtJson.getDtdataJson().txtJSON().toString(), dtJson.getFileUpload());
                             }
                         }
                         if (dtJson.getDtdataJson().getListOftVisitPlanRealisasiData() != null) {

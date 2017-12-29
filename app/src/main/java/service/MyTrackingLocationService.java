@@ -91,7 +91,7 @@ public class MyTrackingLocationService extends Service implements GoogleApiClien
     private Location mLastLocation;
     Handler mHandler = new Handler();
     private final static int INTERVAL_TESTING = 1000 * 60; //2 minutes
-    private final static int INTERVAL_LIVE = 1000 * 60 * 30; //2 minutes
+    private final static int INTERVAL_LIVE = 1000 * 60 * 30; //30 minutes
     private static long UPDATE_INTERVAL = 1*360*1000;;  //default
     private static long UPDATE_INTERVAL_TESTING = /*1000 * 60 * 2*/3000; //2 minutes
     private static Timer timer = new Timer();

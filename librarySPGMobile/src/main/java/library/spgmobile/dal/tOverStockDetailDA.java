@@ -265,16 +265,47 @@ public class tOverStockDetailDA {
                 tOverStockDetailData contact = new tOverStockDetailData();
                 contact.setIntId(String.valueOf(cursor.getString(0)));
                 contact.set_dtDate(cursor.getString(1));
-                contact.set_intPrice(cursor.getString(2));
-                contact.set_txtCodeProduct(cursor.getString(3));
-                contact.set_txtKeterangan(cursor.getString(4));
-                contact.setTxtProduct(cursor.getString(5));
-                contact.setTxtExpireDate(cursor.getString(6));
-                contact.setTxtQuantity(cursor.getString(7));
-                contact.set_txtNIK(cursor.getString(8));
+                contact.set_txtCodeProduct(cursor.getString(2));
+                contact.set_txtKeterangan(cursor.getString(3));
+                contact.setTxtProduct(cursor.getString(4));
+                contact.setTxtExpireDate(cursor.getString(5));
+                contact.setTxtQuantity(cursor.getString(6));
+                contact.set_txtOverStock(cursor.getString(7));
+                contact.set_intPrice(cursor.getString(8));
                 contact.set_intTotal(cursor.getString(9));
-                contact.set_txtOverStock(cursor.getString(10));
-                contact.set_intActive(cursor.getString(11));
+                contact.set_intActive(cursor.getString(10));
+                contact.set_txtNIK(cursor.getString(11));
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return contactList;
+    }
+
+    public List<tOverStockDetailData> getAllDataNew(SQLiteDatabase db) {
+        List<tOverStockDetailData> contactList = new ArrayList<tOverStockDetailData>();
+        // select All Query
+        tOverStockDetailData dt = new tOverStockDetailData();
+        String selectQuery = "SELECT  "+dt.Property_All+" FROM " + TABLE_CONTACTS;
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                tOverStockDetailData contact = new tOverStockDetailData();
+                contact.setIntId(String.valueOf(cursor.getString(0)));
+                contact.set_dtDate(cursor.getString(1));
+                contact.set_txtCodeProduct(cursor.getString(2));
+                contact.set_txtKeterangan(cursor.getString(3));
+                contact.setTxtProduct(cursor.getString(4));
+                contact.setTxtExpireDate(cursor.getString(5));
+                contact.setTxtQuantity(cursor.getString(6));
+                contact.set_txtOverStock(cursor.getString(7));
+                contact.set_intPrice(cursor.getString(8));
+                contact.set_intTotal(cursor.getString(9));
+                contact.set_intActive(cursor.getString(10));
+                contact.set_txtNIK(cursor.getString(11));
                 contactList.add(contact);
             } while (cursor.moveToNext());
         }

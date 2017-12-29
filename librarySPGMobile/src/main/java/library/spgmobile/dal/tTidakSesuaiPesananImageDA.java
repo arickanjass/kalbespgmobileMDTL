@@ -103,4 +103,26 @@ public class tTidakSesuaiPesananImageDA {
         cursor.close();
         return contactList;
     }
+    public List<tTidakSesuaiPesananImageData> getAllData(SQLiteDatabase db){
+        List<tTidakSesuaiPesananImageData> contactList = new ArrayList<tTidakSesuaiPesananImageData>();
+        // select All Query
+        tTidakSesuaiPesananImageData dt = new tTidakSesuaiPesananImageData();
+        String selectQuery = "SELECT  " + dt.Property_All + " FROM "
+                + TABLE_CONTACTS;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            contactList = new ArrayList<tTidakSesuaiPesananImageData>();
+            do {
+                tTidakSesuaiPesananImageData contact = new tTidakSesuaiPesananImageData();
+                contact.set_txtId(cursor.getString(0));
+                contact.set_txtHeaderId(cursor.getString(1));
+                contact.set_txtImage(cursor.getBlob(2));
+                contact.set_intPosition(cursor.getString(3));
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return contactList;
+    }
 }

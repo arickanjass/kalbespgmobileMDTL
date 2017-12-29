@@ -134,6 +134,31 @@ public class tPlanogramImageDA {
         cursor.close();
         return contactList;
     }
+
+    public List<tPlanogramImageData> getAllData(SQLiteDatabase db){
+        List<tPlanogramImageData> contactList = new ArrayList<tPlanogramImageData>();
+        // select All Query
+        tPlanogramImageData dt = new tPlanogramImageData();
+        String selectQuery = "SELECT "+dt.Property_All+" FROM " + TABLE_CONTACTS;
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            contactList = new ArrayList<tPlanogramImageData>();
+            do {
+                tPlanogramImageData contact = new tPlanogramImageData();
+                contact.set_txtId(cursor.getString(0));
+                contact.set_txtHeaderId(cursor.getString(1));
+                contact.set_txtImage(cursor.getBlob(2));
+                contact.set_intPosition(cursor.getString(3));
+                contact.set_txtType(cursor.getString(4));
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return contactList;
+    }
+
     // Deleting single contact
     public void deleteByID(SQLiteDatabase db, String id) {
         tPlanogramImageData dt = new tPlanogramImageData();

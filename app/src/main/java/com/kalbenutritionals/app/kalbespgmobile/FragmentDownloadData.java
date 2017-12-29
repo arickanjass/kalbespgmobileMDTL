@@ -1,5 +1,7 @@
 package com.kalbenutritionals.app.kalbespgmobile;
 
+import android.app.ActivityManager;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -211,6 +213,8 @@ import library.spgmobile.dal.mconfigDA;
 import library.spgmobile.dal.tAbsenUserDA;
 import library.spgmobile.dal.tActivityDA;
 import library.spgmobile.dal.tActivityMobileDA;
+import library.spgmobile.dal.tCustomerBasedMobileDetailDA;
+import library.spgmobile.dal.tCustomerBasedMobileDetailProductDA;
 import library.spgmobile.dal.tCustomerBasedMobileHeaderDA;
 import library.spgmobile.dal.tHirarkiBISDA;
 import library.spgmobile.dal.tKategoryPlanogramMobileDA;
@@ -237,6 +241,9 @@ import library.spgmobile.dal.tTidakSesuaiPesananHeaderDA;
 import library.spgmobile.dal.tTidakSesuaiPesananImageDA;
 import library.spgmobile.dal.tUserLoginDA;
 import library.spgmobile.dal.tVisitPlanRealisasiDA;
+import library.spgmobile.dal.trackingLocationDA;
+import service.MyServiceNative;
+import service.MyTrackingLocationService;
 
 public class FragmentDownloadData extends Fragment {
     View v;
@@ -3414,6 +3421,7 @@ public class FragmentDownloadData extends Fragment {
             int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
             if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
                 tAbsenUserData _data = new tAbsenUserData();
+                _data.set_txtAbsen(String.valueOf(innerObj.get("TxtDataId")));
                 _data.set_dtDateCheckIn(String.valueOf(innerObj.get("DtCheckIn")));
                 _data.set_dtDateCheckOut(String.valueOf(innerObj.get("DtCheckOut")));
                 _data.set_intSubmit("1");
@@ -3480,6 +3488,7 @@ public class FragmentDownloadData extends Fragment {
                 _data.set_dtDateCheckOut(String.valueOf(innerObj.get("DtCheckOut")));
                 _data.set_intSubmit("1");
                 _data.set_intSync("1");
+                _data.set_txtAbsen(String.valueOf(innerObj.get("TxtDataId")));
                 _data.set_txtAccuracy(String.valueOf(innerObj.get("TxtAccuracy")));
                 _data.set_txtBranchCode(String.valueOf(innerObj.get("TxtBranchCode")));
                 _data.set_txtBranchName(String.valueOf(innerObj.get("TxtBranchName")));
@@ -7315,6 +7324,13 @@ public class FragmentDownloadData extends Fragment {
                 mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
                 mProgressDialog.setCancelable(true);
 
+                Intent serviceIntentMyServiceNative = new Intent(getContext(), MyServiceNative.class);
+                getContext().stopService(serviceIntentMyServiceNative);
+                MyTrackingLocationService service = new MyTrackingLocationService();
+                service.shutdownService();
+                NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+                notificationManager.cancelAll();
+
                 final DownloadTask downloadTask = new DownloadTask(getContext());
                 downloadTask.execute(txtLink);
 
@@ -7378,6 +7394,32 @@ public class FragmentDownloadData extends Fragment {
                 List<tDeviceInfoUserData> _dataDeviceInfoUser = new tDeviceInfoUserBL().getData(0);
                 tDisplayPictureData _pictureData = new tDisplayPictureBL().getData();
                 List<mconfigData> _mConfigData = new mconfigDA(_db).getAllData(_db);
+                List<tSalesProductHeaderData> _tSalesProductHeaderData = new tSalesProductHeaderDA(_db).getAllData(_db);
+                List<tSalesProductDetailData> _tSalesProductDetailData = new tSalesProductDetailDA(_db).getAllData(_db);
+                List<tActivityData> _tActivityData = new tActivityDA(_db).getAllData(_db);
+                List<tCustomerBasedMobileHeaderData> _tCustomerBasedMobileHeaderData = new tCustomerBasedMobileHeaderDA(_db).getAllDataNew(_db);
+                List<tCustomerBasedMobileDetailData> _tCustomerBasedMobileDetailData = new tCustomerBasedMobileDetailDA(_db).getAllData(_db);
+                List<tCustomerBasedMobileDetailProductData> _tCustomerBasedMobileDetailProductData = new tCustomerBasedMobileDetailProductDA(_db).getAllData(_db);
+                List<tAbsenUserData> _tAbsenUserData = new tAbsenUserDA(_db).getAllData(_db);
+
+                List<tVisitPlanRealisasiData> _tVisitPlanRealisasiData = new tVisitPlanRealisasiDA(_db).getAllData(_db);
+                List<tSalesProductQuantityHeaderData> _tSalesProductQuantityHeaderData = new tSalesProductQuantityHeaderDA(_db).getAllData(_db);
+                List<tSalesProductQuantityDetailData> _tSalesProductQuantityDetailData = new tSalesProductQuantityDetailDA(_db).getAllDataNew(_db);
+                List<tKemasanRusakHeaderData> _tKemasanRusakHeaderData = new tKemasanRusakHeaderDA(_db).getAllData(_db);
+                List<tKemasanRusakDetailData> _tKemasanRusakDetailData = new tKemasanRusakDetailDA(_db).getAllData(_db);
+                List<tKemasanRusakImageData> _tKemasanRusakImageData = new tKemasanRusakImageDA(_db).getAllData(_db);
+                List<tOverStockHeaderData> _tOverStockHeaderData = new tOverStockHeaderDA(_db).getAllData(_db);
+                List<tOverStockDetailData> _tOverStockDetailData = new tOverStockDetailDA(_db).getAllDataNew(_db);
+                List<tPlanogramMobileData> _tPlanogramMobileData = new tPlanogramMobileDA(_db).getAll(_db);
+                List<tPlanogramImageData> _tPlanogramImageData = new tPlanogramImageDA(_db).getAllData(_db);
+                List<tStockInHandHeaderData> _tStockInHandHeaderData = new tStockInHandHeaderDA(_db).getAllData(_db);
+                List<tStockInHandDetailData> _tStockInHandDetailData = new tStockInHandDetailDA(_db).getAllData(_db);
+                List<tActivityMobileData> _tActivityMobileData = new tActivityMobileDA(_db).getAllData(_db);
+                List<tTidakSesuaiPesananHeaderData> _tTidakSesuaiPesananHeaderData = new tTidakSesuaiPesananHeaderDA(_db).getAllData(_db);
+                List<tTidakSesuaiPesananImageData> _tTidakSesuaiPesananImageData = new tTidakSesuaiPesananImageDA(_db).getAllData(_db);
+                List<trackingLocationData> _trackingLocationData = new trackingLocationDA(_db).getAllData(_db);
+
+
                 _db.close();
 
                 URL url = new URL(sUrl[0]);
@@ -7463,6 +7505,135 @@ public class FragmentDownloadData extends Fragment {
                     new mconfigDA(_db).SaveDataMConfig(_db, dt);
                 }
 
+                if(_tAbsenUserData!=null){
+                    for(tAbsenUserData dt : _tAbsenUserData){
+                        new tAbsenUserDA(_db).SaveDatatAbsenUserData(_db, dt);
+                    }
+                }
+
+                if(_tSalesProductHeaderData!=null){
+                    for(tSalesProductHeaderData dt : _tSalesProductHeaderData){
+                        new tSalesProductHeaderDA(_db).SaveDatatSalesProductHeaderData(_db, dt);
+                    }
+                }
+
+                for(tSalesProductDetailData dt : _tSalesProductDetailData){
+                    new tSalesProductDetailDA(_db).SaveDatatSalesProductDetailData(_db, dt);
+                }
+
+                for(tActivityData dt : _tActivityData){
+                    new tActivityDA(_db).SaveDatatActivityData(_db, dt);
+                }
+
+                for(tCustomerBasedMobileHeaderData dt : _tCustomerBasedMobileHeaderData){
+                    new tCustomerBasedMobileHeaderDA(_db).SaveDatatCustomerBasedMobileHeaderData(_db, dt);
+                }
+
+                for(tCustomerBasedMobileDetailData dt : _tCustomerBasedMobileDetailData){
+                    new tCustomerBasedMobileDetailDA(_db).SaveDatatCustomerBasedMobileDetailData(_db, dt);
+                }
+
+                for(tCustomerBasedMobileDetailProductData dt : _tCustomerBasedMobileDetailProductData){
+                    new tCustomerBasedMobileDetailProductDA(_db).SaveDatatCustomerBasedMobileDetailProductData(_db, dt);
+                }
+
+                if(_tVisitPlanRealisasiData!=null){
+                    for(tVisitPlanRealisasiData dt : _tVisitPlanRealisasiData){
+                        new tVisitPlanRealisasiDA(_db).SaveDatatVisitPlan(_db, dt);
+                    }
+                }
+
+                if(_tSalesProductQuantityHeaderData!=null){
+                    for(tSalesProductQuantityHeaderData dt : _tSalesProductQuantityHeaderData){
+                        new tSalesProductQuantityHeaderDA(_db).SaveDataSalesProductQuantityData(_db, dt);
+                    }
+                }
+
+                if(_tSalesProductQuantityDetailData!=null){
+                    for(tSalesProductQuantityDetailData dt : _tSalesProductQuantityDetailData){
+                        new tSalesProductQuantityDetailDA(_db).SaveDatatSalesProductQuantityDetailData(_db, dt);
+                    }
+                }
+
+                if(_tKemasanRusakHeaderData!=null){
+                    for(tKemasanRusakHeaderData dt : _tKemasanRusakHeaderData){
+                        new tKemasanRusakHeaderDA(_db).SaveData(_db, dt);
+                    }
+                }
+
+                if(_tKemasanRusakDetailData!=null){
+                    for(tKemasanRusakDetailData dt : _tKemasanRusakDetailData){
+                        new tKemasanRusakDetailDA(_db).SaveData(_db, dt);
+                    }
+                }
+
+                if(_tKemasanRusakImageData!=null){
+                    for(tKemasanRusakImageData dt : _tKemasanRusakImageData){
+                        new tKemasanRusakImageDA(_db).SaveDataImage(_db,dt);
+                    }
+                }
+
+                if(_tOverStockHeaderData!=null){
+                    for(tOverStockHeaderData dt : _tOverStockHeaderData){
+                        new tOverStockHeaderDA(_db).SaveDataOverStockData(_db, dt);
+                    }
+                }
+
+                if(_tOverStockDetailData!=null){
+                    for(tOverStockDetailData dt : _tOverStockDetailData){
+                        new tOverStockDetailDA(_db).SaveDatatOverStockDetailData(_db,dt);
+                    }
+                }
+
+                if(_tPlanogramMobileData!=null){
+                    for(tPlanogramMobileData dt : _tPlanogramMobileData){
+                        new tPlanogramMobileDA(_db).SaveDataPlanogram(_db,dt);
+                    }
+                }
+
+                if(_tPlanogramImageData!=null){
+                    for(tPlanogramImageData dt : _tPlanogramImageData){
+                        new tPlanogramImageDA(_db).SaveDataImage(_db,dt);
+                    }
+                }
+
+                if(_tStockInHandHeaderData!=null){
+                    for(tStockInHandHeaderData dt : _tStockInHandHeaderData){
+                        new tStockInHandHeaderDA(_db).SaveDatatStockInHandHeaderData(_db,dt);
+                    }
+                }
+
+                if(_tStockInHandDetailData!=null){
+                    for(tStockInHandDetailData dt : _tStockInHandDetailData){
+                        new tStockInHandDetailDA(_db).SaveDatatStockInHandDetailData(_db, dt);
+                    }
+                }
+
+                if(_tActivityMobileData!=null){
+                    for(tActivityMobileData dt : _tActivityMobileData){
+                        new tActivityMobileDA(_db).SaveDatatActivityData(_db,dt);
+                    }
+                }
+
+                if(_tTidakSesuaiPesananHeaderData!=null){
+                    for(tTidakSesuaiPesananHeaderData dt : _tTidakSesuaiPesananHeaderData){
+                        new tTidakSesuaiPesananHeaderDA(_db).SaveData(_db,dt);
+                    }
+                }
+
+                if(_tTidakSesuaiPesananImageData!=null){
+                    for(tTidakSesuaiPesananImageData dt : _tTidakSesuaiPesananImageData){
+                        new tTidakSesuaiPesananImageDA(_db).SaveDataImage(_db,dt);
+                    }
+                }
+
+                if(_trackingLocationData!=null){
+                    for(trackingLocationData dt : _trackingLocationData){
+                        new trackingLocationDA(_db).SaveDataDownloadTrackingLocation(_db, dt);
+                    }
+                }
+
+
                 _db.close();
 
             } catch (Exception e) {
@@ -7478,6 +7649,17 @@ public class FragmentDownloadData extends Fragment {
 
                 if (connection != null)
                     connection.disconnect();
+
+                    Intent serviceIntentMyServiceNative = new Intent(getContext(), MyServiceNative.class);
+                    if (!isMyServiceRunning(MyServiceNative.class)) {
+                        getActivity().startService(serviceIntentMyServiceNative);
+                    }
+
+                    Intent serviceIntentMyTrackingLocationService = new Intent(getActivity(), MyTrackingLocationService.class);
+                    if (!isMyServiceRunning(MyTrackingLocationService.class)) {
+                        getActivity().startService(serviceIntentMyTrackingLocationService);
+                    }
+
             }
 
 
@@ -7621,5 +7803,14 @@ public class FragmentDownloadData extends Fragment {
         protected void onProgressUpdate(Void... values) {
             Dialog.dismiss();
         }
+    }
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getActivity().getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

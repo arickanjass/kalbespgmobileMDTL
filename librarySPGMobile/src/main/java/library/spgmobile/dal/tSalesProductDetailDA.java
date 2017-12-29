@@ -188,11 +188,11 @@ public class tSalesProductDetailDA {
 						contact.set_intQty(cursor.getString(3));
 						contact.set_txtCodeProduct(cursor.getString(4));
 						contact.set_txtKeterangan(cursor.getString(5));
-						contact.set_txtKeterangan(cursor.getString(6));
+						contact.set_txtNameProduct(cursor.getString(6));
 						contact.set_intTotal(cursor.getString(7));
-						contact.set_txtNIK(cursor.getString(8));
-						contact.set_txtNoSo(cursor.getString(9));
-						contact.set_intActive(cursor.getString(10));
+						contact.set_txtNoSo(cursor.getString(8));
+						contact.set_intActive(cursor.getString(9));
+						contact.set_txtNIK(cursor.getString(10));
 						// Adding contact to list
 						contactList.add(contact);
 					} while (cursor.moveToNext());

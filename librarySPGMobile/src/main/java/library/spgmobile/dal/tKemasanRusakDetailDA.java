@@ -212,4 +212,37 @@ public class tKemasanRusakDetailDA {
         cursor.close();
         return contactList;
     }
+
+
+    public List<tKemasanRusakDetailData> getAllData(SQLiteDatabase db) {
+        List<tKemasanRusakDetailData> contactList = null;
+        // select all query
+        tKemasanRusakDetailData dt = new tKemasanRusakDetailData();
+        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS;
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            contactList = new ArrayList<tKemasanRusakDetailData>();
+            do {
+                tKemasanRusakDetailData contact = new tKemasanRusakDetailData();
+                contact.setIntId(cursor.getString(0));
+                contact.set_dtDate(cursor.getString(1));
+                contact.set_txtCodeProduct(cursor.getString(2));
+                contact.set_txtKeterangan(cursor.getString(3));
+                contact.setTxtProduct(cursor.getString(4));
+                contact.setTxtExpireDate(cursor.getString(5));
+                contact.setTxtQuantity(cursor.getString(6));
+                contact.set_txtKemasanRusak(cursor.getString(7));
+                contact.set_intPrice(cursor.getString(8));
+                contact.set_intTotal(cursor.getString(9));
+                contact.set_intActive(cursor.getString(10));
+                contact.set_txtNIK(cursor.getString(11));
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return contactList;
+    }
 }
