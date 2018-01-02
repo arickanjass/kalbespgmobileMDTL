@@ -7820,7 +7820,7 @@ public class FragmentDownloadData extends Fragment {
                     arrData = SaveDatatAbsenUserData(Json);
 
                     Json = new tLeaveMobileBL().DownloadDataLeave(pInfo.versionName);
-                    arrData = SaveDatatLeaveData(Json); 
+                    arrData = SaveDatatLeaveData(Json);
                 }
             } catch (Exception e) {
                 // TODO Auto-generated catch block
