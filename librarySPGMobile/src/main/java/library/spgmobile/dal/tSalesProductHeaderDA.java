@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import library.spgmobile.common.tAbsenUserData;
 import library.spgmobile.common.tSalesProductHeaderData;
 
 public class tSalesProductHeaderDA {
@@ -111,6 +112,31 @@ public class tSalesProductHeaderDA {
         db.execSQL("Update " + TABLE_CONTACTS + " set  "
                 + dt.Property_intSubmit + "=1"
                 + " Where " + dt.Property_intId + "='" + dataid + "'");
+    }
+
+    public tSalesProductHeaderData getDataExist(SQLiteDatabase db, String txtSo) {
+        // Select All Query
+        tSalesProductHeaderData dt=new tSalesProductHeaderData();
+        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_txtNoSo + "='" + txtSo + "'";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        tSalesProductHeaderData contact = null;
+        // looping through all rows and adding to list
+        if (cursor.moveToLast()) {
+            do {
+                contact=new tSalesProductHeaderData();
+                contact.set_txtNoSo(cursor.getString(1));
+                // Adding contact to list
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        // return contact list
+        return contact;
+    }
+
+    public void UpdateData(SQLiteDatabase db,String txtNo, String id){
+        tSalesProductHeaderData dt=new tSalesProductHeaderData();
+        db.execSQL("UPDATE "+TABLE_CONTACTS+" SET "+dt.Property_intId+ "='" + id + "'"+" WHERE "+dt.Property_txtNoSo+"='" + txtNo + "'");
     }
 
     // Getting single contact

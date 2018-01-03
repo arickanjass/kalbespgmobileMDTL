@@ -3095,6 +3095,18 @@ public class FragmentDownloadData extends Fragment {
                         _data.set_OutletCode(String.valueOf(innerObj_detail.get("TxtOutletCode")));
                         _data.set_OutletName(String.valueOf(innerObj_detail.get("TxtOutletName")));
                         _data.set_dtDate(String.valueOf(innerObj_detail.get("DtDate")));
+
+                        SQLiteDatabase db = new clsMainBL().getDb();
+                        if(_data!=null){
+                            tSalesProductHeaderData _tSalesProductHeaderData = new tSalesProductHeaderDA(db).getDataExist(db, _data.get_txtNoSo());
+                                if(_tSalesProductHeaderData!=null){
+                                    if(_tSalesProductHeaderData.get_txtNoSo()!=null){
+                                        new tSalesProductHeaderDA(db).UpdateData(db, _data.get_txtNoSo(), _data.get_intId());
+                                    }
+                                }
+                        }
+                        db.close();
+
                         new tSalesProductHeaderBL().SaveData(_data);
                     }
 
@@ -3467,8 +3479,6 @@ public class FragmentDownloadData extends Fragment {
             }
         }
         SQLiteDatabase db = new clsMainBL().getDb();
-
-        List<tAbsenUserData> tAbsenUserData = new tAbsenUserDA(db).getAllData(db);
 
         if(ListdataAbsen!=null){
             for(tAbsenUserData dt : ListdataAbsen){
