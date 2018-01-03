@@ -302,19 +302,21 @@ public class tSalesProductHeaderDA {
             do {
                 tSalesProductHeaderData contact = new tSalesProductHeaderData();
                 contact.set_intId(cursor.getString(0));
-                contact.set_OutletCode(cursor.getString(1));
-                contact.set_OutletName(cursor.getString(2));
-                contact.set_dtDate(cursor.getString(3));
-                contact.set_txtKeterangan(cursor.getString(4));
-                contact.set_txtNIK(cursor.getString(5));
-                contact.set_intSumAmount(cursor.getString(6));
-                contact.set_intSumItem(cursor.getString(7));
+                contact.set_txtNoSo(cursor.getString(1));
+                contact.set_dtDate(cursor.getString(2));
+                contact.set_OutletCode(cursor.getString(3));
+                contact.set_OutletName(cursor.getString(4));
+                contact.set_txtKeterangan(cursor.getString(5));
+                contact.set_intSumItem(cursor.getString(6));
+                contact.set_intSumAmount(cursor.getString(7));
                 contact.set_UserId(cursor.getString(8));
                 contact.set_intSubmit(cursor.getString(9));
                 contact.set_intSync(cursor.getString(10));
                 contact.set_txtBranchCode(cursor.getString(11));
                 contact.set_txtBranchName(cursor.getString(12));
                 contact.set_intIdAbsenUser(cursor.getString(13));
+                contact.set_txtNIK(cursor.getString(14));
+                contact.set_txtRoleId(cursor.getString(15));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -338,19 +340,21 @@ public class tSalesProductHeaderDA {
             do {
                 tSalesProductHeaderData contact = new tSalesProductHeaderData();
                 contact.set_intId(cursor.getString(0));
-                contact.set_OutletCode(cursor.getString(1));
-                contact.set_OutletName(cursor.getString(2));
-                contact.set_dtDate(cursor.getString(3));
-                contact.set_txtKeterangan(cursor.getString(4));
-                contact.set_txtNIK(cursor.getString(5));
-                contact.set_intSumAmount(cursor.getString(6));
-                contact.set_intSumItem(cursor.getString(7));
+                contact.set_txtNoSo(cursor.getString(1));
+                contact.set_dtDate(cursor.getString(2));
+                contact.set_OutletCode(cursor.getString(3));
+                contact.set_OutletName(cursor.getString(4));
+                contact.set_txtKeterangan(cursor.getString(5));
+                contact.set_intSumItem(cursor.getString(6));
+                contact.set_intSumAmount(cursor.getString(7));
                 contact.set_UserId(cursor.getString(8));
                 contact.set_intSubmit(cursor.getString(9));
                 contact.set_intSync(cursor.getString(10));
                 contact.set_txtBranchCode(cursor.getString(11));
                 contact.set_txtBranchName(cursor.getString(12));
                 contact.set_intIdAbsenUser(cursor.getString(13));
+                contact.set_txtNIK(cursor.getString(14));
+                contact.set_txtRoleId(cursor.getString(15));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());

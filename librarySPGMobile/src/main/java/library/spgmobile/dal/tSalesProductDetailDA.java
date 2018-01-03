@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import library.spgmobile.common.mProductPICData;
+import library.spgmobile.common.mUserLOBData;
 import library.spgmobile.common.tSalesProductDetailData;
 import library.spgmobile.common.tSalesProductHeaderData;
 
@@ -201,6 +203,49 @@ public class tSalesProductDetailDA {
 				// return contact list
 				return contactList;
 			}
+
+	public List<tSalesProductDetailData> getDataByList(SQLiteDatabase db, List<tSalesProductHeaderData> _tSalesProductHeaderData) {
+		List<tSalesProductDetailData> contactList = new ArrayList<tSalesProductDetailData>();
+		// Select All Query
+		tSalesProductDetailData data = new tSalesProductDetailData();
+
+		String query = "()";
+
+		if (_tSalesProductHeaderData != null){
+			query = "(";
+			for (int i = 0; i < _tSalesProductHeaderData.size(); i++) {
+				query = query + "'" + _tSalesProductHeaderData.get(i).get_txtNoSo() + "'";
+				query = query + ((i + 1) != _tSalesProductHeaderData.size() ? "," : ")");
+			}
+		}
+
+		String selectQuery = "SELECT * FROM " + TABLE_CONTACTS +" WHERE "+data.Property_txtNoSo +" IN " + query;
+		Cursor cursor = db.rawQuery(selectQuery, null);
+		// looping through all rows and adding to list
+
+		if (cursor.moveToFirst()) {
+			do {
+				tSalesProductDetailData contact = new tSalesProductDetailData();
+				contact.set_intId(String.valueOf(cursor.getString(1)));
+				contact.set_dtDate(cursor.getString(0));
+				contact.set_intPrice(cursor.getString(2));
+				contact.set_intQty(cursor.getString(3));
+				contact.set_txtCodeProduct(cursor.getString(4));
+				contact.set_txtKeterangan(cursor.getString(5));
+				contact.set_txtNameProduct(cursor.getString(6));
+				contact.set_intTotal(cursor.getString(7));
+				contact.set_txtNoSo(cursor.getString(8));
+				contact.set_intActive(cursor.getString(9));
+				contact.set_txtNIK(cursor.getString(10));
+				// Adding contact to list
+				contactList.add(contact);
+			} while (cursor.moveToNext());
+		}
+		cursor.close();
+		// return contact list
+		return contactList;
+	}
+
 			public void DeleteAllDAta(SQLiteDatabase db) {
 				// Drop older table if existed
 				db.execSQL("DELETE FROM " + TABLE_CONTACTS);

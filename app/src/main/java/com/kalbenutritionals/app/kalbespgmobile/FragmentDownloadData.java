@@ -122,6 +122,8 @@ import library.spgmobile.common.APIData;
 import library.spgmobile.common.KoordinasiOutletData;
 import library.spgmobile.common.KoordinasiOutletImageData;
 import library.spgmobile.common.clsHelper;
+import library.spgmobile.common.clsLogReceiverDetail_mobile;
+import library.spgmobile.common.clsLogReceiverHeader_mobile;
 import library.spgmobile.common.clsPushData;
 import library.spgmobile.common.dataJson;
 import library.spgmobile.common.mCategoryKoordinasiOutletData;
@@ -195,6 +197,8 @@ import library.spgmobile.common.trackingLocationData;
 import library.spgmobile.dal.KoordinasiOutletDA;
 import library.spgmobile.dal.KoordinasiOutletImageDA;
 import library.spgmobile.dal.clsHardCode;
+import library.spgmobile.dal.clsLogReceiverDetail_mobileDA;
+import library.spgmobile.dal.clsLogReceiverHeader_mobileDA;
 import library.spgmobile.dal.enumCounterData;
 import library.spgmobile.dal.mCategoryKoordinasiOutletDA;
 import library.spgmobile.dal.mCategoryVisitPlanDA;
@@ -217,6 +221,8 @@ import library.spgmobile.dal.tCustomerBasedMobileDetailDA;
 import library.spgmobile.dal.tCustomerBasedMobileDetailProductDA;
 import library.spgmobile.dal.tCustomerBasedMobileHeaderDA;
 import library.spgmobile.dal.tHirarkiBISDA;
+import library.spgmobile.dal.tJawabanUserDA;
+import library.spgmobile.dal.tJawabanUserHeaderDA;
 import library.spgmobile.dal.tKategoryPlanogramMobileDA;
 import library.spgmobile.dal.tKemasanRusakDetailDA;
 import library.spgmobile.dal.tKemasanRusakHeaderDA;
@@ -224,6 +230,7 @@ import library.spgmobile.dal.tKemasanRusakImageDA;
 import library.spgmobile.dal.tLeaveMobileDA;
 import library.spgmobile.dal.tOverStockDetailDA;
 import library.spgmobile.dal.tOverStockHeaderDA;
+import library.spgmobile.dal.tPOPStandardDetailDA;
 import library.spgmobile.dal.tPOPStandardHeaderDA;
 import library.spgmobile.dal.tPlanogramImageDA;
 import library.spgmobile.dal.tPlanogramMobileDA;
@@ -240,6 +247,7 @@ import library.spgmobile.dal.tSubTypeActivityDA;
 import library.spgmobile.dal.tTidakSesuaiPesananHeaderDA;
 import library.spgmobile.dal.tTidakSesuaiPesananImageDA;
 import library.spgmobile.dal.tUserLoginDA;
+import library.spgmobile.dal.tVisitPlanHeader_MobileDA;
 import library.spgmobile.dal.tVisitPlanRealisasiDA;
 import library.spgmobile.dal.trackingLocationDA;
 import service.MyServiceNative;
@@ -7395,30 +7403,69 @@ public class FragmentDownloadData extends Fragment {
                 List<tDeviceInfoUserData> _dataDeviceInfoUser = new tDeviceInfoUserBL().getData(0);
                 tDisplayPictureData _pictureData = new tDisplayPictureBL().getData();
                 List<mconfigData> _mConfigData = new mconfigDA(_db).getAllData(_db);
-                List<tSalesProductHeaderData> _tSalesProductHeaderData = new tSalesProductHeaderDA(_db).getAllData(_db);
-                List<tSalesProductDetailData> _tSalesProductDetailData = new tSalesProductDetailDA(_db).getAllData(_db);
-                List<tActivityData> _tActivityData = new tActivityDA(_db).getAllData(_db);
-                List<tCustomerBasedMobileHeaderData> _tCustomerBasedMobileHeaderData = new tCustomerBasedMobileHeaderDA(_db).getAllDataNew(_db);
-                List<tCustomerBasedMobileDetailData> _tCustomerBasedMobileDetailData = new tCustomerBasedMobileDetailDA(_db).getAllData(_db);
-                List<tCustomerBasedMobileDetailProductData> _tCustomerBasedMobileDetailProductData = new tCustomerBasedMobileDetailProductDA(_db).getAllData(_db);
-                List<tAbsenUserData> _tAbsenUserData = new tAbsenUserDA(_db).getAllData(_db);
 
+                List<tSalesProductHeaderData> _tSalesProductHeaderData = new tSalesProductHeaderDA(_db).getAllDataToPushData(_db);
+                List<tSalesProductDetailData> _tSalesProductDetailData = new tSalesProductDetailDA(_db).getAllDataToPushData(_db, _tSalesProductHeaderData);
+                List<tActivityData> _tActivityData = new tActivityDA(_db).getAllDataToPushData(_db);
+
+                // customer base submit
+                List<tCustomerBasedMobileHeaderData> _tCustomerBasedMobileHeaderData = new tCustomerBasedMobileHeaderDA(_db).getPushData(_db);
+                List<tCustomerBasedMobileDetailData> _tCustomerBasedMobileDetailData = new tCustomerBasedMobileDetailDA(_db).getPushData(_db, _tCustomerBasedMobileHeaderData);
+                List<tCustomerBasedMobileDetailProductData> _tCustomerBasedMobileDetailProductData = new tCustomerBasedMobileDetailProductDA(_db).getPushData(_db, _tCustomerBasedMobileDetailData);
+
+                // cus base save
+                List<tCustomerBasedMobileHeaderData> _tCustomerBasedMobileHeaderDataSave = new tCustomerBasedMobileHeaderBL().getAllDataToSubmit();
+                List<tCustomerBasedMobileDetailData> _tCustomerBasedMobileDetailDataSave = new tCustomerBasedMobileDetailDA(_db).getPushData(_db, _tCustomerBasedMobileHeaderDataSave);
+                List<tCustomerBasedMobileDetailProductData> _tCustomerBasedMobileDetailProductDataSave = new tCustomerBasedMobileDetailProductDA(_db).getPushData(_db, _tCustomerBasedMobileDetailDataSave);
+
+                List<tAbsenUserData> _tAbsenUserData = new tAbsenUserDA(_db).getAllDataToPushData(_db);
+
+                List<tVisitPlanHeader_MobileData> _tVisitPlanHeader_MobileData = new tVisitPlanHeader_MobileDA(_db).getAllData(_db);
                 List<tVisitPlanRealisasiData> _tVisitPlanRealisasiData = new tVisitPlanRealisasiDA(_db).getAllData(_db);
-                List<tSalesProductQuantityHeaderData> _tSalesProductQuantityHeaderData = new tSalesProductQuantityHeaderDA(_db).getAllData(_db);
-                List<tSalesProductQuantityDetailData> _tSalesProductQuantityDetailData = new tSalesProductQuantityDetailDA(_db).getAllDataNew(_db);
-                List<tKemasanRusakHeaderData> _tKemasanRusakHeaderData = new tKemasanRusakHeaderDA(_db).getAllData(_db);
-                List<tKemasanRusakDetailData> _tKemasanRusakDetailData = new tKemasanRusakDetailDA(_db).getAllData(_db);
-                List<tKemasanRusakImageData> _tKemasanRusakImageData = new tKemasanRusakImageDA(_db).getAllData(_db);
-                List<tOverStockHeaderData> _tOverStockHeaderData = new tOverStockHeaderDA(_db).getAllData(_db);
-                List<tOverStockDetailData> _tOverStockDetailData = new tOverStockDetailDA(_db).getAllDataNew(_db);
-                List<tPlanogramMobileData> _tPlanogramMobileData = new tPlanogramMobileDA(_db).getAll(_db);
-                List<tPlanogramImageData> _tPlanogramImageData = new tPlanogramImageDA(_db).getAllData(_db);
-                List<tStockInHandHeaderData> _tStockInHandHeaderData = new tStockInHandHeaderDA(_db).getAllData(_db);
-                List<tStockInHandDetailData> _tStockInHandDetailData = new tStockInHandDetailDA(_db).getAllData(_db);
-                List<tActivityMobileData> _tActivityMobileData = new tActivityMobileDA(_db).getAllData(_db);
-                List<tTidakSesuaiPesananHeaderData> _tTidakSesuaiPesananHeaderData = new tTidakSesuaiPesananHeaderDA(_db).getAllData(_db);
-                List<tTidakSesuaiPesananImageData> _tTidakSesuaiPesananImageData = new tTidakSesuaiPesananImageDA(_db).getAllData(_db);
-                List<trackingLocationData> _trackingLocationData = new trackingLocationDA(_db).getAllData(_db);
+
+                List<tSalesProductQuantityHeaderData> _tSalesProductQuantityHeaderData = new tSalesProductQuantityHeaderDA(_db).getAllDataToPushData(_db);
+                List<tSalesProductQuantityDetailData> _tSalesProductQuantityDetailData = new tSalesProductQuantityDetailDA(_db).getAllDataToPushData(_db, _tSalesProductQuantityHeaderData);
+
+                List<tKemasanRusakHeaderData> _tKemasanRusakHeaderData = new tKemasanRusakHeaderDA(_db).getAllDataToPushData(_db);
+                List<tKemasanRusakDetailData> _tKemasanRusakDetailData = new tKemasanRusakDetailDA(_db).getAllDataToPushData(_db, _tKemasanRusakHeaderData);
+                List<tKemasanRusakImageData> _tKemasanRusakImageData = new tKemasanRusakImageDA(_db).getAllDataToPushData(_db, _tKemasanRusakHeaderData);
+
+                List<tOverStockHeaderData> _tOverStockHeaderData = new tOverStockHeaderDA(_db).getAllDataToPushData(_db);
+                List<tOverStockDetailData> _tOverStockDetailData = new tOverStockDetailDA(_db).getAllDataToPushData(_db, _tOverStockHeaderData);
+
+                List<tPlanogramMobileData> _tPlanogramMobileData = new tPlanogramMobileDA(_db).getAllDataToPushData(_db);
+                List<tPlanogramImageData> _tPlanogramImageData = new tPlanogramImageDA(_db).getAllDataToPushData(_db, _tPlanogramMobileData);
+
+                List<tPlanogramMobileData> _tPlanogramMobileDataSave = new tPlanogramMobileDA(_db).getAllDataSelectImageNotNullUnsubmit(_db);
+                List<tPlanogramImageData> _tPlanogramImageDataSave = new tPlanogramImageDA(_db).getAllDataToPushData(_db, _tPlanogramMobileDataSave);
+
+                List<tStockInHandHeaderData> _tStockInHandHeaderData = new tStockInHandHeaderDA(_db).getAllDataToPushData(_db);
+                List<tStockInHandDetailData> _tStockInHandDetailData = new tStockInHandDetailDA(_db).getAllDataToPushData(_db, _tStockInHandHeaderData);
+
+                List<tStockInHandHeaderData> _tStockInHandHeaderDataSave = new tStockInHandHeaderDA(_db).getAllDataSave(_db);
+                List<tStockInHandDetailData> _tStockInHandDetailDataSave = new tStockInHandDetailDA(_db).getAllDataToPushData(_db, _tStockInHandHeaderDataSave);
+
+                List<tActivityMobileData> _tActivityMobileData = new tActivityMobileDA(_db).getAllDataToPushData(_db);
+
+                List<tTidakSesuaiPesananHeaderData> _tTidakSesuaiPesananHeaderData = new tTidakSesuaiPesananHeaderDA(_db).getAllDataToPushData(_db);
+                List<tTidakSesuaiPesananImageData> _tTidakSesuaiPesananImageData = new tTidakSesuaiPesananImageDA(_db).getAllDataToPushData(_db, _tTidakSesuaiPesananHeaderData);
+
+                List<trackingLocationData> _trackingLocationData = new trackingLocationDA(_db).getAllDataToPushData(_db);
+
+                List<tPurchaseOrderHeaderData> _tPurchaseOrderHeaderData = new tPurchaseOrderHeaderDA(_db).getAllDataToPushData(_db);
+                List<tPurchaseOrderDetailData> _tPurchaseOrderDetailData = new tPurchaseOrderDetailDA(_db).getAllDataToPushDataPO(_db, _tPurchaseOrderHeaderData);
+
+                List<tLeaveMobileData> _tLeaveMobileData=new tLeaveMobileDA(_db).getAllDataPushData(_db);
+
+                List<clsLogReceiverHeader_mobile> _clsLogReceiverHeader_mobile = new clsLogReceiverHeader_mobileDA(_db).getAllDataToPushData(_db);
+                List<clsLogReceiverDetail_mobile> _clsLogReceiverDetail_mobile = new clsLogReceiverDetail_mobileDA(_db).getAllDataToPushData(_db);
+
+//                List<tJawabanUserData> _tJawabanUserData = new tJawabanUserDA(_db).GetDataToPushAnswer(_db);
+//                List<tJawabanUserHeaderData> _tJawabanUserHeaderData = new tJawabanUserHeaderDA(_db).GetDataToPushAnswer(_db);
+//                List<tPOPStandardHeaderData> _tPOPStandardHeaderData = new tPOPStandardHeaderDA(_db).GetDataToPush(_db);
+//                List<tPOPStandardDetailData> _tPOPStandardDetailData = new tPOPStandardDetailDA(_db).GetDataToPush(_db);
+//                List<KoordinasiOutletData> _KoordinasiOutletData = new KoordinasiOutletDA(_db).getAllDataToPushData(_db);
+//                List<KoordinasiOutletImageData> _KoordinasiOutletImageData = new KoordinasiOutletImageDA(_db).getAllDataToPushData(_db, _KoordinasiOutletData);
 
 
                 _db.close();
@@ -7518,24 +7565,58 @@ public class FragmentDownloadData extends Fragment {
                     }
                 }
 
-                for(tSalesProductDetailData dt : _tSalesProductDetailData){
-                    new tSalesProductDetailDA(_db).SaveDatatSalesProductDetailData(_db, dt);
+                if(_tSalesProductDetailData!=null){
+                    for(tSalesProductDetailData dt : _tSalesProductDetailData){
+                        new tSalesProductDetailDA(_db).SaveDatatSalesProductDetailData(_db, dt);
+                    }
                 }
 
-                for(tActivityData dt : _tActivityData){
-                    new tActivityDA(_db).SaveDatatActivityData(_db, dt);
+                if(_tActivityData!=null){
+                    for(tActivityData dt : _tActivityData){
+                        new tActivityDA(_db).SaveDatatActivityData(_db, dt);
+                    }
                 }
 
-                for(tCustomerBasedMobileHeaderData dt : _tCustomerBasedMobileHeaderData){
-                    new tCustomerBasedMobileHeaderDA(_db).SaveDatatCustomerBasedMobileHeaderData(_db, dt);
+                if(_tCustomerBasedMobileHeaderData!=null){
+                    for(tCustomerBasedMobileHeaderData dt : _tCustomerBasedMobileHeaderData){
+                        new tCustomerBasedMobileHeaderDA(_db).SaveDatatCustomerBasedMobileHeaderData(_db, dt);
+                    }
                 }
 
-                for(tCustomerBasedMobileDetailData dt : _tCustomerBasedMobileDetailData){
-                    new tCustomerBasedMobileDetailDA(_db).SaveDatatCustomerBasedMobileDetailData(_db, dt);
+                if(_tCustomerBasedMobileDetailData!=null){
+                    for(tCustomerBasedMobileDetailData dt : _tCustomerBasedMobileDetailData){
+                        new tCustomerBasedMobileDetailDA(_db).SaveDatatCustomerBasedMobileDetailData(_db, dt);
+                    }
                 }
 
-                for(tCustomerBasedMobileDetailProductData dt : _tCustomerBasedMobileDetailProductData){
-                    new tCustomerBasedMobileDetailProductDA(_db).SaveDatatCustomerBasedMobileDetailProductData(_db, dt);
+                if(_tCustomerBasedMobileDetailProductData!=null){
+                    for(tCustomerBasedMobileDetailProductData dt : _tCustomerBasedMobileDetailProductData){
+                        new tCustomerBasedMobileDetailProductDA(_db).SaveDatatCustomerBasedMobileDetailProductData(_db, dt);
+                    }
+                }
+
+                if(_tCustomerBasedMobileHeaderDataSave!=null){
+                    for(tCustomerBasedMobileHeaderData dt : _tCustomerBasedMobileHeaderDataSave){
+                        new tCustomerBasedMobileHeaderDA(_db).SaveDatatCustomerBasedMobileHeaderData(_db, dt);
+                    }
+                }
+
+                if(_tCustomerBasedMobileDetailDataSave!=null){
+                    for(tCustomerBasedMobileDetailData dt : _tCustomerBasedMobileDetailDataSave){
+                        new tCustomerBasedMobileDetailDA(_db).SaveDatatCustomerBasedMobileDetailData(_db, dt);
+                    }
+                }
+
+                if(_tCustomerBasedMobileDetailProductDataSave!=null){
+                    for(tCustomerBasedMobileDetailProductData dt : _tCustomerBasedMobileDetailProductDataSave){
+                        new tCustomerBasedMobileDetailProductDA(_db).SaveDatatCustomerBasedMobileDetailProductData(_db, dt);
+                    }
+                }
+
+                if(_tVisitPlanHeader_MobileData!=null){
+                    for(tVisitPlanHeader_MobileData dt : _tVisitPlanHeader_MobileData){
+                        new tVisitPlanHeader_MobileDA(_db).SaveDatatVisitPlanHeader_MobileData(_db, dt);
+                    }
                 }
 
                 if(_tVisitPlanRealisasiData!=null){
@@ -7598,6 +7679,18 @@ public class FragmentDownloadData extends Fragment {
                     }
                 }
 
+                if(_tPlanogramMobileDataSave!=null){
+                    for(tPlanogramMobileData dt : _tPlanogramMobileDataSave){
+                        new tPlanogramMobileDA(_db).SaveDataPlanogram(_db,dt);
+                    }
+                }
+
+                if(_tPlanogramImageDataSave!=null){
+                    for(tPlanogramImageData dt : _tPlanogramImageDataSave){
+                        new tPlanogramImageDA(_db).SaveDataImage(_db,dt);
+                    }
+                }
+
                 if(_tStockInHandHeaderData!=null){
                     for(tStockInHandHeaderData dt : _tStockInHandHeaderData){
                         new tStockInHandHeaderDA(_db).SaveDatatStockInHandHeaderData(_db,dt);
@@ -7607,6 +7700,30 @@ public class FragmentDownloadData extends Fragment {
                 if(_tStockInHandDetailData!=null){
                     for(tStockInHandDetailData dt : _tStockInHandDetailData){
                         new tStockInHandDetailDA(_db).SaveDatatStockInHandDetailData(_db, dt);
+                    }
+                }
+
+                if(_tStockInHandHeaderDataSave!=null){
+                    for(tStockInHandHeaderData dt : _tStockInHandHeaderDataSave){
+                        new tStockInHandHeaderDA(_db).SaveDatatStockInHandHeaderData(_db,dt);
+                    }
+                }
+
+                if(_tStockInHandDetailDataSave!=null){
+                    for(tStockInHandDetailData dt : _tStockInHandDetailDataSave){
+                        new tStockInHandDetailDA(_db).SaveDatatStockInHandDetailData(_db, dt);
+                    }
+                }
+
+                if(_tPurchaseOrderHeaderData!=null){
+                    for(tPurchaseOrderHeaderData dt : _tPurchaseOrderHeaderData){
+                        new tPurchaseOrderHeaderDA(_db).SaveDatatPurchaseOrderHeaderData(_db,dt);
+                    }
+                }
+
+                if(_tPurchaseOrderDetailData!=null){
+                    for(tPurchaseOrderDetailData dt : _tPurchaseOrderDetailData){
+                        new tPurchaseOrderDetailDA(_db).SaveDatatPurchaseOrderDetailData(_db, dt);
                     }
                 }
 
@@ -7634,6 +7751,23 @@ public class FragmentDownloadData extends Fragment {
                     }
                 }
 
+                if(_tLeaveMobileData!=null){
+                    for(tLeaveMobileData dt : _tLeaveMobileData){
+                        new tLeaveMobileDA(_db).SaveDataMConfig(_db, dt);
+                    }
+                }
+
+                if(_clsLogReceiverHeader_mobile!=null){
+                    for(clsLogReceiverHeader_mobile dt : _clsLogReceiverHeader_mobile){
+                        new clsLogReceiverHeader_mobileDA(_db).SaveDataMConfig(_db, dt);
+                    }
+                }
+
+                if(_clsLogReceiverDetail_mobile!=null){
+                    for(clsLogReceiverDetail_mobile dt : _clsLogReceiverDetail_mobile){
+                        new clsLogReceiverDetail_mobileDA(_db).SaveDataMConfig(_db, dt);
+                    }
+                }
 
                 _db.close();
 
