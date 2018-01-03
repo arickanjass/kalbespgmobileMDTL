@@ -123,6 +123,10 @@ public class tAbsenUserDA {
 		tAbsenUserData dt=new tAbsenUserData();
 		db.execSQL("UPDATE "+TABLE_CONTACTS+" SET "+dt.Property_intSubmit+"=1 WHERE "+dt.Property_intId+"="+IdData);
 	}
+	public void UpdateDatatxtAbsen(SQLiteDatabase db,String txtAbsen){
+		tAbsenUserData dt=new tAbsenUserData();
+		db.execSQL("UPDATE "+TABLE_CONTACTS+" SET "+dt.Property_intId+ "='" + txtAbsen + "'"+" WHERE "+dt.Property_txtAbsen+"='" + txtAbsen + "'");
+	}
 	// Getting single contact
 	public tAbsenUserData getData(SQLiteDatabase db,int id) {
 		tAbsenUserData dt=new tAbsenUserData();
@@ -271,6 +275,47 @@ public class tAbsenUserDA {
 				contact.set_txtRoleId(cursor.getString(17));
 //				Bitmap bmp2 = BitmapFactory.decodeByteArray(blob2, 0, blob2.length);
 				contact.set_txtImg2(blob2);
+				// Adding contact to list
+			} while (cursor.moveToNext());
+		}
+		cursor.close();
+		// return contact list
+		return contact;
+	}
+
+	public tAbsenUserData getDataExist(SQLiteDatabase db, String txtAbsen) {
+		// Select All Query
+		tAbsenUserData dt=new tAbsenUserData();
+		String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_txtAbsen + "='" + txtAbsen + "'";
+
+		Cursor cursor = db.rawQuery(selectQuery, null);
+		tAbsenUserData contact = null;
+		// looping through all rows and adding to list
+		if (cursor.moveToLast()) {
+			do {
+				contact=new tAbsenUserData();
+				contact.set_txtAbsen(cursor.getString(0));
+//				contact.set_dtDateCheckIn(cursor.getString(1));
+//				contact.set_dtDateCheckOut(cursor.getString(2));
+//				contact.set_intSubmit(cursor.getString(3));
+//				contact.set_intSync(cursor.getString(4));
+//				contact.set_txtAbsen(cursor.getString(5));
+//				contact.set_txtAccuracy(cursor.getString(6));
+//				contact.set_txtBranchCode(cursor.getString(7));
+//				contact.set_txtBranchName(cursor.getString(8));
+//				contact.set_txtLatitude(cursor.getString(9));
+//				contact.set_txtLongitude(cursor.getString(10));
+//				contact.set_txtOutletCode(cursor.getString(11));
+//				contact.set_txtOutletName(cursor.getString(12));
+//				contact.set_txtDeviceId(cursor.getString(13));
+//				byte[] blob1 = cursor.getBlob(14);
+////				Bitmap bmp1 = BitmapFactory.decodeByteArray(blob1, 0, blob1.length);
+//				contact.set_txtImg1(blob1);
+//				byte[] blob2 = cursor.getBlob(15);
+//				contact.set_txtUserId(cursor.getString(16));
+//				contact.set_txtRoleId(cursor.getString(17));
+////				Bitmap bmp2 = BitmapFactory.decodeByteArray(blob2, 0, blob2.length);
+//				contact.set_txtImg2(blob2);
 				// Adding contact to list
 			} while (cursor.moveToNext());
 		}

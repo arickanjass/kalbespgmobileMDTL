@@ -3466,6 +3466,22 @@ public class FragmentDownloadData extends Fragment {
                 break;
             }
         }
+        SQLiteDatabase db = new clsMainBL().getDb();
+
+        List<tAbsenUserData> tAbsenUserData = new tAbsenUserDA(db).getAllData(db);
+
+        if(ListdataAbsen!=null){
+            for(tAbsenUserData dt : ListdataAbsen){
+                tAbsenUserData _tAbsenUserData = new tAbsenUserDA(db).getDataExist(db, dt.get_txtAbsen());
+                if(_tAbsenUserData!=null){
+                    if(_tAbsenUserData.get_txtAbsen()!=null){
+//                        dt.set_intId(dt.get_txtAbsen());
+                        new tAbsenUserDA(db).UpdateDatatxtAbsen(db, dt.get_txtAbsen());
+                    }
+                }
+            }
+        }
+        db.close();
         new tAbsenUserBL().saveData(ListdataAbsen);
         return _array;
     }
