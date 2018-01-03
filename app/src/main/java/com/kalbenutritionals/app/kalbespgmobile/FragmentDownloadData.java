@@ -7420,8 +7420,8 @@ public class FragmentDownloadData extends Fragment {
 
                 List<tAbsenUserData> _tAbsenUserData = new tAbsenUserDA(_db).getAllDataToPushData(_db);
 
-                List<tVisitPlanHeader_MobileData> _tVisitPlanHeader_MobileData = new tVisitPlanHeader_MobileDA(_db).getPushData(_db);
-                List<tVisitPlanRealisasiData> _tVisitPlanRealisasiData = new tVisitPlanRealisasiDA(_db).getPushData(_db);
+                List<tVisitPlanHeader_MobileData> _tVisitPlanHeader_MobileData = new tVisitPlanHeader_MobileDA(_db).getAllData(_db);
+                List<tVisitPlanRealisasiData> _tVisitPlanRealisasiData = new tVisitPlanRealisasiDA(_db).getAllData(_db);
 
                 List<tSalesProductQuantityHeaderData> _tSalesProductQuantityHeaderData = new tSalesProductQuantityHeaderDA(_db).getAllDataToPushData(_db);
                 List<tSalesProductQuantityDetailData> _tSalesProductQuantityDetailData = new tSalesProductQuantityDetailDA(_db).getAllDataToPushData(_db, _tSalesProductQuantityHeaderData);
@@ -7450,7 +7450,7 @@ public class FragmentDownloadData extends Fragment {
                 List<tTidakSesuaiPesananHeaderData> _tTidakSesuaiPesananHeaderData = new tTidakSesuaiPesananHeaderDA(_db).getAllDataToPushData(_db);
                 List<tTidakSesuaiPesananImageData> _tTidakSesuaiPesananImageData = new tTidakSesuaiPesananImageDA(_db).getAllDataToPushData(_db, _tTidakSesuaiPesananHeaderData);
 
-                List<trackingLocationData> _trackingLocationData = new trackingLocationDA(_db).getAllDataToPushData(_db);
+                List<trackingLocationData> _trackingLocationData = new trackingLocationDA(_db).getAllData(_db);
 
                 List<tPurchaseOrderHeaderData> _tPurchaseOrderHeaderData = new tPurchaseOrderHeaderDA(_db).getAllDataToPushData(_db);
                 List<tPurchaseOrderDetailData> _tPurchaseOrderDetailData = new tPurchaseOrderDetailDA(_db).getAllDataToPushDataPO(_db, _tPurchaseOrderHeaderData);

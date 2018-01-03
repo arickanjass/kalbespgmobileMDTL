@@ -188,7 +188,7 @@ public class tStockInHandHeaderDA {
         List<tStockInHandHeaderData> contactList = null;
         // Select All Query
         tStockInHandHeaderData dt = new tStockInHandHeaderData();
-        String selectQuery = "SELECT " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intSubmit + "=0 AND " + dt.Property_intSync + "=0";
+        String selectQuery = "SELECT " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intSubmit + "=1 AND " + dt.Property_intSync + "=0";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -227,7 +227,7 @@ public class tStockInHandHeaderDA {
         List<tStockInHandHeaderData> contactList = null;
         // Select All Query
         tStockInHandHeaderData dt = new tStockInHandHeaderData();
-        String selectQuery = "SELECT " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intSubmit + "=1 AND " + dt.Property_intSync + "=0";
+        String selectQuery = "SELECT " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_intSubmit + "=0 AND " + dt.Property_intSync + "=0";
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
