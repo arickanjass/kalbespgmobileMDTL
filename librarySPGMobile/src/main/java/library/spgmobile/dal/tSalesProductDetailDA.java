@@ -79,6 +79,31 @@ public class tSalesProductDetailDA {
 				
 			}
 
+	public tSalesProductDetailData getDataExist(SQLiteDatabase db, String txtSo) {
+		// Select All Query
+		tSalesProductDetailData dt=new tSalesProductDetailData();
+		String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_txtNoSo + "='" + txtSo + "'";
+
+		Cursor cursor = db.rawQuery(selectQuery, null);
+		tSalesProductDetailData contact = null;
+		// looping through all rows and adding to list
+		if (cursor.moveToLast()) {
+			do {
+				contact=new tSalesProductDetailData();
+				contact.set_txtNoSo(cursor.getString(8));
+				// Adding contact to list
+			} while (cursor.moveToNext());
+		}
+		cursor.close();
+		// return contact list
+		return contact;
+	}
+
+	public void UpdateData(SQLiteDatabase db,String txtNo, String id){
+		tSalesProductDetailData dt=new tSalesProductDetailData();
+		db.execSQL("UPDATE "+TABLE_CONTACTS+" SET "+dt.Property_intId+ "='" + id + "'"+" WHERE "+dt.Property_txtNoSo+"='" + txtNo + "'");
+	}
+
 			// Adding new contact
 			public void UpdateInactiveData(SQLiteDatabase db,String id) {
 				tSalesProductDetailData dt=new tSalesProductDetailData();

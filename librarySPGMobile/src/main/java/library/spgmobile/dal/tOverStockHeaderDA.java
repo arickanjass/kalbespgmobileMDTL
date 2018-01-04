@@ -729,7 +729,7 @@ public class tOverStockHeaderDA {
         List<tOverStockHeaderData> contactList = null;
         // select all query
         tOverStockHeaderData dt = new tOverStockHeaderData();
-        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS;
+        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS  + " order by " + dt.Property_txtOverStock;
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 

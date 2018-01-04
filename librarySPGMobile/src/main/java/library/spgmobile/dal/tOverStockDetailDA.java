@@ -438,6 +438,48 @@ public class tOverStockDetailDA {
         return contactList;
     }
 
+    public List<tOverStockDetailData> getAllDataKeep(SQLiteDatabase db, List<tOverStockHeaderData> ListOfSalesProductQuantityHeader) {
+        List<tOverStockDetailData> contactList = null;
+        // select All Query
+        tOverStockDetailData dt = new tOverStockDetailData();
+
+        String tSalesProductQuantityHeader = "()";
+
+        if (ListOfSalesProductQuantityHeader != null){
+            tSalesProductQuantityHeader = "(";
+            for (int i = 0; i < ListOfSalesProductQuantityHeader.size(); i++) {
+                tSalesProductQuantityHeader = tSalesProductQuantityHeader + "'" + ListOfSalesProductQuantityHeader.get(i).get_txtOverStock() + "'";
+                tSalesProductQuantityHeader = tSalesProductQuantityHeader + ((i + 1) != ListOfSalesProductQuantityHeader.size() ? "," : ")");
+            }
+        }
+        String selectQuery = "SELECT "+dt.Property_All+" FROM " + TABLE_CONTACTS +" WHERE "+dt.Property_txtOverStock +" IN " + tSalesProductQuantityHeader;
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            contactList = new ArrayList<tOverStockDetailData>();
+            do {
+                tOverStockDetailData contact = new tOverStockDetailData();
+                contact.setIntId(cursor.getString(0));
+                contact.set_dtDate(cursor.getString(1));
+                contact.set_txtCodeProduct(cursor.getString(2));
+                contact.set_txtKeterangan(cursor.getString(3));
+                contact.setTxtProduct(cursor.getString(4));
+                contact.setTxtExpireDate(cursor.getString(5));
+                contact.setTxtQuantity(cursor.getString(6));
+                contact.set_txtOverStock(cursor.getString(7));
+                contact.set_intPrice(cursor.getString(8));
+                contact.set_intTotal(cursor.getString(9));
+                contact.set_intActive(cursor.getString(10));
+                contact.set_txtNIK(cursor.getString(11));
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return contactList;
+    }
+
     public void deleteByID(SQLiteDatabase db, String id){
         tOverStockDetailData dt = new tOverStockDetailData  ();
         String whereClause = dt.Property_intId + " = ?";

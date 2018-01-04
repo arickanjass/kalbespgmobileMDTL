@@ -94,6 +94,31 @@ public class tStockInHandHeaderDA {
                 + String.valueOf(data.get_txtRoleId())+ "')");
     }
 
+    public tStockInHandHeaderData getDataExist(SQLiteDatabase db, String txtSo) {
+        // Select All Query
+        tStockInHandHeaderData dt=new tStockInHandHeaderData();
+        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_txtNoSo + "='" + txtSo + "'";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        tStockInHandHeaderData contact = null;
+        // looping through all rows and adding to list
+        if (cursor.moveToLast()) {
+            do {
+                contact=new tStockInHandHeaderData();
+                contact.set_txtNoSo(cursor.getString(1));
+                // Adding contact to list
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        // return contact list
+        return contact;
+    }
+
+    public void UpdateData(SQLiteDatabase db,String txtNo, String id){
+        tStockInHandHeaderData dt=new tStockInHandHeaderData();
+        db.execSQL("UPDATE "+TABLE_CONTACTS+" SET "+dt.Property_intId+ "='" + id + "'"+" WHERE "+dt.Property_txtNoSo+"='" + txtNo + "'");
+    }
+
     public void UpdateDataItem(SQLiteDatabase db, tStockInHandHeaderData data) {
         tStockInHandHeaderData dt = new tStockInHandHeaderData();
         db.execSQL("Update " + TABLE_CONTACTS + " set  "
@@ -846,7 +871,7 @@ public class tStockInHandHeaderDA {
         List<tStockInHandHeaderData> contactList = null;
         // Select All Query
         tStockInHandHeaderData dt = new tStockInHandHeaderData();
-        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS;
+        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS  + " order by " + dt.Property_txtNoSo;
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 

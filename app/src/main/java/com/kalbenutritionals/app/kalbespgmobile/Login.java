@@ -480,180 +480,218 @@ public class Login extends clsMainActivity {
                     String PstrMessage = (String) innerObj.get("_pstrMessage");
 
                     if (IntResult == 1) {
-                        tUserLoginData _tUserLoginData = new tUserLoginData();
-                        new mCounterNumberBL().saveDateTimeServer((String) innerObj.get("DatetimeNow"));
-                        _tUserLoginData.set_intId(1);
-                        _tUserLoginData.set_txtCab((String) innerObj.get("TxtCab"));
-                        _tUserLoginData.set_txtDataId((String) innerObj.get("TxtDataId"));
-                        _tUserLoginData.set_txtDeviceId((String) innerObj.get("TxtDeviceId"));
-                        _tUserLoginData.set_TxtEmail((String) innerObj.get("TxtEmail"));
-                        _tUserLoginData.set_TxtEmpId((String) innerObj.get("TxtEmpId"));
-                        _tUserLoginData.set_txtName((String) innerObj.get("TxtName"));
-                        _tUserLoginData.set_txtPassword((String) innerObj.get("TxtPassword"));
-                        _tUserLoginData.set_txtPathImage((String) innerObj.get("TxtPathImage"));
-                        _tUserLoginData.set_txtRoleId((String) innerObj.get("TxtRoleId"));
-                        _tUserLoginData.set_txtRoleName((String) innerObj.get("TxtRoleName"));
-                        _tUserLoginData.set_txtUserId((String) innerObj.get("TxtUserId"));
-                        _tUserLoginData.set_txtUserName((String) innerObj.get("TxtUserName"));
-                        _tUserLoginData.set_dtLastLogin((String) innerObj.get("DtLastLogin"));
-                        _tUserLoginData.set_txtOutletCode((String) innerObj.get("TxtOutletCode"));
-                        _tUserLoginData.set_txtOutletName((String) innerObj.get("TxtOutletName"));
-                        _tUserLoginData.set_txtBranchCode((String) innerObj.get("TxtBranchCode"));
-                        _tUserLoginData.set_txtImei((String) innerObj.get("TxtImei"));
-                        _tUserLoginData.set_txtSubmissionID((String) innerObj.get("TxtSubmissonId"));
-                        _tUserLoginData.set_txtCheckLocation((String) innerObj.get("IntRadius"));
+                        try{
+                            tUserLoginData _tUserLoginData = new tUserLoginData();
+                            new mCounterNumberBL().saveDateTimeServer((String) innerObj.get("DatetimeNow"));
+                            _tUserLoginData.set_intId(1);
+                            _tUserLoginData.set_txtCab((String) innerObj.get("TxtCab"));
+                            _tUserLoginData.set_txtDataId((String) innerObj.get("TxtDataId"));
+                            _tUserLoginData.set_txtDeviceId((String) innerObj.get("TxtDeviceId"));
+                            _tUserLoginData.set_TxtEmail((String) innerObj.get("TxtEmail"));
+                            _tUserLoginData.set_TxtEmpId((String) innerObj.get("TxtEmpId"));
+                            _tUserLoginData.set_txtName((String) innerObj.get("TxtName"));
+                            _tUserLoginData.set_txtPassword((String) innerObj.get("TxtPassword"));
+                            _tUserLoginData.set_txtPathImage((String) innerObj.get("TxtPathImage"));
+                            _tUserLoginData.set_txtRoleId((String) innerObj.get("TxtRoleId"));
+                            _tUserLoginData.set_txtRoleName((String) innerObj.get("TxtRoleName"));
+                            _tUserLoginData.set_txtUserId((String) innerObj.get("TxtUserId"));
+                            _tUserLoginData.set_txtUserName((String) innerObj.get("TxtUserName"));
+                            _tUserLoginData.set_dtLastLogin((String) innerObj.get("DtLastLogin"));
+                            _tUserLoginData.set_txtOutletCode((String) innerObj.get("TxtOutletCode"));
+                            _tUserLoginData.set_txtOutletName((String) innerObj.get("TxtOutletName"));
+                            _tUserLoginData.set_txtBranchCode((String) innerObj.get("TxtBranchCode"));
+                            _tUserLoginData.set_txtImei((String) innerObj.get("TxtImei"));
+                            _tUserLoginData.set_txtSubmissionID((String) innerObj.get("TxtSubmissonId"));
+                            _tUserLoginData.set_txtCheckLocation((String) innerObj.get("IntRadius"));
 
-                        //update aan
-                        mCounterNumberData _data =new mCounterNumberData();
-                        SQLiteDatabase _db = new clsMainBL().getDb();
-                        mCounterNumberDA _mCounterNumberDA = new mCounterNumberDA(_db);
-
-                        _data.set_intId(enumCounterData.NoDataSO.getidCounterData());
-                        _data.set_txtDeskripsi((String) innerObj.get("_pstrMethodRequest"));
-                        _data.set_txtName((String) innerObj.get("_pstrMethodRequest"));
-                        _data.set_txtValue((String) innerObj.get("txtNoSo"));
-                        _mCounterNumberDA.SaveDataMConfig(_db, _data);
-
-                        _data = new mCounterNumberData();
-                        _data.set_intId(enumCounterData.NoPurchaseOrder.getidCounterData());
-                        _data.set_txtDeskripsi((String) innerObj.get("_pstrMethodRequest"));
-                        _data.set_txtName((String) innerObj.get("_pstrMethodRequest"));
-                        _data.set_txtValue((String) innerObj.get("txtNoPo"));
-                        _mCounterNumberDA.SaveDataMConfig(_db, _data);
-
-                        _data = new mCounterNumberData();
-                        _data.set_intId(enumCounterData.NoSIH.getidCounterData());
-                        _data.set_txtDeskripsi((String) innerObj.get("_pstrMethodRequest"));
-                        _data.set_txtName((String) innerObj.get("_pstrMethodRequest"));
-                        _data.set_txtValue((String) innerObj.get("txtNoSOH"));
-                        _mCounterNumberDA.SaveDataMConfig(_db, _data);
-
-                        _data = new mCounterNumberData();
-                        _data.set_intId(enumCounterData.NoQuantityStock.getidCounterData());
-                        _data.set_txtDeskripsi((String) innerObj.get("_pstrMethodRequest"));
-                        _data.set_txtName((String) innerObj.get("_pstrMethodRequest"));
-                        _data.set_txtValue((String) innerObj.get("txtNoQTS"));
-                        _mCounterNumberDA.SaveDataMConfig(_db, _data);
-
-                        _data = new mCounterNumberData();
-                        _data.set_intId(enumCounterData.NoKRS.getidCounterData());
-                        _data.set_txtDeskripsi((String) innerObj.get("_pstrMethodRequest"));
-                        _data.set_txtName((String) innerObj.get("_pstrMethodRequest"));
-                        _data.set_txtValue((String) innerObj.get("txtNoKRS"));
-                        _mCounterNumberDA.SaveDataMConfig(_db, _data);
-
-                        _data = new mCounterNumberData();
-                        _data.set_intId(enumCounterData.NoOS.getidCounterData());
-                        _data.set_txtDeskripsi((String) innerObj.get("_pstrMethodRequest"));
-                        _data.set_txtName((String) innerObj.get("_pstrMethodRequest"));
-                        _data.set_txtValue((String) innerObj.get("txtNoOVS"));
-                        _mCounterNumberDA.SaveDataMConfig(_db, _data);
-
-                        String TxtSubmissonId = (String) innerObj.get("TxtSubmissonId");
-                        if (TxtSubmissonId.equals("") || TxtSubmissonId == null) {
-                            showCustomToast(Login.this, new clsHardCode().txtMessDataSubmissionIdNotFound, false);
-                            Dialog.dismiss();
-                            return;
+                            new tDeviceInfoUserBL().SaveInfoDevice(_tUserLoginData.get_TxtEmpId(), _tUserLoginData.get_txtDeviceId(), _tUserLoginData.get_txtImei());
+                            new tUserLoginBL().saveData(_tUserLoginData);
+                        } catch (Exception e){
+                            showCustomToast(Login.this, e.toString(), false);
                         }
 
-                        new tDeviceInfoUserBL().SaveInfoDevice(_tUserLoginData.get_TxtEmpId(), _tUserLoginData.get_txtDeviceId(), _tUserLoginData.get_txtImei());
-                        new tUserLoginBL().saveData(_tUserLoginData);
+                        try{
+                            //update aan
+                            mCounterNumberData _data =new mCounterNumberData();
+                            SQLiteDatabase _db = new clsMainBL().getDb();
+                            mCounterNumberDA _mCounterNumberDA = new mCounterNumberDA(_db);
 
-                        JSONArray JsonArrayDetail = (JSONArray) innerObj.get("ListOfMWebMenuAPI");
-                        if (JsonArrayDetail != null) {
-                            Iterator iDetail = JsonArrayDetail.iterator();
-                            List<mMenuData> listData = new ArrayList<>();
-                            while (iDetail.hasNext()) {
-                                JSONObject innerObjDetail = (JSONObject) iDetail.next();
-                                mMenuData data = new mMenuData();
-                                data.set_IntMenuID(String.valueOf(innerObjDetail.get("IntMenuID")));
-                                data.set_IntOrder((Long) innerObjDetail.get("IntOrder"));
-                                data.set_IntParentID((Long) innerObjDetail.get("IntParentID"));
-                                data.set_TxtDescription((String) innerObjDetail.get("TxtDescription"));
-                                data.set_TxtLink((String) innerObjDetail.get("TxtLink"));
-                                data.set_TxtMenuName((String) innerObjDetail.get("TxtMenuName"));
-                                listData.add(data);
-                            }
-                            new mMenuBL().SaveData(listData);
+                            _data.set_intId(enumCounterData.NoDataSO.getidCounterData());
+                            _data.set_txtDeskripsi((String) innerObj.get("_pstrMethodRequest"));
+                            _data.set_txtName((String) innerObj.get("_pstrMethodRequest"));
+                            _data.set_txtValue((String) innerObj.get("txtNoSo"));
+                            _mCounterNumberDA.SaveDataMConfig(_db, _data);
+
+                            _data = new mCounterNumberData();
+                            _data.set_intId(enumCounterData.NoPurchaseOrder.getidCounterData());
+                            _data.set_txtDeskripsi((String) innerObj.get("_pstrMethodRequest"));
+                            _data.set_txtName((String) innerObj.get("_pstrMethodRequest"));
+                            _data.set_txtValue((String) innerObj.get("txtNoPo"));
+                            _mCounterNumberDA.SaveDataMConfig(_db, _data);
+
+                            _data = new mCounterNumberData();
+                            _data.set_intId(enumCounterData.NoSIH.getidCounterData());
+                            _data.set_txtDeskripsi((String) innerObj.get("_pstrMethodRequest"));
+                            _data.set_txtName((String) innerObj.get("_pstrMethodRequest"));
+                            _data.set_txtValue((String) innerObj.get("txtNoSOH"));
+                            _mCounterNumberDA.SaveDataMConfig(_db, _data);
+
+                            _data = new mCounterNumberData();
+                            _data.set_intId(enumCounterData.NoQuantityStock.getidCounterData());
+                            _data.set_txtDeskripsi((String) innerObj.get("_pstrMethodRequest"));
+                            _data.set_txtName((String) innerObj.get("_pstrMethodRequest"));
+                            _data.set_txtValue((String) innerObj.get("txtNoQTS"));
+                            _mCounterNumberDA.SaveDataMConfig(_db, _data);
+
+                            _data = new mCounterNumberData();
+                            _data.set_intId(enumCounterData.NoKRS.getidCounterData());
+                            _data.set_txtDeskripsi((String) innerObj.get("_pstrMethodRequest"));
+                            _data.set_txtName((String) innerObj.get("_pstrMethodRequest"));
+                            _data.set_txtValue((String) innerObj.get("txtNoKRS"));
+                            _mCounterNumberDA.SaveDataMConfig(_db, _data);
+
+                            _data = new mCounterNumberData();
+                            _data.set_intId(enumCounterData.NoOS.getidCounterData());
+                            _data.set_txtDeskripsi((String) innerObj.get("_pstrMethodRequest"));
+                            _data.set_txtName((String) innerObj.get("_pstrMethodRequest"));
+                            _data.set_txtValue((String) innerObj.get("txtNoOVS"));
+                            _mCounterNumberDA.SaveDataMConfig(_db, _data);
+                        } catch (Exception e){
+                            showCustomToast(Login.this, e.toString(), false);
                         }
 
-                        JSONArray JsonArrayDetailCountConsumer = (JSONArray) innerObj.get("ListOfmEmployeeAreaCountConsumerMTD");
-                        if(JsonArrayDetailCountConsumer!=null){
-                            Iterator iDetailConsumer = JsonArrayDetailCountConsumer.iterator();
-                            List<mCountConsumerMTDData> listDataConsumer = new ArrayList<>();
-                            while (iDetailConsumer.hasNext()) {
-                                JSONObject innerObjDetail = (JSONObject) iDetailConsumer.next();
-                                mCountConsumerMTDData data = new mCountConsumerMTDData();
-                                data.setJumlah(innerObjDetail.get("_jumlah").toString());
-                                data.setTxtBranchCode(innerObjDetail.get("_txtBranchCode").toString());
-                                data.setTxtBranchName(innerObjDetail.get("_txtBranchName").toString());
-                                data.setTxtOutletCode(innerObjDetail.get("_txtOutletCode").toString());
-                                data.setTxtOutletName(innerObjDetail.get("_txtOutletName").toString());
-                                data.setTxtRegionName(innerObjDetail.get("_txtRegionName").toString());
-                                listDataConsumer.add(data);
+                        try{
+                            String TxtSubmissonId = (String) innerObj.get("TxtSubmissonId");
+                            if (TxtSubmissonId.equals("") || TxtSubmissonId == null) {
+                                showCustomToast(Login.this, new clsHardCode().txtMessDataSubmissionIdNotFound, false);
+                                Dialog.dismiss();
+                                return;
                             }
-                            new mCountConsumerMTDBL().SaveData(listDataConsumer);
+                        } catch (Exception e){
+                            showCustomToast(Login.this, e.toString(), false);
                         }
 
-                        JSONArray JsonArrayDetailmDownloadData = (JSONArray) innerObj.get("ListOftDownloadData_mobile");
-                        if (JsonArrayDetailmDownloadData != null) {
-                            Iterator iDetailmDownloadData = JsonArrayDetailmDownloadData.iterator();
-                            List<mDownloadMasterData_mobileData> listDatamDownloadData = new ArrayList<>();
-                            while (iDetailmDownloadData.hasNext()) {
-                                JSONObject innerObjDetail = (JSONObject) iDetailmDownloadData.next();
-                                mDownloadMasterData_mobileData data = new mDownloadMasterData_mobileData();
-                                data.set_intId((String) innerObjDetail.get("_intID"));
-                                data.set_intModule((String) innerObjDetail.get("_intModule"));
-                                data.set_txtModuleName((String) innerObjDetail.get("_txtModuleName"));
-                                data.set_txtMasterData((String) innerObjDetail.get("_txtMasterData"));
-                                data.set_intVersionApp((String) innerObjDetail.get("_intVersionApp"));
-                                data.set_txtTypeApp((String) innerObjDetail.get("_txtTypeApp"));
-                                data.set_txtVersion((String) innerObjDetail.get("_txtVersion"));
-                                data.set_txtMasterDataName((String) innerObjDetail.get("_txtMasterDataName"));
-                                listDatamDownloadData.add(data);
+                        try{
+                            JSONArray JsonArrayDetail = (JSONArray) innerObj.get("ListOfMWebMenuAPI");
+                            if (JsonArrayDetail != null) {
+                                Iterator iDetail = JsonArrayDetail.iterator();
+                                List<mMenuData> listData = new ArrayList<>();
+                                while (iDetail.hasNext()) {
+                                    JSONObject innerObjDetail = (JSONObject) iDetail.next();
+                                    mMenuData data = new mMenuData();
+                                    data.set_IntMenuID(String.valueOf(innerObjDetail.get("IntMenuID")));
+                                    data.set_IntOrder((Long) innerObjDetail.get("IntOrder"));
+                                    data.set_IntParentID((Long) innerObjDetail.get("IntParentID"));
+                                    data.set_TxtDescription((String) innerObjDetail.get("TxtDescription"));
+                                    data.set_TxtLink((String) innerObjDetail.get("TxtLink"));
+                                    data.set_TxtMenuName((String) innerObjDetail.get("TxtMenuName"));
+                                    listData.add(data);
+                                }
+                                new mMenuBL().SaveData(listData);
                             }
-                            new mDownloadMasterData_mobileBL().SaveData(listDatamDownloadData);
+                        } catch (Exception e){
+                            showCustomToast(Login.this, e.toString(), false);
                         }
 
-                        JSONArray JsonArraytrackingLocation_mobile = (JSONArray) innerObj.get("ListOftrackingLocation_mobile");
-
-                        if(JsonArraytrackingLocation_mobile != null){
-                            Iterator iJsonArraytrackingLocation_mobile = JsonArraytrackingLocation_mobile.iterator();
-                            while (iJsonArraytrackingLocation_mobile.hasNext()) {
-                                JSONObject innerObjDetail = (JSONObject) iJsonArraytrackingLocation_mobile.next();
-                                trackingLocationData data = new trackingLocationData();
-                                data.set_intId(String.valueOf(innerObjDetail.get("IntId")));
-                                data.set_txtLongitude(String.valueOf(innerObjDetail.get("TxtLongitude")));
-                                data.set_txtLatitude(String.valueOf(innerObjDetail.get("TxtLatitude")));
-                                data.set_txtAccuracy(String.valueOf(innerObjDetail.get("TxtAccuracy")));
-                                data.set_txtTime(String.valueOf(innerObjDetail.get("Time")));
-                                data.set_txtUserId(String.valueOf(innerObjDetail.get("TxtUserId")));
-                                data.set_txtUsername(String.valueOf(innerObjDetail.get("TxtUsername")));
-                                data.set_txtRoleId(String.valueOf(innerObjDetail.get("TxtRoleId")));
-                                data.set_txtDeviceId(String.valueOf(innerObjDetail.get("TxtDeviceId")));
-                                data.set_txtBranchCode(String.valueOf(innerObjDetail.get("TxtBranchCode")));
-                                data.set_txtOutletCode(String.valueOf(innerObjDetail.get("TxtOutletCode")));
-                                data.set_txtNIK(String.valueOf(innerObjDetail.get("TxtNIK")));
-                                data.set_intSequence(String.valueOf(innerObjDetail.get("IntSequence")));
-                                data.set_intSubmit("1");
-                                data.set_intSync("1");
-                                new trackingLocationBL().SaveDataTrackingLocation(data);
+                        try{
+                            JSONArray JsonArrayDetailCountConsumer = (JSONArray) innerObj.get("ListOfmEmployeeAreaCountConsumerMTD");
+                            if(JsonArrayDetailCountConsumer!=null){
+                                Iterator iDetailConsumer = JsonArrayDetailCountConsumer.iterator();
+                                List<mCountConsumerMTDData> listDataConsumer = new ArrayList<>();
+                                while (iDetailConsumer.hasNext()) {
+                                    JSONObject innerObjDetail = (JSONObject) iDetailConsumer.next();
+                                    mCountConsumerMTDData data = new mCountConsumerMTDData();
+                                    data.setJumlah(innerObjDetail.get("_jumlah").toString());
+                                    data.setTxtBranchCode(innerObjDetail.get("_txtBranchCode").toString());
+                                    data.setTxtBranchName(innerObjDetail.get("_txtBranchName").toString());
+                                    data.setTxtOutletCode(innerObjDetail.get("_txtOutletCode").toString());
+                                    data.setTxtOutletName(innerObjDetail.get("_txtOutletName").toString());
+                                    data.setTxtRegionName(innerObjDetail.get("_txtRegionName").toString());
+                                    listDataConsumer.add(data);
+                                }
+                                new mCountConsumerMTDBL().SaveData(listDataConsumer);
                             }
+                        } catch (Exception e){
+                            showCustomToast(Login.this, e.toString(), false);
                         }
 
-                        JSONArray JsonArrayListLOBSPG = (JSONArray) innerObj.get("ListLOBSPG");
-
-                        int index = new mUserLOBBL().getContactsCount();
-
-                        if(JsonArrayListLOBSPG!=null){
-                            List<mUserLOBData> _mUserLOBDataList = new ArrayList<>();
-                            for(int i = 0 ; i < JsonArrayListLOBSPG.size();i++){
-                                mUserLOBData dt = new mUserLOBData();
-                                dt.set_intId(String.valueOf(index+=1));
-                                dt.set_txtLOBName(String.valueOf(JsonArrayListLOBSPG.get(i)));
-                                _mUserLOBDataList.add(dt);
+                        try{
+                            JSONArray JsonArrayDetailmDownloadData = (JSONArray) innerObj.get("ListOftDownloadData_mobile");
+                            if (JsonArrayDetailmDownloadData != null) {
+                                Iterator iDetailmDownloadData = JsonArrayDetailmDownloadData.iterator();
+                                List<mDownloadMasterData_mobileData> listDatamDownloadData = new ArrayList<>();
+                                while (iDetailmDownloadData.hasNext()) {
+                                    JSONObject innerObjDetail = (JSONObject) iDetailmDownloadData.next();
+                                    mDownloadMasterData_mobileData data = new mDownloadMasterData_mobileData();
+                                    data.set_intId((String) innerObjDetail.get("_intID"));
+                                    data.set_intModule((String) innerObjDetail.get("_intModule"));
+                                    data.set_txtModuleName((String) innerObjDetail.get("_txtModuleName"));
+                                    data.set_txtMasterData((String) innerObjDetail.get("_txtMasterData"));
+                                    data.set_intVersionApp((String) innerObjDetail.get("_intVersionApp"));
+                                    data.set_txtTypeApp((String) innerObjDetail.get("_txtTypeApp"));
+                                    data.set_txtVersion((String) innerObjDetail.get("_txtVersion"));
+                                    data.set_txtMasterDataName((String) innerObjDetail.get("_txtMasterDataName"));
+                                    listDatamDownloadData.add(data);
+                                }
+                                new mDownloadMasterData_mobileBL().SaveData(listDatamDownloadData);
                             }
-                            new mUserLOBBL().saveData(_mUserLOBDataList);
+                        } catch (Exception e){
+                            showCustomToast(Login.this, e.toString(), false);
+                        }
+
+                        try{
+                            JSONArray JsonArraytrackingLocation_mobile = (JSONArray) innerObj.get("ListOftrackingLocation_mobile");
+
+                            if(JsonArraytrackingLocation_mobile != null){
+                                Iterator iJsonArraytrackingLocation_mobile = JsonArraytrackingLocation_mobile.iterator();
+                                while (iJsonArraytrackingLocation_mobile.hasNext()) {
+                                    JSONObject innerObjDetail = (JSONObject) iJsonArraytrackingLocation_mobile.next();
+                                    trackingLocationData data = new trackingLocationData();
+                                    data.set_intId(String.valueOf(innerObjDetail.get("IntId")));
+                                    data.set_txtLongitude(String.valueOf(innerObjDetail.get("TxtLongitude")));
+                                    data.set_txtLatitude(String.valueOf(innerObjDetail.get("TxtLatitude")));
+                                    data.set_txtAccuracy(String.valueOf(innerObjDetail.get("TxtAccuracy")));
+                                    data.set_txtTime(String.valueOf(innerObjDetail.get("Time")));
+                                    data.set_txtUserId(String.valueOf(innerObjDetail.get("TxtUserId")));
+                                    data.set_txtUsername(String.valueOf(innerObjDetail.get("TxtUsername")));
+                                    data.set_txtRoleId(String.valueOf(innerObjDetail.get("TxtRoleId")));
+                                    data.set_txtDeviceId(String.valueOf(innerObjDetail.get("TxtDeviceId")));
+                                    data.set_txtBranchCode(String.valueOf(innerObjDetail.get("TxtBranchCode")));
+                                    data.set_txtOutletCode(String.valueOf(innerObjDetail.get("TxtOutletCode")));
+                                    data.set_txtNIK(String.valueOf(innerObjDetail.get("TxtNIK")));
+                                    data.set_intSequence(String.valueOf(innerObjDetail.get("IntSequence")));
+                                    data.set_intSubmit("1");
+                                    data.set_intSync("1");
+                                    new trackingLocationBL().SaveDataTrackingLocation(data);
+                                }
+                            }
+                        } catch (Exception e){
+                            showCustomToast(Login.this, e.toString(), false);
+                        }
+
+                        try{
+                            JSONArray JsonArrayListLOBSPG = (JSONArray) innerObj.get("ListLOBSPG");
+
+                            int index = new mUserLOBBL().getContactsCount();
+
+                            if(JsonArrayListLOBSPG!=null){
+                                List<mUserLOBData> _mUserLOBDataList = new ArrayList<>();
+                                for(int i = 0 ; i < JsonArrayListLOBSPG.size();i++){
+                                    mUserLOBData dt = new mUserLOBData();
+                                    dt.set_intId(String.valueOf(index+=1));
+                                    dt.set_txtLOBName(String.valueOf(JsonArrayListLOBSPG.get(i)));
+                                    _mUserLOBDataList.add(dt);
+                                }
+                                new mUserLOBBL().saveData(_mUserLOBDataList);
+                            }
+                        } catch (Exception e){
+                            showCustomToast(Login.this, e.toString(), false);
+                        }
+
+                        try{
+
+                        } catch (Exception e){
+                            showCustomToast(Login.this, e.toString(), false);
                         }
 
                         if (!isMyServiceRunning(MyServiceNative.class)) {

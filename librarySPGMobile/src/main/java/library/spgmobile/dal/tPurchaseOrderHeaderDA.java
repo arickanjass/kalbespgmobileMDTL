@@ -565,7 +565,7 @@ public class tPurchaseOrderHeaderDA {
     public List<tPurchaseOrderHeaderData> getLastDataPO(SQLiteDatabase db){
         List<tPurchaseOrderHeaderData> contactList = null;
         tPurchaseOrderHeaderData dt = new tPurchaseOrderHeaderData();
-        String selectQuery = "SELECT " + dt.Property_All + " FROM " + TABLE_CONTACTS;
+        String selectQuery = "SELECT " + dt.Property_All + " FROM " + TABLE_CONTACTS  + " order by " + dt.Property_txtNoOrder;
 
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToLast()){

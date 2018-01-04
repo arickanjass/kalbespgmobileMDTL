@@ -3120,6 +3120,20 @@ public class FragmentDownloadData extends Fragment {
                         tSalesProductDetailData _data = new tSalesProductDetailData();
                         JSONObject innerObj_detail = (JSONObject) k.next();
                         _data.set_txtNoSo(String.valueOf(innerObj_detail.get("TxtNoSO")));
+
+                        SQLiteDatabase db = new clsMainBL().getDb();
+                        if(_data!=null){
+                            new tSalesProductDetailDA(db).deleteByNOSO(db, _data.get_txtNoSo());
+                        }
+                        db.close();
+                    }
+
+                    Iterator l = JsonArray_detail.iterator();
+
+                    while (l.hasNext()) {
+                        tSalesProductDetailData _data = new tSalesProductDetailData();
+                        JSONObject innerObj_detail = (JSONObject) l.next();
+                        _data.set_txtNoSo(String.valueOf(innerObj_detail.get("TxtNoSO")));
                         _data.set_txtNameProduct(String.valueOf(innerObj_detail.get("TxtNameProduct")));
                         _data.set_txtNoSo(String.valueOf(innerObj_detail.get("TxtNoSO")));
                         _data.set_txtCodeProduct(String.valueOf(innerObj_detail.get("TxtCodeProduct")));
@@ -3127,6 +3141,7 @@ public class FragmentDownloadData extends Fragment {
                         _data.set_intPrice(String.valueOf(innerObj_detail.get("IntPrice")));
                         _data.set_intQty(String.valueOf(innerObj_detail.get("IntQty")));
                         _data.set_intId(String.valueOf(innerObj_detail.get("TxtDataId")));
+
                         new tSalesProductDetailDA(_db).SaveDatatSalesProductDetailData(_db, _data);
                     }
                     _db.close();
@@ -3182,6 +3197,19 @@ public class FragmentDownloadData extends Fragment {
                         _data.set_OutletCode(String.valueOf(innerObj_detail.get("TxtOutletCode")));
                         _data.set_OutletName(String.valueOf(innerObj_detail.get("TxtOutletName")));
                         _data.set_dtDate(String.valueOf(innerObj_detail.get("DtDate")));
+
+                        SQLiteDatabase db = new clsMainBL().getDb();
+                        if(_data!=null){
+                            tStockInHandHeaderData _tStockInHandHeaderData = new tStockInHandHeaderDA(db).getDataExist(db, _data.get_txtNoSo());
+                            if(_tStockInHandHeaderData!=null){
+                                if(_tStockInHandHeaderData.get_txtNoSo()!=null){
+                                    new tStockInHandHeaderDA(db).UpdateData(db, _data.get_txtNoSo(), _data.get_intId());
+                                }
+                            }
+                        }
+
+                        db.close();
+
                         new tStockInHandHeaderBL().SaveData(_data);
                     }
 
@@ -3194,6 +3222,20 @@ public class FragmentDownloadData extends Fragment {
                     while (k.hasNext()) {
                         tStockInHandDetailData _data = new tStockInHandDetailData();
                         JSONObject innerObj_detail = (JSONObject) k.next();
+                        _data.set_txtNoSo(String.valueOf(innerObj_detail.get("TxtNoSIH")));
+
+                        SQLiteDatabase db = new clsMainBL().getDb();
+                        if(_data!=null){
+                            new tStockInHandDetailDA(db).deleteByNOSO(db, _data.get_txtNoSo());
+                        }
+                        db.close();
+                    }
+
+                    Iterator l = JsonArray_detail.iterator();
+
+                    while (l.hasNext()) {
+                        tStockInHandDetailData _data = new tStockInHandDetailData();
+                        JSONObject innerObj_detail = (JSONObject) l.next();
                         _data.set_txtNoSo(String.valueOf(innerObj_detail.get("TxtNoSIH")));
                         _data.set_txtNameProduct(String.valueOf(innerObj_detail.get("TxtNameProduct")));
                         _data.set_txtNoSo(String.valueOf(innerObj_detail.get("TxtNoSIH")));
@@ -6874,26 +6916,28 @@ public class FragmentDownloadData extends Fragment {
                     }
 
                     JSONArray jsonArray_Detail = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListtSalesProductQuantityDetail_mobile")));
-                    Iterator k = jsonArray_Detail.iterator();
-                    clsMainBL _clsMainBL = new clsMainBL();
-                    SQLiteDatabase _db = _clsMainBL.getDb();
-                    while (k.hasNext()) {
-                        tSalesProductQuantityDetailData _data = new tSalesProductQuantityDetailData();
-                        JSONObject innerObj_detail = (JSONObject) k.next();
-                        _data.setIntId(String.valueOf(innerObj_detail.get("TxtTrSalesProductQuantityDetail")));
-                        _data.set_txtQuantityStock(String.valueOf(innerObj_detail.get("TxtNoQuantityStock")));
-                        _data.set_dtDate(String.valueOf(innerObj_detail.get("DtDate")));
-                        _data.set_intPrice(String.valueOf(innerObj_detail.get("IntPrice")));
-                        _data.set_txtCodeProduct(String.valueOf(innerObj_detail.get("TxtCodeProduct")));
-                        _data.set_txtKeterangan(String.valueOf(innerObj_detail.get("TxtKeterangan")));
-                        _data.setTxtProduct(String.valueOf(innerObj_detail.get("TxtProduct")));
-                        _data.setTxtExpireDate(String.valueOf(innerObj_detail.get("TxtExpireDate")));
-                        _data.setTxtQuantity(String.valueOf(innerObj_detail.get("TxtQuantity")));
-                        _data.set_intTotal(String.valueOf(innerObj_detail.get("IntTotal")));
-                        _data.set_txtNIK(String.valueOf(innerObj_detail.get("TxtUserId")));
-                        new tSalesProductQuantityDetailDA(_db).SaveDatatSalesProductQuantityDetailData(_db, _data);
+                    if(jsonArray_Detail!=null){
+                        Iterator k = jsonArray_Detail.iterator();
+                        clsMainBL _clsMainBL = new clsMainBL();
+                        SQLiteDatabase _db = _clsMainBL.getDb();
+                        while (k.hasNext()) {
+                            tSalesProductQuantityDetailData _data = new tSalesProductQuantityDetailData();
+                            JSONObject innerObj_detail = (JSONObject) k.next();
+                            _data.setIntId(String.valueOf(innerObj_detail.get("TxtTrSalesProductQuantityDetail")));
+                            _data.set_txtQuantityStock(String.valueOf(innerObj_detail.get("TxtNoQuantityStock")));
+                            _data.set_dtDate(String.valueOf(innerObj_detail.get("DtDate")));
+                            _data.set_intPrice(String.valueOf(innerObj_detail.get("IntPrice")));
+                            _data.set_txtCodeProduct(String.valueOf(innerObj_detail.get("TxtCodeProduct")));
+                            _data.set_txtKeterangan(String.valueOf(innerObj_detail.get("TxtKeterangan")));
+                            _data.setTxtProduct(String.valueOf(innerObj_detail.get("TxtProduct")));
+                            _data.setTxtExpireDate(String.valueOf(innerObj_detail.get("TxtExpireDate")));
+                            _data.setTxtQuantity(String.valueOf(innerObj_detail.get("TxtQuantity")));
+                            _data.set_intTotal(String.valueOf(innerObj_detail.get("IntTotal")));
+                            _data.set_txtNIK(String.valueOf(innerObj_detail.get("TxtUserId")));
+                            new tSalesProductQuantityDetailDA(_db).SaveDatatSalesProductQuantityDetailData(_db, _data);
+                        }
+                        _db.close();
                     }
-                    _db.close();
 
                     JSONArray jsonArray_Image = new clsHelper().ResultJsonArray(String.valueOf(innerObj.get("ListtSalesProductQuantityImage_mobile")));
                     if (jsonArray_Image != null) {
@@ -7450,14 +7494,14 @@ public class FragmentDownloadData extends Fragment {
                 List<tVisitPlanRealisasiData> _tVisitPlanRealisasiData = new tVisitPlanRealisasiDA(_db).getAllData(_db);
 
                 List<tSalesProductQuantityHeaderData> _tSalesProductQuantityHeaderData = new tSalesProductQuantityHeaderDA(_db).getAllDataToPushData(_db);
-                List<tSalesProductQuantityDetailData> _tSalesProductQuantityDetailData = new tSalesProductQuantityDetailDA(_db).getAllDataToPushData(_db, _tSalesProductQuantityHeaderData);
+                List<tSalesProductQuantityDetailData> _tSalesProductQuantityDetailData = new tSalesProductQuantityDetailDA(_db).getAllDataKeep(_db, _tSalesProductQuantityHeaderData);
 
                 List<tKemasanRusakHeaderData> _tKemasanRusakHeaderData = new tKemasanRusakHeaderDA(_db).getAllDataToPushData(_db);
-                List<tKemasanRusakDetailData> _tKemasanRusakDetailData = new tKemasanRusakDetailDA(_db).getAllDataToPushData(_db, _tKemasanRusakHeaderData);
+                List<tKemasanRusakDetailData> _tKemasanRusakDetailData = new tKemasanRusakDetailDA(_db).getAllDataKeep(_db, _tKemasanRusakHeaderData);
                 List<tKemasanRusakImageData> _tKemasanRusakImageData = new tKemasanRusakImageDA(_db).getAllDataToPushData(_db, _tKemasanRusakHeaderData);
 
                 List<tOverStockHeaderData> _tOverStockHeaderData = new tOverStockHeaderDA(_db).getAllDataToPushData(_db);
-                List<tOverStockDetailData> _tOverStockDetailData = new tOverStockDetailDA(_db).getAllDataToPushData(_db, _tOverStockHeaderData);
+                List<tOverStockDetailData> _tOverStockDetailData = new tOverStockDetailDA(_db).getAllDataKeep(_db, _tOverStockHeaderData);
 
                 List<tPlanogramMobileData> _tPlanogramMobileData = new tPlanogramMobileDA(_db).getAllDataToPushData(_db);
                 List<tPlanogramImageData> _tPlanogramImageData = new tPlanogramImageDA(_db).getAllDataToPushData(_db, _tPlanogramMobileData);

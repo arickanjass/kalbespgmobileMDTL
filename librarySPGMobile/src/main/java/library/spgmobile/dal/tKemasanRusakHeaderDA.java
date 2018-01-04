@@ -158,7 +158,7 @@ public class tKemasanRusakHeaderDA {
         List<tKemasanRusakHeaderData> contactList = null;
         // select all query
         tKemasanRusakHeaderData dt = new tKemasanRusakHeaderData();
-        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS;
+        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS  + " order by " + dt.Property_txtKemasanRusak;
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 

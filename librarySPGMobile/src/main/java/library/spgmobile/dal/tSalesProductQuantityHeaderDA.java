@@ -728,7 +728,7 @@ public class tSalesProductQuantityHeaderDA {
         List<tSalesProductQuantityHeaderData> contactList = null;
         // select all query
         tSalesProductQuantityHeaderData dt = new tSalesProductQuantityHeaderData();
-        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS;
+        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS  + " order by " + dt.Property_txtQuantityStock;
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 

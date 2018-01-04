@@ -639,7 +639,7 @@ public class tSalesProductHeaderDA {
         List<tSalesProductHeaderData> contactList = null;
         // Select All Query
         tSalesProductHeaderData dt = new tSalesProductHeaderData();
-        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS;
+        String selectQuery = "SELECT  " + dt.Property_All + " FROM " + TABLE_CONTACTS + " order by " + dt.Property_txtNoSo ;
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
