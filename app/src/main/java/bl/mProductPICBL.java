@@ -124,7 +124,14 @@ public class mProductPICBL extends clsMainBL {
         db.close();
         return count;
     }
-
+    public int getContactCountByKN(List<mUserLOBData> mUserLOBDataList,String txtNik) {
+        int count = 0;
+        SQLiteDatabase db = getDb();
+        mProductPICDA _mProductPICDA = new mProductPICDA(db);
+        count = _mProductPICDA.getContactsCountByKN(db, mUserLOBDataList,txtNik);
+        db.close();
+        return count;
+    }
     public int getContactCountSubId() {
         int count = 0;
         SQLiteDatabase db = getDb();

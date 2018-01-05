@@ -249,7 +249,13 @@ public class mEmployeeSalesProductBL extends clsMainBL {
         db.close();
         return intcount;
     }
-
+    public int getContactsCountByKN(List<mUserLOBData> mUserLOBDataList,String txtNik) {
+        SQLiteDatabase db = getDb();
+        mEmployeeSalesProductDA _mEmployeeSalesProductDA = new mEmployeeSalesProductDA(db);
+        int intcount = _mEmployeeSalesProductDA.getContactsCountByKN(db, mUserLOBDataList,txtNik);
+        db.close();
+        return intcount;
+    }
     public int getContactsCountByKN(List<mUserLOBData> mUserLOBDataList) {
         SQLiteDatabase db = getDb();
         mEmployeeSalesProductDA _mEmployeeSalesProductDA = new mEmployeeSalesProductDA(db);

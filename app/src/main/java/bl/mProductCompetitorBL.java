@@ -143,7 +143,13 @@ public class mProductCompetitorBL extends clsMainBL {
         clsHelper _clsHelper=new clsHelper();
         return _clsHelper.pushtData(strLinkAPI, String.valueOf(resJson), Integer.valueOf(getBackGroundServiceOnline()));
     }
-
+    public int  getContactsCountByKN(List<mUserLOBData> mUserLOBDataList,String txtNIK){
+        SQLiteDatabase db=getDb();
+        mProductCompetitorDA _mProductCompetitorDA=new mProductCompetitorDA(db);
+        int intcount=_mProductCompetitorDA.getContactsCountByKN(db, mUserLOBDataList,txtNIK);
+        db.close();
+        return intcount;
+    }
     public int  getContactsCountByKN(List<mUserLOBData> mUserLOBDataList){
         SQLiteDatabase db=getDb();
         mProductCompetitorDA _mProductCompetitorDA=new mProductCompetitorDA(db);

@@ -320,7 +320,26 @@ public class mProductPICDA {
         // return count
         return countData;
     }
+    public int getContactsCountByKN(SQLiteDatabase db, List<mUserLOBData>  mUserLOBDataList,String txtNik) {
+        mProductPICData data = new mProductPICData();
 
+        String query = "()";
+
+        if (mUserLOBDataList != null){
+            query = "(";
+            for (int i = 0; i < mUserLOBDataList.size(); i++) {
+                query = query + "'" + mUserLOBDataList.get(i).get_txtLOBName() + "'";
+                query = query + ((i + 1) != mUserLOBDataList.size() ? "," : ")");
+            }
+        }
+
+        String countQuery = "SELECT * FROM " + TABLE_CONTACTS +" WHERE "+data.Property_txtNIK+"='"+txtNik+"' AND "+data.Property_txtLobName +" IN " + query;
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int countData = cursor.getCount();
+        cursor.close();
+        // return count
+        return countData;
+    }
     //deleteByKN
     public void deleteContactsCountByKN(SQLiteDatabase db, List<mUserLOBData>  mUserLOBDataList) {
         mProductPICData data = new mProductPICData();

@@ -16,6 +16,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.os.StrictMode;
@@ -58,6 +59,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import bl.KoordinasiOutletBL;
 import bl.clsHelperBL;
@@ -615,11 +617,45 @@ public class FragmentDownloadData extends Fragment {
             public void onClick(View arg0) {
                 intProcesscancel = 0;
 //                AsyncCallDownloadAll task = new AsyncCallDownloadAll();
-//                AsyncCallDownloadAllBundleData task = new AsyncCallDownloadAllBundleData();
+                tUserLoginData dtLogin = new tUserLoginBL().getUserLogin();
+
+                if(dtLogin!=null&&dtLogin.get_TxtEmpId()!=null){
+                    if (ll_product != null && checkVisibility(ll_product)) {
+                        int count = new mEmployeeSalesProductBL().getContactsCountByKN(mUserLOBDataList,dtLogin.get_TxtEmpId());
+                        if (count == 0) {
+                            validDownloadProduct = true;
+                        }
+                    }
+                    if (ll_product_competitor != null && checkVisibility(ll_product_competitor)) {
+                        int count = new mProductCompetitorBL().getContactsCountByKN(mUserLOBDataList,dtLogin.get_TxtEmpId());
+                        if (count == 0) {
+                            validDownloadProductComp = true;
+                        }
+                    }
+                    if (ll_product_spg != null && checkVisibility(ll_product_spg)) {
+                        int count = new mProductSPGBL().getContactCountByKN(mUserLOBDataList,dtLogin.get_TxtEmpId());
+                        if (count == 0) {
+                            validDownloadProductSPG = true;
+                        }
+                    }
+                    if (ll_product_pic != null && checkVisibility(ll_product_pic)) {
+                        int count = new mProductPICBL().getContactCountByKN(mUserLOBDataList,dtLogin.get_TxtEmpId());
+                        if (count == 0) {
+                            validDownloadProductPIC = true;
+                        }
+                    }
+
+                    if(validDownloadProductPIC&&validDownloadProductSPG&&validDownloadProductComp&&validDownloadProduct){
+                        AsyncCallGenerateSQLite task = new AsyncCallGenerateSQLite();
+                        task.execute();
+                    } else {
+                        AsyncCallDownloadAllBundleData task = new AsyncCallDownloadAllBundleData();
+                        task.execute();
+                    }
+                }
+
 //                task.execute();
 
-                AsyncCallGenerateSQLite task = new AsyncCallGenerateSQLite();
-                task.execute();
             }
         });
         btnLeave.setOnClickListener(new View.OnClickListener() {
@@ -7365,6 +7401,7 @@ public class FragmentDownloadData extends Fragment {
         return _array;
     }
 
+    private boolean successDownload = false;
     private class AsyncCallGenerateSQLite extends AsyncTask<JSONArray, Void, JSONArray> {
         @Override
         protected JSONArray doInBackground(JSONArray... params) {
@@ -7375,10 +7412,15 @@ public class FragmentDownloadData extends Fragment {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+
+
+
             return Json;
         }
 
         private ProgressDialog Dialog = new ProgressDialog(getContext());
+        CountDownTimer CDT;
+        int i =1;
 
         @Override
         protected void onCancelled() {
@@ -7430,6 +7472,7 @@ public class FragmentDownloadData extends Fragment {
             // pg.setVisibility(View.VISIBLE);
             Dialog.setMessage("Generating Data");
             Dialog.setCancelable(false);
+            Dialog.setProgress(i);
 
 //            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
 //                @Override
@@ -7438,12 +7481,48 @@ public class FragmentDownloadData extends Fragment {
 //                }
 //            });
             Dialog.show();
+
+            CDT = new CountDownTimer(1000 * 60 * 30, 1000)
+            {
+                public void onTick(long millisUntilFinished)
+                {
+                    Dialog.setMessage("Please wait... " + getFormattedTime(i));
+                    i++;
+                }
+
+                public void onFinish()
+                {
+                    Dialog.dismiss();
+                    //Your Code ...
+                }
+            }.start();
         }
 
 
         @Override
-        protected void onProgressUpdate(Void... values) {
+        protected void onProgressUpdate(Void... progress) {
             Dialog.dismiss();
+        }
+    }
+
+    private static String getFormattedTime(int secs) {
+        // int secs = (int) Math.round((double) milliseconds / 1000); // for millisecs arg instead of secs
+        if (secs < 60)
+            return secs + "s";
+        else {
+            int mins = (int) secs / 60;
+            int remainderSecs = secs - (mins * 60);
+            if (mins < 60) {
+                return (mins < 10 ? "0" : "") + mins + "m "
+                        + (remainderSecs < 10 ? "0" : "") + remainderSecs + "s";
+            }
+            else {
+                int hours = (int) mins / 60;
+                int remainderMins = mins - (hours * 60);
+                return (hours < 10 ? "0" : "") + hours + "h "
+                        + (remainderMins < 10 ? "0" : "") + remainderMins + "m "
+                        + (remainderSecs < 10 ? "0" : "") + remainderSecs + "s";
+            }
         }
     }
 

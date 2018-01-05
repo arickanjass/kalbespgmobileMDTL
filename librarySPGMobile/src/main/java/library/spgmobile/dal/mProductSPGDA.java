@@ -318,7 +318,26 @@ public class mProductSPGDA {
         // return count
         return countData;
     }
+    public int getContactsCountByKN(SQLiteDatabase db, List<mUserLOBData>  mUserLOBDataList,String txtNik) {
+        mProductSPGData data = new mProductSPGData();
 
+        String query = "()";
+
+        if (mUserLOBDataList != null){
+            query = "(";
+            for (int i = 0; i < mUserLOBDataList.size(); i++) {
+                query = query + "'" + mUserLOBDataList.get(i).get_txtLOBName() + "'";
+                query = query + ((i + 1) != mUserLOBDataList.size() ? "," : ")");
+            }
+        }
+
+        String countQuery = "SELECT * FROM " + TABLE_CONTACTS +" WHERE "+data.Property_txtNIK+"='"+txtNik+"' AND "+data.Property_txtLobName +" IN " + query;
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int countData = cursor.getCount();
+        cursor.close();
+        // return count
+        return countData;
+    }
     // Getting contacts Count
     public int getContactsCountDataSubmissionId(SQLiteDatabase db) {
         String countQuery = "SELECT * FROM " + TABLE_CONTACTS + " where txtMasterId in('null','')";
