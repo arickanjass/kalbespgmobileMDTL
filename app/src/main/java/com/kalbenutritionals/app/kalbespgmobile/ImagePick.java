@@ -271,30 +271,8 @@ public class ImagePick {
 
     }
 
-    private static String getPathFromUri_CursorLoader(Context context, Uri uri){
-
-        String [] projection = {MediaStore.Images.Media.DATA};
-
-        CursorLoader cursorLoader = new CursorLoader(
-                context,
-                uri,
-                projection,
-                null,   //selection
-                null,   //selectionArgs
-                null   //sortOrder
-        );
-
-        Cursor cursor = cursorLoader.loadInBackground();
-
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-
-        return cursor.getString(column_index);
-    }
-
     public static String getFileName(Context context, int resultCode, Intent fileReturnedIntent) throws FileNotFoundException {
         Uri uri = fileReturnedIntent.getData();
-//        String realpath = getPathFromUri_CursorLoader(context, fileReturnedIntent.getData());
         String path = fileReturnedIntent.getData().getPath().toString();
         if (resultCode == Activity.RESULT_OK){
             byte[] byteFile = null;
