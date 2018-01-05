@@ -104,105 +104,113 @@ public class ReportDetailQuiz extends AppCompatActivity {
         SimpleTableHeaderAdapter simpleTableHeaderAdapter;
         List<ReportTable> reportList;
         int i;
-            header = new String[6];
-            header[1] = "Category";
-            header[2] = "No. Soal";
-            header[3] = "Question";
-            header[4] = "Answer";
+        header = new String[6];
+        header[1] = "Category";
+        header[2] = "No. Soal";
+        header[3] = "Question";
+        header[4] = "Answer";
 
-            ReportTableView.setColumnCount(header.length);
+        ReportTableView.setColumnCount(header.length);
 
-            simpleTableHeaderAdapter = new SimpleTableHeaderAdapter(getApplicationContext(), header);
-            simpleTableHeaderAdapter.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.table_header_text));
-            simpleTableHeaderAdapter.setTextSize(14);
-            simpleTableHeaderAdapter.setPaddingBottom(20);
-            simpleTableHeaderAdapter.setPaddingTop(20);
+        simpleTableHeaderAdapter = new SimpleTableHeaderAdapter(getApplicationContext(), header);
+        simpleTableHeaderAdapter.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.table_header_text));
+        simpleTableHeaderAdapter.setTextSize(14);
+        simpleTableHeaderAdapter.setPaddingBottom(20);
+        simpleTableHeaderAdapter.setPaddingTop(20);
 
-            ReportTableView.setColumnComparator(1, ReportComparators.getCategoryComparator());
-            ReportTableView.setColumnComparator(2, ReportComparators.getRepeatComparator());
-            ReportTableView.setColumnComparator(3, ReportComparators.getQuestionComparator());
-            ReportTableView.setColumnComparator(4, ReportComparators.getAnswerComparator());
+        ReportTableView.setColumnComparator(1, ReportComparators.getCategoryComparator());
+        ReportTableView.setColumnComparator(2, ReportComparators.getRepeatComparator());
+        ReportTableView.setColumnComparator(3, ReportComparators.getQuestionComparator());
+        ReportTableView.setColumnComparator(4, ReportComparators.getAnswerComparator());
 
 
-            ReportTableView.setColumnWeight(1, 2);
-            ReportTableView.setColumnWeight(2, 2);
-            ReportTableView.setColumnWeight(3, 2);
-            ReportTableView.setColumnWeight(4, 2);
+        ReportTableView.setColumnWeight(1, 2);
+        ReportTableView.setColumnWeight(2, 2);
+        ReportTableView.setColumnWeight(3, 2);
+        ReportTableView.setColumnWeight(4, 2);
 
-            ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
+        ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
 
-            List<tJawabanUserData> dt_Answer = new tJawabanUserBL().GetDataByHeaderId(dataHeader.get_intHeaderId());
-            reportList = new ArrayList<>();
-            if(dt_Answer != null&&dt_Answer.size()>0){
-                for(tJawabanUserData data : dt_Answer ){
-                    ReportTable rt = new ReportTable();
-                    List<mPertanyaanData> dt_Question  = new mPertanyaanBL().GetDataByQuestionId(data.get_intQuestionId());
-                    List<tJawabanUserData> dataAnswer = new tJawabanUserBL().GetDataByQuestionId(data.get_intQuestionId(), dataHeader.get_intHeaderId());
-                    mKategoriData kategoriData = new mKategoriBL().GetCategoryById(dt_Question.get(0).get_intCategoryId());
-                    if(kategoriData.get_intParentId().equals(2)){
-                        tvAverage.setVisibility(View.GONE);
-                        tvSum.setVisibility(View.GONE);
-                    }
-                    rt.set_report_type("Kuesioner Detail");
-                    rt.set_RepeatQuiz(dt_Question.get(0).get_intSoalId());
-                    rt.set_dummy(data.get_intHeaderId());
-                    rt.set_Category(kategoriData.get_txtCategoryName());
-                    rt.set_Question(dt_Question.get(0).get_txtQuestionDesc());
-                    if (data.get_intTypeQuestionId().equals("1") || data.get_intTypeQuestionId().equals("2") || data.get_intTypeQuestionId().equals("6")){
-                        String jawab = null;
-                        if (dataAnswer != null && dataAnswer.size()>0){
-                            for (tJawabanUserData dt : dataAnswer){
-                                mListJawabanData answer = new mListJawabanBL().GetDataById(dt.get_intAnswerId());
-                                final HashMap<String, String> HMProduct = new HashMap<String, String>();
-                                tAbsenUserData dataOutletCheckIn = new tAbsenUserBL().getDataCheckInActive();
-                                List<String> dataJawaban = new ArrayList<>();
-                                if (answer.get_txtValue().equals("SPG01")){
+        List<tJawabanUserData> dt_Answer = new tJawabanUserBL().GetDataByHeaderId(dataHeader.get_intHeaderId());
+        reportList = new ArrayList<>();
+        if(dt_Answer != null&&dt_Answer.size()>0){
+            for(tJawabanUserData data : dt_Answer ){
+                ReportTable rt = new ReportTable();
+                List<mPertanyaanData> dt_Question  = new mPertanyaanBL().GetDataByQuestionId(data.get_intQuestionId());
+                List<tJawabanUserData> dataAnswer = new tJawabanUserBL().GetDataByQuestionId(data.get_intQuestionId(), dataHeader.get_intHeaderId());
+                mKategoriData kategoriData = new mKategoriBL().GetCategoryById(dt_Question.get(0).get_intCategoryId());
+                if(kategoriData.get_intParentId().equals(2)){
+                    tvAverage.setVisibility(View.GONE);
+                    tvSum.setVisibility(View.GONE);
+                }
+                rt.set_report_type("Kuesioner Detail");
+                rt.set_RepeatQuiz(dt_Question.get(0).get_intSoalId());
+                rt.set_dummy(data.get_intHeaderId());
+                rt.set_Category(kategoriData.get_txtCategoryName());
+                rt.set_Question(dt_Question.get(0).get_txtQuestionDesc());
+                if (data.get_intTypeQuestionId().equals("1") || data.get_intTypeQuestionId().equals("2") || data.get_intTypeQuestionId().equals("6")){
+                    String jawab = null;
+                    if (dataAnswer != null && dataAnswer.size()>0){
+                        for (tJawabanUserData dt : dataAnswer){
+                            mListJawabanData answer = new mListJawabanBL().GetDataById(dt.get_intAnswerId());
+                            final HashMap<String, String> HMProduct = new HashMap<String, String>();
+                            tAbsenUserData dataOutletCheckIn = new tAbsenUserBL().getDataCheckInActive();
+                            List<String> dataJawaban = new ArrayList<>();
+                            if (answer.get_txtValue().equals("SPG01")){
 
-                                    List<tHirarkiBIS> listSPG = new tHirarkiBISBL().GetDataByOutlet(dataHeader.get_txtOutletCode());
-                                    if (listSPG.size() > 0) {
-                                        for (tHirarkiBIS dat : listSPG) {
-                                            dataJawaban.add(dat.get_txtNik());
-                                            HMProduct.put(dat.get_txtNik(), dat.get_txtName());
-                                        }
+                                List<tHirarkiBIS> listSPG = new tHirarkiBISBL().GetDataByOutlet(dataHeader.get_txtOutletCode());
+                                if (listSPG.size() > 0) {
+                                    for (tHirarkiBIS dat : listSPG) {
+                                        dataJawaban.add(dat.get_txtNik());
+                                        HMProduct.put(dat.get_txtNik(), dat.get_txtName());
                                     }
-                                    String jawaban = HMProduct.get(data.get_txtValue());
-                                    rt.set_Answer(jawaban);
-                                } else if (answer.get_txtValue().equals("CUS01")){
-                                    List<mEmployeeSalesProductData> listDataProductKalbe = new mEmployeeSalesProductBL().GetAllData();
-                                    if (listDataProductKalbe.size() > 0) {
-                                        for (mEmployeeSalesProductData dat : listDataProductKalbe) {
-                                            dataJawaban.add(dat.get_txtBrandDetailGramCode());
-                                            HMProduct.put(dat.get_txtBrandDetailGramCode(), dat.get_txtProductBrandDetailGramName());
-                                        }
-                                    }
-                                    String jawaban = HMProduct.get(data.get_txtValue());
-                                    rt.set_Answer(jawaban);
-                                }else {
-                                    if (jawab != null){
-                                        jawab += answer.get_txtKey() + " ,";
-                                    }else {
-                                        jawab = answer.get_txtKey() + " ,";
-                                    }
-                                    String jawabFinal = jawab.substring(0, jawab.lastIndexOf(',')).trim();
-                                    rt.set_Answer(jawabFinal);
                                 }
+                                String jawaban = HMProduct.get(data.get_txtValue());
+                                rt.set_Answer(jawaban);
+                            } else if (answer.get_txtValue().equals("CUS01")){
+                                List<mEmployeeSalesProductData> listDataProductKalbe = new mEmployeeSalesProductBL().GetAllData();
+                                if (listDataProductKalbe.size() > 0) {
+                                    for (mEmployeeSalesProductData dat : listDataProductKalbe) {
+                                        dataJawaban.add(dat.get_txtBrandDetailGramCode());
+                                        HMProduct.put(dat.get_txtBrandDetailGramCode(), dat.get_txtProductBrandDetailGramName());
+                                    }
+                                }
+                                String jawaban = HMProduct.get(data.get_txtValue());
+                                rt.set_Answer(jawaban);
+                            }else {
+                                if (jawab != null){
+                                    jawab += answer.get_txtKey() + " ,";
+                                }else {
+                                    jawab = answer.get_txtKey() + " ,";
+                                }
+                                String jawabFinal = jawab.substring(0, jawab.lastIndexOf(',')).trim();
+                                rt.set_Answer(jawabFinal);
                             }
                         }
-                    } else {
-                        rt.set_Answer(data.get_txtValue());
                     }
-                    rt.set_type(data.get_intTypeQuestionId());
-                    reportList.add(rt);
+                } else if (data.get_intTypeQuestionId().equals("7")){
+                    rt.set_answer(data.get_ptQuiz());
+                    rt.set_Answer(data.get_txtValue());
+                } else if (data.get_intTypeQuestionId().equals("8")){
+                    rt.set_answer(data.get_txtFileQuiz());
+                    rt.set_Answer(data.get_txtValue());
                 }
-            } else {
-                new clsMainActivity().showCustomToast(getApplicationContext(), "No Data to Show", false);
+                else {
+                    rt.set_Answer(data.get_txtValue());
+                }
+                rt.set_type(data.get_intTypeQuestionId());
+                reportList.add(rt);
             }
-
-            ReportTableView.setDataAdapter(new ReportTableDataAdapter(getApplicationContext(), reportList));
+        } else {
+            new clsMainActivity().showCustomToast(getApplicationContext(), "No Data to Show", false);
         }
+
+        ReportTableView.setDataAdapter(new ReportTableDataAdapter(getApplicationContext(), reportList));
+    }
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                new clsMainActivity().deleteTempFolder();
                 Intent parentIntent = NavUtils.getParentActivityIntent(this);
                 parentIntent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(parentIntent);
@@ -210,5 +218,11 @@ public class ReportDetailQuiz extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        new clsMainActivity().deleteTempFolder();
+        super.onBackPressed();
     }
 }

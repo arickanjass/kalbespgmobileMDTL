@@ -25,6 +25,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -144,7 +145,7 @@ public class ImagePick {
         // Create a media file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
         File mediaFile;
-        mediaFile = new File(mediaStorageDir.getPath() + File.separator + "tmp_Quiz_" + timeStamp +".jpg");
+        mediaFile = new File(mediaStorageDir.getPath() + File.separator + "tmp_Quiz_" + timeStamp +".png");
         return mediaFile;
     }
     private static String getRealPathFromURI(Uri contentUri, Context mContext) {
@@ -269,8 +270,31 @@ public class ImagePick {
         return txtFileQuiz;
 
     }
+
+    private static String getPathFromUri_CursorLoader(Context context, Uri uri){
+
+        String [] projection = {MediaStore.Images.Media.DATA};
+
+        CursorLoader cursorLoader = new CursorLoader(
+                context,
+                uri,
+                projection,
+                null,   //selection
+                null,   //selectionArgs
+                null   //sortOrder
+        );
+
+        Cursor cursor = cursorLoader.loadInBackground();
+
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+
+        return cursor.getString(column_index);
+    }
+
     public static String getFileName(Context context, int resultCode, Intent fileReturnedIntent) throws FileNotFoundException {
         Uri uri = fileReturnedIntent.getData();
+//        String realpath = getPathFromUri_CursorLoader(context, fileReturnedIntent.getData());
         String path = fileReturnedIntent.getData().getPath().toString();
         if (resultCode == Activity.RESULT_OK){
             byte[] byteFile = null;
@@ -289,16 +313,16 @@ public class ImagePick {
                e.printStackTrace();
             }
             if (txtFileQuiz != null){
-//                if (Build.MANUFACTURER.equals("Xiaomi")){
-//                    fileName = path.substring(path.lastIndexOf('/')+1, path.length());
-//                }else {
+                if (Build.MANUFACTURER.equals("Xiaomi")){
+                    fileName = path.substring(path.lastIndexOf('/')+1, path.length());
+                }else {
                     Cursor returnCursor = context.getContentResolver().query(uri,null, null, null, null);
 
                     int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
                     int sizeIndex = returnCursor.getColumnIndex(OpenableColumns.SIZE);
                     returnCursor.moveToFirst();
                     fileName = returnCursor.getString(nameIndex);
-//                }
+                }
 
             }else {
                 fileName = "";
@@ -498,5 +522,69 @@ public class ImagePick {
             return bmOut;
         }
         return bm;
+    }
+
+    public static Uri getOutputMediaFileUri(Context context, String folderName, String fileName) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) { //use this if Lollipop_Mr1 (API 22) or above
+            return FileProvider.getUriForFile(context.getApplicationContext(), context.getApplicationContext().getPackageName()+".provider", getOutputMediaFile(folderName, fileName));
+        } else {
+            return Uri.fromFile(getOutputMediaFile(folderName, fileName));
+        }
+    }
+
+    //create path file
+    private static File getOutputMediaFile(String folderName, String fileName) {
+        // External sdcard location
+
+        File mediaStorageDir = new File(folderName + File.separator);
+        mediaStorageDir.mkdir();
+        // Create the storage directory if it does not exist
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                Log.d(IMAGE_DIRECTORY_NAME, "Failed create " + IMAGE_DIRECTORY_NAME + " directory");
+                return null;
+            }
+        }
+
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("_yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        File mediaFile;
+        mediaFile = new File(mediaStorageDir.getPath() + File.separator + fileName);
+        return mediaFile;
+    }
+
+    public static File decodeByteArraytoTempFile(byte[] fileArray, String pathFolder, String fileExtension) {
+        File folder = new File(pathFolder);
+        folder.mkdirs();
+        File file = null;
+        try {
+            file = File.createTempFile("file-", fileExtension, new File(pathFolder));
+            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+            bos.write(fileArray);
+            bos.flush();
+            bos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
+
+    public static File decodeByteArraytoFileImage(byte[] imageArray, String pathFolder){
+        File folder = new File(pathFolder);
+        folder.mkdirs();
+        File file = null;
+        try {
+            file = File.createTempFile("image-", ".jpg", new File(pathFolder));
+            FileOutputStream out = new FileOutputStream(file);
+            out.write(imageArray);
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return file;
     }
 }

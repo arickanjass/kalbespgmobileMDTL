@@ -29,6 +29,7 @@ public class ReportTable implements Serializable {
     private String _Group_Question;
     private String _Question;
     private String _Answer;
+    private byte[] _answer;
     private String _RepeatQuiz;
     private String _Category;
 
@@ -103,6 +104,13 @@ public class ReportTable implements Serializable {
 
     public void set_Group_Question(String _Group_Question) {
         this._Group_Question = _Group_Question;
+    }
+    public byte[] get_answer() {
+        return _answer;
+    }
+
+    public void set_answer(byte[] _answer) {
+        this._answer = _answer;
     }
 
     public String get_Question() {

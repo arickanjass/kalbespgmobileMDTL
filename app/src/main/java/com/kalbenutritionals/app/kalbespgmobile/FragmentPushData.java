@@ -123,7 +123,7 @@ public class FragmentPushData extends Fragment {
             Intent serviceIntentTrancking = new Intent(getContext(), MyServiceNative.class);
             getContext().stopService(serviceIntentMyServiceNative);
             getContext().stopService(serviceIntentTrancking);
-            ImagePick.deleteMediaStorageDirQuiz();;
+            ImagePick.deleteMediaStorageDirQuiz();
             MyTrackingLocationService service = new MyTrackingLocationService();
             service.shutdownService();
             NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
