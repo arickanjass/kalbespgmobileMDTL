@@ -7428,8 +7428,9 @@ public class FragmentDownloadData extends Fragment {
         protected void onPreExecute() {
             // Make ProgressBar invisible
             // pg.setVisibility(View.VISIBLE);
-            Dialog.setMessage("Generating Data\nAbout 1 - 5 minutes");
+            Dialog.setMessage("Generating Data");
             Dialog.setCancelable(false);
+
 //            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
 //                @Override
 //                public void onClick(DialogInterface dialog, int which) {

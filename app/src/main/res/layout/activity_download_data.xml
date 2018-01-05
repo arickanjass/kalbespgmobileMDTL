@@ -2002,13 +2002,13 @@
                 android:textColor="@color/white" />
         </LinearLayout>
     </ScrollView>
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        style="@style/Base.Widget.AppCompat.ProgressBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:indeterminate="true"
-        android:visibility="visible" />
+    <!--<ProgressBar-->
+        <!--android:id="@+id/progress_bar"-->
+        <!--style="@style/Base.Widget.AppCompat.ProgressBar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:indeterminate="true"-->
+        <!--android:visibility="visible" />-->
 </LinearLayout>
 
