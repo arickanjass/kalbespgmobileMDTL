@@ -37,6 +37,7 @@ import bl.clsHelperBL;
 import bl.mDownloadMasterData_mobileBL;
 import bl.tAbsenUserBL;
 import bl.tGroupQuestionMappingBL;
+import bl.tLogErrorBL;
 import bl.tNotificationBL;
 import bl.tPOPStandardHeaderBL;
 import bl.tUserLoginBL;
@@ -56,6 +57,7 @@ import library.spgmobile.common.tJawabanUserData;
 import library.spgmobile.common.tJawabanUserHeaderData;
 import library.spgmobile.common.tKemasanRusakHeaderData;
 import library.spgmobile.common.tLeaveMobileData;
+import library.spgmobile.common.tLogErrorData;
 import library.spgmobile.common.tNotificationData;
 import library.spgmobile.common.tOverStockHeaderData;
 import library.spgmobile.common.tPOPStandardHeaderData;
@@ -171,6 +173,29 @@ public class FragmentPushData extends Fragment {
         ll_data_kemasanrusak = (LinearLayout) v.findViewById(R.id.ll_data_kemasanrusak);
         ll_data_tidaksesuaipesanan = (LinearLayout) v.findViewById(R.id.ll_data_tidaksesuaipesanan);
         ll_dataPOP_Standard = (LinearLayout) v.findViewById(R.id.ll_dataPOP_Standard);
+
+        TextView tvPushError = (TextView) v.findViewById(R.id.tv_push_error);
+
+        List<tLogErrorData> datass = new tLogErrorBL().getAllData();
+
+        if (datass.size() > 0) {
+            tvPushError.setVisibility(View.VISIBLE);
+        } else {
+            tvPushError.setVisibility(View.GONE);
+        }
+        tvPushError = (TextView) v.findViewById(R.id.tv_push_error);
+        tvPushError.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent pushError = new Intent(getActivity(), ActivityPushError.class);
+                pushError.putExtra("status", 0);
+                startActivity(pushError);
+                getActivity().finish();
+//                pushError();
+            }
+        });
+
+//        int i = 1/0;
 
         List<mDownloadMasterData_mobileData> mDownloadMasterData_mobileDataList = new ArrayList<>();
 
