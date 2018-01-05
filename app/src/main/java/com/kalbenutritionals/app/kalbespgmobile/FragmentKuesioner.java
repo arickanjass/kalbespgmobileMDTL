@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -17,6 +18,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -39,7 +41,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -70,6 +74,7 @@ import library.spgmobile.common.tHirarkiBIS;
 import library.spgmobile.common.tJawabanUserData;
 import library.spgmobile.common.tJawabanUserHeaderData;
 import library.spgmobile.common.tUserLoginData;
+import library.spgmobile.dal.clsHardCode;
 import library.spgmobile.dal.tJawabanUserHeaderDA;
 
 /**
@@ -468,7 +473,7 @@ public class FragmentKuesioner extends Fragment {
                     alertDialog.setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
                         ProgressDialog progressDialog = new ProgressDialog(getContext());
                         @Override
-                        public void onClick(final DialogInterface dialog, int which) {
+                        public void onClick(final DialogInterface dialog, int which) { 
                             AsyncSaveQuiz task = new AsyncSaveQuiz();
                             task.execute();
                         }
@@ -606,6 +611,7 @@ public class FragmentKuesioner extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             new clsMainActivity().showCustomToast(getContext(), "Saved", true);
+            ImagePick.deleteMediaStorageDirQuiz();
             toolbar.setTitle("View Performance Tim");
             FragmentKuesionerAwal fragmentKuesionerAwal = new FragmentKuesionerAwal();
             FragmentTransaction fragmentTransactionkuesionerAwal = getFragmentManager().beginTransaction();
@@ -868,8 +874,16 @@ public class FragmentKuesioner extends Fragment {
                             tvImgQuiz = (TextView) nextChild;
                             String selectedImage = tvImgQuiz.getText().toString();
                             String fileName = selectedImage.substring(selectedImage.lastIndexOf('/')+1, selectedImage.length());
-                            Bitmap bm = BitmapFactory.decodeFile(selectedImage, bitmapOptions);
-                            byte[] byteQuiz = ImagePick.byteQuiz(bm);
+                            InputStream ims = null;
+                            try {
+                                Uri uri = ImagePick.getOutputMediaFileUri(getContext(), new clsHardCode().txtFolderQuiz, fileName);
+                                ims = getContext().getContentResolver().openInputStream(uri);
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
+                            Bitmap photo = BitmapFactory.decodeStream(ims);
+//                            Bitmap bm = BitmapFactory.de(selectedImage, bitmapOptions);
+                            byte[] byteQuiz = ImagePick.byteQuiz(photo);
                             tJawabanUserData dt7 = new tJawabanUserData();
                             dt7.set_intUserAnswer(ImagePick.GenerateGuid());
                             dt7.set_intUserId(dataUserActive.get_txtUserId());

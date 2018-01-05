@@ -1,5 +1,6 @@
 package addons.tableview;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,8 +11,10 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -31,10 +34,12 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Transformers.BaseTransformer;
 import com.kalbenutritionals.app.kalbespgmobile.FragmentKuesioner;
+import com.kalbenutritionals.app.kalbespgmobile.ImagePick;
 import com.kalbenutritionals.app.kalbespgmobile.ReportDetailQuiz;
 import com.kalbenutritionals.app.kalbespgmobile.PdfView;
 import com.kalbenutritionals.app.kalbespgmobile.R;
 import com.kalbenutritionals.app.kalbespgmobile.clsMainActivity;
+import com.kalbenutritionals.app.kalbespgmobile.intentCustom;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -216,7 +221,7 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
                     break;
                 case 2:
                     renderedView = renderString(data.get_txtOutletName(), "left");
-                    break; 
+                    break;
                 case 3:
                     renderedView = renderString(data.get_Category(), "left");
                     break;
@@ -394,7 +399,7 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
                     break;
                 case 4:
                     if (data.get_type().equals("8") || data.get_type().equals("7")){
-                        renderedView = renderStringImage(data.get_Answer(), "left");
+                        renderedView = renderStringImage(data.get_Answer(), data.get_answer(), "left");
                     } else {
                         renderedView = renderStringDetail(data.get_Answer(), "left");
                     }
@@ -412,11 +417,11 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
         textView.setText(value);
         textView.setPadding(20, 10, 20, 10);
         textView.setTextSize(TEXT_SIZE);
-        
+
         if(align.equals("right")){
-        	textView.setGravity(Gravity.RIGHT);
+            textView.setGravity(Gravity.RIGHT);
         }
-        
+
         return textView;
     }
 
@@ -434,14 +439,17 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
         return textView;
     }
 
-    private View renderStringImage(final String value, final String align) {
+    private View renderStringImage(final String value, final byte[] dataArray, final String align) {
         final TextView textView = new TextView(getContext());
         textView.setText(value);
         textView.setPadding(20, 10, 20, 10);
         textView.setTextSize(TEXT_SIZE);
         textView.setTextColor(Color.BLUE);
+
         final String fileExtension = value.substring(value.lastIndexOf("."));
-        final File mediaStorageDir = new File(new clsHardCode().txtFolderQuiz + File.separator + value);
+//        final File mediaStorageDir = new File(new clsHardCode().txtFolderQuiz + File.separator + value);
+        final File mediaStorageDir = null;
+
 
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -450,14 +458,43 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
                     Intent intent = new Intent();
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.setAction(Intent.ACTION_VIEW);
-                    if (fileExtension.contains(".jpg")){
-                        intent.setDataAndType(Uri.fromFile(mediaStorageDir), "image/*");
+                    Uri uri = null;
+                    if (fileExtension.contains(".png")||fileExtension.contains(".jpg") ){
+                        File mediaStorageDir = ImagePick.decodeByteArraytoFileImage(dataArray, new clsHardCode().txtPathTempData);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) { //use this if Lollipop_Mr1 (API 22) or above
+                            uri =  FileProvider.getUriForFile(getContext().getApplicationContext(), getContext().getApplicationContext().getPackageName()+".provider", mediaStorageDir);
+                            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        } else {
+                            uri = Uri.fromFile(mediaStorageDir);
+                        }
+                        intent.setDataAndType(uri, "image/*");
                     }else if (fileExtension.contains(".doc")){
-                        intent.setDataAndType(Uri.fromFile(mediaStorageDir), "application/msword");
+                        File mediaStorageDir =  ImagePick.decodeByteArraytoTempFile(dataArray, new clsHardCode().txtPathTempData, fileExtension);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) { //use this if Lollipop_Mr1 (API 22) or above
+                            uri =  FileProvider.getUriForFile(getContext().getApplicationContext(), getContext().getApplicationContext().getPackageName()+".provider", mediaStorageDir);
+                            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        } else {
+                            uri = Uri.fromFile(mediaStorageDir);
+                        }
+                        intent.setDataAndType(uri, "application/msword");
                     } else if (fileExtension.contains(".xls")){
-                        intent.setDataAndType(Uri.fromFile(mediaStorageDir), "application/vnd.ms-excel");
+                        File mediaStorageDir =  ImagePick.decodeByteArraytoTempFile(dataArray, new clsHardCode().txtPathTempData, fileExtension);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) { //use this if Lollipop_Mr1 (API 22) or above
+                            uri =  FileProvider.getUriForFile(getContext().getApplicationContext(), getContext().getApplicationContext().getPackageName()+".provider", mediaStorageDir);
+                            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        } else {
+                            uri = Uri.fromFile(mediaStorageDir);
+                        }
+                        intent.setDataAndType(uri, "application/vnd.ms-excel");
                     }else if (fileExtension.contains(".pdf")){
-                        intent.setDataAndType(Uri.fromFile(mediaStorageDir), "application/pdf");
+                        File mediaStorageDir =  ImagePick.decodeByteArraytoTempFile(dataArray, new clsHardCode().txtPathTempData, fileExtension);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) { //use this if Lollipop_Mr1 (API 22) or above
+                            uri =  FileProvider.getUriForFile(getContext().getApplicationContext(), getContext().getApplicationContext().getPackageName()+".provider", mediaStorageDir);
+                            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        } else {
+                            uri = Uri.fromFile(mediaStorageDir);
+                        }
+                        intent.setDataAndType(uri, "application/pdf");
                     }
                     getContext().startActivity(intent);
                 }catch (ActivityNotFoundException e){
@@ -485,12 +522,12 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    String[] passingValue = {dummy, value};
-                        Bundle bundle = new Bundle();
-                        bundle.putStringArray("Key_HeaderId", passingValue);
-                        Intent intent = new Intent(getContext().getApplicationContext(), ReportDetailQuiz.class);
-                        intent.putExtra("Key_HeaderId", passingValue);
-                        getContext().startActivity(intent);
+                String[] passingValue = {dummy, value};
+                Bundle bundle = new Bundle();
+                bundle.putStringArray("Key_HeaderId", passingValue);
+                Intent intent = new Intent(getContext().getApplicationContext(), ReportDetailQuiz.class);
+                intent.putExtra("Key_HeaderId", passingValue);
+                getContext().startActivity(intent);
             }
         });
 
@@ -1075,7 +1112,7 @@ public class ReportTableDataAdapter extends TableDataAdapter<ReportTable> {
         final RelativeLayout rl_reason = (RelativeLayout) promptView.findViewById(R.id.rl_pop);
         final LinearLayout ln_img = (LinearLayout) promptView.findViewById(R.id.ln_img_pop);
         final TextView status = (TextView) promptView.findViewById(R.id.textView9POP);
-       final SliderLayout mDemoSlider = (SliderLayout) promptView.findViewById(R.id.sliderPOP);
+        final SliderLayout mDemoSlider = (SliderLayout) promptView.findViewById(R.id.sliderPOP);
 
         //adding outlet name di view
         final TextView tv_outlet = (TextView) promptView.findViewById(R.id.tv_date);
