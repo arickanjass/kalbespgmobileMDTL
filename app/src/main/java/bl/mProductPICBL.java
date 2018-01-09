@@ -91,6 +91,14 @@ public class mProductPICBL extends clsMainBL {
         return ListData;
     }
 
+    public List<mProductPICData> GetAllDataByKN(List<mUserLOBData> _mUserLOBData, String txtNIK ) {
+        SQLiteDatabase db = getDb();
+        mProductPICDA _mProductPICDA = new mProductPICDA(db);
+        List<mProductPICData> ListData = _mProductPICDA.getAllDataByKN(db, _mUserLOBData, txtNIK);
+        db.close();
+        return ListData;
+    }
+
     public List<mProductPICData> GetDataByMasterId(String masterId) {
         SQLiteDatabase db = getDb();
         mProductPICDA _mProductPICDA = new mProductPICDA(db);

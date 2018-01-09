@@ -39,7 +39,7 @@ import com.kalbenutritionals.app.kalbespgmobile.ReportDetailQuiz;
 import com.kalbenutritionals.app.kalbespgmobile.PdfView;
 import com.kalbenutritionals.app.kalbespgmobile.R;
 import com.kalbenutritionals.app.kalbespgmobile.clsMainActivity;
-import com.kalbenutritionals.app.kalbespgmobile.intentCustom;
+//import com.kalbenutritionals.app.kalbespgmobile.intentCustom;
 
 import java.io.File;
 import java.io.FileOutputStream;

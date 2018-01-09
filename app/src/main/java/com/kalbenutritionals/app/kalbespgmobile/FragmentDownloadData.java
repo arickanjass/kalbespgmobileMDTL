@@ -645,7 +645,11 @@ public class FragmentDownloadData extends Fragment {
                         }
                     }
 
-                    if(validDownloadProductPIC&&validDownloadProductSPG&&validDownloadProductComp&&validDownloadProduct){
+                    if(validDownloadProductPIC||validDownloadProductSPG||validDownloadProductComp||validDownloadProduct&&checkVisibility(ll_product_pic)&&checkVisibility(ll_product_spg)&&checkVisibility(ll_product_competitor)){
+                        AsyncCallGenerateSQLite task = new AsyncCallGenerateSQLite();
+                        task.execute();
+                    } else if(validDownloadProduct&& !checkVisibility(ll_product_pic)&&!checkVisibility(ll_product_spg)&&!checkVisibility(ll_product_competitor)){
+
                         AsyncCallGenerateSQLite task = new AsyncCallGenerateSQLite();
                         task.execute();
                     } else {
@@ -939,7 +943,6 @@ public class FragmentDownloadData extends Fragment {
         List<tVisitPlanRealisasiData> listVisitPlanRealisasi = new tVisitPlanRealisasiBL().GetAllData();
         List<mEmployeeBranchData> listDataBranch = new mEmployeeBranchBL().GetAllData();
         List<mEmployeeAreaData> listDataArea = new mEmployeeAreaBL().GetAllData();
-        List<mEmployeeSalesProductData> listDataProduct = new mEmployeeSalesProductBL().GetAllData();
         List<mTypeLeaveMobileData> listDataLeave = new mTypeLeaveBL().GetAllData();
         List<mProductBrandHeaderData> listmProductBrandData = new mProductBrandHeaderBL().getData("");
         List<tSalesProductHeaderData> listtSalesProductHeaderData = new tSalesProductHeaderBL().getAllSalesProductHeader();
@@ -966,15 +969,19 @@ public class FragmentDownloadData extends Fragment {
 //        List<trackingLocationData> listtrackingLocationData = new trackingLocationBL().getAllDataTrackingLocation();
         List<KoordinasiOutletData> listKoordinasiOutletData = new KoordinasiOutletBL().getAllKoordinasiOutletData();
         List<mCategoryKoordinasiOutletData> lisCategoryKoordinasiOutletData = new KoordinasiOutletBL().GetAllCategoryKoordinasiOutletData();
-        List<mProductCompetitorData> productCompetitorDataList = new mProductCompetitorBL().GetAllData();
-        List<mTypeSubmissionMobile> typeSubmissionDataList = new mTypeSubmissionMobileBL().GetAllData();
-        List<mProductSPGData> mProductSPGDataList = new mProductSPGBL().GetAllData();
-        List<mProductPICData> mProductPICDataList = new mProductPICBL().GetAllData();
         List<tSubTypeActivityData> tSubTypeActivityDataList = new tSubTypeActivityBL().getAllData();
         List<tPlanogramMobileData> tPlanogramMobileDataList = new tPlanogramMobileBL().getAllData();
         List<tKategoryPlanogramMobileData> tKategoryPlanogramDataList = new tKategoryPlanogramMobileBL().getAllData();
         List<tKemasanRusakHeaderData> tKemasanRusakHeaderDataList = new tKemasanRusakHeaderBL().getAllHeader();
         List<tTidakSesuaiPesananHeaderData> tTidakSesuaiPesananHeaderDataList = new tTidakSesuaiPesananHeaderBL().getAllData();
+        List<mTypeSubmissionMobile> typeSubmissionDataList = new mTypeSubmissionMobileBL().GetAllData();
+
+        tUserLoginData dtLogin = new tUserLoginBL().getUserLogin();
+
+        List<mEmployeeSalesProductData> listDataProduct = new mEmployeeSalesProductBL().GetAllDataByKN(mUserLOBDataList, dtLogin.get_TxtEmpId());
+        List<mProductCompetitorData> productCompetitorDataList = new mProductCompetitorBL().GetAllDataByKN(mUserLOBDataList, dtLogin.get_TxtEmpId());
+        List<mProductSPGData> mProductSPGDataList = new mProductSPGBL().GetAllDataByKN(mUserLOBDataList, dtLogin.get_TxtEmpId());
+        List<mProductPICData> mProductPICDataList = new mProductPICBL().GetAllDataByKN(mUserLOBDataList, dtLogin.get_TxtEmpId());
 
         arrData = new ArrayList<>();
         if (listTypePOP.size() > 0 && listReasonPOP.size() > 0 && listCategoryPOP.size() > 0) {

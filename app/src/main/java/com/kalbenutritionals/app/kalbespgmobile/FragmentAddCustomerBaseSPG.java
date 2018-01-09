@@ -2109,7 +2109,7 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
         }
         if(mUserLOBDataList!=null&&mUserLOBDataList.size()>0 && validate){
             List<mProductPICData> dast=new mProductPICBL().GetAllData();
-            if(new mProductPICBL().getContactCountByKN(mUserLOBDataList)==0){
+            if(new mProductPICBL().getContactCountByKN(mUserLOBDataList)==0&&cbPIC.isChecked()){
                 new clsMainActivity().showCustomToast(getContext(), "Please re-download Product PIC", false);
                 validate=false;
             }

@@ -87,6 +87,14 @@ public class mProductCompetitorBL extends clsMainBL {
         return ListData;
     }
 
+    public List<mProductCompetitorData> GetAllDataByKN(List<mUserLOBData> _mUserLOBData, String txtNIK){
+        SQLiteDatabase db=getDb();
+        mProductCompetitorDA _mProductCompetitorDA=new mProductCompetitorDA(db);
+        List<mProductCompetitorData>ListData=_mProductCompetitorDA.getAllDataByKN(db, _mUserLOBData, txtNIK);
+        db.close();
+        return ListData;
+    }
+
     public List<mProductCompetitorData> GetListDataByProductKN(String idProductKN){
         SQLiteDatabase db=getDb();
         mProductCompetitorDA _mProductCompetitorDA=new mProductCompetitorDA(db);

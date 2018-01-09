@@ -88,6 +88,15 @@ public class mProductSPGBL extends clsMainBL {
         db.close();
         return ListData;
     }
+
+    public List<mProductSPGData> GetAllDataByKN(List<mUserLOBData> _mUserLOBData, String txtNIK){
+        SQLiteDatabase db=getDb();
+        mProductSPGDA _mProductSPGDA=new mProductSPGDA(db);
+        List<mProductSPGData>ListData=_mProductSPGDA.getAllDataByKN(db, _mUserLOBData, txtNIK);
+        db.close();
+        return ListData;
+    }
+
     public List<mProductSPGData> GetDataByMasterId(String masterId){
         SQLiteDatabase db=getDb();
         mProductSPGDA _mProductSPGDA=new mProductSPGDA(db);

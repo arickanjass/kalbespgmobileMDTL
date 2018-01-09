@@ -210,6 +210,14 @@ public class mEmployeeSalesProductBL extends clsMainBL {
         return ListData;
     }
 
+    public List<mEmployeeSalesProductData> GetAllDataByKN(List<mUserLOBData> _mUserLOBData, String txtNIK) {
+        SQLiteDatabase db = getDb();
+        mEmployeeSalesProductDA _mEmployeeSalesProductDA = new mEmployeeSalesProductDA(db);
+        List<mEmployeeSalesProductData> ListData = _mEmployeeSalesProductDA.getAllDataByKN(db, _mUserLOBData, txtNIK);
+        db.close();
+        return ListData;
+    }
+
     public List<mEmployeeSalesProductData> GetAllDataByKN(List<mUserLOBData> mUserLOBDataList) {
         SQLiteDatabase db = getDb();
         mEmployeeSalesProductDA _mEmployeeSalesProductDA = new mEmployeeSalesProductDA(db);

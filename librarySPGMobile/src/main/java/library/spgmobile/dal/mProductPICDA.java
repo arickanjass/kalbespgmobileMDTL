@@ -168,6 +168,51 @@ public class mProductPICDA {
         return contactList;
     }
 
+
+    public List<mProductPICData> getAllDataByKN(SQLiteDatabase db, List<mUserLOBData>  mUserLOBDataList, String txtNik) {
+        List<mProductPICData> contactList = new ArrayList<mProductPICData>();
+
+        mProductPICData data = new mProductPICData();
+
+        String query = "()";
+
+        if (mUserLOBDataList != null){
+            query = "(";
+            for (int i = 0; i < mUserLOBDataList.size(); i++) {
+                query = query + "'" + mUserLOBDataList.get(i).get_txtLOBName() + "'";
+                query = query + ((i + 1) != mUserLOBDataList.size() ? "," : ")");
+            }
+        }
+
+        String countQuery = "SELECT * FROM " + TABLE_CONTACTS +" WHERE "+ data.Property_txtNIK+" = '"+txtNik+"' AND " +data.Property_txtLobName +" IN " + query;
+        Cursor cursor = db.rawQuery(countQuery, null);
+        // looping through all rows and adding to list
+
+        if (cursor.moveToFirst()) {
+            do {
+                mProductPICData contact = new mProductPICData();
+                contact.set_intId(cursor.getString(0));
+                contact.set_decBobot(cursor.getString(1));
+                contact.set_decHJD(cursor.getString(2));
+                contact.set_txtBrandDetailGramCode(cursor.getString(3));
+                contact.set_txtName(cursor.getString(4));
+                contact.set_txtNIK(cursor.getString(5));
+                contact.set_txtProductBrandDetailGramName(cursor.getString(6));
+                contact.set_txtProductDetailCode(cursor.getString(7));
+                contact.set_txtProductDetailName(cursor.getString(8));
+                contact.set_txtLobName(cursor.getString(9));
+                contact.set_txtMasterId(cursor.getString(10));
+                contact.set_txtNamaMasterData(cursor.getString(11));
+                contact.set_txtKeterangan(cursor.getString(12));
+                // Adding contact to list
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        // return contact list
+        return contactList;
+    }
+
     // Getting All Contacts based on masterId
     public List<mProductPICData> getDataByMasterId(SQLiteDatabase db, String masterId) {
         List<mProductPICData> contactList = new ArrayList<mProductPICData>();
