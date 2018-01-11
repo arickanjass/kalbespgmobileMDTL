@@ -2575,6 +2575,7 @@ public class FragmentDownloadData extends Fragment {
     }
 
     private void setViewTextLastDownload() {
+        tUserLoginData dtLogin = new tUserLoginBL().getUserLogin();
         SQLiteDatabase db = new clsMainBL().getDb();
         String pstrArgument = "";
         clsMainActivity _clsMainActivity = new clsMainActivity();
@@ -2620,7 +2621,7 @@ public class FragmentDownloadData extends Fragment {
             }
         }
         if (ll_product != null && checkVisibility(ll_product)) {
-            txtProduct.setText("Product (" + String.valueOf(new mEmployeeSalesProductDA(db).getContactsCountByKN(db, mUserLOBDataList)) + ")");
+            txtProduct.setText("Product (" + String.valueOf(new mEmployeeSalesProductDA(db).getContactsCountByKN(db, mUserLOBDataList, dtLogin.get_TxtEmpId())) + ")");
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_product.getId()).toString());
             if (_tLogDownloadData != null && _tLogDownloadData.get_dtLastDownload().toString() != "null") {
@@ -2644,7 +2645,7 @@ public class FragmentDownloadData extends Fragment {
             }
         }
         if (ll_product_competitor != null && checkVisibility(ll_product_competitor)) {
-            txtVwProductComp.setText("Product Competitor (" + String.valueOf(new mProductCompetitorDA(db).getContactsCountByKN(db, mUserLOBDataList)) + ")");
+            txtVwProductComp.setText("Product Competitor (" + String.valueOf(new mProductCompetitorDA(db).getContactsCountByKN(db, mUserLOBDataList, dtLogin.get_TxtEmpId())) + ")");
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_product_competitor.getId()).toString());
             if (_tLogDownloadData != null && _tLogDownloadData.get_dtLastDownload().toString() != "null") {
@@ -2652,7 +2653,7 @@ public class FragmentDownloadData extends Fragment {
             }
         }
         if (ll_product_spg != null && checkVisibility(ll_product_spg)) {
-            txtVwProductSPGCusBase.setText("Product SPG CustomerBased (" + String.valueOf(new mProductSPGDA(db).getContactsCountByKN(db, mUserLOBDataList)) + ")");
+            txtVwProductSPGCusBase.setText("Product SPG CustomerBased (" + String.valueOf(new mProductSPGDA(db).getContactsCountByKN(db, mUserLOBDataList, dtLogin.get_TxtEmpId())) + ")");
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_product_spg.getId()).toString());
             if (_tLogDownloadData != null && _tLogDownloadData.get_dtLastDownload().toString() != "null") {
@@ -2660,7 +2661,7 @@ public class FragmentDownloadData extends Fragment {
             }
         }
         if (ll_product_pic != null && checkVisibility(ll_product_pic)) {
-            txtVwProductPICCusBase.setText("Product PIC CustomerBased (" + String.valueOf(new mProductPICDA(db).getContactsCountByKN(db, mUserLOBDataList)) + ")");
+            txtVwProductPICCusBase.setText("Product PIC CustomerBased (" + String.valueOf(new mProductPICDA(db).getContactsCountByKN(db, mUserLOBDataList, dtLogin.get_TxtEmpId())) + ")");
             tLogDownloadData _tLogDownloadData;
             _tLogDownloadData = new tLogDownloadBL().getDataById(res.getResourceEntryName(ll_product_pic.getId()).toString());
             if (_tLogDownloadData != null && _tLogDownloadData.get_dtLastDownload().toString() != "null") {
