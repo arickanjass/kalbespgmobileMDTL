@@ -204,6 +204,7 @@ public class fragment_geotagging extends Fragment implements GoogleApiClient.Con
 //    List<clsMobile_ValidationNo> ListOfclsMobile_ValidationNoe=null;
     ListView listData;
     View viewListEmpty;
+    RadioButton radio_outlet_callPLan;
 
     public Location getLocation() {
         try {
@@ -432,7 +433,7 @@ public class fragment_geotagging extends Fragment implements GoogleApiClient.Con
         });
         RadioButton radio_outlet_code = (RadioButton) v.findViewById(R.id.radio_outlet_code);
         RadioButton radio_outlet_name = (RadioButton) v.findViewById(R.id.radio_outlet_name);
-        RadioButton radio_outlet_callPLan = (RadioButton) v.findViewById(R.id.radio_outlet_callPLan);
+        radio_outlet_callPLan = (RadioButton) v.findViewById(R.id.radio_outlet_callPLan);
         //RadioGroup rdtypeSearch = (RadioGroup) v.findViewById(R.id.rdtypeSearch);
         llCategotyOutlet.setVisibility(View.GONE);
         View.OnClickListener first_radio_listener = new View.OnClickListener (){
@@ -653,9 +654,13 @@ public class fragment_geotagging extends Fragment implements GoogleApiClient.Con
 //                        dt.txtAcc=lblAcc.getText().toString();
 //                        dt.save();
                         new mEmployeeAreaBL().saveData(dt);
+//                        if(radio_outlet_callPLan.isChecked()){
+//
+//                        }
                         tVisitPlanRealisasiData data = new tVisitPlanRealisasiData();
                         data.set_txtLatSource(lblLang.getText().toString());
                         data.set_txtLongSource(lblLong.getText().toString());
+                        data.set_txtOutletCode(txtOutletKodeSumberDataID);
                         new tVisitPlanRealisasiBL().UpdateDataTagging(data);
                     }
 //                    if(listclsMobile_MPartnerProfileAlias.size()>0){

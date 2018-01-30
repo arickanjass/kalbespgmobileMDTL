@@ -261,8 +261,8 @@ public class tVisitPlanRealisasiDA {
     public void UpdateDatatVisitPlan_MobileTagging(SQLiteDatabase db, tVisitPlanRealisasiData data) {
         tVisitPlanRealisasiData dt = new tVisitPlanRealisasiData();
         ContentValues cv = new ContentValues();
-        cv.put(dt.Property_txtLong,data.get_txtLong());
-        cv.put(dt.Property_txtLat,data.get_txtLat());
+        cv.put(dt.Property_txtLatSource,data.get_txtLatSource());
+        cv.put(dt.Property_txtLongSource,data.get_txtLongSource());
 
         db.update(TABLE_CONTACTS, cv, dt.Property_txtOutletCode+"='"+data.get_txtOutletCode()+"'", null);
     }
