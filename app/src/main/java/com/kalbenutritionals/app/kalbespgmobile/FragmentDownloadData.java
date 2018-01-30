@@ -7454,9 +7454,10 @@ public class FragmentDownloadData extends Fragment {
                 mProgressDialog.setCancelable(true);
 
                 Intent serviceIntentMyServiceNative = new Intent(getContext(), MyServiceNative.class);
-                getContext().stopService(serviceIntentMyServiceNative);
-                MyTrackingLocationService service = new MyTrackingLocationService();
-                service.shutdownService();
+                    getContext().stopService(serviceIntentMyServiceNative);
+                getContext().stopService(new Intent(getActivity(), MyTrackingLocationService.class));
+//                MyTrackingLocationService service = new MyTrackingLocationService();
+//                    service.shutdownService();
                 NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
                 notificationManager.cancelAll();
 

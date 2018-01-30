@@ -36,6 +36,14 @@ public class mEmployeeAreaBL extends clsMainBL {
         db.close();
     }
 
+    public void saveData(mEmployeeAreaData data) {
+        SQLiteDatabase db = getDb();
+        mEmployeeAreaDA _mEmployeeAreaDA = new mEmployeeAreaDA(db);
+//        _mEmployeeAreaDA.DeleteAllDataMConfig(db);
+            _mEmployeeAreaDA.SaveDataMConfig(db, data);
+        db.close();
+    }
+
     public void saveDataCustomExec(List<mEmployeeAreaTempData> Listdata) {
         SQLiteDatabase db = getDb();
         String sql = "insert into " + new clsHardCode().txtTable_mEmployeeArea + " (intEmployeeId, txtNIK, txtName, intID, intRegionId, txtRegionName, intBranchId, txtBranchCode, txtBranchName, intRayonId, txtRayonCode, txtRayonName, intChannelId, intOutletId, txtOutletCode, txtOutletName, txtLatitude, txtLongitude) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
@@ -84,6 +92,14 @@ public class mEmployeeAreaBL extends clsMainBL {
         SQLiteDatabase db = getDb();
         mEmployeeAreaDA _mEmployeeAreaDA = new mEmployeeAreaDA(db);
         mEmployeeAreaData listdata = _mEmployeeAreaDA.getDataByOutlet(db, idOutlet);
+        db.close();
+        return listdata;
+    }
+
+    public List<mEmployeeAreaData>  GetAllDataListByOutletCode(String idOutlet) {
+        SQLiteDatabase db = getDb();
+        mEmployeeAreaDA _mEmployeeAreaDA = new mEmployeeAreaDA(db);
+        List<mEmployeeAreaData> listdata = _mEmployeeAreaDA.getDataListByOutlet(db, idOutlet);
         db.close();
         return listdata;
     }

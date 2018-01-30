@@ -92,7 +92,7 @@ public class mMenuBL extends clsMainBL {
                 }
             } else if (data.get_TxtDescription().contains("mnVisitPlanMobile")
                     || data.get_TxtDescription().contains("mnPushDataSPG")
-//                    || data.get_TxtDescription().contains("mnLeaveSPG")
+                    || data.get_TxtDescription().contains("mnGeoTagging")
                     || data.get_TxtDescription().contains("mnAbsenSPG")
                     || data.get_TxtDescription().contains("mnAbsenFPE")
                     || data.get_TxtDescription().contains("mnAbsenTL")
@@ -106,7 +106,7 @@ public class mMenuBL extends clsMainBL {
                 mEmployeeSalesProductDA _mEmployeeSalesProductDA = new mEmployeeSalesProductDA(db);
 
                 //Untuk visitplan harus pengecekan master data
-                if (data.get_TxtDescription().contains("mnVisitPlanMobile")||data.get_TxtDescription().contains("mnPushDataSPG")||data.get_TxtDescription().contains("mnLeaveMD")) {
+                if (data.get_TxtDescription().contains("mnVisitPlanMobile")||data.get_TxtDescription().contains("mnPushDataSPG")||data.get_TxtDescription().contains("mnLeaveMD")||data.get_TxtDescription().contains("mnGeoTagging")) {
                     _mEmployeeBranchDA = new mEmployeeBranchDA(db);
                     _mEmployeeAreaDA = new mEmployeeAreaDA(db);
                     _mEmployeeSalesProductDA = new mEmployeeSalesProductDA(db);
@@ -156,6 +156,24 @@ public class mMenuBL extends clsMainBL {
                         }
 
                         if(validAddmnLeave){
+                            tmpData.add(data);
+                        }
+                    }
+                    else if(data.get_TxtDescription().contains("mnGeoTagging")&&
+                            _mEmployeeAreaDA.getContactsCount(db) > 0 &&
+                            _mTypeLeaveMobileDA.getContactsCount(db) > 0){
+                        int validate = 0;
+                        if (listDataLeave.size() == 0) {
+                            validate = 1;
+//                            List<mEmployeeAreaData> datamEmployeeArea = new mEmployeeAreaBL().GetAllData();
+//
+//                            for (mEmployeeAreaData dt : datamEmployeeArea) {
+//                                if (dt.get_txtLatitude().equals("") || dt.get_txtLatitude() == null || dt.get_txtLatitude().equals("") && dt.get_txtLongitude().equals("") || dt.get_txtLongitude() == null || dt.get_txtLongitude().equals("")) {
+//                                    validate = 0;
+//                                }
+//                            }
+                        }
+                        if (validate == 1) {
                             tmpData.add(data);
                         }
                     }

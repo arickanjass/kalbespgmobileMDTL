@@ -42,6 +42,13 @@ public class tVisitPlanRealisasiBL extends clsMainBL{
             _tVisitPlanRealisasiDA.UpdateDatatVisitPlan_MobileData(db, dt);
         db.close();
     }
+    public void UpdateDataTagging(tVisitPlanRealisasiData dt) {
+        SQLiteDatabase db = getDb();
+        tVisitPlanRealisasiDA _tVisitPlanRealisasiDA = new tVisitPlanRealisasiDA(db);
+//        _tVisitPlanRealisasiDA.DeleteAllData(db);
+        _tVisitPlanRealisasiDA.UpdateDatatVisitPlan_MobileTagging(db, dt);
+        db.close();
+    }
     public void downloadData(List<tVisitPlanRealisasiData> dt) {
         SQLiteDatabase db = getDb();
         tVisitPlanRealisasiDA _tVisitPlanRealisasiDA = new tVisitPlanRealisasiDA(db);

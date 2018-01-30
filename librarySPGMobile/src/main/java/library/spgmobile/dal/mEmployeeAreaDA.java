@@ -201,6 +201,62 @@ public class mEmployeeAreaDA {
 		cursor.close();
 		return contact;
 	}
+
+	public List<mEmployeeAreaData> getDataListByOutlet(SQLiteDatabase db, String idOutlet) {
+		mEmployeeAreaData dt = new mEmployeeAreaData();
+		Cursor cursor = db.query(TABLE_CONTACTS, new String[] {
+						dt.Property_intID
+						, dt.Property_intBranchId
+						, dt.Property_intChannelId
+						, dt.Property_intEmployeeId
+						, dt.Property_intOutletId
+						, dt.Property_intRayonId
+						, dt.Property_intRegionId
+						, dt.Property_txtBranchCode
+						, dt.Property_txtBranchName
+						, dt.Property_txtName
+						, dt.Property_txtNIK
+						, dt.Property_txtLatitude
+						, dt.Property_txtLongitude
+						, dt.Property_txtOutletCode
+						, dt.Property_txtOutletName
+						, dt.Property_txtRayonCode
+						, dt.Property_txtRayonName
+						, dt.Property_txtRegionName},
+				dt.Property_txtOutletCode + "=?", new String[] { String.valueOf(idOutlet) },
+				null, null, null, null);
+		if (cursor != null)
+			cursor.moveToFirst();
+		List<mEmployeeAreaData> contactList = new ArrayList<>();
+		if (cursor.getCount() > 0) {
+			mEmployeeAreaData contact = new mEmployeeAreaData();
+			contact.set_intID(cursor.getString(0));
+			contact.set_intBranchId(cursor.getString(1));
+			contact.set_intChannelId(cursor.getString(2));
+			contact.set_intEmployeeId(cursor.getString(3));
+			contact.set_intOutletId(cursor.getString(4));
+			contact.set_intRayonId(cursor.getString(5));
+			contact.set_intRegionId(cursor.getString(6));
+			contact.set_txtBranchCode(cursor.getString(7));
+			contact.set_txtBranchName(cursor.getString(8));
+			contact.set_txtName(cursor.getString(9));
+			contact.set_txtNIK(cursor.getString(10));
+			contact.set_txtLatitude(cursor.getString(11));
+			contact.set_txtLongitude(cursor.getString(12));
+			contact.set_txtOutletCode(cursor.getString(13));
+			contact.set_txtOutletName(cursor.getString(14));
+			contact.set_txtRayonCode(cursor.getString(15));
+			contact.set_txtRayonName(cursor.getString(16));
+			contact.set_txtRegionName(cursor.getString(17));
+			contactList.add(contact);
+			// return contact
+		} else {
+			contactList = null;
+		}
+		cursor.close();
+		return contactList;
+	}
+
 	public List<mEmployeeAreaData> getDataAreaByCabId(SQLiteDatabase db, String Cabid) {
 		List<mEmployeeAreaData> contactList = new ArrayList<mEmployeeAreaData>();
 		mEmployeeAreaData dt = new mEmployeeAreaData();

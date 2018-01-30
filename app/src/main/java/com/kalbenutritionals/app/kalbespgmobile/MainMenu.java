@@ -138,16 +138,23 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         selectedId = 0;
 
+        tUserLoginData dt = new tUserLoginBL().getUserActive();
+
         Intent serviceIntentMyServiceNative = new Intent(getApplicationContext(), MyServiceNative.class);
         if (!isMyServiceRunning(MyServiceNative.class)) {
             getApplicationContext().startService(serviceIntentMyServiceNative);
         }
 
-        Intent serviceIntentMyTrackingLocationService = new Intent(getApplicationContext(), MyTrackingLocationService.class);
-        if (!isMyServiceRunning(MyTrackingLocationService.class)) {
-            getApplicationContext().startService(serviceIntentMyTrackingLocationService);
+        if(dt.get_intTrackingMobile().equals("1")){
+            Intent serviceIntentMyTrackingLocationService = new Intent(getApplicationContext(), MyTrackingLocationService.class);
+            if (!isMyServiceRunning(MyTrackingLocationService.class)) {
+                getApplicationContext().startService(serviceIntentMyTrackingLocationService);
+            }
+        } else if (dt.get_intTrackingMobile().equals("0")){
+//            MyTrackingLocationService service = new MyTrackingLocationService();
+//            service.shutdownService();
+            stopService(new Intent(getApplicationContext(), MyTrackingLocationService.class));
         }
-
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -172,8 +179,6 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
         fragmentTransactionHome.replace(R.id.frame, homeFragment);
         fragmentTransactionHome.commit();
         selectedId = 99;
-
-        tUserLoginData dt = new tUserLoginBL().getUserActive();
 
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         View vwHeader = navigationView.getHeaderView(0);
@@ -951,7 +956,9 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
 //                Json = new tUserLoginBL().Logout(pInfo.versionName);
                 if(validPush){
                     Json = new tUserLoginBL().Logout(pInfo.versionName);
-                } else if (Jresult==null){
+                } else if (validPush && Jresult==null){
+                    Json = new tUserLoginBL().Logout(pInfo.versionName);
+                } else if(!validPush && Jresult==null){
                     Json = new tUserLoginBL().Logout(pInfo.versionName);
                 } else {
                     Json = Jresult;

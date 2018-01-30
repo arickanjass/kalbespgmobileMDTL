@@ -8,6 +8,7 @@ import android.os.Environment;
 import android.os.StatFs;
 import android.util.Log;
 
+import org.json.JSONObject;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -42,6 +43,7 @@ import library.spgmobile.dal.mCountConsumerMTDDA;
 import library.spgmobile.dal.mCounterNumberDA;
 import library.spgmobile.dal.mDownloadMasterData_mobileDA;
 import library.spgmobile.dal.mEmployeeAreaDA;
+import library.spgmobile.dal.mEmployeeAreaTaggingDA;
 import library.spgmobile.dal.mEmployeeBranchDA;
 import library.spgmobile.dal.mEmployeeSalesProductDA;
 import library.spgmobile.dal.mKategoriDA;
@@ -57,6 +59,7 @@ import library.spgmobile.dal.mProductCompetitorDA;
 import library.spgmobile.dal.mProductPICDA;
 import library.spgmobile.dal.mProductSPGDA;
 import library.spgmobile.dal.mReasonPOPStandardDA;
+import library.spgmobile.dal.mTipeSumberDA;
 import library.spgmobile.dal.mTypeLeaveMobileDA;
 import library.spgmobile.dal.mTypePOPStandardDA;
 import library.spgmobile.dal.mTypePertanyaanDA;
@@ -323,6 +326,47 @@ public class clsHelper {
 		return result;
 	}
 
+	public JSONObject callPushDataReturnJsonObject(String urlToRead, String DataJson, Integer intTimeOut) {
+		//notify("asa","asda","asdas");
+		JSONObject _JSONObject = null;
+		URL url;
+		HttpURLConnection conn;
+		BufferedReader rd;
+		String line;
+		String result = "";
+		clsHelper _clsClsHelper = new clsHelper();
+		try {
+			url = new URL(urlToRead);
+			conn = (HttpURLConnection) url.openConnection();
+			conn.setConnectTimeout(intTimeOut);
+			conn.setRequestProperty("User-Agent","Mozilla/5.0 ( compatible ) ");
+			conn.setRequestProperty("Accept","*/*");
+			String param=DataJson;
+			conn.setDoOutput(true);
+			conn.setDoInput(true);
+			conn.setRequestMethod("POST");
+			conn.setFixedLengthStreamingMode(param.getBytes().length);
+			conn.setRequestProperty("Content-Type",
+					"application/x-www-form-urlencoded");
+			conn.setRequestProperty("charset", "utf-8");
+			PrintWriter out = new PrintWriter(conn.getOutputStream());
+			out.print(param);
+			out.close();
+			String response= "";
+			Scanner inStream = new Scanner(conn.getInputStream());
+			while(inStream.hasNextLine())
+			{
+				response+=(inStream.nextLine());
+			}
+			conn.disconnect();
+			result=response;
+			_JSONObject=new JSONObject(result);
+		} catch (IOException e) {
+		} catch (Exception e) {
+		}
+		return _JSONObject;
+	}
+
 	public void DeleteAllDB(SQLiteDatabase db){
 		tUserLoginDA _tUserLoginDA=new tUserLoginDA(db);
 		tSalesProductHeaderDA _tSalesProductHeaderDA=new tSalesProductHeaderDA(db);
@@ -335,6 +379,7 @@ public class clsHelper {
 		mProductBrandHeaderDA _mProductBrandHeaderDA=new mProductBrandHeaderDA(db);
 		mNotificationDA _mNotificationDA=new mNotificationDA(db);
 		mEmployeeAreaDA _mEmployeeAreaDA=new mEmployeeAreaDA(db);
+		mEmployeeAreaTaggingDA _mEmployeeAreaTaggingDA=new mEmployeeAreaTaggingDA(db);
 		mEmployeeBranchDA _mEmployeeBranchDA=new mEmployeeBranchDA(db);
 		mEmployeeSalesProductDA _mEmployeeSalesProductDA=new mEmployeeSalesProductDA(db);
 		mCounterNumberDA _mCounterNumberDA=new mCounterNumberDA(db);
@@ -400,7 +445,9 @@ public class clsHelper {
 		tKemasanRusakImageDA _tKemasanRusakImageDA = new tKemasanRusakImageDA(db);
 		tTidakSesuaiPesananHeaderDA _tTidakSesuaiPesananHeaderDA = new tTidakSesuaiPesananHeaderDA(db);
 		tTidakSesuaiPesananImageDA _tTidakSesuaiPesananImageDA = new tTidakSesuaiPesananImageDA(db);
+		mTipeSumberDA _mTipeSumberDA = new mTipeSumberDA(db);
 
+		_mTipeSumberDA.DropTable(db);
 		_mUserLOBDA.DropTable(db);
 		_tSubTypeActivityDA.Droptable(db);
 		_tKategoryPlanogramMobileDA.Droptable(db);
@@ -434,6 +481,7 @@ public class clsHelper {
 		_tActivityDA.DropTable(db);
 		_tActivityMobileDA.DropTable(db);
 		_mEmployeeAreaDA.DropTable(db);
+		_mEmployeeAreaTaggingDA.DropTable(db);
 		_mNotificationDA.DropTable(db);
 		_mEmployeeBranchDA.DropTable(db);
 //		_mEmployeeSalesProductDA.DropTable(db);
@@ -505,6 +553,7 @@ public class clsHelper {
 		_KoordinasiOutletDA = new KoordinasiOutletDA(db);
 		_mCategoryKoordinasiOutletDA = new mCategoryKoordinasiOutletDA(db);
 		_KoordinasiOutletImageDA = new KoordinasiOutletImageDA(db);
+		new mTipeSumberDA(db);
 		new mProductSPGDA(db);
 		new mProductPICDA(db);
 		new mCountConsumerMTDDA(db);
@@ -539,6 +588,7 @@ public class clsHelper {
 		_tDeviceInfoUserDA=new tDeviceInfoUserDA(db);
 		_mNotificationDA=new mNotificationDA(db);
 		_mEmployeeAreaDA=new mEmployeeAreaDA(db);
+		_mEmployeeAreaTaggingDA=new mEmployeeAreaTaggingDA(db);
 		_mEmployeeBranchDA=new mEmployeeBranchDA(db);
 		_mEmployeeSalesProductDA=new mEmployeeSalesProductDA(db);
 		_mCounterNumberDA=new mCounterNumberDA(db);

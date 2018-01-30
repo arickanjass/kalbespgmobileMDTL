@@ -25,7 +25,12 @@ import android.widget.TextView;
 import com.owater.library.CircleTextView;
 import com.theartofdev.edmodo.cropper.CropImage;
 
+import org.w3c.dom.Text;
+
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import bl.clsHelperBL;
@@ -78,6 +83,7 @@ public class FragmentInformation extends Fragment implements View.OnClickListene
     private LinearLayout ll_data_tidaksesuaipesanan, ll_data_kemasanrusak, ll_data_addDisplay, ll_data_overStock, ll_dataVisitPlan, ll_dataVisitPlanDone, ll_reso, ll_data_activity, ll_data_activityV2 , ll_data_customerbased, ll_data_customerbasedMTD, ll_purchase_order, ll_dataQuantityStock,ll_dataQuesioner, ll_dataKoordinasi, ll_data_planogram, ll_data_stockIH, ll_dataPOP_Standard;
     private TableRow tr_kemasanRusak,tr_tidaksesuai,tr_addDisplay, tr_overStock, tr_oustVisit, tr_doneVisit, tr_reso, tr_activity, tr_activityV2, tr_cunsomer, tr_po, tr_qStock,tr_StockINhand,tr_koordinasi,tr_planogram,tr_quesioner, tr_POPStandard;
     LocationManager locationManager;
+    TextView tv_time;
     TextView tv_kemasanRusak0,tv_kemasanRusak1,tv_kemasanRusak2,tv_tidaksesuai0,tv_tidaksesuai1,tv_tidaksesuai2,tv_oustVisit0, tv_oustVisit1, tv_oustVisit2, tv_doneVisit0, tv_doneVisit1, tv_doneVisit2, tv_os0, tv_os1, tv_os2, tv_addDisplay0, tv_addDisplay1, tv_addDisplay2;
 
     @Nullable
@@ -110,6 +116,7 @@ public class FragmentInformation extends Fragment implements View.OnClickListene
         CircleTextView tvTotalkemasanrusak = (CircleTextView) v.findViewById(R.id.tvTotalkemasanrusak);
         tvUsername = (TextView) v.findViewById(R.id.tvUsername);
         tvBranchOutlet = (TextView) v.findViewById(R.id.tvBranchOutlet);
+        tv_time = (TextView) v.findViewById(R.id.tvDate);
         tvEmail = (TextView) v.findViewById(R.id.tvEmail);
         tv_reso0 = (TextView) v.findViewById(R.id.tv_reso0);
         tv_reso1 = (TextView) v.findViewById(R.id.tv_reso1);
@@ -207,6 +214,15 @@ public class FragmentInformation extends Fragment implements View.OnClickListene
         tr_doneVisit = (TableRow) v.findViewById(R.id.tr_doneVisit);
         tr_kemasanRusak = (TableRow) v.findViewById(R.id.tr_kemasanRusak);
         tr_tidaksesuai = (TableRow) v.findViewById(R.id.tr_tidaksesuai);
+
+        try{
+
+            Date date = new Date();
+
+            tv_time.setText(DateFormat.getDateInstance(DateFormat.MEDIUM).format(date));
+        } catch (Exception e){
+
+        }
 
 
         List<mDownloadMasterData_mobileData> mDownloadMasterData_mobileDataList = new ArrayList<>();

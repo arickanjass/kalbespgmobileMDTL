@@ -50,10 +50,19 @@
                 android:id="@+id/tvEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
                 android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:text="arick_anjasmara@ymail.com"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="-"
                 android:textColor="@color/white" />
         </LinearLayout>
 

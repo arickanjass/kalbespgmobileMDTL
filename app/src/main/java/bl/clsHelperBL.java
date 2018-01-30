@@ -524,6 +524,7 @@ public class clsHelperBL extends clsMainBL {
         String TimeOut = dataAPI.get_txtValue();
         String strLinkAPI = dtlinkAPI.QueryString(strVal2);
         String JsonData = _help.PushDataWithFile(strLinkAPI, strJson, Integer.valueOf(TimeOut), ListOfDataFile);
+//        String JsonData2 = "[{\"_pboolValid\":0,\"_pstrArgument\":\"2018\\/01\\/14 22:13:57:081\",\"_pstrMessage\":\"Transaction (Process ID 121) was deadlocked on lock | communication buffer resources with another process and has been chosen as the deadlock victim. Rerun the transaction.\",\"_pstrMethodRequest\":\"PushDataSPGMobile\",\"ListOfBranch\":null,\"ListOfEmployeeBranchData\":null,\"ListOfOutletCRM\":null,\"ListOfTFileAttach_mobile\":null,\"ListOfTNotificationHeaderSPG_mobile\":null,\"ListOfXTeamRegionAPI\":null,\"ListOfclsDataPOPStandardAPI\":null,\"ListOfclsDataQuesionerAPI\":null,\"ListOfclsDataStockInHandAPI\":null,\"ListOfclsDatatPurchaseOrderAPI\":null,\"ListOfclsKemasanRusakHeader\":null,\"ListOfclsKoordinasiOutletImage_mobile\":null,\"ListOfclsKoordinasiOutlet_mobile\":null,\"ListOfclsMGeolocationOutlet\":null,\"ListOfclsMItemSalesPack_Stock\":null,\"ListOfclsPlanogramMobile\":null,\"ListOfclsTGRNDetail_mobile\":null,\"ListOfclsTGRNHeader_mobile\":null,\"ListOfclsTJawabanSPGHeader_Mobile\":null,\"ListOfclsTJawabanSPG_Mobile\":null,\"ListOfclsTKemasanRusakDetail_mobile\":null,\"ListOfclsTKemasanRusakHeader_mobile\":null,\"ListOfclsTKemasanRusakImage_mobile\":null,\"ListOfclsTOverStockDetail_mobile\":null,\"ListOfclsTOverStockHeader_mobile\":null,\"ListOfclsTPODetail_mobile\":null,\"ListOfclsTPOHeader_mobile\":null,\"ListOfclsTPOStatus_mobile\":null,\"ListOfclsTPenguaranDetail_mobile\":null,\"ListOfclsTPenguaranHeader_Mobile\":null,\"ListOfclsTPenguaranStatus_mobile\":null,\"ListOfclsTPlanogramImage_mobile\":null,\"ListOfclsTPurchaseOrderDetail_Mobile\":null,\"ListOfclsTPurchaseOrderHeader_Mobile\":null,\"ListOfclsTSalesOrderDetail_Mobile\":null,\"ListOfclsTSalesOrderHeader_Mobile\":null,\"ListOfclsTSalesProductDetail_Mobile\":null,\"ListOfclsTSalesProductHeader_Mobile\":null,\"ListOfclsTSalesProductQuantityDetail_mobile\":null,\"ListOfclsTSalesProductQuantityHeader_mobile\":null,\"ListOfclsTSalesProductQuantityImage_mobile\":null,\"ListOfclsTStockOpnameDetail_mobile\":null,\"ListOfclsTStockOpnameHeader_mobile\":null,\"ListOfclsTTransactionDetail\":null,\"ListOfclsTVisitplanDetail_Mobile\":null,\"ListOfclsTVisitplanHeader_Mobile\":null,\"ListOfclsTidakSesuaiPesananOutletImage_mobile\":null,\"ListOfclsTnotificationHeader_mobile\":null,\"ListOfclsTrackingLocation_mobile\":null,\"ListOfclsclsTidakSesuaiPesanan\":null,\"ListOfclsdataCustomerBasedAPI\":null,\"ListOfclsdataResoAPI\":null,\"ListOfclsmBranch\":null,\"ListOfclsmPriceInOutlet\":null,\"ListOfclsmstockawal_mobile\":null,\"ListOfclstOverStockHeader\":null,\"ListOfclstQuantityStockHeader\":null,\"ListOfkoordinasiOutletImage_mobile\":null,\"ListOfkoordinasiOutlet_mobile\":null,\"ListOfmCategoryKoordinasiOutlet_mobile\":null,\"ListOfmCategoryVisitPlanData\":null,\"ListOfmKategoriQuesioner_mobile\":null,\"ListOfmListJawabanQuesioner_mobile\":null,\"ListOfmParentQuesioner_mobile\":null,\"ListOfmPertanyaanQuesioner_mobile\":null,\"ListOfmProductBarcode\":null,\"ListOfmProductBrandHeader\":null,\"ListOfmQuesionerViewHeaderWeb\":null,\"ListOfmTypeLeaveMobile\":null,\"ListOfmTypePertanyaanQuesioner_mobile\":null,\"ListOfmTypeSubmissionMobile\":null,\"ListOftAbsenUser_mobile\":null,\"ListOftActivity_mobile\":null,\"ListOftActivity_mobileNew\":null,\"ListOftAttendanceUser_mobile\":null,\"ListOftCustomerBasedMobileDetail\":null,\"ListOftCustomerBasedMobileDetailProduct\":null,\"ListOftCustomerBasedMobileHeader\":null,\"ListOftHirartkiBis_mobile\":null,\"ListOftJawabanSPGHeader_mobile\":null,\"ListOftJawabanSPG_mobile\":null,\"ListOftKategoryPlanogram\":null,\"ListOftLeaveMobile\":null,\"ListOftLogReceiverDetailNotif_mobile\":null,\"ListOftLogReceiverHeaderNotif_mobile\":null,\"ListOftOverStockDetail_mobile\":null,\"ListOftOverStockHeader_mobile\":null,\"ListOftPOPStandardDetail_mobile\":null,\"ListOftPOPStandardHeader_mobile\":null,\"ListOftPlanogramImage_mobile\":null,\"ListOftPlanogramMobile\":null,\"ListOftPlanogram_mobile\":null,\"ListOftPurchaseOrderDetail_mobile\":null,\"ListOftPurchaseOrderHeader_mobile\":null,\"ListOftSalesProductDetail_mobile\":null,\"ListOftSalesProductHeader_mobile\":null,\"ListOftSalesProductQuantityDetail_mobile\":null,\"ListOftSalesProductQuantityHeader_mobile\":null,\"ListOftStockInHandDetail_mobile\":null,\"ListOftStockInHandHeader_mobile\":null,\"ListOftSubTypeActivity\":nul";
         //String JsonData= _help.ResultJsonData(_help.getHTML(strLinkAPI));
         org.json.simple.JSONArray JsonArray = _help.ResultJsonArray(JsonData);
         APIData dtAPIDATA = new APIData();
@@ -546,6 +547,87 @@ public class clsHelperBL extends clsMainBL {
             }
         }
         _db.close();
+        return JsonArray;
+    }
+
+    public org.json.simple.JSONArray callPushDataReturnJsonParamMethod(String txtMethod,String versionName, String strJson) throws Exception {
+        SQLiteDatabase _db = getDb();
+        Boolean flag = true;
+        String ErrorMess = "";
+        linkAPI dtlinkAPI = new linkAPI();
+        clsHelper _help = new clsHelper();
+        dtlinkAPI = new linkAPI();
+        dtlinkAPI.set_txtMethod(txtMethod);
+        tUserLoginDA _tUserLoginDA = new tUserLoginDA(_db);
+        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
+        dtlinkAPI.set_txtParam(_dataUserLogin.get_txtUserId() + "|||");
+        dtlinkAPI.set_txtToken(new clsHardCode().txtTokenAPI);
+        dtlinkAPI.set_txtVesion(versionName);
+        String strVal2 = "";
+        mconfigDA _mconfigDA = new mconfigDA(_db);
+        mconfigData dataAPI = _mconfigDA.getData(_db, enumConfigData.ApiKalbe.getidConfigData());
+        strVal2 = dataAPI.get_txtValue();
+        if (dataAPI.get_txtValue() == "") {
+            strVal2 = dataAPI.get_txtDefaultValue();
+        }
+        dataAPI = _mconfigDA.getData(_db, enumConfigData.BackGroundServiceOnline.getidConfigData());
+        String TimeOut = dataAPI.get_txtValue();
+        String strLinkAPI = dtlinkAPI.QueryString(strVal2);
+        String JsonData = _help.pushtData(strLinkAPI, strJson, Integer.valueOf(TimeOut));
+//        String JsonData2 = "[{\"_pboolValid\":0,\"_pstrArgument\":\"2018\\/01\\/14 22:13:57:081\",\"_pstrMessage\":\"Transaction (Process ID 121) was deadlocked on lock | communication buffer resources with another process and has been chosen as the deadlock victim. Rerun the transaction.\",\"_pstrMethodRequest\":\"PushDataSPGMobile\",\"ListOfBranch\":null,\"ListOfEmployeeBranchData\":null,\"ListOfOutletCRM\":null,\"ListOfTFileAttach_mobile\":null,\"ListOfTNotificationHeaderSPG_mobile\":null,\"ListOfXTeamRegionAPI\":null,\"ListOfclsDataPOPStandardAPI\":null,\"ListOfclsDataQuesionerAPI\":null,\"ListOfclsDataStockInHandAPI\":null,\"ListOfclsDatatPurchaseOrderAPI\":null,\"ListOfclsKemasanRusakHeader\":null,\"ListOfclsKoordinasiOutletImage_mobile\":null,\"ListOfclsKoordinasiOutlet_mobile\":null,\"ListOfclsMGeolocationOutlet\":null,\"ListOfclsMItemSalesPack_Stock\":null,\"ListOfclsPlanogramMobile\":null,\"ListOfclsTGRNDetail_mobile\":null,\"ListOfclsTGRNHeader_mobile\":null,\"ListOfclsTJawabanSPGHeader_Mobile\":null,\"ListOfclsTJawabanSPG_Mobile\":null,\"ListOfclsTKemasanRusakDetail_mobile\":null,\"ListOfclsTKemasanRusakHeader_mobile\":null,\"ListOfclsTKemasanRusakImage_mobile\":null,\"ListOfclsTOverStockDetail_mobile\":null,\"ListOfclsTOverStockHeader_mobile\":null,\"ListOfclsTPODetail_mobile\":null,\"ListOfclsTPOHeader_mobile\":null,\"ListOfclsTPOStatus_mobile\":null,\"ListOfclsTPenguaranDetail_mobile\":null,\"ListOfclsTPenguaranHeader_Mobile\":null,\"ListOfclsTPenguaranStatus_mobile\":null,\"ListOfclsTPlanogramImage_mobile\":null,\"ListOfclsTPurchaseOrderDetail_Mobile\":null,\"ListOfclsTPurchaseOrderHeader_Mobile\":null,\"ListOfclsTSalesOrderDetail_Mobile\":null,\"ListOfclsTSalesOrderHeader_Mobile\":null,\"ListOfclsTSalesProductDetail_Mobile\":null,\"ListOfclsTSalesProductHeader_Mobile\":null,\"ListOfclsTSalesProductQuantityDetail_mobile\":null,\"ListOfclsTSalesProductQuantityHeader_mobile\":null,\"ListOfclsTSalesProductQuantityImage_mobile\":null,\"ListOfclsTStockOpnameDetail_mobile\":null,\"ListOfclsTStockOpnameHeader_mobile\":null,\"ListOfclsTTransactionDetail\":null,\"ListOfclsTVisitplanDetail_Mobile\":null,\"ListOfclsTVisitplanHeader_Mobile\":null,\"ListOfclsTidakSesuaiPesananOutletImage_mobile\":null,\"ListOfclsTnotificationHeader_mobile\":null,\"ListOfclsTrackingLocation_mobile\":null,\"ListOfclsclsTidakSesuaiPesanan\":null,\"ListOfclsdataCustomerBasedAPI\":null,\"ListOfclsdataResoAPI\":null,\"ListOfclsmBranch\":null,\"ListOfclsmPriceInOutlet\":null,\"ListOfclsmstockawal_mobile\":null,\"ListOfclstOverStockHeader\":null,\"ListOfclstQuantityStockHeader\":null,\"ListOfkoordinasiOutletImage_mobile\":null,\"ListOfkoordinasiOutlet_mobile\":null,\"ListOfmCategoryKoordinasiOutlet_mobile\":null,\"ListOfmCategoryVisitPlanData\":null,\"ListOfmKategoriQuesioner_mobile\":null,\"ListOfmListJawabanQuesioner_mobile\":null,\"ListOfmParentQuesioner_mobile\":null,\"ListOfmPertanyaanQuesioner_mobile\":null,\"ListOfmProductBarcode\":null,\"ListOfmProductBrandHeader\":null,\"ListOfmQuesionerViewHeaderWeb\":null,\"ListOfmTypeLeaveMobile\":null,\"ListOfmTypePertanyaanQuesioner_mobile\":null,\"ListOfmTypeSubmissionMobile\":null,\"ListOftAbsenUser_mobile\":null,\"ListOftActivity_mobile\":null,\"ListOftActivity_mobileNew\":null,\"ListOftAttendanceUser_mobile\":null,\"ListOftCustomerBasedMobileDetail\":null,\"ListOftCustomerBasedMobileDetailProduct\":null,\"ListOftCustomerBasedMobileHeader\":null,\"ListOftHirartkiBis_mobile\":null,\"ListOftJawabanSPGHeader_mobile\":null,\"ListOftJawabanSPG_mobile\":null,\"ListOftKategoryPlanogram\":null,\"ListOftLeaveMobile\":null,\"ListOftLogReceiverDetailNotif_mobile\":null,\"ListOftLogReceiverHeaderNotif_mobile\":null,\"ListOftOverStockDetail_mobile\":null,\"ListOftOverStockHeader_mobile\":null,\"ListOftPOPStandardDetail_mobile\":null,\"ListOftPOPStandardHeader_mobile\":null,\"ListOftPlanogramImage_mobile\":null,\"ListOftPlanogramMobile\":null,\"ListOftPlanogram_mobile\":null,\"ListOftPurchaseOrderDetail_mobile\":null,\"ListOftPurchaseOrderHeader_mobile\":null,\"ListOftSalesProductDetail_mobile\":null,\"ListOftSalesProductHeader_mobile\":null,\"ListOftSalesProductQuantityDetail_mobile\":null,\"ListOftSalesProductQuantityHeader_mobile\":null,\"ListOftStockInHandDetail_mobile\":null,\"ListOftStockInHandHeader_mobile\":null,\"ListOftSubTypeActivity\":nul";
+        //String JsonData= _help.ResultJsonData(_help.getHTML(strLinkAPI));
+        org.json.simple.JSONArray JsonArray = _help.ResultJsonArray(JsonData);
+        APIData dtAPIDATA = new APIData();
+        Iterator i = JsonArray.iterator();
+        mCounterNumberDA _mCounterNumberDA = new mCounterNumberDA(_db);
+        while (i.hasNext()) {
+            org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
+            int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
+            if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
+                mCounterNumberData _data = new mCounterNumberData();
+                _data.set_intId(enumCounterData.dtPushKBN.getidCounterData());
+                _data.set_txtDeskripsi((String) innerObj.get("_pstrMethodRequest"));
+                _data.set_txtName((String) innerObj.get("_pstrMethodRequest"));
+                _data.set_txtValue((String) innerObj.get("_pstrArgument"));
+                _mCounterNumberDA.SaveDataMConfig(_db, _data);
+            } else {
+                flag = false;
+                ErrorMess = (String) innerObj.get(dtAPIDATA.strMessage);
+                break;
+            }
+        }
+        _db.close();
+        return JsonArray;
+    }
+
+    public JSONArray callPushDataReturnJsonParamMethodJObject(String txtMethod, String versionName, String strJson) throws Exception {
+        SQLiteDatabase _db = getDb();
+        Boolean flag = true;
+        String ErrorMess = "";
+        linkAPI dtlinkAPI = new linkAPI();
+        clsHelper _help = new clsHelper();
+        dtlinkAPI = new linkAPI();
+        dtlinkAPI.set_txtMethod(txtMethod);
+        tUserLoginDA _tUserLoginDA = new tUserLoginDA(_db);
+        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
+        dtlinkAPI.set_txtParam(_dataUserLogin.get_txtUserId() + "|||");
+        dtlinkAPI.set_txtToken(new clsHardCode().txtTokenAPI);
+        dtlinkAPI.set_txtVesion(versionName);
+        String strVal2 = "";
+        mconfigDA _mconfigDA = new mconfigDA(_db);
+        mconfigData dataAPI = _mconfigDA.getData(_db, enumConfigData.ApiKalbe.getidConfigData());
+        strVal2 = dataAPI.get_txtValue();
+        if (dataAPI.get_txtValue() == "") {
+            strVal2 = dataAPI.get_txtDefaultValue();
+        }
+        dataAPI = _mconfigDA.getData(_db, enumConfigData.BackGroundServiceOnline.getidConfigData());
+        String TimeOut = dataAPI.get_txtValue();
+        String strLinkAPI = dtlinkAPI.QueryString(strVal2);
+        String JsonData = _help.pushtData(strLinkAPI, strJson, Integer.valueOf(TimeOut));
+//        String JsonData2 = "[{\"_pboolValid\":0,\"_pstrArgument\":\"2018\\/01\\/14 22:13:57:081\",\"_pstrMessage\":\"Transaction (Process ID 121) was deadlocked on lock | communication buffer resources with another process and has been chosen as the deadlock victim. Rerun the transaction.\",\"_pstrMethodRequest\":\"PushDataSPGMobile\",\"ListOfBranch\":null,\"ListOfEmployeeBranchData\":null,\"ListOfOutletCRM\":null,\"ListOfTFileAttach_mobile\":null,\"ListOfTNotificationHeaderSPG_mobile\":null,\"ListOfXTeamRegionAPI\":null,\"ListOfclsDataPOPStandardAPI\":null,\"ListOfclsDataQuesionerAPI\":null,\"ListOfclsDataStockInHandAPI\":null,\"ListOfclsDatatPurchaseOrderAPI\":null,\"ListOfclsKemasanRusakHeader\":null,\"ListOfclsKoordinasiOutletImage_mobile\":null,\"ListOfclsKoordinasiOutlet_mobile\":null,\"ListOfclsMGeolocationOutlet\":null,\"ListOfclsMItemSalesPack_Stock\":null,\"ListOfclsPlanogramMobile\":null,\"ListOfclsTGRNDetail_mobile\":null,\"ListOfclsTGRNHeader_mobile\":null,\"ListOfclsTJawabanSPGHeader_Mobile\":null,\"ListOfclsTJawabanSPG_Mobile\":null,\"ListOfclsTKemasanRusakDetail_mobile\":null,\"ListOfclsTKemasanRusakHeader_mobile\":null,\"ListOfclsTKemasanRusakImage_mobile\":null,\"ListOfclsTOverStockDetail_mobile\":null,\"ListOfclsTOverStockHeader_mobile\":null,\"ListOfclsTPODetail_mobile\":null,\"ListOfclsTPOHeader_mobile\":null,\"ListOfclsTPOStatus_mobile\":null,\"ListOfclsTPenguaranDetail_mobile\":null,\"ListOfclsTPenguaranHeader_Mobile\":null,\"ListOfclsTPenguaranStatus_mobile\":null,\"ListOfclsTPlanogramImage_mobile\":null,\"ListOfclsTPurchaseOrderDetail_Mobile\":null,\"ListOfclsTPurchaseOrderHeader_Mobile\":null,\"ListOfclsTSalesOrderDetail_Mobile\":null,\"ListOfclsTSalesOrderHeader_Mobile\":null,\"ListOfclsTSalesProductDetail_Mobile\":null,\"ListOfclsTSalesProductHeader_Mobile\":null,\"ListOfclsTSalesProductQuantityDetail_mobile\":null,\"ListOfclsTSalesProductQuantityHeader_mobile\":null,\"ListOfclsTSalesProductQuantityImage_mobile\":null,\"ListOfclsTStockOpnameDetail_mobile\":null,\"ListOfclsTStockOpnameHeader_mobile\":null,\"ListOfclsTTransactionDetail\":null,\"ListOfclsTVisitplanDetail_Mobile\":null,\"ListOfclsTVisitplanHeader_Mobile\":null,\"ListOfclsTidakSesuaiPesananOutletImage_mobile\":null,\"ListOfclsTnotificationHeader_mobile\":null,\"ListOfclsTrackingLocation_mobile\":null,\"ListOfclsclsTidakSesuaiPesanan\":null,\"ListOfclsdataCustomerBasedAPI\":null,\"ListOfclsdataResoAPI\":null,\"ListOfclsmBranch\":null,\"ListOfclsmPriceInOutlet\":null,\"ListOfclsmstockawal_mobile\":null,\"ListOfclstOverStockHeader\":null,\"ListOfclstQuantityStockHeader\":null,\"ListOfkoordinasiOutletImage_mobile\":null,\"ListOfkoordinasiOutlet_mobile\":null,\"ListOfmCategoryKoordinasiOutlet_mobile\":null,\"ListOfmCategoryVisitPlanData\":null,\"ListOfmKategoriQuesioner_mobile\":null,\"ListOfmListJawabanQuesioner_mobile\":null,\"ListOfmParentQuesioner_mobile\":null,\"ListOfmPertanyaanQuesioner_mobile\":null,\"ListOfmProductBarcode\":null,\"ListOfmProductBrandHeader\":null,\"ListOfmQuesionerViewHeaderWeb\":null,\"ListOfmTypeLeaveMobile\":null,\"ListOfmTypePertanyaanQuesioner_mobile\":null,\"ListOfmTypeSubmissionMobile\":null,\"ListOftAbsenUser_mobile\":null,\"ListOftActivity_mobile\":null,\"ListOftActivity_mobileNew\":null,\"ListOftAttendanceUser_mobile\":null,\"ListOftCustomerBasedMobileDetail\":null,\"ListOftCustomerBasedMobileDetailProduct\":null,\"ListOftCustomerBasedMobileHeader\":null,\"ListOftHirartkiBis_mobile\":null,\"ListOftJawabanSPGHeader_mobile\":null,\"ListOftJawabanSPG_mobile\":null,\"ListOftKategoryPlanogram\":null,\"ListOftLeaveMobile\":null,\"ListOftLogReceiverDetailNotif_mobile\":null,\"ListOftLogReceiverHeaderNotif_mobile\":null,\"ListOftOverStockDetail_mobile\":null,\"ListOftOverStockHeader_mobile\":null,\"ListOftPOPStandardDetail_mobile\":null,\"ListOftPOPStandardHeader_mobile\":null,\"ListOftPlanogramImage_mobile\":null,\"ListOftPlanogramMobile\":null,\"ListOftPlanogram_mobile\":null,\"ListOftPurchaseOrderDetail_mobile\":null,\"ListOftPurchaseOrderHeader_mobile\":null,\"ListOftSalesProductDetail_mobile\":null,\"ListOftSalesProductHeader_mobile\":null,\"ListOftSalesProductQuantityDetail_mobile\":null,\"ListOftSalesProductQuantityHeader_mobile\":null,\"ListOftStockInHandDetail_mobile\":null,\"ListOftStockInHandHeader_mobile\":null,\"ListOftSubTypeActivity\":nul";
+        //String JsonData= _help.ResultJsonData(_help.getHTML(strLinkAPI));
+
+        org.json.simple.JSONArray JsonArray = _help.ResultJsonArray(JsonData);
         return JsonArray;
     }
 
@@ -738,6 +820,7 @@ public class clsHelperBL extends clsMainBL {
             dtPush.set_txtVersionApp(versionName);
             dtPush.set_txtUserId(_tUserLoginData.get_txtUserId());
             dtPush.set_txtSessionLoginId(_tUserLoginData.get_txtDataId());
+            dtPush.set_intRoleId(_tUserLoginData.get_txtRoleId());
             try {
                 DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 Calendar cal = Calendar.getInstance();

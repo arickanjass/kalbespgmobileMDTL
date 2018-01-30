@@ -120,7 +120,7 @@ public class FragmentPushData extends Fragment {
             myValue = this.getArguments().getString("message");
 
             Intent serviceIntentMyServiceNative = new Intent(getContext(), MyServiceNative.class);
-            Intent serviceIntentTrancking = new Intent(getContext(), MyServiceNative.class);
+            Intent serviceIntentTrancking = new Intent(getContext(), MyTrackingLocationService.class);
             getContext().stopService(serviceIntentMyServiceNative);
             getContext().stopService(serviceIntentTrancking);
             ImagePick.deleteMediaStorageDirQuiz();
@@ -1779,6 +1779,96 @@ public class FragmentPushData extends Fragment {
         }
     }
 
+//    private class AsyncCallSyncData extends AsyncTask<List<dataJson>, Void, List<dataJson>> {
+//        @Override
+//        protected List<dataJson> doInBackground(List<dataJson>... params) {
+//            String versionName="";
+//            try {
+//                versionName = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0).versionName;
+////                    versionName = new clsMainActivity().getApplicationContext().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName;
+//            } catch (NameNotFoundException e2) {
+//                // TODO Auto-generated catch block
+//                e2.printStackTrace();
+//            }
+////            android.os.Debug.waitForDebugger();
+//            List<dataJson> roledata=new ArrayList<dataJson>();
+//            clsPushData dtJson= new clsHelperBL().pushData(versionName);
+//            dataJson dtdataJson=new dataJson();
+//            if(dtJson!=null){
+//
+//                try {
+//                    JSONArray Jresult= new clsHelperBL().callPushDataReturnJson(versionName,dtJson.getDtdataJson().txtJSON().toString(),dtJson.getFileUpload());
+//                    new clsHelperBL().saveDataPush(dtJson.getDtdataJson(),Jresult);
+//                    dtdataJson.setIntResult("1");
+//                } catch (Exception e) {
+//                    // TODO Auto-generated catch block
+//                    e.printStackTrace();
+//                    dtdataJson.setTxtMessage(e.toString());
+//                    dtdataJson.setIntResult("0");
+//                }
+//            }
+//            else
+//            {
+//                dtdataJson.setIntResult("0");
+//                dtdataJson.setTxtMessage("No Data");
+//            }
+//            roledata.add(dtdataJson);
+//            return roledata ;
+//        }
+//
+//        private ProgressDialog Dialog = new ProgressDialog(getContext());
+//        @Override
+//        protected void onCancelled() {
+//            Dialog.dismiss();
+//            Toast toast = Toast.makeText(getContext(),
+//                    new clsHardCode().txtMessCancelRequest, Toast.LENGTH_LONG);
+//            toast.setGravity(Gravity.TOP, 25, 400);
+//            toast.show();
+//        }
+//        @Override
+//        protected void onPostExecute(List<dataJson> roledata) {
+//            boolean result = false;
+//            if(roledata.get(0).getIntResult().equals("1")){
+//                new clsMainActivity().showCustomToast(getContext(), "Success Sync Data", true);
+//                loadData();
+//                Intent myIntent = new Intent(getContext(), MainMenu.class);
+//                if(myValue!=null&&myValue.equals("notMainMenu")){
+//                    AsyncCallLogOut task = new AsyncCallLogOut();
+//                    task.execute();
+//                }
+////                else {
+////                    startActivity(myIntent);
+////                }
+//            }else{
+//                new clsMainActivity().showCustomToast(getContext(), roledata.get(0).getTxtMessage(),false);
+//            }
+//            Dialog.dismiss();
+//        }
+//        int intProcesscancel=0;
+//        @Override
+//        protected void onPreExecute() {
+//            //Make ProgressBar invisible
+//            //pg.setVisibility(View.VISIBLE);
+//            Dialog.setMessage("Syncronize Data!!");
+//            Dialog.setCancelable(false);
+//            Dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    intProcesscancel=1;
+//                }
+//            });
+//            Dialog.show();
+//        }
+//
+//        @Override
+//        protected void onProgressUpdate(Void... values) {
+//            AsyncCallLogOut task = new AsyncCallLogOut();
+//            task.execute();
+//            Dialog.dismiss();
+//        }
+//
+//    }
+
     private class AsyncCallSyncData extends AsyncTask<List<dataJson>, Void, List<dataJson>> {
         @Override
         protected List<dataJson> doInBackground(List<dataJson>... params) {
@@ -1799,7 +1889,28 @@ public class FragmentPushData extends Fragment {
                 try {
                     JSONArray Jresult= new clsHelperBL().callPushDataReturnJson(versionName,dtJson.getDtdataJson().txtJSON().toString(),dtJson.getFileUpload());
                     new clsHelperBL().saveDataPush(dtJson.getDtdataJson(),Jresult);
-                    dtdataJson.setIntResult("1");
+
+                    String mess ="";
+                    APIData dtAPIDATA = new APIData();
+                    Iterator i = Jresult.iterator();
+                    boolean validPush = false;
+                    while (i.hasNext()) {
+                        org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
+                        int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
+                        mess = String.valueOf(innerObj.get(dtAPIDATA.strMessage));
+                        if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
+                            validPush = true;
+                        } else {
+                            validPush = false;
+                            break;
+                        }
+                    }
+                    if(validPush){
+                        dtdataJson.setIntResult("1");
+                    } else {
+                        dtdataJson.setIntResult("0");
+                        dtdataJson.setTxtMessage(mess);
+                    }
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -1931,7 +2042,7 @@ public class FragmentPushData extends Fragment {
                             }
                         }
                         Intent serviceIntentMyServiceNative = new Intent(getContext(), MyServiceNative.class);
-                        Intent serviceIntentTrancking = new Intent(getContext(), MyServiceNative.class);
+                        Intent serviceIntentTrancking = new Intent(getContext(), MyTrackingLocationService.class);
                         getContext().stopService(serviceIntentMyServiceNative);
                         getContext().stopService(serviceIntentTrancking);
                         ImagePick.deleteMediaStorageDirQuiz();;

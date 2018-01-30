@@ -70,6 +70,70 @@ public class tVisitPlanRealisasiData extends APIData{
     public String Property_listOftVisitPlanRealisasiData = "listOftVisitPlanRealisasiData";
 
 
+//    public tVisitPlanRealisasiData(
+//             String _txtDataIDRealisasi,
+//             String _intCategoryVisitPlan,
+//             String _intDetailID,
+//             String _intHeaderID,
+//             String _intUserID,
+//             String _txtOutletCode,
+//             String _txtOutletName,
+//             String _txtBranchCode,
+//             String _txtBranchName,
+//             String _dtDate,
+//             String _intBobot,
+//             String _dtDateRealisasi,
+//             String _dtDateRealisasiDevice,
+//             String _txtDesc,
+//             String _txtDescReply,
+//             byte[] _dtPhoto1,
+//             byte[] _dtPhoto2,
+//             String _txtLong,
+//             String _txtLat,
+//             String _txtAcc,
+//             String _txtLongSource,
+//             String _txtLatSource,
+//             String _intDistance,
+//             String _bitActive,
+//             String _txtRoleId,
+//             String _intPush,
+//             String _intSubmit,
+//             String _intCheckout,
+//             String _dateCheckout,
+//             String _deviceId) {
+//                this._txtDataIDRealisasi = _txtDataIDRealisasi;
+//                this._intCategoryVisitPlan = _intCategoryVisitPlan;
+//                this._intDetailID = _intDetailID;
+//                this._intHeaderID = _intHeaderID;
+//                this._intUserID = _intUserID;
+//                this._txtOutletCode = _txtOutletCode;
+//                this._txtOutletName= _txtOutletName;
+//                this._txtBranchCode= _txtBranchCode;
+//                this._txtBranchName= _txtBranchName;
+//                this._dtDate= _dtDate;
+//                this._intBobot= _intBobot;
+//                this._dtDateRealisasi= _dtDateRealisasi;
+//                this._dtDateRealisasiDevice= _dtDateRealisasiDevice;
+//                this._txtDesc= _txtDesc;
+//                this._txtDescReply= _txtDescReply;
+//                this._dtPhoto1= _dtPhoto1;
+//                this._dtPhoto2= _dtPhoto2;
+//                this._txtLong= _txtLong;
+//                this._txtLat= _txtLat;
+//                this._txtAcc= _txtAcc;
+//                this._txtLongSource= _txtLongSource;
+//                this._txtLatSource= _txtLatSource;
+//                this._intDistance= _intDistance;
+//                this._bitActive= _bitActive;
+//                this._txtRoleId= _txtRoleId;
+//                this._intPush= _intPush;
+//                this._intSubmit= _intSubmit;
+//                this._intCheckout= _intCheckout;
+//                this._dateCheckout= _dateCheckout;
+//                this._deviceId = _deviceId;
+//    }
+
+
 
     public String Property_All=Property_txtDataIDRealisasi + "," +
             Property_intCategoryVisitPlan + "," +

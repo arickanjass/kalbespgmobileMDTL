@@ -2,12 +2,29 @@ package bl;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.kalbenutritionals.app.kalbespgmobile.R;
 import com.kalbenutritionals.app.kalbespgmobile.clsMainActivity;
 
+import org.json.JSONException;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.*;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
 import java.util.UUID;
 
 import library.spgmobile.common.APIData;
@@ -915,4 +933,184 @@ public class clsMainBL {
 		}
 		_db.close();
 	}
+	public void showToastWarning(Context ctx, String str){
+		LayoutInflater mInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+		View promptView = mInflater.inflate(R.layout.custom_toast, null);
+
+		TextView tvTextToast = (TextView) promptView.findViewById(R.id.custom_toast_message);
+		ImageView icon = (ImageView) promptView.findViewById(R.id.custom_toast_image);
+		tvTextToast.setText(str);
+
+		GradientDrawable bgShape = (GradientDrawable)promptView.getBackground();
+
+		bgShape.setColor(Color.parseColor("#e74c3c"));
+		icon.setImageResource(R.drawable.ic_error);
+        /*
+        if (status) {
+            bgShape.setColor(Color.parseColor("#6dc066"));
+            icon.setImageResource(R.drawable.ic_checklist);
+
+        } else {
+            bgShape.setColor(Color.parseColor("#e74c3c"));
+            icon.setImageResource(R.drawable.ic_error);
+        }
+        */
+		Toast toast = new Toast(ctx);
+		toast.setDuration(Toast.LENGTH_SHORT);
+		toast.setView(promptView);
+		toast.setGravity(Gravity.TOP, 25, 400);
+		//toast.setGravity(Gravity.CENTER, 0, 0);
+		toast.show();
+        /*
+        Toast toast = Toast.makeText(ctx,
+                str, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.TOP, 25, 400);
+        toast.show();
+        */
+	}
+
+	public void showToast(Context ctx, String str){
+		LayoutInflater mInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+		View promptView = mInflater.inflate(R.layout.custom_toast, null);
+
+		TextView tvTextToast = (TextView) promptView.findViewById(R.id.custom_toast_message);
+		ImageView icon = (ImageView) promptView.findViewById(R.id.custom_toast_image);
+		tvTextToast.setText(str);
+
+		GradientDrawable bgShape = (GradientDrawable)promptView.getBackground();
+
+		bgShape.setColor(Color.parseColor("#6dc066"));
+		icon.setImageResource(R.drawable.ic_checklist);
+        /*
+        if (status) {
+            bgShape.setColor(Color.parseColor("#6dc066"));
+            icon.setImageResource(R.drawable.ic_checklist);
+
+        } else {
+            bgShape.setColor(Color.parseColor("#e74c3c"));
+            icon.setImageResource(R.drawable.ic_error);
+        }
+        */
+		Toast toast = new Toast(ctx);
+		toast.setDuration(Toast.LENGTH_SHORT);
+		toast.setView(promptView);
+		toast.setGravity(Gravity.TOP, 25, 400);
+		//toast.setGravity(Gravity.CENTER, 0, 0);
+		toast.show();
+        /*
+        Toast toast = Toast.makeText(ctx,
+                str, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.TOP, 25, 400);
+        toast.show();
+        */
+	}
+	public Boolean ValidJSON(org.json.JSONObject JsonRes){
+		if(JsonRes == null){
+			return false;
+		}else{
+			if(JsonRes.length()==0){
+				return false;
+			}else{
+				if(JsonRes.toString().equals("{}")==false){
+					return true;
+				}else{
+					return false;
+				}
+			}
+		}
+
+	}
+	public Boolean ValidJSON_a(JSONArray JsonRes){
+		if(JsonRes == null){
+			return false;
+		}else{
+//			if(JsonRes.length()==0){
+//				return false;
+//			}
+//			if{
+				if(JsonRes.toString().equals("{}")==false){
+					return true;
+				}else{
+					return false;
+				}
+//			}
+		}
+
+	}
+
+//	public static boolean isJson(String Json) {
+//
+//		try {
+//			new JSONObject(Json);
+//		} catch (JSONException ex) {
+//			try {
+//				new JSONArray(Json);
+//			} catch (JSONException ex1) {
+//				return false;
+//			}
+//		}
+//		return true;
+//	}
+
+
+//	public org.json.JSONObject PushData(String txtMethod, String txtJson) throws Exception {
+////		Mobile_mConfigBL _Mobile_mConfigBL=new Mobile_mConfigBL();
+////		String txtLink=_Mobile_mConfigBL.getValue(enum_mconfig.API.getValue());
+//		SQLiteDatabase _db = getDb();
+//		tUserLoginDA _tUserLoginDA = new tUserLoginDA(_db);
+//		mconfigDA _mconfigDA = new mconfigDA(_db);
+//
+//		String strVal2 = "";
+//		mconfigData dataAPI = _mconfigDA.getData(_db, enumConfigData.ApiKalbe.getidConfigData());
+//		strVal2 = dataAPI.get_txtValue();
+//		if (dataAPI.get_txtValue() == "") {
+//			strVal2 = dataAPI.get_txtDefaultValue();
+//		}
+//
+//		org.json.JSONObject _JSONArray=_Mobile_mConfigBL.callPushDataReturnJson(txtLink,txtMethod,txtJson);
+//		return _JSONArray;
+//	}
+//
+//	public org.json.JSONObject callPushDataReturnJson(String link, String txtMethod, String txtJson) {
+//		org.json.JSONObject _JSONObject = null;
+//		//notify("asa","asda","asdas");
+//		URL url;
+//		HttpURLConnection conn;
+//		BufferedReader rd;
+//		String line;
+//		String result = "";
+//		String txtTimeOut= new Mobile_mConfigBL().getValue(enum_mconfig.TimeOut.getValue());
+//		String urlToRead=link+txtMethod;
+//		try {
+//			url = new URL(urlToRead);
+//			conn = (HttpURLConnection) url.openConnection();
+//			conn.setConnectTimeout(Integer.valueOf(txtTimeOut));
+//			conn.setRequestProperty("Accept","*/*");
+//			String param="txtParam="+txtJson;
+//			conn.setDoOutput(true);
+//			conn.setDoInput(true);
+//			conn.setRequestMethod("POST");
+//			conn.setFixedLengthStreamingMode(param.getBytes().length);
+//			conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+//			conn.setRequestProperty("charset", "utf-8");
+//			//conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+//			PrintWriter out = new PrintWriter(conn.getOutputStream());
+//			out.print(param);
+//			out.close();
+//			String response= "";
+//			Scanner inStream = new Scanner(conn.getInputStream());
+//			while(inStream.hasNextLine())
+//			{
+//				response+=(inStream.nextLine());
+//			}
+//			conn.disconnect();
+//			result=response;
+//			_JSONObject=new org.json.JSONObject(result);
+//		} catch (IOException e) {
+//		} catch (Exception e) {
+//		}
+//		return _JSONObject;
+//	}
 }

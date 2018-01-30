@@ -1,18 +1,32 @@
 package com.kalbenutritionals.app.kalbespgmobile;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.text.InputFilter;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +37,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -35,11 +50,17 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import bl.tDeviceInfoUserBL;
 import bl.tUserLoginBL;
@@ -50,12 +71,15 @@ import library.spgmobile.common.tDeviceInfoUserData;
 import library.spgmobile.common.tUserLoginData;
 import library.spgmobile.common.tVisitPlanHeader_MobileData;
 import library.spgmobile.common.tVisitPlanRealisasiData;
+import library.spgmobile.dal.clsHardCode;
+
+import static android.content.Context.LOCATION_SERVICE;
 
 /**
  * Created by aan.junianto on 2/01/2018.
  */
 
-public class FragmentAddTaggingOutlet extends Fragment {
+public class FragmentAddTaggingOutlet extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     private GoogleMap mMap;
     private Location mLastLocation;
@@ -136,8 +160,6 @@ public class FragmentAddTaggingOutlet extends Fragment {
     String idRealisasiHeader;
     tVisitPlanRealisasiData dataDetail;
     private Class<?> clazz = null;
-    tVisitPlanRealisasiData _tVisitPlanRealisasiData = new tVisitPlanRealisasiData();
-    ;
     private Uri uriImage;
     private int countActivity;
 
@@ -147,92 +169,95 @@ public class FragmentAddTaggingOutlet extends Fragment {
 
     private GoogleApiClient client;
 
+    private FragmentAddTaggingOutlet dataBiding;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        v = inflater.inflate(R.layout.fragment_visit_plan, container, false);
+        v = inflater.inflate(R.layout.fragment_add_tagging_outlet, container, false);
 
-//        dataHeader = getArguments();
-//        idRealisasiHeader = dataHeader.getString(ID_REALISASI);
-//        dataDetail = new tVisitPlanRealisasiBL().getDataByHeaderId(idRealisasiHeader);
-//
-//        etBranch = (EditText) v.findViewById(R.id.etBranch);
-//        etOutlet = (EditText) v.findViewById(R.id.etOutlet);
-//        etBranch.setText(dataDetail.get_txtBranchCode());
-//        etBranch.setClickable(false);
-//        etBranch.setFocusable(false);
+        dataHeader = getArguments();
+        idRealisasiHeader = dataHeader.getString(ID_REALISASI);
+        dataDetail = new tVisitPlanRealisasiBL().getDataByHeaderId(idRealisasiHeader);
+
+        etBranch = (EditText) v.findViewById(R.id.etBranch);
+        etOutlet = (EditText) v.findViewById(R.id.etOutlet);
+        etBranch.setText(dataDetail.get_txtBranchCode());
+        etBranch.setClickable(false);
+        etBranch.setFocusable(false);
 //        tvDesc.setText(dataDetail.get_txtDesc());
-//        etOutlet.setText(dataDetail.get_txtOutletName());
-//        etOutlet.setFocusable(false);
-//        etOutlet.setClickable(false);
-//        txtHDId = (TextView) v.findViewById(R.id.txtHDId);
-//        btnRefreshMaps = (Button) v.findViewById(R.id.btnRefreshMaps);
-//        btnCheckIn = (Button) v.findViewById(R.id.buttonCheckIn);
-//        btnPopupMap = (Button) v.findViewById(R.id.viewMap);
-//        lblLong = (TextView) v.findViewById(R.id.tvLong);
-//        lblLang = (TextView) v.findViewById(R.id.tvLat);
-//        lblAcc = (TextView) v.findViewById(R.id.tvAcc);
+        etOutlet.setText(dataDetail.get_txtOutletName());
+        etOutlet.setFocusable(false);
+        etOutlet.setClickable(false);
+        txtHDId = (TextView) v.findViewById(R.id.txtHDId);
+        btnRefreshMaps = (Button) v.findViewById(R.id.btnRefreshMaps);
+        btnCheckIn = (Button) v.findViewById(R.id.buttonCheckIn);
+        btnPopupMap = (Button) v.findViewById(R.id.viewMap);
+        lblLong = (TextView) v.findViewById(R.id.tvLong);
+        lblLang = (TextView) v.findViewById(R.id.tvLat);
+        lblAcc = (TextView) v.findViewById(R.id.tvAcc);
 //        lblLongOutlet = (TextView) v.findViewById(R.id.tvLongOutlet);
 //        lblLatOutlet = (TextView) v.findViewById(R.id.tvlatOutlet);
 //        lblLongOutlet.setText(dataDetail.get_txtLongSource());
 //        lblLatOutlet.setText(dataDetail.get_txtLatSource());
 //        lblDistance = (TextView) v.findViewById(R.id.tvDistance);
-//
-//        options = new BitmapFactory.Options();
-//        options.inSampleSize = 2;
+
+        options = new BitmapFactory.Options();
+        options.inSampleSize = 2;
+
 //        textInputLayoutDescriptionVisiPlan = (TextInputLayout) v.findViewById(R.id.input_layout_description_visit_plan);
 //        etDescReply = (EditText) v.findViewById(R.id.et_desc_reply);
-//
-//        lblLong.setText("");
-//        lblLang.setText("");
-//        lblAcc.setText("");
+
+        lblLong.setText("");
+        lblLang.setText("");
+        lblAcc.setText("");
 //        lblDistance.setText("");
-//
-//        getLocation();
-//
-//        if (mLastLocation != null) {
-//            displayLocation(mLastLocation);
-//        }
-//
+
+        getLocation();
+
+        if (mLastLocation != null) {
+            displayLocation(mLastLocation);
+        }
+
 //        if (checkPlayServices()) {
 //            buildGoogleApiClient();
 //        }
-//
-//        btnRefreshMaps.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                getLocation();
-//                if (mLastLocation == null) {
-//                    displayLocation(mLastLocation);
-//                }
-//            }
-//        });
-//
-//        pht1 = null;
-//        pht2 = null;
-//
-//        btnPopupMap.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Boolean valid = true;
-//
-//                double latitude = 0;
-//                double longitude = 0;
-//                double latitudeOutlet = 0;
-//                double longitudeOutlet = 0;
-//
-//                //Check longlat my location
-//                try {
-//                    latitude = Double.parseDouble(String.valueOf(lblLang.getText()));
-//                    longitude = Double.parseDouble(String.valueOf(lblLong.getText()));
-//                } catch (Exception ex) {
-//                    valid = false;
-//                    new clsMainActivity().showCustomToast(getContext(), "Your location not found", false);
-//                }
-//
-//                //Check longlat outlet location
+
+        btnRefreshMaps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getLocation();
+                if (mLastLocation == null) {
+                    displayLocation(mLastLocation);
+                }
+            }
+        });
+
+        pht1 = null;
+        pht2 = null;
+
+        btnPopupMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Boolean valid = true;
+
+                double latitude = 0;
+                double longitude = 0;
+                double latitudeOutlet = 0;
+                double longitudeOutlet = 0;
+
+                //Check longlat my location
+                try {
+                    latitude = Double.parseDouble(String.valueOf(lblLang.getText()));
+                    longitude = Double.parseDouble(String.valueOf(lblLong.getText()));
+                } catch (Exception ex) {
+                    valid = false;
+                    new clsMainActivity().showCustomToast(getContext(), "Your location not found", false);
+                }
+
+                //Check longlat outlet location
 //                if (valid) {
 //                    try {
 //                        latitudeOutlet = Double.parseDouble(dataDetail.get_txtLatSource().toString());
@@ -243,81 +268,88 @@ public class FragmentAddTaggingOutlet extends Fragment {
 //                        new clsMainActivity().showCustomToast(getContext(), "Outlet location not found", false);
 //                    }
 //                }
-//
-//                if(valid){
-//                    LayoutInflater layoutInflater = LayoutInflater.from(getContext());
-//
-//                    final View promptView = layoutInflater.inflate(R.layout.popup_map_absen, null);
-//
-//                    GoogleMap mMap;
-//                    mMap = ((MapFragment) (getActivity()).getFragmentManager().findFragmentById(R.id.map)).getMap();
-//
-//                    if (mMap == null) {
-//                        mMap = ((MapFragment) (getActivity()).getFragmentManager().findFragmentById(R.id.map)).getMap();
-//                    }
-//
-//                    MarkerOptions marker = new MarkerOptions().position(new LatLng(latitude, longitude)).title("Your Location");
-//
+                try {
+                    if(valid){
+                        LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+
+                        final View promptView = layoutInflater.inflate(R.layout.popup_map_absen, null);
+
+                        GoogleMap mMap;
+                        mMap = ((MapFragment) (getActivity()).getFragmentManager().findFragmentById(R.id.map)).getMap();
+
+                        if (mMap == null) {
+                            mMap = ((MapFragment) (getActivity()).getFragmentManager().findFragmentById(R.id.map)).getMap();
+                        }
+
+                        MarkerOptions marker = new MarkerOptions().position(new LatLng(latitude, longitude)).title("Your Location");
+
 //                    MarkerOptions markerOutlet = new MarkerOptions().position(new LatLng(latitudeOutlet, longitudeOutlet)).title("Outlet Location");
-//
-//                    marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-//
-//                    final LatLngBounds.Builder builder = new LatLngBounds.Builder();
-//                    builder.include(marker.getPosition());
+
+                        marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+
+                        final LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                        builder.include(marker.getPosition());
 //                    builder.include(markerOutlet.getPosition());
-//
-//                    mMap.clear();
-//                    mMap.addMarker(marker);
+
+                        mMap.clear();
+                        mMap.addMarker(marker);
 //                    mMap.addMarker(markerOutlet);
-//
-//                    final GoogleMap finalMMap = mMap;
-//                    mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
-//
-//                        @Override
-//                        public void onCameraChange(CameraPosition arg0) {
-//                            // Move camera.
-//                            finalMMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 60));
-//                            // Remove listener to prevent position reset on camera move.
-//                            finalMMap.setOnCameraChangeListener(null);
-//                        }
-//                    });
-//
-//
-//                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-//                    alertDialogBuilder.setView(promptView);
-//                    alertDialogBuilder
-//                            .setCancelable(false)
-//                            .setPositiveButton("OK",
-//                                    new DialogInterface.OnClickListener() {
-//                                        public void onClick(DialogInterface dialog, int id) {
-//                                            MapFragment f = (MapFragment) (getActivity()).getFragmentManager().findFragmentById(R.id.map);
-//                                            if (f != null) {
-//                                                (getActivity()).getFragmentManager().beginTransaction().remove(f).commit();
-//                                            }
-//
-//                                            dialog.dismiss();
-//                                        }
-//                                    });
-//                    final AlertDialog alertD = alertDialogBuilder.create();
-//
-//                    Location locationA = new Location("point A");
-//
-//                    locationA.setLatitude(latitude);
-//                    locationA.setLongitude(longitude);
-//
+
+                        final GoogleMap finalMMap = mMap;
+                        mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+
+                            @Override
+                            public void onCameraChange(CameraPosition arg0) {
+                                // Move camera.
+                                finalMMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 60));
+                                // Remove listener to prevent position reset on camera move.
+                                finalMMap.setOnCameraChangeListener(null);
+                            }
+                        });
+
+//                    LatLng coordinate = new LatLng(latitude, longitude);
+//                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(coordinate,70));
+
+
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+                        alertDialogBuilder.setView(promptView);
+                        alertDialogBuilder
+                                .setCancelable(false)
+                                .setPositiveButton("OK",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                MapFragment f = (MapFragment) (getActivity()).getFragmentManager().findFragmentById(R.id.map);
+                                                if (f != null) {
+                                                    (getActivity()).getFragmentManager().beginTransaction().remove(f).commit();
+                                                }
+
+                                                dialog.dismiss();
+                                            }
+                                        });
+                        final AlertDialog alertD = alertDialogBuilder.create();
+
+                        Location locationA = new Location("point A");
+
+                        locationA.setLatitude(latitude);
+                        locationA.setLongitude(longitude);
+
 //                    Location locationB = new Location("point B");
 //
 //                    locationB.setLatitude(latitudeOutlet);
 //                    locationB.setLongitude(longitudeOutlet);
 //
 //                    distance = locationA.distanceTo(locationB);
-//
-//                    alertD.setTitle(String.valueOf((int) Math.ceil(distance)) + " meters");
-//                    alertD.show();
-//                }
-//            }
-//        });
-//
+
+                        alertD.setTitle(String.valueOf(getAddress(getActivity(),latitude, longitude).get(0)));
+                        alertD.show();
+                    }
+                } catch (Exception ex) {
+                    new clsMainActivity().showCustomToast(getContext(), ex.getMessage().toString(), false);
+                }
+
+            }
+        });
+
 //        // First we need to check availability of play services
 //        imgPrevNoImg1.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -333,253 +365,47 @@ public class FragmentAddTaggingOutlet extends Fragment {
 //                captureImage2();
 //            }
 //        });
-//
-//        btnCheckIn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                nameOutlet = dataDetail.get_txtOutletName();
-//                outletCode = dataDetail.get_txtOutletCode();
-//
-//                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-//                alertDialogBuilder
-//                        .setCancelable(false)
-//                        .setPositiveButton("OK",
-//                                new DialogInterface.OnClickListener() {
-//                                    public void onClick(DialogInterface dialog, int id) {
-//                                        Boolean pRes = true;
-//                                        Boolean validTagOutlet = true;
-//                                        new clsMainActivity().removeErrorMessage(textInputLayoutDescriptionVisiPlan);
-//                                        //validasi foto jika kosong semua
-//                                        if (pht1 == null && pht2 == null) {
-//                                            new clsMainActivity().removeErrorMessage(textInputLayoutDescriptionVisiPlan);
-//                                            new clsMainActivity().showCustomToast(getContext(), "Please take at least 1 photo", false);
-//                                            pRes = false;
-//                                        }
-////                                        if (pRes) {
-////                                            double latitude = Double.parseDouble(String.valueOf(lblLang.getText()));
-////                                            double longitude = Double.parseDouble(String.valueOf(lblLong.getText()));
-////                                            if (dataDetail.get_txtLatSource().toString().equals("") || dataDetail.get_txtLatSource().toString().equals("null")) {
-////                                                latitudeOutlet = 0.0;
-////                                                longitudeOutlet = 0.0;
-////                                            } else {
-////                                                latitudeOutlet = Double.parseDouble(dataDetail.get_txtLatSource().toString());
-////                                                longitudeOutlet = Double.parseDouble(dataDetail.get_txtLongSource().toString());
-////                                            }
-////
-////                                            Location locationA = new Location("point A");
-////
-////                                            locationA.setLatitude(latitude);
-////                                            locationA.setLongitude(longitude);
-////
-////                                            Location locationB = new Location("point B");
-////
-////                                            locationB.setLatitude(latitudeOutlet);
-////                                            locationB.setLongitude(longitudeOutlet);
-////
-////                                            float distance = locationA.distanceTo(locationB);
-////
-////                                            tUserLoginData checkLocation = new tUserLoginBL().getUserLogin();
-////                                            boolean dValidDistance = false;
-////                                            if (checkLocation.get_txtCheckLocation().equals("0")) {
-////                                                dValidDistance = true;
-////                                            } else if ((int) Math.ceil(distance) <= Integer.valueOf(checkLocation.get_txtCheckLocation())) {
-////                                                dValidDistance = true;
-////                                            }
-//////                                            if ((int) Math.ceil(distance) > 100 && checkLocation.get_txtCheckLocation().equals("1")) {
-//////                                                _clsMainActivity.showCustomToast(getContext(), "Failed checkin: Your location too far from outlet", false);
-//////                                            }
-////                                            if (!dValidDistance) {
-////                                                _clsMainActivity.showCustomToast(getContext(), "Failed checkin: Your location too far from outlet", false);
-////                                            } else {
-////                                                nameBranch = dataDetail.get_txtBranchCode();
-////                                                nameOutlet = dataDetail.get_txtOutletName();
-////                                                branchCode = dataDetail.get_txtBranchCode();
-////                                                outletCode = dataDetail.get_txtOutletCode();
-////                                                idRealisasi = dataDetail.get_txtDataIDRealisasi();
-////
-////                                                tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
-////                                                String idRoleActive = String.valueOf(dataUserActive.get_txtRoleId());
-////
-////                                                tUserLoginData dataLogin = new tUserLoginBL().getUserLogin();
-////                                                String dataTanggalLogin = dataLogin.get_dtLastLogin();
-////
-////                                                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-////                                                Calendar cal = Calendar.getInstance();
-////                                                String descReply = etDescReply.getText().toString();
-////                                                _tVisitPlanRealisasiData.set_txtDataIDRealisasi(idRealisasi);
-////                                                _tVisitPlanRealisasiData.set_dtDateRealisasi(dataTanggalLogin);
-////                                                _tVisitPlanRealisasiData.set_dtDateRealisasiDevice(dateFormat.format(cal.getTime()));
-////                                                _tVisitPlanRealisasiData.set_txtDescReply(descReply);
-////                                                _tVisitPlanRealisasiData.set_txtLong(longitude + "");
-////                                                _tVisitPlanRealisasiData.set_txtLat(latitude + "");
-////                                                _tVisitPlanRealisasiData.set_intDistance(distance + "");
-////                                                _tVisitPlanRealisasiData.set_txtRoleId(idRoleActive);
-////                                                _tVisitPlanRealisasiData.set_intSubmit("1");
-////                                                _tVisitPlanRealisasiData.set_txtAcc(lblAcc.getText().toString());
-////                                                List<tDeviceInfoUserData> dataDeviceInfoUser = new tDeviceInfoUserBL().getData(0);
-////                                                String deviceInfo="";
-////                                                if(dataDeviceInfoUser!=null){
-////                                                    deviceInfo = String.valueOf(dataDeviceInfoUser.get(0).get_txtDeviceId());
-////                                                }
-////                                                _tVisitPlanRealisasiData.set_deviceId(deviceInfo);
-////                                                new tVisitPlanRealisasiBL().UpdateData(_tVisitPlanRealisasiData);
-////                                                imgPrevNoImg1.setClickable(false);
-////                                                imgPrevNoImg2.setClickable(false);
-////                                                btnRefreshMaps.setClickable(false);
-////                                                btnRefreshMaps.setVisibility(View.GONE);
-////
-////                                                List<tVisitPlanRealisasiData> data = new tVisitPlanRealisasiBL().getAllData();
-////                                                boolean statusHeader = false;
-////                                                for (tVisitPlanRealisasiData dt : data) {
-////                                                    if (dt.get_intSubmit().toString().equals("1")) {
-////                                                        statusHeader = true;
-////                                                    } else {
-////                                                        statusHeader = false;
-////                                                    }
-////                                                }
-////                                                if (statusHeader) {
-////                                                    tVisitPlanHeader_MobileData dt = new tVisitPlanHeader_MobileData();
-////                                                    dt.set_intSubmit("1");
-////                                                    dt.set_intHeaderId(dataDetail.get_intHeaderID());
-////                                                    new tVisitPlanHeader_MobileBL().UpdateData(dt);
-////                                                }
-////
-////                                                _clsMainActivity.showCustomToast(getContext(), "Saved", true);
-////                                                Intent myIntent = new Intent(getContext(), MainMenu.class);
-////                                                getActivity().finish();
-////                                                startActivity(myIntent);
-////                                            }
-////
-////                                        }
-//
-//                                        if (pRes) {
-//                                            double latitude = Double.parseDouble(String.valueOf(lblLang.getText()));
-//                                            double longitude = Double.parseDouble(String.valueOf(lblLong.getText()));
-//                                            if (dataDetail.get_txtLatSource().toString().equals("") || dataDetail.get_txtLatSource().toString().equals("null")) {
-////                                                latitudeOutlet = 0.0;
-////                                                longitudeOutlet = 0.0;
-//                                                validTagOutlet = false;
-//                                            }
-//                                            if(dataDetail.get_txtLongSource().toString().equals("") || dataDetail.get_txtLongSource().toString().equals("null")){
-//                                                validTagOutlet = false;
-//                                            }
-////                                            else {
-////                                                latitudeOutlet = Double.parseDouble(dataDetail.get_txtLatSource().toString());
-////                                                longitudeOutlet = Double.parseDouble(dataDetail.get_txtLongSource().toString());
-////                                            }
-//
-//                                            if(validTagOutlet){
-//                                                latitudeOutlet = Double.parseDouble(dataDetail.get_txtLatSource().toString());
-//                                                longitudeOutlet = Double.parseDouble(dataDetail.get_txtLongSource().toString());
-//                                                Location locationA = new Location("point A");
-//
-//                                                locationA.setLatitude(latitude);
-//                                                locationA.setLongitude(longitude);
-//
-//                                                Location locationB = new Location("point B");
-//
-//                                                locationB.setLatitude(latitudeOutlet);
-//                                                locationB.setLongitude(longitudeOutlet);
-//
-//                                                float distance = locationA.distanceTo(locationB);
-//
-//                                                tUserLoginData checkLocation = new tUserLoginBL().getUserLogin();
-//                                                boolean dValidDistance = false;
-//                                                if (checkLocation.get_txtCheckLocation().equals("0")) {
-//                                                    dValidDistance = true;
-//                                                } else if ((int) Math.ceil(distance) <= Integer.valueOf(checkLocation.get_txtCheckLocation())) {
-//                                                    dValidDistance = true;
-//                                                }
-////                                            if ((int) Math.ceil(distance) > 100 && checkLocation.get_txtCheckLocation().equals("1")) {
-////                                                _clsMainActivity.showCustomToast(getContext(), "Failed checkin: Your location too far from outlet", false);
-////                                            }
-//                                                if (!dValidDistance) {
-//                                                    _clsMainActivity.showCustomToast(getContext(), "Failed checkin: Your location too far from outlet", false);
-//                                                } else {
-//                                                    nameBranch = dataDetail.get_txtBranchCode();
-//                                                    nameOutlet = dataDetail.get_txtOutletName();
-//                                                    branchCode = dataDetail.get_txtBranchCode();
-//                                                    outletCode = dataDetail.get_txtOutletCode();
-//                                                    idRealisasi = dataDetail.get_txtDataIDRealisasi();
-//
-//                                                    tUserLoginData dataUserActive = new tUserLoginBL().getUserActive();
-//                                                    String idRoleActive = String.valueOf(dataUserActive.get_txtRoleId());
-//
-//                                                    tUserLoginData dataLogin = new tUserLoginBL().getUserLogin();
-//                                                    String dataTanggalLogin = dataLogin.get_dtLastLogin();
-//
-//                                                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//                                                    Calendar cal = Calendar.getInstance();
-//                                                    String descReply = etDescReply.getText().toString();
-//                                                    _tVisitPlanRealisasiData.set_txtDataIDRealisasi(idRealisasi);
-//                                                    _tVisitPlanRealisasiData.set_dtDateRealisasi(dataTanggalLogin);
-//                                                    _tVisitPlanRealisasiData.set_dtDateRealisasiDevice(dateFormat.format(cal.getTime()));
-//                                                    _tVisitPlanRealisasiData.set_txtDescReply(descReply);
-//                                                    _tVisitPlanRealisasiData.set_txtLong(longitude + "");
-//                                                    _tVisitPlanRealisasiData.set_txtLat(latitude + "");
-//                                                    _tVisitPlanRealisasiData.set_intDistance(distance + "");
-//                                                    _tVisitPlanRealisasiData.set_txtRoleId(idRoleActive);
-//                                                    _tVisitPlanRealisasiData.set_intSubmit("1");
-//                                                    _tVisitPlanRealisasiData.set_txtAcc(lblAcc.getText().toString());
-//                                                    List<tDeviceInfoUserData> dataDeviceInfoUser = new tDeviceInfoUserBL().getData(0);
-//                                                    String deviceInfo="";
-//                                                    if(dataDeviceInfoUser!=null){
-//                                                        deviceInfo = String.valueOf(dataDeviceInfoUser.get(0).get_txtDeviceId());
-//                                                    }
-//                                                    _tVisitPlanRealisasiData.set_deviceId(deviceInfo);
-//                                                    new tVisitPlanRealisasiBL().UpdateData(_tVisitPlanRealisasiData);
-//                                                    imgPrevNoImg1.setClickable(false);
-//                                                    imgPrevNoImg2.setClickable(false);
-//                                                    btnRefreshMaps.setClickable(false);
-//                                                    btnRefreshMaps.setVisibility(View.GONE);
-//
-//                                                    List<tVisitPlanRealisasiData> data = new tVisitPlanRealisasiBL().getAllData();
-//                                                    boolean statusHeader = false;
-//                                                    for (tVisitPlanRealisasiData dt : data) {
-//                                                        if (dt.get_intSubmit().toString().equals("1")) {
-//                                                            statusHeader = true;
-//                                                        } else {
-//                                                            statusHeader = false;
-//                                                        }
-//                                                    }
-//                                                    if (statusHeader) {
-//                                                        tVisitPlanHeader_MobileData dt = new tVisitPlanHeader_MobileData();
-//                                                        dt.set_intSubmit("1");
-//                                                        dt.set_intHeaderId(dataDetail.get_intHeaderID());
-//                                                        new tVisitPlanHeader_MobileBL().UpdateData(dt);
-//                                                    }
-//
-//                                                    _clsMainActivity.showCustomToast(getContext(), "Saved", true);
-//                                                    Intent myIntent = new Intent(getContext(), MainMenu.class);
-//                                                    getActivity().finish();
-//                                                    startActivity(myIntent);
-//                                                }
-//                                            }
-//                                            else {
-//                                                _clsMainActivity.showCustomToast(getContext(), "Outlet Location not Found", false);
-//                                            }
-//
-//                                        }
-//
-//                                        else {
-////                                            _clsMainActivity.showCustomToast(getContext(), "Please Photo at least 1 photo..", false);
-//                                        }
-//                                    }
-//                                })
-//                        .setNegativeButton("Cancel",
-//                                new DialogInterface.OnClickListener() {
-//                                    public void onClick(DialogInterface dialog, int id) {
-//                                        dialog.cancel();
-//                                    }
-//                                });
-//                final AlertDialog alertD = alertDialogBuilder.create();
-//                alertD.setTitle("Confirmation");
-//                alertD.setMessage("Are you sure want to checkin?");
-//                alertD.show();
-//            }
-//        });
-//
-////        set output text as ALL CAPS and filter
+
+        btnCheckIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nameOutlet = dataDetail.get_txtOutletName();
+                outletCode = dataDetail.get_txtOutletCode();
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+                alertDialogBuilder
+                        .setCancelable(false)
+                        .setPositiveButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        Boolean validTagOutlet = true;
+                                        double latitude = Double.parseDouble(String.valueOf(lblLang.getText()));
+                                        double longitude = Double.parseDouble(String.valueOf(lblLong.getText()));
+                                        double acc = Double.parseDouble(String.valueOf(lblAcc.getText()));
+                                        if (dataDetail.get_txtLatSource().toString().equals("") || dataDetail.get_txtLatSource().toString().equals("null")) {
+//                                                latitudeOutlet = 0.0;
+//                                                longitudeOutlet = 0.0;
+                                            validTagOutlet = false;
+                                        }
+                                        if(validTagOutlet){
+
+                                        }
+                                    }
+                                })
+                        .setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+                final AlertDialog alertD = alertDialogBuilder.create();
+                alertD.setTitle("Confirmation");
+                alertD.setMessage("Are you sure want to Submit?");
+                alertD.show();
+            }
+        });
+
+//        set output text as ALL CAPS and filter
 //        etDescReply.setFilters(new InputFilter[]{
 //                new InputFilter() {
 //                    @Override
@@ -597,5 +423,198 @@ public class FragmentAddTaggingOutlet extends Fragment {
 //        });
 
         return v;
+    }
+
+    private List<String> getAddress(Context context, double LATITUDE, double LONGITUDE) {
+
+        List<String> addressAll = new ArrayList<>();
+
+        //Set Address
+        try {
+            Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+            List<Address> addresses = geocoder.getFromLocation(LATITUDE, LONGITUDE, 1);
+            if (addresses != null && addresses.size() > 0) {
+
+
+
+                String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                String city = addresses.get(0).getLocality();
+                String state = addresses.get(0).getAdminArea();
+                String country = addresses.get(0).getCountryName();
+                String postalCode = addresses.get(0).getPostalCode();
+                String knownName = addresses.get(0).getFeatureName(); // Only if available else return NULL
+
+//                Log.d(TAG, "getAddress:  address" + address);
+//                Log.d(TAG, "getAddress:  city" + city);
+//                Log.d(TAG, "getAddress:  state" + state);
+//                Log.d(TAG, "getAddress:  postalCode" + postalCode);
+//                Log.d(TAG, "getAddress:  knownName" + knownName);
+
+                addressAll.add(address);
+                addressAll.add(city);
+                addressAll.add(state);
+                addressAll.add(country);
+                addressAll.add(postalCode);
+                addressAll.add(knownName);
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            addressAll.add(e.toString());
+        }
+        return addressAll;
+    }
+
+    private boolean earlyState = true;
+    public Location getLocation() {
+        try {
+            LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
+
+            boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            boolean isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+            if (!isGPSEnabled && !isNetworkEnabled) {
+                // no network provider is enabled
+                mLastLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                new clsMainActivity().showCustomToast(getContext(), "Please turn on GPS or check your internet connection", false);
+            } else {
+                if (isNetworkEnabled) {
+                    if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        _clsMainActivity.showCustomToast(getContext(), "Please check application permissions", false);
+                    } else {
+                        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, this);
+                        mLastLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    }
+                } else {
+                    _clsMainActivity.showCustomToast(getContext(), "Please check your connection", false);
+                }
+
+                if (isGPSEnabled && mLastLocation==null) {
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, this);
+                    mLastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                } else if(!isGPSEnabled){
+                    _clsMainActivity.showCustomToast(getContext(), "Please turn on GPS", false);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(mLastLocation!=null&&!earlyState){
+            new clsMainActivity().showCustomToast(getContext(), "Location Updated", true);
+        }
+        earlyState = false;
+        return mLastLocation;
+    }
+
+    @SuppressWarnings("deprecation")
+    //set text view long lat
+    private void displayLocation(Location mLastLocation) {
+        DecimalFormat df = new DecimalFormat("#.##");
+
+        if (mLastLocation != null) {
+            double latitude = mLastLocation.getLatitude();
+            double longitude = mLastLocation.getLongitude();
+            double accurate = mLastLocation.getAccuracy();
+
+            lblLong.setText(String.format("%s", longitude));
+            lblLang.setText(String.format("%s", latitude));
+            lblAcc.setText(String.format("%s", df.format(accurate)));
+
+            try {
+//                float distance = countDistance(latitude, longitude);
+//                lblDistance.setText(String.format("%s meters", String.valueOf((int) Math.ceil(distance))));
+            } catch (Exception ignored) {
+                String e = ignored.toString();
+            }
+
+            mlongitude = longitude;
+            mlatitude = latitude;
+
+        } else {
+            lblLong.setText("");
+            lblLang.setText("");
+            lblAcc.setText("");
+//            lblDistance.setText("");
+        }
+
+    }
+
+    protected void captureImage1() {
+        uriImage = getOutputMediaFileUri();
+        Intent intentCamera1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intentCamera1.putExtra(MediaStore.EXTRA_OUTPUT, uriImage);
+        getActivity().startActivityForResult(intentCamera1, CAMERA_CAPTURE_IMAGE1_REQUEST_CODE);
+    }
+
+    protected void captureImage2() {
+        uriImage = getOutputMediaFileUri();
+        Intent intentCamera2 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intentCamera2.putExtra(MediaStore.EXTRA_OUTPUT, uriImage);
+        getActivity().startActivityForResult(intentCamera2, CAMERA_CAPTURE_IMAGE2_REQUEST_CODE);
+    }
+
+    private Uri getOutputMediaFileUri() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) { //use this if Lollipop_Mr1 (API 22) or above
+            return FileProvider.getUriForFile(getActivity(), getActivity().getPackageName()+".provider", getOutputMediaFile());
+        } else {
+            return Uri.fromFile(getOutputMediaFile());
+        }
+//        return Uri.fromFile(getOutputMediaFile());
+    }
+
+    private File getOutputMediaFile() {
+        // External sdcard location
+
+        File mediaStorageDir = new File(new clsHardCode().txtFolderAbsen + File.separator);
+        // Create the storage directory if it does not exist
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                Log.d(IMAGE_DIRECTORY_NAME, "Failed create " + IMAGE_DIRECTORY_NAME + " directory");
+                return null;
+            }
+        }
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        File mediaFile;
+        mediaFile = new File(mediaStorageDir.getPath() + File.separator + "tmp_absen" + ".jpg");
+        return mediaFile;
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        mLastLocation = location;
+        displayLocation(mLastLocation);
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 }

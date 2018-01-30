@@ -258,6 +258,14 @@ public class tVisitPlanRealisasiDA {
         }
         db.update(TABLE_CONTACTS, cv, dt.Property_txtDataIDRealisasi+"='"+data.get_txtDataIDRealisasi()+"'", null);
     }
+    public void UpdateDatatVisitPlan_MobileTagging(SQLiteDatabase db, tVisitPlanRealisasiData data) {
+        tVisitPlanRealisasiData dt = new tVisitPlanRealisasiData();
+        ContentValues cv = new ContentValues();
+        cv.put(dt.Property_txtLong,data.get_txtLong());
+        cv.put(dt.Property_txtLat,data.get_txtLat());
+
+        db.update(TABLE_CONTACTS, cv, dt.Property_txtOutletCode+"='"+data.get_txtOutletCode()+"'", null);
+    }
     public void UpdatePushVisitPlan_MobileData(SQLiteDatabase db, tVisitPlanRealisasiData data) {
         tVisitPlanRealisasiData dt = new tVisitPlanRealisasiData();
         ContentValues cv = new ContentValues();

@@ -1376,6 +1376,7 @@ public class dataJson {
         resJson.put(Property_txtSessionLoginId, get_txtSessionLoginId());
         resJson.put(Property_txtUserId, get_txtUserId());
         resJson.put(Property_txtVersionApp, get_txtVersionApp());
+        resJson.put(Property_intRoleId, get_intRoleId());
         return resJson;
     }
 

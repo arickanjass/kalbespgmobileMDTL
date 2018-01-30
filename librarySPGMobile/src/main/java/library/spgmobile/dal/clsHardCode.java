@@ -39,6 +39,7 @@ public class clsHardCode {
     public String txtTable_clsLogReceiverDetail_mobile = "clsLogReceiverDetail_mobile";
     public String txtTable_mEmployeeBranch = "mEmployeeBranch";
     public String txtTable_mEmployeeArea = "mEmployeeArea";
+    public String txtTable_mEmployeeAreaTagging = "mEmployeeAreaTagging";
     public String txtTable_mBrosurMobile = "mBrosurMobile";
     public String txtTable_mBrosurDetailMobile = "mBrosurDetailMobile";
     public String txtTable_mCategoryBrosurMobile = "mCategoryBrosurMobile";
@@ -58,6 +59,7 @@ public class clsHardCode {
     public String txtTable_tKategoryPlanogram = "tKategoryPlanogram";
     public String txtTable_mProductSPG = "mProductSPG";
     public String txtTable_mProductPIC = "mProductPIC";
+    public String txtTable_mTipeSumberData = "mTipeSumberData";
     public String txtTable_mNotification = "mNotification";
     public String txtTable_mProductBrandHeaderData = "mProductBrandHeaderData";
     public String txtTable_tErrorLog = "tErrorLog";
@@ -342,6 +344,13 @@ public class clsHardCode {
     public String txtName_ll_reso = "Reso";
     public String txtName_ll_subtypeactivity = "Sub Type Activity";
     public String txtName_ll_type_submission = "Type Submission";
+    public final String txtConstProcessGetDataSumberDataforWebDashboard  = "GetDataSumberDataforWebDashboard";
+    public final String txtConstProcessGetDataTipeSumberDataforWebDashboard  = "GetDataTipeSumberDataforWebDashboard";
+    public final String txtConstProcessSaveDataSumberDataforWebDashboard  = "SaveDataSumberDataforWebDashboard";
+    public final String txtConstProcessGetDataSumberDataforWebDashboardByOutlet  = "GetDataSumberDataforWebDashboardByOutlet";
+    public final String txtConstCancelRequest  = "Cancel Request";
+    public final String txtConstErrorConnection  = "Error Connection,Please Try Again!!";
+    public final String txtConstGettingAsyncData  = "Please Wait";
 
     public String dtDateTimeNow() {
         Date date = new Date();

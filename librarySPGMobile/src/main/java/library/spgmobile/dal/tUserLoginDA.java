@@ -48,6 +48,7 @@ public class tUserLoginDA {
                 + dt.Property_txtBranchCode + " TEXT NULL,"
                 + dt.Property_txtSubmissionID + " TEXT NULL,"
                 + dt.Property_txtImei + " TEXT NULL,"
+                + dt.Property_intTrackingMobile + " TEXT NULL,"
                 + dt.Property_checkLocation + " TEXT NULL"
                 + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
@@ -97,6 +98,7 @@ public class tUserLoginDA {
                 + dt.Property_txtUserId + ","
                 + dt.Property_txtSubmissionID + ","
                 + dt.Property_txtImei + ","
+                + dt.Property_intTrackingMobile + ","
                 + dt.Property_checkLocation + ") " +
                 "values(" + strVal + ",'"
                 + String.valueOf(data.get_txtPassword()) + "','"
@@ -120,6 +122,7 @@ public class tUserLoginDA {
                 + String.valueOf(data.get_txtUserId()) + "','"
                 + String.valueOf(data.get_txtSubmissionID()) + "','"
                 + String.valueOf(data.get_txtImei()) + "','"
+                + String.valueOf(data.get_intTrackingMobile()) + "','"
                 + String.valueOf(data.get_txtCheckLocation()) + "')");
     }
 
@@ -128,17 +131,38 @@ public class tUserLoginDA {
 
         tUserLoginData dt = new tUserLoginData();
         tUserLoginData contact = null;
-        Cursor cursor = db.query(TABLE_CONTACTS, new String[]{dt.Property_intId,
-                        dt.Property_txtUserId, dt.Property_txtRoleId, dt.Property_txtRoleName, dt.Property_txtPassword, dt.Property_txtUserName,
-                        dt.Property_txtName, dt.Property_txtPathImage, dt.Property_TxtEmail, dt.Property_TxtEmpId, dt.Property_DtLastLogin,
-                        dt.Property_TxtDeviceId, dt.Property_DtCheckIn, dt.Property_DtCheckOut, dt.Property_DtLogOut, dt.Property_TxtCab, dt.Property_txtDataId, dt.Property_txtOutletCode, dt.Property_txtOutletName, dt.Property_txtBranchCode, dt.Property_txtSubmissionID, dt.Property_txtImei, dt.Property_checkLocation}, dt.Property_intId + "=?",
+        Cursor cursor = db.query(TABLE_CONTACTS, new String[]{
+                        dt.Property_intId,
+                        dt.Property_txtUserId,
+                        dt.Property_txtRoleId,
+                        dt.Property_txtRoleName,
+                        dt.Property_txtPassword,
+                        dt.Property_txtUserName,
+                        dt.Property_txtName,
+                        dt.Property_txtPathImage,
+                        dt.Property_TxtEmail,
+                        dt.Property_TxtEmpId,
+                        dt.Property_DtLastLogin,
+                        dt.Property_TxtDeviceId,
+                        dt.Property_DtCheckIn,
+                        dt.Property_DtCheckOut,
+                        dt.Property_DtLogOut,
+                        dt.Property_TxtCab,
+                        dt.Property_txtDataId,
+                        dt.Property_txtOutletCode,
+                        dt.Property_txtOutletName,
+                        dt.Property_txtBranchCode,
+                        dt.Property_txtSubmissionID,
+                        dt.Property_txtImei,
+                        dt.Property_checkLocation,
+                        dt.Property_intTrackingMobile}, dt.Property_intId + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
         if (cursor.getCount() > 0) {
             contact = new tUserLoginData(Integer.parseInt(cursor.getString(0)),
                     (cursor.getString(1)), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7),
-                    cursor.getString(8), cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getString(12), cursor.getString(13), cursor.getString(14), cursor.getString(15), cursor.getString(16), cursor.getString(17), cursor.getString(18), cursor.getString(19), cursor.getString(20), cursor.getString(21), cursor.getString(22));
+                    cursor.getString(8), cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getString(12), cursor.getString(13), cursor.getString(14), cursor.getString(15), cursor.getString(16), cursor.getString(17), cursor.getString(18), cursor.getString(19), cursor.getString(20), cursor.getString(21), cursor.getString(22), cursor.getString(23));
             // return contact
         }
         cursor.close();
@@ -148,17 +172,35 @@ public class tUserLoginDA {
     public tUserLoginData CheckDataLogin(SQLiteDatabase db, String DateLogin) {
 
         tUserLoginData dt = new tUserLoginData();
-        Cursor cursor = db.query(TABLE_CONTACTS, new String[]{dt.Property_intId,
-                        dt.Property_txtUserId, dt.Property_txtRoleId, dt.Property_txtRoleName, dt.Property_txtPassword, dt.Property_txtUserName,
-                        dt.Property_txtName, dt.Property_txtPathImage, dt.Property_TxtEmail, dt.Property_TxtEmpId, dt.Property_DtLastLogin,
-                        dt.Property_TxtDeviceId, dt.Property_DtCheckIn, dt.Property_DtCheckOut, dt.Property_DtLogOut, dt.Property_TxtCab, dt.Property_txtDataId, dt.Property_txtOutletCode, dt.Property_txtOutletName, dt.Property_txtImei, dt.Property_txtBranchCode}, dt.Property_DtLastLogin + "=?",
+        Cursor cursor = db.query(TABLE_CONTACTS, new String[]{
+                        dt.Property_intId,
+                        dt.Property_txtUserId,
+                        dt.Property_txtRoleId,
+                        dt.Property_txtRoleName,
+                        dt.Property_txtPassword,
+                        dt.Property_txtUserName,
+                        dt.Property_txtName,
+                        dt.Property_txtPathImage,
+                        dt.Property_TxtEmail,
+                        dt.Property_TxtEmpId,
+                        dt.Property_DtLastLogin,
+                        dt.Property_TxtDeviceId,
+                        dt.Property_DtCheckIn,
+                        dt.Property_DtCheckOut,
+                        dt.Property_DtLogOut,
+                        dt.Property_TxtCab,
+                        dt.Property_txtDataId,
+                        dt.Property_txtOutletCode,
+                        dt.Property_txtOutletName,
+                        dt.Property_txtImei,
+                        dt.Property_txtBranchCode}, dt.Property_DtLastLogin + "=?",
                 new String[]{String.valueOf(DateLogin)}, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
         tUserLoginData contact = new tUserLoginData(Integer.parseInt(cursor.getString(0)),
                 (cursor.getString(1)), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7),
-                cursor.getString(8), cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getString(12), cursor.getString(13), cursor.getString(14), cursor.getString(15), cursor.getString(16), cursor.getString(17), cursor.getString(18), cursor.getString(19), cursor.getString(20), cursor.getString(21), cursor.getString(22));
+                cursor.getString(8), cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getString(12), cursor.getString(13), cursor.getString(14), cursor.getString(15), cursor.getString(16), cursor.getString(17), cursor.getString(18), cursor.getString(19), cursor.getString(20), cursor.getString(21), cursor.getString(22), cursor.getString(23));
         // return contact
         cursor.close();
         return contact;
@@ -195,7 +237,8 @@ public class tUserLoginDA {
                 contact.set_dtLogOut((cursor.getString(14)));
                 contact.set_txtCab((cursor.getString(15)));
                 contact.set_txtDataId((cursor.getString(16)));
-                contact.set_txtImei(cursor.getString(17));
+                contact.set_intTrackingMobile(cursor.getString(22));
+                contact.set_txtImei(cursor.getString(18));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -235,7 +278,8 @@ public class tUserLoginDA {
                 contact.set_dtLogOut((cursor.getString(14)));
                 contact.set_txtCab((cursor.getString(15)));
                 contact.set_txtDataId((cursor.getString(16)));
-                contact.set_txtImei(cursor.getString(17));
+                contact.set_intTrackingMobile(cursor.getString(22));
+                contact.set_txtImei(cursor.getString(18));
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -308,7 +352,8 @@ public class tUserLoginDA {
                 contact.set_txtBranchCode((cursor.getString(19)));
                 contact.set_txtSubmissionID(cursor.getString(20));
                 contact.set_txtCheckLocation(cursor.getString(21));
-                contact.set_txtImei(cursor.getString(17));
+                contact.set_intTrackingMobile(cursor.getString(22));
+                contact.set_txtImei(cursor.getString(23));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());

@@ -95,9 +95,30 @@ public class tUserLoginData {
         // TODO Auto-generated constructor stub
     }
 
-    public tUserLoginData(int _intId, String _txtUserId, String _txtRoleId,
-                          String _txtRoleName, String _txtPassword, String _txtUserName, String _txtName, String _txtPathImage, String _TxtEmail, String _TxtEmpId, String _dtLastLogin,
-                          String _txtDeviceId, String _dtCheckIn, String _dtCheckOut, String _dtLogOut, String _txtCab, String _DataId, String _txtOutletCode, String _txtOutletName, String _txtBranchCode, String _txtSubmissionID, String _txtImei, String _txtCheckLocation) {
+    public tUserLoginData(int _intId,
+                          String _txtUserId,
+                          String _txtRoleId,
+                          String _txtRoleName,
+                          String _txtPassword,
+                          String _txtUserName,
+                          String _txtName,
+                          String _txtPathImage,
+                          String _TxtEmail,
+                          String _TxtEmpId,
+                          String _dtLastLogin,
+                          String _txtDeviceId,
+                          String _dtCheckIn,
+                          String _dtCheckOut,
+                          String _dtLogOut,
+                          String _txtCab,
+                          String _DataId,
+                          String _txtOutletCode,
+                          String _txtOutletName,
+                          String _txtBranchCode,
+                          String _txtSubmissionID,
+                          String _txtImei,
+                          String _txtCheckLocation,
+                          String _intTrackingMobile) {
         this._intId = _intId;
         this._txtUserId = _txtUserId;
         this._txtRoleId = _txtRoleId;
@@ -119,8 +140,9 @@ public class tUserLoginData {
         this._txtOutletName = _txtOutletName;
         this._txtBranchCode = _txtBranchCode;
         this._txtSubmissionID = _txtSubmissionID;
-        this._txtCheckLocation = _txtCheckLocation;
         this._txtImei = _txtImei;
+        this._txtCheckLocation = _txtCheckLocation;
+        this._intTrackingMobile = _intTrackingMobile;
     }
 
     public int get_intId() {
@@ -225,6 +247,16 @@ public class tUserLoginData {
     private String _txtBranchCode;
     private String _txtSubmissionID;
     private String _txtCheckLocation;
+
+    public String get_intTrackingMobile() {
+        return _intTrackingMobile;
+    }
+
+    public void set_intTrackingMobile(String _intTrackingMobile) {
+        this._intTrackingMobile = _intTrackingMobile;
+    }
+
+    private String _intTrackingMobile;
     private String _txtImei;
 
     public String Property_txtOutletCode = "txtOutletCode";
@@ -250,6 +282,7 @@ public class tUserLoginData {
     public String Property_ListOftUserLoginData = "ListOftUserLoginData";
     public String Property_txtSubmissionID = "txtSubmissionID";
     public String Property_checkLocation = "txtCheckLocation";
+    public String Property_intTrackingMobile = "intTrackingMobile";
     public String Property_txtImei = "txtImei";
     public String Property_All = Property_intId + "," +
             Property_txtUserId + "," +
@@ -273,6 +306,7 @@ public class tUserLoginData {
             Property_txtBranchCode + "," +
             Property_txtSubmissionID + "," +
             Property_checkLocation + "," +
+            Property_intTrackingMobile + "," +
             Property_txtImei;
 
     public String get_txtSubmissionID() {

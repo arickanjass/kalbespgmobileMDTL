@@ -407,17 +407,17 @@ public class Login extends clsMainActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if (isMyServiceRunning(MyTrackingLocationService.class)) {
-            stopService(new Intent(Login.this, MyTrackingLocationService.class));
-        }
+//        if (isMyServiceRunning(MyTrackingLocationService.class)) {
+//            stopService(new Intent(Login.this, MyTrackingLocationService.class));
+//        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (isMyServiceRunning(MyTrackingLocationService.class)) {
-            stopService(new Intent(Login.this, MyTrackingLocationService.class));
-        }
+//        if (isMyServiceRunning(MyTrackingLocationService.class)) {
+//            stopService(new Intent(Login.this, MyTrackingLocationService.class));
+//        }
     }
 
     private void resetAccount() {
@@ -478,6 +478,7 @@ public class Login extends clsMainActivity {
                     JSONObject innerObj = (JSONObject) aRoledata;
                     Long IntResult = (Long) innerObj.get("_pboolValid");
                     String PstrMessage = (String) innerObj.get("_pstrMessage");
+                    String intTrackingMobile = "1";
 
                     if (IntResult == 1) {
                         try{
@@ -503,6 +504,8 @@ public class Login extends clsMainActivity {
                             _tUserLoginData.set_txtImei((String) innerObj.get("TxtImei"));
                             _tUserLoginData.set_txtSubmissionID((String) innerObj.get("TxtSubmissonId"));
                             _tUserLoginData.set_txtCheckLocation((String) innerObj.get("IntRadius"));
+                            _tUserLoginData.set_intTrackingMobile((String) innerObj.get("IntTrackingMobile"));
+                            intTrackingMobile = (String) innerObj.get("IntTrackingMobile");
 
                             new tDeviceInfoUserBL().SaveInfoDevice(_tUserLoginData.get_TxtEmpId(), _tUserLoginData.get_txtDeviceId(), _tUserLoginData.get_txtImei());
                             new tUserLoginBL().saveData(_tUserLoginData);
@@ -697,8 +700,11 @@ public class Login extends clsMainActivity {
                         if (!isMyServiceRunning(MyServiceNative.class)) {
                             startService(new Intent(Login.this, MyServiceNative.class));
                         }
-                        if (!isMyServiceRunning(MyTrackingLocationService.class)) {
-                            startService(new Intent(Login.this, MyTrackingLocationService.class));
+
+                        if(intTrackingMobile.equals("1")){
+                            if (!isMyServiceRunning(MyTrackingLocationService.class)) {
+                                startService(new Intent(Login.this, MyTrackingLocationService.class));
+                            }
                         }
 
                         finish();
