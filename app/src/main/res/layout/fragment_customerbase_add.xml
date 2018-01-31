@@ -219,7 +219,7 @@
                             android:digits="0123456789"
                             android:editable="false"
                             android:inputType="number"
-                            android:maxLength="2"
+                            android:maxLength="3"
                             android:singleLine="true" />
                     </android.support.design.widget.TextInputLayout>
 

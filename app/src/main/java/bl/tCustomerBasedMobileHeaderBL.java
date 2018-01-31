@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 import library.spgmobile.common.clsHelper;
+import library.spgmobile.common.clsReturnData;
 import library.spgmobile.common.linkAPI;
 import library.spgmobile.common.mconfigData;
 import library.spgmobile.common.tCustomerBasedMobileDetailData;
@@ -59,6 +60,12 @@ public class tCustomerBasedMobileHeaderBL extends clsMainBL {
         tCustomerBasedMobileHeaderData dt = new tCustomerBasedMobileHeaderDA(_db).getDataByBitActive(_db);
         _db.close();
         return dt;
+    }
+    public int getDataByNameAndTlp(String txtName, String txtTlp) {
+        SQLiteDatabase _db = getDb();
+        int count = new tCustomerBasedMobileHeaderDA(_db).getDataByNameAndTlp(_db, txtName, txtTlp);
+        _db.close();
+        return count;
     }
     public tCustomerBasedMobileHeaderData getDataById(String idTrCustomer) {
         SQLiteDatabase _db = getDb();
@@ -119,8 +126,9 @@ public class tCustomerBasedMobileHeaderBL extends clsMainBL {
         return dt;
     }
 
-    public Boolean save(Context context) {
+    public clsReturnData save(Context context) {
         SQLiteDatabase _db = getDb();
+        clsReturnData _clsReturnData = new clsReturnData();
 
         Calendar c = Calendar.getInstance();
         int lYear = c.get(Calendar.YEAR);
@@ -130,6 +138,8 @@ public class tCustomerBasedMobileHeaderBL extends clsMainBL {
         String dateNow = Integer.valueOf(lYear) + "-" + Integer.valueOf(lMonth) + "-" + Integer.valueOf(lDay);
 
         Boolean status = false;
+        _clsReturnData.set_boleanValue(false);
+        _clsReturnData.set_boleanValueProduct(false);
         tCustomerBasedMobileHeaderData dtHeader = getDataByBitActive();
         if (dtHeader != null) {
             List<tCustomerBasedMobileDetailData> dtDetail = new tCustomerBasedMobileDetailBL().getAllDataByHeaderId(dtHeader.get_intTrCustomerId());
@@ -139,14 +149,24 @@ public class tCustomerBasedMobileHeaderBL extends clsMainBL {
                     if(dt.get_txtTglLahir().equals(dateNow) || dt.get_txtTglLahir() == null || dt.get_txtTglLahir().equals("null") || dt.get_txtTglLahir().equals("")){
                         new clsMainActivity().showCustomToast(context, "Failed to save: \n" + dt.get_txtNamaDepan() + "'s Date of birth has not been set", false);
                         status = false;
+                        _clsReturnData.set_boleanValue(false);
+                        _clsReturnData.set_boleanValueProduct(true);
+                        _clsReturnData.set_IdData(dt.get_intTrCustomerIdDetail());
+                        _clsReturnData.set_title(dt.get_txtNamaDepan());
                         break;
                     }
                     if (dtProduct == null || dtProduct.size() == 0) {
                         new clsMainActivity().showCustomToast(context, "Failed to save: \n" + dt.get_txtNamaDepan() + "'s product usage has not defined", false);
                         status = false;
+                        _clsReturnData.set_boleanValue(false);
+                        _clsReturnData.set_boleanValueProduct(false);
+                        _clsReturnData.set_IdData(dt.get_intTrCustomerIdDetail());
+                        _clsReturnData.set_title(dt.get_txtNamaDepan());
                         break;
                     } else {
                         status = true;
+                        _clsReturnData.set_boleanValue(true);
+                        _clsReturnData.set_boleanValueProduct(true);
                     }
                 }
             }
@@ -174,7 +194,7 @@ public class tCustomerBasedMobileHeaderBL extends clsMainBL {
             new clsMainActivity().showCustomToast(context, "Saved", true);
         }
         _db.close();
-        return status;
+        return _clsReturnData;
     }
 
     public List<tCustomerBasedMobileHeaderData> getAllData() {

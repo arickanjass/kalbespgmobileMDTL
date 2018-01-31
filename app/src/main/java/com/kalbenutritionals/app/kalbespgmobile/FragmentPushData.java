@@ -20,16 +20,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
+import java.io.File;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -67,6 +73,7 @@ import library.spgmobile.common.tSalesProductHeaderData;
 import library.spgmobile.common.tSalesProductQuantityHeaderData;
 import library.spgmobile.common.tStockInHandHeaderData;
 import library.spgmobile.common.tTidakSesuaiPesananHeaderData;
+import library.spgmobile.common.tUserLoginData;
 import library.spgmobile.common.tVisitPlanRealisasiData;
 import library.spgmobile.dal.clsHardCode;
 import service.MyServiceNative;
@@ -96,6 +103,9 @@ public class FragmentPushData extends Fragment {
     private String myValue;
     private LinearLayout ll_data_tidaksesuaipesanan,ll_data_kemasanrusak,ll_data_addDisplay,ll_data_planogram, ll_data_stockIH,ll_data_activityV2,ll_data_attendance,ll_reso, ll_data_activity, ll_data_customerbased, ll_purchase_order, ll_dataQuantityStock, ll_absen, ll_dataVisitPlan, ll_data_leave, ll_data_koordinasi, ll_dataQuesioner, ll_data_overStock;
     private LinearLayout ll_dataPOP_Standard;
+    private TextView tvDate;
+    ProgressBar progressBar;
+    TextView txtPercentage;
 
     View v;
 
@@ -132,6 +142,9 @@ public class FragmentPushData extends Fragment {
 
         v = inflater.inflate(R.layout.activity_push_data, container, false);
 
+        progressBar = (ProgressBar) v.findViewById(R.id.progressBar);
+        txtPercentage = (TextView) v.findViewById(R.id.txtPercentage);
+
         tlsPOP = (TableLayout) v.findViewById(R.id.tl_POP_standard);
         tlSOHeader = (TableLayout) v.findViewById(R.id.tlSOHeader);
         tlsPOHeader = (TableLayout)v.findViewById(R.id.tlPO);
@@ -151,6 +164,17 @@ public class FragmentPushData extends Fragment {
         tladdDisplay = (TableLayout) v.findViewById(R.id.tladdDisplay);
         tl_kemasanrusak = (TableLayout) v.findViewById(R.id.tl_kemasanrusak);
         tl_tidaksesuaipesanan = (TableLayout) v.findViewById(R.id.tl_tidaksesuaipesanan);
+
+        tvDate = (TextView) v.findViewById(R.id.tvDate);
+
+        try{
+
+            Date date = new Date();
+
+            tvDate.setText(DateFormat.getDateInstance(DateFormat.MEDIUM).format(date));
+        } catch (Exception e){
+
+        }
 
         btnPush = (Button) v.findViewById(R.id.btnPush);
 
@@ -175,6 +199,7 @@ public class FragmentPushData extends Fragment {
         ll_dataPOP_Standard = (LinearLayout) v.findViewById(R.id.ll_dataPOP_Standard);
 
         TextView tvPushError = (TextView) v.findViewById(R.id.tv_push_error);
+        TextView tvPushDB = (TextView) v.findViewById(R.id.tv_push_db);
 
         List<tLogErrorData> datass = new tLogErrorBL().getAllData();
 
@@ -196,6 +221,14 @@ public class FragmentPushData extends Fragment {
         });
 
 //        int i = 1/0;
+
+//        tvPushDB.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AsyncCall asyncCall = new AsyncCall();
+//                asyncCall.execute();
+//            }
+//        });
 
         List<mDownloadMasterData_mobileData> mDownloadMasterData_mobileDataList = new ArrayList<>();
 
@@ -2245,4 +2278,116 @@ public class FragmentPushData extends Fragment {
             }
         }
     }
+
+//    private class AsyncCall extends AsyncTask<String, Integer, List<tLogErrorData>> {
+//
+//        Boolean result = false;
+//        clsHardCode _path = new clsHardCode();
+//
+//        @Override
+//        protected List<tLogErrorData> doInBackground(String... params) {
+//            String versionName = "";
+//
+//            org.json.JSONArray _JSONArray = null;
+//            org.json.JSONObject JsonParam=new org.json.JSONObject();
+//            tUserLoginData dt = new tUserLoginBL().getUserActive();
+//
+//            try {
+//                versionName = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName;
+//            } catch (PackageManager.NameNotFoundException e2) {
+//                // TODO Auto-generated catch block
+//                e2.printStackTrace();
+//            }
+//
+//            try {
+//
+//                _JSONArray=new org.json.JSONArray();
+//                JsonParam.put("TxtNik",dt.get_TxtEmpId());
+//                JsonParam.put("IntCode",dt.get_txtUserId());
+//                _JSONArray.put(JsonParam);
+//
+//                HashMap<String, String> FileUpload = new HashMap<String, String>();
+//                    File file = new File(_path.txtPathApp + _path.txtDatabaseName);
+//                    if (file.exists()) {
+//                        FileUpload.put(_path.txtDatabaseName, _path.txtPathApp + _path.txtDatabaseName);
+//                    }
+//
+//                JSONArray Jresult = new clsHelperBL().callPushDataFileReturnJson("m_pushSQlite",versionName, _JSONArray.toString(), FileUpload);
+//
+//                APIData dtAPIDATA = new APIData();
+//                Iterator i = Jresult.iterator();
+//                boolean validPush = false;
+//                while (i.hasNext()) {
+//                    org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
+//                    int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
+//                    if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
+//                        validPush = true;
+//                        result = true;
+//                    } else {
+//                        validPush = false;
+//                        break;
+//                    }
+//                }
+//
+//                dtdataJson.setIntResult("1");
+//            } catch (Exception e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//                dtdataJson.setIntResult("0");
+//                dtdataJson.setTxtMessage("Please Check Your Connection !!!");
+//            }
+////            }
+////            else
+////            {
+////                dtdataJson.setIntResult("0");
+////                dtdataJson.setTxtMessage("No Data");
+////            }
+//            roledata.add(dtdataJson);
+////            return uploadFile(params[0]);
+//            return null;
+//        }
+//        private ProgressDialog Dialog = new ProgressDialog(getContext());
+//
+//        @Override
+//        protected void onPostExecute(List<tLogErrorData> tErrorLogDatas) {
+//            /*SQLiteDatabase db = new clsMainBL().getDb();
+//            tLogErrorDA _tLogErrorDA = new tLogErrorDA(db);
+//            _tLogErrorDA.DropTable(db);
+//            _tLogErrorDA = new tLogErrorDA(db);
+//            super.onPostExecute(tErrorLogDatas);*/
+//
+//            if (result) {
+//                new tLogErrorBL().deleteFileLogFromDevice();
+////                finish();
+////                Intent intent = new Intent(ActivityPushError.this, Splash.class);
+////                startActivity(intent);
+//                new clsMainActivity().showCustomToast(getActivity(), "Success", true);
+//            } else {
+//                Toast.makeText(getActivity(), "error", Toast.LENGTH_LONG).show();
+//            }
+//
+//        }
+//
+//        @Override
+//        protected void onProgressUpdate(Integer... values) {
+//            super.onProgressUpdate(values);
+//            // Making progress bar visible
+//            progressBar.setVisibility(View.VISIBLE);
+//
+//            // updating progress bar value
+//            progressBar.setProgress(values[0]);
+//
+//            // updating percentage value
+//            txtPercentage.setText(String.valueOf(values[0]) + "%");
+//
+//            btnPush.setVisibility(View.GONE);
+//        }
+//
+//        @Override
+//        protected void onCancelled() {
+//            Dialog.dismiss();
+//            new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessCancelRequest, false);
+//        }
+//
+//    }
 }

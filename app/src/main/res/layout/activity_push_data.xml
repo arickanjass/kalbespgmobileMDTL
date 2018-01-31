@@ -11,6 +11,15 @@
     android:padding="15dp"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:gravity="right"
+        android:text="-"
+        android:textColor="@color/black" />
+
     <LinearLayout
         android:id="@+id/ll_reso"
         android:orientation="vertical"
@@ -481,6 +490,19 @@
             android:text="Push Data" />
 
     <TextView
+        android:id="@+id/tv_push_db"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:clickable="true"
+        android:text="Push DataBase"
+        android:textColor="@color/black"
+        android:textStyle="italic|bold"
+        android:background="@drawable/bg_edtext"/>
+
+    <TextView
         android:id="@+id/tv_push_error"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -492,6 +514,25 @@
         android:textColor="@color/red"
         android:textStyle="italic|bold"
         android:background="@drawable/bg_edtext"/>
+
+    <TextView
+        android:id="@+id/txtPercentage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/green"
+        android:textSize="30dp"
+        android:visibility="gone"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="20dp"
+        android:layout_marginBottom="35dp"
+        android:visibility="gone"/>
 
 
 </LinearLayout>

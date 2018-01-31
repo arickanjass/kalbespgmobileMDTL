@@ -71,6 +71,7 @@ import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.OnMen
 import edu.swu.pulltorefreshswipemenulistview.library.swipemenu.interfaces.SwipeMenuCreator;
 import library.spgmobile.common.AppAdapter;
 import library.spgmobile.common.ModelListview;
+import library.spgmobile.common.clsReturnData;
 import library.spgmobile.common.clsSwipeList;
 import library.spgmobile.common.mProductCompetitorData;
 import library.spgmobile.common.mProductPICData;
@@ -265,8 +266,9 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
         if (typeSubmissionDataList.size() > 0) {
             for (mTypeSubmissionMobile dt : typeSubmissionDataList) {
                 arrData.add(dt.get_txtNamaMasterData());
-                HMSubmision.put(dt.get_txtNamaMasterData(), dt.get_txtKeterangan());
+                HMSubmision.put(dt.get_txtNamaMasterData(), dt.get_txtMasterID());
                 HMSubmision.put(dt.get_txtKeterangan(), dt.get_txtMasterID());
+//                HMSubmision.put(dt.get_txtNamaMasterData(), dt.get_txtMasterID());
             }
         }
         ArrayAdapter<String> adapterSubmission = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, arrData);
@@ -749,7 +751,7 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
             }
         }
 
-        setTablePerson();
+//        setTablePerson();
         LinearLayout lnTop = (LinearLayout) v.findViewById(R.id.linearLayoutTop);
         LinearLayout lnBottom = (LinearLayout) v.findViewById(R.id.linearLayoutBottom);
 
@@ -801,6 +803,10 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
         tvAlamat.setText(String.format(": %s", etAlamat.getText().toString()));
         tvEmail.setText(String.format(": %s", etEmail.getText().toString()));
         tvPinBBM.setText(String.format(": %s", etPinBBM.getText().toString()));
+
+        if(cbPIC.isChecked()){
+
+        }
     }
 
     private void viewCustomerBaseFragment() {
@@ -811,11 +817,21 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
     }
 
     private void saveCustomerBase() {
-        Boolean status = new tCustomerBasedMobileHeaderBL().save(getContext());
+        clsReturnData _dt = new clsReturnData();
+        _dt  = new tCustomerBasedMobileHeaderBL().save(getContext());
 
-        if (status) {
+        if (_dt.get_boleanValue()&&_dt.get_boleanValueProduct()) {
             new mTypeSubmissionMobileBL().updateLastSelected(dtHeader.get_txtSubmissionCode());
             viewCustomerBaseFragment();
+        } else if(!_dt.get_boleanValue()&&!_dt.get_boleanValueProduct()){
+            if(dtListDetail.size()>0){
+                for(int i = 0; i < dtListDetail.size(); i++){
+                    if(dtListDetail.get(0).get_intTrCustomerIdDetail().equals(_dt.get_IdData())){
+                        popUpAddProduct(dtListDetail.get(i));
+                        break;
+                    }
+                }
+            }
         }
     }
 
@@ -836,8 +852,9 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
 
         List<String> dataProductKalbe = new ArrayList<>();
         final List<String> dataProductKompetitor = new ArrayList<>();
-        final List<mProductSPGData> mProductSPGDataList = new mProductSPGBL().GetDataByMasterIdByKN(HMSubmision.get(HMSubmision.get(spnSubmissionCode.getSelectedItem())),mUserLOBDataList);
-        final List<mProductPICData> mProductPICDataList = new mProductPICBL().GetDataByMasterIdByKN(HMSubmision.get(HMSubmision.get(spnSubmissionCode.getSelectedItem())), mUserLOBDataList);
+        String a = spnSubmissionCode.getSelectedItem().toString();
+        final List<mProductSPGData> mProductSPGDataList = new mProductSPGBL().GetDataByMasterIdByKN(HMSubmision.get(spnSubmissionCode.getSelectedItem()),mUserLOBDataList);
+        final List<mProductPICData> mProductPICDataList = new mProductPICBL().GetDataByMasterIdByKN(HMSubmision.get(spnSubmissionCode.getSelectedItem()), mUserLOBDataList);
 
         if (dataDetail.get_intPIC().equals("1")) {
             if (mProductPICDataList.size() > 0) {
@@ -1406,6 +1423,8 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
                         }
                         alertD.dismiss();
                         setTablePerson();
+//                        List<tCustomerBasedMobileDetailData> _tCustomerBasedMobileDetailData = new tCustomerBasedMobileDetailBL().getAllDataByHeaderId(dtHeader.get_intTrCustomerId());
+
                     }
                 } else {
                     if (nama.getText().toString().equals("")) {
@@ -1421,6 +1440,9 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
     }
 
     private void setTablePerson() {
+        boolean viewPopUpProductPIC = false;
+        boolean viewPopUpProduct = false;
+        int positionListPerson = -1;
         sv = (ScrollView) v.findViewById(R.id.scroll);
         sv.setFillViewport(true);
         dtListDetail = new tCustomerBasedMobileDetailBL().getAllDataByHeaderId(dtHeader.get_intTrCustomerId());
@@ -1435,6 +1457,7 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
         String dateNow = Integer.valueOf(lYear) + "-" + Integer.valueOf(lMonth) + "-" + Integer.valueOf(lDay);
 
         int totalProduct = 0;
+        int indexMember = 0;
         for (int i = 0; i < dtListDetail.size(); i++) {
             List<tCustomerBasedMobileDetailProductData> dtListProduct = new tCustomerBasedMobileDetailProductBL().getDataByCustomerDetailId(dtListDetail.get(i).get_intTrCustomerIdDetail());
 
@@ -1449,6 +1472,14 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
 
             if (dtListDetail.get(i).get_intPIC().equals("1")) PIC = " (PIC)";
             else PIC = "";
+
+            if(dtListDetail.get(i).get_intPIC().equals("1")&&totalProduct==0){
+                viewPopUpProductPIC = true;
+                positionListPerson = i;
+            } else if(!viewPopUpProductPIC&&totalProduct==0){
+                viewPopUpProduct = true;
+                positionListPerson += 1;
+            }
 
             String gender = dtListDetail.get(i).get_txtGender().equals("Laki-laki") ? "Male" : "Female";
 
@@ -1557,6 +1588,12 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
                 }
             }
         });
+
+        if(cbPIC.isChecked()&&viewPopUpProductPIC&&dtListDetail.size()>0){
+            popUpAddProduct(dtListDetail.get(positionListPerson));
+        } else if (!viewPopUpProductPIC&&positionListPerson>=0){
+            popUpAddProduct(dtListDetail.get(positionListPerson));
+        }
 
     }
 
@@ -1981,6 +2018,8 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
 
     private boolean validateHeader() {
 
+
+
         String notelp = etTelpon.getText().toString();
         String notelp2 = etTelpon2.getText().toString();
         String notelpkantor = etTelponKantor.getText().toString();
@@ -2133,6 +2172,14 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
             if(new mProductCompetitorBL().getContactsCountByKN(mUserLOBDataList)==0 && validate){
                 new clsMainActivity().showCustomToast(getContext(), "Please re-download Product Competitor", false);
                 validate=false;
+            }
+        }
+
+        if(validate){
+            int count = new tCustomerBasedMobileHeaderBL().getDataByNameAndTlp(etNama.getText().toString(), etTelpon.getText().toString());
+            if(count>=1&&idTrCustomer.equals("null")){
+                new clsMainActivity().showCustomToast(getContext(), "Nama Pic & no tlp sudah terdaftar", false);
+                validate = false;
             }
         }
 

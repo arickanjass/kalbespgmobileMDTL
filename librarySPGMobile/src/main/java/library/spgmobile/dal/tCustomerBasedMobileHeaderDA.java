@@ -984,6 +984,17 @@ public class tCustomerBasedMobileHeaderDA {
         return contact;
     }
 
+    public int getDataByNameAndTlp(SQLiteDatabase db, String txtName, String txtTlp) {
+        tCustomerBasedMobileHeaderData dt = new tCustomerBasedMobileHeaderData();
+
+        String selectQuery = "SELECT  " + " count (intTrCustomerId) " + " FROM " + TABLE_NAME + " WHERE " + dt.Property_txtNamaDepan + " = '" + txtName + "' and " + dt.Property_txtTelp + " = '" + txtTlp + "' and " + dt.Property_bitActive + " = '1'" ;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        int countData = cursor.getCount();
+        cursor.close();
+        // return count
+        return countData;
+    }
+
     public List<tCustomerBasedMobileHeaderData> getAllDataByIntSyc(SQLiteDatabase db, String int_sync) {
         List<tCustomerBasedMobileHeaderData> contactList = null;
         // Select All Query
