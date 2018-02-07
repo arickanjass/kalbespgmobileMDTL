@@ -14,6 +14,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,9 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+//import com.github.glomadrian.codeinputlib.CodeInput;
+import addons.codeinputlib.CodeInput;
 
 import org.json.JSONException;
 import org.json.simple.JSONArray;
@@ -41,11 +45,9 @@ import java.util.List;
 
 import bl.clsHelperBL;
 import bl.mDownloadMasterData_mobileBL;
-import bl.tAbsenUserBL;
 import bl.tGroupQuestionMappingBL;
 import bl.tLogErrorBL;
 import bl.tNotificationBL;
-import bl.tPOPStandardHeaderBL;
 import bl.tUserLoginBL;
 import come.example.viewbadger.ShortcutBadger;
 import library.spgmobile.common.APIData;
@@ -59,7 +61,6 @@ import library.spgmobile.common.tActivityMobileData;
 import library.spgmobile.common.tAttendanceUserData;
 import library.spgmobile.common.tCustomerBasedMobileHeaderData;
 import library.spgmobile.common.tGroupQuestionMappingData;
-import library.spgmobile.common.tJawabanUserData;
 import library.spgmobile.common.tJawabanUserHeaderData;
 import library.spgmobile.common.tKemasanRusakHeaderData;
 import library.spgmobile.common.tLeaveMobileData;
@@ -222,13 +223,14 @@ public class FragmentPushData extends Fragment {
 
 //        int i = 1/0;
 
-//        tvPushDB.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
+        tvPushDB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 //                AsyncCall asyncCall = new AsyncCall();
 //                asyncCall.execute();
-//            }
-//        });
+                popUpPushDB();
+            }
+        });
 
         List<mDownloadMasterData_mobileData> mDownloadMasterData_mobileDataList = new ArrayList<>();
 
@@ -2279,115 +2281,119 @@ public class FragmentPushData extends Fragment {
         }
     }
 
-//    private class AsyncCall extends AsyncTask<String, Integer, List<tLogErrorData>> {
-//
-//        Boolean result = false;
-//        clsHardCode _path = new clsHardCode();
-//
-//        @Override
-//        protected List<tLogErrorData> doInBackground(String... params) {
-//            String versionName = "";
-//
-//            org.json.JSONArray _JSONArray = null;
-//            org.json.JSONObject JsonParam=new org.json.JSONObject();
-//            tUserLoginData dt = new tUserLoginBL().getUserActive();
-//
-//            try {
-//                versionName = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName;
-//            } catch (PackageManager.NameNotFoundException e2) {
-//                // TODO Auto-generated catch block
-//                e2.printStackTrace();
-//            }
-//
-//            try {
-//
-//                _JSONArray=new org.json.JSONArray();
-//                JsonParam.put("TxtNik",dt.get_TxtEmpId());
-//                JsonParam.put("IntCode",dt.get_txtUserId());
-//                _JSONArray.put(JsonParam);
-//
-//                HashMap<String, String> FileUpload = new HashMap<String, String>();
-//                    File file = new File(_path.txtPathApp + _path.txtDatabaseName);
-//                    if (file.exists()) {
-//                        FileUpload.put(_path.txtDatabaseName, _path.txtPathApp + _path.txtDatabaseName);
-//                    }
-//
-//                JSONArray Jresult = new clsHelperBL().callPushDataFileReturnJson("m_pushSQlite",versionName, _JSONArray.toString(), FileUpload);
-//
-//                APIData dtAPIDATA = new APIData();
-//                Iterator i = Jresult.iterator();
-//                boolean validPush = false;
-//                while (i.hasNext()) {
-//                    org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
-//                    int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
-//                    if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
-//                        validPush = true;
-//                        result = true;
-//                    } else {
-//                        validPush = false;
-//                        break;
-//                    }
-//                }
-//
-//                dtdataJson.setIntResult("1");
-//            } catch (Exception e) {
-//                // TODO Auto-generated catch block
-//                e.printStackTrace();
-//                dtdataJson.setIntResult("0");
-//                dtdataJson.setTxtMessage("Please Check Your Connection !!!");
-//            }
-////            }
-////            else
-////            {
-////                dtdataJson.setIntResult("0");
-////                dtdataJson.setTxtMessage("No Data");
-////            }
-//            roledata.add(dtdataJson);
-////            return uploadFile(params[0]);
-//            return null;
-//        }
-//        private ProgressDialog Dialog = new ProgressDialog(getContext());
-//
-//        @Override
-//        protected void onPostExecute(List<tLogErrorData> tErrorLogDatas) {
-//            /*SQLiteDatabase db = new clsMainBL().getDb();
-//            tLogErrorDA _tLogErrorDA = new tLogErrorDA(db);
-//            _tLogErrorDA.DropTable(db);
-//            _tLogErrorDA = new tLogErrorDA(db);
-//            super.onPostExecute(tErrorLogDatas);*/
-//
-//            if (result) {
-//                new tLogErrorBL().deleteFileLogFromDevice();
-////                finish();
-////                Intent intent = new Intent(ActivityPushError.this, Splash.class);
-////                startActivity(intent);
-//                new clsMainActivity().showCustomToast(getActivity(), "Success", true);
-//            } else {
-//                Toast.makeText(getActivity(), "error", Toast.LENGTH_LONG).show();
-//            }
-//
-//        }
-//
-//        @Override
-//        protected void onProgressUpdate(Integer... values) {
-//            super.onProgressUpdate(values);
-//            // Making progress bar visible
-//            progressBar.setVisibility(View.VISIBLE);
-//
-//            // updating progress bar value
-//            progressBar.setProgress(values[0]);
-//
-//            // updating percentage value
-//            txtPercentage.setText(String.valueOf(values[0]) + "%");
-//
-//            btnPush.setVisibility(View.GONE);
-//        }
-//
-//        @Override
-//        protected void onCancelled() {
-//            Dialog.dismiss();
-//            new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessCancelRequest, false);
-//        }
-//
-//    }
+    private class AsyncCall extends AsyncTask<String, Integer, org.json.JSONObject> {
+
+        Boolean result = false;
+        clsHardCode _path = new clsHardCode();
+
+        @Override
+        protected org.json.JSONObject doInBackground(String... params) {
+            String versionName = "";
+
+            org.json.JSONArray _JSONArray = null;
+            org.json.JSONObject JsonParam = new org.json.JSONObject();
+            tUserLoginData dt = new tUserLoginBL().getUserActive();
+
+            org.json.JSONObject Jresults = null;
+            try {
+
+                _JSONArray = new org.json.JSONArray();
+                JsonParam.put("TxtNik", dt.get_TxtEmpId());
+                JsonParam.put("IntCode", params[0]);
+                _JSONArray.put(JsonParam);
+
+                HashMap<String, String> FileUpload = new HashMap<String, String>();
+                File file = new File(_path.txtDatabaseName);
+                if (file.exists()) {
+                    FileUpload.put("fprsV4", _path.txtDatabaseName);
+                }
+
+                Jresults = new clsHelperBL().callPushDataFileReturnJson("GetDatamCodePushDB_mobile", versionName, _JSONArray.toString(), FileUpload);
+
+
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return Jresults;
+        }
+        private ProgressDialog Dialog = new ProgressDialog(getContext());
+
+        @Override
+        protected void onPostExecute(org.json.JSONObject json) {
+            try {
+                String txtvalid=(String.valueOf(json.get("_pboolValid")));
+                String txtmess=(String.valueOf(json.get("_pstrMessage")));
+                if(txtvalid.equals("1")){
+                    new clsMainActivity().showCustomToast(getContext(), txtmess, true);
+                } else {
+                    new clsMainActivity().showCustomToast(getContext(), txtmess, false);
+                }
+            } catch (JSONException e){
+                new clsMainActivity().showCustomToast(getContext(), e.getMessage(), false);
+            }
+
+            Dialog.dismiss();
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            Dialog.dismiss();
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Dialog.setMessage("Please Wait...");
+            Dialog.setCancelable(false);
+            Dialog.show();
+        }
+
+        @Override
+        protected void onCancelled() {
+            Dialog.dismiss();
+            new clsMainActivity().showCustomToast(getContext(), new clsHardCode().txtMessCancelRequest, false);
+        }
+
+    }
+
+    CodeInput cInput;
+    AlertDialog.Builder alertDialogBuilder;
+    private void popUpPushDB(){
+
+        try{
+            LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+            final View promptView = layoutInflater.inflate(R.layout.popup_push_db, null);
+
+            cInput = (CodeInput) promptView.findViewById(R.id.pairing);
+            cInput.setCodeReadyListener(new CodeInput.codeReadyListener() {
+                @Override
+                public void onCodeReady(Character[] code) {
+                    String token="";
+                    for(Character a : code){
+                        token+=a;
+                    }
+//                    Toast.makeText(getActivity(),"code entered is : "+ token,Toast.LENGTH_SHORT).show();
+                    AsyncCall call = new AsyncCall();
+                    call.execute(token);
+//                    AsyncCalls calls = new AsyncCalls(token);
+//                    calls.execute();
+
+                }
+            });
+
+            alertDialogBuilder = new AlertDialog.Builder(getContext());
+            alertDialogBuilder.setView(promptView);
+
+            alertDialogBuilder
+                    .setCancelable(true);
+
+            final AlertDialog alertD = alertDialogBuilder.create();
+            alertD.show();
+        }catch (Exception x){
+            Toast.makeText(getActivity(),x.getMessage().toString(),Toast.LENGTH_SHORT).show();
+        }
+    }
 }

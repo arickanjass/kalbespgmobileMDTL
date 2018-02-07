@@ -36,6 +36,7 @@ import java.util.List;
 import bl.clsHelperBL;
 import bl.mCountConsumerMTDBL;
 import bl.mDownloadMasterData_mobileBL;
+import bl.mUserLOBBL;
 import bl.tAbsenUserBL;
 import bl.tActivityBL;
 import bl.tActivityMobileBL;
@@ -56,6 +57,7 @@ import bl.tUserLoginBL;
 import bl.tVisitPlanRealisasiBL;
 import de.hdodenhof.circleimageview.CircleImageView;
 import library.spgmobile.common.mDownloadMasterData_mobileData;
+import library.spgmobile.common.mUserLOBData;
 import library.spgmobile.common.tAbsenUserData;
 import library.spgmobile.common.tActivityData;
 import library.spgmobile.common.tActivityMobileData;
@@ -224,7 +226,6 @@ public class FragmentInformation extends Fragment implements View.OnClickListene
 
         }
 
-
         List<mDownloadMasterData_mobileData> mDownloadMasterData_mobileDataList = new ArrayList<>();
 
         mDownloadMasterData_mobileDataList = new mDownloadMasterData_mobileBL().GetAllData();
@@ -357,7 +358,27 @@ public class FragmentInformation extends Fragment implements View.OnClickListene
         int dt_pop_unpush = 0;
         int dt_pop_save = 0;
 
-        tvUsername.setText(dt.get_txtUserName().toUpperCase());
+        List<mUserLOBData> mUserLOBDataList = new mUserLOBBL().GetAllData();
+
+//        String txtLOB = "";
+//
+//        if(mUserLOBDataList!=null&&mUserLOBDataList.size()>0){
+//            for(mUserLOBData dtLOB : mUserLOBDataList){
+//                txtLOB += dtLOB.get_txtLOBName();
+//            }
+//        }
+
+        String query = "";
+
+        if (mUserLOBDataList != null&&mUserLOBDataList.size()>0){
+            query = "(";
+            for (int i = 0; i < mUserLOBDataList.size(); i++) {
+                query = query + "" + mUserLOBDataList.get(i).get_txtLOBName() + "";
+                query = query + ((i + 1) != mUserLOBDataList.size() ? "," : ")");
+            }
+        }
+
+        tvUsername.setText(dt.get_txtUserName().toUpperCase() + query.toUpperCase());
 
         if (dtLeave.size() > 0) {
             tvBranchOutlet.setText(dtLeave.get(0).get_txtTypeAlasanName() + " - " + dtLeave.get(0).get_txtAlasan());

@@ -45,6 +45,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.nio.channels.FileChannel;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -74,6 +75,7 @@ import javax.crypto.spec.SecretKeySpec;
 import adapter.AppAdapterViewCusBase;
 import adapter.GridAdapter;
 import addons.adapter.AdapterListProductCustomerBased;
+import addons.adapter.AdapterListProductReso;
 import addons.adapter.AdapterListVisitplan;
 import addons.zoomview.CustomZoomView;
 import bl.clsLogReceiverDetail_mobileBL;
@@ -581,6 +583,24 @@ public class clsMainActivity extends Activity {
         }
 
         mAdapter = new AdapterListProductCustomerBased(_ctx, mAppList);
+
+        return mAdapter;
+
+    }
+
+    public static AdapterListProductReso setListProductReso(Context _ctx, final ArrayList<clsSwipeList> swipeList) {
+        final AdapterListProductReso mAdapter;
+        PullToRefreshSwipeMenuListView mListView;
+        Handler mHandler;
+
+        ArrayList<clsSwipeList> mAppList = new ArrayList<>();
+
+        for (int i = 0; i < swipeList.size(); i++) {
+            clsSwipeList getswipeList = swipeList.get(i);
+            mAppList.add(getswipeList);
+        }
+
+        mAdapter = new AdapterListProductReso(_ctx, mAppList);
 
         return mAdapter;
 
@@ -1173,4 +1193,31 @@ public class clsMainActivity extends Activity {
             return Uri.fromFile(file);
         }
     }
+
+    public void copyFile() throws Exception
+    {
+            File sd = Environment.getExternalStorageDirectory();
+            File data = Environment.getDataDirectory();
+
+            if (sd.canWrite())
+            {
+                String currentDBPath = new clsHardCode().txtPathApp;
+                String backupDBName = "databaseroot_copy";
+                File currentDB = new File(new clsHardCode().txtDatabaseName);
+                File backupDB = new File(sd, backupDBName);
+
+                if (currentDB.exists()) {
+                    FileChannel src = new FileInputStream(currentDB).getChannel();
+                    FileChannel dst = new FileOutputStream(backupDB).getChannel();
+                    dst.transferFrom(src, 0, src.size());
+                    src.close();
+                    dst.close();
+//                    new clsMainActivity().showCustomToast(getContext(), "Successfull...", true);
+                } else {
+//                    new clsMainActivity().showCustomToast(getContext(), "File not found...", false);
+                }
+            } else {
+//                new clsMainActivity().showCustomToast(getContext(), "Permission not granted...", false);
+            }
+        }
 }

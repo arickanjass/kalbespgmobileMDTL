@@ -243,6 +243,13 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
         etPinBBM = (EditText) v.findViewById(R.id.etPinBBM);
         cbPIC = (CheckBox) v.findViewById(R.id.cbPIC);
 
+        if(mUserLOBDataList!=null){
+            if(new mProductPICBL().getContactCountByKN(mUserLOBDataList)==0){
+                cbPIC.setChecked(false);
+                cbPIC.setEnabled(false);
+            }
+        }
+
         etTelpon.setOnTouchListener(new DrawableClickListener.RightDrawableClickListener(etTelpon) {
             public boolean onDrawableClick() {
                 if (!etTelpon.getText().toString().equals("")) {
@@ -1442,7 +1449,7 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
     private void setTablePerson() {
         boolean viewPopUpProductPIC = false;
         boolean viewPopUpProduct = false;
-        int positionListPerson = -1;
+        int positionListPerson = 0;
         sv = (ScrollView) v.findViewById(R.id.scroll);
         sv.setFillViewport(true);
         dtListDetail = new tCustomerBasedMobileDetailBL().getAllDataByHeaderId(dtHeader.get_intTrCustomerId());
@@ -1478,7 +1485,7 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
                 positionListPerson = i;
             } else if(!viewPopUpProductPIC&&totalProduct==0){
                 viewPopUpProduct = true;
-                positionListPerson += 1;
+                positionListPerson = i;
             }
 
             String gender = dtListDetail.get(i).get_txtGender().equals("Laki-laki") ? "Male" : "Female";
@@ -1591,7 +1598,7 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
 
         if(cbPIC.isChecked()&&viewPopUpProductPIC&&dtListDetail.size()>0){
             popUpAddProduct(dtListDetail.get(positionListPerson));
-        } else if (!viewPopUpProductPIC&&positionListPerson>=0){
+        } else if (!viewPopUpProductPIC&&positionListPerson>=0&&viewPopUpProduct){
             popUpAddProduct(dtListDetail.get(positionListPerson));
         }
 

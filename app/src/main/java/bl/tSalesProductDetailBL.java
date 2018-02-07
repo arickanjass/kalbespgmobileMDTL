@@ -17,6 +17,7 @@ import library.spgmobile.common.tSalesProductHeaderData;
 import library.spgmobile.common.tUserLoginData;
 import library.spgmobile.dal.clsHardCode;
 import library.spgmobile.dal.enumConfigData;
+import library.spgmobile.dal.mProductPICDA;
 import library.spgmobile.dal.mconfigDA;
 import library.spgmobile.dal.tSalesProductDetailDA;
 import library.spgmobile.dal.tSalesProductHeaderDA;
@@ -121,5 +122,14 @@ public class tSalesProductDetailBL extends clsMainBL {
 			}
 		}
 		_db.close();
+	}
+
+	public int getContactCount(String txtNoso) {
+		int count = 0;
+		SQLiteDatabase db = getDb();
+		tSalesProductDetailDA _tSalesProductDetailDA= new tSalesProductDetailDA(db);
+		count = _tSalesProductDetailDA.getContactsCountInt(db, txtNoso);
+		db.close();
+		return count;
 	}
 }

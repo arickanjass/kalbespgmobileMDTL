@@ -721,6 +721,7 @@ public class Login extends clsMainActivity {
                 showCustomToast(Login.this, new clsHardCode().txtMessDataNotFound, false);
                 txtLoginEmail.requestFocus();
             }
+            txtLoginPassword.setText("");
             Dialog.dismiss();
         }
 

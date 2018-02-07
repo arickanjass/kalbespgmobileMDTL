@@ -987,7 +987,7 @@ public class tCustomerBasedMobileHeaderDA {
     public int getDataByNameAndTlp(SQLiteDatabase db, String txtName, String txtTlp) {
         tCustomerBasedMobileHeaderData dt = new tCustomerBasedMobileHeaderData();
 
-        String selectQuery = "SELECT  " + " count (intTrCustomerId) " + " FROM " + TABLE_NAME + " WHERE " + dt.Property_txtNamaDepan + " = '" + txtName + "' and " + dt.Property_txtTelp + " = '" + txtTlp + "' and " + dt.Property_bitActive + " = '1'" ;
+        String selectQuery = "SELECT  * FROM " + TABLE_NAME + " WHERE " + dt.Property_txtNamaDepan + " = '" + txtName + "' and " + dt.Property_txtTelp + " = '" + txtTlp + "' and " + dt.Property_bitActive + " = '1'" ;
         Cursor cursor = db.rawQuery(selectQuery, null);
         int countData = cursor.getCount();
         cursor.close();

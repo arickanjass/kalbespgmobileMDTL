@@ -498,7 +498,7 @@ public class clsHelperBL extends clsMainBL {
         return JsonArray;
     }
 
-    public org.json.simple.JSONArray callPushDataFileReturnJson(String methodName,String versionName, String strJson, HashMap<String, String> ListOfDataFile) throws Exception {
+    public org.json.JSONObject callPushDataFileReturnJson(String methodName,String versionName, String strJson, HashMap<String, String> ListOfDataFile) throws Exception {
         SQLiteDatabase _db = getDb();
         Boolean flag = true;
         String ErrorMess = "";
@@ -508,10 +508,10 @@ public class clsHelperBL extends clsMainBL {
         dtlinkAPI = new linkAPI();
         dtlinkAPI.set_txtMethod(txtMethod);
         tUserLoginDA _tUserLoginDA = new tUserLoginDA(_db);
-//        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
-//        dtlinkAPI.set_txtParam(_dataUserLogin.get_txtUserId() + "|||");
-//        dtlinkAPI.set_txtToken(new clsHardCode().txtTokenAPI);
-//        dtlinkAPI.set_txtVesion(versionName);
+        tUserLoginData _dataUserLogin = _tUserLoginDA.getData(_db, 1);
+        dtlinkAPI.set_txtParam(_dataUserLogin.get_txtUserId() + "|||");
+        dtlinkAPI.set_txtToken(new clsHardCode().txtTokenAPI);
+        dtlinkAPI.set_txtVesion(versionName);
         String strVal2 = "";
         mconfigDA _mconfigDA = new mconfigDA(_db);
         mconfigData dataAPI = _mconfigDA.getData(_db, enumConfigData.ApiKalbe.getidConfigData());
@@ -524,28 +524,9 @@ public class clsHelperBL extends clsMainBL {
         String strLinkAPI = dtlinkAPI.QueryString(strVal2);
         String JsonData = _help.PushErrorFile(strLinkAPI, strJson, Integer.valueOf(TimeOut), ListOfDataFile);
         //String JsonData= _help.ResultJsonData(_help.getHTML(strLinkAPI));
-        org.json.simple.JSONArray JsonArray = _help.ResultJsonArray(JsonData);
-        APIData dtAPIDATA = new APIData();
-        Iterator i = JsonArray.iterator();
-        mCounterNumberDA _mCounterNumberDA = new mCounterNumberDA(_db);
-        while (i.hasNext()) {
-            org.json.simple.JSONObject innerObj = (org.json.simple.JSONObject) i.next();
-            int boolValid = Integer.valueOf(String.valueOf(innerObj.get(dtAPIDATA.boolValid)));
-            if (boolValid == Integer.valueOf(new clsHardCode().intSuccess)) {
-                mCounterNumberData _data = new mCounterNumberData();
-                _data.set_intId(enumCounterData.dtPushKBN.getidCounterData());
-                _data.set_txtDeskripsi((String) innerObj.get("_pstrMethodRequest"));
-                _data.set_txtName((String) innerObj.get("_pstrMethodRequest"));
-                _data.set_txtValue((String) innerObj.get("_pstrArgument"));
-                _mCounterNumberDA.SaveDataMConfig(_db, _data);
-            } else {
-                flag = false;
-                ErrorMess = (String) innerObj.get(dtAPIDATA.strMessage);
-                break;
-            }
-        }
-        _db.close();
-        return JsonArray;
+//        org.json.simple.JSONArray JsonArray = _help.ResultJsonArray(JsonData);
+        org.json.JSONObject js = new org.json.JSONObject(JsonData);
+        return js;
     }
 
 

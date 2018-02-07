@@ -8,6 +8,7 @@ import java.util.List;
 
 import library.spgmobile.common.mProductPICData;
 import library.spgmobile.common.mUserLOBData;
+import library.spgmobile.common.tCustomerBasedMobileDetailProductData;
 import library.spgmobile.common.tSalesProductDetailData;
 import library.spgmobile.common.tSalesProductHeaderData;
 
@@ -342,6 +343,27 @@ public class tSalesProductDetailDA {
 		cursor.close();
 		// return contact list
 		return contactList;
+	}
+
+	public void deleteByID(SQLiteDatabase db,String id) {
+		tSalesProductDetailData dt = new tSalesProductDetailData();
+		String whereClause =dt.Property_intId + " = ?";
+		String[] whereArgs = new String[] {
+				String.valueOf(id)
+		};
+
+		db.delete(TABLE_CONTACTS, whereClause,whereArgs);
+	}
+
+	// Getting contacts Count
+	public int getContactsCountInt(SQLiteDatabase db, String txtNoso) {
+		tSalesProductDetailData dt = new tSalesProductDetailData();
+		String countQuery = "SELECT * FROM " + TABLE_CONTACTS + " where " + dt.Property_txtNoSo + " = '" + txtNoso + "'";
+		Cursor cursor = db.rawQuery(countQuery, null);
+		int countData = cursor.getCount();
+		cursor.close();
+		// return count
+		return countData;
 	}
 
 }

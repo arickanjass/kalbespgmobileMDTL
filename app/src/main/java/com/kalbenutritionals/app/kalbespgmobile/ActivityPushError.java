@@ -96,6 +96,11 @@ public class ActivityPushError extends clsMainActivity {
                 e2.printStackTrace();
             }
             try {
+
+
+
+
+
                 HashMap<String, String> FileUpload = new HashMap<String, String>();
                 for (tLogErrorData dt : dtJson.getDtdataJson().getListOftErrorLogData()) {
                     File file = new File(_path.txtPathApp + dt.get_txtFileName());
