@@ -364,6 +364,18 @@ public class mProductSPGDA {
         // return count
         return countData;
     }
+
+    public int getContactsCountBySubCode(SQLiteDatabase db, String txtSubCode) {
+        mProductSPGData data = new mProductSPGData();
+
+        String countQuery = "SELECT * FROM " + TABLE_CONTACTS +" WHERE "+data.Property_txtMasterId + " = '" + txtSubCode + "'";
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int countData = cursor.getCount();
+        cursor.close();
+        // return count
+        return countData;
+    }
+
     public int getContactsCountByKN(SQLiteDatabase db, List<mUserLOBData>  mUserLOBDataList,String txtNik) {
         mProductSPGData data = new mProductSPGData();
 

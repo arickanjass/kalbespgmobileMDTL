@@ -3,13 +3,14 @@ package bl;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import library.spgmobile.common.tDeviceInfoUserData;
 import library.spgmobile.dal.tDeviceInfoUserDA;
 
 public class tDeviceInfoUserBL extends clsMainBL {
-	public void SaveInfoDevice(String txtUserId,String txtDeviceId, String imeiNumber){
+	public void SaveInfoDevice(String txtUserId,String txtDeviceId, String imeiNumber) throws SQLException{
 		SQLiteDatabase db=getDb();
 		tDeviceInfoUserDA _tDeviceInfoUserDA=new tDeviceInfoUserDA(db);
 		tDeviceInfoUserData data= new tDeviceInfoUserData();

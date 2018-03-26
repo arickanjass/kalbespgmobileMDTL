@@ -130,6 +130,16 @@ public class mProductSPGBL extends clsMainBL {
         db.close();
         return count;
     }
+
+    public int getContactCountBySubCode(String txtSubCode){
+        int count = 0;
+        SQLiteDatabase db=getDb();
+        mProductSPGDA _mProductSPGDA=new mProductSPGDA(db);
+        count = _mProductSPGDA.getContactsCountBySubCode(db, txtSubCode);
+        db.close();
+        return count;
+    }
+
     public int getContactCountByKN(List<mUserLOBData> mUserLOBDataList,String txtNik){
         int count = 0;
         SQLiteDatabase db=getDb();

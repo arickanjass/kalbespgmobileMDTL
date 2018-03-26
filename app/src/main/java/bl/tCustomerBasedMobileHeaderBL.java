@@ -156,7 +156,7 @@ public class tCustomerBasedMobileHeaderBL extends clsMainBL {
                         break;
                     }
                     if (dtProduct == null || dtProduct.size() == 0) {
-                        new clsMainActivity().showCustomToast(context, "Failed to save: \n" + dt.get_txtNamaDepan() + "'s product usage has not defined", false);
+                        new clsMainActivity().showCustomToast(context, "Failed to save: \n" + dt.get_txtNamaDepan() + "'s product usage has not found", false);
                         status = false;
                         _clsReturnData.set_boleanValue(false);
                         _clsReturnData.set_boleanValueProduct(false);

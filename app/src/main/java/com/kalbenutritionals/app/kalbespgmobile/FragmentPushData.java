@@ -1942,6 +1942,7 @@ public class FragmentPushData extends Fragment {
                     }
                     if(validPush){
                         dtdataJson.setIntResult("1");
+                        dtdataJson.setTxtMessage(mess);
                     } else {
                         dtdataJson.setIntResult("0");
                         dtdataJson.setTxtMessage(mess);

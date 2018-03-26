@@ -618,6 +618,7 @@ public class FragmentDownloadData extends Fragment {
                 intProcesscancel = 0;
 //                AsyncCallDownloadAll task = new AsyncCallDownloadAll();
                 tUserLoginData dtLogin = new tUserLoginBL().getUserLogin();
+                boolean validMandatoryProdComp = false;
 
                 if(dtLogin!=null&&dtLogin.get_TxtEmpId()!=null){
                     if (ll_product != null && checkVisibility(ll_product)) {
@@ -644,6 +645,13 @@ public class FragmentDownloadData extends Fragment {
                             validDownloadProductPIC = true;
                         }
                     }
+
+//                    if(ll_product_competitor != null && checkVisibility(ll_product_competitor)){
+//                        int count = new mTypeSubmissionMobileBL().getContactCountTypeSUbProdComp();
+//                        if(count>0){
+//                            validMandatoryProdComp = true;
+//                        }
+//                    }
 
                     if(validDownloadProductPIC||validDownloadProductSPG||validDownloadProductComp||validDownloadProduct&&checkVisibility(ll_product_pic)&&checkVisibility(ll_product_spg)&&checkVisibility(ll_product_competitor)){
                         AsyncCallGenerateSQLite task = new AsyncCallGenerateSQLite();
@@ -815,7 +823,9 @@ public class FragmentDownloadData extends Fragment {
             @Override
             public void onClick(View v) {
                 intProcesscancel = 0;
-                AsyncCallDataProdComp task = new AsyncCallDataProdComp();
+//                AsyncCallDataProdComp task = new AsyncCallDataProdComp();
+//                task.execute();
+                AsyncCallGenerateSQLite task = new AsyncCallGenerateSQLite();
                 task.execute();
             }
         });
@@ -6473,6 +6483,8 @@ public class FragmentDownloadData extends Fragment {
                 _data.set_txtKeterangan(String.valueOf(innerObj.get("TxtKeterangan")));
                 _data.set_txtNamaMasterData(String.valueOf(innerObj.get("TxtNamaMasterData")));
                 _data.set_intLastActiveSelection("0");
+                _data.set_BitMandatoryProductCompetitor(String.valueOf(innerObj.get("BitMandatoryProductCompetitor")));
+//                _data.set_BitMandatoryProductCompetitor("0");
                 _array.add(_data.get_txtMasterID());
                 _Listdata.add(_data);
             } else {

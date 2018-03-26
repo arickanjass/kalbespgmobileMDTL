@@ -18,6 +18,7 @@ import library.spgmobile.common.linkAPI;
 import library.spgmobile.common.mTypeSubmissionMobile;
 import library.spgmobile.common.tDeviceInfoUserData;
 import library.spgmobile.dal.clsHardCode;
+import library.spgmobile.dal.mProductPICDA;
 import library.spgmobile.dal.mProductSPGDA;
 import library.spgmobile.dal.mTypeSubmissionMobileDA;
 import library.spgmobile.dal.mconfigDA;
@@ -93,6 +94,14 @@ public class mTypeSubmissionMobileBL extends clsMainBL {
         return ListData;
     }
 
+    public mTypeSubmissionMobile getTypeMandatoryCompetitor() {
+        SQLiteDatabase db = getDb();
+        mTypeSubmissionMobileDA _mTypeSubmissionMobileDA = new mTypeSubmissionMobileDA(db);
+        mTypeSubmissionMobile Data = _mTypeSubmissionMobileDA.getTypeMandatoryCompetitor(db);
+        db.close();
+        return Data;
+    }
+
     public void updateLastSelected(String id) {
         SQLiteDatabase db = getDb();
         mTypeSubmissionMobileDA _mTypeSubmissionMobileDA = new mTypeSubmissionMobileDA(db);
@@ -135,5 +144,22 @@ public class mTypeSubmissionMobileBL extends clsMainBL {
         String strLinkAPI = dtlinkAPI.QueryString(getLinkAPI());
         clsHelper _clsHelper = new clsHelper();
         return _clsHelper.pushtData(strLinkAPI, String.valueOf(resJson), Integer.valueOf(getBackGroundServiceOnline()));
+    }
+    public int getContactCountTypeSUbProdComp() {
+        int count = 0;
+        SQLiteDatabase db = getDb();
+        mTypeSubmissionMobileDA _mTypeSubmissionMobileDA = new mTypeSubmissionMobileDA(db);
+        count = _mTypeSubmissionMobileDA.getContactsCountTypeSubMandatoryComp(db);
+        db.close();
+        return count;
+    }
+
+    public mTypeSubmissionMobile getContactCountTypeSUbProdCompBySubCode(String txtSubCode) {
+        int bit = 0;
+        SQLiteDatabase db = getDb();
+        mTypeSubmissionMobileDA _mTypeSubmissionMobileDA = new mTypeSubmissionMobileDA(db);
+        mTypeSubmissionMobile _mTypeSubmissionMobile = _mTypeSubmissionMobileDA.getContactsCountTypeSubMandatoryCompByCode(db, txtSubCode);
+        db.close();
+        return _mTypeSubmissionMobile;
     }
 }

@@ -51,6 +51,16 @@ public class mTypeSubmissionMobile extends APIData {
     private String _txtKeterangan;
     private String _intLastActiveSelection;
 
+    public synchronized String get_BitMandatoryProductCompetitor() {
+        return _BitMandatoryProductCompetitor;
+    }
+
+    public synchronized void set_BitMandatoryProductCompetitor(String _BitMandatoryProductCompetitor) {
+        this._BitMandatoryProductCompetitor = _BitMandatoryProductCompetitor;
+    }
+
+    private String _BitMandatoryProductCompetitor;
+
     public mTypeSubmissionMobile(){
 
     }
@@ -60,7 +70,8 @@ public class mTypeSubmissionMobile extends APIData {
     public String Property_txtNamaMasterData="txtNamaMasterData";
     public String Property_txtKeterangan="txtKeterangan";
     public String Property_intLastActiveSelection="intLastActiveSelection";
+    public String Property_BitMandatoryProductCompetitor="bitMandatoryProductCompetitor";
     public String Property_ListOfmTypeSubmissionMobile="ListOfmTypeSubmissionMobile";
     public String Property_All=Property_txtGrupMasterID+","+Property_txtMasterID+","+Property_txtNamaMasterData+","+
-            Property_txtKeterangan+","+Property_intLastActiveSelection;
+            Property_txtKeterangan+","+Property_intLastActiveSelection+","+Property_BitMandatoryProductCompetitor;
 }

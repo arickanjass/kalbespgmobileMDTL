@@ -227,8 +227,8 @@ public class tUserLoginDA {
                 contact.set_txtPassword(cursor.getString(4));
                 contact.set_txtUserName(cursor.getString(5));
                 contact.set_txtName(cursor.getString(6));
-                contact.set_TxtEmail(cursor.getString(6));
-                contact.set_TxtEmpId(cursor.getString(6));
+                contact.set_TxtEmail(cursor.getString(7));
+                contact.set_TxtEmpId(cursor.getString(8));
                 contact.set_txtPathImage((cursor.getString(9)));
                 contact.set_dtLastLogin((cursor.getString(10)));
                 contact.set_txtDeviceId((cursor.getString(11)));
@@ -237,8 +237,13 @@ public class tUserLoginDA {
                 contact.set_dtLogOut((cursor.getString(14)));
                 contact.set_txtCab((cursor.getString(15)));
                 contact.set_txtDataId((cursor.getString(16)));
+                contact.set_txtOutletCode((cursor.getString(17)));
+                contact.set_txtOutletName((cursor.getString(18)));
+                contact.set_txtBranchCode((cursor.getString(19)));
+                contact.set_txtSubmissionID(cursor.getString(20));
+                contact.set_txtCheckLocation(cursor.getString(21));
                 contact.set_intTrackingMobile(cursor.getString(22));
-                contact.set_txtImei(cursor.getString(18));
+                contact.set_txtImei(cursor.getString(23));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());

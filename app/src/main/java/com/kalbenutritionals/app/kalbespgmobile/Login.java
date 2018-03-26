@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -70,6 +71,7 @@ import bl.mCountConsumerMTDBL;
 import bl.mCounterNumberBL;
 import bl.mDownloadMasterData_mobileBL;
 import bl.mMenuBL;
+import bl.mTypeSubmissionMobileBL;
 import bl.mUserLOBBL;
 import bl.mUserRoleBL;
 import bl.tDeviceInfoUserBL;
@@ -83,6 +85,7 @@ import library.spgmobile.common.mCounterNumberData;
 import library.spgmobile.common.mDownloadMasterData_mobileData;
 import library.spgmobile.common.mEmployeeAreaData;
 import library.spgmobile.common.mMenuData;
+import library.spgmobile.common.mTypeSubmissionMobile;
 import library.spgmobile.common.mUserLOBData;
 import library.spgmobile.common.mUserRoleData;
 import library.spgmobile.common.tLogErrorData;
@@ -181,7 +184,13 @@ public class Login extends clsMainActivity {
         llContent = (LinearLayout) findViewById(R.id.llContent);
         tvWarning = (TextView) findViewById(R.id.tvWarning);
         btnCheckVersion = (Button) findViewById(R.id.btnCheckVersion);
-        new tDeviceInfoUserBL().SaveInfoDevice("", "", imeiNumber);
+
+        try{
+            new tDeviceInfoUserBL().SaveInfoDevice("", "", imeiNumber);
+        } catch (SQLException e){
+            showCustomToast(Login.this, e.getMessage().toString(), false);
+        }
+
         ImageView imgBanner = (ImageView) findViewById(R.id.ivBannerLogin);
         imgBanner.setAdjustViewBounds(true);
         imgBanner.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -481,37 +490,6 @@ public class Login extends clsMainActivity {
                     String intTrackingMobile = "1";
 
                     if (IntResult == 1) {
-                        try{
-                            tUserLoginData _tUserLoginData = new tUserLoginData();
-                            new mCounterNumberBL().saveDateTimeServer((String) innerObj.get("DatetimeNow"));
-                            _tUserLoginData.set_intId(1);
-                            _tUserLoginData.set_txtCab((String) innerObj.get("TxtCab"));
-                            _tUserLoginData.set_txtDataId((String) innerObj.get("TxtDataId"));
-                            _tUserLoginData.set_txtDeviceId((String) innerObj.get("TxtDeviceId"));
-                            _tUserLoginData.set_TxtEmail((String) innerObj.get("TxtEmail"));
-                            _tUserLoginData.set_TxtEmpId((String) innerObj.get("TxtEmpId"));
-                            _tUserLoginData.set_txtName((String) innerObj.get("TxtName"));
-                            _tUserLoginData.set_txtPassword((String) innerObj.get("TxtPassword"));
-                            _tUserLoginData.set_txtPathImage((String) innerObj.get("TxtPathImage"));
-                            _tUserLoginData.set_txtRoleId((String) innerObj.get("TxtRoleId"));
-                            _tUserLoginData.set_txtRoleName((String) innerObj.get("TxtRoleName"));
-                            _tUserLoginData.set_txtUserId((String) innerObj.get("TxtUserId"));
-                            _tUserLoginData.set_txtUserName((String) innerObj.get("TxtUserName"));
-                            _tUserLoginData.set_dtLastLogin((String) innerObj.get("DtLastLogin"));
-                            _tUserLoginData.set_txtOutletCode((String) innerObj.get("TxtOutletCode"));
-                            _tUserLoginData.set_txtOutletName((String) innerObj.get("TxtOutletName"));
-                            _tUserLoginData.set_txtBranchCode((String) innerObj.get("TxtBranchCode"));
-                            _tUserLoginData.set_txtImei((String) innerObj.get("TxtImei"));
-                            _tUserLoginData.set_txtSubmissionID((String) innerObj.get("TxtSubmissonId"));
-                            _tUserLoginData.set_txtCheckLocation((String) innerObj.get("IntRadius"));
-                            _tUserLoginData.set_intTrackingMobile((String) innerObj.get("IntTrackingMobile"));
-                            intTrackingMobile = (String) innerObj.get("IntTrackingMobile");
-
-                            new tDeviceInfoUserBL().SaveInfoDevice(_tUserLoginData.get_TxtEmpId(), _tUserLoginData.get_txtDeviceId(), _tUserLoginData.get_txtImei());
-                            new tUserLoginBL().saveData(_tUserLoginData);
-                        } catch (Exception e){
-                            showCustomToast(Login.this, e.toString(), false);
-                        }
 
                         try{
                             //update aan
@@ -691,11 +669,29 @@ public class Login extends clsMainActivity {
                             showCustomToast(Login.this, e.toString(), false);
                         }
 
-                        try{
-
-                        } catch (Exception e){
-                            showCustomToast(Login.this, e.toString(), false);
-                        }
+//                        try{
+//                            JSONArray JsonArrayDetailmTypeSubmissionMobile = (JSONArray) innerObj.get("ListOfmTypeSubmissionMobile");
+//                            if (JsonArrayDetailmTypeSubmissionMobile != null) {
+//                                Iterator iDetail = JsonArrayDetailmTypeSubmissionMobile.iterator();
+//                                List<mTypeSubmissionMobile> listiDetail = new ArrayList<>();
+//                                while (iDetail.hasNext()) {
+//                                    JSONObject innerObjDetail = (JSONObject) iDetail.next();
+//                                    mTypeSubmissionMobile _data = new mTypeSubmissionMobile();
+//                                    _data.set_txtMasterID(String.valueOf(innerObjDetail.get("TxtMasterID")));
+//                                    _data.set_txtGrupMasterID(String.valueOf(innerObjDetail.get("TxtGrupMasterID")));
+//                                    _data.set_txtKeterangan(String.valueOf(innerObjDetail.get("TxtKeterangan")));
+//                                    _data.set_txtNamaMasterData(String.valueOf(innerObjDetail.get("TxtNamaMasterData")));
+//                                    _data.set_intLastActiveSelection("0");
+//                                    _data.set_BitMandatoryProductCompetitor(String.valueOf(innerObjDetail.get("BitMandatoryProductCompetitor")));
+////                                    _data.set_BitMandatoryProductCompetitor("0");
+//                                    listiDetail.add(_data);
+//                                }
+//                                new mTypeSubmissionMobileBL().saveData(listiDetail);
+//                            }
+//
+//                        } catch (Exception e){
+//                            showCustomToast(Login.this, e.toString(), false);
+//                        }
 
                         if (!isMyServiceRunning(MyServiceNative.class)) {
                             startService(new Intent(Login.this, MyServiceNative.class));
@@ -706,6 +702,39 @@ public class Login extends clsMainActivity {
                                 startService(new Intent(Login.this, MyTrackingLocationService.class));
                             }
                         }
+
+                        try{
+                            tUserLoginData _tUserLoginData = new tUserLoginData();
+                            new mCounterNumberBL().saveDateTimeServer((String) innerObj.get("DatetimeNow"));
+                            _tUserLoginData.set_intId(1);
+                            _tUserLoginData.set_txtCab((String) innerObj.get("TxtCab"));
+                            _tUserLoginData.set_txtDataId((String) innerObj.get("TxtDataId"));
+                            _tUserLoginData.set_txtDeviceId((String) innerObj.get("TxtDeviceId"));
+                            _tUserLoginData.set_TxtEmail((String) innerObj.get("TxtEmail"));
+                            _tUserLoginData.set_TxtEmpId((String) innerObj.get("TxtEmpId"));
+                            _tUserLoginData.set_txtName((String) innerObj.get("TxtName"));
+                            _tUserLoginData.set_txtPassword((String) innerObj.get("TxtPassword"));
+                            _tUserLoginData.set_txtPathImage((String) innerObj.get("TxtPathImage"));
+                            _tUserLoginData.set_txtRoleId((String) innerObj.get("TxtRoleId"));
+                            _tUserLoginData.set_txtRoleName((String) innerObj.get("TxtRoleName"));
+                            _tUserLoginData.set_txtUserId((String) innerObj.get("TxtUserId"));
+                            _tUserLoginData.set_txtUserName((String) innerObj.get("TxtUserName"));
+                            _tUserLoginData.set_dtLastLogin((String) innerObj.get("DtLastLogin"));
+                            _tUserLoginData.set_txtOutletCode((String) innerObj.get("TxtOutletCode"));
+                            _tUserLoginData.set_txtOutletName((String) innerObj.get("TxtOutletName"));
+                            _tUserLoginData.set_txtBranchCode((String) innerObj.get("TxtBranchCode"));
+                            _tUserLoginData.set_txtImei((String) innerObj.get("TxtImei"));
+                            _tUserLoginData.set_txtSubmissionID((String) innerObj.get("TxtSubmissonId"));
+                            _tUserLoginData.set_txtCheckLocation((String) innerObj.get("IntRadius"));
+                            _tUserLoginData.set_intTrackingMobile((String) innerObj.get("IntTrackingMobile"));
+                            intTrackingMobile = (String) innerObj.get("IntTrackingMobile");
+
+                            new tDeviceInfoUserBL().SaveInfoDevice(_tUserLoginData.get_TxtEmpId(), _tUserLoginData.get_txtDeviceId(), _tUserLoginData.get_txtImei());
+                            new tUserLoginBL().saveData(_tUserLoginData);
+                        } catch (Exception e){
+                            showCustomToast(Login.this, e.toString(), false);
+                        }
+
 
                         finish();
                         Intent myIntent = new Intent(Login.this, MainMenu.class);

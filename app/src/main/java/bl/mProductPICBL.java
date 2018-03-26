@@ -132,6 +132,16 @@ public class mProductPICBL extends clsMainBL {
         db.close();
         return count;
     }
+
+    public int getContactCountBySubCode(String txtSubCode) {
+        int count = 0;
+        SQLiteDatabase db = getDb();
+        mProductPICDA _mProductPICDA = new mProductPICDA(db);
+        count = _mProductPICDA.getContactsCountBySubCode(db, txtSubCode);
+        db.close();
+        return count;
+    }
+
     public int getContactCountByKN(List<mUserLOBData> mUserLOBDataList,String txtNik) {
         int count = 0;
         SQLiteDatabase db = getDb();

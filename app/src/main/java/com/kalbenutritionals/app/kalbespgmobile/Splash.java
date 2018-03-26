@@ -124,6 +124,7 @@ public class Splash extends AppCompatActivity {
 
             public void run() {
                 Intent myIntent = new Intent(Splash.this, Login.class);
+                myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 clsHelper _clsHelper = new clsHelper();
                 _clsHelper.createFolderApp();
                 new clsHelperBL().InsertDefaultMconfig();
@@ -132,13 +133,18 @@ public class Splash extends AppCompatActivity {
                     if (_clsStatusMenuStart.get_intStatus() == enumStatusMenuStart.FormLogin) {
                         new clsHelperBL().DeleteAllDB();
                         myIntent = new Intent(Splash.this, Login.class);
+                        myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     } else if (_clsStatusMenuStart.get_intStatus() == enumStatusMenuStart.PushDataSPGMobile) {
                         myIntent = new Intent(Splash.this, PushData.class);
+                        myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     } else if (_clsStatusMenuStart.get_intStatus() == enumStatusMenuStart.UserActiveLogin) {
                         myIntent = new Intent(Splash.this, MainMenu.class);
                         startService(new Intent(getApplicationContext(), MyServiceNative.class));
+                        myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     }
                 } catch (ParseException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 finish();

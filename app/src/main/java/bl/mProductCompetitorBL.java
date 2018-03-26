@@ -23,6 +23,7 @@ import library.spgmobile.common.tDeviceInfoUserData;
 import library.spgmobile.dal.clsHardCode;
 import library.spgmobile.dal.mEmployeeSalesProductDA;
 import library.spgmobile.dal.mProductCompetitorDA;
+import library.spgmobile.dal.mProductSPGDA;
 import library.spgmobile.dal.mconfigDA;
 import library.spgmobile.dal.tDeviceInfoUserDA;
 
@@ -165,4 +166,13 @@ public class mProductCompetitorBL extends clsMainBL {
         db.close();
         return intcount;
     }
+
+//    public int getContactCountBySubCode(String txtSubCode){
+//        int count = 0;
+//        SQLiteDatabase db=getDb();
+//        mProductCompetitorDA _mProductCompetitorDA=new mProductCompetitorDA(db);
+//        count = _mProductCompetitorDA.getContactsCountBySubCode(db, txtSubCode);
+//        db.close();
+//        return count;
+//    }
 }

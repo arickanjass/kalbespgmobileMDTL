@@ -21,7 +21,8 @@ public class mTypeSubmissionMobileDA {
                 + dt.Property_txtGrupMasterID + " TEXT NULL,"
                 + dt.Property_txtNamaMasterData + " TEXT NULL,"
                 + dt.Property_txtKeterangan + " TEXT NULL,"
-                + dt.Property_intLastActiveSelection + " TEXT NULL)";
+                + dt.Property_intLastActiveSelection + " TEXT NULL,"
+                + dt.Property_BitMandatoryProductCompetitor + " TEXT NULL)";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
 
@@ -49,12 +50,14 @@ public class mTypeSubmissionMobileDA {
                 + "," + dt.Property_txtNamaMasterData
                 + "," + dt.Property_txtKeterangan
                 + "," + dt.Property_intLastActiveSelection
+                + "," + dt.Property_BitMandatoryProductCompetitor
                 + ") " + "values('"
                 + String.valueOf(data.get_txtGrupMasterID()) + "','"
                 + String.valueOf(data.get_txtMasterID()) + "','"
                 + String.valueOf(data.get_txtNamaMasterData()) + "','"
                 + String.valueOf(data.get_txtKeterangan()) + "','"
-                + String.valueOf(data.get_intLastActiveSelection()) + "'" + ")");
+                + String.valueOf(data.get_intLastActiveSelection()) + "','"
+                + String.valueOf(data.get_BitMandatoryProductCompetitor()) + "'" + ")");
         // db.insert(TABLE_CONTACTS, null, values);
         // db.close(); // Closing database connection
     }
@@ -62,7 +65,7 @@ public class mTypeSubmissionMobileDA {
     public void UpdateLastSelected(SQLiteDatabase db, String id) {
         mTypeSubmissionMobile dt = new mTypeSubmissionMobile();
         db.execSQL("update " + TABLE_CONTACTS + " set " + dt.Property_intLastActiveSelection + "='0'");
-        db.execSQL("update " + TABLE_CONTACTS + " set " + dt.Property_intLastActiveSelection + "='1' where " + dt.Property_txtKeterangan + "='" + id + "'");
+        db.execSQL("update " + TABLE_CONTACTS + " set " + dt.Property_intLastActiveSelection + "='1' where " + dt.Property_txtMasterID + "='" + id + "'");
     }
 
     public void DeleteAllDataMConfig(SQLiteDatabase db) {
@@ -77,7 +80,7 @@ public class mTypeSubmissionMobileDA {
         Cursor cursor = db.query(TABLE_CONTACTS, new String[]{
                         dt.Property_txtGrupMasterID, dt.Property_txtMasterID
                         , dt.Property_txtNamaMasterData
-                        , dt.Property_txtKeterangan, dt.Property_intLastActiveSelection
+                        , dt.Property_txtKeterangan, dt.Property_intLastActiveSelection, dt.Property_BitMandatoryProductCompetitor
                 },
                 dt.Property_txtGrupMasterID + "=?", new String[]{String.valueOf(id)},
                 null, null, null, null);
@@ -90,6 +93,7 @@ public class mTypeSubmissionMobileDA {
             contact.set_txtNamaMasterData(cursor.getString(2));
             contact.set_txtKeterangan(cursor.getString(3));
             contact.set_intLastActiveSelection(cursor.getString(4));
+            contact.set_BitMandatoryProductCompetitor(cursor.getString(5));
         } else {
             contact = null;
         }
@@ -102,9 +106,9 @@ public class mTypeSubmissionMobileDA {
         Cursor cursor = db.query(TABLE_CONTACTS, new String[]{
                         dt.Property_txtGrupMasterID, dt.Property_txtMasterID
                         , dt.Property_txtNamaMasterData
-                        , dt.Property_txtKeterangan, dt.Property_intLastActiveSelection
+                        , dt.Property_txtKeterangan, dt.Property_intLastActiveSelection, dt.Property_BitMandatoryProductCompetitor
                 },
-                dt.Property_txtKeterangan + "=?", new String[]{String.valueOf(id)},
+                dt.Property_txtMasterID + "=?", new String[]{String.valueOf(id)},
                 null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
@@ -115,6 +119,7 @@ public class mTypeSubmissionMobileDA {
             contact.set_txtNamaMasterData(cursor.getString(2));
             contact.set_txtKeterangan(cursor.getString(3));
             contact.set_intLastActiveSelection(cursor.getString(4));
+            contact.set_BitMandatoryProductCompetitor(cursor.getString(5));
         } else {
             contact = null;
         }
@@ -135,6 +140,28 @@ public class mTypeSubmissionMobileDA {
             contact.set_txtNamaMasterData(cursor.getString(2));
             contact.set_txtKeterangan(cursor.getString(3));
             contact.set_intLastActiveSelection(cursor.getString(4));
+            contact.set_BitMandatoryProductCompetitor(cursor.getString(5));
+        } else {
+            contact = null;
+        }
+        cursor.close();
+        return contact;
+    }
+
+    public mTypeSubmissionMobile getTypeMandatoryCompetitor(SQLiteDatabase db) {
+        mTypeSubmissionMobile dt = new mTypeSubmissionMobile();
+        String selectQuery = "SELECT " + dt.Property_All + " FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_BitMandatoryProductCompetitor + "='1'";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor != null)
+            cursor.moveToFirst();
+        mTypeSubmissionMobile contact = new mTypeSubmissionMobile();
+        if (cursor.getCount() > 0) {
+            contact.set_txtGrupMasterID(cursor.getString(0));
+            contact.set_txtMasterID(cursor.getString(1));
+            contact.set_txtNamaMasterData(cursor.getString(2));
+            contact.set_txtKeterangan(cursor.getString(3));
+            contact.set_intLastActiveSelection(cursor.getString(4));
+            contact.set_BitMandatoryProductCompetitor(cursor.getString(5));
         } else {
             contact = null;
         }
@@ -160,6 +187,7 @@ public class mTypeSubmissionMobileDA {
                 contact.set_txtNamaMasterData(cursor.getString(2));
                 contact.set_txtKeterangan(cursor.getString(3));
                 contact.set_intLastActiveSelection(cursor.getString(4));
+                contact.set_BitMandatoryProductCompetitor(cursor.getString(5));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -183,5 +211,43 @@ public class mTypeSubmissionMobileDA {
         int countData = cursor.getCount();
         cursor.close();
         return countData;
+    }
+
+    public int getContactsCountTypeSubMandatoryComp(SQLiteDatabase db) {
+        mTypeSubmissionMobile dt = new mTypeSubmissionMobile();
+        String countQuery = "SELECT * FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_BitMandatoryProductCompetitor + "='1'";
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int countData = cursor.getCount();
+        cursor.close();
+        return countData;
+    }
+
+    public mTypeSubmissionMobile getContactsCountTypeSubMandatoryCompByCode(SQLiteDatabase db, String txtSubCode) {
+        mTypeSubmissionMobile dt = new mTypeSubmissionMobile();
+        String countQuery = "SELECT * FROM " + TABLE_CONTACTS + " WHERE " + dt.Property_txtMasterID + " = '" + txtSubCode + "'";
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int bitMandatoryProductCompetitor = 0;
+//        if(cursor.getCount()>0){
+//            bitMandatoryProductCompetitor = Integer.parseInt(cursor.getString(5));
+//        }
+
+        if (cursor.moveToFirst()) {
+            do {
+                mTypeSubmissionMobile contact = new mTypeSubmissionMobile();
+                contact.set_txtGrupMasterID(cursor.getString(0));
+                contact.set_txtMasterID(cursor.getString(1));
+                contact.set_txtNamaMasterData(cursor.getString(2));
+                contact.set_txtKeterangan(cursor.getString(3));
+                contact.set_intLastActiveSelection(cursor.getString(4));
+                contact.set_BitMandatoryProductCompetitor(cursor.getString(5));
+                // Adding contact to list
+//                contactList.add(contact);
+                dt = contact;
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        cursor.close();
+        return dt;
     }
 }

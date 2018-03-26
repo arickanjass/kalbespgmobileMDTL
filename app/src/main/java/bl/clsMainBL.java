@@ -221,7 +221,7 @@ public class clsMainBL {
 		DeviceUuidFactory _DeviceUuidFactory=new DeviceUuidFactory(context);
 		return _DeviceUuidFactory.getDeviceUuid().toString();
 	 }
-	public clsStatusMenuStart checkUserActive() throws ParseException{
+	public clsStatusMenuStart checkUserActive() throws ParseException, Exception{
 		SQLiteDatabase db;
 		db = getDb();
 		tSalesProductHeaderDA _tSalesProductHeaderDA=new tSalesProductHeaderDA(db);

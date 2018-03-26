@@ -254,6 +254,7 @@ public class mProductCompetitorDA {
         // return count
         return countData;
     }
+
     public int getContactsCountByKN(SQLiteDatabase db, List<mUserLOBData>  mUserLOBDataList,String txtNik) {
         mProductCompetitorData data = new mProductCompetitorData();
 

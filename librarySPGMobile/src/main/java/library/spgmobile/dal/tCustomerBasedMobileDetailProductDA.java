@@ -299,4 +299,44 @@ public class tCustomerBasedMobileDetailProductDA {
 		return num;
 	}
 
+	public List<tCustomerBasedMobileDetailData> getContactsCountProdCompIsNull(SQLiteDatabase db, String txtId) {
+		List<tCustomerBasedMobileDetailData> retList = null;
+		String countQuery = "select b.* from tCustomerBasedMobileHeader a\n" +
+				"left join tCustomerBasedMobileDetail b on a.intTrCustomerId=b.intTrCustomerId\n" +
+				"left join tCustomerBasedMobileDetailProduct c on b.intTrCustomerIdDetail=c.intTrCustomerIdDetail\n" +
+				"left join mTypeSubmissionMobile d on a.txtSubmissionCode=d.txtMasterID\n" +
+				"where \n" +
+				"a.bitActive='0' and\n" +
+//				"--a.intTrCustomerId='73cecf62-fa52-49e8-999f-e4152bdfc5ae' and a.bitActive='1' and txtSubmissionCode='0001' \n" +
+				"b.intTrCustomerId ='" + txtId + "'"+ " and\n" +
+				"c.txtProductCompetitorCode = 'null' or c.txtProductCompetitorCode = ''";
+		Cursor cursor = db.rawQuery(countQuery, null);
+		if(cursor.moveToFirst()){
+			retList = new ArrayList<tCustomerBasedMobileDetailData>();
+			do {
+				tCustomerBasedMobileDetailData contact = new tCustomerBasedMobileDetailData();
+				contact.set_intTrCustomerIdDetail(cursor.getString(0));
+				contact.set_intTrCustomerId(cursor.getString(1));
+				contact.set_txtNamaDepan(cursor.getString(2));
+				contact.set_txtGender(cursor.getString(3));
+				contact.set_txtTglLahir(cursor.getString(4));
+				contact.set_txtUsiaKehamilan(cursor.getString(5));
+				contact.set_intNo(cursor.getString(6));
+				contact.set_intPIC(cursor.getString(7));
+				contact.set_bitActive(cursor.getString(8));
+				contact.set_dtInserted(cursor.getString(9));
+				contact.set_dtUpdated(cursor.getString(10));
+				contact.set_txtInsertedBy(cursor.getString(11));
+				contact.set_txtUpdatedBy(cursor.getString(12));
+				contact.set_intAge(cursor.getString(13));
+				contact.set_intAgeTypeFlag(cursor.getString(14));
+				retList.add(contact);
+			} while (cursor.moveToNext());
+		}
+		cursor.close();
+
+		// return count
+		return retList;
+	}
+
 }

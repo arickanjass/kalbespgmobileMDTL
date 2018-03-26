@@ -876,11 +876,18 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
             JSONArray Json = null;
 
             try {
+
+
+                DateFormat dateFormatAbsen = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Calendar calAbsen = Calendar.getInstance();
+                calAbsen.add(Calendar.DATE, -1);
+                String dateAbsenCheckout = dateFormatAbsen.format(calAbsen.getTime());
+
                 boolean validPush = false;
                 List<tAbsenUserData> listAbsenData = new ArrayList<>();
                 tAbsenUserData dtTabsenData = new tAbsenUserBL().getDataCheckInActive();
                 if (dtTabsenData != null) {
-                    dtTabsenData.set_dtDateCheckOut(_clsMainActivity.FormatDateComplete());
+                    dtTabsenData.set_dtDateCheckOut(dateAbsenCheckout);
                     dtTabsenData.set_intSubmit("1");
                     dtTabsenData.set_intSync("0");
                     listAbsenData.add(dtTabsenData);
@@ -925,6 +932,9 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                                 Jresult = new clsHelperBL().callPushDataReturnJson(versionName, dtJson.getDtdataJson().txtJSON().toString(), null);
                             }
 //                            new clsHelperBL().saveDataPush(dtJson.getDtdataJson(), Jresult);
+                        }
+                        if (dtJson.getDtdataJson().getListOftLeaveMobileData() != null) {
+                                Jresult = new clsHelperBL().callPushDataReturnJson(versionName, dtJson.getDtdataJson().txtJSON().toString(), dtJson.getFileUpload());
                         }
                     } catch (Exception e) {
                         // TODO Auto-generated catch block

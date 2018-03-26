@@ -243,12 +243,13 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
         etPinBBM = (EditText) v.findViewById(R.id.etPinBBM);
         cbPIC = (CheckBox) v.findViewById(R.id.cbPIC);
 
-        if(mUserLOBDataList!=null){
-            if(new mProductPICBL().getContactCountByKN(mUserLOBDataList)==0){
-                cbPIC.setChecked(false);
-                cbPIC.setEnabled(false);
-            }
-        }
+//        if(mUserLOBDataList!=null){
+//            if(new mProductPICBL().getContactCountByKN(mUserLOBDataList)==0){
+//                cbPIC.setChecked(false);
+//                cbPIC.setEnabled(false);
+//            }
+//        }
+
 
         etTelpon.setOnTouchListener(new DrawableClickListener.RightDrawableClickListener(etTelpon) {
             public boolean onDrawableClick() {
@@ -462,6 +463,12 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 etCustomerBasedNo.setText(new tCustomerBasedMobileHeaderBL().generateSubmissionId(typeSubmissionDataList.get(i).get_txtKeterangan()));
+                if(new mProductPICBL().getContactCountBySubCode(HMSubmision.get(spnSubmissionCode.getSelectedItem().toString()))==0){
+                    cbPIC.setChecked(false);
+                    cbPIC.setEnabled(false);
+                } else {
+                    cbPIC.setEnabled(true);
+                }
             }
 
             @Override
@@ -719,7 +726,23 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
 
                 builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        saveCustomerBase();
+
+                        boolean valMandComp = true;
+
+                        mTypeSubmissionMobile _mTypeSubmissionMobile = new mTypeSubmissionMobileBL().getContactCountTypeSUbProdCompBySubCode(HMSubmision.get(spnSubmissionCode.getSelectedItem().toString()));
+//                        int bitMandComp = 1;
+                        if(_mTypeSubmissionMobile.get_BitMandatoryProductCompetitor().equals("1")){
+                            List<tCustomerBasedMobileDetailData> retData = new tCustomerBasedMobileDetailProductBL().getProdCompIsNull(dtHeader.get_intTrCustomerId());
+                            if(retData!=null&&retData.size()>0){
+                                valMandComp = false;
+                                popUpAddProduct(retData.get(0));
+                                new clsMainActivity().showCustomToast(getContext(), "Product Competitor Not Set", false);
+                            }
+                        }
+
+                        if(valMandComp){
+                            saveCustomerBase();
+                        }
                     }
                 });
 
@@ -843,190 +866,205 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
     }
 
     private void popUpAddProduct(final tCustomerBasedMobileDetailData dataDetail) {
-        LayoutInflater layoutInflater = LayoutInflater.from(getContext());
-        final View promptView = layoutInflater.inflate(R.layout.popup_add_product, null);
-        final TextView nama = (TextView) promptView.findViewById(R.id.add_nama);
-        final Button btnAddProduct = (Button) promptView.findViewById(R.id.btn_add_product);
-        final EditText qty = (EditText) promptView.findViewById(R.id.qty);
-        final HashMap<String, String> HMProduct = new HashMap<>();
-        final HashMap<String, String> HMProductKompetitor = new HashMap<>();
-        final TextInputLayout txtInputLayoutQty = (TextInputLayout) promptView.findViewById(R.id.input_layout_qty);
 
-        setTableProduct(dataDetail, promptView);
-
-        final Spinner spnKalbeProduct = (Spinner) promptView.findViewById(R.id.spn_kn_product);
-        final Spinner spnCompetProduct = (Spinner) promptView.findViewById(R.id.spn_cp_product);
-
-        List<String> dataProductKalbe = new ArrayList<>();
-        final List<String> dataProductKompetitor = new ArrayList<>();
-        String a = spnSubmissionCode.getSelectedItem().toString();
-        final List<mProductSPGData> mProductSPGDataList = new mProductSPGBL().GetDataByMasterIdByKN(HMSubmision.get(spnSubmissionCode.getSelectedItem()),mUserLOBDataList);
-        final List<mProductPICData> mProductPICDataList = new mProductPICBL().GetDataByMasterIdByKN(HMSubmision.get(spnSubmissionCode.getSelectedItem()), mUserLOBDataList);
-
-        if (dataDetail.get_intPIC().equals("1")) {
-            if (mProductPICDataList.size() > 0) {
-                dataProductKalbe.add("Select Product");
-                for (mProductPICData dt : mProductPICDataList) {
-                    dataProductKalbe.add(dt.get_txtProductBrandDetailGramName());
-                    HMProduct.put(dt.get_txtProductBrandDetailGramName(), dt.get_txtBrandDetailGramCode());
-                    HMProduct.put(dt.get_txtBrandDetailGramCode(), dt.get_txtProductDetailCode());
-                    HMProduct.put(dt.get_txtProductDetailCode(), dt.get_txtLobName());
-                }
-
-            }
+        if(dataDetail.get_intPIC().equals("1")&&new mProductPICBL().getContactCountBySubCode(HMSubmision.get(spnSubmissionCode.getSelectedItem().toString()))==0){
+            new clsMainActivity().showCustomToast(getContext(), "Product Submission Not Found", false);
+        } else if (dataDetail.get_intPIC().equals("0")&&new mProductSPGBL().getContactCountBySubCode(HMSubmision.get(spnSubmissionCode.getSelectedItem().toString()))==0){
+            new clsMainActivity().showCustomToast(getContext(), "Product Submission Not Found", false);
         } else {
-            dataProductKalbe.add("Select Product");
-            if (mProductSPGDataList.size() > 0) {
-                for (mProductSPGData dt : mProductSPGDataList) {
-                    dataProductKalbe.add(dt.get_txtProductBrandDetailGramName());
-                    HMProduct.put(dt.get_txtProductBrandDetailGramName(), dt.get_txtBrandDetailGramCode());
-                    HMProduct.put(dt.get_txtBrandDetailGramCode(), dt.get_txtProductDetailCode());
-                    HMProduct.put(dt.get_txtProductDetailCode(), dt.get_txtLobName());
-                }
+            LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+            final View promptView = layoutInflater.inflate(R.layout.popup_add_product, null);
+            final TextView nama = (TextView) promptView.findViewById(R.id.add_nama);
+            final Button btnAddProduct = (Button) promptView.findViewById(R.id.btn_add_product);
+            final EditText qty = (EditText) promptView.findViewById(R.id.qty);
+            final HashMap<String, String> HMProduct = new HashMap<>();
+            final HashMap<String, String> HMProductKompetitor = new HashMap<>();
+            final TextInputLayout txtInputLayoutQty = (TextInputLayout) promptView.findViewById(R.id.input_layout_qty);
 
-            }
-        }
+            setTableProduct(dataDetail, promptView);
 
-        final List<String> lisAwalKompet = new ArrayList<>();
-        lisAwalKompet.add("-");
+            final Spinner spnKalbeProduct = (Spinner) promptView.findViewById(R.id.spn_kn_product);
+            final Spinner spnCompetProduct = (Spinner) promptView.findViewById(R.id.spn_cp_product);
 
-        ArrayAdapter<String> adapterKalbeProduct = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, dataProductKalbe);
-        final ArrayAdapter<String> adapterAwalKompet = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, lisAwalKompet);
-        spnKalbeProduct.setAdapter(adapterKalbeProduct);
-        spnCompetProduct.setAdapter(adapterAwalKompet);
-        final int index = spnKalbeProduct.getAdapter().getCount() - 1;
-        spnKalbeProduct.setSelection(0);
-        spnKalbeProduct.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+            List<String> dataProductKalbe = new ArrayList<>();
+            final List<String> dataProductKompetitor = new ArrayList<>();
+            String a = spnSubmissionCode.getSelectedItem().toString();
+            final List<mProductSPGData> mProductSPGDataList = new mProductSPGBL().GetDataByMasterIdByKN(HMSubmision.get(spnSubmissionCode.getSelectedItem()),mUserLOBDataList);
+            final List<mProductPICData> mProductPICDataList = new mProductPICBL().GetDataByMasterIdByKN(HMSubmision.get(spnSubmissionCode.getSelectedItem()), mUserLOBDataList);
 
-                if (spnKalbeProduct.getSelectedItemPosition() > 0) {
-                    HMProductKompetitor.clear();
-                    dataProductKompetitor.clear();
-                    String txtProductDetailCode;
-                    if (dataDetail.get_intPIC().equals("1")) {
-                        txtProductDetailCode = mProductPICDataList.get(position - 1).get_txtProductDetailCode();
-                    } else {
-                        txtProductDetailCode = mProductSPGDataList.get(position - 1).get_txtProductDetailCode();
+            if (dataDetail.get_intPIC().equals("1")) {
+                if (mProductPICDataList.size() > 0) {
+                    dataProductKalbe.add("Select Product");
+                    for (mProductPICData dt : mProductPICDataList) {
+                        dataProductKalbe.add(dt.get_txtProductBrandDetailGramName());
+                        HMProduct.put(dt.get_txtProductBrandDetailGramName(), dt.get_txtBrandDetailGramCode());
+                        HMProduct.put(dt.get_txtBrandDetailGramCode(), dt.get_txtProductDetailCode());
+                        HMProduct.put(dt.get_txtProductDetailCode(), dt.get_txtLobName());
                     }
 
-                    List<mProductCompetitorData> listProductKompetitor = new mProductCompetitorBL().GetListDataByProductKNByKN(txtProductDetailCode,mUserLOBDataList);
+                }
+            } else {
+                dataProductKalbe.add("Select Product");
+                if (mProductSPGDataList.size() > 0) {
+                    for (mProductSPGData dt : mProductSPGDataList) {
+                        dataProductKalbe.add(dt.get_txtProductBrandDetailGramName());
+                        HMProduct.put(dt.get_txtProductBrandDetailGramName(), dt.get_txtBrandDetailGramCode());
+                        HMProduct.put(dt.get_txtBrandDetailGramCode(), dt.get_txtProductDetailCode());
+                        HMProduct.put(dt.get_txtProductDetailCode(), dt.get_txtLobName());
+                    }
 
-                    dataProductKompetitor.add("Select Previous Product");
-                    if (listProductKompetitor.size() > 0) {
-                        //dataProductKompetitor.add("Select Previous Product");
-                        for (mProductCompetitorData dt : listProductKompetitor) {
-                            dataProductKompetitor.add(dt.get_txtProdukKompetitorID());
-                            HMProductKompetitor.put(dt.get_txtProdukKompetitorID(), dt.get_txtProdukKompetitorID());
+                }
+            }
+
+            final List<String> lisAwalKompet = new ArrayList<>();
+            lisAwalKompet.add("-");
+
+            ArrayAdapter<String> adapterKalbeProduct = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, dataProductKalbe);
+            final ArrayAdapter<String> adapterAwalKompet = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, lisAwalKompet);
+            spnKalbeProduct.setAdapter(adapterKalbeProduct);
+            spnCompetProduct.setAdapter(adapterAwalKompet);
+            final int index = spnKalbeProduct.getAdapter().getCount() - 1;
+            spnKalbeProduct.setSelection(0);
+            spnKalbeProduct.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+
+                    if (spnKalbeProduct.getSelectedItemPosition() > 0) {
+                        HMProductKompetitor.clear();
+                        dataProductKompetitor.clear();
+                        String txtProductDetailCode;
+                        if (dataDetail.get_intPIC().equals("1")) {
+                            txtProductDetailCode = mProductPICDataList.get(position - 1).get_txtProductDetailCode();
+                        } else {
+                            txtProductDetailCode = mProductSPGDataList.get(position - 1).get_txtProductDetailCode();
+                        }
+
+                        List<mProductCompetitorData> listProductKompetitor = new mProductCompetitorBL().GetListDataByProductKNByKN(txtProductDetailCode,mUserLOBDataList);
+
+                        dataProductKompetitor.add("Select Previous Product");
+                        if (listProductKompetitor.size() > 0) {
+                            //dataProductKompetitor.add("Select Previous Product");
+                            for (mProductCompetitorData dt : listProductKompetitor) {
+                                dataProductKompetitor.add(dt.get_txtProdukKompetitorID());
+                                HMProductKompetitor.put(dt.get_txtProdukKompetitorID(), dt.get_txtProdukKompetitorID());
+                            }
+
+                        }
+
+                        ArrayAdapter<String> adapterKompetProduct = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, dataProductKompetitor);
+                        spnCompetProduct.setAdapter(adapterKompetProduct);
+                        //final int index = spnCompetProduct.getAdapter().getCount()-1;
+                        spnCompetProduct.setSelection(0);
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parentView) {
+                }
+
+            });
+
+            btnAddProduct.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dtListDetailProduct = new tCustomerBasedMobileDetailProductBL().getDataByCustomerDetailId(txtDetailIDCustomerBased);
+                    boolean val = true;
+                    mTypeSubmissionMobile _mTypeSubmissionMobile = new mTypeSubmissionMobileBL().getContactCountTypeSUbProdCompBySubCode(HMSubmision.get(spnSubmissionCode.getSelectedItem().toString()));
+                    boolean validMandatoryProdComp = true;
+                    if(_mTypeSubmissionMobile.get_BitMandatoryProductCompetitor().equals("1")&&spnCompetProduct.getSelectedItem().equals("Select Previous Product")){
+                        validMandatoryProdComp=false;
+                    }
+                    for (int i = 0; i < dtListDetailProduct.size(); i++) {
+                        if (dtListDetailProduct.get(i).get_txtProductBrandName().equals(spnKalbeProduct.getSelectedItem().toString())) {
+                            val = false;
                         }
 
                     }
 
-                    ArrayAdapter<String> adapterKompetProduct = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, dataProductKompetitor);
-                    spnCompetProduct.setAdapter(adapterKompetProduct);
-                    //final int index = spnCompetProduct.getAdapter().getCount()-1;
-                    spnCompetProduct.setSelection(0);
-                }
-            }
+                    if (!spnKalbeProduct.getSelectedItem().equals("Select Product")) {
+                        if (val) {
+                            if(validMandatoryProdComp){
+                                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                                imm.hideSoftInputFromWindow(qty.getWindowToken(), 0);
+                                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                String date = dateFormat.format(Calendar.getInstance().getTime());
+                                String selectedOneKNProduct = spnKalbeProduct.getSelectedItem().toString();
+                                String selectedOneCompetitorProduct = spnCompetProduct.getSelectedItem().toString();
+                                tUserLoginData dtUser = new tUserLoginBL().getUserActive();
+                                String qtyProduct;
+                                qtyProduct = qty.getText().toString();
+                                new clsMainActivity().removeErrorMessage(txtInputLayoutQty);
+                                if (qtyProduct.length() == 0) {
+                                    new clsMainActivity().setErrorMessage(getContext(), txtInputLayoutQty, qty, "Qty cannot empty");
+                                    spnKalbeProduct.setSelection(spnKalbeProduct.getSelectedItemPosition());
+                                    spnCompetProduct.setSelection(spnCompetProduct.getSelectedItemPosition());
+                                } else if (Integer.parseInt(qtyProduct) == 0) {
+                                    new clsMainActivity().setErrorMessage(getContext(), txtInputLayoutQty, qty, "Qty cannot 0");
+                                    spnKalbeProduct.setSelection(spnKalbeProduct.getSelectedItemPosition());
+                                    spnCompetProduct.setSelection(spnCompetProduct.getSelectedItemPosition());
+                                } else {
+                                    new clsMainActivity().removeErrorMessage(txtInputLayoutQty);
+                                    tCustomerBasedMobileDetailProductData data = new tCustomerBasedMobileDetailProductData();
+                                    data.set_intTrCustomerIdDetailProduct(new clsMainActivity().GenerateGuid());
+                                    data.set_intTrCustomerIdDetail(dataDetail.get_intTrCustomerIdDetail());
+                                    data.set_txtProductBrandCode(HMProduct.get(selectedOneKNProduct));// brand name
+                                    data.set_txtProductBrandName(selectedOneKNProduct);
+                                    data.set_txtProductBrandQty(qtyProduct);
+                                    data.set_txtProductBrandCodeCRM(HMProduct.get(HMProduct.get(selectedOneKNProduct)));// brandcode
+                                    data.set_txtLOB(HMProduct.get(HMProduct.get(HMProduct.get(selectedOneKNProduct))));// brandcodeCRM
+                                    if (spnCompetProduct.getSelectedItem().equals("Select Previous Product")) {
+                                        data.set_txtProductCompetitorCode(null);
+                                        data.set_txtProductCompetitorName(null);
+                                    } else {
+                                        data.set_txtProductCompetitorCode(HMProductKompetitor.get(selectedOneCompetitorProduct));
+                                        data.set_txtProductCompetitorName(selectedOneCompetitorProduct);
+                                    }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-            }
+                                    data.set_dtInserted(date);
+                                    data.set_txtInsertedBy(dtUser.get_txtUserId());
 
-        });
+                                    new tCustomerBasedMobileDetailProductBL().saveData(data);
 
-        btnAddProduct.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dtListDetailProduct = new tCustomerBasedMobileDetailProductBL().getDataByCustomerDetailId(txtDetailIDCustomerBased);
-                boolean val = true;
-                for (int i = 0; i < dtListDetailProduct.size(); i++) {
-                    if (dtListDetailProduct.get(i).get_txtProductBrandName().equals(spnKalbeProduct.getSelectedItem().toString())) {
-                        val = false;
-                    }
-
-                }
-
-                if (!spnKalbeProduct.getSelectedItem().equals("Select Product")) {
-                    if (val) {
-                        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(qty.getWindowToken(), 0);
-                        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                        String date = dateFormat.format(Calendar.getInstance().getTime());
-                        String selectedOneKNProduct = spnKalbeProduct.getSelectedItem().toString();
-                        String selectedOneCompetitorProduct = spnCompetProduct.getSelectedItem().toString();
-                        tUserLoginData dtUser = new tUserLoginBL().getUserActive();
-                        String qtyProduct;
-                        qtyProduct = qty.getText().toString();
-                        new clsMainActivity().removeErrorMessage(txtInputLayoutQty);
-                        if (qtyProduct.length() == 0) {
-                            new clsMainActivity().setErrorMessage(getContext(), txtInputLayoutQty, qty, "Qty cannot empty");
-                            spnKalbeProduct.setSelection(spnKalbeProduct.getSelectedItemPosition());
-                            spnCompetProduct.setSelection(spnCompetProduct.getSelectedItemPosition());
-                        } else if (Integer.parseInt(qtyProduct) == 0) {
-                            new clsMainActivity().setErrorMessage(getContext(), txtInputLayoutQty, qty, "Qty cannot 0");
-                            spnKalbeProduct.setSelection(spnKalbeProduct.getSelectedItemPosition());
-                            spnCompetProduct.setSelection(spnCompetProduct.getSelectedItemPosition());
-                        } else {
-                            new clsMainActivity().removeErrorMessage(txtInputLayoutQty);
-                            tCustomerBasedMobileDetailProductData data = new tCustomerBasedMobileDetailProductData();
-                            data.set_intTrCustomerIdDetailProduct(new clsMainActivity().GenerateGuid());
-                            data.set_intTrCustomerIdDetail(dataDetail.get_intTrCustomerIdDetail());
-                            data.set_txtProductBrandCode(HMProduct.get(selectedOneKNProduct));// brand name
-                            data.set_txtProductBrandName(selectedOneKNProduct);
-                            data.set_txtProductBrandQty(qtyProduct);
-                            data.set_txtProductBrandCodeCRM(HMProduct.get(HMProduct.get(selectedOneKNProduct)));// brandcode
-                            data.set_txtLOB(HMProduct.get(HMProduct.get(HMProduct.get(selectedOneKNProduct))));// brandcodeCRM
-                            if (spnCompetProduct.getSelectedItem().equals("Select Previous Product")) {
-                                data.set_txtProductCompetitorCode(null);
-                                data.set_txtProductCompetitorName(null);
+                                    if (spnKalbeProduct.getSelectedItemPosition() > 0) {
+                                        spnCompetProduct.setAdapter(null);
+                                        spnKalbeProduct.setSelection(0);
+                                    }
+                                    qty.setText("");
+                                    spnKalbeProduct.setSelection(0);
+                                    spnCompetProduct.setAdapter(adapterAwalKompet);
+                                    setTableProduct(dataDetail, promptView);
+                                    //                setTablePerson();
+                                }//validasi product kompetitor
                             } else {
-                                data.set_txtProductCompetitorCode(HMProductKompetitor.get(selectedOneCompetitorProduct));
-                                data.set_txtProductCompetitorName(selectedOneCompetitorProduct);
+                                new clsMainActivity().showCustomToast(getContext(), "Please Choose Product Competitor first", false);
                             }
-
-                            data.set_dtInserted(date);
-                            data.set_txtInsertedBy(dtUser.get_txtUserId());
-
-                            new tCustomerBasedMobileDetailProductBL().saveData(data);
-
-                            if (spnKalbeProduct.getSelectedItemPosition() > 0) {
-                                spnCompetProduct.setAdapter(null);
-                                spnKalbeProduct.setSelection(0);
-                            }
-                            qty.setText("");
-                            spnKalbeProduct.setSelection(0);
-                            spnCompetProduct.setAdapter(adapterAwalKompet);
-                            setTableProduct(dataDetail, promptView);
-                            //                setTablePerson();
-                        }//validasi product kompetitor
+                        } else {
+                            new clsMainActivity().showCustomToast(getContext(), "Sorry, you cannot add same product", false);
+                        }
                     } else {
-                        new clsMainActivity().showCustomToast(getContext(), "Sorry, you cannot add same product", false);
+                        new clsMainActivity().showCustomToast(getContext(), "Please Choose Product first", false);
                     }
-                } else {
-                    new clsMainActivity().showCustomToast(getContext(), "Please Choose Product first", false);
+
                 }
+            });
 
+            if (dataDetail.get_intTrCustomerIdDetail() != null) {
+                nama.setText(dataDetail.get_txtNamaDepan());
             }
-        });
 
-        if (dataDetail.get_intTrCustomerIdDetail() != null) {
-            nama.setText(dataDetail.get_txtNamaDepan());
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+            alertDialogBuilder.setView(promptView);
+            alertDialogBuilder
+                    .setCancelable(false)
+                    .setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            setTablePerson();
+                            dialog.cancel();
+                        }
+                    });
+            final AlertDialog alertD = alertDialogBuilder.create();
+            alertD.show();
         }
-
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-        alertDialogBuilder.setView(promptView);
-        alertDialogBuilder
-                .setCancelable(false)
-                .setNegativeButton("Close", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        setTablePerson();
-                        dialog.cancel();
-                    }
-                });
-        final AlertDialog alertD = alertDialogBuilder.create();
-        alertD.show();
-
     }
 
     private void popUpAddPerson(final tCustomerBasedMobileDetailData dataDetail) {
@@ -1617,7 +1655,7 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
             swplist.set_txtId(dtListDetailProduct.get(i).get_intTrCustomerIdDetailProduct());
             swplist.set_txtTitle(dtListDetailProduct.get(i).get_txtProductBrandName());
             if (dtListDetailProduct.get(i).get_txtProductCompetitorName().equals("null")) {
-                swplist.set_txtDescription("Not set");
+                swplist.set_txtDescription("Not set*");
             } else {
                 swplist.set_txtDescription(dtListDetailProduct.get(i).get_txtProductCompetitorName());
             }
@@ -2153,10 +2191,37 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
             new clsMainActivity().showCustomToast(getContext(), "Your Submission Empty", false);
             validate=false;
         }
-        if(mUserLOBDataList!=null&&mUserLOBDataList.size()>0 && validate){
-            List<mProductPICData> dast=new mProductPICBL().GetAllData();
-            if(new mProductPICBL().getContactCountByKN(mUserLOBDataList)==0&&cbPIC.isChecked()){
-                new clsMainActivity().showCustomToast(getContext(), "Please re-download Product PIC", false);
+//        if(mUserLOBDataList!=null&&mUserLOBDataList.size()>0 && validate){
+//            List<mProductPICData> dast=new mProductPICBL().GetAllData();
+//            if(new mProductPICBL().getContactCountByKN(mUserLOBDataList)==0&&cbPIC.isChecked()){
+//                new clsMainActivity().showCustomToast(getContext(), "Please re-download Product PIC", false);
+//                validate=false;
+//            }
+//            /*
+//            else if (new mProductPICBL().getContactCountSubId()>0 && validate){
+//                new clsMainActivity().showCustomToast(getContext(), "Please re-download Product PIC", false);
+//                validate=false;
+//            }
+//            */
+//            if(new mProductSPGBL().getContactCountByKN(mUserLOBDataList)==0 && validate){
+//                new clsMainActivity().showCustomToast(getContext(), "Please re-download Product SPG", false);
+//                validate=false;
+//            }
+//            /*
+//            else if (new mProductSPGBL().getContactCountSubId()>0){
+//                new clsMainActivity().showCustomToast(getContext(), "Please re-download Product SPG", false);
+//                validate=false;
+//            }
+//            */
+//
+//            if(new mProductCompetitorBL().getContactsCountByKN(mUserLOBDataList)==0 && validate){
+//                new clsMainActivity().showCustomToast(getContext(), "Please re-download Product Competitor", false);
+//                validate=false;
+//            }
+//        }
+        if(validate){
+            if(new mProductPICBL().getContactCountBySubCode(HMSubmision.get(spnSubmissionCode.getSelectedItem().toString()))==0&&cbPIC.isChecked()){
+                new clsMainActivity().showCustomToast(getContext(), "Product PIC not found", false);
                 validate=false;
             }
             /*
@@ -2165,8 +2230,8 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
                 validate=false;
             }
             */
-            if(new mProductSPGBL().getContactCountByKN(mUserLOBDataList)==0 && validate){
-                new clsMainActivity().showCustomToast(getContext(), "Please re-download Product SPG", false);
+            if(new mProductSPGBL().getContactCountBySubCode(HMSubmision.get(spnSubmissionCode.getSelectedItem().toString()))==0 && validate){
+                new clsMainActivity().showCustomToast(getContext(), "Product SPG not found", false);
                 validate=false;
             }
             /*
@@ -2175,7 +2240,10 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
                 validate=false;
             }
             */
+        }
 
+
+        if(mUserLOBDataList!=null&&mUserLOBDataList.size()>0 && validate){
             if(new mProductCompetitorBL().getContactsCountByKN(mUserLOBDataList)==0 && validate){
                 new clsMainActivity().showCustomToast(getContext(), "Please re-download Product Competitor", false);
                 validate=false;
