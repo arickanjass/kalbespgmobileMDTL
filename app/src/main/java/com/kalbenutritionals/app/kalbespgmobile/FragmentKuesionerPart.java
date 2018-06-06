@@ -114,7 +114,7 @@ public class FragmentKuesionerPart extends Fragment {
         View vw = null;
 
         if (typeJawaban == 1) {
-            ArrayList<String> spinnerArray = new ArrayList<String>();     
+            ArrayList<String> spinnerArray = new ArrayList<String>();
 
             if(_jawabanModel.get(0).getValue().equals("SPG01")){
                 tAbsenUserData dataOutletCheckIn = new tAbsenUserBL().getDataCheckInActive();

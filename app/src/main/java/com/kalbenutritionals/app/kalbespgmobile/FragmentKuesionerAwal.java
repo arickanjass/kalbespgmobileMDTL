@@ -32,7 +32,7 @@ import library.spgmobile.common.visitplanAbsenData;
 
 public class FragmentKuesionerAwal extends Fragment {
     View v;
-    Button btn1, btn2;
+    Button btn1, btn2;         
     Toolbar toolbar;
     List<tGroupQuestionMappingData> groupQuestionMappingDataList = new ArrayList<>();
     List<tGroupQuestionMappingData> mappingDataList = new ArrayList<>();
