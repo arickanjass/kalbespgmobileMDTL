@@ -10,26 +10,63 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:orientation="vertical">
-        <!--<TextView-->
+        android:orientation="vertical"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp">
+        <!--<LinearLayout-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="wrap_content"-->
-            <!--android:id="@+id/tv_quizzz"-->
-            <!--android:gravity="center|top"-->
-            <!--android:text="Example"-->
-            <!--android:textColor="@color/white"-->
-            <!--android:background="@color/primary_color_theme"-->
-            <!--android:paddingBottom="4dp"-->
-            <!--android:paddingTop="4dp"-->
-            <!--android:textSize="15dp"/>-->
+            <!--android:orientation="horizontal"-->
+            <!--android:layout_marginTop="45dp">-->
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Outlet : "-->
+                <!--android:textSize="12dp"-->
+                <!--android:textStyle="bold"/>-->
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textSize="12dp"-->
+                <!--android:id="@+id/tv_outletQuiz"/>-->
+        <!--</LinearLayout>-->
+        <!--<View-->
+            <!--android:id="@+id/view0"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="2dp"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:background="#bfbfbf" />-->
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:layout_marginTop="5dp">-->
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Date : "-->
+                <!--android:textSize="12dp"-->
+                <!--android:textStyle="bold"/>-->
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textSize="12dp"-->
+                <!--android:id="@+id/tv_dateQuiz"/>-->
+        <!--</LinearLayout>-->
+        <!--<View-->
+            <!--android:id="@+id/view01"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="2dp"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:background="#bfbfbf" />-->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="50dp"
             android:id="@+id/txtSoal"
             android:gravity="center"
             android:text="Example"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:layout_marginBottom="20dp"/>
     </LinearLayout>
 

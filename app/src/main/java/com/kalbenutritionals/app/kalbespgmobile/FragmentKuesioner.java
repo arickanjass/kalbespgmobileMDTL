@@ -473,7 +473,7 @@ public class FragmentKuesioner extends Fragment {
                     alertDialog.setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
                         ProgressDialog progressDialog = new ProgressDialog(getContext());
                         @Override
-                        public void onClick(final DialogInterface dialog, int which) { 
+                        public void onClick(final DialogInterface dialog, int which) {
                             AsyncSaveQuiz task = new AsyncSaveQuiz();
                             task.execute();
                         }

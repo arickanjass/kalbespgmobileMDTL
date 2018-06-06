@@ -259,7 +259,7 @@ public class clsHelper {
 
 				byte [] array = entry.getValue();
 //				File file = File.createTempFile("file-", ekstension, new File(Environment.getExternalStorageDirectory().toString() + "/data/data/Kalbespgmobile/tempdata"));
-				File file = File.createTempFile("image-", ".jpg", new File(new clsHardCode().txtPathTempData));
+				File file = File.createTempFile("image-", ekstension, new File(new clsHardCode().txtPathTempData));
 				FileOutputStream out = new FileOutputStream( file );
 				out.write( array );
 				out.close();
