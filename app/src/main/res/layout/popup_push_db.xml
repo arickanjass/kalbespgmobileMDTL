@@ -22,20 +22,35 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="*Please Insert Pin Code"
+                android:text="Please Insert Pin Code"
                 />
 
-            <addons.codeinputlib.CodeInput
-                android:id="@+id/pairing"
-                android:layout_margin="10dp"
+            <!--<addons.codeinputlib.CodeInput-->
+                <!--android:id="@+id/pairing"-->
+                <!--android:layout_margin="10dp"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--app:underline_color="#457ad1"-->
+                <!--app:underline_selected_color="#9e1ace"-->
+                <!--app:text_color="#b12eff"-->
+                <!--app:hint_color="#77ce9d"-->
+                <!--app:hint_text="Pin code"-->
+                <!--app:codes="4"-->
+                <!--/>-->
+
+            <EditText
+                android:id="@+id/et_inputCode"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="number"
+                android:maxLength="4"/>
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:underline_color="#457ad1"
-                app:underline_selected_color="#9e1ace"
-                app:text_color="#b12eff"
-                app:hint_color="#77ce9d"
-                app:hint_text="Pin code"
-                app:codes="4"
+                android:textColor="#FF0000"
+                android:textSize="10dp"
+                android:text="*Fungsi ini untuk report error aplikasi ke server"
                 />
 
         </LinearLayout>

@@ -11,7 +11,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import library.spgmobile.common.mTypePOPStandardData;
+import library.spgmobile.common.tGroupQuestionMappingData;
+import library.spgmobile.common.tHirarkiBIS;
 import library.spgmobile.common.tJawabanUserHeaderData;
+import library.spgmobile.common.tPOPStandardHeaderData;
 import library.spgmobile.common.tUserLoginData;
 
 /**
@@ -285,5 +289,57 @@ public class tJawabanUserHeaderDA {
         }
         cursor.close();
         return contactList;
+    }
+
+    public int countDataMandatory(SQLiteDatabase db, List<tHirarkiBIS> ListtHirarkiBIS, List<tGroupQuestionMappingData> listGrupQuest, String txtOutletCode) {
+        tPOPStandardHeaderData dt = new tPOPStandardHeaderData();
+
+        String builderSPG = "()";
+
+        if (ListtHirarkiBIS != null){
+            builderSPG = "(";
+            for (int i = 0; i < ListtHirarkiBIS.size(); i++) {
+                builderSPG = builderSPG + "'" + ListtHirarkiBIS.get(i).get_txtNik() + "'";
+                builderSPG = builderSPG + ((i + 1) != ListtHirarkiBIS.size() ? "," : ")");
+            }
+        }
+        String builderGrupQuest = "()";
+
+        if (listGrupQuest != null){
+            builderGrupQuest = "(";
+            for (int i = 0; i < listGrupQuest.size(); i++) {
+                builderGrupQuest = builderGrupQuest + "'" + listGrupQuest.get(i).get_intId() + "'";
+                builderGrupQuest = builderGrupQuest + ((i + 1) != listGrupQuest.size() ? "," : ")");
+            }
+        }
+//        String selectQuery = "SELECT "+dt.Property_All+" FROM " + TABLE_CONTACTS +" WHERE "+dt.Property_txtType +" IN " + builder + " AND " + dt.Property_txtOutletCode + "='" + txtOutletCode + "'";
+        String selectQuery = "SELECT * FROM tJawabanUserHeader a \n" +
+                "left join tJawabanUser b on a.intHeaderId = b.intHeaderId\n" +
+                "where\n" +
+                "a.intGroupQuestionId IN \n" +
+                builderGrupQuest +
+                "and \n" +
+                "a.txtOutletCode\n" +
+                "='" + txtOutletCode + "'" +
+                "and \n" +
+                "b.txtValue in \n" +
+                builderSPG;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        int countData = cursor.getCount();
+        cursor.close();
+        // return count
+        return countData;
+    }
+
+    public int countDataMandatory2(SQLiteDatabase db, List<tHirarkiBIS> ListtHirarkiBIS, List<tGroupQuestionMappingData> listGrupQuest, String txtOutletCode) {
+        tPOPStandardHeaderData dt = new tPOPStandardHeaderData();
+
+        String selectQuery = "select * from tJawabanUser where intAnswerId is not 'null' and txtValue is not 'null'";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        int countData = cursor.getCount();
+        cursor.close();
+        // return count
+        return countData;
     }
 }

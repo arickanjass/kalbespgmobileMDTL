@@ -26,6 +26,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -67,11 +68,12 @@ import library.spgmobile.dal.clsHardCode;
 public class FragmentAddPOP extends Fragment {
     View v;
     TextView tvDate, tvOutlet;
+    EditText txtDesc;
     Spinner spnCategory, spnReason;
     CheckBox cbPOP;
     ImageView img1, img2;
     Button btnSubmit;
-    LinearLayout lnReason;
+    LinearLayout lnReason, ln_descPOP;
     CardView cvImg;
     private ArrayList<String> arrData;
     private HashMap<String, String> HMsubCategory = new HashMap<>();
@@ -89,8 +91,10 @@ public class FragmentAddPOP extends Fragment {
         spnCategory = (Spinner) v.findViewById(R.id.spnPOP);
         spnReason = (Spinner) v.findViewById(R.id.spnReasonPOP);
         lnReason = (LinearLayout) v.findViewById(R.id.ln_reasonPOP);
+        ln_descPOP = (LinearLayout) v.findViewById(R.id.ln_descPOP);
         cvImg = (CardView) v.findViewById(R.id.itemCardViewPOP);
         cbPOP = (CheckBox) v.findViewById(R.id.cbPOP);
+        txtDesc = (EditText) v.findViewById(R.id.etKeterangan);
         img1 = (ImageView) v.findViewById(R.id.imagePOP1);
         img2 = (ImageView) v.findViewById(R.id.imagePOP2);
         btnSubmit = (Button) v.findViewById(R.id.btnSubmitPOP);
@@ -122,8 +126,10 @@ public class FragmentAddPOP extends Fragment {
                 if (cbPOP.isChecked()){
                     lnReason.setVisibility(View.GONE);
                     cvImg.setVisibility(View.VISIBLE);
+                    ln_descPOP.setVisibility(View.VISIBLE);
                 } else {
                     cvImg.setVisibility(View.GONE);
+                    ln_descPOP.setVisibility(View.GONE);
                     lnReason.setVisibility(View.VISIBLE);
                 }
             }
@@ -131,8 +137,10 @@ public class FragmentAddPOP extends Fragment {
         if (cbPOP.isChecked()){
             lnReason.setVisibility(View.GONE);
             cvImg.setVisibility(View.VISIBLE);
+            ln_descPOP.setVisibility(View.VISIBLE);
         } else {
             cvImg.setVisibility(View.GONE);
+            ln_descPOP.setVisibility(View.GONE);
             lnReason.setVisibility(View.VISIBLE);
         }
         m_fillSpinner();
@@ -219,7 +227,7 @@ public class FragmentAddPOP extends Fragment {
         dt.set_txtType(bundleType[0]);
         if (cbPOP.isChecked()){
             dt.set_bolHavePOP("1");
-            dt.set_txtReason(null);
+            dt.set_txtReason(txtDesc.getText().toString());
         } else {
             dt.set_bolHavePOP("0");
             dt.set_txtReason(spnReason.getSelectedItem().toString());

@@ -56,6 +56,8 @@ import bl.tKemasanRusakImageBL;
 import bl.tPOPStandardDetailBL;
 import bl.tPOPStandardHeaderBL;
 import bl.tPlanogramImageBL;
+import bl.tStockOutDetailBL;
+import bl.tStockOutHeaderBL;
 import bl.tTidakSesuaiPesananImageBL;
 import jxl.Cell;
 import jxl.CellView;
@@ -146,6 +148,8 @@ import library.spgmobile.common.tSalesProductQuantityDetailData;
 import library.spgmobile.common.tSalesProductQuantityHeaderData;
 import library.spgmobile.common.tStockInHandDetailData;
 import library.spgmobile.common.tStockInHandHeaderData;
+import library.spgmobile.common.tStockOutDetailData;
+import library.spgmobile.common.tStockOutHeaderData;
 import library.spgmobile.common.tTidakSesuaiPesananHeaderData;
 import library.spgmobile.common.tTidakSesuaiPesananImageData;
 import library.spgmobile.common.tUserLoginData;
@@ -172,6 +176,7 @@ public class FragmentReporting extends Fragment {
     List<mCountConsumerMTDData> dt_mCountConsumerMTDData = null;
     List<tKemasanRusakHeaderData> dt_krs= null;
     List<tOverStockHeaderData> dt_OVS = null;
+    List<tStockOutHeaderData> dt_SOUT = null;
     List<tPlanogramMobileData> dt_planogram = null;
     List<tTidakSesuaiPesananHeaderData> listTSP = null;
     List<mMenuData> menu;
@@ -542,7 +547,34 @@ public class FragmentReporting extends Fragment {
                         AsyncKRS task = new AsyncKRS();
                         task.execute();
                     }
-                } else if (dt_OVS!=null&&dt_OVS.size()>0){
+                } else if (dt_SOUT!=null&&dt_SOUT.size()>0){
+                    if(!outletName.equals("ALL OUTLET")){
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                        builder.setTitle("Confirm");
+                        builder.setMessage("Hanya akan export Exel data transaksi di Outlet " + outletName + "\n" + "Untuk export semua outlet silahkan pilih 'ALL OUTLET'");
+
+                        builder.setPositiveButton("Lanjutkan", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                AsyncSOUT task = new AsyncSOUT();
+                                task.execute();
+                            }
+                        });
+
+                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                        AlertDialog alert = builder.create();
+                        alert.show();
+                    } else {
+                        AsyncOVS task = new AsyncOVS();
+                        task.execute();
+                    }
+                }else if (dt_OVS!=null&&dt_OVS.size()>0){
                     if(!outletName.equals("ALL OUTLET")){
                         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
@@ -1347,6 +1379,72 @@ public class FragmentReporting extends Fragment {
             }
 
             ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
+        } else if (spinnerSelected.contains("Stock Out")){
+//            Toast.makeText(getContext(), "Quantity Stock", Toast.LENGTH_SHORT).show();
+            header = new String[6];
+            header[1] = "NO";
+            header[2] = "Tot. Prd";
+            header[3] = "Tot. Qty";
+//            header[4] = "Tot. Price";
+            header[4] = "Outlet";
+            header[5] = "";
+
+            ReportTableView.setColumnCount(header.length);
+
+            simpleTableHeaderAdapter = new SimpleTableHeaderAdapter(getContext(), header);
+            simpleTableHeaderAdapter.setTextColor(ContextCompat.getColor(getContext(), R.color.table_header_text));
+            simpleTableHeaderAdapter.setTextSize(14);
+            simpleTableHeaderAdapter.setPaddingBottom(20);
+            simpleTableHeaderAdapter.setPaddingTop(20);
+
+            ReportTableView.setColumnComparator(1, ReportComparators.getNoQStockComparator());
+            ReportTableView.setColumnComparator(2, ReportComparators.getTotalProductComparator());
+            ReportTableView.setColumnComparator(3, ReportComparators.getTotalItemComparator());
+            ReportTableView.setColumnComparator(4, ReportComparators.getStatusComparator());
+            ReportTableView.setColumnComparator(5, ReportComparators.getviewDetailComparator());
+
+            ReportTableView.setColumnWeight(1, 2);
+            ReportTableView.setColumnWeight(2, 1);
+            ReportTableView.setColumnWeight(3, 1);
+            ReportTableView.setColumnWeight(4, 1);
+            ReportTableView.setColumnWeight(5, 1);
+
+            ReportTableView.setHeaderAdapter(simpleTableHeaderAdapter);
+
+            dt_SOUT = new tStockOutHeaderBL().getAllOverStockHeaderByOutletCode(outletcode);
+            reportList = new ArrayList<>();
+
+            if(dt_SOUT != null&&dt_SOUT.size()>0){
+                for(tStockOutHeaderData datas : dt_SOUT ){
+                    ReportTable rt = new ReportTable();
+
+                    rt.set_report_type("QStock");
+                    rt.set_txtQuantityStock(datas.get_txtOverStock());
+                    rt.set_total_product(datas.get_intSumItem());
+                    rt.set_total_price(new clsMainActivity().convertNumberDec(Double.valueOf(datas.get_intSumAmount())));
+                    rt.set_status(datas.get_OutletName());
+                    rt.set_dummy("Over Stock");
+                    rt.set_view_detail("View Detail");
+
+                    List<tStockOutDetailData> dt_detail = new tStockOutDetailBL().GetDataByNoOverStock(datas.get_txtOverStock());
+
+                    int total_item = 0;
+
+                    for(i = 0; i < dt_detail.size(); i++){
+                        total_item = total_item + Integer.parseInt(dt_detail.get(i).getTxtQuantity());
+                    }
+
+                    rt.set_total_item(String.valueOf(total_item)+ " pcs");
+                    rt.set_total_product(String.valueOf(dt_detail.size()));
+
+                    reportList.add(rt);
+                }
+                btnExport.setVisibility(View.VISIBLE);
+            } else {
+                new clsMainActivity().showCustomToast(getContext(), "No Data to Show", false);
+            }
+
+            ReportTableView.setDataAdapter(new ReportTableDataAdapter(getContext(), reportList));
         } else if (spinnerSelected.contains("Planogram")){
 //            Toast.makeText(getContext(), "Actvity", Toast.LENGTH_SHORT).show();
             header = new String[6];
@@ -2117,6 +2215,37 @@ public class FragmentReporting extends Fragment {
         @Override
         protected Void doInBackground(Void... params) {
             generatefileXlsOVS(spinnerSelected, outlet, dt_OVS);
+            return null;
+        }
+
+        private ProgressDialog Dialog = new ProgressDialog(getActivity());
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if (!writeException.equals("")){
+                new clsMainActivity().showCustomToast(getActivity(), writeException, false);
+            }else if (!iOException.equals("")){
+                new clsMainActivity().showCustomToast(getActivity(), iOException, false);
+            } else {
+                new clsMainActivity().showCustomToast(getActivity(), "Data Exported in a Excel Sheet\n" + "Location file in Internal Storage", true);
+                showfileExel(files);
+            }
+            Dialog.dismiss();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            Dialog.setMessage("Exporting Your Report...");
+            Dialog.setCancelable(false);
+            Dialog.show();
+        }
+    }
+
+    private class AsyncSOUT extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            generatefileXlsSOUT(spinnerSelected, outlet, dt_SOUT);
             return null;
         }
 
@@ -3566,6 +3695,139 @@ public class FragmentReporting extends Fragment {
                     sheet.addCell(new Label(0, j, "Total", formatFont));
                     sheet.addCell(new Label(4, j, totalQty, cellFormat));
                     sheet.mergeCells(0,j,3,j);
+                }
+            }
+            //closing cursor
+            workbook.write();
+            workbook.close();
+        } catch (WriteException e) {
+            e.printStackTrace();
+            writeException = e.getMessage().toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+            iOException = e.getMessage().toString();
+        }
+    }
+
+    private void generatefileXlsSOUT(String fileName, String outletName, List<tStockOutHeaderData> _tOverStockHeaderData ){
+        File sd = Environment.getExternalStorageDirectory();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        String currentDateandTime = sdf.format(new Date());
+        String csvFile = fileName + "_" + outletName + "_" + currentDateandTime + ".xls";
+        File directory = new File(sd.getAbsolutePath());
+        //create directory if not exist
+        if (!directory.isDirectory()) {
+            directory.mkdirs();
+        }
+        try {
+
+            //file path
+            files = new File(directory, csvFile);
+//            if(file.exists()){
+//
+//            }
+            WorkbookSettings wbSettings = new WorkbookSettings();
+            wbSettings.setLocale(new Locale("en", "EN"));
+            WritableWorkbook workbook;
+            workbook = Workbook.createWorkbook(files, wbSettings);
+
+
+            tUserLoginData dataUserActive = new tAbsenUserBL().getUserActive();
+            String name = dataUserActive.get_txtUserName();
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            SimpleDateFormat sdfDated = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = null;
+            try {
+                date = sdfDate.parse(dataUserActive.get_dtLastLogin());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            String dateNow = dateFormat.format(date);
+            String branch = dataUserActive.get_txtCab();
+
+            if (_tOverStockHeaderData!=null&&_tOverStockHeaderData.size()>0) {
+                for(int i=0; i<_tOverStockHeaderData.size(); i++){
+                    String no = _tOverStockHeaderData.get(i).get_txtOverStock();
+
+                    //Excel sheet name. 0 represents first sheet
+                    WritableSheet sheet = workbook.createSheet(no, i);
+
+                    // column and row header
+                    sheet.addCell(new Label(0, 0, "Name"));
+                    sheet.addCell(new Label(0, 1, "Branch"));
+                    sheet.addCell(new Label(0, 2, "Date"));
+                    sheet.addCell(new Label(0, 3, "No."));
+                    sheet.addCell(new Label(0, 4, "Outlet"));
+                    sheet.addCell(new Label(0, 5, "Total Product"));
+                    sheet.addCell(new Label(0, 6, "Description"));
+
+                    String outletname  = _tOverStockHeaderData.get(i).get_OutletName();
+                    String sumItem = _tOverStockHeaderData.get(i).get_intSumItem();
+                    String description = _tOverStockHeaderData.get(i).get_txtKeterangan();
+
+                    sheet.addCell(new Label(1, 0, name));
+                    sheet.addCell(new Label(1, 1, branch));
+                    sheet.addCell(new Label(1, 2, dateNow));
+                    sheet.addCell(new Label(1, 3, no));
+                    sheet.addCell(new Label(1, 4, outletname));
+                    sheet.addCell(new Label(1, 5, sumItem));
+                    sheet.addCell(new Label(1, 6, description));
+
+                    WritableCellFormat cellFormat = new WritableCellFormat();
+                    cellFormat.setWrap(true);
+                    cellFormat.setVerticalAlignment(VerticalAlignment.CENTRE);
+                    cellFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
+
+                    int k = 9;
+
+                    WritableFont cellFont = new WritableFont(WritableFont.TIMES, 10,WritableFont.BOLD);
+                    WritableCellFormat formatFont = new WritableCellFormat(cellFont);
+                    formatFont.setBorder(Border.ALL, BorderLineStyle.THIN);
+                    formatFont.setAlignment(Alignment.CENTRE);
+
+                    // column and row detail
+                    sheet.addCell(new Label(0, k, "No.", formatFont));
+                    sheet.addCell(new Label(1, k, "Product", formatFont));
+                    sheet.addCell(new Label(2, k, "Description", formatFont));
+                    sheet.addCell(new Label(3, k, "Expired Date", formatFont));
+                    sheet.addCell(new Label(4, k, "Qty", formatFont));
+
+                    for (int z = 0; z <= 4; z++){
+                        CellView cellData2 = sheet.getColumnView(z);
+                        cellData2.setAutosize(true);
+                        sheet.setColumnView(z, cellData2);
+                    }
+
+                    int sumQty = 0;
+                    List<tStockOutDetailData> dt_detail = new tStockOutDetailBL().GetDataByNoOverStock(_tOverStockHeaderData.get(i).get_txtOverStock());
+                    if (dt_detail!=null&&dt_detail.size()>0){
+                        for (int x =0; x < dt_detail.size(); x++){
+                            k++;
+                            String product = dt_detail.get(x).getTxtProduct();
+                            String desc = dt_detail.get(x).get_txtKeterangan();
+                            try {
+                                date = sdfDate.parse(dt_detail.get(x).getTxtExpireDate());
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            String ed = dateFormat.format(date);
+                            String qty = dt_detail.get(x).getTxtQuantity();
+                            sumQty += Integer.parseInt(qty);
+
+                            sheet.addCell(new Label(0, k, String.valueOf(x+1), cellFormat));
+                            sheet.addCell(new Label(1, k, product, cellFormat));
+                            sheet.addCell(new Label(2, k, desc, cellFormat));
+                            sheet.addCell(new Label(3, k, ed, cellFormat));
+                            sheet.addCell(new Label(4, k, qty, cellFormat));
+                        }
+                    }
+
+                    String totalQty = String.valueOf(sumQty);
+                    int j = k+1;
+                    sheet.addCell(new Label(3, j, "Total", formatFont));
+                    sheet.addCell(new Label(4, j, totalQty, cellFormat));
+//                    sheet.mergeCells(0,j,3,j);
                 }
             }
             //closing cursor

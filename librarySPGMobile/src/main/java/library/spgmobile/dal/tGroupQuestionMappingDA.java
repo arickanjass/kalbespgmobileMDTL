@@ -72,6 +72,27 @@ public class tGroupQuestionMappingDA {
         return contactList;
     }
 
+    public List<tGroupQuestionMappingData> GetAllDataNoFileFoto(SQLiteDatabase db){
+        List<tGroupQuestionMappingData> contactList = new ArrayList<tGroupQuestionMappingData>();
+        tGroupQuestionMappingData dt = new tGroupQuestionMappingData();
+        String selectQuery = "Select " + dt.Property_All + " FROM " + TABLE_CONTACTS  + " WHERE " + dt.Property_txtGroupQuestion + " is not 'File Foto' " + " ORDER BY intId ASC";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()){
+            do {
+                tGroupQuestionMappingData contact = new tGroupQuestionMappingData();
+                contact.set_intId(cursor.getString(0));
+                contact.set_txtGroupQuestion(cursor.getString(1));
+                contact.set_intRoleId(cursor.getString(2));
+                contact.set_txtRepeatQuestion(cursor.getString(3));
+                contact.set_dtStart(cursor.getString(4));
+                contact.set_dtEnd(cursor.getString(5));
+                contactList.add(contact);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return contactList;
+    }
+
     public List<tGroupQuestionMappingData> GetDataById(SQLiteDatabase db, int intId){
         List<tGroupQuestionMappingData> contactList = new ArrayList<tGroupQuestionMappingData>();
         tGroupQuestionMappingData dt = new tGroupQuestionMappingData();

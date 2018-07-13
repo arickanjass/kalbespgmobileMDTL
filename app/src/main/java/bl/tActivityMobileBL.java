@@ -141,6 +141,12 @@ public class tActivityMobileBL extends clsMainBL{
         _db.close();
         return count;
     }
+    public int countActivityV2Mandatori(String code) {
+        SQLiteDatabase _db = getDb();
+        int count = new tActivityMobileDA(_db).countActivityV2Mandatori(_db, code);
+        _db.close();
+        return count;
+    }
 
     public List<tActivityMobileData> getAllDataByIntSyc(String val){
         SQLiteDatabase _db =getDb();

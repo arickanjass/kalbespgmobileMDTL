@@ -699,10 +699,57 @@ public class dataJson {
                 resJson.put(dttOverStockHeaderData.Property_ListOftOverStockHeaderData, new JSONArray(itemsListJquey));
             }
 
+            if (this.getListOftStockOutHeaderData() != null){
+                tStockOutHeaderData dttOverStockHeaderData = new tStockOutHeaderData();
+                itemsListJquey = new ArrayList<JSONObject>();
+                for (tStockOutHeaderData data : this.getListOftStockOutHeaderData()){
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dttOverStockHeaderData.Property_intId, String.valueOf(data.get_intId()));
+                    item1.put(dttOverStockHeaderData.Property_txtOverStock, String.valueOf(data.get_txtOverStock()));
+                    item1.put(dttOverStockHeaderData.Property_OutletCode, String.valueOf(data.get_OutletCode()));
+                    item1.put(dttOverStockHeaderData.Property_OutletName, String.valueOf(data.get_OutletName()));
+                    item1.put(dttOverStockHeaderData.Property_txtDate, String.valueOf(data.get_dtDate()));
+                    item1.put(dttOverStockHeaderData.Property_intIdAbsenUser, String.valueOf(data.get_intIdAbsenUser()));
+                    item1.put(dttOverStockHeaderData.Property_intSubmit, String.valueOf(data.get_intSubmit()));
+                    item1.put(dttOverStockHeaderData.Property_intSumAmount, String.valueOf(data.get_intSumAmount()));
+                    item1.put(dttOverStockHeaderData.Property_intSumItem, String.valueOf(data.get_intSumItem()));
+                    item1.put(dttOverStockHeaderData.Property_intSync, String.valueOf(data.get_intSync()));
+                    item1.put(dttOverStockHeaderData.Property_txtBranchCode, String.valueOf(data.get_txtBranchCode()));
+                    item1.put(dttOverStockHeaderData.Property_txtBranchName, String.valueOf(data.get_txtBranchName()));
+                    item1.put(dttOverStockHeaderData.Property_UserId, String.valueOf(data.get_UserId()));
+                    item1.put(dttOverStockHeaderData.Property_txtKeterangan, String.valueOf(data.get_txtKeterangan()));
+                    item1.put(dttOverStockHeaderData.Property_txtNIK, String.valueOf(data.get_txtNIK()));
+                    item1.put(dttOverStockHeaderData.Property_txtRoleId, String.valueOf(data.get_txtRoleId()));
+                    itemsListJquey.add(item1);
+                }
+                resJson.put(dttOverStockHeaderData.Property_ListOftOverStockHeaderData, new JSONArray(itemsListJquey));
+            }
+
             if (this.getListOftOverStockDetailData() != null){
                 tOverStockDetailData dttOverStockDetailData = new tOverStockDetailData();
                 itemsListJquey = new ArrayList<JSONObject>();
                 for (tOverStockDetailData data : this.getListOftOverStockDetailData()){
+                    JSONObject item = new JSONObject();
+                    item.put(dttOverStockDetailData.Property_intId, String.valueOf(data.getIntId()));
+                    item.put(dttOverStockDetailData.Property_dtDate, String.valueOf(data.get_dtDate()));
+                    item.put(dttOverStockDetailData.Property_intPrice, String.valueOf(data.get_intTotal()));
+                    item.put(dttOverStockDetailData.Property_txtQuantity, String.valueOf(data.getTxtExpireDate()));
+                    item.put(dttOverStockDetailData.Property_txtCodeProduct, String.valueOf(data.get_intPrice()));
+                    item.put(dttOverStockDetailData.Property_txtKeterangan, String.valueOf(data.get_txtCodeProduct()));
+                    item.put(dttOverStockDetailData.Property_txtExpireDate, String.valueOf(data.getTxtProduct()));
+                    item.put(dttOverStockDetailData.Property_txtProduct, String.valueOf(data.get_txtKeterangan()));
+                    item.put(dttOverStockDetailData.Property_txtNIK, String.valueOf(data.get_txtNIK()));
+                    item.put(dttOverStockDetailData.Property_intTotal, String.valueOf(data.get_txtOverStock()));
+                    item.put(dttOverStockDetailData.Property_txtOverStock, String.valueOf(data.getTxtQuantity()));
+                    itemsListJquey.add(item);
+                }
+                resJson.put(dttOverStockDetailData.Property_ListOftOverStockDetailData, new JSONArray(itemsListJquey));
+            }
+
+            if (this.getListOftStockOutDetailData() != null){
+                tStockOutDetailData dttOverStockDetailData = new tStockOutDetailData();
+                itemsListJquey = new ArrayList<JSONObject>();
+                for (tStockOutDetailData data : this.getListOftStockOutDetailData()){
                     JSONObject item = new JSONObject();
                     item.put(dttOverStockDetailData.Property_intId, String.valueOf(data.getIntId()));
                     item.put(dttOverStockDetailData.Property_dtDate, String.valueOf(data.get_dtDate()));
@@ -1609,6 +1656,15 @@ public class dataJson {
                 }
             }
 
+            if(this.getDttStockOutHeaderData()!=null){
+                if(this.getDttStockOutHeaderData().getBoolValid().equals("1")){
+                    tStockOutHeaderData dtConfig = new tStockOutHeaderData();
+                    JSONObject item1 = new JSONObject();
+                    item1.put(dtConfig.Property_boolValid, String.valueOf(this.getDttStockOutHeaderData().getBoolValid()));
+                    resJson.put(dtConfig.Property_ListOftOverStockHeaderData, item1);
+                }
+            }
+
             if(this.getDttrackingLocationData()!=null){
                 if(this.getDttrackingLocationData().getBoolValid().equals("1")){
                     trackingLocationData dtConfig = new trackingLocationData();
@@ -1800,6 +1856,16 @@ public class dataJson {
     }
 
     private List<tOverStockDetailData> ListOftOverStockDetailData;
+
+    public List<tStockOutDetailData> getListOftStockOutDetailData() {
+        return ListOftStockOutDetailData;
+    }
+
+    public void setListOftStockOutDetailData(List<tStockOutDetailData> listOftStockOutDetailData) {
+        ListOftStockOutDetailData = listOftStockOutDetailData;
+    }
+
+    private List<tStockOutDetailData> ListOftStockOutDetailData;
     private List<tSalesProductQuantityImageData> ListOftSalesProductQuantityImageData;
 
     public List<tKemasanRusakImageData> getListOftKemasanRusakImageData() {
@@ -1854,6 +1920,16 @@ public class dataJson {
     }
 
     private List<tOverStockHeaderData> ListOftOverStockHeaderData;
+
+    public List<tStockOutHeaderData> getListOftStockOutHeaderData() {
+        return ListOftStockOutHeaderData;
+    }
+
+    public void setListOftStockOutHeaderData(List<tStockOutHeaderData> listOftStockOutHeaderData) {
+        ListOftStockOutHeaderData = listOftStockOutHeaderData;
+    }
+
+    private List<tStockOutHeaderData> ListOftStockOutHeaderData;
     private List<tPlanogramMobileData> ListOftPlanogramMobileData;
     private List<tCustomerBasedMobileHeaderData> ListOftCustomerBasedMobileHeaderData;
     private List<tCustomerBasedMobileDetailData> ListOftCustomerBasedMobileDetailData;
@@ -2107,6 +2183,16 @@ public class dataJson {
     private tHirarkiBIS dttHirarkiBIS;
     private tSalesProductQuantityHeaderData dttSalesProductQuantityHeaderData;
     private tOverStockHeaderData dttOverStockHeaderData;
+
+    public tStockOutHeaderData getDttStockOutHeaderData() {
+        return dttStockOutHeaderData;
+    }
+
+    public void setDttStockOutHeaderData(tStockOutHeaderData dttStockOutHeaderData) {
+        this.dttStockOutHeaderData = dttStockOutHeaderData;
+    }
+
+    private tStockOutHeaderData dttStockOutHeaderData;
     private trackingLocationData dttrackingLocationData;
     private KoordinasiOutletData dtKoordinasiOutletData;
     private tPlanogramMobileData dttPlanogramMobileData;

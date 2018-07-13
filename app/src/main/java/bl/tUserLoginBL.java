@@ -116,7 +116,7 @@ public class tUserLoginBL extends clsMainBL{
 		resJson.put("username", txtUserName);
 		resJson.put("pass", txtPass);
 		resJson.put("deviceid", "");
-		resJson.put("imeiNumber", dt.get_txtImei());
+		resJson.put("imeiNumber", dt.get_txtImei().toString());
 		resJson.put("version", dt.get_txtVersion());
 		resJson.put("device", dt.get_txtDevice());
 		resJson.put("model", dt.get_txtModel());

@@ -249,10 +249,12 @@ public class clsHardCode {
     public String txtTable_tSalesQuantityStock = "tSalesProductQuantityHeader";
     public String txtTable_tKemasanRusakHeader = "tKemasanRusakHeader";
     public String txtTable_tOverStockHeader = "tOverStockHeader";
+    public String txtTable_tStockOutHeader = "tStockOutHeader";
     public String txtTable_tPlanogramMobile = "tPlanogramMobile";
     public String txtTable_tSalesProductQuantityDetail = "tSalesProductQuantityDetail";
     public String txtTable_tKemasanRusakDetail = "tKemasanRusakDetail";
     public String txtTable_tOverStockDetail = "tOverStockDetail";
+    public String txtTable_tStockOutDetail = "tStockOutDetail";
     public String txtTable_tSalesProductQuantityImage = "tSalesProductQuantityImage";
     public String txtTable_tKemasanRusakImage = "tKemasanRusakImage";
     public String txtTable_tPlanogramImage = "tPlanogramImage";

@@ -537,6 +537,13 @@ public class Login extends clsMainActivity {
                             _data.set_txtName((String) innerObj.get("_pstrMethodRequest"));
                             _data.set_txtValue((String) innerObj.get("txtNoOVS"));
                             _mCounterNumberDA.SaveDataMConfig(_db, _data);
+
+                            _data = new mCounterNumberData();
+                            _data.set_intId(enumCounterData.NoSOUT.getidCounterData());
+                            _data.set_txtDeskripsi((String) innerObj.get("_pstrMethodRequest"));
+                            _data.set_txtName((String) innerObj.get("_pstrMethodRequest"));
+                            _data.set_txtValue((String) innerObj.get("txtNoSOUT"));
+                            _mCounterNumberDA.SaveDataMConfig(_db, _data);
                         } catch (Exception e){
                             showCustomToast(Login.this, e.toString(), false);
                         }

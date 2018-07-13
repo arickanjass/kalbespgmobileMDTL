@@ -359,7 +359,7 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
         int month;
         int day;
 
-        if (dtHeader.get_intTrCustomerId() != null) {
+        if (dtHeader.get_intTrCustomerId() != null&&idTrCustomer.equals("null")) {
             etCustomerBasedNo.setText(dtHeader.get_txtSubmissionId());
             etAlamat.setText(dtHeader.get_txtALamat());
             etNama.setText(dtHeader.get_txtNamaDepan());
@@ -402,7 +402,11 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
             String key = "";
             for (Map.Entry<String, String> entry : HMSubmision.entrySet()) {
                 if (entry.getValue().equals(dtHeader.get_txtSubmissionCode())) {
-                    key = entry.getKey();
+                    try{
+                        double d = Double.parseDouble(entry.getKey());
+                    }catch (NumberFormatException e){
+                        key = entry.getKey();
+                    }
                 }
             }
 
@@ -452,7 +456,11 @@ public class FragmentAddCustomerBaseSPG extends Fragment implements View.OnClick
             String key = "";
             for (Map.Entry<String, String> entry : HMSubmision.entrySet()) {
                 if (entry.getValue().equals(dtHeader.get_txtSubmissionCode())) {
-                    key = entry.getKey();
+                    try{
+                        double d = Double.parseDouble(entry.getKey());
+                    }catch (NumberFormatException e){
+                        key = entry.getKey();
+                    }
                 }
             }
 

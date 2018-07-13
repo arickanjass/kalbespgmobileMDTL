@@ -101,6 +101,8 @@ import library.spgmobile.dal.tSalesProductQuantityHeaderDA;
 import library.spgmobile.dal.tSalesProductQuantityImageDA;
 import library.spgmobile.dal.tStockInHandDetailDA;
 import library.spgmobile.dal.tStockInHandHeaderDA;
+import library.spgmobile.dal.tStockOutDetailDA;
+import library.spgmobile.dal.tStockOutHeaderDA;
 import library.spgmobile.dal.tSubTypeActivityDA;
 import library.spgmobile.dal.tTidakSesuaiPesananHeaderDA;
 import library.spgmobile.dal.tTidakSesuaiPesananImageDA;
@@ -481,6 +483,8 @@ public class clsHelper {
 		tSalesProductQuantityImageDA _tSalesProductQuantityImageDA = new tSalesProductQuantityImageDA(db);
 		tOverStockHeaderDA _tOverStockHeaderDA = new tOverStockHeaderDA(db);
 		tOverStockDetailDA _tOverStockDetailDA = new tOverStockDetailDA(db);
+		tStockOutHeaderDA _tStockOutHeaderDA = new tStockOutHeaderDA(db);
+		tStockOutDetailDA _tStockOutDetailDA = new tStockOutDetailDA(db);
 		tCustomerBasedMobileHeaderDA _tCustomerBasedMobileHeaderDA = new tCustomerBasedMobileHeaderDA(db);
 		tCustomerBasedMobileDetailDA _tCustomerBasedMobileDetailDA = new tCustomerBasedMobileDetailDA(db);
 		tCustomerBasedMobileDetailProductDA _tCustomerBasedMobileDetailProductDA = new tCustomerBasedMobileDetailProductDA(db);
@@ -516,6 +520,8 @@ public class clsHelper {
 		_tSalesProductQuantityDetailDA.DropTable(db);
 		_tOverStockHeaderDA.Droptable(db);
 		_tOverStockDetailDA.DropTable(db);
+		_tStockOutHeaderDA.Droptable(db);
+		_tStockOutDetailDA.DropTable(db);
 		_tSalesProductQuantityImageDA.Droptable(db);
 		_tCustomerBasedMobileHeaderDA.DropTable(db);
 		_tCustomerBasedMobileDetailDA.DropTable(db);

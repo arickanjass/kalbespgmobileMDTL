@@ -1797,6 +1797,67 @@
 
                 </LinearLayout>
 
+                <!--data stock out-->
+
+                <LinearLayout
+                    android:id="@+id/ll_data_StockOut"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/txtVwDataStockOut"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="Stock Out"
+                            android:textColor="#000" />
+                        <TextView
+                            android:id="@+id/txtStockOutLastDownload"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:text="Last Download"
+                            android:textColor="@color/colorPrimary" />
+
+                    </LinearLayout>
+
+                    <Spinner
+                        android:id="@+id/spnDataStockOut"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtVwDataStockOut"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/bg_edtext" />
+
+                    <Button
+                        android:id="@+id/btnDataStockOut"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/spnKordinasiOutlet"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/btn_on_click"
+                        android:text="Download Data Stock Out" />
+
+                    <View
+                        android:id="@+id/viewDataStockOut"
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/btnDataStockOut"
+                        android:layout_marginTop="10dp"
+                        android:background="#bfbfbf" />
+
+                </LinearLayout>
+
                 <!--data over stock-->
 
                 <LinearLayout

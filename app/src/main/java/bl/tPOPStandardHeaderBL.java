@@ -5,7 +5,9 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import library.spgmobile.common.mTypePOPStandardData;
 import library.spgmobile.common.tPOPStandardHeaderData;
+import library.spgmobile.dal.tActivityMobileDA;
 import library.spgmobile.dal.tPOPStandardHeaderDA;
 
 /**
@@ -96,5 +98,12 @@ public class tPOPStandardHeaderBL extends clsMainBL {
         }
         _db.close();
         return listData;
+    }
+
+    public int countDataMandatory(List<mTypePOPStandardData> ListmTypePOPStandardData, String txtOutletCode) {
+        SQLiteDatabase _db = getDb();
+        int count = new tPOPStandardHeaderDA(_db).countDataMandatory(_db, ListmTypePOPStandardData, txtOutletCode);
+        _db.close();
+        return count;
     }
 }

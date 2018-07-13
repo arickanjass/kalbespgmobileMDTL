@@ -309,7 +309,7 @@ public class tCustomerBasedMobileDetailProductDA {
 				"a.bitActive='0' and\n" +
 //				"--a.intTrCustomerId='73cecf62-fa52-49e8-999f-e4152bdfc5ae' and a.bitActive='1' and txtSubmissionCode='0001' \n" +
 				"b.intTrCustomerId ='" + txtId + "'"+ " and\n" +
-				"c.txtProductCompetitorCode = 'null' or c.txtProductCompetitorCode = ''";
+				"(c.txtProductCompetitorCode = 'null' or c.txtProductCompetitorCode = '')";
 		Cursor cursor = db.rawQuery(countQuery, null);
 		if(cursor.moveToFirst()){
 			retList = new ArrayList<tCustomerBasedMobileDetailData>();

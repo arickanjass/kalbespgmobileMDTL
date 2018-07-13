@@ -5,8 +5,12 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import library.spgmobile.common.mTypePOPStandardData;
+import library.spgmobile.common.tGroupQuestionMappingData;
+import library.spgmobile.common.tHirarkiBIS;
 import library.spgmobile.common.tJawabanUserHeaderData;
 import library.spgmobile.dal.tJawabanUserHeaderDA;
+import library.spgmobile.dal.tPOPStandardHeaderDA;
 
 /**
  * Created by Dewi Oktaviani on 04/09/2017.
@@ -72,5 +76,18 @@ public class tJawabanUserHeaderBL extends clsMainBL {
         dt=_tJawabanUserHeaderDA.GetDataByHeaderId(db,intHeaderId);
         db.close();
         return dt;
+    }
+    public int countDataMandatory(List<tHirarkiBIS> ListtHirarkiBIS, List<tGroupQuestionMappingData> listGrupQuest, String txtOutletCode) {
+        SQLiteDatabase _db = getDb();
+        int count = new tJawabanUserHeaderDA(_db).countDataMandatory(_db, ListtHirarkiBIS,listGrupQuest, txtOutletCode);
+        _db.close();
+        return count;
+    }
+
+    public int countDataMandatory2(List<tHirarkiBIS> ListtHirarkiBIS, List<tGroupQuestionMappingData> listGrupQuest, String txtOutletCode) {
+        SQLiteDatabase _db = getDb();
+        int count = new tJawabanUserHeaderDA(_db).countDataMandatory2(_db, ListtHirarkiBIS,listGrupQuest, txtOutletCode);
+        _db.close();
+        return count;
     }
 }

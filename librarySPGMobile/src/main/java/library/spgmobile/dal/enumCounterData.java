@@ -17,7 +17,8 @@ public enum enumCounterData {
 	 MonitoringLocation(14),
 	 NoSIH(15),
 	NoOS(16),
-	NoKRS(17)
+	NoKRS(17),
+	NoSOUT(18)
 	 ; 
 	 enumCounterData(int idConfigData) {this.idConfigData = idConfigData;}
 	public int getidCounterData() {

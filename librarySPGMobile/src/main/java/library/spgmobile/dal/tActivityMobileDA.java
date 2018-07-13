@@ -275,6 +275,26 @@ public class tActivityMobileDA {
         // return contact list
         return count;
     }
+
+    public int countActivityV2Mandatori(SQLiteDatabase db, String code) {
+
+        String selectQuery = "select coalesce(sum(1),0) from [tActivityMobile] where txtOutletCode='" + code + "'";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        int count = 0;
+
+        if (cursor.moveToFirst()) {
+            do {
+                count=Integer.valueOf(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        // return contact list
+        return count;
+    }
+
     // Getting All Contacts
     public List<tActivityMobileData> getAllData(SQLiteDatabase db) {
         List<tActivityMobileData> contactList = new ArrayList<tActivityMobileData>();

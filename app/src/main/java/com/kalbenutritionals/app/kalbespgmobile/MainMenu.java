@@ -53,11 +53,17 @@ import java.util.List;
 import bl.clsHelperBL;
 import bl.clsMainBL;
 import bl.mMenuBL;
+import bl.mTypePOPStandardBL;
 import bl.tAbsenUserBL;
+import bl.tActivityMobileBL;
 import bl.tAttendanceUserBL;
 import bl.tCustomerBasedMobileHeaderBL;
 import bl.tDisplayPictureBL;
+import bl.tGroupQuestionMappingBL;
+import bl.tHirarkiBISBL;
+import bl.tJawabanUserHeaderBL;
 import bl.tNotificationBL;
+import bl.tPOPStandardHeaderBL;
 import bl.tPlanogramMobileBL;
 import bl.tStockInHandHeaderBL;
 import bl.tUserLoginBL;
@@ -67,9 +73,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import library.spgmobile.common.APIData;
 import library.spgmobile.common.clsPushData;
 import library.spgmobile.common.mMenuData;
+import library.spgmobile.common.mTypePOPStandardData;
 import library.spgmobile.common.tAbsenUserData;
 import library.spgmobile.common.tAttendanceUserData;
 import library.spgmobile.common.tCustomerBasedMobileHeaderData;
+import library.spgmobile.common.tGroupQuestionMappingData;
+import library.spgmobile.common.tHirarkiBIS;
 import library.spgmobile.common.tNotificationData;
 import library.spgmobile.common.tPlanogramMobileData;
 import library.spgmobile.common.tStockInHandHeaderData;
@@ -634,6 +643,10 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                                         tAbsenUserData datatAbsenUserData = dttAbsenUserData;
                                         List<tAbsenUserData> absenUserDatas = new ArrayList<>();
 
+                                        List<mTypePOPStandardData> listType = new mTypePOPStandardBL().GetAllData();
+                                        List<tHirarkiBIS> listSPG = new tHirarkiBISBL().GetDataByOutlet(dttAbsenUserData.get_txtOutletCode());
+                                        List<tGroupQuestionMappingData> listGrupQuest = new tGroupQuestionMappingBL().GetAllDataNotFileFoto();
+
                                         if (dttAbsenUserData != null) {
                                             datatAbsenUserData.set_intId(dttAbsenUserData.get_intId());
                                             datatAbsenUserData.set_dtDateCheckOut(_clsMainActivity.FormatDateDB());
@@ -641,13 +654,59 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                                             datatAbsenUserData.set_intSync("0");
 //                                            datatAbsenUserData.set_txtAbsen("0");
                                             absenUserDatas.add(datatAbsenUserData);
-                                            new tAbsenUserBL().saveData(absenUserDatas);
+//                                            new tAbsenUserBL().saveData(absenUserDatas);
 
-                                            finish();
-                                            Intent nextScreen = new Intent(getApplicationContext(), MainMenu.class);
-                                            nextScreen.putExtra("keyMainMenu", "main_menu");
-                                            finish();
-                                            startActivity(nextScreen);
+                                            if(listType!=null&&listType.size()>0){
+                                                int sumActPromosi = new tActivityMobileBL().countActivityV2Mandatori(dttAbsenUserData.get_txtOutletCode());
+                                                int sumPopStandard = new tPOPStandardHeaderBL().countDataMandatory(listType,dttAbsenUserData.get_txtOutletCode());
+                                                int sumPerTim = -1;
+                                                if(listSPG!=null&&listSPG.size()>0&&listGrupQuest!=null&&listGrupQuest.size()>0){
+                                                    sumPerTim = new tJawabanUserHeaderBL().countDataMandatory2(listSPG, listGrupQuest, dttAbsenUserData.get_txtOutletCode());
+                                                }
+
+                                                if(sumActPromosi==0||sumPopStandard<listType.size()){
+                                                    AlertDialog.Builder _alertDialogBuilder3 = new AlertDialog.Builder(MainMenu.this);
+                                                    _alertDialogBuilder3
+                                                            .setCancelable(false)
+                                                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                                public void onClick(DialogInterface dialog, int id) {
+                                                                }
+                                                            });
+                                                    final AlertDialog _alertD3 = _alertDialogBuilder3.create();
+                                                    _alertD3.setTitle("Alert");
+                                                    _alertD3.setMessage("Mandatory : \t\n" +
+                                                            "-Pop Standard semua kategory min 1\n" +
+                                                            "-Aktivitas Promosi min 1");
+                                                    _alertD3.show();
+                                                }  else if (listGrupQuest!=null&&listGrupQuest.size()>0&&listSPG!=null&&listSPG.size()>0&&sumPerTim>-1&&sumPerTim<listSPG.size()*listGrupQuest.size()){
+                                                    AlertDialog.Builder _alertDialogBuilder3 = new AlertDialog.Builder(MainMenu.this);
+                                                    _alertDialogBuilder3
+                                                            .setCancelable(false)
+                                                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                                public void onClick(DialogInterface dialog, int id) {
+                                                                }
+                                                            });
+                                                    final AlertDialog _alertD3 = _alertDialogBuilder3.create();
+                                                    _alertD3.setTitle("Alert");
+                                                    _alertD3.setMessage("Mandatory : \t\n" +
+                                                            "-Performance tim min 50% per kategory (per SPG)\n");
+                                                    _alertD3.show();
+                                                } else {
+                                                    new tAbsenUserBL().saveData(absenUserDatas);
+                                                    finish();
+                                                    Intent nextScreen = new Intent(getApplicationContext(), MainMenu.class);
+                                                    nextScreen.putExtra("keyMainMenu", "main_menu");
+                                                    finish();
+                                                    startActivity(nextScreen);
+                                                }
+                                            } else {
+                                                new tAbsenUserBL().saveData(absenUserDatas);
+                                                finish();
+                                                Intent nextScreen = new Intent(getApplicationContext(), MainMenu.class);
+                                                nextScreen.putExtra("keyMainMenu", "main_menu");
+                                                finish();
+                                                startActivity(nextScreen);
+                                            }
                                         }
                                     }
                                 })

@@ -7,7 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import library.spgmobile.common.mTypePOPStandardData;
 import library.spgmobile.common.tJawabanUserData;
+import library.spgmobile.common.tOverStockDetailData;
+import library.spgmobile.common.tOverStockHeaderData;
 import library.spgmobile.common.tPOPStandardHeaderData;
 
 /**
@@ -344,6 +347,26 @@ public class tPOPStandardHeaderDA {
     public int getContactsCount(SQLiteDatabase db) {
         String countQuery = "SELECT * FROM " + TABLE_CONTACTS;
         Cursor cursor = db.rawQuery(countQuery, null);
+        int countData = cursor.getCount();
+        cursor.close();
+        // return count
+        return countData;
+    }
+
+    public int countDataMandatory(SQLiteDatabase db, List<mTypePOPStandardData> ListmTypePOPStandardData, String txtOutletCode) {
+        tPOPStandardHeaderData dt = new tPOPStandardHeaderData();
+
+        String builder = "()";
+
+        if (ListmTypePOPStandardData != null){
+            builder = "(";
+            for (int i = 0; i < ListmTypePOPStandardData.size(); i++) {
+                builder = builder + "'" + ListmTypePOPStandardData.get(i).get_txtType() + "'";
+                builder = builder + ((i + 1) != ListmTypePOPStandardData.size() ? "," : ")");
+            }
+        }
+        String selectQuery = "SELECT "+dt.Property_All+" FROM " + TABLE_CONTACTS +" WHERE "+dt.Property_txtType +" IN " + builder + " AND " + dt.Property_txtOutletCode + "='" + txtOutletCode + "'";
+        Cursor cursor = db.rawQuery(selectQuery, null);
         int countData = cursor.getCount();
         cursor.close();
         // return count

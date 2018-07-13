@@ -15,11 +15,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
@@ -73,6 +76,7 @@ import library.spgmobile.common.tPurchaseOrderHeaderData;
 import library.spgmobile.common.tSalesProductHeaderData;
 import library.spgmobile.common.tSalesProductQuantityHeaderData;
 import library.spgmobile.common.tStockInHandHeaderData;
+import library.spgmobile.common.tStockOutHeaderData;
 import library.spgmobile.common.tTidakSesuaiPesananHeaderData;
 import library.spgmobile.common.tUserLoginData;
 import library.spgmobile.common.tVisitPlanRealisasiData;
@@ -99,10 +103,10 @@ public class FragmentPushData extends Fragment {
     private TableLayout  tlstockIH;
     private TableLayout  tlplanogram;
     private TableLayout tlsPOP;
-    private TableLayout  tl_overStock, tladdDisplay, tl_kemasanrusak, tl_tidaksesuaipesanan;
+    private TableLayout  tl_overStock,tl_StockOut, tladdDisplay, tl_kemasanrusak, tl_tidaksesuaipesanan;
     private Button btnPush;
     private String myValue;
-    private LinearLayout ll_data_tidaksesuaipesanan,ll_data_kemasanrusak,ll_data_addDisplay,ll_data_planogram, ll_data_stockIH,ll_data_activityV2,ll_data_attendance,ll_reso, ll_data_activity, ll_data_customerbased, ll_purchase_order, ll_dataQuantityStock, ll_absen, ll_dataVisitPlan, ll_data_leave, ll_data_koordinasi, ll_dataQuesioner, ll_data_overStock;
+    private LinearLayout ll_data_tidaksesuaipesanan,ll_data_kemasanrusak,ll_data_addDisplay,ll_data_planogram, ll_data_stockIH,ll_data_activityV2,ll_data_attendance,ll_reso, ll_data_activity, ll_data_customerbased, ll_purchase_order, ll_dataQuantityStock, ll_absen, ll_dataVisitPlan, ll_data_leave, ll_data_koordinasi, ll_dataQuesioner, ll_data_overStock, ll_data_StockOut;
     private LinearLayout ll_dataPOP_Standard;
     private TextView tvDate;
     ProgressBar progressBar;
@@ -162,6 +166,7 @@ public class FragmentPushData extends Fragment {
         tlstockIH = (TableLayout) v.findViewById(R.id.tlstockIH);
         tlplanogram = (TableLayout) v.findViewById(R.id.tlplanogram);
         tl_overStock = (TableLayout) v.findViewById(R.id.tl_overStock);
+        tl_StockOut = (TableLayout) v.findViewById(R.id.tl_StockOut);
         tladdDisplay = (TableLayout) v.findViewById(R.id.tladdDisplay);
         tl_kemasanrusak = (TableLayout) v.findViewById(R.id.tl_kemasanrusak);
         tl_tidaksesuaipesanan = (TableLayout) v.findViewById(R.id.tl_tidaksesuaipesanan);
@@ -195,6 +200,7 @@ public class FragmentPushData extends Fragment {
         ll_data_stockIH = (LinearLayout) v.findViewById(R.id.ll_data_stockIH);
         ll_data_planogram = (LinearLayout) v.findViewById(R.id.ll_data_planogram);
         ll_data_overStock = (LinearLayout) v.findViewById(R.id.ll_data_overStock);
+        ll_data_StockOut = (LinearLayout) v.findViewById(R.id.ll_data_StockOut);
         ll_data_kemasanrusak = (LinearLayout) v.findViewById(R.id.ll_data_kemasanrusak);
         ll_data_tidaksesuaipesanan = (LinearLayout) v.findViewById(R.id.ll_data_tidaksesuaipesanan);
         ll_dataPOP_Standard = (LinearLayout) v.findViewById(R.id.ll_dataPOP_Standard);
@@ -283,6 +289,9 @@ public class FragmentPushData extends Fragment {
             }
             else if (txt_id.equals(res.getResourceEntryName(ll_data_overStock.getId()))){
                 ll_data_overStock.setVisibility(View.VISIBLE);
+            }
+            else if (txt_id.equals(res.getResourceEntryName(ll_data_StockOut.getId()))){
+                ll_data_StockOut.setVisibility(View.VISIBLE);
             }
             else if (txt_id.equals(res.getResourceEntryName(ll_data_kemasanrusak.getId()))){
                 ll_data_kemasanrusak.setVisibility(View.VISIBLE);
@@ -376,6 +385,12 @@ public class FragmentPushData extends Fragment {
                     initOverStockHeader(getContext(),dtJson.getListOftOverStockHeaderData());
                 } else {
                     initOverStockHeader(getContext(), null);
+                }
+
+                if (dtJson.getListOftStockOutHeaderData() != null){
+                    initStockOutHeader(getContext(),dtJson.getListOftStockOutHeaderData());
+                } else {
+                    initStockOutHeader(getContext(), null);
                 }
 
                 if (dtJson.getListOfKoordinasiOutletImageData() != null){
@@ -1652,6 +1667,87 @@ public class FragmentPushData extends Fragment {
         }
     }
 
+
+    private void initStockOutHeader(Context context, List<tStockOutHeaderData> listOftOverStockHeaderData) {
+        tl_overStock = (TableLayout) v.findViewById(R.id.tl_StockOut);
+        tl_overStock.removeAllViews();
+
+        TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1f);
+        params.setMargins(1, 1, 1, 1);
+
+        TableRow tr = new TableRow(getContext());
+
+        String[] colTextHeader = {"No.", "No", "Date", "Outlet Code"};
+
+        for (String text : colTextHeader) {
+            TextView tv = new TextView(getContext());
+            // tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 1));
+
+            tv.setTextSize(14);
+            tv.setPadding(10, 10, 10, 10);
+            tv.setText(text);
+            tv.setGravity(Gravity.CENTER);
+            tv.setBackgroundColor(Color.parseColor("#4CAF50"));
+            tv.setTextColor(Color.WHITE);
+            tv.setLayoutParams(params);
+
+            tr.addView(tv);
+        }
+        tl_StockOut.addView(tr);
+
+        if (listOftOverStockHeaderData != null){
+            int index = 1;
+            for (tStockOutHeaderData dat : listOftOverStockHeaderData){
+                tr = new TableRow(getContext());
+
+                TextView tv_index = new TextView(getContext());
+                tv_index.setTextSize(12);
+                tv_index.setPadding(10, 10, 10, 10);
+                tv_index.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                tv_index.setGravity(Gravity.CENTER);
+                tv_index.setTextColor(Color.BLACK);
+                tv_index.setText(String.valueOf(index + "."));
+                tv_index.setLayoutParams(params);
+                tr.addView(tv_index);
+
+                TextView no_quantity_stock = new TextView(getContext());
+                no_quantity_stock.setTextSize(12);
+                no_quantity_stock.setPadding(10, 10, 10, 10);
+                no_quantity_stock.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                no_quantity_stock.setTextColor(Color.BLACK);
+                no_quantity_stock.setGravity(Gravity.CENTER);
+                no_quantity_stock.setText(dat.get_txtOverStock());
+                no_quantity_stock.setLayoutParams(params);
+
+                tr.addView(no_quantity_stock);
+
+                TextView date = new TextView(getContext());
+                date.setTextSize(12);
+                date.setPadding(10, 10, 10, 10);
+                date.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                date.setTextColor(Color.BLACK);
+                date.setGravity(Gravity.CENTER);
+                date.setText(new clsMainActivity().giveFormatDate2(dat.get_dtDate()));
+                date.setLayoutParams(params);
+
+                tr.addView(date);
+
+                TextView outlet_code = new TextView(getContext());
+                outlet_code.setTextSize(12);
+                outlet_code.setPadding(10, 10, 10, 10);
+                outlet_code.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                outlet_code.setTextColor(Color.BLACK);
+                outlet_code.setGravity(Gravity.CENTER);
+                outlet_code.setText(dat.get_OutletCode());
+                outlet_code.setLayoutParams(params);
+
+                tr.addView(outlet_code);
+
+                tl_StockOut.addView(tr, index++);
+            }
+        }
+    }
+
     private void initKoordinasiOutlet(Context context, List<KoordinasiOutletData> listOfKoordinasiOutletData) {
         tlKoordinasi = (TableLayout) v.findViewById(R.id.tl_koordinasi);
         tlKoordinasi.removeAllViews();
@@ -2361,26 +2457,48 @@ public class FragmentPushData extends Fragment {
     }
 
     CodeInput cInput;
+    EditText et_inputCode;
     AlertDialog.Builder alertDialogBuilder;
     private void popUpPushDB(){
 
         try{
             LayoutInflater layoutInflater = LayoutInflater.from(getContext());
             final View promptView = layoutInflater.inflate(R.layout.popup_push_db, null);
+            et_inputCode = (EditText) promptView.findViewById(R.id.et_inputCode);
 
-            cInput = (CodeInput) promptView.findViewById(R.id.pairing);
-            cInput.setCodeReadyListener(new CodeInput.codeReadyListener() {
+//            cInput = (CodeInput) promptView.findViewById(R.id.pairing);
+//            cInput.setCodeReadyListener(new CodeInput.codeReadyListener() {
+//                @Override
+//                public void onCodeReady(Character[] code) {
+//                    String token="";
+//                    for(Character a : code){
+//                        token+=a;
+//                    }
+////                    Toast.makeText(getActivity(),"code entered is : "+ token,Toast.LENGTH_SHORT).show();
+//                    AsyncCall call = new AsyncCall();
+//                    call.execute(token);
+////                    AsyncCalls calls = new AsyncCalls(token);
+////                    calls.execute();
+//
+//                }
+//            });
+
+            et_inputCode.addTextChangedListener(new TextWatcher() {
                 @Override
-                public void onCodeReady(Character[] code) {
-                    String token="";
-                    for(Character a : code){
-                        token+=a;
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if(s.length()==4){
+                        AsyncCall call = new AsyncCall();
+                        call.execute(et_inputCode.getText().toString());
                     }
-//                    Toast.makeText(getActivity(),"code entered is : "+ token,Toast.LENGTH_SHORT).show();
-                    AsyncCall call = new AsyncCall();
-                    call.execute(token);
-//                    AsyncCalls calls = new AsyncCalls(token);
-//                    calls.execute();
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
 
                 }
             });

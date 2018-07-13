@@ -143,6 +143,7 @@ import library.spgmobile.dal.tSalesProductQuantityHeaderDA;
 import library.spgmobile.dal.tSalesProductQuantityImageDA;
 import library.spgmobile.dal.tStockInHandDetailDA;
 import library.spgmobile.dal.tStockInHandHeaderDA;
+import library.spgmobile.dal.tStockOutHeaderDA;
 import library.spgmobile.dal.tSubTypeActivityDA;
 import library.spgmobile.dal.tTidakSesuaiPesananHeaderDA;
 import library.spgmobile.dal.tTidakSesuaiPesananImageDA;
@@ -235,6 +236,7 @@ public class clsMainBL {
 		tSalesProductQuantityHeaderDA _tSalesProductQuantityHeaderDA = new tSalesProductQuantityHeaderDA(db);
 		tKemasanRusakHeaderDA _tKemasanRusakHeaderDA = new tKemasanRusakHeaderDA(db);
 		tOverStockHeaderDA _tOverStockHeaderDA = new tOverStockHeaderDA(db);
+		tStockOutHeaderDA _tStockOutHeaderDA = new tStockOutHeaderDA(db);
 		tPlanogramMobileDA _tPlanogramMobileDA = new tPlanogramMobileDA(db);
 		tActivityMobileDA _tActivityMobileDA = new tActivityMobileDA(db);
 		tJawabanUserDA _tJawabanUserDA = new tJawabanUserDA(db);
@@ -376,6 +378,7 @@ public class clsMainBL {
 			int listStockInHandSubmit = _tStockInHandHeaderDA.getAllCheckToPushDataSubmit(db);
 			int listtKemasanRusakHeaderData = _tKemasanRusakHeaderDA.getAllCheckPushData(db);
 			int listtOverStockHeader = _tOverStockHeaderDA.getAllCheckPushData(db);
+			int listtStockOverHeader = _tStockOutHeaderDA.getAllCheckPushData(db);
 //			int listtPlanogramSave = _tPlanogramMobileDA.getAllCheckPushDataSave(db);
 			int listtPlanogramSubmit = _tPlanogramMobileDA.getAllCheckPushDataSubmit(db);
 			int listtTidakSesuaiPesananHeaderData = _tTidakSesuaiPesananHeaderDA.getAllCheckPushData(db);
@@ -432,6 +435,9 @@ public class clsMainBL {
 				dvalid = true;
 			}
 			if (listtOverStockHeader > 0 && dvalid == false) {
+				dvalid = true;
+			}
+			if (listtStockOverHeader > 0 && dvalid == false) {
 				dvalid = true;
 			}
 //			if (listtPlanogramSave > 0 && dvalid == false) {

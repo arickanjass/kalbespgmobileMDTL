@@ -30,6 +30,14 @@ public class tGroupQuestionMappingBL extends clsMainBL{
         return listData;
     }
 
+    public List<tGroupQuestionMappingData> GetAllDataNotFileFoto(){
+        SQLiteDatabase _db = getDb();
+        tGroupQuestionMappingDA _tGroupQuestionMappingDA = new tGroupQuestionMappingDA(_db);
+        List<tGroupQuestionMappingData> listData = _tGroupQuestionMappingDA.GetAllDataNoFileFoto(_db);
+        _db.close();
+        return listData;
+    }
+
     public List<tGroupQuestionMappingData> GetDataById(int intId){
         SQLiteDatabase _db = getDb();
         tGroupQuestionMappingDA _tGroupQuestionMappingDA = new tGroupQuestionMappingDA(_db);
