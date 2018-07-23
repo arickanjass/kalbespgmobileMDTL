@@ -571,7 +571,7 @@ public class FragmentReporting extends Fragment {
                         AlertDialog alert = builder.create();
                         alert.show();
                     } else {
-                        AsyncOVS task = new AsyncOVS();
+                        AsyncSOUT task = new AsyncSOUT();
                         task.execute();
                     }
                 }else if (dt_OVS!=null&&dt_OVS.size()>0){
@@ -1423,7 +1423,7 @@ public class FragmentReporting extends Fragment {
                     rt.set_total_product(datas.get_intSumItem());
                     rt.set_total_price(new clsMainActivity().convertNumberDec(Double.valueOf(datas.get_intSumAmount())));
                     rt.set_status(datas.get_OutletName());
-                    rt.set_dummy("Over Stock");
+                    rt.set_dummy("Stock Out");
                     rt.set_view_detail("View Detail");
 
                     List<tStockOutDetailData> dt_detail = new tStockOutDetailBL().GetDataByNoOverStock(datas.get_txtOverStock());
