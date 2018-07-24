@@ -305,6 +305,8 @@ public class clsMainBL {
 		new clsLogReceiverHeader_mobileDA(db);
 		new clsLogReceiverDetail_mobileDA(db);
 		new tNotificationDA(db);
+		new tStockOutHeaderDA(db);
+		new tStockOutDetailDA(db);
 		new clsHardCode();
 		new clsHelper();
 		new mconfigDA(db);
