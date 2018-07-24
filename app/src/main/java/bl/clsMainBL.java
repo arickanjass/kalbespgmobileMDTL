@@ -143,6 +143,7 @@ import library.spgmobile.dal.tSalesProductQuantityHeaderDA;
 import library.spgmobile.dal.tSalesProductQuantityImageDA;
 import library.spgmobile.dal.tStockInHandDetailDA;
 import library.spgmobile.dal.tStockInHandHeaderDA;
+import library.spgmobile.dal.tStockOutDetailDA;
 import library.spgmobile.dal.tStockOutHeaderDA;
 import library.spgmobile.dal.tSubTypeActivityDA;
 import library.spgmobile.dal.tTidakSesuaiPesananHeaderDA;
@@ -296,6 +297,8 @@ public class clsMainBL {
 		new mEmployeeAreaDA(db);
 		new mEmployeeBranchDA(db);
 		new mEmployeeSalesProductDA(db);
+		new tStockOutHeaderDA(db);
+		new tStockOutDetailDA(db);
 		new mCounterNumberDA(db);
 		new mProductBrandHeaderDA(db);
 		new clsFileAttach_mobileDA(db);

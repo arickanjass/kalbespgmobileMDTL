@@ -972,7 +972,12 @@ public class FragmentKuesioner extends Fragment {
                         DecimalFormat df = new DecimalFormat("#.##");
                         String avg = df.format(average).replace(",", ".");
                         dt.set_intSum(String.valueOf(total));
-                        dt.set_intAverage(avg);
+                        if(penyebut!=0){
+                            dt.set_intAverage(avg);
+                        }else {
+                            dt.set_intAverage("0");
+                        }
+
                     }
                 }
                 dt.set_intSubmit("1");

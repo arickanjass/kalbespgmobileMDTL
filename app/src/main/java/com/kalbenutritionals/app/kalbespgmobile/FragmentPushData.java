@@ -31,7 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 //import com.github.glomadrian.codeinputlib.CodeInput;
-import addons.codeinputlib.CodeInput;
+//import addons.codeinputlib.CodeInput;
 
 import org.json.JSONException;
 import org.json.simple.JSONArray;
@@ -2456,7 +2456,7 @@ public class FragmentPushData extends Fragment {
 
     }
 
-    CodeInput cInput;
+    //CodeInput cInput;
     EditText et_inputCode;
     AlertDialog.Builder alertDialogBuilder;
     private void popUpPushDB(){

@@ -20,6 +20,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -4277,9 +4278,17 @@ public class FragmentReporting extends Fragment {
 
         builder.setPositiveButton("Show", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
+                Uri uri = null;
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
-                intent.setDataAndType(Uri.fromFile(file),"application/vnd.ms-excel");
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) { //use this if Lollipop_Mr1 (API 22) or above
+                    //  File tes = new File(file.toString().replace("%20",""));
+                    uri =  FileProvider.getUriForFile(getActivity(), getActivity().getPackageName()+".provider", file);
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                } else {
+                    uri = Uri.fromFile(file);
+                }
+                intent.setDataAndType(uri,"application/vnd.ms-excel");
                 try {
                     startActivity(intent);
                 } catch (ActivityNotFoundException e) {
