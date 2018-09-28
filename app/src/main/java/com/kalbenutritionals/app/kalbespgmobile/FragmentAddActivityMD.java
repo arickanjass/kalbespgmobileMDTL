@@ -116,6 +116,7 @@ public class FragmentAddActivityMD extends Fragment implements View.OnClickListe
 
         spnTypeActivity = (Spinner) v.findViewById(R.id.spn_typeActivity);
 
+        spnTypeActivity.setVisibility(View.GONE);
         //adding date and outlet di menu add
 
         TextView tv_date = (TextView) v.findViewById(R.id.tv_date);
@@ -169,21 +170,21 @@ public class FragmentAddActivityMD extends Fragment implements View.OnClickListe
             }
         });
 
-        spnTypeActivity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(spnTypeActivity.getSelectedItem().toString().equals("Pattern Display")){
-                    lnlayoutIsValidPattern.setVisibility(View.VISIBLE);
-                } else if(!spnTypeActivity.getSelectedItem().toString().equals("Pattern Display"))  {
-                    lnlayoutIsValidPattern.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+//        spnTypeActivity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                if(spnTypeActivity.getSelectedItem().toString().equals("Pattern Display")){
+//                    lnlayoutIsValidPattern.setVisibility(View.VISIBLE);
+//                } else if(!spnTypeActivity.getSelectedItem().toString().equals("Pattern Display"))  {
+//                    lnlayoutIsValidPattern.setVisibility(View.GONE);
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
 
         if(dtActivityMobileData.get_intId() != null){
             byte[] imgFile = dtActivityMobileData.get_txtImg1();
@@ -239,7 +240,7 @@ public class FragmentAddActivityMD extends Fragment implements View.OnClickListe
             arrTypeActivity.add(dt.get_txtName());
             HMsubType.put(dt.get_txtName(), dt.get_intSubTypeActivity());
         }
-        spnTypeActivity.setAdapter(new MyAdapter(getActivity(), R.layout.custom_spinner, arrTypeActivity));
+//        spnTypeActivity.setAdapter(new MyAdapter(getActivity(), R.layout.custom_spinner, arrTypeActivity));
     }
 
     @Override
@@ -254,9 +255,10 @@ public class FragmentAddActivityMD extends Fragment implements View.OnClickListe
             case R.id.btnSave:
                 new clsMainActivity().removeErrorMessage(textInputLayoutDescription);
 
-                if(spnTypeActivity.getSelectedItem().toString().equals("Select Category")||spnTypeActivity.getSelectedItem().toString().equals("Select Category")){
-                    new clsMainActivity().showCustomToast(getContext(), "Please " + spnTypeActivity.getSelectedItem().toString() , false);
-                } else if(lnlayoutIsValidPattern.getVisibility()==View.VISIBLE&&rg_isValidPattern.getCheckedRadioButtonId()==-1){
+//                if(spnTypeActivity.getSelectedItem().toString().equals("Select Category")||spnTypeActivity.getSelectedItem().toString().equals("Select Category")){
+//                    new clsMainActivity().showCustomToast(getContext(), "Please " + spnTypeActivity.getSelectedItem().toString() , false);
+//                } else
+                if(lnlayoutIsValidPattern.getVisibility()==View.VISIBLE&&rg_isValidPattern.getCheckedRadioButtonId()==-1){
                         new clsMainActivity().showCustomToast(getContext(), "Please Check Is Valid Pattern are not" , false);
                 } else if(etDescription.getText().toString().equals("")&&etDescription.getText().toString().length()==0){
                 new clsMainActivity().setErrorMessage(getContext(), textInputLayoutDescription, etDescription, "Please give Description");
@@ -307,8 +309,10 @@ public class FragmentAddActivityMD extends Fragment implements View.OnClickListe
                             dtActivityMobileData.set_txtRoleId(dtLogin.get_txtRoleId());
                             dtActivityMobileData.set_txtImg1(pht1);
                             dtActivityMobileData.set_txtImg2(pht2);
-                            dtActivityMobileData.set_txtTypeActivity(spnTypeActivity.getSelectedItem().toString());
-                            dtActivityMobileData.set_intSubTypeActivity(HMsubType.get(spnTypeActivity.getSelectedItem().toString()));
+//                            dtActivityMobileData.set_txtTypeActivity(spnTypeActivity.getSelectedItem().toString());
+                            dtActivityMobileData.set_txtTypeActivity("");
+//                            dtActivityMobileData.set_intSubTypeActivity(HMsubType.get(spnTypeActivity.getSelectedItem().toString()));
+                            dtActivityMobileData.set_intSubTypeActivity("8");
 
                             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                             Calendar cal = Calendar.getInstance();

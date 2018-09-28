@@ -89,7 +89,7 @@ public class FragmentAddOverStockMD extends Fragment implements IXListViewListen
     static List<tOverStockHeaderData> data;
     //    private FloatingActionButton fab;
 //    private List<String> arrData;
-    private EditText edKeterangan;
+//    private EditText edKeterangan;
     private ImageView after1, after2;
     private ImageView before1, before2;
     //    private Spinner product;
@@ -131,7 +131,7 @@ public class FragmentAddOverStockMD extends Fragment implements IXListViewListen
         txtHDId = (TextView) v.findViewById(R.id.txtHDId);
 //        fab = (FloatingActionButton) v.findViewById(R.id.fabQuntity);
 //        product = (Spinner) v.findViewById(R.id.txtProduct_quantity);
-        edKeterangan = (EditText) v.findViewById(R.id.etKeterangan_quantity);
+//        edKeterangan = (EditText) v.findViewById(R.id.etKeterangan_quantity);
         Button preview = (Button) v.findViewById(R.id.btnPreviewQuantity);
         tv_date = (TextView) v.findViewById(R.id.txtviewDateQuantity);
         tv_noQuantityStock = (TextView) v.findViewById(R.id.txtNoQuantity);
@@ -150,7 +150,7 @@ public class FragmentAddOverStockMD extends Fragment implements IXListViewListen
 
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(edKeterangan.getWindowToken(), 0);
+//        imm.hideSoftInputFromWindow(edKeterangan.getWindowToken(), 0);
 
         // add no Quantity Stock in Textview txtNoQuantity
         List<tOverStockHeaderData> dtLast = new tOverStockHeaderBL().getLastData();
@@ -341,21 +341,21 @@ public class FragmentAddOverStockMD extends Fragment implements IXListViewListen
             }
         });
 
-        edKeterangan.setFilters(new InputFilter[]{
-                new InputFilter() {
-                    @Override
-                    public CharSequence filter(CharSequence cs, int start,
-                                               int end, Spanned spanned, int dStart, int dEnd) {
-                        if (cs.equals("")) { // for backspace
-                            return cs;
-                        }
-                        if (cs.toString().matches("[a-zA-Z0-9,.\\- ]+")) {
-                            return cs;
-                        }
-                        return "";
-                    }
-                }, new InputFilter.AllCaps()
-        });
+//        edKeterangan.setFilters(new InputFilter[]{
+//                new InputFilter() {
+//                    @Override
+//                    public CharSequence filter(CharSequence cs, int start,
+//                                               int end, Spanned spanned, int dStart, int dEnd) {
+//                        if (cs.equals("")) { // for backspace
+//                            return cs;
+//                        }
+//                        if (cs.toString().matches("[a-zA-Z0-9,.\\- ]+")) {
+//                            return cs;
+//                        }
+//                        return "";
+//                    }
+//                }, new InputFilter.AllCaps()
+//        });
 
         TableProduct();
         return v;
@@ -435,6 +435,9 @@ public class FragmentAddOverStockMD extends Fragment implements IXListViewListen
 
         if (qtyProduct.equals("0") || qtyProduct.equals("00") || qtyProduct.equals("000")) {
             validQty = false;
+        }else
+        if ( editTextKeterangan.getText().toString().equals("")){
+            validQty = false;
         }
 
         if(validQty){
@@ -451,69 +454,7 @@ public class FragmentAddOverStockMD extends Fragment implements IXListViewListen
                 .setPositiveButton("Save",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                clsMainBL _clsMainBL = new clsMainBL();
-//                                        SQLiteDatabase _db = _clsMainBL.getDb();
 
-                                String qtyProduct = null;
-                                qtyProduct = editTextQty.getText().toString();
-
-                                boolean validQty = true;
-
-                                if (qtyProduct.equals("0") || qtyProduct.equals("00") || qtyProduct.equals("000")) {
-                                    validQty = true;
-                                    qtyProduct = "1";
-                                }
-
-                                if(validQty){
-                                    String selectedOneKNProduct = spnKalbeProduct.getSelectedItem().toString();
-                                    tUserLoginData dtUser = new tUserLoginBL().getUserActive();
-                                    java.text.DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                                    Calendar cal = Calendar.getInstance();
-
-                                    int day = dp.getDayOfMonth();
-                                    int month = dp.getMonth() + 1;
-                                    int year = dp.getYear();
-                                    final String expireDate = year + "-" + month + "-" + day;
-
-                                    String keterangan;
-                                    keterangan = editTextKeterangan.getText().toString();
-
-                                    if (keterangan.length() == 0) {
-                                        keterangan = "";
-                                    }
-
-                                    tOverStockDetailData data = new tOverStockDetailData();
-                                    if (dataDetail.getIntId() != null) {
-                                        data.setIntId(dataDetail.getIntId());
-                                    } else {
-                                        data.setIntId(_clsMainActivity.GenerateGuid());
-                                    }
-
-                                    data.set_txtOverStock(tv_noQuantityStock.getText().toString());
-                                    data.set_dtDate(dateFormat.format(cal.getTime()));
-                                    data.set_txtCodeProduct(HMProduct.get(selectedOneKNProduct));
-                                    data.set_txtKeterangan(keterangan);
-                                    data.setTxtProduct(selectedOneKNProduct);
-                                    data.setTxtExpireDate(expireDate);
-                                    data.setTxtQuantity(qtyProduct);
-                                    data.set_intPrice(HMProduct.get(HMProduct.get(selectedOneKNProduct)));
-
-                                    double prc = Double.valueOf(HMProduct.get(HMProduct.get(selectedOneKNProduct)));
-                                    double itm = Double.valueOf(qtyProduct);
-
-                                    data.set_intTotal(_clsMainActivity.convertNumberDec2(prc * itm));
-                                    data.set_txtNIK(dtUser.get_txtUserId());
-
-                                    new tOverStockDetailBL().saveData(data);
-//                                        new tSalesProductQuantityDetailDA(_db).SaveDatatSalesProductQuantityDetailData(_db, data);
-
-                                    dialog.dismiss();
-                                    TableProduct();
-
-                                    _clsMainActivity.showCustomToast(getActivity(), "Saved", true);
-                                } else {
-                                    _clsMainActivity.showCustomToast(getActivity(), "Quantity Cannot 0", true);
-                                }
                             }
                         })
                 .setNegativeButton("Close", new DialogInterface.OnClickListener() {
@@ -523,6 +464,84 @@ public class FragmentAddOverStockMD extends Fragment implements IXListViewListen
                 });
         final AlertDialog alertD = alertDialogBuilder.create();
         alertD.show();
+        final Button btnPos = alertD.getButton(AlertDialog.BUTTON_POSITIVE);
+        btnPos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clsMainBL _clsMainBL = new clsMainBL();
+//                                        SQLiteDatabase _db = _clsMainBL.getDb();
+
+                String qtyProduct = null;
+                qtyProduct = editTextQty.getText().toString();
+
+                boolean validQty = true;
+                String txtReason = "";
+                if (qtyProduct.equals("0") || qtyProduct.equals("00") || qtyProduct.equals("000")) {
+                    validQty = true;
+                    qtyProduct = "1";
+                    txtReason = "qty";
+                } else if ( editTextKeterangan.getText().toString().equals("")){
+                    validQty = false;
+                    txtReason = "desc";
+                }
+
+                if(validQty){
+                    String selectedOneKNProduct = spnKalbeProduct.getSelectedItem().toString();
+                    tUserLoginData dtUser = new tUserLoginBL().getUserActive();
+                    java.text.DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                    Calendar cal = Calendar.getInstance();
+
+                    int day = dp.getDayOfMonth();
+                    int month = dp.getMonth() + 1;
+                    int year = dp.getYear();
+                    final String expireDate = year + "-" + month + "-" + day;
+
+                    String keterangan;
+                    keterangan = editTextKeterangan.getText().toString();
+
+                    if (keterangan.length() == 0) {
+                        keterangan = "";
+                    }
+
+                    tOverStockDetailData data = new tOverStockDetailData();
+                    if (dataDetail.getIntId() != null) {
+                        data.setIntId(dataDetail.getIntId());
+                    } else {
+                        data.setIntId(_clsMainActivity.GenerateGuid());
+                    }
+
+                    data.set_txtOverStock(tv_noQuantityStock.getText().toString());
+                    data.set_dtDate(dateFormat.format(cal.getTime()));
+                    data.set_txtCodeProduct(HMProduct.get(selectedOneKNProduct));
+                    data.set_txtKeterangan(keterangan);
+                    data.setTxtProduct(selectedOneKNProduct);
+                    data.setTxtExpireDate(expireDate);
+                    data.setTxtQuantity(qtyProduct);
+                    data.set_intPrice(HMProduct.get(HMProduct.get(selectedOneKNProduct)));
+
+                    double prc = Double.valueOf(HMProduct.get(HMProduct.get(selectedOneKNProduct)));
+                    double itm = Double.valueOf(qtyProduct);
+
+                    data.set_intTotal(_clsMainActivity.convertNumberDec2(prc * itm));
+                    data.set_txtNIK(dtUser.get_txtUserId());
+
+                    new tOverStockDetailBL().saveData(data);
+//                                        new tSalesProductQuantityDetailDA(_db).SaveDatatSalesProductQuantityDetailData(_db, data);
+
+                    alertD.dismiss();
+                    TableProduct();
+
+                    _clsMainActivity.showCustomToast(getActivity(), "Saved", true);
+                } else {
+                    if (txtReason=="qty"){
+                        _clsMainActivity.showCustomToast(getActivity(), "Quantity Cannot 0", true);
+                    }else if (txtReason=="desc"){
+                        _clsMainActivity.showCustomToast(getActivity(), "Please fill Description...", false);
+                    }
+
+                }
+            }
+        });
     }
 
     // put image from camera
@@ -955,7 +974,8 @@ public class FragmentAddOverStockMD extends Fragment implements IXListViewListen
         dtQuantityData.set_dtDate(dateFormat.format(cal.getTime()));
         dtQuantityData.set_OutletCode(absenUserData.get_txtOutletCode());
         dtQuantityData.set_OutletName(absenUserData.get_txtOutletName());
-        dtQuantityData.set_txtKeterangan(edKeterangan.getText().toString());
+//        dtQuantityData.set_txtKeterangan(edKeterangan.getText().toString());
+        dtQuantityData.set_txtKeterangan("");
         dtQuantityData.set_UserId(absenUserData.get_txtUserId());
         dtQuantityData.set_txtRoleId(absenUserData.get_txtRoleId());
         dtQuantityData.set_txtBranchCode(absenUserData.get_txtBranchCode());

@@ -395,10 +395,10 @@ public class FragmentAddStockInHand extends Fragment implements View.OnClickList
                         dataPrevList.add(dataPrev);
                     }
                 }
-                if (edketerangan.getText().toString().equals("")) {
-                    _clsMainActivity.showCustomToast(getActivity(), "Please fill Description...", false);
-
-                } else
+//                if (edketerangan.getText().toString().equals("")) {
+//                    _clsMainActivity.showCustomToast(getActivity(), "Please fill Description...", false);
+//
+//                } else
                 if (arrdataPriv.size()==0){
                     _clsMainActivity.showCustomToast(getActivity(), "Please fill Quantity Product...", false);
 
