@@ -142,9 +142,9 @@ public class FragmentAddNearEDMD extends Fragment implements IXListViewListener 
         mUserLOBDataList = new ArrayList<>();
         mUserLOBDataList = new mUserLOBBL().GetAllData();
 
-        edKeterangan.setVisibility(View.GONE);
+//        edKeterangan.setVisibility(View.GONE);
         TextView tvket = (TextView) v.findViewById(R.id.txtKet_quantity);
-        tvket.setVisibility(View.GONE);
+//        tvket.setVisibility(View.GONE);
 
         _clsMainActivity = new clsMainActivity();
         dtQuantityData = new tSalesProductQuantityHeaderData();

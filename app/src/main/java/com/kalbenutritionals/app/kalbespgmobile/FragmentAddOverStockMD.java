@@ -89,7 +89,7 @@ public class FragmentAddOverStockMD extends Fragment implements IXListViewListen
     static List<tOverStockHeaderData> data;
     //    private FloatingActionButton fab;
 //    private List<String> arrData;
-//    private EditText edKeterangan;
+    private EditText edKeterangan;
     private ImageView after1, after2;
     private ImageView before1, before2;
     //    private Spinner product;
@@ -131,7 +131,7 @@ public class FragmentAddOverStockMD extends Fragment implements IXListViewListen
         txtHDId = (TextView) v.findViewById(R.id.txtHDId);
 //        fab = (FloatingActionButton) v.findViewById(R.id.fabQuntity);
 //        product = (Spinner) v.findViewById(R.id.txtProduct_quantity);
-//        edKeterangan = (EditText) v.findViewById(R.id.etKeterangan_quantity);
+        edKeterangan = (EditText) v.findViewById(R.id.etKeterangan_quantity);
         Button preview = (Button) v.findViewById(R.id.btnPreviewQuantity);
         tv_date = (TextView) v.findViewById(R.id.txtviewDateQuantity);
         tv_noQuantityStock = (TextView) v.findViewById(R.id.txtNoQuantity);
@@ -140,7 +140,8 @@ public class FragmentAddOverStockMD extends Fragment implements IXListViewListen
         before1 = (ImageView) v.findViewById(R.id.imageBefore1);
         before2 = (ImageView) v.findViewById(R.id.imageBefore2);
 //        editTextQty = (EditText) v.findViewById(R.id.editTextQty);
-
+        TextView tvket = (TextView) v.findViewById(R.id.txtKet_quantity);
+        tvket.setVisibility(View.GONE);
         mUserLOBDataList = new ArrayList<>();
         mUserLOBDataList = new mUserLOBBL().GetAllData();
 
@@ -151,7 +152,7 @@ public class FragmentAddOverStockMD extends Fragment implements IXListViewListen
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 //        imm.hideSoftInputFromWindow(edKeterangan.getWindowToken(), 0);
-
+        edKeterangan.setVisibility(View.GONE);
         // add no Quantity Stock in Textview txtNoQuantity
         List<tOverStockHeaderData> dtLast = new tOverStockHeaderBL().getLastData();
         String noQuantityStock;

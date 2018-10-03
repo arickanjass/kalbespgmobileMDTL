@@ -61,12 +61,12 @@
             android:text="Tanggal"
             android:textColor="#000" />
 
-        <View
-            android:id="@+id/view2"
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:background="#bfbfbf" />
+        <!--<View-->
+            <!--android:id="@+id/view2"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:background="#bfbfbf" />-->
 
         <TextView
             android:id="@+id/txtKet_quantity"
