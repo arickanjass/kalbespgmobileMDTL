@@ -12,11 +12,10 @@ ext {
 
 android {
 
-    compileSdkVersion 24
-    buildToolsVersion '25.0.0'
+    compileSdkVersion 28
     defaultConfig {
-        minSdkVersion 10
-        targetSdkVersion 24
+        minSdkVersion 14
+        targetSdkVersion 28
         versionCode 1
         versionName PUBLISH_VERSION
     }
@@ -47,6 +46,6 @@ publishing {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:24.1.1'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
 }
 
