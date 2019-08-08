@@ -2,12 +2,9 @@
     package="com.example.salesforcelibrary"
     android:versionCode="1"
     android:versionName="Android.20160122.001" >
-    
-    
-    <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="23" />
-<uses-permission android:name="android.permission.VIBRATE" />
+
+
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
