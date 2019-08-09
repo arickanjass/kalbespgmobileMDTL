@@ -26,7 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.kalbenutritionals.app.kalbespgmobile.CropDisplayPicture;
+import com.kalbenutritionals.app.kalbespgmobile.Utils.CropDisplayPicture;
 import com.kalbenutritionals.app.kalbespgmobile.MainMenu;
 import com.kalbenutritionals.app.kalbespgmobile.R;
 import com.kalbenutritionals.app.kalbespgmobile.clsMainActivity;

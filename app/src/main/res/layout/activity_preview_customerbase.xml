@@ -7,7 +7,7 @@
     android:paddingLeft="5dp"
     android:paddingRight="5dp"
     android:paddingTop="5dp"
-    tools:context="com.kalbenutritionals.app.kalbespgmobile.FragmentViewCustomerBaseSPG"
+    tools:context="com.kalbenutritionals.app.kalbespgmobile.Fragment.FragmentViewCustomerBaseSPG"
     android:background="#fff"
     android:orientation="vertical">
     <LinearLayout

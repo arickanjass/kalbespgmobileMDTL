@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteStatement;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kalbenutritionals.app.kalbespgmobile.mEmployeeSalesProductTempData;
+import com.kalbenutritionals.app.kalbespgmobile.Network.mEmployeeSalesProductTempData;
 
 import org.json.simple.JSONArray;
 
@@ -14,17 +14,14 @@ import java.util.Iterator;
 import java.util.List;
 
 import library.spgmobile.common.APIData;
-import library.spgmobile.common.clsFileAttach_mobile;
 import library.spgmobile.common.clsHelper;
 import library.spgmobile.common.linkAPI;
 import library.spgmobile.common.mCounterNumberData;
 import library.spgmobile.common.mEmployeeSalesProductData;
-import library.spgmobile.common.mTypeLeaveMobileData;
 import library.spgmobile.common.mUserLOBData;
 import library.spgmobile.common.mconfigData;
 import library.spgmobile.common.tLogDownloadData;
 import library.spgmobile.common.tUserLoginData;
-import library.spgmobile.dal.clsFileAttach_mobileDA;
 import library.spgmobile.dal.clsHardCode;
 import library.spgmobile.dal.enumConfigData;
 import library.spgmobile.dal.enumCounterData;

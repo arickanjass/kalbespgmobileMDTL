@@ -10,7 +10,7 @@
     android:paddingTop="5dp"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
-    tools:context="com.kalbenutritionals.app.kalbespgmobile.FragmentAddKoordinasi" >
+    tools:context="com.kalbenutritionals.app.kalbespgmobile.Fragment.FragmentAddKoordinasi" >
 
     <ScrollView
         android:layout_width="match_parent"

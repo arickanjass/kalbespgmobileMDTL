@@ -7,7 +7,7 @@
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
-    tools:context="com.kalbenutritionals.app.kalbespgmobile.FragmentAbsen"
+    tools:context="com.kalbenutritionals.app.kalbespgmobile.Fragment.FragmentAbsen"
     android:background="@color/background_card_view">
 
     <LinearLayout

@@ -3,6 +3,8 @@ package com.kalbenutritionals.app.kalbespgmobile;
 import android.app.Application;
 import android.content.Context;
 
+import com.kalbenutritionals.app.kalbespgmobile.Utils.LocalReportSender;
+
 import org.acra.ACRA;
 import org.acra.ReportField;
 import org.acra.ReportingInteractionMode;

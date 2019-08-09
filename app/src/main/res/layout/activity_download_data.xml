@@ -8,7 +8,7 @@
     android:focusableInTouchMode="true"
     android:gravity="center_vertical|top"
     android:orientation="vertical"
-    tools:context="com.kalbenutritionals.app.kalbespgmobile.FragmentDownloadData">
+    tools:context="com.kalbenutritionals.app.kalbespgmobile.Fragment.FragmentDownloadData">
 
     <ScrollView
         android:layout_width="fill_parent"

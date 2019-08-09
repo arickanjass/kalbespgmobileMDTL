@@ -1,18 +1,15 @@
 package bl;
 
-import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
-import com.kalbenutritionals.app.kalbespgmobile.mProductCompTempData;
+import com.kalbenutritionals.app.kalbespgmobile.Network.mProductCompTempData;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import library.spgmobile.common.APIData;
 import library.spgmobile.common.clsHelper;
@@ -21,9 +18,7 @@ import library.spgmobile.common.mProductCompetitorData;
 import library.spgmobile.common.mUserLOBData;
 import library.spgmobile.common.tDeviceInfoUserData;
 import library.spgmobile.dal.clsHardCode;
-import library.spgmobile.dal.mEmployeeSalesProductDA;
 import library.spgmobile.dal.mProductCompetitorDA;
-import library.spgmobile.dal.mProductSPGDA;
 import library.spgmobile.dal.mconfigDA;
 import library.spgmobile.dal.tDeviceInfoUserDA;
 

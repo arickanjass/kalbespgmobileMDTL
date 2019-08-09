@@ -3,7 +3,7 @@ package bl;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
-import com.kalbenutritionals.app.kalbespgmobile.mProductBrandHeaderTempData;
+import com.kalbenutritionals.app.kalbespgmobile.Network.mProductBrandHeaderTempData;
 
 import org.json.simple.JSONArray;
 
@@ -14,15 +14,12 @@ import java.util.List;
 import library.spgmobile.common.APIData;
 import library.spgmobile.common.clsHelper;
 import library.spgmobile.common.linkAPI;
-import library.spgmobile.common.mEmployeeSalesProductData;
 import library.spgmobile.common.mProductBrandHeaderData;
 import library.spgmobile.common.mconfigData;
 import library.spgmobile.common.tLogDownloadData;
 import library.spgmobile.common.tUserLoginData;
 import library.spgmobile.dal.clsHardCode;
 import library.spgmobile.dal.enumConfigData;
-import library.spgmobile.dal.mEmployeeBranchDA;
-import library.spgmobile.dal.mEmployeeSalesProductDA;
 import library.spgmobile.dal.mProductBrandHeaderDA;
 import library.spgmobile.dal.mconfigDA;
 import library.spgmobile.dal.tUserLoginDA;

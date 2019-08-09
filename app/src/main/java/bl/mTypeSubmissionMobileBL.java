@@ -3,8 +3,7 @@ package bl;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
-import com.kalbenutritionals.app.kalbespgmobile.mProductSPGTempData;
-import com.kalbenutritionals.app.kalbespgmobile.mTypeSubmissionTempData;
+import com.kalbenutritionals.app.kalbespgmobile.Network.mTypeSubmissionTempData;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -18,8 +17,6 @@ import library.spgmobile.common.linkAPI;
 import library.spgmobile.common.mTypeSubmissionMobile;
 import library.spgmobile.common.tDeviceInfoUserData;
 import library.spgmobile.dal.clsHardCode;
-import library.spgmobile.dal.mProductPICDA;
-import library.spgmobile.dal.mProductSPGDA;
 import library.spgmobile.dal.mTypeSubmissionMobileDA;
 import library.spgmobile.dal.mconfigDA;
 import library.spgmobile.dal.tDeviceInfoUserDA;

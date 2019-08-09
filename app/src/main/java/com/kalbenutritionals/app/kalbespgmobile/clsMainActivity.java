@@ -34,6 +34,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kalbenutritionals.app.kalbespgmobile.Fragment.FragmentNotification;
+
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -72,6 +74,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import adapter.AppAdapterNotif;
 import adapter.AppAdapterViewCusBase;
 import adapter.GridAdapter;
 import addons.adapter.AdapterListProductCustomerBased;
@@ -103,7 +106,7 @@ import library.spgmobile.dal.enumCounterData;
 
 public class clsMainActivity extends Activity {
     private static final String TAG_UUID = "id";
-    String months[] = {"", "January", "February", "March", "April",
+    public String months[] = {"", "January", "February", "March", "April",
             "May", "June", "July", "August", "September",
             "October", "November", "December"};
 

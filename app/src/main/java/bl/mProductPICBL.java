@@ -3,8 +3,7 @@ package bl;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
-import com.kalbenutritionals.app.kalbespgmobile.mProductPICTempData;
-import com.kalbenutritionals.app.kalbespgmobile.mProductSPGTempData;
+import com.kalbenutritionals.app.kalbespgmobile.Network.mProductPICTempData;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

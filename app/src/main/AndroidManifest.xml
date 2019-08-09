@@ -107,7 +107,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CropDisplayPicture"
+            android:name=".Utils.CropDisplayPicture"
             android:configChanges="orientation|keyboardHidden"
             android:label=""
             android:screenOrientation="portrait"
@@ -119,7 +119,7 @@
             android:label="" />
 
         <activity
-            android:name=".PdfView"
+            android:name=".Utils.PdfView"
             android:label="">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

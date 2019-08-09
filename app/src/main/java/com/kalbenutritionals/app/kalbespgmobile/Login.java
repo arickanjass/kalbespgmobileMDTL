@@ -102,7 +102,7 @@ import service.MyServiceNative;
 import service.MyTrackingLocationService;
 
 import static android.support.v4.content.FileProvider.getUriForFile;
-import static junit.framework.Assert.assertEquals;
+//import static junit.framework.Assert.assertEquals;
 
 public class Login extends clsMainActivity {
     private EditText txtLoginEmail;
@@ -386,7 +386,7 @@ public class Login extends clsMainActivity {
                     HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
                     urlConn.connect();
 
-                    assertEquals(HttpURLConnection.HTTP_OK, urlConn.getResponseCode());
+//                    assertEquals(HttpURLConnection.HTTP_OK, urlConn.getResponseCode());
                     showCustomToast(Login.this, "Connected", true);
 
                 } catch (IOException e) {

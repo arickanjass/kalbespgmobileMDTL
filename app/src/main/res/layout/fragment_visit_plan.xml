@@ -8,7 +8,7 @@
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
-    tools:context="com.kalbenutritionals.app.kalbespgmobile.FragmentAbsen">
+    tools:context="com.kalbenutritionals.app.kalbespgmobile.Fragment.FragmentAbsen">
 
     <LinearLayout
         android:layout_width="match_parent"

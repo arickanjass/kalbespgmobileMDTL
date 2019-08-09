@@ -3,8 +3,7 @@ package bl;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
-import com.kalbenutritionals.app.kalbespgmobile.mBranchTempData;
-import com.kalbenutritionals.app.kalbespgmobile.mEmployeeAreaTempData;
+import com.kalbenutritionals.app.kalbespgmobile.Network.mEmployeeAreaTempData;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -21,7 +20,6 @@ import library.spgmobile.common.tUserLoginData;
 import library.spgmobile.dal.clsHardCode;
 import library.spgmobile.dal.enumConfigData;
 import library.spgmobile.dal.mEmployeeAreaDA;
-import library.spgmobile.dal.mEmployeeBranchDA;
 import library.spgmobile.dal.mconfigDA;
 import library.spgmobile.dal.tUserLoginDA;
 
