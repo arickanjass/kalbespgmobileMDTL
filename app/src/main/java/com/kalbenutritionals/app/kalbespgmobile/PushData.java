@@ -20,8 +20,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.kalbenutritionals.app.kalbespgmobile.Fragment.FragmentPushData;
-
 import org.json.simple.JSONArray;
 
 import java.util.ArrayList;

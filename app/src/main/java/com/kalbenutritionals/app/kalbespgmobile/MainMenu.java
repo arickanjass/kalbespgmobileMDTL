@@ -35,14 +35,6 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.kalbenutritionals.app.kalbespgmobile.Fragment.FragmentDownloadData;
-import com.kalbenutritionals.app.kalbespgmobile.Fragment.FragmentInformation;
-import com.kalbenutritionals.app.kalbespgmobile.Fragment.FragmentNotification;
-import com.kalbenutritionals.app.kalbespgmobile.Fragment.FragmentPushData;
-import com.kalbenutritionals.app.kalbespgmobile.Fragment.FragmentReporting;
-import com.kalbenutritionals.app.kalbespgmobile.Fragment.FragmentSettings;
-import com.kalbenutritionals.app.kalbespgmobile.Fragment.FragmentViewHistoryAbsen;
-import com.kalbenutritionals.app.kalbespgmobile.Fragment.FragmentViewQuantityStock;
 import com.kalbenutritionals.app.kalbespgmobile.Utils.CropDisplayPicture;
 import com.kalbenutritionals.app.kalbespgmobile.Utils.ImagePick;
 import com.theartofdev.edmodo.cropper.CropImage;
